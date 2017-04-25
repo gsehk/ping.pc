@@ -13,7 +13,7 @@
 <body @yield('body_class')>
 
     <!-- nav -->
-    @include('layouts.partials.topnav')
+    @include('layouts.partials.nav')
 
     <!-- content -->
     @yield('content')

@@ -2,6 +2,11 @@
     margin: 0;
     padding: 0;
     font-family: '微软雅黑',Arial,sans-serif !important;
+    position:absolute;width:100%;min-height:100%; 
+}
+
+body.gray{
+    background:#f3f6f7;
 }
 
 ul {
@@ -143,7 +148,7 @@ textarea {
 }
 
 .p_cont {
-    background: url("../img/personal_ye.png") center no-repeat;
+    background: url("../images/personal_ye.png") center no-repeat;
     position: absolute;
     right: 128px;
     top: 72px;
@@ -280,7 +285,7 @@ textarea {
 }
 
 .cen_more {
-    background: url("../img/dongtai_icon.png") center no-repeat;
+    background: url("../images/dongtai_icon.png") center no-repeat;
     width: 125px;
     height: 208px;
     position: absolute;
@@ -1833,7 +1838,7 @@ textarea {
 }
 
 .loginleft_bg {
-    background: url("../img/login-leftBg.png") no-repeat;
+    background: url("../images/login-leftBg.png") no-repeat;
     width: 240px;
     height: 360px;
     float: left;
@@ -1902,6 +1907,7 @@ textarea {
 .l_mm {
     color: #b3b3b3;
     font-size: 12px;
+    overflow: hidden;
 }
 
     .l_mm img {
@@ -1958,18 +1964,13 @@ textarea {
     }
 
 .login_word {
-    position: absolute;
-    bottom: 24px;
-    width: 30%;
-    clear: both;
-    left: 35%;
-}
-
-.login_word {
-    width: 30%;
-    left: 40%;
-    position: absolute;
-    bottom: 0;
+    clear:both;
+    margin:0;
+    padding:0;
+    position:absolute;
+    bottom:30px;
+    width:100%;
+    text-align: center;
 }
 /*资讯详情页*/
 .zx_top {
