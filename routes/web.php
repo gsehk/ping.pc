@@ -6,13 +6,15 @@ use Zhiyi\Plus\Http\Middleware;
 
 Route::get('/pc/login', 'PassportController@index')->name('login');
 
-Route::middleware('auth:web')->group(function () {
+Route::get('/pc/register', 'PassportController@register')->name('register');
+
+// Route::middleware('auth:web')->group(function () {
 
 	// 动态
-    Route::get('/pc/feed', 'FeedController@feed');
+    Route::get('/pc/feed', 'FeedController@feed')->name('feed');
 
     // 资讯
-    Route::get('/pc/news', 'FeedController@news');
+    Route::get('/pc/news', 'FeedController@news')->name('news');
     
     // 积分规则
     Route::get('/pc/credit', 'FeedController@credit');
@@ -25,4 +27,4 @@ Route::middleware('auth:web')->group(function () {
     
     // 排行榜
     Route::get('/pc/rank', 'ProfileController@rank');
-});
+// });

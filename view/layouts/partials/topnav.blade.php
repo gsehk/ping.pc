@@ -1,7 +1,7 @@
     <!-- NAV -->
     <div class="nav">
         <div class="nav_left">
-            <img src="../img/logo.png" class="nav_logo" />
+            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/logo.png') }}" class="nav_logo" />
             <span class="nav_beta fs-16">beta</span>
         </div>
         <div class="nav_list">

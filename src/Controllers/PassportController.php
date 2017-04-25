@@ -2,6 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
+use Illuminate\Http\Request;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
@@ -9,9 +10,15 @@ class PassportController extends BaseController
 {
     public function index()
     {
-        $this->view['site']['footer'] = 'simple';
         
     	return view('passport.login', $this->view);
+    }
+
+    public function register(Request $request)
+    {
+        $type = $request->input('type');
+
+        return view('passport.register', ['type'=>$type]);
     }
 
     public function logout(Request $request)
