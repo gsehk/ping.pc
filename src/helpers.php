@@ -52,7 +52,7 @@ function base_path($path = '')
  */
 function component_name()
 {
-    return 'medz/plus-component-example';
+    return 'zhiyicx/plus-component-pc';
 }
 /**
  * Get the component route filename.
@@ -91,7 +91,7 @@ function view($view = null, $data = [], $mergeData = [])
 {
     $finder = app(\Illuminate\View\FileViewFinder::class, [
         'files' => app(\Illuminate\Filesystem\Filesystem::class),
-        'paths' => [base_path('/views')],
+        'paths' => [base_path('/view')],
     ]);
     $factory = app(\Illuminate\Contracts\View\Factory::class);
     $factory->setFinder($finder);

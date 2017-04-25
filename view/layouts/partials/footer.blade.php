@@ -1,42 +1,21 @@
-<footer class="mastfoot offwhite-bg">
-    <section class="inner-section social-wrap">
-        <div class="container-fluid">
-            <div class="row">
-                <article class="col-md-6 col-md-offset-3 text-center foot-logo">
-
-                    <p class="friend-links">
-                        <a href="https://laravel-china.org/">LC 社区</a>
-                        <a href="https://laravel-china.org/docs/home">中文文档</a>
-                        <a href="https://cs.laravel-china.org/">速查表</a>
-                        <a href="https://laravel-china.org/categories/1">Laravel 工作</a>
-                        <a href="https://laravel-china.org/laravel-tutorial/5.1/about">入门教程</a>
-                        <a href="{{ route('issues.index') }}">周刊存档</a>
-                    </p>
-
-                    <a href="index.html"><img alt="" title="" src="/assets/images/icon.png" /></a>
-
-                    <p class="credits font2 dark add-top-quarter icons">
-                        <a href="/assets/images/qrcode_new.png" class="icon-wechat">
-                            <i class="fa fa-weixin" aria-hidden="true"></i>
-                        </a>
-                        <a href="http://weibo.com/laravelnews" class="icon-weibo">
-                            <i class="fa fa-weibo" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://github.com/summerblue/news.laravel-china.org" class="icon-github">
-                            <i class="fa fa-github-alt" aria-hidden="true"></i>
-                        </a>
-                    </p>
-                    <p class="credits font2  add-top-quarter">
-                        由 <a href="https://github.com/summerblue" target="_blank">Summer</a> 设计与编码。
-                        <hr style="border-top: 1px solid #4c4c4c;width: 320px;">
-                        <a href="http://estgroupe.com/" style="color:#a5a5a5">
-                            <img class="brand-icon" src="https://dn-phphub.qbox.me/uploads/images/201612/12/1/iq7WQc2iuW.png" ><span style="margin-top: 7px;display: inline-block;">
-                                优帆远扬 | 创造不息，交付不止
-                            </span>
-                        </a>
-                    </p>
-                </article>
+    <div class="dy_bottom">
+        <div class="dybCont">
+            <ul>
+                <li><a href="javascript:;">关于TS+</a></li>
+                <li><a href="javascript:;">广告合作</a></li>
+                <li><a href="javascript:;">移动客户端</a></li>
+                <li><a href="javascript:;">投稿须知</a></li>
+                <li><a href="javascript:;">意见与建议</a></li>
+                <li><a href="javascript:;">友情链接</a></li>
+                <li><a href="javascript:;">TS+官网</a></li>
+                <li><a href="javascript:;">智士官网</a></li>
+            </ul>
+            <div class="dyb_py fs-12">Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.</div>
+            <div class="dy_chat">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-weibo"></use></svg>
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq"></use></svg>
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg>
             </div>
+            <div class="dy_bz">本站/APP由 <span>ThinkSNS+</span> 提供技术和产品支持</div>
         </div>
-    </section>
-</footer>
+    </div>

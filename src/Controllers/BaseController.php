@@ -7,7 +7,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class BaseController extends Controller
 {
-    protected $site = array();
+    protected $view = array();
     protected $user = array();
 
 	/**
@@ -28,7 +28,8 @@ class BaseController extends Controller
      */
     public function initSite()
     {
-    	$this->site['nav'] = [];
+    	$this->view['site']['nav'] = [];
+        $this->view['site']['footer'] = 'default';
     }
 
     /**

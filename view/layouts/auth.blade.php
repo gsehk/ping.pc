@@ -13,13 +13,13 @@
 <body @yield('body_class')>
 
     <!-- nav -->
-    @include('layouts.partials.topnav')
+    @include('layouts.partials.authnav')
 
     <!-- content -->
     @yield('content')
     
     <!-- footer -->
-    @include('layouts.partials.footer')
+    @include('layouts.partials.authfooter')
 
     <!-- js -->
     @yield('scripts')
