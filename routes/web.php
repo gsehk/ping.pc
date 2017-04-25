@@ -8,6 +8,24 @@ Route::get('/pc/login', 'PassportController@index')->name('login');
 
 Route::get('/pc/register', 'PassportController@register')->name('register');
 
+Route::get('pc/set-other', 'PassportController@setOther')->name('register');
+
+// 个人中心菜单
+
+Route::prefix('profile')->group(function () {
+
+    Route::get('all', 'ProfileController@feedAll')->name('pc:feedAll');
+    Route::get('feed', 'ProfileController@myFeed')->name('pc:myFeed');
+    Route::get('related', 'ProfileController@related')->name('pc:related');
+    Route::get('fans', 'ProfileController@myFans')->name('pc:myFans');
+    Route::get('following', 'ProfileController@following')->name('pc:following');
+    Route::get('rank', 'ProfileController@rank')->name('pc:rank');
+    Route::get('collection', 'ProfileController@collection')->name('pc:collection');
+    Route::get('account', 'ProfileController@account')->name('pc:account');
+    
+});
+
+
 // Route::middleware('auth:web')->group(function () {
 
 	// 动态

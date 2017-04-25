@@ -21,6 +21,12 @@ class PassportController extends BaseController
         return view('passport.register', ['type'=>$type]);
     }
 
+    public function setOther()
+    {
+
+        return view('passport.setother');
+    }
+
     public function logout(Request $request)
     {
         $this->guard()->logout();

@@ -10,6 +10,6 @@ class FeedController extends BaseController
 {
     public function feed(Request $request)
     {
-        return 123;
+        return view('profile.myfeed');
     }
 }
