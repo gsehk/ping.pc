@@ -28,8 +28,8 @@ class BaseController extends Controller
      */
     public function initSite()
     {
-    	$this->view['site']['nav'] = [];
-        $this->view['site']['footer'] = 'default';
+        $site['nav'] = ['news'=>route('news'), 'feed'=>route('feed')];
+        return $site;
     }
 
     /**
