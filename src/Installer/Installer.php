@@ -1,10 +1,10 @@
 <?php
 
-namespace Medz\Component\ZhiyiPlus\PlusComponentExample\Installer;
+namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Installer;
 
 use Closure;
 use Zhiyi\Component\Installer\PlusInstallPlugin\AbstractInstaller;
-use function Medz\Component\ZhiyiPlus\PlusComponentExample\{
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
     route_path,
     resource_path,
     base_path as component_base_path
@@ -17,9 +17,9 @@ class Installer extends AbstractInstaller
     /**
      * Get the component info onject.
      *
-     * @return Medz\Component\ZiyiPlus\PlusComponentExample\Installer\Info
+     * @return Zhiyi\Component\ZiyiPlus\PlusComponentPc\Installer\Info
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function getComponentInfo()
     {
@@ -31,7 +31,7 @@ class Installer extends AbstractInstaller
      *
      * @return string
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function router()
     {
@@ -43,7 +43,7 @@ class Installer extends AbstractInstaller
      *
      * @return string
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function resource()
     {
@@ -56,18 +56,10 @@ class Installer extends AbstractInstaller
      * @param Closure $next
      *
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function install(Closure $next)
     {
-        if (!Schema::hasTable('component_example')) {
-            Schema::create('component_example', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
-                $table->increments('id')->comment('主键');
-            });
-        }
-
-        include component_base_path('/src/table_column.php');
         $next();
     }
 
@@ -77,17 +69,15 @@ class Installer extends AbstractInstaller
      * @param Closure $next
      *
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function update(Closure $next)
     {
-        include component_base_path('/src/table_column.php');
         $next();
     }
 
     public function uninstall(Closure $next)
     {
-        Schema::dropIfExists('component_example');
         $next();
     }
 }

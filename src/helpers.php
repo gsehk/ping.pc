@@ -1,6 +1,6 @@
 <?php
 
-namespace Medz\Component\ZhiyiPlus\PlusComponentExample;
+namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
 use function asset as plus_asset;
 use function view as plus_view;
@@ -17,10 +17,8 @@ use function view as plus_view;
 function asset($path, $secure = null)
 {
     $path = asset_path($path);
-
     return plus_asset($path, $secure);
 }
-
 /**
  * Get The component resource asset path.
  *
@@ -33,7 +31,6 @@ function asset_path($path)
 {
     return component_name().'/'.$path;
 }
-
 /**
  * Get the component base path.
  *
@@ -46,8 +43,6 @@ function base_path($path = '')
 {
     return dirname(__DIR__).$path;
 }
-
-
 /**
  * Get the component name.
  *
@@ -59,7 +54,6 @@ function component_name()
 {
     return 'medz/plus-component-example';
 }
-
 /**
  * Get the component route filename.
  *
@@ -71,8 +65,6 @@ function route_path()
 {
     return base_path('/router.php');
 }
-
-
 /**
  * Get the component resource path.
  *
@@ -84,7 +76,6 @@ function resource_path()
 {
     return base_path('/resource');
 }
-
 /**
  * Get the evaluated view contents for the given view.
  *
@@ -98,12 +89,14 @@ function resource_path()
  */
 function view($view = null, $data = [], $mergeData = [])
 {
-    $factory = plus_view();
-    $factory->addLocation(base_path('/view'));
-
+    $finder = app(\Illuminate\View\FileViewFinder::class, [
+        'files' => app(\Illuminate\Filesystem\Filesystem::class),
+        'paths' => [base_path('/views')],
+    ]);
+    $factory = app(\Illuminate\Contracts\View\Factory::class);
+    $factory->setFinder($finder);
     if (func_num_args() === 0) {
         return $factory;
     }
-
     return $factory->make($view, $data, $mergeData);
 }

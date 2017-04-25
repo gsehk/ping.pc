@@ -1,9 +1,9 @@
 <?php
 
-namespace Medz\Component\ZhiyiPlus\PlusComponentExample\Installer;
+namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Installer;
 
 use Zhiyi\Component\Installer\PlusInstallPlugin\ComponentInfoInterface;
-use function Medz\Component\ZhiyiPlus\PlusComponentExample\{
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
     asset
 };
 
@@ -14,11 +14,11 @@ class Info implements ComponentInfoInterface
      *
      * @return string
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function getName(): string
     {
-        return 'Example';
+        return 'Pc';
     }
 
     /**
@@ -26,7 +26,7 @@ class Info implements ComponentInfoInterface
      *
      * @return string
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function getLogo(): string
     {
@@ -38,7 +38,7 @@ class Info implements ComponentInfoInterface
      *
      * @return string
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function getIcon(): string
     {
@@ -50,10 +50,10 @@ class Info implements ComponentInfoInterface
      *
      * @return string
      * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://medz.cn
+     * @homepage http://Zhiyi.cn
      */
     public function getAdminEntry()
     {
-        return route('example.admin');
+        return 'www.baidu.com';
     }
 }
