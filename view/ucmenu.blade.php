@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="{{Route('pc:following')}}" class="fs-16 @if ($route == 'pc:following') dy_59 @endif">
+            <a href="{{Route('pc:myFans', ['type'=>2])}}" class="fs-16 @if ($route == 'pc:myFans') dy_59 @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bofang1-copy-copy-copy-copy-copy-copy-copy"></use></svg>关注的人
             </a>
         </li>

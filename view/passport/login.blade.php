@@ -20,12 +20,12 @@
             </div>
             <div class="l_mm">
                 <!-- <input  type="checkbox" style=" float: left; margin-right: 5px;"/>忘记密码 -->
-                <span class="l_forget">忘记密码</span>
+                <a href="{{Route('pc:findPassword')}}"><span class="l_forget">忘记密码</span></a>
             </div>
             <a href="#" class="login_login">登陆</a>
 
             <div class="no_zh">
-                <span class="no_span">没有账号？<span>注册</span></span>
+                <span class="no_span">没有账号？<a href="{{Route('pc:register')}}"><span>注册</span></a></span>
                 <div class="del_share login_share" >
                     三方登陆：
                     <svg class="icon svdel_g1" aria-hidden="true">
