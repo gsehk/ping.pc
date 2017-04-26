@@ -17,6 +17,7 @@
             <span class="dyn_zy"><i class="icon iconfont icon-gongsi"></i>智艺创想</span>
             <span class="dyn_time"><i class="icon iconfont icon-shengri"></i>09.30<label>女</label></span>
             <span class="dyn_address"><i class="icon iconfont icon-site"></i>成都·高新区</span>
+            <a href="{{Route('pc:newsrelease')}}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
         </div>
         <div>
             <!--left-->
@@ -260,6 +261,7 @@
                     <ul class="infR_time">
                         <li><a href="javascript:;">粉丝</a></li>
                         <li><a href="javascript:;">关注</a></li>
+                        <li><a href="{{Route('pc:myFans', ['type'=>3])}}">访客</a></li>
                     </ul>
                     @component('related')
                         {{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}
