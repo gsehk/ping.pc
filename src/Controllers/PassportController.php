@@ -16,7 +16,7 @@ class PassportController extends BaseController
 
     public function register(Request $request)
     {
-        $type = $request->input('type');
+        $type = $request->input('type') ?: 1;
 
         return view('passport.register', ['type'=>$type]);
     }
