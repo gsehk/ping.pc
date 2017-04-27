@@ -29,5 +29,5 @@
     @yield('scripts')
 
 </body>
-
+<script src="http://cdn.bootcss.com/scrollup/2.4.1/jquery.scrollUp.min.js"></script>
 </html>

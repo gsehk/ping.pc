@@ -74,152 +74,30 @@
     <div class="inf_main">
         <div class="inf_left">
             <ul>
-                <li><a href="javascript:;">最新文章</a></li>
-                <li><a href="javascript:;">明星公司</a></li>
-                <li><a href="javascript:;">行业新闻</a></li>
-                <li><a href="javascript:;">早期项目</a></li>
-                <li><a href="javascript:;">深度报道</a></li>
-                <li><a href="javascript:;">智能GET</a></li>
+            @foreach ($cate as $post)
+                @if ($loop->iteration < 10)
+                <li><a href="javascript:;">{{$post['name']}}</a></li>
+                @endif
+            @endforeach
             </ul>
-            <div class="inf_list">
-                <div class="inf_img">
-                    <a href="{{Route('pc:newsdetail')}}">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </a>
-                </div>
-                <div class="inf_word">
-                    <a href="{{Route('pc:newsdetail')}}">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                    </a>
-                    <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                    <div class="inf_bm">
-                        <span class="inf_time">环球网-5分钟前</span>
-                        <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                    </div>
-                </div>
-            </div>
-            <div style="width:811px;">
+            <div id="news-list">
                 <div class="inf_list">
                     <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
+                        <a href="{{Route('pc:newsdetail')}}">
+                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
+                        </a>
                     </div>
                     <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
+                        <a href="{{Route('pc:newsdetail')}}">
+                            <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
+                        </a>
                         <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
                         <div class="inf_bm">
                             <span class="inf_time">环球网-5分钟前</span>
                             <span class="inf_comment">1评论<span>|</span>2收藏</span>
                         </div>
                     </div>
-                </div>
-                <div class="inf_list">
-                    <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </div>
-                    <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inf_list">
-                    <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </div>
-                    <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inf_list">
-                    <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </div>
-                    <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inf_list">
-                    <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </div>
-                    <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inf_list">
-                    <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </div>
-                    <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inf_list">
-                    <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </div>
-                    <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inf_list">
-                    <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </div>
-                    <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="inf_list">
-                    <div class="inf_img">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                    </div>
-                    <div class="inf_word">
-                        <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="dy_loading">
-                    <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}">
-                    加载中
-                </div>
+                </div> 
             </div>
         </div>
         <div class="inf_right">
@@ -288,3 +166,21 @@
     </div>
 </div>
 @endsection
+
+
+@section('scripts')
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/main.js') }}"></script>
+@endsection
+<script type="text/javascript">
+var option = {
+    container: '#news-list',
+    loadcount: '',
+    loadmax: '',
+    maxid: 0,
+    loadlimit: '',
+    cid: 1
+};
+setTimeout(function() {
+    news.init(option);
+}, 300);
+</script>
