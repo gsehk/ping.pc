@@ -6,8 +6,8 @@
 <div class=" forget_cont" style="height:640px;">
     <ul class="forget_ul">
 
-        <li><a href="{{Route('register', ['type'=>1])}}" @if ($type == 1) class="forget_333" @endif>手机注册</a></li>
-        <li><a href="{{Route('register', ['type'=>2])}}" @if ($type == 2) class="forget_333" @endif>邮箱注册</a></li>
+        <li><a href="{{Route('pc:register', ['type'=>1])}}" @if ($type == 1) class="forget_333" @endif>手机注册</a></li>
+        <li><a href="{{Route('pc:register', ['type'=>2])}}" @if ($type == 2) class="forget_333" @endif>邮箱注册</a></li>
     </ul>
     
     <div class="f_div">

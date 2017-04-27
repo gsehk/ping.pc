@@ -21,10 +21,10 @@ class PassportController extends BaseController
         return view('passport.register', ['type'=>$type]);
     }
 
-    public function setOther()
+    public function perfect()
     {
 
-        return view('passport.setother');
+        return view('passport.perfect');
     }
 
     public function logout(Request $request)
@@ -34,5 +34,12 @@ class PassportController extends BaseController
         $request->session()->regenerate();
 
         return redirect(route('pc'));
+    }
+
+    public function findPassword(Request $request)
+    {
+        $type = $request->input('type') ?: 1;
+
+        return view('passport.findpwd', ['type' => $type]);
     }
 }

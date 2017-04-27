@@ -25,7 +25,34 @@ class ProfileController extends BaseController
     {
         $type = $request->input('type') ?: 1;
 
-        return view('profile.collection', ['type'=>$type]);
+        return view('profile.collection', ['type' => $type]);
+    }
+
+    public function myFans(Request $request)
+    {
+        $type = $request->input('type') ?: 1;
+
+        return view('profile.myfans', ['type' => $type]);
+    }
+
+    public function rank()
+    {
+
+        return view('profile.rank');
+    }
+
+    public function account(Request $request)
+    {
+        $page = $request->input('page') ?: 'account';
+
+        return view('profile.'.$page, ['page' => $page]);
+    }
+
+    public function score(Request $request)
+    {
+        $type = $request->input('type') ?: '1';
+
+        return view('profile.scoredetail', ['type' => $type]);
     }
 
 }

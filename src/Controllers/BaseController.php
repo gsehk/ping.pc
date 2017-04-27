@@ -28,7 +28,7 @@ class BaseController extends Controller
      */
     public function initSite()
     {
-        $site['nav'] = ['news'=>route('news'), 'feed'=>route('feed')];
+        $site['nav'] = ['news'=>route('pc:news'), 'feed'=>route('pc:feed')];
         return $site;
     }
 

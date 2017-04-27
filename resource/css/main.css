@@ -36,7 +36,12 @@ textarea {
     textarea::-webkit-input-placeholder {
         color: #ccc;
     }
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{*+height:1%;}
 
+.ml27{
+    margin-left: 27px;
+}
 .fs-12 {
     font-size: 12px;
 }
@@ -404,7 +409,7 @@ textarea {
 
 .dy_cen {
     width: 100%;
-    border-top: 30px solid #f3f6f7;
+    /* border-top: 30px solid #f3f6f7; */
     padding: 30px 40px 0;
 }
 
@@ -568,7 +573,9 @@ textarea {
     float: left;
     margin-top: 36px;
 }
-
+.dy_signed{
+    margin-bottom: 30px;
+}
 .dyrTop {
     width: 100%;
     height: 120px;
@@ -619,7 +626,6 @@ textarea {
     width: 100%;
     height: 340px;
     background: #fff;
-    margin-top: 30px;
     border-radius: 3px;
     padding-left: 0;
 }
@@ -1419,12 +1425,17 @@ textarea {
 .autor_border {
     border-bottom: 1px solid #ededed;
 }
-
+.uc-feed-rightbox{
+    margin-left: 27px;
+    width: 235px;
+}
 .infR_time {
     height: 30px;
     padding-top: 16px;
     border-bottom: 1px solid #ededed;
     padding-bottom: 40px;
+    background-color: white;
+    margin: 0;
 }
 
     .infR_time li {
@@ -3439,4 +3450,20 @@ textarea {
 }
 .content_no{
     text-align:center;
+}
+
+.score-table{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.score-table th, .score-table td{
+    line-height: 48px;
+}
+.score-table th{
+    font-weight: normal;
+    color: #999;
+    font-size: 14px;
+    line-height: 60px;
+    border-bottom: 1px solid #ededed;
 }

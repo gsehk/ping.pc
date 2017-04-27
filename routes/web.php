@@ -4,12 +4,22 @@ use Zhiyi\Plus\Http\Middleware;
 
 // PC路由
 
-Route::get('/pc/login', 'PassportController@index')->name('login');
+Route::prefix('passport')->group(function () {
 
-Route::get('/pc/register', 'PassportController@register')->name('register');
+    // login
+    Route::get('login', 'PassportController@index')->name('pc:login');
 
-Route::get('pc/set-other', 'PassportController@setOther')->name('register');
+    // register
+    Route::get('register', 'PassportController@register')->name('pc:register');
 
+    // 找回密码 
+    Route::get('findpwd', 'PassportController@findPassword')->name('pc:findPassword');
+
+    // 完善第三方授权信息
+    Route::get('perfect', 'PassportController@perfect')->name('pc:perfect');
+
+
+});
 // 个人中心菜单
 
 Route::prefix('profile')->group(function () {
@@ -22,6 +32,7 @@ Route::prefix('profile')->group(function () {
     Route::get('rank', 'ProfileController@rank')->name('pc:rank');
     Route::get('collection', 'ProfileController@collection')->name('pc:collection');
     Route::get('account', 'ProfileController@account')->name('pc:account');
+    Route::get('score', 'ProfileController@score')->name('pc:score');
     
 });
 
@@ -29,11 +40,17 @@ Route::prefix('profile')->group(function () {
 // Route::middleware('auth:web')->group(function () {
 
 	// 动态
-    Route::get('/pc/feed', 'FeedController@feed')->name('feed');
+    Route::get('/pc/feed', 'FeedController@feed')->name('pc:feed');
 
     // 资讯
-    Route::get('/pc/news', 'FeedController@news')->name('news');
+    Route::get('/information/index', 'InformationController@index')->name('pc:news');
     
+    // 资讯详情
+    Route::get('/information/read', 'InformationController@read')->name('pc:newsdetail');
+
+    // 投稿
+    Route::get('/information/release', 'InformationController@release')->name('pc:newsrelease');
+
     // 积分规则
     Route::get('/pc/credit', 'FeedController@credit');
     
