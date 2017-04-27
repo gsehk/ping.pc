@@ -2,7 +2,7 @@
 <div class="dy_left">
     <ul>
         <li>
-            <a href="{{Route('pc:feedAll')}}" class="fs-16 @if ($route == 'pc:feedAll') dy_59 @endif">
+            <a href="{{Route('pc:feed')}}" class="fs-16 @if ($route == 'pc:feed') dy_59 @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bofang1-copy"></use></svg>全部动态
             </a>
         </li>

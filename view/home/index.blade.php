@@ -36,9 +36,9 @@
             </div>
             <div class="dy_cen">
                 <div>
-                    <a href="{{Route('pc:feedAll', ['type'=>1])}}" class="fs-16 @if ($type == 1) dy_cen_333 @endif">关注的</a>
-                    <a href="{{Route('pc:feedAll', ['type'=>2])}}" class="fs-16 @if ($type == 2) dy_cen_333 @endif">热门</a>
-                    <a href="{{Route('pc:feedAll', ['type'=>3])}}" class="fs-16 @if ($type == 3) dy_cen_333 @endif">最新</a>
+                    <a href="{{Route('pc:feed', ['type'=>1])}}" class="fs-16 @if ($type == 1) dy_cen_333 @endif">关注的</a>
+                    <a href="{{Route('pc:feed', ['type'=>2])}}" class="fs-16 @if ($type == 2) dy_cen_333 @endif">热门</a>
+                    <a href="{{Route('pc:feed', ['type'=>3])}}" class="fs-16 @if ($type == 3) dy_cen_333 @endif">最新</a>
                 </div>
                 <div>
                     <div class="dy_c">

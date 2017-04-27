@@ -38,7 +38,6 @@ textarea {
     }
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .clearfix{*+height:1%;}
-
 .ml27{
     margin-left: 27px;
 }
@@ -410,7 +409,7 @@ textarea {
 .dy_cen {
     width: 100%;
     /* border-top: 30px solid #f3f6f7; */
-    padding: 30px 40px 0;
+    padding: 20px 40px 0;
 }
 
     .dy_cen a {
@@ -3466,4 +3465,8 @@ textarea {
     font-size: 14px;
     line-height: 60px;
     border-bottom: 1px solid #ededed;
+}
+.dy_center .top-menu-left{
+    position: relative;
+    height: 60px;
 }

@@ -24,8 +24,8 @@ Route::prefix('passport')->group(function () {
 
 Route::prefix('profile')->group(function () {
 
-    Route::get('all', 'ProfileController@feedAll')->name('pc:feedAll');
-    Route::get('feed', 'ProfileController@myFeed')->name('pc:myFeed');
+    // Route::get('all', 'ProfileController@feedAll')->name('pc:feedAll');
+    Route::get('index', 'ProfileController@index')->name('pc:myFeed');
     Route::get('related', 'ProfileController@related')->name('pc:related');
     Route::get('fans', 'ProfileController@myFans')->name('pc:myFans');
     Route::get('following', 'ProfileController@following')->name('pc:following');
@@ -33,6 +33,7 @@ Route::prefix('profile')->group(function () {
     Route::get('collection', 'ProfileController@collection')->name('pc:collection');
     Route::get('account', 'ProfileController@account')->name('pc:account');
     Route::get('score', 'ProfileController@score')->name('pc:score');
+    Route::get('article', 'ProfileController@article')->name('pc:article');
     
 });
 
@@ -40,7 +41,7 @@ Route::prefix('profile')->group(function () {
 // Route::middleware('auth:web')->group(function () {
 
 	// 动态
-    Route::get('/pc/feed', 'FeedController@feed')->name('pc:feed');
+    Route::get('/home/index', 'HomeController@index')->name('pc:feed');
 
     // 资讯
     Route::get('/information/index', 'InformationController@index')->name('pc:news');

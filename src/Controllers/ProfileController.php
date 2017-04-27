@@ -8,17 +8,25 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class ProfileController extends BaseController
 {
-    public function feedAll(Request $request)
+    /*public function feedAll(Request $request)
     {
         $type = $request->input('type') ?: 1;
 
         return view('profile.feedall', ['type'=>$type]);
+    }*/
+
+    public function index(Request $request)
+    {
+        $type = $request->input('type') ?: 'all';
+
+        return view('profile.index', ['type' => $type]);
     }
 
-    public function myFeed()
+    public function article(Request $request)
     {
+        $type = $request->input('type') ?: 'relase';
 
-        return view('profile.myfeed');
+        return view('profile.article', ['type' => $type]);
     }
 
     public function collection(Request $request)

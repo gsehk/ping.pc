@@ -28,12 +28,12 @@
                     <div class="dy_cen">
                         <div style="position:relative;">
                             <div class="artic_left">
-                                <a href="javascript:;" class="fs-16 dy_cen_333">全部动态</a>
-                                <a href="javascript:;" class="fs-16">图片</a>
-                                <a href="javascript:;" class="fs-16">视频</a>
-                                <a href="javascript:;" class="fs-16">资讯</a>
+                                <a href="{{Route('pc:myFeed', ['type'=>'all'])}}" class="fs-16 @if($type == 'all') dy_cen_333 @endif">全部动态</a>
+                                <a href="{{Route('pc:myFeed', ['type'=>'img'])}}" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
+                                <a href="{{Route('pc:myFeed', ['type'=>'video'])}}" class="fs-16 @if($type == 'video') dy_cen_333 @endif">视频</a>
+                                <a href="{{Route('pc:myFeed', ['type'=>'news'])}}" class="fs-16 @if($type == 'news') dy_cen_333 @endif">资讯</a>
                             </div>
-                            <div class="artic_artic fs-16">文章</div>
+                            <a href="{{Route('pc:article')}}"><div class="artic_artic fs-16">文章</div></a>
                         </div>
                         <div style="margin-top: 60px;">
                             <div class="dy_c">
