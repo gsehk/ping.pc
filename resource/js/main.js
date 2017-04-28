@@ -42,7 +42,7 @@ news.bindScroll = function()
       var bodyHeight = $(document.body).height();
       if(bodyTop + $(window).height() >= bodyHeight - 250) {
           if($(news.setting.container).length > 0) {
-            //$('#news-list').append("<div class='loading' id='loadMore'><img src='/image/ico-load.png' class='load'></div>");
+            $(news.setting.container).append("<div class='loading' id='loadMore'><img src='zhiyicx/plus-component-pc/images/loading.png' class='load'>加载中</div>");
             news.loadMore();
         }
       }
@@ -74,14 +74,76 @@ news.loadMore = function()
   postArgs.max_id = news.setting.maxid;
   postArgs.limit = news.setting.loadlimit;
   postArgs.cate_id = news.setting.cid;
-  $.get('/api/v1/news/', postArgs, function(res) {
-
-      console.log(res);
-
+  $.get('/information/getNewsList', postArgs, function(res) {
+    if (res.data.length > 0) {
+      news.setting.canload = true;
+      // 修改加载ID
+      news.setting.maxid = res.data[res.data.length-1].id;
+      var html = '';
+      var data = res.data;
+      for(var i in data) {
+        html += '<div class="inf_list">'+
+        '<div class="inf_img">'+
+          '<a href="{{Route(\'pc:newsdetail\')}}">'+'<img src="http://tsplus.zhibocloud.cn/api/v1/storages/'+data[i].storage+'/30" />'+'</a>'+
+        '</div>'+
+        '<div class="inf_word">'+
+          '<a href="{{Route(\'pc:newsdetail\')}}">'+
+            '<div class="infW_title">'+data[i].title+'</div>'+
+          '</a>'+
+          '<p>'+data[i].title+'</p>'+
+          '<div class="inf_bm">'+
+            '<span class="inf_time">'+data[i].updated_at+'</span>'+
+            '<span class="inf_comment">'+data[i].comment_count+'评论<span>|</span>'+data[i].collection.length+'收藏</span>'+
+          '</div>'+
+        '</div>'+
+        '</div> ';
+      }
+      if (news.setting.loadcount == 1) {
+        $(news.setting.container).html(html);
+      } else {
+        $(news.setting.container).append(html);
+      }
+      
+    } else {
+      news.setting.canload = false;
+      $('#loadMore').html('没有了~');
+    }
   });
-
-  
 };
 
 
+var recent_hot = function (type) {
+    if (type != undefined) {
+      $.get('/information/getRecentHot', {type:type}, function(res) {
+          if (res.data.length > 0) {
+            var html = '';
+            var data = res.data;
+            for(var i in data){
+              html += '<li>'+
+                '<span>1</span>'+
+                '<a href="javascript:;">'+data[i].title+'</a>'+
+              '</li>';
+            }
 
+            $('#j-recent-hot-wrapp').html(html);
+          } else {
+            $('#loadMore').html('没有了~');
+          }
+      });
+    }
+};
+
+$(document).ready(function(){
+  $('#j-recent-hot .week').on('click', function(){
+    $(this).addClass('a_border');
+    recent_hot(1);
+  });
+  $('#j-recent-hot .meth').on('click', function(){
+    $(this).addClass('a_border');
+    recent_hot(2);
+  });
+  $('#j-recent-hot .moth').on('click', function(){
+    $(this).addClass('a_border');
+    recent_hot(3);
+  });
+});

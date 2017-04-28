@@ -52,6 +52,9 @@ Route::prefix('profile')->group(function () {
     // 投稿
     Route::get('/information/release', 'InformationController@release')->name('pc:newsrelease');
 
+    Route::get('/information/getNewsList', 'InformationController@getNewsList');
+    Route::get('/information/getRecentHot', 'InformationController@getRecentHot');
+    
     // 积分规则
     Route::get('/pc/credit', 'FeedController@credit');
     

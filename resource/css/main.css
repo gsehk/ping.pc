@@ -1255,6 +1255,7 @@ textarea {
 .inf_left {
     width: 811px;
     float: left;
+    padding-bottom: 30px;
 }
 
 .inf_right {
@@ -1278,18 +1279,16 @@ textarea {
 }
 
     .inf_left ul li {
+        font-size: 18px;
+        color: #999;
         display: inline-block;
         margin: 0 15px;
     }
 
-        .inf_left ul li a {
-            font-size: 18px;
-            color: #999;
-        }
 
-            .inf_left ul li a:hover {
-                color: #333;
-            }
+    .inf_left ul li:hover {
+        color: #333;
+    }
 
 .inf_list {
     padding-top: 30px;
@@ -3469,4 +3468,28 @@ textarea {
 .dy_center .top-menu-left{
     position: relative;
     height: 60px;
+}
+.loading{text-align:center;padding:10px 0;color:#999;}
+.loading img.load{
+    margin-left:2px;height:16px;width:16px;-webkit-animation:icon-load 1.5s infinite linear;animation:icon-load 1.5s infinite linear;
+}
+@-webkit-keyframes icon-load {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes icon-load {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }

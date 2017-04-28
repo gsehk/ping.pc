@@ -76,12 +76,12 @@
             <ul>
             @foreach ($cate as $post)
                 @if ($loop->iteration < 10)
-                <li><a href="javascript:;">{{$post['name']}}</a></li>
+                <a href="{{Route('pc:news', ['cid'=>$post['id']])}}"><li @if($cid == $post['id']) class="dy_59" @endif>{{$post['name']}}</li></a>
                 @endif
             @endforeach
             </ul>
             <div id="news-list">
-                <div class="inf_list">
+                <!-- <div class="inf_list">
                     <div class="inf_img">
                         <a href="{{Route('pc:newsdetail')}}">
                             <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
@@ -97,7 +97,8 @@
                             <span class="inf_comment">1评论<span>|</span>2收藏</span>
                         </div>
                     </div>
-                </div> 
+                </div>  -->
+                <div class='loading' id='loadMore'><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" class='load'>加载中</div>
             </div>
         </div>
         <div class="inf_right">
@@ -134,12 +135,12 @@
             <div class="i_right_img"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" /></div>
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
-                <ul class="infR_time">
-                    <li><a href="javascript:;">本周</a></li>
-                    <li><a href="javascript:;">当月</a></li>
-                    <li><a href="javascript:;">季度</a></li>
+                <ul class="infR_time" id="j-recent-hot">
+                    <li><a href="javascript:;" class="week">本周</a></li>
+                    <li><a href="javascript:;" class="meth">当月</a></li>
+                    <li><a href="javascript:;" class="moth">季度</a></li>
                 </ul>
-                <ul class="new_list">
+                <ul class="new_list" id="j-recent-hot-wrapp">
                     <li>
                         <span>1</span>
                         <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
@@ -170,7 +171,6 @@
 
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/main.js') }}"></script>
-@endsection
 <script type="text/javascript">
 var option = {
     container: '#news-list',
@@ -178,9 +178,11 @@ var option = {
     loadmax: '',
     maxid: 0,
     loadlimit: '',
-    cid: 1
+    cid: "{{$cid}}"
 };
 setTimeout(function() {
     news.init(option);
 }, 300);
 </script>
+
+@endsection
