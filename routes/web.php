@@ -47,13 +47,16 @@ Route::prefix('profile')->group(function () {
     Route::get('/information/index', 'InformationController@index')->name('pc:news');
     
     // 资讯详情
-    Route::get('/information/read', 'InformationController@read')->name('pc:newsdetail');
+    Route::get('/information/read/{news_id}', 'InformationController@read')->where(['news_id' => '[0-9]+']);
 
     // 投稿
     Route::get('/information/release', 'InformationController@release')->name('pc:newsrelease');
 
     Route::get('/information/getNewsList', 'InformationController@getNewsList');
     Route::get('/information/getRecentHot', 'InformationController@getRecentHot');
+    Route::get('/information/getAuthorHot', 'InformationController@getAuthorHot');
+    Route::get('/information/doSavePost', 'InformationController@doSavePost')->name('pc:doSavePost');
+    Route::post('/information/uploadImg', 'InformationController@uploadImg')->name('pc:uploadImg');
     
     // 积分规则
     Route::get('/pc/credit', 'FeedController@credit');

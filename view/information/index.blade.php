@@ -81,54 +81,30 @@
             @endforeach
             </ul>
             <div id="news-list">
-                <!-- <div class="inf_list">
-                    <div class="inf_img">
-                        <a href="{{Route('pc:newsdetail')}}">
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
-                        </a>
-                    </div>
-                    <div class="inf_word">
-                        <a href="{{Route('pc:newsdetail')}}">
-                            <div class="infW_title">大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工大新闻成都三环绿化带竣工</div>
-                        </a>
-                        <p>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
-                        <div class="inf_bm">
-                            <span class="inf_time">环球网-5分钟前</span>
-                            <span class="inf_comment">1评论<span>|</span>2收藏</span>
-                        </div>
-                    </div>
-                </div>  -->
                 <div class='loading' id='loadMore'><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" class='load'>加载中</div>
             </div>
         </div>
         <div class="inf_right">
             <div class="infR_top">
                 <div class="itop_autor">热门作者</div>
-                <div class="R_list">
-                    <div class="i_left">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
+                <div id="j-author-hot-wrapp">
+                    <div class="R_list">
+                        <div class="i_left">
+                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
+                        </div>
+                        <div class="i_right">
+                            <span>大姐头 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/vip_icon.png') }}" class="vip_icon" /></span>
+                            <p>大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师</p>
+                        </div>
                     </div>
-                    <div class="i_right">
-                        <span>大姐头 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/vip_icon.png') }}" class="vip_icon" /></span>
-                        <p>大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师</p>
-                    </div>
-                </div>
-                <div class="R_list">
-                    <div class="i_left">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-                    </div>
-                    <div class="i_right">
-                        <span>大姐头 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/vip_icon.png') }}" class="vip_icon" /></span>
-                        <p>大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师</p>
-                    </div>
-                </div>
-                <div class="R_list">
-                    <div class="i_left">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-                    </div>
-                    <div class="i_right">
-                        <span>大姐头 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/vip_icon.png') }}" class="vip_icon" /></span>
-                        <p>大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师</p>
+                    <div class="R_list">
+                        <div class="i_left">
+                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
+                        </div>
+                        <div class="i_right">
+                            <span>大姐头 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/vip_icon.png') }}" class="vip_icon" /></span>
+                            <p>大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,31 +112,12 @@
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
                 <ul class="infR_time" id="j-recent-hot">
-                    <li><a href="javascript:;" class="week">本周</a></li>
+                    <li><a href="javascript:;" class="week a_border">本周</a></li>
                     <li><a href="javascript:;" class="meth">当月</a></li>
                     <li><a href="javascript:;" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
-                    <li>
-                        <span>1</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
-                    <li>
-                        <span>2</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
-                    <li>
-                        <span>3</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
-                    <li>
-                        <span>4</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
-                    <li>
-                        <span class="bg_ccc">5</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
+                    <div class='loading'><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" class='load'>加载中</div>
                 </ul>
             </div>
         </div>
@@ -170,7 +127,7 @@
 
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/main.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/news.js') }}"></script>
 <script type="text/javascript">
 var option = {
     container: '#news-list',

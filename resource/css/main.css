@@ -1,7 +1,7 @@
 ﻿body {
     margin: 0;
     padding: 0;
-    font-family: '微软雅黑',Arial,sans-serif !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     position:absolute;width:100%;min-height:100%; 
 }
 
@@ -390,6 +390,7 @@ textarea {
     }
 
 .dy_share {
+    border: 0;
     float: right;
     width: 85px;
     height: 36px;
@@ -1355,6 +1356,7 @@ textarea {
     padding: 15px;
     margin-top: 15px;
     border-radius: 3px;
+    background-color: white;
 }
 
 .itop_autor {
@@ -1501,7 +1503,6 @@ textarea {
     color: #333;
     text-align: center;
     padding-bottom: 40px;
-    font-weight: bold;
 }
 
 .del_top {
@@ -1536,23 +1537,7 @@ textarea {
 .del_time {
     display: inline-block;
     margin-right: 5px;
-}
-
-.del_img {
-    margin: 40px auto 30px;
-}
-
-    .del_img img {
-        margin: auto;
-    }
-
-.del_p {
-    font-size: 14px;
-    color: #666;
-    line-height: 30px;
-    text-indent: 28px;
-    text-align: justify;
-    margin-bottom: 40px;
+    color: #999;
 }
 
 .del_pro {
@@ -1766,6 +1751,7 @@ textarea {
         .del_ul li a {
             font-size: 14px;
             color: #666;
+            vertical-align: top;
         }
 
             .del_ul li a span {
@@ -2851,7 +2837,8 @@ textarea {
     text-align: center;
 }
 
-    .con_btn a {
+    .con_btn .button {
+        border: 0;
         color: #fff;
         width: 100px;
         height: 36px;
@@ -2869,10 +2856,6 @@ textarea {
 
 .con_a2 {
     background: #59b6d7;
-}
-
-.con_btn a:hover, .con_btn a:link {
-    color: #fff;
 }
 
 .conR_title {
@@ -3493,3 +3476,8 @@ textarea {
         transform: rotate(360deg);
     }
 }
+.post_content img{max-width: 100%;margin: 15px auto;}
+.post_content p{margin-top: 0;margin-bottom: 1.46em;font-size: 16px;line-height: 30px;}
+.ai_face_box {position: relative;display: inline-block;}
+.ai_upload{position: absolute;top: 0;}
+.ai_upload input {position: absolute;width: 223px;opacity: 0; cursor: pointer;}

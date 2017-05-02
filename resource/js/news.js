@@ -84,7 +84,7 @@ news.loadMore = function()
       for(var i in data) {
         html += '<div class="inf_list">'+
         '<div class="inf_img">'+
-          '<a href="{{Route(\'pc:newsdetail\')}}">'+'<img src="http://tsplus.zhibocloud.cn/api/v1/storages/'+data[i].storage+'/30" />'+'</a>'+
+          '<a href="@{{Route(\'pc:newsdetail\')}}">'+'<img src="http://tsplus.zhibocloud.cn/api/v1/storages/'+data[i].storage+'/30" />'+'</a>'+
         '</div>'+
         '<div class="inf_word">'+
           '<a href="{{Route(\'pc:newsdetail\')}}">'+
@@ -111,38 +111,143 @@ news.loadMore = function()
   });
 };
 
-
+/** 
+ * 获取热点文章
+ * @param  type (1-本周 2-当月 3-季度)
+ */
 var recent_hot = function (type) {
     if (type != undefined) {
       $.get('/information/getRecentHot', {type:type}, function(res) {
           if (res.data.length > 0) {
-            var html = '';
+            var html = '', f = 1;
             var data = res.data;
             for(var i in data){
               html += '<li>'+
-                '<span>1</span>'+
-                '<a href="javascript:;">'+data[i].title+'</a>'+
+                '<span>'+f+'</span>'+
+                '<a href="javascript:;">'+data[i].title+type+'</a>'+
               '</li>';
+              f++;
             }
-
             $('#j-recent-hot-wrapp').html(html);
           } else {
-            $('#loadMore').html('没有了~');
+            $('#j-recent-hot-wrapp').html('<div class="loading">暂无数据~</div>');
           }
       });
     }
 };
 
+/**
+ * 获取热门作者
+ */
+var author_hot = function () {
+    $.get('/information/getAuthorHot', function(res) {
+        if (res.data.length > 0) {
+          var html = '';
+          var data = res.data;
+          for(var i in data){
+            html += '<div class="R_list">'+
+              '<div class="i_left">'+
+              '<img src="" />'+
+              '</div>'+
+              '<div class="i_right">'+
+              '<span>'+data[i].author+' <img src="" class="vip_icon" /></span>'+
+              '<p>'+data[i].desc+'</p>'+
+              '</div>'+
+              '</div>';
+          }
+          $('#j-author-hot-wrapp').html(html);
+        } else {
+          $('#j-author-hot-wrapp').html('<div class="loading">暂无数据~</div>');
+        }
+    });
+};
+
+var ajaxFileUpload = function() {
+    /*if(MID == 0){
+      ui.quicklogin();
+      return;
+    }*/
+    var f = document.getElementById("J-file-upload").files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var data = e.target.result;
+        //加载图片获取图片真实宽度和高度
+        var image = new Image();
+        image.onload=function(){
+            var width = image.width;
+            var height = image.height;
+            var size = f.size;
+            // callback(width, height, size);
+        };
+        image.src= data;
+   };
+   reader.readAsDataURL(f);
+
+    var $this = $(this);
+    $.getScript($this.data('js'), function() {
+        $.ajaxFileUpload({
+            url: $this.data('url'),
+            fileElementId: $this.attr('id'),
+            secureuri: false,
+            dataType: 'json',
+            type: 'POST',
+            data:{_token:$this.data('token')},
+            success: function(res) {
+              if (res.status) {
+                //
+              }
+                // $($this.data('input')).val(data.data.attach_id);
+                // $($this.data('preview')).attr('src', $this.data('preview-url') + data.data.save_path + data.data.save_name);
+                //ui.success('上传成功');
+            },
+            error: function() {
+                alert('提交错误，请刷新页面重新尝试！');
+            }
+        });
+    });
+};
+
+$('#J-file-upload').on('change', ajaxFileUpload);
+
+$('.subject-submit').on('click', function(){
+  /* 各个控件列表 */
+  var $this = $(this);
+  var subject  = $('#subject-title'),
+      logo     = $('#form_logo'),
+      abstract = $('#subject-abstract'),
+      content  = $('#subject-content'),
+      url      = $this.data('uri');
+      var args  = {
+        'subject' : subject.val(),
+        'logo'    : logo.val(),
+        'abstract': abstract.val(),
+        'content' : content.getContent()
+      };
+
+      $.post(url, args, function(data) {
+      /*optional stuff to do after success */
+        if (data.status == 1) {
+          
+        } else {
+          
+        };
+    }, 'json');
+});
+
 $(document).ready(function(){
+  recent_hot(1);
   $('#j-recent-hot .week').on('click', function(){
+    $('#j-recent-hot a').removeClass('a_border');
     $(this).addClass('a_border');
     recent_hot(1);
   });
   $('#j-recent-hot .meth').on('click', function(){
+    $('#j-recent-hot a').removeClass('a_border');
     $(this).addClass('a_border');
     recent_hot(2);
   });
   $('#j-recent-hot .moth').on('click', function(){
+    $('#j-recent-hot a').removeClass('a_border');
     $(this).addClass('a_border');
     recent_hot(3);
   });

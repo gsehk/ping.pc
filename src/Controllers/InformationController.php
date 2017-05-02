@@ -28,8 +28,20 @@ class InformationController extends BaseController
 
     public function read(int $news_id)
     {
-        $data = News::where('id', $news_id)->first()->toArray();
+        $data = News::where('id', $news_id)
+                ->with('newsCount') //当前作者文章数
+                // ->with('newsCate') //当前作者热门文章数
+                ->with(['collection' => function( $query ){
+                    return $query->count();
+                }])->first();
 
+        /*$data['news_list'] = News::where('id', $data['id'])
+                            ->orderBy('created_at', 'desc')
+                            ->take($limit)
+                            ->select('id','title')
+                            ->get()
+                            ->toArray();*/
+        dump($data);
         return view('information.read', $data);
     }
 
@@ -42,8 +54,9 @@ class InformationController extends BaseController
 
     public function release()
     {
+        $data['count'] = News::where('is_recommend', 2)->count(); 
 
-        return view('information.release');
+        return view('information.release', $data);
     }
 
     /**
@@ -107,8 +120,8 @@ class InformationController extends BaseController
      * @param  type     [分类id]
      * @return mixed  返回结果
      */
-   public function getRecentHot(Request $request)
-   {
+    public function getRecentHot(Request $request)
+    {
         $time = Carbon::now();
         $type = $request->type;
         $limit = $request->limit ?? 5;
@@ -121,7 +134,7 @@ class InformationController extends BaseController
                 $datas = News::whereBetween('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','from')
+                        ->select('id','title','updated_at','storage','content','from')
                         ->with('storage')
                         ->get();
 
@@ -133,7 +146,7 @@ class InformationController extends BaseController
                 $datas = News::whereBetween('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','from')
+                        ->select('id','title','updated_at','storage','content','from')
                         ->with('storage')
                         ->get();
 
@@ -146,7 +159,7 @@ class InformationController extends BaseController
                 $datas = News::whereBetween('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','from')
+                        ->select('id','title','updated_at','storage','content','from')
                         ->with('storage')
                         ->get();
 
@@ -162,6 +175,55 @@ class InformationController extends BaseController
             'message' => '获取成功',
             'data'    => $datas
         ]))->setStatusCode(200);
-   }
+    }
 
+    public function doSavePost()
+    {
+
+
+        return response()->json(static::createJsonData([
+            'status'  => true,
+            'code'    => 0,
+            'message' => '获取成功',
+            'data'    => $_GET
+        ]))->setStatusCode(200);
+    }
+
+
+    public function uploadImg()
+    {
+
+        echo json_encode($_FILES);
+
+    }
+
+    /**
+    * 获取热门作者
+    * @param  uid  [获取某个作者最新的文章]
+    */
+    public function getAuthorHot(Request $request)
+    {
+        $uid = $request->uid;
+        $limit = $request->limit ?? 3;
+        if ($uid) {
+            // 获取uid对应的作者文章
+            $datas = News::where('is_recommend', $uid)
+                    ->orderBy('hits', 'desc')
+                    ->take($limit)
+                    ->select('id','title')
+                    ->get()
+                    ->toArray();
+        } else {
+            //获取热门作者
+            
+        }
+
+        return response()->json(static::createJsonData([
+            'status'  => true,
+            'code'    => 0,
+            'message' => '获取成功',
+            'data'    => $uid
+        ]))->setStatusCode(200);
+
+    }
 }

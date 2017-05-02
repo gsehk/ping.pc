@@ -4,20 +4,20 @@
 <div class="dy_bg">
     <div class="dy_cont del_top">
         <div class="del_left">
-            <div class="del_title">成都糖酒会地铁拥堵</div>
+            <div class="del_title">{{$title}}</div>
             <div class="top_list">
                 <a href="javascript:;" class="top_list_span">视点</a>
                 <a href="javascript:;">视点</a>
                 <div class="del_top_r">
-                    <span class="del_time">2017-3-25</span>
-                    <span>21:40</span>
+                    <span class="del_time">{{$created_at}}</span>
                 </div>
             </div>
-            <div class="del_img"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="img-responsive" /> </div>
-            <p class="del_p">智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想智艺创想</p>
+            <div class="post_content">
+                {!!$content!!}
+            </div>
             <div class="del_pro">
-                <span><i class="icon iconfont icon-shoucang-copy1"></i>20收藏</span>
-                <span><i class="icon iconfont icon-xihuan-white"></i>66人喜欢</span>
+                <span><i class="icon iconfont icon-shoucang-copy1"></i>{{count($collection)}}收藏</span>
+                <span><i class="icon iconfont icon-xihuan-white"></i>{{$digg_count}}人喜欢</span>
                 <div class="del_share">
                     分享至：
                     <svg class="icon svdel_g1" aria-hidden="true">
@@ -31,7 +31,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="del_comment"><span>123</span>人评论</div>
+            <div class="del_comment"><span>{{$comment_count}}</span>人评论</div>
             <div>
                 <textarea class="del_ta" placeholder="说点什么吧"></textarea>
                 <div class="dy_company" style="padding-left:0;">
@@ -40,7 +40,7 @@
                         表情
                     </span>
                     <span class="dy_cs" style="margin:10px auto auto 420px;">可输入<span>255</span>字</span>
-                    <a href="javascript:;" class="dy_share a_link" style="margin-right: 0; float: right;">评论</a>
+                    <button class="dy_share a_link" style="margin-right: 0; float: right;">评论</button>
                 </div>
             </div>
             <div class="delComment_cont">
@@ -93,7 +93,7 @@
                                     表情
                                 </span>
                                 <span class="dy_cs" style="margin:10px auto auto 360px;">可输入<span>255</span>字</span>
-                                <a href="javascript:;" class="dy_share a_link" style="margin-right: 0; float: right;margin-top:0;">评论</a>
+                                <button class="dy_share a_link" style="margin-right: 0; float: right;margin-top:0;">评论</button>
                             </div>
                         </div>
                     </div>
@@ -151,38 +151,24 @@
                     <a href="javascript:;">京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉</a>
                 </div>
             </div>
-                <a href="javascript:;" class="del_more">更多他的文章</a>
-            <div class="infR_top" style="background: #fff; margin-top:30px;border:0;">
+            <a href="javascript:;" class="del_more">更多他的文章</a>
+            
+            <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
-                <ul class="infR_time">
-                    <li><a href="javascript:;">本周</a></li>
-                    <li><a href="javascript:;">当月</a></li>
-                    <li><a href="javascript:;">季度</a></li>
+                <ul class="infR_time" id="j-recent-hot">
+                    <li><a href="javascript:;" class="week a_border">本周</a></li>
+                    <li><a href="javascript:;" class="meth">当月</a></li>
+                    <li><a href="javascript:;" class="moth">季度</a></li>
                 </ul>
-                <ul class="new_list">
-                    <li>
-                        <span>1</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
-                    <li>
-                        <span>2</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
-                    <li>
-                        <span>3</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
-                    <li>
-                        <span>4</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
-                    <li>
-                        <span class="bg_ccc">5</span>
-                        <a href="javascript:;">京东今年亏损了好多京东今年亏损了好多京东今年亏损了好多</a>
-                    </li>
+                <ul class="new_list" id="j-recent-hot-wrapp">
+                    <div class='loading'><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" class='load'>加载中</div>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/news.js') }}"></script>
 @endsection
