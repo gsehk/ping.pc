@@ -123,33 +123,23 @@
                     <div> <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" /></div>
                 </div>
                 <div class="delTop_right">
-                    <span>大姐头</span>
-                    <p>大师大师大师大师大师大师大师</p>
+                    <span>{{$user['name']}}</span>
+                    <p>{{$user['datas'][2]['pivot']['user_profile_setting_data']}}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="javascript:;">文章<span>16</span></a>
+                        <a href="javascript:;">文章<span>{{count($news_count)}}</span></a>
                     </li>
                     <li>
-                        <a href="javascript:;">热门<span>10</span></a>
+                        <a href="javascript:;">热门<span>{{$hots}}</span></a>
                     </li>
                 </ul>
-                <div class="del_rTop">
-                    <span></span>
-                    <a href="javascript:;">京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉</a>
-                </div>
-                <div class="del_rTop">
-                    <span></span>
-                    <a href="javascript:;">京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉</a>
-                </div>
-                <div class="del_rTop">
-                    <span></span>
-                    <a href="javascript:;">京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉</a>
-                </div>
-                <div class="del_rTop">
-                    <span></span>
-                    <a href="javascript:;">京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉京东亏损拉</a>
-                </div>
+                @foreach($news as $post)
+                    <div class="del_rTop">
+                        <span></span>
+                        <a href="javascript:;">{{$post['title']}}</a>
+                    </div>
+                @endforeach
             </div>
             <a href="javascript:;" class="del_more">更多他的文章</a>
             

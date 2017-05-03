@@ -162,12 +162,10 @@ var author_hot = function () {
     });
 };
 
-var ajaxFileUpload = function() {
-    /*if(MID == 0){
-      ui.quicklogin();
-      return;
-    }*/
-    var f = document.getElementById("J-file-upload").files[0];
+var getImgInfo = function(event){
+    var $this = $(this);
+    var callback = event.data.callback;
+    var f = document.getElementById(event.data.id).files[0];
     var reader = new FileReader();
     reader.onload = function (e) {
         var data = e.target.result;
@@ -177,59 +175,72 @@ var ajaxFileUpload = function() {
             var width = image.width;
             var height = image.height;
             var size = f.size;
-            // callback(width, height, size);
+            callback(image, height, f, $this);
         };
         image.src= data;
    };
    reader.readAsDataURL(f);
-
-    var $this = $(this);
-    $.getScript($this.data('js'), function() {
+};
+var ajaxFileUpload = function(width, height, f, obj) {
+    /*if(MID == 0){
+      ui.quicklogin();
+      return;
+    }*/
+    var args = {
+        width  : width,
+        height : height,
+        mime_type : f.type,
+        origin_filename : f.name,
+        _token : obj.data('token'),
+        hash   : CryptoJS.MD5(f.name).toString(),
+    };
+    $.getScript(obj.data('js'), function() {
         $.ajaxFileUpload({
-            url: $this.data('url'),
-            fileElementId: $this.attr('id'),
+            url: '/api/v1/storages/task',
+            fileElementId: obj.attr('id'),
             secureuri: false,
             dataType: 'json',
             type: 'POST',
-            data:{_token:$this.data('token')},
-            success: function(res) {
-              if (res.status) {
-                //
-              }
-                // $($this.data('input')).val(data.data.attach_id);
-                // $($this.data('preview')).attr('src', $this.data('preview-url') + data.data.save_path + data.data.save_name);
-                //ui.success('上传成功');
-            },
+            data: args,
+    //         beforeSend: function (xhr) {
+    // 　　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    // 　　　　},
             error: function() {
                 alert('提交错误，请刷新页面重新尝试！');
+            },
+            success: function(res) {
+              console.log(res);
+              if (res.status) {
+                // $(obj.data('input')).val(data.data.attach_id);
+              }
             }
         });
     });
 };
 
-$('#J-file-upload').on('change', ajaxFileUpload);
+// $('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
 
 $('.subject-submit').on('click', function(){
-  /* 各个控件列表 */
   var $this = $(this);
   var subject  = $('#subject-title'),
       logo     = $('#form_logo'),
       abstract = $('#subject-abstract'),
-      content  = $('#subject-content'),
-      url      = $this.data('uri');
+      froms    = $('#subject-from'), 
+      url      = $this.data('url');
       var args  = {
         'subject' : subject.val(),
-        'logo'    : logo.val(),
+        'storage'    : logo.val(),
         'abstract': abstract.val(),
-        'content' : content.getContent()
+        'content' : $(editor).html(),
+        'source'  : froms.val(),
+        '_token'  : $('#token').val()
       };
 
       $.post(url, args, function(data) {
-      /*optional stuff to do after success */
-        if (data.status == 1) {
-          
-        } else {
-          
+        if (data.status == true) {
+          window.location.href = data.data.url;
+        } else {  
+          alert(data.data.message);
         };
     }, 'json');
 });

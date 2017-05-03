@@ -22,6 +22,22 @@ class InformationController extends BaseController
 
         /*  文章分类  */
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
+        /*  热门作者 */
+        $datas['author'] = News::where([['state','=', 0],['author','!=', 0]])
+                        ->orderBy('hits', 'desc')
+                        ->groupBy('author')
+                        ->select('author')
+                        ->take(3)
+                        ->with('user')
+                        ->get()
+                        ->toArray();
+        foreach ($datas['author'] as $key => &$value) {
+            $value['user']['intro'] = '  暂无简介';
+            if ($value['user']['datas']) {
+                $value['user']['intro'] = $value['user']['datas'][2]['pivot']['user_profile_setting_data'];
+            }
+            unset($value['user']['datas']);
+        }
 
         return view('information.index', $datas);
     }
@@ -30,18 +46,22 @@ class InformationController extends BaseController
     {
         $data = News::where('id', $news_id)
                 ->with('newsCount') //当前作者文章数
-                // ->with('newsCate') //当前作者热门文章数
+                ->with('user')
                 ->with(['collection' => function( $query ){
                     return $query->count();
                 }])->first();
 
-        /*$data['news_list'] = News::where('id', $data['id'])
-                            ->orderBy('created_at', 'desc')
-                            ->take($limit)
-                            ->select('id','title')
-                            ->get()
-                            ->toArray();*/
-        dump($data);
+        $data['hots'] = News::join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
+                        ->where([['news.author','=',$data->author], ['news_cates_links.cate_id','=',1]])
+                        ->count();
+
+        $data['news'] = News::where('author', $data->author)
+                        ->orderBy('created_at', 'desc')
+                        ->take(4)
+                        ->select('id','title')
+                        ->get()
+                        ->toArray();
+                        
         return view('information.read', $data);
     }
 
@@ -177,24 +197,40 @@ class InformationController extends BaseController
         ]))->setStatusCode(200);
     }
 
-    public function doSavePost()
+    public function doSavePost(Request $request)
     {
+        $type = $request->type; // 1 待审核 2 草稿
+        if (!$request->storage) {
+            return response()->json([
+                'status' => false,
+                'code' => 6003,
+                'message' => '没有上传封面图片',
+            ])->setStatusCode(404);
+        }
+        if (mb_strlen($request->content, 'utf8') > 5000) {
+            return response()->json([
+                'status' => false,
+                'code' => 6003,
+                'message' => '内容不能大于5000字',
+            ])->setStatusCode(400);
+        }
 
+        $news = new News();
+
+        $news->title = $request->subject;
+        $news->storage = $request->storage;
+        $news->content = $request->content;
+        $news->from = $request->source ?: '';
+        $news->state = $type;
+
+        $news->save();
 
         return response()->json(static::createJsonData([
             'status'  => true,
             'code'    => 0,
-            'message' => '获取成功',
-            'data'    => $_GET
+            'message' => '操作成功',
+            'data'    => ['url' => route('pc:news'),'id' => $news->id]
         ]))->setStatusCode(200);
-    }
-
-
-    public function uploadImg()
-    {
-
-        echo json_encode($_FILES);
-
     }
 
     /**
@@ -207,22 +243,27 @@ class InformationController extends BaseController
         $limit = $request->limit ?? 3;
         if ($uid) {
             // 获取uid对应的作者文章
-            $datas = News::where('is_recommend', $uid)
-                    ->orderBy('hits', 'desc')
+            $datas = News::where('author', $uid)
+                    ->orderBy('created_at', 'desc')
                     ->take($limit)
                     ->select('id','title')
                     ->get()
                     ->toArray();
         } else {
             //获取热门作者
-            
+            $datas = News::where('state', 0)
+                    ->orderBy('hits', 'desc')
+                    ->take($limit)
+                    ->select('author')
+                    ->with('user')
+                    ->get();
         }
 
         return response()->json(static::createJsonData([
             'status'  => true,
             'code'    => 0,
             'message' => '获取成功',
-            'data'    => $uid
+            'data'    => $datas
         ]))->setStatusCode(200);
 
     }

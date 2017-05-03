@@ -88,24 +88,17 @@
             <div class="infR_top">
                 <div class="itop_autor">热门作者</div>
                 <div id="j-author-hot-wrapp">
+                @foreach ($author as $user)
                     <div class="R_list">
                         <div class="i_left">
                             <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
                         </div>
                         <div class="i_right">
-                            <span>大姐头 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/vip_icon.png') }}" class="vip_icon" /></span>
-                            <p>大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师</p>
+                            <span>{{$user['user']['name']}}</span>
+                            <p>{{$user['user']['intro']}}</p>
                         </div>
                     </div>
-                    <div class="R_list">
-                        <div class="i_left">
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-                        </div>
-                        <div class="i_right">
-                            <span>大姐头 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/vip_icon.png') }}" class="vip_icon" /></span>
-                            <p>大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师</p>
-                        </div>
-                    </div>
+                @endforeach
                 </div>
             </div>
             <div class="i_right_img"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" /></div>
