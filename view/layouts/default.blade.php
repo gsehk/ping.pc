@@ -9,9 +9,14 @@
     <link href="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('css/font/iconfont.css') }}" rel="stylesheet">
     <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/jquery.min.js') }}"></script>
     <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/font/iconfont.js') }}"></script>
-    <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.js') }}"></script>
+    <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/common.js') }}"></script>
     <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/jquery.pjax.js') }}"></script>
     <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/nprogress.js') }}"></script>
+    <script>
+        // 全局变量
+        var PUBLIC_URL = '{{\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset("")}}';
+        var MID;
+    </script>
 </head>
 
 <body @yield('body_class')>
