@@ -3,12 +3,7 @@
 @section('content')
 
 <div class="success_div">
-    <div class="set_success s_bg">
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/set_success.png') }}" />资料修改成功
-    </div>
-    <div class="set_success">
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/failure.png') }}" />资料修改失败
-    </div>
+    
 </div>
     
 <div class="bas_cont">
@@ -39,81 +34,72 @@
             <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
             <span>更换头像</span>
         </div>
-        <div class="f_div">
+        <div class="f_div" id="J-input">
             <div class="f_tel bas_div">
                 <label>昵称</label>
-                <span class="f_span"><input type="text" placeholder="输入昵称" style="color:#ccc"></span>
+                <span class="f_span"><input type="text" name="name" placeholder="输入昵称"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>简介</label>
-                <span class="f_span"><input type="text" placeholder="输入简介" style="color:#ccc"></span>
+                <span class="f_span"><input type="text" name="intro" placeholder="输入简介"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>性别</label>
-                <span class="f_sex"><i class="icon iconfont icon-xuanze"></i>男</span>
-                <span class="f_sex"><i class="icon iconfont icon-xuanze"></i>女</span>
-                <span class="f_sex"><i class="icon iconfont icon-xuanze"></i>不方便透露</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="1" class="s-ck">男</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" checked="checked">女</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck">不方便透露</span>
             </div>
             <div class="f_tel bas_div">
                 <label>生日</label>
                 <div class="f_select">
                     <span></span>
-                    <select>
-                        <option>2017</option>
-                        <option>2016</option>
-                        <option>1993</option>
-                    </select>
+                    <select name="y" class="sel_year" rel="2000"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select>
-                        <option>8</option>
-                        <option>5</option>
-                        <option>2</option>
-                    </select>
+                    <select name="m" class="sel_month" rel="6"></select>
                 </div>
                 <div class="f_select">
-                    <span> </span>
-                    <select>
-                        <option>11</option>
-                        <option>10</option>
-                        <option>1</option>
-                    </select>
+                    <span></span>
+                    <select name="d" class="sel_day" rel="14"></select>
                 </div>
             </div>
             <div class="f_tel bas_div">
                 <label>公司</label>
-                <span class="f_span"><input type="text" placeholder="输入公司名称" style="color:#ccc"></span>
+                <span class="f_span"><input type="text" name="company" placeholder="输入公司名称"></span>
             </div>
-            <div class="f_tel bas_div">
+            <div class="f_tel bas_div" id="sel_area">
                 <label>地区</label>
                 <div class="f_select">
                     <span></span>
-                    <select>
-                        <option>北京</option>
-                        <option>成都</option>
-                        <option>重庆</option>
-                    </select>
+                    <select name="province" id="province" onchange="getArea(this);"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select>
-                        <option>北京</option>
-                        <option>成都</option>
-                        <option>重庆</option>
-                    </select>
+                    <select name="city" id="city" onchange="getArea(this);"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select>
-                        <option>北京</option>
-                        <option>成都</option>
-                        <option>重庆</option>
-                    </select>
+                    <select name="area" id="area"></select>
                 </div>
             </div>
-            <a href="#" class="f_sure">保存</a>
+            <a href="javascript:;" class="f_sure" id="J-submit">保存</a>
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/birthday.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/seting.js') }}"></script>
+<script>  
+$(function () {
+    $.ms_DatePicker({
+            YearSelector: ".sel_year",
+            MonthSelector: ".sel_month",
+            DaySelector: ".sel_day"
+    });
+    $.ms_DatePicker();
+}); 
+</script> 
 @endsection

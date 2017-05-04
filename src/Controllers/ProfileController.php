@@ -52,7 +52,7 @@ class ProfileController extends Controller
     public function account(Request $request)
     {
         $page = $request->input('page') ?: 'account';
-
+        
         return view('profile.'.$page, ['page' => $page]);
     }
 

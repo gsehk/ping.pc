@@ -2412,7 +2412,6 @@ textarea {
 }
 
     .f_tel label {
-        color: #ccc;
         font-weight: normal;
         display: inline-block;
         width: 88px;
@@ -2431,7 +2430,6 @@ textarea {
     .f_span input {
         border: none;
         outline: none;
-        color: #ccc;
         width: 100%;
     }
 
@@ -2512,7 +2510,6 @@ textarea {
     }
 
 .f_select {
-    width: 68px;
     height: 28px;
     border: 1px solid #dedede;
     display: inline-block;
@@ -2522,22 +2519,11 @@ textarea {
 
     .f_select select {
         outline: none;
-        width: 68px;
         height: 26px;
         border: none;
         position: relative;
         z-index: 1;
         background: rgba(0,0,0, 0);
-    }
-
-    .f_select span {
-        display: inline-block;
-        width: 19px;
-        height: 26px;
-        background: #dfdfdf;
-        position: absolute;
-        top: 0;
-        right: -1px;
     }
 
         .f_select span img {
@@ -2969,7 +2955,13 @@ textarea {
     padding: 0 30px 0 0;
     margin-right: 0 !important;
 }
-
+.bas_div .sex_item{
+    padding-right: 10px;
+}
+.bas_div .s-ck{
+    margin: 0 5px 0 0;
+    vertical-align: -2px;
+}
 .bas_div input:focus {
     color: #333 !important;
 }

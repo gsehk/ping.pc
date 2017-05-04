@@ -202,9 +202,9 @@ var ajaxFileUpload = function(width, height, f, obj) {
             dataType: 'json',
             type: 'POST',
             data: args,
-    //         beforeSend: function (xhr) {
-    // 　　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
-    // 　　　　},
+            /*beforeSend: function (xhr) {
+    　　　　  xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　　　},*/
             error: function() {
                 alert('提交错误，请刷新页面重新尝试！');
             },
@@ -218,7 +218,7 @@ var ajaxFileUpload = function(width, height, f, obj) {
     });
 };
 
-// $('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
+$('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
 
 $('.subject-submit').on('click', function(){
   var $this = $(this);
