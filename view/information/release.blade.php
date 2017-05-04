@@ -12,7 +12,9 @@
                 <input type="text" id="subject-abstract" name="abstract" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字" />
             </div>
             <div class="con_place">
-                <textarea id="subject-content" placeholder="代替内容"></textarea>
+                @component('editor')
+                    @slot('height') 530px @endslot
+                @endcomponent
             </div>
             <div class="con_produce">
                 <span class="con_bq">
@@ -31,7 +33,7 @@
                                data-url="{{route('pc:uploadImg')}}"
                                data-token="{{ csrf_token() }}"
                         >
-                        <input name="logo" id="form_logo" type="hidden" value="{$logo}" />
+                        <input name="logo" id="form_logo" type="hidden" value="71" />
                     </div>
                 </span>
             </div>
@@ -40,8 +42,8 @@
             </div>
             <div class="con_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
             <div class="con_btn">
-                <button class="subject-submit button con_a1" data-url="{{route('pc:doSavePost',['type'=>1])}}">存草稿</button>
-                <button class="subject-submit button con_a2" data-url="{{route('pc:doSavePost',['type'=>2])}}">投稿</button>
+                <button class="subject-submit button con_a1" data-url="{{route('pc:doSavePost',['type'=>2])}}">存草稿</button>
+                <button class="subject-submit button con_a2" data-url="{{route('pc:doSavePost',['type'=>1])}}">投稿</button>
             </div>
         </div>
         <div class="con_right">
@@ -61,4 +63,5 @@
 
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/news.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 @endsection

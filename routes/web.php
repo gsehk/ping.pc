@@ -65,7 +65,7 @@ Route::prefix('profile')->group(function () {
     Route::get('/information/getNewsList', 'InformationController@getNewsList');
     Route::get('/information/getRecentHot', 'InformationController@getRecentHot');
     Route::get('/information/getAuthorHot', 'InformationController@getAuthorHot');
-    Route::get('/information/doSavePost', 'InformationController@doSavePost')->name('pc:doSavePost');
+    Route::post('/information/doSavePost', 'InformationController@doSavePost')->name('pc:doSavePost');
     Route::post('/information/uploadImg', 'InformationController@uploadImg')->name('pc:uploadImg');
     
     // 积分规则
