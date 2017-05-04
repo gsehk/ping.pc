@@ -13,7 +13,32 @@
 
     <div class="nav_right">
         <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/logo.png') }}" />
-        <span class="fs-16 nav_name">大师大师</span>
+        <span class="fs-16 nav_name"></span>
     </div>
+
+    @if ($user != null)
+    <div class="p_cont">
+        <ul>
+            <li>
+                <a href="#"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
+            </li>
+            <li>
+                <a href="#"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>
+            </li>
+            <li>
+                <a href="#" class="p_cont_hover"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
+            </li>
+            <li>
+                <a href="#"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
+            </li>
+            <li style=" border-top: 1px solid #ededed; padding-top: 20px;">
+                <a href="#">个人主页</a>
+            </li>
+            <li>
+                <a href="#">退出</a>
+            </li>
+        </ul>
+    </div>
+    @endif
 </div>
 

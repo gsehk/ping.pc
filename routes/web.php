@@ -6,11 +6,20 @@ use Zhiyi\Plus\Http\Middleware;
 
 Route::prefix('passport')->group(function () {
 
+    // index
+    Route::get('index', 'PassportController@index')->name('pc:index');
+
     // login
-    Route::get('login', 'PassportController@index')->name('pc:login');
+    Route::post('login', 'PassportController@login')->name('pc:login');
+
+    // logout
+    Route::any('logout', 'PassportController@logout')->name('pc:logout');
 
     // register
     Route::get('register', 'PassportController@register')->name('pc:register');
+
+    // captcha
+    Route::get('captcha/{tmp}', 'PassportController@captcha')->name('pc:captcha');
 
     // 找回密码 
     Route::get('findpwd', 'PassportController@findPassword')->name('pc:findPassword');
@@ -20,6 +29,7 @@ Route::prefix('passport')->group(function () {
 
 
 });
+
 // 个人中心菜单
 
 Route::prefix('profile')->group(function () {
@@ -38,7 +48,7 @@ Route::prefix('profile')->group(function () {
 });
 
 
-// Route::middleware('auth:web')->group(function () {
+//Route::middleware('auth:web')->group(function () {
 
 	// 动态
     Route::get('/home/index', 'HomeController@index')->name('pc:feed');
@@ -69,4 +79,4 @@ Route::prefix('profile')->group(function () {
     
     // 排行榜
     Route::get('/pc/rank', 'ProfileController@rank');
-// });
+//});

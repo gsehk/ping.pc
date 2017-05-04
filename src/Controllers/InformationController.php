@@ -12,7 +12,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
-class InformationController extends BaseController
+class InformationController extends Controller
 {
     public function index(Request $request)
     {

@@ -1871,6 +1871,10 @@ textarea {
     padding: 40px 50px 50px;
 }
 
+.l_tip {
+    color: #CC0000;
+}
+
 .l_tel {
     margin-bottom: 20px;
 }
@@ -1927,9 +1931,10 @@ textarea {
     margin: 20px auto 50px;
     text-align: center;
     border-radius: 3px;
+    cursor: pointer;
 }
 
-    .login_login:visited, .login_login:active, .login_login:hover {
+    .login_login:link, .login_login:visited, .login_login:active, .login_login:hover {
         color: #fff;
     }
 

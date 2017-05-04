@@ -2,42 +2,34 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
+use Illuminate\Http\Request;
 use Zhiyi\Plus\Http\Controllers\Controller;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class BaseController extends Controller
 {
-    protected $view = array();
-    protected $user = array();
+	protected $mergeData;
 
-	/**
-	 * @Author Foreach<missu082500@163.com>
-	 */
+    use AuthenticatesUsers {
+        login as traitLogin;
+    }
+
     public function __construct()
     {
-    	// 初始化网站信息
-        $this->initSite();
+    	$this->middleware(function($request, $next){
+    		// 用户信息
+			$this->mergeData['user'] = $this->guard()->user() ?: null;
 
-        // 初始化用户
-        $this->initUser();
+			// 站点配置
+	        $config = [
+	            'title' => 'ThinkSNS Plus Title',
+	            'keywords' => 'ThinkSNS Plus Keywords',
+	            'description' => 'ThinkSNS Plus Description',	
+	            'nav' => ['feed'=>route('pc:feed'), 'news'=>route('pc:news')]
+	        ];
+	        $this->mergeData['site'] = $config;
+    		return $next($request);
+    	});
     }
 
-    /**
-     * 初始化网站信息
-     * @Author Foreach<missu082500@163.com>
-     */
-    public function initSite()
-    {
-        $site['nav'] = ['news'=>route('pc:news'), 'feed'=>route('pc:feed')];
-        return $site;
-    }
-
-    /**
-     * 初始化用户信息
-     * @Author Foreach<missu082500@163.com>
-     */
-    public function initUser()
-    {
-
-    }
 }

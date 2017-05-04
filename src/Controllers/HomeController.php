@@ -10,8 +10,7 @@ class HomeController extends BaseController
 {
     public function index(Request $request)
     {
-        $type = $request->input('type') ?: 1;
-
-        return view('home.index', ['type'=>$type]);
+    	$data['type'] = 1;
+    	return view('home.index', $data, $this->mergeData);
     }
 }

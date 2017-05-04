@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
-class ProfileController extends BaseController
+class ProfileController extends Controller
 {
     /*public function feedAll(Request $request)
     {

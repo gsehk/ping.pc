@@ -94,8 +94,6 @@ function view($view = null, $data = [], $mergeData = [])
         'paths' => [base_path('/view')],
     ]);
     $factory = app(\Illuminate\Contracts\View\Factory::class);
-    $site = app(\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers\BaseController::class);
-    $mergeData = $site->initSite();
     $factory->setFinder($finder);
     if (func_num_args() === 0) {
         return $factory;
