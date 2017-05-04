@@ -3,17 +3,11 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
-use Zhiyi\Plus\Http\Controllers\Controller;
+use Zhiyi\Plus\Models\User;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
-class ProfileController extends Controller
+class ProfileController extends BaseController
 {
-    /*public function feedAll(Request $request)
-    {
-        $type = $request->input('type') ?: 1;
-
-        return view('profile.feedall', ['type'=>$type]);
-    }*/
 
     public function index(Request $request)
     {
@@ -52,8 +46,18 @@ class ProfileController extends Controller
     public function account(Request $request)
     {
         $page = $request->input('page') ?: 'account';
-        
-        return view('profile.'.$page, ['page' => $page]);
+        $data = User::where('id', $this->mergeData['user']->id)
+                ->select('id', 'name')
+                ->with('datas')
+                ->first();
+
+        foreach ($data['datas'] as $key => &$value) {
+            $data[$value['profile']] = $value['pivot']['user_profile_setting_data'];
+        }
+        unset($data['datas']);
+
+        dump($data->toArray());
+        return view('profile.'.$page, ['page' => $page, 'data' => $data], $this->mergeData);
     }
 
     public function score(Request $request)

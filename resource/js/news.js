@@ -175,17 +175,14 @@ var getImgInfo = function(event){
             var width = image.width;
             var height = image.height;
             var size = f.size;
-            callback(image, height, f, $this);
+            callback(width, height, f, $this);
         };
         image.src= data;
    };
    reader.readAsDataURL(f);
 };
 var ajaxFileUpload = function(width, height, f, obj) {
-    /*if(MID == 0){
-      ui.quicklogin();
-      return;
-    }*/
+
     var args = {
         width  : width,
         height : height,
@@ -194,7 +191,54 @@ var ajaxFileUpload = function(width, height, f, obj) {
         _token : obj.data('token'),
         hash   : CryptoJS.MD5(f.name).toString(),
     };
-    $.getScript(obj.data('js'), function() {
+    var formData = new FormData($( "#release_form" )[0]); 
+    // 创建存储任务
+    $.ajax({  
+        url: '/api/v1/storages/task' ,  
+        type: 'POST',  
+        data: args,
+        beforeSend: function (xhr) {
+  　　　　  xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+  　　　}, 
+        success: function (res) {  
+            if (res.data.uri) {
+              if (res.data.options) {
+                for(var i in res.data.options){
+                  formData.append(i, res.data.options[i]);
+                }
+              }
+              // 上传文件
+              $.ajax({
+                  url: res.data.uri,  
+                  type: res.data.method,  
+                  data: formData,  
+                  async: false,  
+                  cache: false,  
+                  contentType: false,  
+                  processData: false,   
+                  beforeSend: function (xhr) {
+            　　　　  xhr.setRequestHeader('Authorization', res.data.headers.Authorization);
+            　　　}, 
+                  success: function (data) { 
+                  // 上传通知 
+                    $.ajax({
+                        url: '/api/v1/storages/task/'+res.data.storage_task_id,  
+                        type: 'PATCH',
+                        beforeSend: function (xhr) {
+                  　　　　  xhr.setRequestHeader('Authorization', res.data.headers.Authorization);
+                  　　　}, 
+                        success: function(response){
+                            console.log(response);
+                        }
+                    });
+                  } 
+              }); 
+            }else{
+                console.log(res);
+            }
+        }
+    }); 
+    /*$.getScript(obj.data('js'), function() {
         $.ajaxFileUpload({
             url: '/api/v1/storages/task',
             fileElementId: obj.attr('id'),
@@ -202,9 +246,9 @@ var ajaxFileUpload = function(width, height, f, obj) {
             dataType: 'json',
             type: 'POST',
             data: args,
-            /*beforeSend: function (xhr) {
+            beforeSend: function (xhr) {
     　　　　  xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
-    　　　　},*/
+    　　　　},
             error: function() {
                 alert('提交错误，请刷新页面重新尝试！');
             },
@@ -215,7 +259,7 @@ var ajaxFileUpload = function(width, height, f, obj) {
               }
             }
         });
-    });
+    });*/
 };
 
 $('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);

@@ -4,6 +4,7 @@
 <div class="dy_bg">
     <div class="con_cont">
         <div class="con_left">
+            <form id="release_form">
             <div class="con_title">
                 <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
                 <input type="text" id="subject-title" name="title" placeholder="请在此输入20字以内的标题" />
@@ -46,6 +47,7 @@
                 <button class="subject-submit button con_a2" data-url="{{route('pc:doSavePost',['type'=>1])}}">投稿</button>
             </div>
         </div>
+        </form>
         <div class="con_right">
             <div class="conR_title">投稿须知</div>
             <div class="conR_artic">

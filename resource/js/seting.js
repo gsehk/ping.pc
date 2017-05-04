@@ -16,11 +16,39 @@ var init = function(pid) {
   var option1 = '<option value="0">请选择</option>';
    var option2 = '<option value="0">请选择</option>';
     var option3 = '<option value="0">请选择</option>';
-  $.getJSON('/api/v1/areas', {pid:pid}, function(area){
-    if (area.status == true) {
-      $.each(area.data, function(i, n) {
-        option1 += '<option value="' + n.id +'">' + n.name + '</option>'
+  $.getJSON('/api/v1/areas', {pid:pid}, function(pro){
+    if (pro.status == true) {
+      $.each(pro.data, function(i, n) {
+        var selected1 = (n.id == arrSelect[0]) ? 'selected="selected"' : '';
+        option1 += '<option value="' + n.id +'" ' + selected1 + '>' + n.name + '</option>'
       });
+      if (arrSelect[0]) {
+        $.getJSON('/api/v1/areas', {pid:arrSelect[0]}, function(city){
+
+          if (city.status == true) {
+            $.each(city.data, function(i, n) {
+              var selected2 = (n.id == arrSelect[1]) ? 'selected="selected"' : '';
+              option2 += '<option value="' + n.id +'" ' + selected2 + '>' + n.name + '</option>'
+            });
+
+            $('#city').html(option2);
+          }
+        });
+      }
+      if (arrSelect[1]) {
+        $.getJSON('/api/v1/areas', {pid:arrSelect[1]}, function(area){
+
+          if (area.status == true) {
+            $.each(area.data, function(i, n) {
+              var selected3 = (n.id == arrSelect[2]) ? 'selected="selected"' : '';
+              option3 += '<option value="' + n.id +'" ' + selected3 + '>' + n.name + '</option>'
+            });
+            
+            $('#area').html(option3);
+          }
+        });
+      }
+      console.log(option2);
       $('#province').html(option1);
       $('#city').html(option2);
       $('#area').html(option3);

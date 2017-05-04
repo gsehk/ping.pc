@@ -5,14 +5,13 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCate;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
-class InformationController extends Controller
+class InformationController extends BaseController
 {
     public function index(Request $request)
     {
@@ -62,7 +61,7 @@ class InformationController extends Controller
                         ->get()
                         ->toArray();
                         
-        return view('information.read', $data);
+        return view('information.read', $data, $this->mergeData);
     }
 
     public function getRecommendList(int $cate_id = 0)
@@ -76,7 +75,7 @@ class InformationController extends Controller
     {
         $data['count'] = News::where('is_recommend', 2)->count(); 
 
-        return view('information.release', $data);
+        return view('information.release', $data, $this->mergeData);
     }
 
     /**

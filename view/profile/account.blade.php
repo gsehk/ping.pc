@@ -37,17 +37,17 @@
         <div class="f_div" id="J-input">
             <div class="f_tel bas_div">
                 <label>昵称</label>
-                <span class="f_span"><input type="text" name="name" placeholder="输入昵称"></span>
+                <span class="f_span"><input type="text" name="name" value="{{$data['name']}}" placeholder="输入昵称"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>简介</label>
-                <span class="f_span"><input type="text" name="intro" placeholder="输入简介"></span>
+                <span class="f_span"><input type="text" name="intro" value="{{$data['intro']}}" placeholder="输入简介"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>性别</label>
-                  <span class="sex_item"><input name="sex" type="radio" value="1" class="s-ck">男</span>
-                  <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" checked="checked">女</span>
-                  <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck">不方便透露</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="1" class="s-ck" @if($data['sex'] == 1) checked="checked" @endif>男</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" @if($data['sex'] == 2) checked="checked" @endif>女</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck" @if($data['sex'] == 3) checked="checked" @endif>不方便透露</span>
             </div>
             <div class="f_tel bas_div">
                 <label>生日</label>
@@ -92,7 +92,8 @@
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/birthday.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/seting.js') }}"></script>
-<script>  
+<script> 
+var arrSelect = ["{{$data['province']}}", "{{$data['city']}}", "{{$data['area']}}"];
 $(function () {
     $.ms_DatePicker({
             YearSelector: ".sel_year",
