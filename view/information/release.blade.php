@@ -28,13 +28,12 @@
                         <input id="J-file-upload"
                                type="file"
                                name="poster-input"
-                               data-input="#form_logo"
+                               data-input="#task_id"
+                               data-form="#release_form"
                                data-preview="#J-image-preview"
-                               data-js="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/ajaxfileupload.js') }}"
-                               data-url="{{route('pc:uploadImg')}}"
                                data-token="{{ csrf_token() }}"
                         >
-                        <input name="logo" id="form_logo" type="hidden" value="71" />
+                        <input name="task_id" id="task_id" type="hidden" value="" />
                     </div>
                 </span>
             </div>
@@ -43,8 +42,8 @@
             </div>
             <div class="con_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
             <div class="con_btn">
-                <button class="subject-submit button con_a1" data-url="{{route('pc:doSavePost',['type'=>2])}}">存草稿</button>
-                <button class="subject-submit button con_a2" data-url="{{route('pc:doSavePost',['type'=>1])}}">投稿</button>
+                <button type="button" class="subject-submit button con_a1" data-url="{{route('pc:doSavePost',['type'=>2])}}">存草稿</button>
+                <button type="button" class="subject-submit button con_a2" data-url="{{route('pc:doSavePost',['type'=>1])}}">投稿</button>
             </div>
         </div>
         </form>
@@ -66,4 +65,7 @@
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/news.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
+<script type="text/javascript">
+$('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
+</script>
 @endsection

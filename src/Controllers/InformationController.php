@@ -5,6 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Zhiyi\Plus\Models\StorageTask;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCate;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
@@ -118,9 +119,8 @@ class InformationController extends BaseController
                         ->orderBy('news.id', 'desc')
                         ->select('news.id','news.title','news.updated_at','news.storage','news.comment_count','news.from')
                         // ->with('storage')
-                        ->with(['collection'=>function($query){
-                            $query->count();
-                        }])->get()->toArray();
+                        ->withCount('collection')
+                        ->get()->toArray();
                 break;
         }
 
@@ -199,31 +199,35 @@ class InformationController extends BaseController
     public function doSavePost(Request $request)
     {
         $type = $request->type; // 1 待审核 2 草稿
-        if (!$request->storage) {
+        if (!$request->task_id) {
             return response()->json([
                 'status' => false,
-                'code' => 6003,
                 'message' => '没有上传封面图片',
             ])->setStatusCode(404);
         }
         if (mb_strlen($request->content, 'utf8') > 5000) {
             return response()->json([
                 'status' => false,
-                'code' => 6003,
                 'message' => '内容不能大于5000字',
             ])->setStatusCode(400);
         }
 
+        $storage = StorageTask::where('id', $request->task_id)
+                    ->select('hash')
+                    ->with('storage')
+                    ->first();
+        if ($storage) {
+            $storage_id = $storage['storage']['id'];
+        }
         $news = new News();
 
         $news->title = $request->subject;
-        $news->storage = $request->storage;
         $news->content = $request->content;
+        $news->storage = $storage_id ?: '';
         $news->from = $request->source ?: '';
         $news->state = $type;
 
         $news->save();
-
         return response()->json(static::createJsonData([
             'status'  => true,
             'code'    => 0,

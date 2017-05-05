@@ -5,7 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class Example extends Model
+class UserVerified extends Model
 {
-    protected $table = 'component_example';
+    protected $table = 'user_verified';
 }

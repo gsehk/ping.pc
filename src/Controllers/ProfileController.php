@@ -4,6 +4,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Models\User;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class ProfileController extends BaseController
@@ -56,7 +57,6 @@ class ProfileController extends BaseController
         }
         unset($data['datas']);
 
-        dump($data->toArray());
         return view('profile.'.$page, ['page' => $page, 'data' => $data], $this->mergeData);
     }
 
@@ -67,4 +67,48 @@ class ProfileController extends BaseController
         return view('profile.scoredetail', ['type' => $type]);
     }
 
+
+    public function doSaveAuth(Request $request)
+    {
+        $isVerif = UserVerified::where('uid', $this->mergeData['user']->id)
+                    ->count();
+        if ($isVerif) {
+            return response()->json([
+                'status' => false,
+                'message' => '您已提交认证资料,请勿重复提交',
+            ])->setStatusCode(202);
+        }
+        if (!$request->realname) {
+            return response()->json([
+                'status' => false,
+                'message' => '真实姓名不能为空',
+            ])->setStatusCode(404);
+        }
+        if (!$request->phone) {
+            return response()->json([
+                'status' => false,
+                'message' => '联系方式错误',
+            ])->setStatusCode(404);
+        }
+        if (!$request->idcard) {
+            return response()->json([
+                'status' => false,
+                'message' => '身份证号码错误',
+            ])->setStatusCode(404);
+        }
+
+        $verif = new UserVerified();
+
+        $verif->uid = $this->mergeData['user']->id;
+        $verif->realname = $request->realname;
+        $verif->idcard = $request->idcard;
+        $verif->phone = $request->phone;
+        $verif->info = $request->info ?: '';
+        $verif->storage = $request->task_id ?: '';
+        $verif->save();
+
+        return response()->json([
+            'status' => true
+        ])->setStatusCode(200);        
+    }
 }

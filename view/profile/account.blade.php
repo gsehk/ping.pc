@@ -101,6 +101,8 @@ $(function () {
             DaySelector: ".sel_day"
     });
     $.ms_DatePicker();
+    
+    init(1);
 }); 
 </script> 
 @endsection

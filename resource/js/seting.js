@@ -1,15 +1,4 @@
 
-var args = {
-  data: {},
-  set: function(name, value) {
-    this.data[name] = value;
-    return this;
-  },
-  get: function () {
-    return this.data;
-  }
-};
-
 // 地区初始化
 var init = function(pid) {
   // 获取树形结构的子树
@@ -22,6 +11,8 @@ var init = function(pid) {
         var selected1 = (n.id == arrSelect[0]) ? 'selected="selected"' : '';
         option1 += '<option value="' + n.id +'" ' + selected1 + '>' + n.name + '</option>'
       });
+      $('#province').html(option1);
+
       if (arrSelect[0]) {
         $.getJSON('/api/v1/areas', {pid:arrSelect[0]}, function(city){
 
@@ -34,6 +25,8 @@ var init = function(pid) {
             $('#city').html(option2);
           }
         });
+      }else{
+          $('#city').html(option2);
       }
       if (arrSelect[1]) {
         $.getJSON('/api/v1/areas', {pid:arrSelect[1]}, function(area){
@@ -47,11 +40,9 @@ var init = function(pid) {
             $('#area').html(option3);
           }
         });
+      }else{
+        $('#area').html(option3);
       }
-      console.log(option2);
-      $('#province').html(option1);
-      $('#city').html(option2);
-      $('#area').html(option3);
     }
   });
 };
@@ -63,12 +54,12 @@ var getArea = function (obj) {
     $.getJSON('/api/v1/areas', {pid:pid}, function(area){
         if (area.status == true) {
           switch(id) {
-
               case 'province':
                   $.each(area.data, function(i, n) {
                       option2 += '<option value="' + n.id +'">' + n.name + '</option>'
                   });
                   $('#city').html(option2);
+                  $('#area').html(option3);
               break;
               case 'city':
                   $.each(area.data, function(i, n) {
@@ -77,11 +68,9 @@ var getArea = function (obj) {
                   $('#area').html(option3);
               break;
           }
-          console.log(area);
         }
     });
 };
-init(1);
 
 
 /* 获取页面中所有文本域，表单，选择器的值 */
@@ -120,8 +109,59 @@ $('#J-submit').on('click', function(e){
         beforeSend: function (xhr) {
     　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
     　　},
-        error:function(){$('.success_div').html('<div class="set_success"><img src="" />资料修改失败</div>');},
-        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />资料修改成功</div>');}
+        error:function(xml){
+          $('.success_div').html('<div class="set_success s_bg"><img src="" />资料修改失败</div>').fadeIn();
+        },
+        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />资料修改成功</div>').fadeIn();}
     });
     setTimeout("$('.success_div').fadeOut(1000)", 3000);
 });
+
+var resetPwd = function () {
+
+    var password = $('#password').val();
+    var new_pwd = $('#new_password').val();
+    var token = $('#token').val();
+    $.ajax({
+        url: '/api/v1/users/password',
+        type: 'PATCH',
+        data: {password:password,new_password:new_pwd,_token:token},
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　},
+        error:function(xml){
+          $('.success_div').html('<div class="set_success s_bg"><img src="" />修改失败</div>').fadeIn();
+        },
+        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />修改成功</div>').fadeIn();}
+    });
+    setTimeout("$('.success_div').fadeOut(1000)", 3000);
+};
+
+var userVerif = function () {
+    var getArgs = function () {
+      var inp = $('#auth_form input').toArray();
+      var sel;
+      for (var i in inp) {
+        sel = $(inp[i]);
+        args.set(sel.attr('name'), sel.val());
+      };
+      return args.get();
+    };
+    var url = $('#J-user-verif').data('url');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: getArgs(),
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　},
+        error:function(xml){
+          // if (xml.responseJSON.code == 1004) {}
+          $('.success_div').html('<div class="set_success s_bg"><img src="" />修改失败</div>').fadeIn();
+        },
+        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />修改成功</div>').fadeIn();}
+    });
+    setTimeout("$('.success_div').fadeOut(1000)", 3000);
+};
