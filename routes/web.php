@@ -6,11 +6,11 @@ use Zhiyi\Plus\Http\Middleware;
 
 Route::prefix('passport')->group(function () {
 
-    // index
+    // login
     Route::get('index', 'PassportController@index')->name('pc:index');
 
-    // login
-    Route::post('login', 'PassportController@login')->name('pc:login');
+    // dologin
+    Route::post('dologin', 'PassportController@doLogin')->name('pc:dologin');
 
     // logout
     Route::any('logout', 'PassportController@logout')->name('pc:logout');
@@ -18,8 +18,22 @@ Route::prefix('passport')->group(function () {
     // register
     Route::get('register', 'PassportController@register')->name('pc:register');
 
+    // doregister
+    Route::post('doregister', 'PassportController@doRegister')
+        ->middleware(Middleware\VerifyPhoneNumber::class) // 验证手机号码是否正确
+        ->middleware(Middleware\VerifyUserNameRole::class) // 验证用户名规则是否正确
+        ->middleware(Middleware\CheckUserByNameNotExisted::class) // 验证用户名是否被占用
+        ->middleware(Middleware\CheckUserByPhoneNotExisted::class) // 验证手机号码是否被占用
+        ->middleware(Middleware\VerifyPhoneCode::class) // 验证验证码释放正确
+    ;
+
+
+
     // captcha
     Route::get('captcha/{tmp}', 'PassportController@captcha')->name('pc:captcha');
+
+    // checkcaptcha
+    Route::post('checkcaptcha', 'PassportController@checkCaptcha')->name('pc:checkcaptcha');
 
     // 找回密码 
     Route::get('findpwd', 'PassportController@findPassword')->name('pc:findPassword');

@@ -13,8 +13,7 @@
             <div class="login_b">扫描二维码体验APP</div>
         </div>
         <div class="login_right">
-            <form method="POST" action="/passport/login" id="login_form">
-                {!! csrf_field() !!}
+            <form method="POST" id="login_form">
                 <div class="l_tel">
                     <input type="text" placeholder="输入手机号" name="phone"/>
                 </div>

@@ -2420,18 +2420,29 @@ textarea {
     }
 
 .f_span {
-    width: 380px;
+    width: 385px;
     display: inline-block;
     border-bottom: 1px solid #ededed;
     padding-bottom: 5px;
     margin-top: -5px;
 }
-
     .f_span input {
         border: none;
         outline: none;
         width: 100%;
     }
+
+.f_captcha{
+    vertical-align: bottom;
+    width: 100px;
+    height: 40px;
+    bottom: 0;
+}
+
+.f_span_verify{
+    width: 250px;
+}
+
 
 .f_code {
     width: 120px;
@@ -2442,8 +2453,8 @@ textarea {
 }
 
     .f_code img {
-        width: 120px;
-        height: 55px;
+        width: 100px;
+        height: 40px;
     }
 
 .f_sure {
@@ -2466,23 +2477,26 @@ textarea {
     }
 
 .get_code {
-    width: 118px;
-    height: 34px;
+    width: 98px;
+    height: 38px;
     border: 1px solid #dedede;
     color: #333;
-    font-size: 14px;
+    font-size: 12px;
     background: #ededed;
     text-align: center;
-    line-height: 34px;
+    line-height: 38px;
     cursor: pointer;
-    position: absolute;
-    top: -4px;
-    left: 488px;
     display: inline-block;
+    vertical-align: bottom;
+    bottom: 0;
 }
 
 .w_370 {
     width: 370px !important;
+}
+
+.w_280 {
+    width: 280px !important;
 }
 
 .f_welcome {

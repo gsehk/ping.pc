@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="_token" content="{{ csrf_token() }}"/>
     <title>@yield('title')</title>
     <link href="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -15,6 +16,8 @@
     <script>
         // 全局变量
         var PUBLIC_URL = '{{\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset("")}}';
+        var API = '/api/v1';
+        var TOKEN = '';
         var MID;
     </script>
 </head>

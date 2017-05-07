@@ -36,7 +36,7 @@ class PassportController extends BaseController
     }
 
     /**
-     * [index 登录页]
+     * [login 登录页]
      * @Author Foreach<hhhcode@outlook.com>
      * @return [type] [description]
      */
@@ -50,11 +50,11 @@ class PassportController extends BaseController
     }
 
     /**
-     * [login 登录]
+     * [doLogin 登录]
      * @Author Foreach<hhhcode@outlook.com>
      * @return [type] [description]
      */
-    public function login(Request $request)
+    public function doLogin(Request $request)
     {
         $this->guard()->logout();
         $request->session()->regenerate();
@@ -87,6 +87,20 @@ class PassportController extends BaseController
         return view('passport.register');
     }
 
+    public function doRegister()
+    {
+        $name = $request->input('name');
+        $phone = $request->input('phone');
+        $password = $request->input('password', '');
+        $user = new User();
+        $user->name = $name;
+        $user->phone = $phone;
+        $user->createPassword($password);
+        $user->save();
+
+        return $this->doLogin($request);
+    }
+
     public function perfect()
     {
 
@@ -102,18 +116,42 @@ class PassportController extends BaseController
 
     public function captcha($tmp)
     {
-        //生成验证码图片的Builder对象，配置相应属性
+        // 生成验证码图片的Builder对象，配置相应属性
         $builder = new CaptchaBuilder;
-        //可以设置图片宽高及字体
+        // 设置背景
+        $builder->setBackgroundColor(237,237,237);
+        // 设置字体大小
+        $builder->setBackgroundColor(237,237,237);
+        // 可以设置图片宽高及字体
         $builder->build($width = 100, $height = 40, $font = null);
-        //获取验证码的内容
+        // 获取验证码的内容
         $phrase = $builder->getPhrase();
 
-        //把内容存入session
+        // 把内容存入session
         Session::flash('milkcaptcha', $phrase);
-        //生成图片
+        // 生成图片
         header("Cache-Control: no-cache, must-revalidate");
         header('Content-Type: image/jpeg');
         $builder->output();
+    }
+
+    /**
+     * [checkCaptcha description]
+     * @Author Foreach<hhhcode@outlook.com>
+     * @return [type] [description]
+     */
+    public function checkCaptcha()
+    {
+        $userInput = \Request::get('captcha');
+
+        if (Session::get('milkcaptcha') == $userInput) {
+            return response()->json(static::createJsonData([
+            'status'  => true,
+            ]));
+        } else {
+            return response()->json(static::createJsonData([
+            'status'  => true,
+            ]));
+        }
     }
 }
