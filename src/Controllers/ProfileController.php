@@ -3,17 +3,12 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
-use Zhiyi\Plus\Http\Controllers\Controller;
+use Zhiyi\Plus\Models\User;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
-class ProfileController extends Controller
+class ProfileController extends BaseController
 {
-    /*public function feedAll(Request $request)
-    {
-        $type = $request->input('type') ?: 1;
-
-        return view('profile.feedall', ['type'=>$type]);
-    }*/
 
     public function index(Request $request)
     {
@@ -52,8 +47,17 @@ class ProfileController extends Controller
     public function account(Request $request)
     {
         $page = $request->input('page') ?: 'account';
-        
-        return view('profile.'.$page, ['page' => $page]);
+        $data = User::where('id', $this->mergeData['user']->id)
+                ->select('id', 'name')
+                ->with('datas')
+                ->first();
+
+        foreach ($data['datas'] as $key => &$value) {
+            $data[$value['profile']] = $value['pivot']['user_profile_setting_data'];
+        }
+        unset($data['datas']);
+
+        return view('profile.'.$page, ['page' => $page, 'data' => $data], $this->mergeData);
     }
 
     public function score(Request $request)
@@ -63,4 +67,48 @@ class ProfileController extends Controller
         return view('profile.scoredetail', ['type' => $type]);
     }
 
+
+    public function doSaveAuth(Request $request)
+    {
+        $isVerif = UserVerified::where('uid', $this->mergeData['user']->id)
+                    ->count();
+        if ($isVerif) {
+            return response()->json([
+                'status' => false,
+                'message' => '您已提交认证资料,请勿重复提交',
+            ])->setStatusCode(202);
+        }
+        if (!$request->realname) {
+            return response()->json([
+                'status' => false,
+                'message' => '真实姓名不能为空',
+            ])->setStatusCode(404);
+        }
+        if (!$request->phone) {
+            return response()->json([
+                'status' => false,
+                'message' => '联系方式错误',
+            ])->setStatusCode(404);
+        }
+        if (!$request->idcard) {
+            return response()->json([
+                'status' => false,
+                'message' => '身份证号码错误',
+            ])->setStatusCode(404);
+        }
+
+        $verif = new UserVerified();
+
+        $verif->uid = $this->mergeData['user']->id;
+        $verif->realname = $request->realname;
+        $verif->idcard = $request->idcard;
+        $verif->phone = $request->phone;
+        $verif->info = $request->info ?: '';
+        $verif->storage = $request->task_id ?: '';
+        $verif->save();
+
+        return response()->json([
+            'status' => true
+        ])->setStatusCode(200);        
+    }
 }

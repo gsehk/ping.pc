@@ -93,7 +93,7 @@ news.loadMore = function()
           '<p>'+data[i].title+'</p>'+
           '<div class="inf_bm">'+
             '<span class="inf_time">'+data[i].updated_at+'</span>'+
-            '<span class="inf_comment">'+data[i].comment_count+'评论<span>|</span>'+data[i].collection.length+'收藏</span>'+
+            '<span class="inf_comment">'+data[i].comment_count+'评论<span>|</span>'+data[i].collection_count+'收藏</span>'+
           '</div>'+
         '</div>'+
         '</div> ';
@@ -162,74 +162,16 @@ var author_hot = function () {
     });
 };
 
-var getImgInfo = function(event){
-    var $this = $(this);
-    var callback = event.data.callback;
-    var f = document.getElementById(event.data.id).files[0];
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        var data = e.target.result;
-        //加载图片获取图片真实宽度和高度
-        var image = new Image();
-        image.onload=function(){
-            var width = image.width;
-            var height = image.height;
-            var size = f.size;
-            callback(image, height, f, $this);
-        };
-        image.src= data;
-   };
-   reader.readAsDataURL(f);
-};
-var ajaxFileUpload = function(width, height, f, obj) {
-    /*if(MID == 0){
-      ui.quicklogin();
-      return;
-    }*/
-    var args = {
-        width  : width,
-        height : height,
-        mime_type : f.type,
-        origin_filename : f.name,
-        _token : obj.data('token'),
-        hash   : CryptoJS.MD5(f.name).toString(),
-    };
-    $.getScript(obj.data('js'), function() {
-        $.ajaxFileUpload({
-            url: '/api/v1/storages/task',
-            fileElementId: obj.attr('id'),
-            secureuri: false,
-            dataType: 'json',
-            type: 'POST',
-            data: args,
-            /*beforeSend: function (xhr) {
-    　　　　  xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
-    　　　　},*/
-            error: function() {
-                alert('提交错误，请刷新页面重新尝试！');
-            },
-            success: function(res) {
-              console.log(res);
-              if (res.status) {
-                // $(obj.data('input')).val(data.data.attach_id);
-              }
-            }
-        });
-    });
-};
-
-$('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
-
 $('.subject-submit').on('click', function(){
   var $this = $(this);
   var subject  = $('#subject-title'),
-      logo     = $('#form_logo'),
+      task_id     = $('#task_id'),
       abstract = $('#subject-abstract'),
       froms    = $('#subject-from'), 
       url      = $this.data('url');
       var args  = {
         'subject' : subject.val(),
-        'storage'    : logo.val(),
+        'task_id'    : task_id.val(),
         'abstract': abstract.val(),
         'content' : $(editor).html(),
         'source'  : froms.val(),

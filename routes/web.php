@@ -89,7 +89,7 @@ Route::prefix('profile')->group(function () {
     Route::get('/pc/profile', 'ProfileController@profile');
     
     // 个人设置
-    Route::get('/pc/profile', 'ProfileController@setting');
+    Route::post('profile/doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
     
     // 排行榜
     Route::get('/pc/rank', 'ProfileController@rank');
