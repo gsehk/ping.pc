@@ -24,42 +24,37 @@ $(function(){
     $("#reg_form").validate({
 		rules: {
 			phone: "required",
-			captcha: "required",
+            captchacode:{
+                required:true,
+                checkCaptcha:true
+            },
 			smscode: "required",
 			name: "required",
 			password: "required",
 			repassword: "required",
 		},
 		messages: {
-			phone: "手机号不能为空"
+			phone: "手机号不能为空",
+            captchacode: {
+                required: "图形验证码不能为空",
+                checkCaptcha: "图形验证码错误"
+            },
+            smscode: "短信验证码不能为空",
+            name: "昵称不能为空",
+            password: "密码不能为空",
+            repassword: "请确认密码",
 		},
+        errorPlacement: function(error,element) {
+            var name = element.attr('name');
+            error.insertAfter('#' + name);
+        },
         submitHandler:function(form){
-            alert();return false;
-            var captcha = $('input[name="captcha"]').val();
-            // 验证图形验证码
-            $.ajax({
-                type: 'post',
-                url: 'checkcaptcha',
-                data: {captcha: captcha},
-                success: function(res){
-                    if (res.status) {
-                        
-                    } else {
-                        
-                    }
-                }
-            });
 
             // 验证手机验证码
-
-
             var url = '/passport/doregister';
             $('#reg_form').ajaxSubmit({
                 type: 'post',
                 url: url,
-                beforeSend: function (xhr) {
-            　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
-            　　},
                 success : function(res) {
                     if (res.code == 1000) {
 
@@ -77,6 +72,31 @@ $(function(){
     });
 
 
+    // 添加图形验证码验证
+    $.validator.addMethod("checkCaptcha", function(value, element, params){
+        var captcha = $('input[name="captchacode"]').val();
+
+        if ((value.length > 0 && value.length < 5) || (value.length > 5)) {
+            return false;
+        } else {
+            console.log(value.length);
+            $.ajax({
+                type: 'post',
+                url: 'checkcaptcha',
+                async: false,
+                data: {captcha: captcha},
+                success: function(res){
+                    if (res.status) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }, 'json');
+        }
+    });
+
+
 })
 
 
@@ -86,7 +106,7 @@ $(function(){
  * @return {[type] [description]
  */
 function re_captcha() {
-	var url = '{{ URL("passport/captcha") }}';
+	var url = '/passport/captcha';
 	url = url + "/" + Math.random();
-	$('#captcha').attr('src', url);
+	$('#captchacode').attr('src', url);
 }

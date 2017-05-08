@@ -2406,6 +2406,12 @@ textarea {
     margin-top: 60px;
 }
 
+.f_div label.error {
+    color: #CC0000;
+    width: 300px;
+    margin-left: 20px;
+}
+
 .f_tel {
     margin-bottom: 25px;
     position: relative;

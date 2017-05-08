@@ -3,6 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Gregwar\Captcha\CaptchaBuilder;
@@ -42,6 +43,11 @@ class PassportController extends BaseController
      */
     public function index()
     {
+
+        $users = DB::table('users')->simplePaginate(15);
+        return view('passport.login', ['users' => $users]);
+
+        
         if ($this->guard()->check()) {
             return redirect(route('pc:feed'));
         }
@@ -114,6 +120,12 @@ class PassportController extends BaseController
         return view('passport.findpwd', ['type' => $type]);
     }
 
+    /**
+     * [captcha 获取验证码]
+     * @Author Foreach<hhhcode@outlook.com>
+     * @param  [type] $tmp [description]
+     * @return [type] [description]
+     */
     public function captcha($tmp)
     {
         // 生成验证码图片的Builder对象，配置相应属性
@@ -136,7 +148,7 @@ class PassportController extends BaseController
     }
 
     /**
-     * [checkCaptcha description]
+     * [checkCaptcha 验证验证码]
      * @Author Foreach<hhhcode@outlook.com>
      * @return [type] [description]
      */
@@ -150,7 +162,7 @@ class PassportController extends BaseController
             ]));
         } else {
             return response()->json(static::createJsonData([
-            'status'  => true,
+            'status'  => false,
             ]));
         }
     }
