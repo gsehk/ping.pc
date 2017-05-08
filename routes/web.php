@@ -53,10 +53,8 @@ Route::prefix('profile')->group(function () {
     Route::get('related', 'ProfileController@related')->name('pc:related');
     Route::get('fans', 'ProfileController@myFans')->name('pc:myFans');
     Route::get('following', 'ProfileController@following')->name('pc:following');
-    Route::get('rank', 'ProfileController@rank')->name('pc:rank');
     Route::get('collection', 'ProfileController@collection')->name('pc:collection');
     Route::get('account', 'ProfileController@account')->name('pc:account');
-    Route::get('score', 'ProfileController@score')->name('pc:score');
     Route::get('article', 'ProfileController@article')->name('pc:article');
     
 });
@@ -83,14 +81,11 @@ Route::prefix('profile')->group(function () {
     Route::post('/information/uploadImg', 'InformationController@uploadImg')->name('pc:uploadImg');
     
     // 积分规则
-    Route::get('/pc/credit', 'FeedController@credit');
-    
-    // 个人主页
-    Route::get('/pc/profile', 'ProfileController@profile');
+    Route::get('/credit/index', 'CreditController@index')->name('pc:credit');
     
     // 个人设置
-    Route::post('profile/doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
+    Route::post('/profile/doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
     
     // 排行榜
-    Route::get('/pc/rank', 'ProfileController@rank');
+    Route::get('/rank/index', 'RankController@index')->name('pc:rank');
 //});

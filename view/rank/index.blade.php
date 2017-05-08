@@ -6,20 +6,27 @@
 <div class="dy_bg fans_bg">
     <div class="dy_cont list_bg">
       <ul class="list_ul">
-          <li><a href="javascript:;" class="fs-16 a_border">用户排行榜</a></li>
-          <li><a href="javascript:;" class="fs-16">好友排行榜</a></li>
-          <li><a href="javascript:;" class="fs-16">分享排行榜</a></li>
+          <li><a href="{{route('pc:rank',['type'=>1])}}" class="fs-16 @if($type == 1) a_border @endif">用户排行榜</a></li>
+          <li><a href="{{route('pc:rank',['type'=>2])}}" class="fs-16 @if($type == 2) a_border @endif">好友排行榜</a></li>
       </ul>
         <div class="fans_div">
             <div class="list_fans fans1">
-                <div class="fans_list">
+            <div class="rank-tit"> 
+                <span style =" display: inline-block; ">粉丝排行榜</span>
+                <span class="right">
+                    <i class="arrow-rank-l" id="followerlast" onclick="gorank(1,'follower',this,{$follower.ranknum})"></i>
+                        <font id="followernum">1</font>/10
+                    <i class="arrow-rank-r" id="followernext" onclick="gorank(2,'follower',this,{$follower.ranknum})"></i>
+                </span>
+            </div>
+                <!-- <div class="fans_list">
                     <span style =" display: inline-block; ">粉丝排行榜</span>
                     <div class="fList_r">
                         <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/ic_lastpage_light.png') }}" />
                         <span >1/10</span>
                         <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/ic_nextpage.png') }}" />
                     </div>
-                </div>
+                </div> -->
                 <div class="list_pm fs-14">
                     <span class="pm_1">排名</span>
                     <span class="pm_2">昵称</span>
