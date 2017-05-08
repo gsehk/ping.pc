@@ -1,10 +1,4 @@
 $(function(){
-	$.ajaxSetup({
-	   headers: {
-	       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-	   }
-	});
-
     $('#login_btn').click(function(){
 
     	var url = '/passport/dologin';
@@ -24,7 +18,7 @@ $(function(){
     });
 
     $('#reg_btn').click(function(){
-    	$('#reg_form').submit();
+    	$('#reg_form').submit();	
     });
 
     $("#reg_form").validate({
