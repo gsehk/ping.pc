@@ -38,6 +38,8 @@ textarea {
     }
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .clearfix{*+height:1%;}
+.right{float: right;}
+.left{float: left;}
 .ml27{
     margin-left: 27px;
 }
@@ -3508,3 +3510,6 @@ textarea {
 .easy-blue{color:rgba(255,255,255,1);background-color:rgba(51,153,204,0.8);border:1px solid rgba(102,153,204,1);border-radius:5px;padding: 10px;}
 .easy-red{color:rgba(255,255,255,1);background-color:rgba(255,102,102,0.9);border:1px solid rgba(204,0,51,1);border-radius:5px;padding: 10px;}
 .easy-white{color:rgba(102,102,102,1);background-color:rgba(255,255,255,0.9);border:1px solid rgba(153,153,153,1);border-radius:5px;padding: 10px;}
+.rank-tit .arrow-rank-l,.rank-tit .arrow-rank-r{width: 12px;height: 12px;margin: 0 0 0 3px;cursor: pointer;display: inline-block;}
+.rank-tit .arrow-rank-l{background-image: url('../images/ic_lastpage.png')}
+.rank-tit .arrow-rank-r{background-image: url('../images/ic_nextpage.png')}

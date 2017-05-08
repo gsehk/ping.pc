@@ -82,19 +82,19 @@ class ProfileController extends BaseController
             return response()->json([
                 'status' => false,
                 'message' => '真实姓名不能为空',
-            ])->setStatusCode(404);
+            ])->setStatusCode(201);
         }
         if (!$request->phone) {
             return response()->json([
                 'status' => false,
                 'message' => '联系方式错误',
-            ])->setStatusCode(404);
+            ])->setStatusCode(201);
         }
         if (!$request->idcard) {
             return response()->json([
                 'status' => false,
                 'message' => '身份证号码错误',
-            ])->setStatusCode(404);
+            ])->setStatusCode(201);
         }
 
         $verif = new UserVerified();

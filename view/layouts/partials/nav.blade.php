@@ -16,7 +16,7 @@
         <span class="fs-16 nav_name"></span>
     </div>
 
-    @if ($user != null)
+    @if (!empty($user))
     <div class="p_cont">
         <ul>
             <li>

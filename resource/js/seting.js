@@ -165,3 +165,44 @@ var userVerif = function () {
     });
     setTimeout("$('.success_div').fadeOut(1000)", 3000);
 };
+
+function gorank(action,type,obj,num){
+  var current = $('div[rel="'+type+'div"][current="1"]');
+  //当前页数
+  var curnum = $('#'+type+'num').text();
+  //向前
+  if ( action == 1 ){
+    curnum = parseInt(curnum) - 1;
+    if ( curnum  >= 1 ){
+      if ( curnum == 1 ){
+        $(obj).attr('class','arrow-rank-l');
+      }
+      $('#'+type+'next').attr('class','arrow-rank-r');
+      var last = $('div[rel="'+type+'div"][current="1"]').prev();
+      if ( last != undefined ){
+        $(last).attr('current',1);
+        $(current).removeAttr('current');
+        $(last).show();
+        $(current).hide();
+      }
+      $('#'+type+'num').text(curnum);
+    }
+  } else {
+    //向后翻页
+    curnum = parseInt(curnum) + 1;
+    if ( curnum <= num ){
+      if ( curnum == num ){
+        $(obj).attr('class','arrow-rank-r1');
+      }
+      $('#'+type+'last').attr('class','arrow-rank-l1');
+      var next = $('div[rel="'+type+'div"][current="1"]').next();
+      if ( next != undefined ){
+        $(next).attr('current',1);
+        $(current).removeAttr('current');
+        $(current).hide();
+        $(next).show();
+      }
+      $('#'+type+'num').text(curnum);
+    }
+  } 
+}
