@@ -12,6 +12,6 @@ class CreditUser extends Model
     public function record()
     {
 
-        return $this->hasMany(CreditRecord::class, 'uid', 'uid');
+        return $this->hasMany(CreditRecord::class, 'user_id', 'user_id');
     }
 }
