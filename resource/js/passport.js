@@ -18,95 +18,161 @@ $(function(){
     });
 
     $('#reg_btn').click(function(){
-    	$('#reg_form').submit();	
-    });
-
-    $("#reg_form").validate({
-		rules: {
-			phone: "required",
-            captchacode:{
-                required:true,
-                checkCaptcha:true
-            },
-			smscode: "required",
-			name: "required",
-			password: "required",
-			repassword: "required",
-		},
-		messages: {
-			phone: "手机号不能为空",
-            captchacode: {
-                required: "图形验证码不能为空",
-                checkCaptcha: "图形验证码错误"
-            },
-            smscode: "短信验证码不能为空",
-            name: "昵称不能为空",
-            password: "密码不能为空",
-            repassword: "请确认密码",
-		},
-        errorPlacement: function(error,element) {
-            var name = element.attr('name');
-            error.insertAfter('#' + name);
-        },
-        submitHandler:function(form){
-
-            // 验证手机验证码
-            var url = '/passport/doregister';
-            $('#reg_form').ajaxSubmit({
-                type: 'post',
-                url: url,
-                success : function(res) {
-                    if (res.code == 1000) {
-
-                    } else if (res.code == 1001) {
-
-                    } else if (res.code == 1002) {
-
-                    } else if (res.code == 1003) {
-
-                    }
-                }
-            });
-            return false;
-        }    
-    });
-
-
-    // 添加图形验证码验证
-    $.validator.addMethod("checkCaptcha", function(value, element, params){
+        var phone = $('input[name="phone"]').val();
         var captcha = $('input[name="captchacode"]').val();
-
-        if ((value.length > 0 && value.length < 5) || (value.length > 5)) {
+        var smscode = $('input[name="code"]').val();
+        var name = $('input[name="name"]').val();
+        var password = $('input[name="password"]').val();
+        var repassword = $('input[name="repassword"]').val();
+        $('label.error').hide();
+        if (phone == '') {
+            $('#phone_tip').html('请输入手机号').show();
             return false;
-        } else {
-            console.log(value.length);
-            $.ajax({
-                type: 'post',
-                url: 'checkcaptcha',
-                async: false,
-                data: {captcha: captcha},
-                success: function(res){
-                    if (res.status) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }, 'json');
         }
+
+        if (!checkPhone(phone)) {
+            $('#phone_tip').html('请输入正确的手机号').show();
+            return false;
+        }
+
+        if (captcha == '') {
+            $('#captcha_tip').html('请输入图形验证码').show();
+            return false;
+        }
+
+        if (name == '') {
+            $('#name_tip').html('请输入昵称').show();
+            return false;
+        }
+
+        if (repassword == '') {
+            $('#repassword_tip').html('两次密码输入不一致').show();
+            return false;
+        }
+
+
+        var url = '/passport/doregister';
+        $('#reg_form').ajaxSubmit({
+            type: 'post',
+            url: url,
+            success : function(res) {
+                window.location.href = '/home/index';
+            },
+            error : function(xhr, textStatus, errorThrown){
+               if (xhr.responseJSON.code == 1000) {
+                    $('#phone_tip').html('请输入正确的手机号');
+               } else if (xhr.responseJSON.code == 1003) {
+                    $('#user_tip').html('用户名格式错误');
+               } else if (xhr.responseJSON.code == 1004) {
+                    $('#user_tip').html('用户名已存在');
+               } else if (xhr.responseJSON.code == 1010) {
+                    $('#phone_tip').html('手机号已存在');
+               } else if (xhr.responseJSON.code == 1000) {
+                    $('#smscode_tip').html('手机验证码错误或失效');
+               }
+            }
+        });
+        return false;
     });
 
+    // 发送短信验证码
+    $('#smscode').click(function(){
+        var _this = $(this);
+        if ($(this).hasClass('get_code_disable')) return false;
+
+        var phone = $('input[name="phone"]').val();
+        var captcha = $('input[name="captchacode"]').val();
+        if (phone == '') {
+            $('#phone_tip').html('请输入手机号').show();
+            return false;
+        }
+
+        if (!checkPhone(phone)) {
+            $('#phone_tip').html('请输入正确的手机号').show();
+            return false;
+        }
+
+        if (!captcha) {
+            $('#captcha_tip').html('请输入图形验证码').show();
+            return false;
+        }
+
+        $('#phone_tip').html('').hide();
+        $('#captcha_tip').html('').hide();
+
+        // 验证图形验证码
+        var url = '/passport/checkcaptcha';
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: {captcha: captcha},
+            async: false,
+            success: function (res) {
+                if (!res.status) {
+                    $('#captcha_tip').html('图形验证码错误').show();
+                    re_captcha();
+                } else {
+                    // 发送验证码
+                    var url = API + '/auth/phone/send-code';
+                    var type = 'register';
+                    $.ajax({
+                        type: 'post',
+                        url: url,
+                        data: {phone: phone, type: type},
+                        success: function(){
+                            var str = '等待<span id="passsec">60</span>秒';
+                            _this.html(str);
+                            timeDown(60);
+                            $('#smscode_tip').html('').hide();
+                            $('input[name="code"]').val('');
+                        },
+                        error : function(xhr, textStatus, errorThrown){
+                            if (xhr.responseJSON.code == 1010) {
+                                $('#phone_tip').html('手机号已存在').show();
+                            } else {
+                                $('#smscode_tip').html('发送失败，请稍后再试').show();
+                            }
+                        }
+                    }, 'json');
+                }
+            }
+        }, 'json');
+        return false;
+    })
 
 })
 
+// 验证手机号
+var checkPhone = function (string) {    
+    var pattern = /^1[34578]\d{9}$/;    
+    if (pattern.test(string)) {        
+        return true;    
+    }
+    return false;
+};
 
-/**
- * [re_captcha 刷新验证码]
- * @Author Foreach<hhhcode@outlook.com>
- * @return {[type] [description]
- */
-function re_captcha() {
+// 验证码倒计时
+var downTimeHandler = null;
+var timeDown = function(timeLeft){
+    clearInterval(downTimeHandler);
+    if(timeLeft <= 0) return ;
+    $('#smscode').addClass('get_code_disable');
+    $('#passsec').html(timeLeft);
+    downTimeHandler = setInterval(function(){
+        timeLeft--;
+        $('#passsec').html(timeLeft);
+        if(timeLeft <= -1){
+            clearInterval(downTimeHandler);
+            $('#smscode').html('获取短信验证码').removeClass('get_code_disable');
+        }
+    }, 1000);
+};
+
+
+// 刷新验证码
+var re_captcha = function(){
 	var url = '/passport/captcha';
 	url = url + "/" + Math.random();
 	$('#captchacode').attr('src', url);
+    $('input[name="captchacode"]').val('');
 }

@@ -2411,6 +2411,7 @@ textarea {
 }
 
 .f_div label.error {
+    display: none;
     color: #CC0000;
     width: 300px;
     margin-left: 20px;
@@ -2488,7 +2489,7 @@ textarea {
     }
 
 .get_code {
-    width: 98px;
+    width: 100px;
     height: 38px;
     border: 1px solid #dedede;
     color: #333;
@@ -2500,6 +2501,11 @@ textarea {
     display: inline-block;
     vertical-align: bottom;
     bottom: 0;
+}
+
+.get_code_disable {
+    cursor: auto;
+    color: #999;
 }
 
 .w_370 {

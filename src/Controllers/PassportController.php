@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Gregwar\Captcha\CaptchaBuilder;
+use Zhiyi\Plus\Models\VerifyCode;
+use Zhiyi\Plus\Models\User;
 use Session;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
@@ -93,11 +95,22 @@ class PassportController extends BaseController
         return view('passport.register');
     }
 
-    public function doRegister()
+    public function doRegister(Request $request)
     {
         $name = $request->input('name');
         $phone = $request->input('phone');
         $password = $request->input('password', '');
+
+        // 图形验证码判断
+        $captcha = $request->input('captcha');
+
+        if (Session::get('milkcaptcha') != $captcha) {
+            return response()->json(static::createJsonData([
+                'code' => 91002,
+            ]))->setStatusCode(403);
+        }
+
+        // 注册用户
         $user = new User();
         $user->name = $name;
         $user->phone = $phone;
