@@ -42,7 +42,7 @@ news.bindScroll = function()
       var bodyHeight = $(document.body).height();
       if(bodyTop + $(window).height() >= bodyHeight - 250) {
           if($(news.setting.container).length > 0) {
-            $(news.setting.container).append("<div class='loading' id='loadMore'><img src='zhiyicx/plus-component-pc/images/loading.png' class='load'>加载中</div>");
+            $(news.setting.container).append("<div class='loading'><img src='"+PUBLIC_URL +"/images/loading.png' class='load'>加载中</div>");
             news.loadMore();
         }
       }
@@ -185,23 +185,4 @@ $('.subject-submit').on('click', function(){
           alert(data.data.message);
         };
     }, 'json');
-});
-
-$(document).ready(function(){
-  recent_hot(1);
-  $('#j-recent-hot .week').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(1);
-  });
-  $('#j-recent-hot .meth').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(2);
-  });
-  $('#j-recent-hot .moth').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(3);
-  });
 });

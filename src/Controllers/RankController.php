@@ -51,9 +51,9 @@ class RankController extends BaseController
                         ->get();
 
             /*积分排行榜*/
-            $credit = User::join('credit_user', 'users.id', '=', 'credit_user.uid')
+            $credit = User::join('credit_user', 'users.id', '=', 'credit_user.user_id')
                         ->when($fids, function ($query) use ($fids) {
-                            return $query->whereIn('credit_user.uid', $fids);
+                            return $query->whereIn('credit_user.user_id', $fids);
                         })
                         ->select('users.id','users.name', 'credit_user.score')
                         ->with('datas')

@@ -39,6 +39,7 @@ textarea {
 .txt-hide{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .clearfix{*+height:1%;}
+.hide{display: none;}
 .right{float: right;}
 .left{float: left;}
 .ml27{
@@ -298,6 +299,7 @@ textarea {
     position: absolute;
     top: 24px;
     right: -49px;
+    display: none;
 }
 
     .cen_more ul {
@@ -491,7 +493,11 @@ textarea {
     cursor: pointer;
     margin-left: 5px;
 }
-
+.show_admin{
+    width: 30px;
+    text-align: right;
+    cursor: pointer;
+}
 .cen_right {
     float: right;
 }
@@ -873,6 +879,7 @@ textarea {
 .dy_cCont {
     float: left;
     width: 635px;
+    min-height: 800px;
     margin: 36px 30px 0;
 }
 
@@ -1013,11 +1020,11 @@ textarea {
     padding-bottom: 20px;
     border-bottom: 1px solid #ededed;
     margin-bottom: 0;
-    min-height: 500px;
+    min-height: 506px;
 }
 
     .fans_ul li {
-        margin-top: 20px;
+        margin-top: 15px;
     }
 
         .fans_ul li div {

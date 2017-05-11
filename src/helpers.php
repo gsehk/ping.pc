@@ -87,7 +87,7 @@ function resource_path()
  * @author Seven Du <shiweidu@outlook.com>
  * @homepage http://medz.cn
  */
-function view($view = null, $data = [], $mergeData = [])
+function view($view = null, $data = [], $mergeData = [], $type = false)
 {
     $finder = app(\Illuminate\View\FileViewFinder::class, [
         'files' => app(\Illuminate\Filesystem\Filesystem::class),
@@ -98,5 +98,11 @@ function view($view = null, $data = [], $mergeData = [])
     if (func_num_args() === 0) {
         return $factory;
     }
-    return $factory->make($view, $data, $mergeData);
+
+    if ($type == false) {
+        return $factory->make($view, $data, $mergeData);
+    } else {
+        return $factory->make($view, $data, $mergeData)->render();
+    }
+    
 }

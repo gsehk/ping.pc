@@ -120,7 +120,7 @@
 
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/news.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
 <script type="text/javascript">
 var option = {
     container: '#news-list',
@@ -133,6 +133,24 @@ var option = {
 setTimeout(function() {
     news.init(option);
 }, 300);
-</script>
 
+$(document).ready(function(){
+  recent_hot(1);
+  $('#j-recent-hot .week').on('click', function(){
+    $('#j-recent-hot a').removeClass('a_border');
+    $(this).addClass('a_border');
+    recent_hot(1);
+  });
+  $('#j-recent-hot .meth').on('click', function(){
+    $('#j-recent-hot a').removeClass('a_border');
+    $(this).addClass('a_border');
+    recent_hot(2);
+  });
+  $('#j-recent-hot .moth').on('click', function(){
+    $('#j-recent-hot a').removeClass('a_border');
+    $(this).addClass('a_border');
+    recent_hot(3);
+  });
+});
+</script>
 @endsection

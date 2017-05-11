@@ -73,7 +73,7 @@
 
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/easyform.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/seting.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.seting.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function ()

@@ -64,6 +64,9 @@ Route::prefix('profile')->group(function () {
 
 	// 动态
     Route::get('/home/index', 'HomeController@index')->name('pc:feed');
+    Route::get('/home/follows', 'HomeController@getFollowFeeds');
+    Route::get('/home/hots', 'HomeController@getHotFeeds');
+    Route::get('/home/feeds', 'HomeController@getNewFeeds');
 
     // 资讯
     Route::get('/information/index', 'InformationController@index')->name('pc:news');

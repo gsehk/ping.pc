@@ -2,7 +2,9 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
+use Zhiyi\Plus\Models\Role;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Zhiyi\Plus\Models\AuthToken;
@@ -23,7 +25,9 @@ class BaseController extends Controller
 
 			// token
 			$this->mergetData['user']['token'] = AuthToken::where('user_id', $this->mergeData['user']['id'])->select('token')->first();
-			// var_dump($this->mergetData['user']['token']);exit;
+			
+            // user role
+            $this->mergeData['user']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['user']['id'])->first();
 
 			// 站点配置
 	        $config = [
@@ -33,6 +37,8 @@ class BaseController extends Controller
 	            'nav' => ['feed'=>route('pc:feed'), 'news'=>route('pc:news')]
 	        ];
 	        $this->mergeData['site'] = $config;
+
+            $this->mergeData['route']['storage'] = '/api/v1/storages/';
     		return $next($request);
     	});
     }

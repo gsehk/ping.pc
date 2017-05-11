@@ -91,7 +91,7 @@
 
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/birthday.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/seting.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.seting.js') }}"></script>
 <script> 
 var arrSelect = ["{{$data['province']}}", "{{$data['city']}}", "{{$data['area']}}"];
 $(function () {

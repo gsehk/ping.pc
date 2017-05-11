@@ -63,7 +63,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/news.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script type="text/javascript">
 $('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
