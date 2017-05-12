@@ -3,7 +3,7 @@
 @foreach($data as $key => $post)
 <div class="feed-item">
     <div class="dy_c">
-        <img src="{{$route['storage']}}{{$post['user']['avatar'] or 7}}" />
+        <img src="{{$routes['storage']}}{{$post['user']['avatar'] or 7}}" />
         <span class="dy_name fs-14">{{$post['user']['name']}}</span>
         <span class="dy_time fs-12">{{$post['feed']['created_at']}}</span>
     </div>
@@ -12,7 +12,7 @@
         @if($post['feed']['storages'])
             @php $imgNum = count($post['feed']['storages']); @endphp
             @foreach($post['feed']['storages'] as $store)
-            <img src="{{$route['storage']}}{{$store['storage_id']}}" class="img-responsive" />
+            <img src="{{$routes['storage']}}{{$store['storage_id']}}" class="img-responsive" />
             @endforeach
         @endif
         <div class="dy_comment">

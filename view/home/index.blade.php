@@ -55,7 +55,6 @@
                     <span>{{ $user['credit'] }}</span>
                 </span>
                 @if (!empty($user['avatar']))
-                <img src="{{ $route['storage'] }}/{{ $user['avatar']}} " class="dyrTop_img" alt="{{ $user['name'] }}"/>
                 @else
                 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" class="dyrTop_img" />
                 @endif

@@ -26,7 +26,7 @@ class BaseController extends Controller
 
 			if ($this->mergeData['user']) {
 				// 用户信息
-				$user_profile = User::where('id', '=', $this->mergeData['user']['id'])->with('datas', 'counts')->get()->toArray();
+				$user_profile = User::where('id', '=', $this->mergeData['user']['id'])->with('datas', 'counts')->get();
 
 				foreach ($user_profile[0]['datas'] as $key => $value) {
 					$user_profile[0][$value['profile']] = $value['pivot']['user_profile_setting_data'];
@@ -53,7 +53,7 @@ class BaseController extends Controller
 	        ];
 	        $this->mergeData['site'] = $config;
 
-            $this->mergeData['route']['storage'] = '/api/v1/storages/';
+            $this->mergeData['routes']['storage'] = '/api/v1/storages/';
     		return $next($request);
     	});
     }

@@ -17,7 +17,7 @@
             </div>
             <div class="del_pro">
                 <span><i class="icon iconfont icon-shoucang-copy1"></i>{{count($collection)}}收藏</span>
-                <span onclick="digg.addDigg('{{$id}}');"><i class="icon iconfont icon-xihuan-white"></i>{{$digg_count}}人喜欢</span>
+                <span onclick="digg.addDigg('{{$id}}');"><i class="icon iconfont icon-xihuan-white"></i><font class="digg_num">{{$digg_count}}</font>人喜欢</span>
                 <div class="del_share">
                     分享至：
                     <svg class="icon svdel_g1" aria-hidden="true">

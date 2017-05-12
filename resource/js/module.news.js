@@ -3,6 +3,7 @@ var loadHtml = "<div class='loading'><img src='"+PUBLIC_URL +"/images/loading.pn
 var request_url = {
     /* 获取文章列表 */
     get_news:'/information/getNewsList',
+    digg_news:'/api/v1/news/{news_id}/digg',
 };
 var news = {};
 
@@ -260,27 +261,27 @@ digg = {
       return false;
     }
     digg.digglock = 1;
-    $.post('/api/v1/news/'+news_id+'/digg', function (res) {
-      console.log(res);return false;
-      if (res.status == true) {
-        $digg = {};
-        if (typeof $('#digg'+news_id)[0] === 'undefined') {
-          $digg = $('#digg_'+news_id);
-        } else {
-          $digg = $('#digg'+news_id);
+
+    var url = request_url.digg_news.replace('{news_id}', news_id);
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　},
+        error:function(xml){alert(xml.responseJSON.message)},
+        success:function(res){
+          if (res.status == true) {
+              var num = $(this).find('.digg_num').text();
+              $(this).find('.digg_num').text(num);
+          }else{
+              alert(res.message);
+          }
         }
-        var num = $digg.attr('rel');
-        num++;
-        $digg.attr('rel', num);
-        //$('#digg'+news_id).html('<a href="javascript:;" class="like-h" onclick="digg.delDigg('+news_id+')">已赞('+num+')</a>');
-//        $('#digg_'+news_id).html('<a href="javascript:;" class="like-h" onclick="digg.delDigg('+news_id+')">已赞('+num+')</a>');
-        $('#digg'+news_id).html('<a href="javascript:;" class="like-h digg-like-yes" title="取消赞" onclick="digg.delDigg('+news_id+')"><i class="digg-like"></i>('+num+')</a>');
-        $('#digg_'+news_id).html('<a href="javascript:;" class="like-h digg-like-yes" title="取消赞" onclick="digg.delDigg('+news_id+')"><i class="digg-like"></i>('+num+')</a>');
-      } else{
-        ui.error(res.info);
-      }
-      digg.digglock = 0;
-    }, 'json');
+    });
+
   },
   delDigg: function (news_id) {
     if (digg.digglock == 1) {
