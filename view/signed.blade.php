@@ -1,3 +1,5 @@
+@if (empty($user))
+<!-- 个人中心右边签到 -->
 <div class="dy_signed">
     <div class="dyrTop">
         <span class="dyrTop_r fs-14">
@@ -8,4 +10,3 @@
     </div>
     <div class="dy_qiandao">每日签到<span>+5积分</span></div>
 </div>
-<!-- 个人中心右边签到 -->

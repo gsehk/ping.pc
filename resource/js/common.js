@@ -103,6 +103,7 @@ var ajaxFileUpload = function(width, height, f, obj) {
     });
 };
 
+
 ;(function($){
     //默认参数
     var defaluts = {
@@ -159,3 +160,10 @@ var ajaxFileUpload = function(width, height, f, obj) {
         }
     });
 })(jQuery);
+
+$(function(){
+  $('#menu_toggle').click(function(){
+    $('.p_cont').toggle();
+  })
+})
+

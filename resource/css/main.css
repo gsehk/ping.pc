@@ -90,6 +90,7 @@ textarea {
 }
 
 .nav_beta {
+    color: #59b6d7;
     padding-top: 32px;
     float: left;
     display: inline-block;
@@ -142,6 +143,13 @@ textarea {
         border-radius: 50%;
         margin-right: 9px;
         float: left;
+        cursor: pointer;
+    }
+
+    .nav_right a, a:visited, .nav_right a:hover{
+        padding: 0px 10px;
+        color: #59b6d7;
+        font-size: 14px;
     }
 
 .nav_name {
@@ -156,13 +164,21 @@ textarea {
 }
 
 .p_cont {
-    background: url("../images/personal_ye.png") center no-repeat;
+    display: none;
+    background: #fff;
     position: absolute;
-    right: 128px;
-    top: 72px;
+    right: 69px;
+    top: 80px;
     width: 180px;
-    height: 312px;
+    border-radius: 3px;
     padding-top: 20px;
+    box-shadow: 0px 1px 22px #E2E0E0;
+}
+
+.p_cont .triangle {
+    position: absolute;
+    left: 72px;
+    top: -14px;
 }
 
     .p_cont ul li {
@@ -826,6 +842,7 @@ textarea {
     }
 
 .dy_picture {
+    display: none;
     margin-top: 40px;
     padding: 0 40px;
     height: 60px;

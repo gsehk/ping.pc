@@ -1,7 +1,7 @@
 @php $route = Route::currentRouteName(); @endphp
 <div class="nav nav_border">
     <div class="nav_left">
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/logo.png') }}" class="nav_logo" />
+        <a href="{{ route('pc:feed') }}"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/logo.png') }}" class="nav_logo" /></a>
         <span class="nav_beta fs-16">beta</span>
     </div>
     <div class="nav_list">
@@ -11,33 +11,42 @@
         </ul>
     </div>
 
+    @if (!empty($user))
     <div class="nav_right">
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/logo.png') }}" />
+        @if (!empty($user['avatar']))
+        <img src="{{ $route['storage'] }}/{{ $user['avatar']}} " id="menu_toggle" alt="{{ $user['name'] }}"/>
+        @else
+        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" id="menu_toggle"/>
+        @endif
         <span class="fs-16 nav_name"></span>
     </div>
-
-    @if (!empty($user))
     <div class="p_cont">
         <ul>
             <li>
-                <a href="#"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
+                <a href="{{ route('pc:collection') }}"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
             </li>
             <li>
-                <a href="#"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>
+                <a href="{{ route('pc:credit') }}"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>
             </li>
             <li>
-                <a href="#" class="p_cont_hover"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
+                <a href="{{ route('pc:account', ['page'=>'account-auth']) }}"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
             </li>
             <li>
-                <a href="#"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
+                <a href="{{ route('pc:account') }}"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
             </li>
             <li style=" border-top: 1px solid #ededed; padding-top: 20px;">
-                <a href="#">个人主页</a>
+                <a href="{{ route('pc:myFeed')}}">个人主页</a>
             </li>
             <li>
-                <a href="#">退出</a>
+                <a href="{{ route('pc:logout')}}">退出</a>
             </li>
         </ul>
+        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/triangle.png') }}" class="triangle" />
+    </div>
+    @else
+    <div class="nav_right">
+        <a href="{{ route('pc:register') }}">注册</a>
+        <a href="{{ route('pc:index') }}">登录</a>
     </div>
     @endif
 </div>
