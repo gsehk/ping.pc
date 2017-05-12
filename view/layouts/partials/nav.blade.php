@@ -13,6 +13,7 @@
     @if (!empty($user))
     <div class="nav_right">
         @if (!empty($user['avatar']))
+        <img src="{{ $routes['storage'] }}{{ $user['avatar']}} " id="menu_toggle" alt="{{ $user['name'] }}"/>
         @else
         <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" id="menu_toggle"/>
         @endif
