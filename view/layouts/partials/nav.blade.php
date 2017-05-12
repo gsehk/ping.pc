@@ -13,7 +13,11 @@
 
     @if (!empty($user))
     <div class="nav_right">
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/logo.png') }}" id="menu_toggle"/>
+        @if (!empty($user['avatar']))
+        <img src="{{ $route['storage'] }}/{{ $user['avatar']}} " id="menu_toggle" alt="{{ $user['name'] }}"/>
+        @else
+        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" id="menu_toggle"/>
+        @endif
         <span class="fs-16 nav_name"></span>
     </div>
     <div class="p_cont">
@@ -25,7 +29,7 @@
                 <a href="{{ route('pc:credit') }}"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>
             </li>
             <li>
-                <a href="{{ route('pc:account', ['page'=>'account-auth']) }}" class="p_cont_hover"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
+                <a href="{{ route('pc:account', ['page'=>'account-auth']) }}"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
             </li>
             <li>
                 <a href="{{ route('pc:account') }}"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>

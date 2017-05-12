@@ -41,49 +41,29 @@
                     <a href="javascript:;" data-cid="3" class="fs-16 @if ($type == 3) dy_cen_333 @endif">最新</a>
                 </div>
                 <div id="feeds-list">
-                    
                 </div>
-                <!-- <div>
-                    <div class="dy_c">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-                        <span class="dy_name fs-14">大师</span>
-                        <span class="dy_time fs-12">5分钟前</span>
-                    </div>
-                    <div class="cen_img">
-                        <p class="fs-14 cen_word">你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候</p>
-                        <div class="dy_img4">
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="img4" />
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="img4" />
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="img4" />
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="img4" />
-                        </div>
-                        <div class="dy_comment">
-                            <span>
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg>
-                                121
-                            </span>
-                            <span>
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
-                                121
-                            </span>
-                            <span>
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
-                                121
-                            </span>
-                            <span class="cen_right">
-                                <i class="icon iconfont icon-gengduo-copy"></i>
-                            </span>
-                        </div>
-                        <div class="f3"></div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
     <div class="dy_right">
-        @component('signed')
-            555
-        @endcomponent
+        @if (!empty($user))
+        <!-- 个人中心右边签到 -->
+        <div class="dy_signed">
+            <div class="dyrTop">
+                <span class="dyrTop_r fs-14">
+                    已获积分
+                    <span>{{ $user['credit'] }}</span>
+                </span>
+                @if (!empty($user['avatar']))
+                <img src="{{ $route['storage'] }}/{{ $user['avatar']}} " class="dyrTop_img" alt="{{ $user['name'] }}"/>
+                @else
+                <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" class="dyrTop_img" />
+                @endif
+            </div>
+            <div class="dy_qiandao">每日签到<span>+5积分</span></div>
+        </div>
+        @endif
+
 
         @component('related')
             {{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}
