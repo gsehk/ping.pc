@@ -98,3 +98,9 @@ var ajaxFileUpload = function(width, height, f, obj) {
         }
     });
 };
+
+$(function(){
+  $('#menu_toggle').click(function(){
+    $('.p_cont').toggle();
+  })
+})
