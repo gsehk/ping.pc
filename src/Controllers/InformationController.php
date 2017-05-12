@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Zhiyi\Plus\Models\StorageTask;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCate;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCateLink;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
@@ -20,8 +21,23 @@ class InformationController extends BaseController
         /*  幻灯片  */
         $datas['silid'] = $this->getRecommendList();
 
+        /* 推荐文章第一条 */
+        $datas['recommend'] = News::where('is_recommend', 1)
+                            ->orderBy('news.id', 'desc')
+                            ->take(6)
+                            ->select('id','title','updated_at','storage','from','author')
+                            ->with('storage')
+                            ->with('user')
+                            ->get();
+        foreach ($datas['recommend'][0]['user']['datas'] as $k => &$v) {
+            if ($v['profile'] == 'avatar') {
+                $datas['recommend'][0]['user'][$v['profile']] = $v['pivot']['user_profile_setting_data'];
+            }
+        }
+
         /*  文章分类  */
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
+
         /*  热门作者 */
         $datas['author'] = News::where([['state','=', 0],['author','!=', 0]])
                         ->orderBy('hits', 'desc')
@@ -29,17 +45,20 @@ class InformationController extends BaseController
                         ->select('author')
                         ->take(3)
                         ->with('user')
-                        ->get()
-                        ->toArray();
+                        ->get();
         foreach ($datas['author'] as $key => &$value) {
             $value['user']['intro'] = '  暂无简介';
             if ($value['user']['datas']) {
-                $value['user']['intro'] = $value['user']['datas'][2]['pivot']['user_profile_setting_data'];
+                foreach ($value['user']['datas'] as $pk => $pv) {
+                    if ($pv['profile'] == 'intro') {
+                        $value['user'][$pv['profile']] = $pv['pivot']['user_profile_setting_data'];
+                    }
+                }
             }
             unset($value['user']['datas']);
         }
 
-        return view('information.index', $datas);
+        return view('information.index', $datas, $this->mergeData);
     }
 
     public function read(int $news_id)
@@ -50,6 +69,14 @@ class InformationController extends BaseController
                 ->with(['collection' => function( $query ){
                     return $query->count();
                 }])->first();
+        if ($data['user']['datas']) {
+            $data['user']['intro'] = '暂无简介';
+            foreach ($data['user']['datas'] as $k => $v) {
+                if ($v['profile'] == 'intro') {
+                    $data['user'][$v['profile']] = $v['pivot']['user_profile_setting_data'];
+                }
+            }
+        }
 
         $data['hots'] = News::join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
                         ->where([['news.author','=',$data->author], ['news_cates_links.cate_id','=',1]])
@@ -74,7 +101,8 @@ class InformationController extends BaseController
 
     public function release()
     {
-        $data['count'] = News::where('is_recommend', 2)->count(); 
+        $data['count'] = News::where('state', 2)->count();
+        $data['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get();
 
         return view('information.release', $data, $this->mergeData);
     }
@@ -90,39 +118,19 @@ class InformationController extends BaseController
         $max_id = $request->max_id;
         $limit = $request->limit ?? 15;
 
-        switch ($cate_id) {
-            // 推荐
-            case -1:
-                $datas['list'] = News::where('is_recommend', 1)
-                        ->where(function ($query) use ($max_id) {
-                            if ($max_id > 0) {
-                                $query->where('news.id', '<', $max_id);
-                            }
-                        })
-                        ->orderBy('news.id', 'desc')
-                        ->take($limit)
-                        ->select('id','title','updated_at','storage','from')
-                        ->with('storage')
-                        ->get()->toArray();
-                break;
-
-            // 分类
-            default:
-                $datas = News::Join('news_cates_links', function ($query) use ($cate_id) {
-                            $query->on('news.id', '=', 'news_cates_links.news_id')->where('news_cates_links.cate_id', $cate_id);
-                        })
-                        ->where(function ($query) use ($max_id) {
-                            if ($max_id > 0) {
-                                $query->where('news.id', '<', $max_id);
-                            }
-                        })
-                        ->orderBy('news.id', 'desc')
-                        ->select('news.id','news.title','news.updated_at','news.storage','news.comment_count','news.from')
-                        // ->with('storage')
-                        ->withCount('collection')
-                        ->get()->toArray();
-                break;
-        }
+        $datas = News::Join('news_cates_links', function ($query) use ($cate_id) {
+                    $query->on('news.id', '=', 'news_cates_links.news_id')->where('news_cates_links.cate_id', $cate_id);
+                })
+                ->where(function ($query) use ($max_id) {
+                    if ($max_id > 0) {
+                        $query->where('news.id', '<', $max_id);
+                    }
+                })
+                ->orderBy('news.id', 'desc')
+                ->select('news.id','news.title','news.updated_at','news.storage','news.comment_count','news.from')
+                // ->with('storage')
+                ->withCount('collection')
+                ->get()->toArray();
 
         return response()->json(static::createJsonData([
             'status'  => true,
@@ -199,17 +207,24 @@ class InformationController extends BaseController
     public function doSavePost(Request $request)
     {
         $type = $request->type; // 1 待审核 2 草稿
+        if (!$request->cate_id) {
+            return response()->json([
+                'status' => false,
+                'message' => '请选择文章分类',
+            ])->setStatusCode(201);
+        }
+
         if (!$request->task_id) {
             return response()->json([
                 'status' => false,
                 'message' => '没有上传封面图片',
-            ])->setStatusCode(404);
+            ])->setStatusCode(201);
         }
         if (mb_strlen($request->content, 'utf8') > 5000) {
             return response()->json([
                 'status' => false,
                 'message' => '内容不能大于5000字',
-            ])->setStatusCode(400);
+            ])->setStatusCode(201);
         }
 
         $storage = StorageTask::where('id', $request->task_id)
@@ -219,15 +234,21 @@ class InformationController extends BaseController
         if ($storage) {
             $storage_id = $storage['storage']['id'];
         }
-        $news = new News();
 
+        $news = new News();
         $news->title = $request->subject;
+        $news->author = $this->mergeData['user']->id ?? 0;
         $news->content = $request->content;
         $news->storage = $storage_id ?: '';
         $news->from = $request->source ?: '';
         $news->state = $type;
-
         $news->save();
+
+        $news_link = new NewsCateLink();
+        $news_link->news_id = $news->id;
+        $news_link->cate_id = $request->cate_id;
+        $news_link->save();
+
         return response()->json(static::createJsonData([
             'status'  => true,
             'code'    => 0,

@@ -3,19 +3,27 @@
 @section('content')
 <div class="dy_bg">
     <div class="in_cont">
-        <div class="inT_l">
-            <div class="inT_title">
-                <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-                <span>大姐头</span>
-            </div>
-            <div class="inT_word">大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师大师</div>
+        <div class="inT_l" id="first_recommend_news">
+            @if($recommend)
+                @foreach($recommend as $frv)
+                    @if($loop->first)
+                    <div class="inT_title">
+                        <img src="{{$route['storage']}}{{$frv['user']['avatar']}}" />
+                        <span>{{$frv['user']['name']}}</span>
+                    </div>
+                    <div class="inT_word">{{$frv['title']}}</div>
+                    @endif
+                @endforeach
+            @endif
             <div class="inT_line"></div>
-            <div class="inT_list">
-                <span>大姐头大姐头大姐头大姐头大姐头大姐头</span>
-                <span>大姐头大姐头大姐头大姐头大姐头大姐头</span>
-                <span>大姐头大姐头大姐头大姐头大姐头大姐头</span>
-                <span>大姐头大姐头大姐头大姐头大姐头大姐头</span>
-                <span>大姐头大姐头大姐头大姐头大姐头大姐头</span>
+            <div class="inT_list" id="recommend_news">
+                @if($recommend)
+                    @foreach($recommend as $rv)
+                        @if(!$loop->first)
+                        <span>{{$rv['title']}}</span>
+                        @endif
+                    @endforeach
+                @endif
             </div>
         </div>
         <div class="inT_c">
@@ -81,7 +89,6 @@
             @endforeach
             </ul>
             <div id="news-list">
-                <div class='loading' id='loadMore'><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" class='load'>加载中</div>
             </div>
         </div>
         <div class="inf_right">
@@ -122,16 +129,11 @@
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
 <script type="text/javascript">
-var option = {
-    container: '#news-list',
-    loadcount: '',
-    loadmax: '',
-    maxid: 0,
-    loadlimit: '',
-    cid: "{{$cid}}"
-};
 setTimeout(function() {
-    news.init(option);
+    news.init({
+        container: '#news-list',
+        cid: "{{$cid}}"
+    });
 }, 300);
 
 $(document).ready(function(){

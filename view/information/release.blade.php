@@ -12,6 +12,16 @@
             <div class="con_title p_30">
                 <input type="text" id="subject-abstract" name="abstract" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字" />
             </div>
+            <div class="con_title">
+                @if($cate)
+                <select class="select" name="cate_id" id="subject-cate">
+                    <option value="0">请选择</option>
+                    @foreach($cate as $cat)
+                        <option value="{{$cat['id']}}">{{$cat['name']}}</option>
+                    @endforeach
+                </select>
+                @endif
+            </div>
             <div class="con_place">
                 @component('editor')
                     @slot('height') 530px @endslot
@@ -22,7 +32,7 @@
                     <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/pro.png') }}" /><input placeholder="添加标签，多个标签用逗号分开" />
                 </span>
                 <span class="con_cover ai_face_box">
-                    封面555*393px
+                    <span id="J-show-tips">封面555*393px</span>
                     <a href="javascript:;" class="ai_face_btn">点击上传</a>
                     <div class="ai_upload">
                         <input id="J-file-upload"
@@ -31,6 +41,7 @@
                                data-input="#task_id"
                                data-form="#release_form"
                                data-preview="#J-image-preview"
+                               data-tips="#J-show-tips"
                                data-token="{{ csrf_token() }}"
                         >
                         <input name="task_id" id="task_id" type="hidden" value="" />
@@ -66,6 +77,7 @@
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script type="text/javascript">
+$('select.select').select();
 $('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
 </script>
 @endsection

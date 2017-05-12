@@ -17,7 +17,7 @@
             </div>
             <div class="del_pro">
                 <span><i class="icon iconfont icon-shoucang-copy1"></i>{{count($collection)}}收藏</span>
-                <span><i class="icon iconfont icon-xihuan-white"></i>{{$digg_count}}人喜欢</span>
+                <span onclick="digg.addDigg('{{$id}}');"><i class="icon iconfont icon-xihuan-white"></i>{{$digg_count}}人喜欢</span>
                 <div class="del_share">
                     分享至：
                     <svg class="icon svdel_g1" aria-hidden="true">
@@ -124,7 +124,7 @@
                 </div>
                 <div class="delTop_right">
                     <span>{{$user['name']}}</span>
-                    <p>{{$user['datas'][2]['pivot']['user_profile_setting_data']}}</p>
+                    <p class="txt-hide">{{$user['intro']}}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">

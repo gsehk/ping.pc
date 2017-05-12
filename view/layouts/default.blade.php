@@ -17,7 +17,7 @@
         // 全局变量
         var PUBLIC_URL = '{{\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset("")}}';
         var API = '/api/v1';
-        var MID;
+        var MID = "{{$user['id'] or 0}}";
     </script>
 </head>
 

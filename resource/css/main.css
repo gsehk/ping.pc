@@ -2764,9 +2764,8 @@ textarea {
 
 .con_title {
     font-size: 24px;
-    color: #ccc;
     padding-bottom: 20px;
-    border-bottom: 1px solid #ededed;
+    border-bottom: 1px solid #ccc;
 }
 
     .con_title input {
@@ -2782,8 +2781,7 @@ textarea {
 
 .con_place {
     width: 680px;
-    height: 540px;
-    border: 1px solid #ededed;
+    height: 538px;
     margin-top: 30px;
 }
 
@@ -2798,7 +2796,7 @@ textarea {
     height: 48px;
     display: inline-block;
     padding-left: 53px;
-    border-right: 1px solid #ededed;
+    border-right: 1px solid #ccc;
     position: relative;
 }
 
@@ -2821,9 +2819,9 @@ textarea {
     line-height: 48px;
     font-size: 14px;
     color: #ccc;
-    border-left: 1px solid #ededed;
-    border-right: 1px solid #ededed;
-    border-bottom: 1px solid #ededed;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .con_cover {
@@ -3528,3 +3526,12 @@ textarea {
 .rank-tit .arrow-rank-l,.rank-tit .arrow-rank-r{width: 12px;height: 12px;margin: 0 0 0 3px;cursor: pointer;display: inline-block;}
 .rank-tit .arrow-rank-l{background-image: url('../images/ic_lastpage.png')}
 .rank-tit .arrow-rank-r{background-image: url('../images/ic_nextpage.png')}
+
+/* select 模拟样式  */
+.select{position:relative;width:134px;min-width:134px;height:36px;cursor:pointer;margin-top: 20px;color: #999;}
+.select:after{content:"";position:absolute;top:50%;right:10px;margin-top:-2px;border-top:5px solid #666;border-right:5px solid transparent;border-left:5px solid transparent;}
+.select .select_text{padding:0 20px 0 10px;height:36px;line-height:36px;}
+.select_ul{display:none;position:absolute;top:34px;left:-1px;width:134px;min-width:134px;border:1px solid #D4D4D4;border-bottom-right-radius:3px;border-bottom-left-radius:3px;background:#fff;z-index: 555;}
+.select_ul li{line-height:36px;text-indent:10px;}
+.select_ul li:hover{color:#fff;background:#6AA7EA;}
+.select_ul li.cur{color:#fff;background:#195DA3;}
