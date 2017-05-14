@@ -19,6 +19,8 @@
         var API = '/api/v1';
         var TOKEN = '';
         var MID = "{{$user['id'] or 0}}";
+        var NAME = "{{$user['name'] or '无名'}}";
+        var AVATAR = "{{$user['avatar'] or 7}}";
     </script>
 </head>
 

@@ -16,6 +16,30 @@ var args = {
   }
 };
 
+var urlToObject=function(url){   
+  var urlObject = {};    
+    var urlString=url.substring(url.indexOf("?")+1);   
+    var urlArray=urlString.split("&");   
+    for(var i=0,len=urlArray.length;i<len;i++){   
+      var urlItem=urlArray[i];   
+      var item = urlItem.split("=");   
+      urlObject[item[0]]=item[1];   
+    }
+    
+    return urlObject;      
+};
+
+// 字符串长度 - 中文和全角符号为1；英文、数字和半角为0.5
+var getLength = function(str, shortUrl) {
+  if (true == shortUrl) {
+    // 一个URL当作十个字长度计算
+    return Math.ceil(str.replace(/((news|telnet|nttp|file|http|ftp|https):\/\/){1}(([-A-Za-z0-9]+(\.[-A-Za-z0-9]+)*(\.[-A-Za-z]{2,5}))|([0-9]{1,3}(\.[0-9]{1,3}){3}))(:[0-9]*)?(\/[-A-Za-z0-9_\$\.\+\!\*\(\),;:@&=\?\/~\#\%]*)*/ig, 'xxxxxxxxxxxxxxxxxxxx')
+              .replace(/^\s+|\s+$/ig,'').replace(/[^\x00-\xff]/ig,'xx').length/2);
+  } else {
+    return Math.ceil(str.replace(/^\s+|\s+$/ig,'').replace(/[^\x00-\xff]/ig,'xx').length/2);
+  }
+};
+
 
 var getImgInfo = function(event){
     var $this = $(this);
@@ -53,7 +77,7 @@ var ajaxFileUpload = function(width, height, f, obj) {
         _token : obj.data('token'),
         hash   : CryptoJS.MD5(f.name).toString(),
     };
-    var formData = new FormData($(obj.data('form'))[0]); 
+    var formData = new FormData($(obj.data('form'))[0]);
     // 创建存储任务
     $.ajax({  
         url: '/api/v1/storages/task' ,  

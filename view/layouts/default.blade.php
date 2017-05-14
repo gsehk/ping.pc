@@ -18,6 +18,8 @@
         var PUBLIC_URL = '{{\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset("")}}';
         var API = '/api/v1';
         var MID = "{{$user['id'] or 0}}";
+        var NAME = "{{$user['name'] or '无名'}}";
+        var AVATAR = "{{$user['avatar'] or 7}}";
     </script>
 </head>
 

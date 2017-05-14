@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Zhiyi\Plus\Models\StorageTask;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCate;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCateLink;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
@@ -63,12 +64,15 @@ class InformationController extends BaseController
 
     public function read(int $news_id)
     {
+        $uid = $this->mergeData['user']->id ?? 0;
         $data = News::where('id', $news_id)
                 ->with('newsCount') //当前作者文章数
                 ->with('user')
                 ->with(['collection' => function( $query ){
                     return $query->count();
                 }])->first();
+        $data['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
+        $data['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         if ($data['user']['datas']) {
             $data['user']['intro'] = '暂无简介';
             foreach ($data['user']['datas'] as $k => $v) {

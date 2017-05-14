@@ -420,7 +420,7 @@ textarea {
     line-height: 36px;
     color: #fff;
     border-radius: 3px;
-    margin-right: 40px;
+    /* margin-right: 40px;.del_huifu */
 }
 
     .dy_share:link {
@@ -1573,7 +1573,7 @@ textarea {
     padding-bottom: 40px;
 }
 
-    .del_pro span {
+    .del_pro a {
         width: 120px;
         text-align: center;
         display: inline-block;
@@ -1692,24 +1692,24 @@ textarea {
     color: #666;
     line-height: 24px;
     margin-top: 20px;
-    display: block;
+    /* display: block; */
 }
 
     .comment_right a link, .comment_right a:visited, .comment_right a:hover {
         color: #666;
     }
 
-.del_huifu {
+.del_huifu>a {
     font-size: 14px;
-    color: #ccc;
-    left: 0;
+    color: #111;
+    /* left: 0;
     display: none;
     bottom: 0;
-    position: absolute;
+    position: absolute; */
 }
 
 .comment_right a:hover .del_huifu {
-    display: block;
+    /* display: block; */
 }
 
 .del_reply {

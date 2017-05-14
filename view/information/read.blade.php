@@ -16,8 +16,20 @@
                 {!!$content!!}
             </div>
             <div class="del_pro">
-                <span><i class="icon iconfont icon-shoucang-copy1"></i>{{count($collection)}}收藏</span>
-                <span onclick="digg.addDigg('{{$id}}');"><i class="icon iconfont icon-xihuan-white"></i><font class="digg_num">{{$digg_count}}</font>人喜欢</span>
+                <span id="collect{{$id}}" rel="{{count($collection)}}">
+                    @if($is_collect_news <= 0)
+                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><i class="icon iconfont icon-shoucang-copy1"></i><font class="collect_num">{{count($collection)}}</font>收藏</a>
+                    @else 
+                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');"><i class="icon iconfont icon-shoucang-copy1" style="color: red;"></i><font class="collect_num">{{count($collection)}}</font>收藏</a>
+                    @endif
+                </span>
+                <span id="digg{{$id}}" rel="{{$digg_count}}">
+                    @if($is_digg_news <= 0)
+                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><i class="icon iconfont icon-xihuan-white"></i><font class="digg_num">{{$digg_count}}</font>人喜欢</a>
+                    @else 
+                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');"><i class="icon iconfont icon-xihuan-white" style="color: red;"></i><font class="digg_num">{{$digg_count}}</font>人喜欢</a>
+                    @endif
+                </span>
                 <div class="del_share">
                     分享至：
                     <svg class="icon svdel_g1" aria-hidden="true">
@@ -32,18 +44,18 @@
                 </div>
             </div>
             <div class="del_comment"><span>{{$comment_count}}</span>人评论</div>
-            <div>
-                <textarea class="del_ta" placeholder="说点什么吧"></textarea>
+            <div class="comment-box">
                 <div class="dy_company" style="padding-left:0;">
+                    <textarea class="del_ta mini_editor" placeholder="说点什么吧"></textarea>
                     <span class="fs-14">
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>
                         表情
                     </span>
                     <span class="dy_cs" style="margin:10px auto auto 420px;">可输入<span>255</span>字</span>
-                    <button class="dy_share a_link" style="margin-right: 0; float: right;">评论</button>
+                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{$id}}" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
                 </div>
             </div>
-            <div class="delComment_cont">
+            <div class="delComment_cont" id="comment_detail">
                 <div class="delComment_list">
                     <div class="comment_left">
                         <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" class="c_leftImg" />
@@ -52,10 +64,8 @@
                         <span class="del_ellen">Ellen</span>
                         <span class="c_time">5分钟前</span>
                         <i class="icon iconfont icon-gengduo-copy"></i>
-                        <a href="javascript:;">
-                            大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头
-                            <span class="del_huifu">回复</span>
-                        </a>
+                        <p>试试啦<span class="del_huifu"><a href="javascript:void(0)" data-args='editor=#comment&box=#comment_detail&row_id={{$id}}' id="J-reply-comment-news">回复</a></span>
+                        </p>
                     </div>
                 </div>
                 <div class="delComment_list">
@@ -85,17 +95,6 @@
                             大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头
                             <span class="del_huifu">回复</span>
                         </a>
-                        <div>
-                            <textarea class="del_ta" placeholder="说点什么吧"></textarea>
-                            <div class="dy_company" style="padding-left:0;">
-                                <span class="fs-14">
-                                    <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>
-                                    表情
-                                </span>
-                                <span class="dy_cs" style="margin:10px auto auto 360px;">可输入<span>255</span>字</span>
-                                <button class="dy_share a_link" style="margin-right: 0; float: right;margin-top:0;">评论</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="delComment_cont">
@@ -162,6 +161,23 @@
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
 <script type="text/javascript">
+
+$('#J-comment-news').on('click', function(){
+    var attrs = urlToObject($(this).data('args'));
+    attrs.to_uid = $(this).attr('to_uid');
+    attrs.addToEnd = $(this).attr('addtoend');
+    attrs.to_comment_id = $(this).attr('to_comment_id');
+
+    comment.init(attrs);
+
+    var _this = this;
+    var after = function(){
+        $(_this).attr('to_uid','0');
+        $(_this).attr('to_comment_id','0');
+    }
+    comment.addComment(after, this);
+});
+
 $(document).ready(function(){
   recent_hot(1);
   $('#j-recent-hot .week').on('click', function(){

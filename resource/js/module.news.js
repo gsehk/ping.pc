@@ -1,9 +1,12 @@
 ﻿
+var initNums = 255;
 var loadHtml = "<div class='loading'><img src='"+PUBLIC_URL +"/images/loading.png' class='load'>加载中</div>";
 var request_url = {
     /* 获取文章列表 */
     get_news:'/information/getNewsList',
     digg_news:'/api/v1/news/{news_id}/digg',
+    collect_news:'/api/v1/news/{news_id}/collection',
+    comment_news:'/api/v1/news/{news_id}/comment',
 };
 var news = {};
 
@@ -228,7 +231,7 @@ $('.subject-submit').on('click', function(){
         'source'  : froms.val(),
         '_token'  : $('#token').val()
       };
-      console.log(args);
+
       $.post(url, args, function(data) {
         if (data.status == true) {
           window.location.href = data.data.url;
@@ -242,7 +245,7 @@ $('.subject-submit').on('click', function(){
  * 赞核心Js
  * @type {Object}
  */
-digg = {
+var digg = {
   // 给工厂调用的接口
   _init: function (attrs) {
     digg.init();
@@ -263,7 +266,6 @@ digg = {
     digg.digglock = 1;
 
     var url = request_url.digg_news.replace('{news_id}', news_id);
-
     $.ajax({
         url: url,
         type: 'POST',
@@ -271,14 +273,19 @@ digg = {
         beforeSend: function (xhr) {
     　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
     　　},
-        error:function(xml){alert(xml.responseJSON.message)},
+        error:function(xml){},
         success:function(res){
           if (res.status == true) {
-              var num = $(this).find('.digg_num').text();
-              $(this).find('.digg_num').text(num);
+              $digg = $('#digg'+news_id);
+              var num = $digg.attr('rel');
+              num++;
+              $digg.attr('rel', num);
+              $('#digg'+news_id).html('<a href="javascript:;" onclick="digg.delDigg('+news_id+');"><i class="icon iconfont icon-xihuan-white" style="color: red;"></i><font class="digg_num">'+num+'</font>人喜欢</a>');
           }else{
               alert(res.message);
           }
+
+          digg.digglock = 0;
         }
     });
 
@@ -288,34 +295,273 @@ digg = {
       return false;
     }
     digg.digglock = 1;
-    $.post(U('widget/Digg/delDigg'), {news_id:news_id}, function(res) {
-      if (res.status == 1) {
-        $digg = {};
-        if (typeof $('#digg'+news_id)[0] === 'undefined') {
-          $digg = $('#digg_'+news_id);
-        } else {
-          $digg = $('#digg'+news_id);
+
+    var url = request_url.digg_news.replace('{news_id}', news_id);
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　},
+        error:function(xml){},
+        success:function(res, data, xml){
+          if (xml.status == 204) {
+              $digg = $('#digg'+news_id);
+              var num = $digg.attr('rel');
+              num--;
+              $digg.attr('rel', num);
+              $('#digg'+news_id).html('<a href="javascript:;" onclick="digg.addDigg('+news_id+');"><i class="icon iconfont icon-xihuan-white"></i><font class="digg_num">'+num+'</font>人喜欢</a>');
+          }else{
+              alert(res.message);
+          }
+
+          digg.digglock = 0;
         }
-        var num = $digg.attr('rel');
-        num--;
-        $digg.attr('rel', num);
-        var content;
-        //if (num == 0) {
-//          content = '<a href="javascript:;" onclick="digg.addDigg('+news_id+')">赞</a>';
-//        } else {
-//          content = '<a href="javascript:;" onclick="digg.addDigg('+news_id+')">赞('+num+')</a>';
-//        }
-                if (num == 0) {
-          content = '<a href="javascript:;" onclick="digg.addDigg('+news_id+')" title="赞"><i class="digg-like"></i></a>';
-        } else {
-          content = '<a href="javascript:;" onclick="digg.addDigg('+news_id+')" title="赞"><i class="digg-like"></i>('+num+')</a>';
-        }
-        $('#digg'+news_id).html(content);
-        $('#digg_'+news_id).html(content);
-      } else {
-        ui.error(res.info);
-      }
-      digg.digglock = 0;
-    }, 'json');
+    });
   }
 };
+
+/**
+ * 赞核心Js
+ * @type {Object}
+ */
+var collect = {
+  // 给工厂调用的接口
+  _init: function (attrs) {
+    collect.init();
+  },
+  init: function () {
+    collect.collectlock = 0;
+  },
+  addCollect: function (news_id) {
+    // 未登录弹出弹出层
+    if(MID == 0){
+          alert('小伙子你还没登录~~');
+      return;
+    }
+    
+    if (collect.collectlock == 1) {
+      return false;
+    }
+    collect.collectlock = 1;
+
+    var url = request_url.collect_news.replace('{news_id}', news_id);
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　},
+        error:function(xml){},
+        success:function(res){
+          if (res.status == true) {
+              $collect = $('#collect'+news_id);
+              var num = $collect.attr('rel');
+              num++;
+              $collect.attr('rel', num);
+              $('#collect'+news_id).html('<a href="javascript:;" onclick="collect.delCollect('+news_id+');"><i class="icon iconfont icon-shoucang-copy1" style="color: red;"></i><font class="collect_num">'+num+'</font>收藏</a>');
+          }else{
+              alert(res.message);
+          }
+
+          collect.collectlock = 0;
+        }
+    });
+
+  },
+  delCollect: function (news_id) {
+
+    if (collect.collectlock == 1) {
+      return false;
+    }
+    collect.collectlock = 1;
+    var url = request_url.collect_news.replace('{news_id}', news_id);
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　},
+        error:function(xml){},
+        success:function(res, data, xml){
+          if (xml.status == 204) {
+              $collect = $('#collect'+news_id);
+              var num = $collect.attr('rel');
+              num--;
+              $collect.attr('rel', num);
+              $('#collect'+news_id).html('<a href="javascript:;" onclick="collect.addCollect('+news_id+');"><i class="icon iconfont icon-shoucang-copy1"></i><font class="collect_num">'+num+'</font>收藏</a>');
+          }else{
+              alert(res.message);
+          }
+
+          collect.collectlock = 0;
+        }
+    });
+  }
+};
+
+/**
+ * 核心评论对象
+ */
+var comment = {
+  // 给工厂调用的接口
+  _init:function(attrs) {
+    if(attrs.length == 3) {
+      comment.init(attrs[1], attrs[2]);
+    } else {
+      return false;
+    }
+  },
+  // 初始化评论对象
+  init: function(attrs) {
+    this.box = attrs.box;
+    this.editor = attrs.editor;
+    this.row_id = attrs.row_id;
+    this.reply_to_user_id = attrs.reply_to_user_id || 0;
+  },
+  // 显示回复块
+  /*display: function(callback) { 
+    var box = this.box;
+    var infopen = $(box).parent().find('.infopen:first');
+    var forwardBox = $(box).parent().find('.forward_box:first');
+    if("undefined" == typeof this.table) {
+      this.table = 'feed';
+    }
+    if(forwardBox.size()) forwardBox.hide();
+    if(box.style.display == 'none') {
+      if(infopen.size()) {
+        infopen.show();
+        infopen.find('.trigon').css('left',
+         $(this.sourceObject).position().left
+          + ($(this.sourceObject).width()/2));
+      }
+      if(box.innerHTML !=''){
+        //box.style.display = 'block';
+        $(box).stop().slideDown(200);
+        var _textarea = $(box).find('textarea');
+        if(_textarea.size() == 0) {
+          _textarea = $(box).find('input:eq(0)');
+        }
+        _textarea.focus(); callback && callback('show');
+      }else{
+        
+      }
+    }else{
+      $(box).stop().slideUp(200, function(){
+        if(infopen.size()) infopen.hide();
+        callback && callback('hide');
+      });
+      //box.style.display = 'none';
+    }
+  },*/
+  // 初始化回复操作
+  initReply: function() {
+    this.comment_textarea = this.box.childModels['comment_textarea'][0];
+    var mini_editor = this.comment_textarea.childModels['mini_editor'][0];
+    var _textarea = $(mini_editor).find('textarea');
+    if(_textarea.size() == 0) _textarea = $(mini_editor).find('input:eq(0)');
+    var html = L('PUBLIC_RESAVE')+'@'+this.to_comment_uname+' ：';
+    //清空输入框
+    _textarea.val('');
+    //_textarea.focus();
+    _textarea.inputToEnd(html);
+    _textarea.focus();
+  },
+  // 发表评论
+  addComment:function(afterComment,obj) {
+    var box = this.box;
+    var _textarea = $(obj).parent().find('textarea');
+    if(_textarea.size() == 0) {
+      _textarea = $(obj).parent().find('input:eq(0)');
+    }
+    _textarea = _textarea.get(0);
+    var strlen = getLength(_textarea.value);
+
+    var leftnums = initNums - strlen;
+    if(leftnums < 0 || leftnums == initNums) {
+      alert('内容不能大于255个字符');
+      return false;
+    }
+
+    var content = _textarea.value;  
+    if(content == '') {
+      alert('内容不能为空');
+    }
+    if("undefined" != typeof(this.addComment) && (this.addComment == true)) {
+      return false; //不要重复评论
+    }
+    var addcomment = this.addComment;
+    var addToEnd = this.addToEnd;
+    var url = request_url.comment_news.replace('{news_id}',this.row_id);
+    var _this = this;
+    obj.innerHTML = '回复中..';
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data:{comment_content:content,reply_to_user_id:this.to_uid},
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　},
+        error:function(xml){},
+        success:function(res){
+          if (res.status == true) {
+              if ( obj != undefined ){
+                obj.innerHTML = '回复';
+              }
+              var html = '<div class="delComment_list">'+
+                '<div class="comment_left">'+
+                '<img src="'+API+'/storages/'+AVATAR+'" class="c_leftImg" />'+
+                '</div>'+
+                '<div class="comment_right">'+
+                '<span class="del_ellen">'+NAME+'</span>'+
+                '<span class="c_time">刚刚</span>'+
+                '<i class="icon iconfont icon-gengduo-copy"></i>'+
+                '<p>'+content+'<span class="del_huifu">'+
+                '<a href="javascript:void(0)" data-args="editor=#comment&box=#comment_detail&to_uid='+res.data+'"'+
+                'id="J-reply-comment">回复'+
+                '</a></span></p>'+
+                '</div>'+
+                '</div>';
+              var commentBox = $(comment.box);
+              if("undefined" != typeof(commentBox)){
+                if(addToEnd == 1){
+                  commentBox.append(html);
+                }else{
+                  commentBox.prepend(html);
+                }
+                /*绑定回复操作*/
+                $('#J-reply-comment').on('click', function(){
+                    comment.initReply();
+                });
+              }
+          }else{
+              alert(res.message);
+          }
+        }
+    });
+  },
+  delComment:function(comment_id){
+    $.post(U('widget/Comment/delcomment'),{comment_id:comment_id},function(msg){
+      // 动态添加字数
+      var commentDom = $('#feed'+comment.row_id).find('a[event-node="comment"]');
+      var oldHtml = commentDom.html();
+      if (oldHtml != null) {
+        var commentVal = oldHtml.replace(/\(\d+\)$/, function (num) {
+          var cnum = parseInt(num.slice(1, -1)) - 1;
+          if (cnum <= 0) {
+            return '';
+          }
+          num = '(' + cnum + ')';
+          return num;
+        });
+        commentDom.html(commentVal);
+      }
+    });
+  }
+};
+
