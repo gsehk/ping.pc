@@ -842,7 +842,6 @@ textarea {
     }
 
 .dy_picture {
-    display: none;
     margin-top: 40px;
     padding: 0 40px;
     height: 60px;
@@ -855,7 +854,17 @@ textarea {
     display: inline-block;
     margin-right: 3px;
     position: relative;
+    border: 1px solid #ededed;
 }
+    .dy_picture_span .imgload{
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    .dy_picture_span .imgloaded{
+        height: 59px;
+        width: 59px;
+    }
 
     .dy_picture_span span {
         display: inline-block;
@@ -1836,6 +1845,14 @@ textarea {
     background: #f3f6f7;
 }
 
+.login_top {
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    margin-right: 0;
+    padding-top: 20px;
+}
+
 .login_top a {
     font-size: 14px;
     color: #666;
@@ -1849,8 +1866,8 @@ textarea {
         border-right: 0;
     }
 
-    .login_top a:hover, .login_top a:visited {
-        color: #666;
+    .login_top a:hover{
+        color: #59b6d7;
     }
 
 .login_center {
@@ -1900,7 +1917,10 @@ textarea {
 }
 
 .l_tip {
+    height: 30px;
+    line-height: 30px;
     color: #CC0000;
+    display: block;
 }
 
 .l_tel {
@@ -3503,7 +3523,7 @@ textarea {
     height: 60px;
 }
 .loading{text-align:center;padding:10px 0;color:#999;}
-.loading img.load{margin-left:2px;height:16px;width:16px;-webkit-animation:icon-load 1.5s infinite linear;animation:icon-load 1.5s infinite linear;
+img.load{margin-left:2px;height:16px;width:16px;-webkit-animation:icon-load 1.5s infinite linear;animation:icon-load 1.5s infinite linear;
 }
 @-webkit-keyframes icon-load {
     from {

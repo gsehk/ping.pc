@@ -15,23 +15,15 @@
             <div class="dy_cTop">
                 <textarea class="dy_ta" placeholder="说说新鲜事"></textarea>
                 <div class="dy_company">
-                    <span class="fs-14">
+                    <span class="fs-14" id="feed_expression">
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-biaoqing"></use></svg>
                         表情
                     </span>
-                    <span class="fs-14">
+                    <span class="fs-14" id="feed_pic">
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
                         图片
                     </span>
                     <a href="javascript:;" class="dy_share">分享</a>
-                </div>
-                <div class="dy_picture">
-                    <a href="javascript:;" class="dy_picture_span">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="dy_picture_span_img" />
-                        <span>
-                            <i class="icon iconfont icon-close"></i>
-                        </span>
-                    </a>
                 </div>
             </div>
             <div class="dy_cen">
@@ -73,8 +65,23 @@
 @endsection
 
 @section('scripts')
-<script src="{{\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.weibo.js')}}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.weibo.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/jquery.Huploadify.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script type="text/javascript">
+$(function(){
+    // 发布微博
+    var loadgif = PUBLIC_URL + '/images/loading.png';
+    var up = $('.dy_company').Huploadify({
+        fileTypeExts: '*.jpg,*.png',
+        auto:true,
+        multi:true,
+        newUpload:true,
+        buttonText:''
+    });
+})
+
+// 加载微博
 var option = {
     container: '#feeds-list',
     loadcount: '',

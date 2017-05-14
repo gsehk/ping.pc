@@ -14,6 +14,7 @@
         </div>
         <div class="login_right">
             <form method="POST" id="login_form">
+                <span class="l_tip" id="login_tip"> </span>
                 <div class="l_tel">
                     <input type="text" placeholder="输入手机号" name="phone"/>
                 </div>
@@ -21,8 +22,7 @@
                     <input type="password" placeholder="输入密码" name="password"/>
                 </div>
                 <div class="l_mm">
-                    <span class="l_tip" id="login_tip"></span>
-                    <a href="{{Route('pc:findPassword')}}">
+                    <a href="{{ route('pc:findPassword') }}">
                         <span class="l_forget">忘记密码</span>
                     </a>
                 </div>
@@ -30,7 +30,7 @@
             </form>
 
             <div class="no_zh">
-                <span class="no_span">没有账号？<a href="{{Route('pc:register')}}"><span>注册</span></a></span>
+                <span class="no_span">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
                 <div class="del_share login_share" >
                     三方登陆：
                     <svg class="icon svdel_g1" aria-hidden="true">

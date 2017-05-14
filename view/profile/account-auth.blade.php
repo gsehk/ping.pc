@@ -89,6 +89,7 @@ $(document).ready(function ()
         userVerif();
     };
 });
-$('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
+var file = $('#J-file-upload').files[0];
+$('#J-file-upload').on('change', {file: file, callback:ajaxFileUpload},getImgInfo);
 </script>
 @endsection
