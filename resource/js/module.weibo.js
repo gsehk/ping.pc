@@ -135,6 +135,10 @@ weibo.afterUpload = function(image, f, task_id) {
  * @return void
  */
 weibo.postFeed = function() {
+    if (!USER) {
+        alert();
+    }
+
     var content = $('#feed_content').val();
     var task_ids = [];
     $('.dy_picture').find('img').each(function(){

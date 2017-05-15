@@ -18,8 +18,11 @@
         var PUBLIC_URL = '{{\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset("")}}';
         var API = '/api/v1';
         // 用户属性
+        var USER = {};
         @if (!empty($user))
         var USER = eval({!! $user["jsonData"] !!});
+        @else
+        var USER = null;
         @endif
     </script>
 </head>
