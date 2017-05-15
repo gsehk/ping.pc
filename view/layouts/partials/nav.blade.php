@@ -10,10 +10,10 @@
             <li><a href="{{Route('pc:news')}}" class="fs-18 @if($route == 'pc:news') c_59b6d7 @endif">资讯</a></li>
         </ul>
     </div>
-    @if (!empty($user))
+    @if (!empty($TS))
     <div class="nav_right">
-        @if (!empty($user['avatar']))
-        <img src="{{ $routes['storage'] }}{{ $user['avatar']}} " id="menu_toggle" alt="{{ $user['name'] }}"/>
+        @if (!empty($TS['avatar']))
+        <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " id="menu_toggle" alt="{{ $TS['name'] }}"/>
         @else
         <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" id="menu_toggle"/>
         @endif

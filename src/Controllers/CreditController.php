@@ -16,11 +16,11 @@ class CreditController extends BaseController
 
         switch ($type) {
             case 2:
-                $credit = CreditUser::where('user_id', $this->mergeData['user']->id)->first();
+                $credit = CreditUser::where('user_id', $this->mergeData['TS']['id'])->first();
                 $credit['setting'] = CreditSetting::simplePaginate(10);
                 break;
             default:
-                $credit = CreditUser::where('user_id', $this->mergeData['user']->id)
+                $credit = CreditUser::where('user_id', $this->mergeData['TS']['id'])
                     ->with('record')
                     ->first();
                 break;

@@ -87,7 +87,7 @@ class HomeController extends BaseController
      */
     public function getFollowFeeds(Request $request)
     {
-        $user_id = $this->mergeData['user']->id ?? 0;
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
         // 设置单页数量
         $limit = $request->limit ?? 15;
         $feeds = Feed::orderBy('id', 'DESC')
@@ -119,7 +119,7 @@ class HomeController extends BaseController
      */
     public function getHotFeeds(Request $request)
     {
-        $user_id = $this->mergeData['user']->id ?? 0;
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
         // 设置单页数量
         $limit = $request->limit ?? 15;
         $page = $request->page ?? 1;
@@ -156,7 +156,7 @@ class HomeController extends BaseController
      */
     public function getNewFeeds(Request $request)
     {
-        $user_id = $this->mergeData['user']->id ?? 0;
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
         $feed_ids = $request->input('feed_ids');
         is_string($feed_ids) && $feed_ids = explode(',', $feed_ids);
         // 设置单页数量

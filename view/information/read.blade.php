@@ -46,74 +46,16 @@
             <div class="del_comment"><span>{{$comment_count}}</span>人评论</div>
             <div class="comment-box">
                 <div class="dy_company" style="padding-left:0;">
-                    <textarea class="del_ta mini_editor" placeholder="说点什么吧"></textarea>
+                    <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧"></textarea>
                     <span class="fs-14">
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>
                         表情
                     </span>
                     <span class="dy_cs" style="margin:10px auto auto 420px;">可输入<span>255</span>字</span>
-                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{$id}}" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
+                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{$id}}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
                 </div>
             </div>
-            <div class="delComment_cont" id="comment_detail">
-                <div class="delComment_list">
-                    <div class="comment_left">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" class="c_leftImg" />
-                    </div>
-                    <div class="comment_right">
-                        <span class="del_ellen">Ellen</span>
-                        <span class="c_time">5分钟前</span>
-                        <i class="icon iconfont icon-gengduo-copy"></i>
-                        <p>试试啦<span class="del_huifu"><a href="javascript:void(0)" data-args='editor=#comment&box=#comment_detail&row_id={{$id}}' id="J-reply-comment-news">回复</a></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="delComment_list">
-                    <div class="comment_left">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" class="c_leftImg" />
-                    </div>
-                    <div class="comment_right">
-                        <span class="del_ellen">Ellen</span>
-                        <span class="c_time">5分钟前</span>
-                        <i class="icon iconfont icon-gengduo-copy"></i>
-                        <div class="del_reply">
-                            回复
-                            <span class="del_ellen" style="font-weight:bold;margin:0 5px;">Ellen</span>
-                            晚上好
-                        </div>
-                    </div>
-                </div>
-                <div class="delComment_list">
-                    <div class="comment_left">
-                        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" class="c_leftImg" />
-                    </div>
-                    <div class="comment_right">
-                        <span class="del_ellen">Ellen</span>
-                        <span class="c_time">5分钟前</span>
-                        <i class="icon iconfont icon-gengduo-copy"></i>
-                        <a href="javascript:;">
-                            大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头
-                            <span class="del_huifu">回复</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="delComment_cont">
-                    <div class="delComment_list">
-                        <div class="comment_left">
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" class="c_leftImg" />
-                        </div>
-                        <div class="comment_right">
-                            <span class="del_ellen">Ellen</span>
-                            <span class="c_time">5分钟前</span>
-                            <i class="icon iconfont icon-gengduo-copy"></i>
-                            <a href="javascript:;">
-                                大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头大姐头
-                                <span class="del_huifu">回复</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="delComment_cont" id="comment_detail"></div>
             <div class="del_right"></div>
         </div>
         <div class="del_right">
@@ -167,7 +109,7 @@ $('#J-comment-news').on('click', function(){
     attrs.to_uid = $(this).attr('to_uid');
     attrs.addToEnd = $(this).attr('addtoend');
     attrs.to_comment_id = $(this).attr('to_comment_id');
-
+    console.log(attrs);
     comment.init(attrs);
 
     var _this = this;
@@ -179,6 +121,9 @@ $('#J-comment-news').on('click', function(){
 });
 
 $(document).ready(function(){
+
+  comment.init({row_id:'{{$id}}', canload:true});
+
   recent_hot(1);
   $('#j-recent-hot .week').on('click', function(){
     $('#j-recent-hot a').removeClass('a_border');

@@ -38,16 +38,16 @@
         </div>
     </div>
     <div class="dy_right">
-        @if (!empty($user))
+        @if (!empty($TS))
         <!-- 个人中心右边签到 -->
         <div class="dy_signed">
             <div class="dyrTop">
                 <span class="dyrTop_r fs-14">
                     已获积分
-                    <span>{{ $user['credit'] }}</span>
+                    <span>{{ $TS['credit'] }}</span>
                 </span>
-                @if (!empty($user['avatar']))
-                <img src="{{ $routes['storage'] }}{{ $user['avatar']}} " class="dyrTop_img" alt="{{ $user['name'] }}"/>
+                @if (!empty($TS['avatar']))
+                <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                 @else
                 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" class="dyrTop_img" />
                 @endif

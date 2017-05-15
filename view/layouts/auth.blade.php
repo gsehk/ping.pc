@@ -18,9 +18,9 @@
         var PUBLIC_URL = '{{\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset("")}}';
         var API = '/api/v1';
         var TOKEN = '';
-        var MID = "{{$user['id'] or 0}}";
-        var NAME = "{{$user['name'] or '无名'}}";
-        var AVATAR = "{{$user['avatar'] or 7}}";
+        var MID = "{{$TS['id'] or 0}}";
+        var NAME = "{{$TS['name'] or ''}}";
+        var AVATAR = "{{$TS['avatar'] or \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png')}}";
     </script>
 </head>
 

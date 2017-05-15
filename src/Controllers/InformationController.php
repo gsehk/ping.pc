@@ -12,6 +12,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCateLink;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsComment;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class InformationController extends BaseController
@@ -64,7 +65,7 @@ class InformationController extends BaseController
 
     public function read(int $news_id)
     {
-        $uid = $this->mergeData['user']->id ?? 0;
+        $uid = $this->mergeData['TS']['id'] ?? 0;
         $data = News::where('id', $news_id)
                 ->with('newsCount') //当前作者文章数
                 ->with('user')
@@ -92,6 +93,7 @@ class InformationController extends BaseController
                         ->select('id','title')
                         ->get()
                         ->toArray();
+
         return view('information.read', $data, $this->mergeData);
     }
 
@@ -240,7 +242,7 @@ class InformationController extends BaseController
 
         $news = new News();
         $news->title = $request->subject;
-        $news->author = $this->mergeData['user']->id ?? 0;
+        $news->author = $this->mergeData['TS']['id'] ?? 0;
         $news->content = $request->content;
         $news->storage = $storage_id ?: '';
         $news->from = $request->source ?: '';
@@ -292,6 +294,43 @@ class InformationController extends BaseController
             'message' => '获取成功',
             'data'    => $datas
         ]))->setStatusCode(200);
-
     }
+
+    public function getCommentList(Request $request, int $news_id)
+    {
+        $limit = $request->get('limit',15);
+        $max_id = intval($request->get('max_id'));
+        if(!$news_id) {
+            return response()->json([
+                'status' => false,
+                'code' => 9001,
+                'message' => '资讯ID不能为空'
+            ])->setStatusCode(400);
+        }
+        $comments = NewsComment::byNewsId($news_id)
+                    ->take($limit)
+                    ->where(function($query) use ($max_id) {
+                        if ($max_id > 0) {
+                            $query->where('id', '<', $max_id);
+                        }
+                    })
+                    ->select(['id', 'created_at', 'comment_content', 'user_id', 'reply_to_user_id','comment_mark'])
+                    ->with('user')
+                    ->orderBy('id','desc')
+                    ->get(); 
+        foreach ($comments as $key => &$value) {
+            $value['user']['intro'] = '  暂无简介';
+            if ($value['user']['datas']) {
+                foreach ($value['user']['datas'] as $pk => $pv) {
+                    $value['user'][$pv['profile']] = $pv['pivot']['user_profile_setting_data'];
+                }
+            }
+            unset($value['user']['datas']);
+        }
+        return response()->json(static::createJsonData([
+            'status' => true,
+            'data' => $comments,
+        ]))->setStatusCode(200);
+    }
+
 }

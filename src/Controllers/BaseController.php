@@ -22,11 +22,11 @@ class BaseController extends Controller
     public function __construct()
     {
     	$this->middleware(function($request, $next){
-			$this->mergeData['user'] = $this->guard()->user() ?: null;
+			$this->mergeData['TS'] = $this->guard()->user() ?: null;
 
-			if ($this->mergeData['user']) {
+			if ($this->mergeData['TS']) {
 				// 用户信息
-				$user_profile = User::where('id', '=', $this->mergeData['user']['id'])->with('datas', 'counts')
+				$user_profile = User::where('id', '=', $this->mergeData['TS']['id'])->with('datas', 'counts')
 									->get()
 									->toArray();
 
@@ -34,19 +34,19 @@ class BaseController extends Controller
 					$user_profile[0][$value['profile']] = $value['pivot']['user_profile_setting_data'];
 				}
 				unset($user_profile[0]['datas']);
-				$this->mergeData['user'] = $user_profile[0];
+				$this->mergeData['TS'] = $user_profile[0];
 
 				// 用户积分
-				$this->mergeData['user']['credit'] = CreditUser::where('user_id', $this->mergeData['user']['id'])
+				$this->mergeData['TS']['credit'] = CreditUser::where('user_id', $this->mergeData['TS']['id'])
 														->value('score');
 
 				// token
-				$this->mergeData['user']['token'] = AuthToken::where('user_id', $this->mergeData['user']['id'])
+				$this->mergeData['TS']['token'] = AuthToken::where('user_id', $this->mergeData['TS']['id'])
 														->where('state', 1)
 														->value('token');
 				
 	            // user role
-	            $this->mergeData['user']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['user']['id'])
+	            $this->mergeData['TS']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['TS']['id'])
 	            										->first();
 			}
 			// 站点配置

@@ -70,10 +70,10 @@ Route::prefix('profile')->group(function () {
 
     // 资讯
     Route::get('/information/index', 'InformationController@index')->name('pc:news');
-    
     // 资讯详情
     Route::get('/information/read/{news_id}', 'InformationController@read')->where(['news_id' => '[0-9]+']);
-
+    // 评论列表
+    Route::get('/information/{news_id}/comments', 'InformationController@getCommentList')->where(['news_id' => '[0-9]+']);
     // 投稿
     Route::get('/information/release', 'InformationController@release')->name('pc:newsrelease');
 

@@ -34,7 +34,7 @@ class RankController extends BaseController
 
     public function _getRankList($type, $fids)
     {
-        $user_id = $this->mergeData['user']->id ?? 0;
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
         $rank_list_key = 'user_rank_list_'.$type;
         $rank_list = Cache::get($rank_list_key);
         if (!$rank_list) {
@@ -105,23 +105,39 @@ class RankController extends BaseController
                 $user_key_data[$v['key']] = $v['value'];
             }
 
-            $followed_rank = UserDatas::where('value', '>', $user_key_data['followed_count'])
+            $followed_rank = UserDatas::where(function ($query){
+                                if (!empty($user_key_data['followed_count'])) {
+                                    $query->where('value', '>', $user_key_data['followed_count']);
+                                }
+                            })
                             ->where('key', 'followed_count')
                             ->count();
             $followed_rank += 1;
 
-            $post_rank = UserDatas::where('value', '>', $user_key_data['feeds_count'])
+            $post_rank = UserDatas::where(function ($query){
+                                if (!empty($user_key_data['feeds_count'])) {
+                                    $query->where('value', '>', $user_key_data['feeds_count']);
+                                }
+                            })
                         ->where('key', 'feeds_count')
                         ->count();
             $post_rank += 1;
 
             /*数据库暂时写一条数据做操作 所以此条不准*/
-            $check_rank = UserDatas::where('value', '>', $user_key_data['check_totalnum'])
+            $check_rank = UserDatas::where(function ($query){
+                                if (!empty($user_key_data['check_totalnum'])) {
+                                    $query->where('value', '>', $user_key_data['check_totalnum']);
+                                }
+                            })
                         ->where('key', 'check_totalnum')
                         ->count();
             $check_rank += 1;
-
-            $score_rank = CreditUser::where('score', '>', $user_credit->score)
+            
+            $score_rank = CreditUser::where(function ($query){
+                                if (!empty($user_credit->score)) {
+                                    $query->where('score', '>', $user_credit->score);
+                                }
+                            })
                         ->count();
             $score_rank += 1;
             

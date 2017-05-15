@@ -46,8 +46,9 @@ class ProfileController extends BaseController
 
     public function account(Request $request)
     {
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
         $page = $request->input('page') ?: 'account';
-        $data = User::where('id', $this->mergeData['user']->id)
+        $data = User::where('id', $user_id)
                 ->select('id', 'name')
                 ->with('datas')
                 ->first();
@@ -70,7 +71,7 @@ class ProfileController extends BaseController
 
     public function doSaveAuth(Request $request)
     {
-        $isVerif = UserVerified::where('uid', $this->mergeData['user']->id)
+        $isVerif = UserVerified::where('uid', $this->mergeData['TS']['id'])
                     ->count();
         if ($isVerif) {
             return response()->json([
@@ -99,7 +100,7 @@ class ProfileController extends BaseController
 
         $verif = new UserVerified();
 
-        $verif->uid = $this->mergeData['user']->id;
+        $verif->uid = $this->mergeData['TS']['id'];
         $verif->realname = $request->realname;
         $verif->idcard = $request->idcard;
         $verif->phone = $request->phone;

@@ -1,4 +1,4 @@
-@if (empty($user))
+
 <!-- 个人中心右边签到 -->
 <div class="dy_signed">
     <div class="dyrTop">

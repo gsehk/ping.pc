@@ -2,11 +2,13 @@
 var initNums = 255;
 var loadHtml = "<div class='loading'><img src='"+PUBLIC_URL +"/images/loading.png' class='load'>加载中</div>";
 var request_url = {
+    login:'passport/index',
     /* 获取文章列表 */
     get_news:'/information/getNewsList',
     digg_news:'/api/v1/news/{news_id}/digg',
     collect_news:'/api/v1/news/{news_id}/collection',
     comment_news:'/api/v1/news/{news_id}/comment',
+    get_comment:'/information/{news_id}/comments',
 };
 var news = {};
 
@@ -453,61 +455,97 @@ var collect = {
 var comment = {
   // 给工厂调用的接口
   _init:function(attrs) {
-    if(attrs.length == 3) {
-      comment.init(attrs[1], attrs[2]);
-    } else {
-      return false;
-    }
+    comment.init(attrs);
   },
   // 初始化评论对象
   init: function(attrs) {
-    this.box = attrs.box;
-    this.editor = attrs.editor;
-    this.row_id = attrs.row_id;
+    this.row_id = attrs.row_id || 0;
+    this.max_id = attrs.max_id || 0;
+    this.limit = attrs.limit || 5;
+    this.to_uid = attrs.to_uid || 0;
+    this.canload = attrs.canload || 1;
     this.reply_to_user_id = attrs.reply_to_user_id || 0;
+    this.addToEnd = attrs.addToEnd || 0;
+    this.box = attrs.box || '#comment_detail';
+    this.editor = attrs.editor || '#mini_editor';
+
+    this.bindScroll();
+
+    if($(this.box).length > 0 && this.canload > 0){
+        $(this.box).append(loadHtml);
+        comment.loadMore();
+    }
+  },
+   // 页面底部触发事件
+  bindScroll:function()
+  {
+    // 底部触发事件绑定
+    $(window).bind('scroll resize', function() {
+      if (comment.canload == true) {
+        var bodyTop = document.documentElement.scrollTop + document.body.scrollTop;
+        var bodyHeight = $(document.body).height();
+        if(bodyTop + $(window).height() >= bodyHeight - 250) {
+            if($(comment.box).length > 0) {
+              $(comment.box).append(loadHtml);
+              comment.loadMore();
+          }
+        }
+      }
+    });
   },
   // 显示回复块
-  display: function(callback) { 
-    var box = this.box;
-    var infopen = $(box).parent().find('.infopen:first');
-    var forwardBox = $(box).parent().find('.forward_box:first');
-    if("undefined" == typeof this.table) {
-      this.table = 'feed';
-    }
-    if(forwardBox.size()) forwardBox.hide();
-    if(box.style.display == 'none') {
-      if(infopen.size()) {
-        infopen.show();
-        infopen.find('.trigon').css('left',
-         $(this.sourceObject).position().left
-          + ($(this.sourceObject).width()/2));
-      }
-      if(box.innerHTML !=''){
-        //box.style.display = 'block';
-        $(box).stop().slideDown(200);
-        var _textarea = $(box).find('textarea');
-        if(_textarea.size() == 0) {
-          _textarea = $(box).find('input:eq(0)');
+  loadMore:function(){
+      comment.canload = false;
+      var url = request_url.get_comment.replace('{news_id}', comment.row_id);
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: {max_id:comment.max_id, limit:comment.limit},
+        dataType: 'json',
+        error:function(xml){},
+        success:function(res){
+            if (res.data.length > 0) {
+              comment.canload = true;
+              comment.max_id = res.data[res.data.length-1].id;
+              var data = res.data,
+                  html = '';
+                for(var i in data) {
+                  html += '<div class="delComment_list">';
+                  html +='<div class="comment_left">';
+                  html +='<img src="'+API+'/storages/'+data[i].user.avatar+'" class="c_leftImg" />';
+                  html +='</div>';
+                  html +='<div class="comment_right">';
+                  html +='<span class="del_ellen">'+data[i].user.name+'</span>';
+                  html +='<span class="c_time">'+data[i].created_at+'</span>';
+                  html +='<i class="icon iconfont icon-gengduo-copy"></i>';
+                  html +='<p>'+data[i].comment_content+'';
+                  if (data[i].user_id != MID) {
+                    html +='<span class="del_huifu">';
+                    html +='<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname='+data[i].user.name+'&canload=0&to_uid='+data[i].user_id+'"';
+                    html +='class="J-reply-comment">回复';
+                    html +='</a></span>';
+                  }
+                  html +='</p></div></div>';
+                }
+                $(comment.box).append(html);
+                $('.loading').remove();
+                $('.J-reply-comment').on('click', function(){
+                  var attrs = urlToObject($(this).data('args'));
+                  comment.initReply(attrs);
+                });
+            } else {
+              comment.canload = false;
+              $('.loading').html('暂时没有更多可显示的内容哟~');
+            }
         }
-        _textarea.focus(); callback && callback('show');
-      }else{
-        
-      }
-    }else{
-      $(box).stop().slideUp(200, function(){
-        if(infopen.size()) infopen.hide();
-        callback && callback('hide');
       });
-      //box.style.display = 'none';
-    }
   },
   // 初始化回复操作
-  initReply: function() {
-    this.comment_textarea = this.box.childModels['comment_textarea'][0];
-    var mini_editor = this.comment_textarea.childModels['mini_editor'][0];
-    var _textarea = $(mini_editor).find('textarea');
-    if(_textarea.size() == 0) _textarea = $(mini_editor).find('input:eq(0)');
-    var html = L('PUBLIC_RESAVE')+'@'+this.to_comment_uname+' ：';
+  initReply: function(obj) {
+    console.log(obj);return false;
+    var _textarea = $(obj.editor);
+    if(_textarea.size() == 0) _textarea = _textarea.find('input:eq(0)');
+    var html = '回复@'+obj.to_comment_uname+' ：';
     //清空输入框
     _textarea.val('');
     //_textarea.focus();
@@ -537,7 +575,6 @@ var comment = {
     if("undefined" != typeof(this.addComment) && (this.addComment == true)) {
       return false; //不要重复评论
     }
-    var addcomment = this.addComment;
     var addToEnd = this.addToEnd;
     var url = request_url.comment_news.replace('{news_id}',this.row_id);
     var _this = this;
@@ -558,16 +595,13 @@ var comment = {
               }
               var html = '<div class="delComment_list">'+
                 '<div class="comment_left">'+
-                '<img src="'+API+'/storages/'+AVATAR+'" class="c_leftImg" />'+
+                '<img src="'+AVATAR+'" class="c_leftImg" />'+
                 '</div>'+
                 '<div class="comment_right">'+
                 '<span class="del_ellen">'+NAME+'</span>'+
                 '<span class="c_time">刚刚</span>'+
                 '<i class="icon iconfont icon-gengduo-copy"></i>'+
-                '<p>'+content+'<span class="del_huifu">'+
-                '<a href="javascript:void(0)" data-args="editor=#comment&box=#comment_detail&to_uid='+res.data+'"'+
-                'id="J-reply-comment">回复'+
-                '</a></span></p>'+
+                '<p>'+content+'</p>'+
                 '</div>'+
                 '</div>';
               var commentBox = $(comment.box);
@@ -578,7 +612,7 @@ var comment = {
                   commentBox.prepend(html);
                 }
                 /*绑定回复操作*/
-                $('#J-reply-comment').on('click', function(){
+                $('.J-reply-comment').on('click', function(){
                     comment.initReply();
                 });
               }
