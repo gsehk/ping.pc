@@ -48,8 +48,6 @@ class BaseController extends Controller
 	            // user role
 	            $this->mergeData['user']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['user']['id'])
 	            										->first();
-
-	            $this->mergeData['user']['jsonData'] = json_encode($this->mergeData['user']);
 			}
 			// 站点配置
 	        $config = [
