@@ -163,6 +163,49 @@ var recommend = {
     },
 };
 
+/* 加载推荐资讯 */
+var recommend = {
+    opt: {},
+    init:function(option){
+        this.opt.container = option.container;
+        this.opt.limit = option.loadlimit || 6;
+        this.opt.cate_id = option.cate_id || 0;
+        this.opt.canload = option.canload || true;
+
+        if($(recommend.opt.container).length > 0 && this.opt.canload){
+            $(recommend.opt.container).append(loadHtml);
+            recommend.loadMore();
+        }
+    },
+    loadMore:function(){
+        recommend.opt.canload = false;
+        var postArgs = {};
+        postArgs.limit = recommend.opt.limit;
+        postArgs.cate_id = recommend.opt.cate_id;
+        $.ajax({
+          url: request_url.get_news,
+          type: 'GET',
+          data: postArgs,
+          dataType: 'json',
+          error:function(xml){},
+          success:function(res){
+              if (res.data.length > 0) {
+                recommend.opt.canload = true;
+                var data = res.data,
+                    html = '';
+                  for(var i in data) {
+                    html += '<span>'+data[i].title+'</span>';
+                  }
+                  $(recommend.opt.container).append(html);
+                  $('.loading').remove();
+              } else {
+                recommend.opt.canload = false;
+                $('.loading').html('暂时没有更多可显示的内容哟~');
+              }
+          }
+        });
+    },
+};
 /** 
  * 获取热点文章
  * @param  type (1-本周 2-当月 3-季度)
@@ -424,7 +467,7 @@ var comment = {
     this.reply_to_user_id = attrs.reply_to_user_id || 0;
   },
   // 显示回复块
-  /*display: function(callback) { 
+  display: function(callback) { 
     var box = this.box;
     var infopen = $(box).parent().find('.infopen:first');
     var forwardBox = $(box).parent().find('.forward_box:first');
@@ -457,7 +500,7 @@ var comment = {
       });
       //box.style.display = 'none';
     }
-  },*/
+  },
   // 初始化回复操作
   initReply: function() {
     this.comment_textarea = this.box.childModels['comment_textarea'][0];

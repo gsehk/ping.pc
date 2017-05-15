@@ -92,7 +92,6 @@ class InformationController extends BaseController
                         ->select('id','title')
                         ->get()
                         ->toArray();
-                        
         return view('information.read', $data, $this->mergeData);
     }
 
