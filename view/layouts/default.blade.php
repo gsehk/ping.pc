@@ -17,9 +17,10 @@
         // 全局变量
         var PUBLIC_URL = '{{\Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset("")}}';
         var API = '/api/v1';
-        var MID = "{{$user['id'] or 0}}";
-        var NAME = "{{$user['name'] or '无名'}}";
-        var AVATAR = "{{$user['avatar'] or 7}}";
+        // 用户属性
+        @if (!empty($user))
+        var USER = eval({!! $user["jsonData"] !!});
+        @endif
     </script>
 </head>
 

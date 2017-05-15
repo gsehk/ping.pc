@@ -13,7 +13,7 @@
     <div class="dy_cCont">
         <div class="dy_center">
             <div class="dy_cTop">
-                <textarea class="dy_ta" placeholder="说说新鲜事"></textarea>
+                <textarea class="dy_ta" placeholder="说说新鲜事" id="feed_content" onPropertyChange="alert('test')"></textarea>
                 <div class="dy_company">
                     <span class="fs-14" id="feed_expression">
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-biaoqing"></use></svg>
@@ -23,7 +23,7 @@
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
                         图片
                     </span>
-                    <a href="javascript:;" class="dy_share">分享</a>
+                    <a href="javascript:;" class="dy_share dy_share_feed" onclick="weibo.postFeed()">分享</a>
                 </div>
             </div>
             <div class="dy_cen">
@@ -66,7 +66,7 @@
 
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.weibo.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/jquery.Huploadify.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/jquery.uploadify.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script type="text/javascript">
 $(function(){
@@ -79,6 +79,12 @@ $(function(){
         newUpload:true,
         buttonText:''
     });
+
+    //为删除文件按钮绑定删除文件事件
+    $(".dy_cTop").on("click", ".imgdel", function(){
+        $(this).parent().remove();
+　　});
+
 })
 
 // 加载微博

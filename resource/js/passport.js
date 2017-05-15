@@ -5,8 +5,8 @@ $(function(){
 		$('#login_form').ajaxSubmit({
 		    type: 'post',
 		    url: url,
-		    success : function() {
-		    	window.location.href = '/home/index';
+		    success : function(res) {
+                if (res.status) window.location.href = '/home/index';
 		    },
 			error : function(xhr, textStatus, errorThrown){
 			　　if (xhr.status == 422) {

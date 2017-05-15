@@ -422,6 +422,9 @@ textarea {
     border-radius: 3px;
     /* margin-right: 40px;.del_huifu */
 }
+    .dy_share_feed {
+        margin-right: 38px;
+    }
 
     .dy_share:link {
         text-decoration: none;
@@ -845,6 +848,7 @@ textarea {
     margin-top: 40px;
     padding: 0 40px;
     height: 60px;
+    display: none;
 }
 
 .dy_picture_span {

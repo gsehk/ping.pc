@@ -26,7 +26,9 @@ class BaseController extends Controller
 
 			if ($this->mergeData['user']) {
 				// 用户信息
-				$user_profile = User::where('id', '=', $this->mergeData['user']['id'])->with('datas', 'counts')->get();
+				$user_profile = User::where('id', '=', $this->mergeData['user']['id'])->with('datas', 'counts')
+									->get()
+									->toArray();
 
 				foreach ($user_profile[0]['datas'] as $key => $value) {
 					$user_profile[0][$value['profile']] = $value['pivot']['user_profile_setting_data'];
@@ -35,15 +37,20 @@ class BaseController extends Controller
 				$this->mergeData['user'] = $user_profile[0];
 
 				// 用户积分
-				$this->mergeData['user']['credit'] = CreditUser::where('user_id', $this->mergeData['user']['id'])->value('score');
+				$this->mergeData['user']['credit'] = CreditUser::where('user_id', $this->mergeData['user']['id'])
+														->value('score');
 
 				// token
-				$this->mergeData['user']['token'] = AuthToken::where('user_id', $this->mergeData['user']['id'])->select('token')->first();
+				$this->mergeData['user']['token'] = AuthToken::where('user_id', $this->mergeData['user']['id'])
+														->where('state', 1)
+														->value('token');
 				
 	            // user role
-	            $this->mergeData['user']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['user']['id'])->first();
-			}
+	            $this->mergeData['user']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['user']['id'])
+	            										->first();
 
+	            $this->mergeData['user']['jsonData'] = json_encode($this->mergeData['user']);
+			}
 			// 站点配置
 	        $config = [
 	            'title' => 'ThinkSNS Plus Title',

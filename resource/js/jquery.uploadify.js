@@ -180,17 +180,12 @@
 				_renderFile : function(file){
 					var $html = $(option.itemTemplate.replace(/\${fileID}/g,'fileupload_'+instanceNumber+'_'+file.index).replace(/\${fileName}/g,file.name).replace(/\${fileSize}/g,F.formatFileSize(file.size)).replace(/\${instanceID}/g,_this.attr('id')));
 
-					uploadManager._getFileList().append($html);
+					uploadManager._getFileList().show().append($html);
 
 					//触发select动作
 					option.onSelect && option.onSelect(file);
 
 					uploadManager._uploadFile(file);
-
-					//为删除文件按钮绑定删除文件事件
-					$(".dy_cTop").on("click", ".imgdel", function(){
-						$(this).parent().remove();
-				　　});
 				},
 				//获取选择后的文件
 				_getFiles : function(e){
@@ -208,16 +203,7 @@
 				//上传文件
 				_uploadFile : function(file){
 					// new 上传方式
-					var event = {file: file, callback:weibo.afterUpload};
-					var rs = weibo.fileUpload(event);
-
-					option.onUploadComplete && option.onUploadComplete(file,xhr.responseText);
-					
-					//检测队列中的文件是否全部上传完成，执行onQueueComplete
-					if(option.onQueueComplete){
-						var queueData = uploadManager._allFilesUploaded();
-						queueData && option.onQueueComplete(queueData);	
-					}
+					var rs = fileUpload(file, weibo.afterUpload);
 
 					//清除文件选择框中的已有值
 					uploadManager._getInputBtn().val('');

@@ -40,6 +40,94 @@ var getLength = function(str, shortUrl) {
   }
 };
 
+// 文件上传
+var fileUpload = function(f, callback){
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var data = e.target.result;
+        //加载图片获取图片真实宽度和高度
+        var image = new Image();
+        image.onload=function(){
+            var width = image.width;
+            var height = image.height;
+            var size = f.size;
+            doFileUpload(image, f, callback);
+        };
+        image.src= data;
+   };
+   reader.readAsDataURL(f);
+};
+
+var doFileUpload = function(image, f, callback) {
+    var args = {
+        width  : image.width,
+        height : image.height,
+        mime_type : f.type,
+        origin_filename : f.name,
+        hash   : CryptoJS.MD5(f.name).toString(),
+    };
+    console.log(USER.token);
+    // 创建存储任务
+    $.ajax({  
+        url: '/api/v1/storages/task' ,  
+        type: 'POST', 
+        async: false,  
+        data: args,
+        beforeSend: function (xhr) {
+  　　　　  xhr.setRequestHeader('Authorization', USER.token);
+  　　　}, 
+        success: function (res) {  
+            if (res.data.uri) {
+                var formData = new FormData();
+                formData.append("file", f);
+
+                if (res.data.options) {
+                    for(var i in res.data.options){
+                        formData.append(i, res.data.options[i]);
+                    }
+                }
+
+                // 上传文件
+                $.ajax({
+                      url: res.data.uri,  
+                      type: res.data.method,  
+                      data: formData,
+                      async: false,  
+                      cache: false,  
+                      contentType: false,  
+                      processData: false,
+                      beforeSend: function (xhr) {
+                　　　　  xhr.setRequestHeader('Authorization', res.data.headers.Authorization);
+                　　　}, 
+                      success: function (data) {
+
+                      // 上传通知 
+                        $.ajax({
+                            url: '/api/v1/storages/task/'+res.data.storage_task_id,  
+                            type: 'PATCH',
+                            async: false,  
+                            beforeSend: function (xhr) {
+                      　　　　  xhr.setRequestHeader('Authorization', res.data.headers.Authorization);
+                      　　　}, 
+                            success: function(response){
+                                callback(image, f, res.data.storage_task_id);
+                            }
+                        });
+                      } 
+                }); 
+            }else{
+                callback(image, f, res.data.storage_task_id);
+            }
+        }
+    });
+};
+
+
+
+
+
+
+
 
 var getImgInfo = function(event){
     var $this = $(this);

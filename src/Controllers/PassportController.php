@@ -4,11 +4,14 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Gregwar\Captcha\CaptchaBuilder;
+use Zhuzhichao\IpLocationZh\Ip;
+use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Plus\Models\VerifyCode;
 use Zhiyi\Plus\Models\User;
+use Zhiyi\Plus\Models\AuthToken;
+use Zhiyi\Plus\Models\LoginRecord;
 use Session;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
@@ -69,6 +72,52 @@ class PassportController extends BaseController
 
         return $this->traitLogin($request);
     }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $user
+     *
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // token
+        $deviceCode = '';
+        $token = new AuthToken();
+        $token->token = md5($deviceCode.str_random(32));
+        $token->refresh_token = md5($deviceCode.str_random(32));
+        $token->user_id = $user->id;
+        $token->expires = 0;
+        $token->state = 1;
+
+        // 登录记录
+        $clientIp = $request->getClientIp();
+        $loginrecord = new LoginRecord();
+        $loginrecord->ip = $clientIp;
+
+        $location = (array)Ip::find($clientIp);
+        array_filter($location);
+        $loginrecord->address = trim(implode(' ', $location));
+        $loginrecord->device_system = '';
+        $loginrecord->device_name = '';
+        $loginrecord->device_model = '';
+        $loginrecord->device_code = $deviceCode;
+
+        DB::transaction(function () use ($token, $user, $loginrecord) {
+            $user->tokens()->update(['state' => 0]);
+            $user->tokens()->delete();
+            $token->save();
+            $user->loginRecords()->save($loginrecord);
+        });
+
+        return response()->json(static::createJsonData([
+            'status'  => true,
+        ]));
+    }
+
+
 
     /**
      * [logout 登出]
