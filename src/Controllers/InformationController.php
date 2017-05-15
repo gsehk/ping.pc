@@ -327,6 +327,7 @@ class InformationController extends BaseController
             }
             unset($value['user']['datas']);
         }
+
         return response()->json(static::createJsonData([
             'status' => true,
             'data' => $comments,

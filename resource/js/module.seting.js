@@ -100,15 +100,14 @@ var getArgs = function () {
 $('#J-submit').on('click', function(e){
     var args = getArgs();
     args['location'] = args['p']+' '+args['c']+' '+args['a'];
-    console.log(args);
     $.ajax({
         url: '/api/v1/users',
         type: 'PATCH',
         data: args,
         dataType: 'json',
-        beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
-    　　},
+        /*beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
+    　　},*/
         error:function(xml){
           $('.success_div').html('<div class="set_success s_bg"><img src="" />资料修改失败</div>').fadeIn();
         },
@@ -128,7 +127,7 @@ var resetPwd = function () {
         data: {password:password,new_password:new_pwd,_token:token},
         dataType: 'json',
         beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){
           $('.success_div').html('<div class="set_success s_bg"><img src="" />修改失败</div>').fadeIn();
@@ -155,7 +154,7 @@ var userVerif = function () {
         data: getArgs(),
         dataType: 'json',
         beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){
           // if (xml.responseJSON.code == 1004) {}

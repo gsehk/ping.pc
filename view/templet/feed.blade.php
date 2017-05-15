@@ -38,7 +38,7 @@
                     @if($post['user_id'] == $TS['id'])
                     <li><a href="#"><i class="icon iconfont icon-shanchu-copy1"></i>删除</a></li>
                     @endif
-                    @if($TS['role']->role_id == 1)
+                    @if($TS['role']['role_id'] == 1)
                     <li><a href="#"><i class="icon iconfont icon-zhiding-copy-copy1"></i>置顶</a></li>
                     @endif
                 </ul>

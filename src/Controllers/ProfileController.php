@@ -57,7 +57,6 @@ class ProfileController extends BaseController
             $data[$value['profile']] = $value['pivot']['user_profile_setting_data'];
         }
         unset($data['datas']);
-
         return view('profile.'.$page, ['page' => $page, 'data' => $data], $this->mergeData);
     }
 

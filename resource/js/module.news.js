@@ -316,7 +316,7 @@ var digg = {
         type: 'POST',
         dataType: 'json',
         beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){},
         success:function(res){
@@ -347,7 +347,7 @@ var digg = {
         type: 'DELETE',
         dataType: 'json',
         beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){},
         success:function(res, data, xml){
@@ -398,7 +398,7 @@ var collect = {
         type: 'POST',
         dataType: 'json',
         beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){},
         success:function(res){
@@ -429,7 +429,7 @@ var collect = {
         type: 'DELETE',
         dataType: 'json',
         beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){},
         success:function(res, data, xml){
@@ -510,9 +510,10 @@ var comment = {
               var data = res.data,
                   html = '';
                 for(var i in data) {
+                  var  avatar = data[i].user.avatar ? API+'/storages/'+data[i].user.avatar : AVATAR;
                   html += '<div class="delComment_list">';
                   html +='<div class="comment_left">';
-                  html +='<img src="'+API+'/storages/'+data[i].user.avatar+'" class="c_leftImg" />';
+                  html +='<img src="'+avatar+'" class="c_leftImg" />';
                   html +='</div>';
                   html +='<div class="comment_right">';
                   html +='<span class="del_ellen">'+data[i].user.name+'</span>';
@@ -542,14 +543,13 @@ var comment = {
   },
   // 初始化回复操作
   initReply: function(obj) {
-    console.log(obj);return false;
+    $('#J-comment-news').attr('to_uid', obj.to_uid);
     var _textarea = $(obj.editor);
     if(_textarea.size() == 0) _textarea = _textarea.find('input:eq(0)');
     var html = '回复@'+obj.to_comment_uname+' ：';
     //清空输入框
     _textarea.val('');
-    //_textarea.focus();
-    _textarea.inputToEnd(html);
+    _textarea.val(html);
     _textarea.focus();
   },
   // 发表评论
@@ -579,13 +579,14 @@ var comment = {
     var url = request_url.comment_news.replace('{news_id}',this.row_id);
     var _this = this;
     obj.innerHTML = '回复中..';
+
     $.ajax({
         url: url,
         type: 'POST',
         data:{comment_content:content,reply_to_user_id:this.to_uid},
         dataType: 'json',
         beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', '67bbd394939f52a0be3a6ff6e1845811');
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){},
         success:function(res){

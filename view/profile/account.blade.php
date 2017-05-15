@@ -29,12 +29,26 @@
             </div>
         </a>
     </div>
-    <div class="bas_right">
+    <div class="bas_right" id="J-input">
         <div class="bas_header">
-            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-            <span>更换头像</span>
+            <img id="J-image-preview" src="@if($data['avatar']) {{$routes['storage']}}{{ $data['avatar'] }} @else {{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }} @endif" />
+            <span class="con_cover ai_face_box">
+                <div class="ai_upload">
+                    <input id="J-file-upload"
+                           type="file"
+                           name="poster-input"
+                           data-input="#task_id"
+                           data-form="#release_form"
+                           data-preview="#J-image-preview"
+                           data-tips="#J-show-tips"
+                           data-token="{{ csrf_token() }}"
+                    >
+                    <input name="storage_task_id" id="task_id" type="hidden" value="" />
+                </div>
+                <span class="ai_btn">更换头像</span>
+            </span>
         </div>
-        <div class="f_div" id="J-input">
+        <div class="f_div">
             <div class="f_tel bas_div">
                 <label>昵称</label>
                 <span class="f_span"><input type="text" name="name" value="{{$data['name']}}" placeholder="输入昵称"></span>
@@ -92,8 +106,18 @@
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/birthday.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.seting.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script> 
 var arrSelect = ["{{$data['province']}}", "{{$data['city']}}", "{{$data['area']}}"];
+$('#J-file-upload').on('change', function(e){
+    var file = e.target.files[0];
+    fileUpload(file, updateImg);
+});
+var updateImg = function(image, f, task_id){
+    $('#task_id').val(task_id);
+    $('#J-image-preview').attr('src', image.src);
+}
+
 $(function () {
     $.ms_DatePicker({
             YearSelector: ".sel_year",
