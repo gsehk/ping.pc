@@ -135,17 +135,35 @@ weibo.afterUpload = function(image, f, task_id) {
  * @return void
  */
 weibo.postFeed = function() {
-    if (!USER) {
-        alert();
+    if (MID == 0) {
+        window.location.href = '/passport/index';
+        return false;
     }
 
-    var content = $('#feed_content').val();
-    var task_ids = [];
+    var storage_task_ids = [];
     $('.dy_picture').find('img').each(function(){
-        task_ids.push($(this).attr('tid'));
+        storage_task_ids.push($(this).attr('tid'));
     });
 
+    var data = {
+        feed_content: $('#feed_content').val(),
+        storage_task_ids: storage_task_ids,
+        feed_from: 1,
+        isatuser: 0
+    }
+
+    var url = API + '/feeds';
     $.ajax({
+        url: url,
+        type: 'post',
+        data: data,
+        dataType: 'json',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', TOKEN);
+    　　},
+        success: function(res) {
+            console.log(res);
+        }
 
     })
 

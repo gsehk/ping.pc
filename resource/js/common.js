@@ -66,7 +66,6 @@ var doFileUpload = function(image, f, callback) {
         origin_filename : f.name,
         hash   : CryptoJS.MD5(f.name).toString(),
     };
-    console.log(USER.token);
     // 创建存储任务
     $.ajax({  
         url: '/api/v1/storages/task' ,  
@@ -74,7 +73,7 @@ var doFileUpload = function(image, f, callback) {
         async: false,  
         data: args,
         beforeSend: function (xhr) {
-  　　　　  xhr.setRequestHeader('Authorization', USER.token);
+  　　　　  xhr.setRequestHeader('Authorization', TOKEN);
   　　　}, 
         success: function (res) {  
             if (res.data.uri) {
