@@ -48,16 +48,11 @@ class PassportController extends BaseController
      */
     public function index()
     {
-
-        $users = DB::table('users')->simplePaginate(15);
-        return view('passport.login', ['users' => $users]);
-
-        
         if ($this->guard()->check()) {
             return redirect(route('pc:feed'));
         }
 
-    	return view('passport.login');
+    	return view('passport.login', [], $this->mergeData);
     }
 
     /**

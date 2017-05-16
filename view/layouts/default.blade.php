@@ -22,8 +22,9 @@
     <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
     <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
     <script src="{{ $routes['resource'] }}/js/common.js"></script>
-
+    <script src="{{ $routes['resource'] }}/js/jquery.scrollUp.min.js"></script>
 </head>
+
 <body @yield('body_class')>
 
     <!-- nav -->
