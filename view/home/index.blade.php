@@ -44,7 +44,7 @@
             <div class="dyrTop">
                 <span class="dyrTop_r fs-14">
                     已获积分
-                    <span>{{ $TS['credit'] }}</span>
+                    <span class="totalnum">{{ $TS['credit'] or 0 }}</span>
                 </span>
                 @if (!empty($TS['avatar']))
                 <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " class="dyrTop_img" alt="{{ $TS['name'] }}"/>
@@ -52,7 +52,11 @@
                 <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" class="dyrTop_img" />
                 @endif
             </div>
-            <div class="dy_qiandao">每日签到<span>+5积分</span></div>
+            @if(empty($ischeck))
+                <div class="dy_qiandao" onclick="checkin();" id="checkin">每日签到<span>+5积分</span></div>
+            @else 
+                <div class="dy_qiandao dy_qiandao_sign" id="checkin">已签到</div>
+            @endif
         </div>
         @endif
 
@@ -69,6 +73,23 @@
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/jquery.uploadify.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script type="text/javascript">
+
+var checkin = function(){
+  if( MID == 0 ){
+    return;
+  }
+  var totalnum = {{$checkin['total_num'] or 0}} + 1;
+  var credit_score = {{$credit['score']}};
+  $.get('/home/checkin' , {} , function (res){
+    if ( res ){
+      var totalnum = res.data.score;
+      $('#checkin').html('已签到');
+      $('.totalnum').text(totalnum);
+      $('#checkin').addClass('dy_qiandao_sign');
+    }
+  });
+};
+
 $(function(){
     // 发布微博
     var loadgif = PUBLIC_URL + '/images/loading.png';
@@ -88,16 +109,11 @@ $(function(){
 })
 
 // 加载微博
-var option = {
-    container: '#feeds-list',
-    loadcount: '',
-    loadmax: '',
-    maxid: 0,
-    loadlimit: '',
-    cid: "{{$type}}"
-};
 setTimeout(function() {
-    weibo.init(option);
+    weibo.init({
+        container: '#feeds-list',
+        cid: "{{$type}}"
+    });
 }, 300);
 
 $(function(){

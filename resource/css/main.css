@@ -642,6 +642,10 @@ textarea {
     color: #fff;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
+    cursor: pointer;
+}   
+.dy_qiandao_sign{
+    background: grey;
 }
 
     .dy_qiandao span {
@@ -3004,7 +3008,8 @@ textarea {
 .bas_right {
     padding-top: 80px;
     float: left;
-    margin-left: 40px;
+    padding-left: 40px;
+    width: 600px;
 }
 
 .bas_header img {
@@ -3513,7 +3518,7 @@ textarea {
     text-align:center;
 }
 
-.score-table{
+.score-table, .auth-table{
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
@@ -3527,6 +3532,24 @@ textarea {
     font-size: 14px;
     line-height: 60px;
     border-bottom: 1px solid #ededed;
+}
+.auth-table .auth_caption{
+    padding: 0;
+    height: 60px;
+    line-height: 60px;
+    background: #f2f9fc;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.auth-table td{
+    padding: 0 20px;
+    height: 40px;
+    line-height: 45px;
+}
+.auth-table .td{
+    text-align: right;
+    color: #aaa;
 }
 .dy_center .top-menu-left{
     position: relative;

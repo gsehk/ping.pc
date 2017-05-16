@@ -108,6 +108,7 @@
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.seting.js') }}"></script>
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script> 
+var username = "{{$data['name']}}";
 var arrSelect = ["{{$data['province']}}", "{{$data['city']}}", "{{$data['area']}}"];
 $('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];
@@ -117,12 +118,11 @@ var updateImg = function(image, f, task_id){
     $('#task_id').val(task_id);
     $('#J-image-preview').attr('src', image.src);
 }
-
 $(function () {
     $.ms_DatePicker({
-            YearSelector: ".sel_year",
-            MonthSelector: ".sel_month",
-            DaySelector: ".sel_day"
+        YearSelector: ".sel_year",
+        MonthSelector: ".sel_month",
+        DaySelector: ".sel_day"
     });
     $.ms_DatePicker();
     
