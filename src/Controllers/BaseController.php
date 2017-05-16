@@ -10,6 +10,7 @@ use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Zhiyi\Plus\Models\AuthToken;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 
 class BaseController extends Controller
 {
@@ -59,6 +60,8 @@ class BaseController extends Controller
 	        $this->mergeData['site'] = $config;
 
             $this->mergeData['routes']['storage'] = '/api/v1/storages/';
+            $this->mergeData['routes']['resource'] = asset('');
+
     		return $next($request);
     	});
     }
