@@ -8,7 +8,7 @@
         <div class="loginleft_bg">
             <div class="login_hy">欢迎来到ThinkSNS+</div>
             <div class="login_code">
-                <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/login_code.png') }}" />
+                <img src="{{ $routes['resource'] }}/images/login_code.png" />
             </div>
             <div class="login_b">扫描二维码体验APP</div>
         </div>
@@ -51,6 +51,6 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/jquery.form.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/passport.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/jquery.form.js"></script>
+<script src="{{ $routes['resource'] }}/js/module.passport.js"></script>
 @endsection

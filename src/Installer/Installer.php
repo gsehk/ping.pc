@@ -11,6 +11,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
 };
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Zhiyi\Plus\Support\Configuration;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Providers\PcProvider;
 
 class Installer extends AbstractInstaller
 {
@@ -60,6 +62,8 @@ class Installer extends AbstractInstaller
      */
     public function install(Closure $next)
     {
+        $config = app(Configuration::class);
+        $config->set(sprintf('app.providers.%s', PcProvider::class), PcProvider::class);
         $next();
     }
 

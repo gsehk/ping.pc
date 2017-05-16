@@ -4,8 +4,8 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Models\User;
+use Zhiyi\Plus\Models\Followed;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class ProfileController extends BaseController
 {
@@ -33,69 +33,64 @@ class ProfileController extends BaseController
 
     public function myFans(Request $request)
     {
-        $type = $request->input('type') ?: 1;
+        $data = [];
+        $data['type'] = $type = $request->input('type') ?: 1;
 
         if (!$this->mergeData['TS']) {
-            return redirect(route('pc:login'));
+            return redirect(route('pc:index'));
         }
-        $user_id = $this->mergeData['TS']['user']['id'];
-        var_dump($user_id);exit;
+        $user_id = $this->mergeData['TS']['id'];
 
         // 我的粉丝
         if ($type == 1) {
             $followeds = Followed::where('user_id', $user_id)
-                ->where(function ($query) use ($max_id) {
-                    if ($max_id > 0) {
-                        $query->where('id', '<', $max_id);
-                    }
-                })
                 ->orderBy('id', 'DESC')
-                ->take($limit)
-                ->with('userFollowing')
-                ->get();
-            $datas['followeds'] = [];
-            foreach ($followeds as $followed) {
-                $data = [];
-                $data['id'] = $followed->id;
-                $data['user_id'] = $followed->followed_user_id;
-                $data['my_follow_status'] = $followed->userFollowing->where('following_user_id', $followed->followed_user_id)->isEmpty() ? 0 : 1;
+                ->with('userFollowing', 'user.datas')
+                ->paginate(15);
 
-                $data['follow_status'] = 1; //关注我的的列表  对方关注状态始终为1
-                $datas['followeds'][] = $data;
+            $data['followeds'] = [];
+            foreach ($followeds as $followed) {
+                $_data = [];
+                $_data['id'] = $followed->id;
+
+                // 获取用户设置
+                $_user = $followed->user->toArray();
+                $_data['user']['id'] = $_user['id'];
+                $_data['user']['phone'] = $_user['phone'];
+                // $_data['user']['followed'] = $followed->user->counts()->where('key', 'followed_count')->value('value');
+                $_followed = null;
+                $_followed = $followed->user->counts->map( function($count) {
+                    if($count->key == 'followed_count') {
+                        return $count->value;
+                    }
+                });
+                var_dump($_followed);
+                foreach ($_user['datas'] as $key => $value) {
+                    $_data['user'][$value['profile']] = $value['pivot']['user_profile_setting_data'];
+                }
+
+                $_data['my_follow_status'] = $followed->userFollowing->where('following_user_id', $followed->followed_user_id)->isEmpty() ? 0 : 1;
+
+                $_data['follow_status'] = 1; //关注我的的列表  对方关注状态始终为1
+                $data['followeds'][] = $_data;
             }
         } else { // 关注的人
-            if (! User::find($user_id)) {
-                return response()->json(static::createJsonData([
-                    'status'  => false,
-                    'code'    => 1023,
-                    'message' => '用户未找到',
-                ]))->setStatusCode(404);
-            }
-
             $follows = Following::where('user_id', $user_id)
-                ->where(function ($query) use ($max_id) {
-                    if ($max_id > 0) {
-                        $query->where('id', '<', $max_id);
-                    }
-                })
                 ->orderBy('id', 'DESC')
-                ->take($limit)
                 ->with('userFollowed')
                 ->get();
             $datas['follows'] = [];
             foreach ($follows as $follow) {
-                $data = [];
-                $data['id'] = $follow->id;
-                $data['user_id'] = $follow->following_user_id;
-                $data['my_follow_status'] = 1; //我关注的列表  关注状态始终为1
-                $data['follow_status'] = $follow->userFollowed->where('followed_user_id', $follow->following_user_id)->isEmpty() ? 0 : 1;
-                $datas['follows'][] = $data;
+                $_data = [];
+                $_data['id'] = $follow->id;
+                $_data['user'] = $follow->following_user_id;
+                $_data['my_follow_status'] = 1; //我关注的列表  关注状态始终为1
+                $_data['follow_status'] = $follow->userFollowed->where('followed_user_id', $follow->following_user_id)->isEmpty() ? 0 : 1;
+                $data['follows'][] = $_data;
             }
         }
 
-
-
-        return view('profile.myfans', ['type' => $type]);
+        return view('pcview::profile.myfans', $data, $this->mergeData);
     }
 
     public function rank()

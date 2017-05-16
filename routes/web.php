@@ -2,6 +2,8 @@
 
 use Zhiyi\Plus\Http\Middleware;
 
+Route::any('/test2', 'TestController@show');
+
 // PC路由
 
 Route::prefix('passport')->group(function () {

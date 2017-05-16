@@ -6,7 +6,7 @@
 <div class="forget_cont" style="height:640px;">
     <ul class="forget_ul">
 
-        <li><a href="{{Route('pc:register', ['type'=>1])}}" class="forget_333">手机注册</a></li>
+        <li><a href="{{ route('pc:register', ['type'=>1]) }}" class="forget_333">手机注册</a></li>
     </ul>
     
     <div class="f_div">
@@ -77,11 +77,6 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/jquery.form.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/passport.js') }}"></script>
-<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
-<script>
-$().ready(function() {
-});
-</script>
+<script src="{{ $routes['resource'] }}/js/jquery.form.js"></script>
+<script src="{{ $routes['resource'] }}/js/passport.js"></script>
 @endsection

@@ -28,13 +28,13 @@
 <body @yield('body_class')>
 
     <!-- nav -->
-    @include('layouts.partials.nav')
+    @include('pcview::layouts.partials.nav')
 
     <!-- content -->
     @yield('content')
     
     <!-- footer -->
-    @include('layouts.partials.footer')
+    @include('pcview::layouts.partials.footer')
 
     <!-- js -->
     @yield('scripts')
