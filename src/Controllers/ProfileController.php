@@ -5,6 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\Followed;
+use Zhiyi\Plus\Models\StorageTask;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 
 class ProfileController extends BaseController
@@ -102,17 +103,31 @@ class ProfileController extends BaseController
     public function account(Request $request)
     {
         $user_id = $this->mergeData['TS']['id'] ?? 0;
-        $page = $request->input('page') ?: 'account';
-        $data = User::where('id', $user_id)
-                ->select('id', 'name')
-                ->with('datas')
-                ->first();
-
-        foreach ($data['datas'] as $key => &$value) {
-            $data[$value['profile']] = $value['pivot']['user_profile_setting_data'];
+        $datas['page'] = $request->input('page') ?: 'account';
+        switch ($datas['page']) {
+            case 'account':
+                $datas['data'] = User::where('id', $user_id)
+                                ->select('id', 'name')
+                                ->with('datas')
+                                ->first();
+                foreach ($datas['data']['datas'] as $key => &$value) {
+                    $datas['data'][$value['profile']] = $value['pivot']['user_profile_setting_data'];
+                }
+                unset($datas['data']['datas']);
+                break;
+            case 'account-auth':
+                $datas['auth'] = UserVerified::where('user_id', $user_id)
+                                ->first();
+                break;
+            case 'account-security':
+                # code...
+                break;
+            case 'account-bind':
+                # code...
+                break;
         }
-        unset($data['datas']);
-        return view('profile.'.$page, ['page' => $page, 'data' => $data], $this->mergeData);
+        
+        return view('profile.'.$datas['page'], $datas, $this->mergeData);
     }
 
     public function score(Request $request)
@@ -125,7 +140,7 @@ class ProfileController extends BaseController
 
     public function doSaveAuth(Request $request)
     {
-        $isVerif = UserVerified::where('uid', $this->mergeData['TS']['id'])
+        $isVerif = UserVerified::where('user_id', $this->mergeData['TS']['id'])
                     ->count();
         if ($isVerif) {
             return response()->json([
@@ -152,18 +167,41 @@ class ProfileController extends BaseController
             ])->setStatusCode(201);
         }
 
+        if ($request->task_id) {
+            $storage = StorageTask::where('id', $request->task_id)
+                    ->select('hash')
+                    ->with('storage')
+                    ->first();
+            if ($storage) {
+                $storage_id = $storage['storage']['id'];
+            }
+        }
         $verif = new UserVerified();
 
-        $verif->uid = $this->mergeData['TS']['id'];
+        $verif->user_id = $this->mergeData['TS']['id'];
         $verif->realname = $request->realname;
         $verif->idcard = $request->idcard;
         $verif->phone = $request->phone;
         $verif->info = $request->info ?: '';
-        $verif->storage = $request->task_id ?: '';
+        $verif->storage = $storage_id ?: '';
         $verif->save();
 
         return response()->json([
             'status' => true
         ])->setStatusCode(200);        
     }
+
+    public function delUserAuth(Request $request)
+    {
+        $user_id = $request->input('user_id');
+
+        $response =  UserVerified::where('user_id', $user_id)->delete();
+
+        return response()->json([
+            'uri' => '/profile/account?page=account-auth',
+            'code' => $response,
+            'status' => true
+        ])->setStatusCode(200);  
+    }
+
 }

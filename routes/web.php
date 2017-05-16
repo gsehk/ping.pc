@@ -58,6 +58,9 @@ Route::prefix('profile')->group(function () {
     Route::get('collection', 'ProfileController@collection')->name('pc:collection');
     Route::get('account', 'ProfileController@account')->name('pc:account');
     Route::get('article', 'ProfileController@article')->name('pc:article');
+    // 个人设置
+    Route::post('doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
+    Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
     
 });
 
@@ -69,6 +72,7 @@ Route::prefix('profile')->group(function () {
     Route::get('/home/follows', 'HomeController@getFollowFeeds');
     Route::get('/home/hots', 'HomeController@getHotFeeds');
     Route::get('/home/feeds', 'HomeController@getNewFeeds');
+    Route::get('/home/checkin', 'HomeController@checkin');
 
     // 资讯
     Route::get('/information/index', 'InformationController@index')->name('pc:news');
@@ -87,10 +91,6 @@ Route::prefix('profile')->group(function () {
     
     // 积分规则
     Route::get('/credit/index', 'CreditController@index')->name('pc:credit');
-    
-    // 个人设置
-    Route::post('/profile/doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
-    
     // 排行榜
     Route::get('/rank/index', 'RankController@index')->name('pc:rank');
 //});

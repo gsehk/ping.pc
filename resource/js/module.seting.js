@@ -81,7 +81,11 @@ var getArgs = function () {
     sel = $(inp[i]);
     if (sel.val()) {
       args.set(sel.attr('name'), sel.val());
-
+      if (sel.attr('name') == 'name') {
+        if (sel.val() == username) {
+            delete args.data.name;
+        }
+      }
       if ($(inp[i]).attr('name') == 'province') {
           args.set('p', sel.find("option:selected").text());
       }
@@ -105,9 +109,6 @@ $('#J-submit').on('click', function(e){
         type: 'PATCH',
         data: args,
         dataType: 'json',
-        /*beforeSend: function (xhr) {
-    　　　xhr.setRequestHeader('Authorization', TOKEN);
-    　　},*/
         error:function(xml){
           $('.success_div').html('<div class="set_success s_bg"><img src="" />资料修改失败</div>').fadeIn();
         },
@@ -137,6 +138,7 @@ var resetPwd = function () {
     setTimeout("$('.success_div').fadeOut(1000)", 3000);
 };
 
+/*  提交用户认证信息*/
 var userVerif = function () {
     var getArgs = function () {
       var inp = $('#auth_form input').toArray();
@@ -158,9 +160,31 @@ var userVerif = function () {
     　　},
         error:function(xml){
           // if (xml.responseJSON.code == 1004) {}
-          $('.success_div').html('<div class="set_success s_bg"><img src="" />修改失败</div>').fadeIn();
+          $('.success_div').html('<div class="set_success s_bg"><img src="" />认证失败</div>').fadeIn();
         },
-        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />修改成功</div>').fadeIn();}
+        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />认证成功</div>').fadeIn();}
     });
     setTimeout("$('.success_div').fadeOut(1000)", 3000);
+};
+
+/*  删除用户认证资料 重新认证*/
+var delUserAuth = function(uid) {
+    if (uid) {
+      var url = '/profile/delUserAuth';
+      $.ajax({
+        url: url,
+        type: 'DELETE',
+        data: {user_id:uid},
+        dataType: 'json',
+        error:function(xml){
+        },
+        success:function(res){
+          if (res.code == 1) {
+              window.location.href = res.uri;
+          } else {
+              alert('操作失败请重试')
+          }
+        }
+      });
+    }
 };

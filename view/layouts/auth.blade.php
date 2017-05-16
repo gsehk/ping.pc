@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="_token" content="{{ csrf_token() }}"/>
     <title>@yield('title')</title>
-
     <script>
         // 全局变量
         var PUBLIC_URL = '{{ $routes["resource"] }}';

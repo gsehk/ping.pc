@@ -27,6 +27,7 @@
         </a>
     </div>
     <div class="bas_right">
+        @if(empty($auth))
         <div class="f_div cer_div">
         <form id="auth_form">
             <div class="f_tel bas_div">
@@ -67,6 +68,44 @@
             <div class="cer_format"><span class="cer_x">*</span>附件格式：gif, jpg, jpeg, png;附件大小：不超过10M</div>
         </form>
         </div>
+        @else 
+            <table width="100%" class="auth-table">
+                @if($auth['verified'] == 1)
+                    <caption class="auth_caption">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>  您已经认证成功</caption>
+                @elseif($auth['verified'] == 2) 
+                    <caption class="auth_caption">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>  认证失败请  
+                            <a href="javascript:;" onclick="delUserAuth('{{$auth['user_id']}}');">重新认证</a></caption>
+                @else 
+                    <caption class="auth_caption">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg> 
+                            认证资料已提交, 我们会在3个工作日给您回复, 请耐心等待．</caption>
+                @endif
+                <tbody>
+                    <tr>
+                        <td width="20%" class="td">真实姓名</td>
+                        <td width="80%">{{$auth['realname']}}</td>
+                    </tr>
+                    <tr>
+                        <td width="20%" class="td">身份证号码</td>
+                        <td width="80%">{{$auth['idcard']}}</td>
+                    </tr>
+                    <tr>
+                        <td width="20%" class="td">联系方式</td>
+                        <td width="80%">{{$auth['phone']}}</td>
+                    </tr>
+                    <tr>
+                        <td width="20%" class="td">认证补充</td>
+                        <td width="80%">{{$auth['info']}}</td>
+                    </tr>
+                    <tr>
+                        <td width="20%" class="td">认证资料</td>
+                        <td width="80%"><a target="_blank" href="{{$routes['storage']}}{{$auth['storage']}}">认证附件信息</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        @endif
     </div>
 </div>
 @endsection
@@ -78,18 +117,27 @@
 <script type="text/javascript">
 $(document).ready(function ()
 {
-    var v = $('#auth_form').easyform();
-    v.error = function (ef, i, r)
-    {
-        console.log("Error事件：" + i.id + "对象的值不符合" + r + "规则");
-    };
-    v.success = function (ef)
-    {
-        v.is_submit = false;
-        userVerif();
-    };
+    if ($('#auth_form').length > 0) {
+        var v = $('#auth_form').easyform();
+        v.error = function (ef, i, r)
+        {
+            console.log("Error事件：" + i.id + "对象的值不符合" + r + "规则");
+        };
+        v.success = function (ef)
+        {
+            v.is_submit = false;
+            userVerif();
+        };
+    }
 });
-var file = $('#J-file-upload').files[0];
-$('#J-file-upload').on('change', {file: file, callback:ajaxFileUpload},getImgInfo);
+
+$('#J-file-upload').on('change', function(e){
+    var file = e.target.files[0];
+    fileUpload(file, updateImg);
+});
+var updateImg = function(image, f, task_id){
+    $('#task_id').val(task_id);
+    $('#J-image-preview').attr('src', image.src);
+}
 </script>
 @endsection

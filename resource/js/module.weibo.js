@@ -177,4 +177,4 @@ $(function(){
             $('#file_upload_1-queue').hide();
         }
     });
-})
+});

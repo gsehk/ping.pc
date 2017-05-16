@@ -25,15 +25,15 @@
                     <th width="40%">积分</th>
                     <th width="20%">时间</th>
                 </tr>
-                @forelse ($record as $post)
-                <tr>
-                    <td>{{$post['action']}}</td>
-                    <td class="c_f8">{!!$post['change']!!}</td>
-                    <td>{{$post['created_at']}}</td>
-                </tr>
-                @empty
-                    <p>No posts found.</p>
-                @endforelse
+                @if(isset($record))
+                    @foreach ($record as $post)
+                    <tr>
+                        <td>{{$post['action']}}</td>
+                        <td class="c_f8">{!!$post['change']!!}</td>
+                        <td>{{$post['created_at']}}</td>
+                    </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
         @else
