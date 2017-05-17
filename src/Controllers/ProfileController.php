@@ -5,7 +5,10 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\Followed;
+use Zhiyi\Plus\Models\Following;
 use Zhiyi\Plus\Models\StorageTask;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedStorage;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 
 class ProfileController extends BaseController
@@ -44,53 +47,88 @@ class ProfileController extends BaseController
 
         // 我的粉丝
         if ($type == 1) {
-            $followeds = Followed::where('user_id', $user_id)
+            $follows = Followed::where('user_id', $user_id)
                 ->orderBy('id', 'DESC')
-                ->with('userFollowing', 'user.datas')
-                ->paginate(15);
+                ->with('userFollowing', 'user.datas', 'user.counts')
+                ->paginate(3);
 
-            $data['followeds'] = [];
-            foreach ($followeds as $followed) {
+            $data['follows'] = [];
+            foreach ($follows as $follow) {
                 $_data = [];
-                $_data['id'] = $followed->id;
+                $_data['id'] = $follow->id;
 
                 // 获取用户设置
-                $_user = $followed->user->toArray();
+                $_user = $follow->user->toArray();
                 $_data['user']['id'] = $_user['id'];
                 $_data['user']['phone'] = $_user['phone'];
-                // $_data['user']['followed'] = $followed->user->counts()->where('key', 'followed_count')->value('value');
-                $_followed = null;
-                $_followed = $followed->user->counts->map( function($count) {
-                    if($count->key == 'followed_count') {
-                        return $count->value;
-                    }
-                });
-                var_dump($_followed);
+
+                // 统计信息
+                foreach ($_user['counts'] as $key => $value) {
+                    $_data['user'][$value['key']] = $value['value'];
+                }
+
+                // 个人资料
                 foreach ($_user['datas'] as $key => $value) {
                     $_data['user'][$value['profile']] = $value['pivot']['user_profile_setting_data'];
                 }
 
-                $_data['my_follow_status'] = $followed->userFollowing->where('following_user_id', $followed->followed_user_id)->isEmpty() ? 0 : 1;
-
+                // 关注状态
+                $_data['my_follow_status'] = $follow->userFollowing->where('following_user_id', $follow->follow_user_id)->isEmpty() ? 0 : 1;
                 $_data['follow_status'] = 1; //关注我的的列表  对方关注状态始终为1
-                $data['followeds'][] = $_data;
+
+                // 最新微博图片
+                $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
+                                        ->where('feeds.user_id', '=', $_user['id'])
+                                        ->orderBy('feed_storages.id', 'desc')
+                                        ->take(3)
+                                        ->pluck('feed_storages.feed_storage_id')
+                                        ->toArray();
+
+                $data['follows'][] = $_data;
             }
+
         } else { // 关注的人
             $follows = Following::where('user_id', $user_id)
                 ->orderBy('id', 'DESC')
-                ->with('userFollowed')
-                ->get();
-            $datas['follows'] = [];
+                ->with('userFollowed', 'user.datas', 'user.counts')
+                ->paginate(1);
+            $data['follows'] = [];
             foreach ($follows as $follow) {
                 $_data = [];
                 $_data['id'] = $follow->id;
-                $_data['user'] = $follow->following_user_id;
+
+                // 获取用户设置
+                $_user = $follow->user->toArray();
+                $_data['user']['id'] = $_user['id'];
+                $_data['user']['phone'] = $_user['phone'];
+
+                // 统计信息
+                foreach ($_user['counts'] as $key => $value) {
+                    $_data['user'][$value['key']] = $value['value'];
+                }
+
+                // 个人资料
+                foreach ($_user['datas'] as $key => $value) {
+                    $_data['user'][$value['profile']] = $value['pivot']['user_profile_setting_data'];
+                }
+
+                // 关注状态
                 $_data['my_follow_status'] = 1; //我关注的列表  关注状态始终为1
                 $_data['follow_status'] = $follow->userFollowed->where('followed_user_id', $follow->following_user_id)->isEmpty() ? 0 : 1;
+
+                // 最新微博图片
+                $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
+                                        ->where('feeds.user_id', '=', $_user['id'])
+                                        ->orderBy('feed_storages.id', 'desc')
+                                        ->take(3)
+                                        ->pluck('feed_storages.feed_storage_id')
+                                        ->toArray();
+
                 $data['follows'][] = $_data;
             }
         }
 
+        $data['page'] = $follows->appends(['type'=>$type])->links('pcview::template.page');
         return view('pcview::profile.myfans', $data, $this->mergeData);
     }
 

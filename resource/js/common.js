@@ -229,6 +229,31 @@ var ajaxFileUpload = function(width, height, f, obj) {
     });
 };
 
+// 关注
+var follow = function(status, user_id, target, callback){
+    if (status == 0) {
+        var url = API + '/users/follow';
+        $.ajax({
+            url: url,  
+            type: 'POST',
+            data: {user_id: user_id},
+            success: function(response){
+                callback(target);
+            }
+        })
+    } else {
+        var url = API + '/users/unFollow';
+        $.ajax({
+            url: url,  
+            type: 'DELETE',
+            data: {user_id: user_id},
+            success: function(response){
+                callback(target);
+            }
+        })
+    }
+}
+
 
 ;(function($){
     //默认参数

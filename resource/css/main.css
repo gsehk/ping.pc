@@ -825,7 +825,7 @@ textarea {
     text-align: center;
 }
 
-.page_a, .page_l {
+.page_arrow, .page_a, .page_cur {
     display: inline-block;
     width: 40px;
     height: 40px;
@@ -836,11 +836,21 @@ textarea {
     line-height: 40px;
     background: #fff;
 }
-
     .page_a:hover {
         color: #59b6d7;
         border: 1px solid #59b6d7;
     }
+
+.page_cur {
+    color: #fff;
+    background: #59B6D7;
+}
+    
+    .page_cur:hover {
+        color: #fff;
+    }
+
+
 
 .dy_picture {
     margin-top: 40px;
@@ -2705,8 +2715,9 @@ textarea {
 .fan_subtitle {
     font-size: 12px;
     line-height: 22px;
+    height: 44px;
     color: #999;
-    margin-top: 20px;
+    margin-top: 15px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
