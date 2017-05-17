@@ -85,7 +85,7 @@ class HomeController extends BaseController
             $datas[] = $data;
         }
         $feedList['data'] = $datas;
-        $feedData['html'] = view('pcview::templet.feed', $feedList, $this->mergeData)->render();
+        $feedData['html'] = view('pcview::template.feed', $feedList, $this->mergeData)->render();
         $feedData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['feed']['feed_id'] : 0;
 
         return response()->json([
