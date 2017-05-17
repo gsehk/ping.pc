@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('css/wangEditor.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('wangEditor/wangEditor.min.css') }}">
 <style type="text/css">
     #editor {
         width: 100%;
@@ -6,7 +6,7 @@
     }
 </style>
 <div id="editor"><p>请输入内容...</p></div>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/wangEditor.min.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('wangEditor/wangEditor.min.js') }}"></script>
 <script type="text/javascript">
     $(function () {
         var editor = new wangEditor('editor');
