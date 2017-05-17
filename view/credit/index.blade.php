@@ -58,7 +58,5 @@
        
         @endif
     </div>
-    @component('pages')
-    @endcomponent
 </div>
 @endsection

@@ -13,7 +13,6 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCateLink;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsComment;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class InformationController extends BaseController
 {
@@ -60,7 +59,7 @@ class InformationController extends BaseController
             unset($value['user']['datas']);
         }
 
-        return view('information.index', $datas, $this->mergeData);
+        return view('pcview::information.index', $datas, $this->mergeData);
     }
 
     public function read(int $news_id)
@@ -94,7 +93,7 @@ class InformationController extends BaseController
                         ->get()
                         ->toArray();
 
-        return view('information.read', $data, $this->mergeData);
+        return view('pcview::information.read', $data, $this->mergeData);
     }
 
     public function getRecommendList(int $cate_id = 0)

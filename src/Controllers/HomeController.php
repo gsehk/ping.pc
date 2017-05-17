@@ -5,7 +5,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 use Zhiyi\Plus\Models\UserDatas;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
@@ -16,7 +15,6 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedComment;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Services\FeedCount;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class HomeController extends BaseController
 {
@@ -25,21 +23,20 @@ class HomeController extends BaseController
     	$data['type'] = $request->input('type') ?: 1;
         $data['credit'] = CreditSetting::where('name', 'check_in')->first();
         $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
-                    ->where(function($query){
-                        if ($this->mergeData) {
-                            $query->where('user_id', $this->mergeData['TS']['id']);
-                        }
-                    })
-                    ->orderBy('created_at', 'desc')
-                    ->first();
+                            ->where(function($query){
+                                if ($this->mergeData) {
+                                    $query->where('user_id', $this->mergeData['TS']['id']);
+                                }
+                            })
+                            ->orderBy('created_at', 'desc')
+                            ->first();
         $data['checkin'] = CheckInfo::where(function($query){
                                 if ($this->mergeData) {
                                     $query->where('user_id', $this->mergeData['TS']['id']);
                                 }
                             })
                             ->first();
-        dump(Carbon::today()->timestamp);
-    	return view('home.index', $data, $this->mergeData);
+    	return view('pcview::home.index', $data, $this->mergeData);
     }
 
     public function formatFeedList($feeds, $uid)
@@ -75,6 +72,7 @@ class HomeController extends BaseController
                 ->orderBy('id', 'desc')
                 ->take($getCommendsNumber)
                 ->select(['id', 'user_id', 'created_at', 'comment_content', 'reply_to_user_id', 'comment_mark'])
+                ->with('user')
                 ->get()
                 ->toArray();
             $data['user'] = $feed->user()
@@ -87,7 +85,7 @@ class HomeController extends BaseController
             $datas[] = $data;
         }
         $feedList['data'] = $datas;
-        $feedData['html'] = view('templet.feed', $feedList, $this->mergeData, true);
+        $feedData['html'] = view('pcview::templet.feed', $feedList, $this->mergeData)->render();
         $feedData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['feed']['feed_id'] : 0;
 
         return response()->json([
@@ -324,4 +322,5 @@ class HomeController extends BaseController
         }
         return $credit_user;
     }
+
 }

@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('pcview::layouts.default')
 
 @section('body_class')class="gray"@endsection
 
@@ -6,7 +6,7 @@
 <div class="dy_bg">
     <div class="dy_cont">
         <!--左-->
-        @component('ucmenu')
+        @component('pcview::ucmenu')
             555
         @endcomponent
     </div>
@@ -23,7 +23,7 @@
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
                         图片
                     </span>
-                    <a href="javascript:;" class="dy_share dy_share_feed" onclick="weibo.postFeed()">分享</a>
+                    <a href="javascript:;" class="dy_share" onclick="weibo.postFeed()">分享</a>
                 </div>
             </div>
             <div class="dy_cen">
@@ -32,8 +32,7 @@
                     <a href="javascript:;" data-cid="2" class="fs-16 @if ($type == 2) dy_cen_333 @endif">热门</a>
                     <a href="javascript:;" data-cid="3" class="fs-16 @if ($type == 3) dy_cen_333 @endif">最新</a>
                 </div>
-                <div id="feeds-list">
-                </div>
+                <div id="feeds-list"></div>
             </div>
         </div>
     </div>
@@ -59,11 +58,6 @@
             @endif
         </div>
         @endif
-
-
-        @component('related')
-            {{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}
-        @endcomponent
     </div>
 </div>
 @endsection
@@ -90,24 +84,6 @@ var checkin = function(){
   });
 };
 
-$(function(){
-    // 发布微博
-    var loadgif = PUBLIC_URL + '/images/loading.png';
-    var up = $('.dy_company').Huploadify({
-        fileTypeExts: '*.jpg,*.png',
-        auto:true,
-        multi:true,
-        newUpload:true,
-        buttonText:''
-    });
-
-    //为删除文件按钮绑定删除文件事件
-    $(".dy_cTop").on("click", ".imgdel", function(){
-        $(this).parent().remove();
-　　});
-
-})
-
 // 加载微博
 setTimeout(function() {
     weibo.init({
@@ -117,23 +93,14 @@ setTimeout(function() {
 }, 300);
 
 $(function(){
-    $('.show_tab a').on('click', function(){
-        var cid = $(this).data('cid');
-        var option = {
-            container: '#feeds-list',
-            cid: cid
-        };
-        $(option.container).html('');
-        weibo.init(option);
-        $('.show_tab a').removeClass('dy_cen_333');
-        $(this).addClass('dy_cen_333');
-    });
-    $('#feeds-list').on('click', '.show_admin', function(){
-        if ($(this).next('.cen_more').css('display') == 'none') {
-            $(this).next('.cen_more').show();
-        } else {
-            $(this).next('.cen_more').hide();
-        }
+    // 发布微博
+    var loadgif = PUBLIC_URL + '/images/loading.png';
+    var up = $('.dy_company').Huploadify({
+        fileTypeExts: '*.jpg,*.png',
+        auto:true,
+        multi:true,
+        newUpload:true,
+        buttonText:''
     });
 });
 </script>

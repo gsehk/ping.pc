@@ -76,33 +76,3 @@ function resource_path()
 {
     return base_path('/resource');
 }
-/**
- * Get the evaluated view contents for the given view.
- *
- * @param  string  $view
- * @param  array   $data
- * @param  array   $mergeData
- * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
- *
- * @author Seven Du <shiweidu@outlook.com>
- * @homepage http://medz.cn
- */
-function view($view = null, $data = [], $mergeData = [], $type = false)
-{
-    $finder = app(\Illuminate\View\FileViewFinder::class, [
-        'files' => app(\Illuminate\Filesystem\Filesystem::class),
-        'paths' => [base_path('/view')],
-    ]);
-    $factory = app(\Illuminate\Contracts\View\Factory::class);
-    $factory->setFinder($finder);
-    if (func_num_args() === 0) {
-        return $factory;
-    }
-
-    if ($type == false) {
-        return $factory->make($view, $data, $mergeData);
-    } else {
-        return $factory->make($view, $data, $mergeData)->render();
-    }
-    
-}

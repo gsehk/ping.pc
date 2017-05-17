@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('pcview::layouts.auth')
 
 @section('body_class')class="gray"@endsection
 

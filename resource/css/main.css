@@ -173,6 +173,7 @@ textarea {
     border-radius: 3px;
     padding-top: 20px;
     box-shadow: 0px 1px 22px #E2E0E0;
+    z-index: 555;
 }
 
 .p_cont .triangle {
@@ -368,7 +369,6 @@ textarea {
 }
 
 .dy_center {
-    background: #fff;
     padding-bottom: 30px;
     width: 635px;
     float: left;
@@ -376,7 +376,9 @@ textarea {
 
 .dy_cTop {
     width: 100%;
-    padding-bottom: 35px;
+    padding: 20px 40px;
+    margin-bottom: 20px;
+    background: white;
 }
 
 .dy_ta {
@@ -384,7 +386,6 @@ textarea {
     height: 158px;
     background: #f3f6f7;
     border: 1px solid #ededed;
-    margin: 30px 40px 20px;
     padding: 10px;
     font-size: 16px;
     outline: none;
@@ -392,12 +393,10 @@ textarea {
 }
 
 .dy_company {
-    padding-left: 40px;
+    height: 37px;
+    line-height: 31px;
+    margin-top: 20px;
 }
-
-    .dy_company a {
-        letter-spacing: 5px;
-    }
 
     .dy_company span {
         color: #666;
@@ -433,20 +432,21 @@ textarea {
 
 .dy_cen {
     width: 100%;
-    /* border-top: 30px solid #f3f6f7; */
-    padding: 20px 40px 0;
+    background: white;
+    padding: 30px 40px 0;
 }
 
     .dy_cen a {
         color: #999;
         display: inline-block;
-        margin-right: 20px;
     }
 
         .dy_cen a:hover {
             color: #333;
         }
-
+.show_tab>a{
+    margin-right: 20px;
+}
 .dy_cen_333 {
     color: #333 !important;
 }
@@ -494,24 +494,18 @@ textarea {
     position: relative;
 }
 
-    .dy_comment span {
+    .dy_comment .digg, .dy_comment .like, .dy_comment .vie{
         font-size: 14px;
         color: #cccccc;
         display: inline-block;
-        margin-right: 4px;
+        margin-right: 50px;
+        cursor: pointer;
     }
 
     .dy_comment svg {
         font-size: 24px;
         vertical-align: -8px;
     }
-
-.dy_comit a {
-    color: #59b6d7;
-    display: inline-block;
-    cursor: pointer;
-    margin-left: 5px;
-}
 .show_admin{
     width: 30px;
     text-align: right;
@@ -522,7 +516,7 @@ textarea {
 }
 
 .dy_line {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .dy_comit {
@@ -792,7 +786,7 @@ textarea {
 }
 
 .dyBox_comment {
-    margin: 20px 0 10px;
+    margin: 10px 0 10px;
 }
 
     .dyBox_comment textarea {

@@ -1,15 +1,4 @@
 ﻿
-var initNums = 255;
-var loadHtml = "<div class='loading'><img src='"+PUBLIC_URL +"/images/loading.png' class='load'>加载中</div>";
-var request_url = {
-    login:'passport/index',
-    /* 获取文章列表 */
-    get_news:'/information/getNewsList',
-    digg_news:'/api/v1/news/{news_id}/digg',
-    collect_news:'/api/v1/news/{news_id}/collection',
-    comment_news:'/api/v1/news/{news_id}/comment',
-    get_comment:'/information/{news_id}/comments',
-};
 var news = {};
 
 news.setting = {};
@@ -555,9 +544,9 @@ var comment = {
   // 发表评论
   addComment:function(afterComment,obj) {
     var box = this.box;
-    var _textarea = $(obj).parent().find('textarea');
+    var _textarea = $('#mini_editor');
     if(_textarea.size() == 0) {
-      _textarea = $(obj).parent().find('input:eq(0)');
+      return;
     }
     _textarea = _textarea.get(0);
     var strlen = getLength(_textarea.value);
@@ -596,7 +585,7 @@ var comment = {
               }
               var html = '<div class="delComment_list">'+
                 '<div class="comment_left">'+
-                '<img src="'+AVATAR+'" class="c_leftImg" />'+
+                '<img src="'+API+'/storages/'+AVATAR+'" class="c_leftImg" />'+
                 '</div>'+
                 '<div class="comment_right">'+
                 '<span class="del_ellen">'+NAME+'</span>'+

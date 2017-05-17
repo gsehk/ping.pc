@@ -13,7 +13,6 @@ use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\AuthToken;
 use Zhiyi\Plus\Models\LoginRecord;
 use Session;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class PassportController extends BaseController
 {
@@ -52,7 +51,7 @@ class PassportController extends BaseController
             return redirect(route('pc:feed'));
         }
 
-    	return view('passport.login', [], $this->mergeData);
+    	return view('pcview::passport.login', [], $this->mergeData);
     }
 
     /**

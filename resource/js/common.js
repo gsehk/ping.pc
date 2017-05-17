@@ -1,3 +1,17 @@
+
+var initNums = 255;
+var loadHtml = "<div class='loading'><img src='"+PUBLIC_URL +"/images/loading.png' class='load'>加载中</div>";
+var request_url = {
+    login:'passport/index',
+    /* 获取文章列表 */
+    get_news:'/information/getNewsList',
+    digg_news:'/api/v1/news/{news_id}/digg',
+    collect_news:'/api/v1/news/{news_id}/collection',
+    comment_news:'/api/v1/news/{news_id}/comment',
+    get_comment:'/information/{news_id}/comments',
+    feed_comment:'/api/v1/feeds/{feed_id}/comment',
+};
+
 // Ajax 设置csrf Header
 $.ajaxSetup({
    headers: {

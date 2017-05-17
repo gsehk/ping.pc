@@ -73,6 +73,7 @@ Route::prefix('profile')->group(function () {
     Route::get('/home/hots', 'HomeController@getHotFeeds');
     Route::get('/home/feeds', 'HomeController@getNewFeeds');
     Route::get('/home/checkin', 'HomeController@checkin');
+    // Route::post('/home/{feed_id}/comment', 'HomeController@addComment')->where(['feed_id' => '[0-9]+']);
 
     // 资讯
     Route::get('/information/index', 'InformationController@index')->name('pc:news');
