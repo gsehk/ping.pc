@@ -18,16 +18,16 @@
             <div class="del_pro">
                 <span id="collect{{$id}}" rel="{{count($collection)}}">
                     @if($is_collect_news <= 0)
-                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><i class="icon iconfont icon-shoucang-copy1"></i><font class="collect_num">{{count($collection)}}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{count($collection)}}</font>收藏</a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');"><i class="icon iconfont icon-shoucang-copy1" style="color: red;"></i><font class="collect_num">{{count($collection)}}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{count($collection)}}</font>收藏</a>
                     @endif
                 </span>
                 <span id="digg{{$id}}" rel="{{$digg_count}}">
                     @if($is_digg_news <= 0)
-                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><i class="icon iconfont icon-xihuan-white"></i><font class="digg_num">{{$digg_count}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$digg_count}}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');"><i class="icon iconfont icon-xihuan-white" style="color: red;"></i><font class="digg_num">{{$digg_count}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$digg_count}}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share">

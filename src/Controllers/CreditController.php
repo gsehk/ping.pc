@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditSetting;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class CreditController extends BaseController
 {
@@ -28,6 +27,6 @@ class CreditController extends BaseController
         
         $credit['type'] = $type;
         
-        return view('credit.index', $credit);
+        return view('pcview::credit.index', $credit, $this->mergeData);
     }
 }

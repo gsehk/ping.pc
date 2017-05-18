@@ -11,7 +11,6 @@ use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\view;
 
 class RankController extends BaseController
 {
@@ -29,7 +28,7 @@ class RankController extends BaseController
         $list = $this->_parseRankList($ranList);
         $list['type'] = $type;
         // dump($list);exit;
-        return view('rank.index', $list);
+        return view('pcview::rank.index', $list, $this->mergeData);
     }
 
     public function _getRankList($type, $fids)

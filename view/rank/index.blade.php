@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('pcview::layouts.default')
 
 @section('body_class')class="gray"@endsection
 
