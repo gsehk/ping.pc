@@ -62,7 +62,7 @@
         @endif
         <a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
     </div>
-    <div>
+    <div class="dy_cont">
         <!--left-->
         <div class="dy_left"></div>
         <!--《center》-->
