@@ -66,4 +66,26 @@ class BaseController extends Controller
     	});
     }
 
+
+    public function formatUserDatas($user)
+    {
+    	$rs['id'] = $user->id;
+    	$rs['name'] = $user->name;
+    	$rs['phone'] = $user->phone;
+    	$rs['email'] = $user->email;
+
+		if (!empty($user->datas)) {
+	        foreach ($user->datas as $value) {
+	            $rs[$value->profile] = $value->pivot->user_profile_setting_data;;
+	        }
+		}
+
+		if (!empty($user->counts)) {
+    		// 统计信息
+            foreach ($user->counts as $key => $value) {
+                $rs[$value->key] = $value->value;
+            }
+		}
+		return $rs;
+    }
 }

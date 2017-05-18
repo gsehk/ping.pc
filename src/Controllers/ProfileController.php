@@ -3,7 +3,9 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use Zhiyi\Plus\Models\User;
+use Zhiyi\Plus\Models\UserDatas;
 use Zhiyi\Plus\Models\Followed;
 use Zhiyi\Plus\Models\Following;
 use Zhiyi\Plus\Models\StorageTask;
@@ -18,7 +20,7 @@ class ProfileController extends BaseController
     {
         $type = $request->input('type') ?: 'all';
 
-        return view('profile.index', ['type' => $type]);
+        return view('pcview::profile.index', ['type' => $type], $this->mergeData);
     }
 
     public function article(Request $request)
@@ -35,7 +37,7 @@ class ProfileController extends BaseController
         return view('profile.collection', ['type' => $type]);
     }
 
-    public function myFans(Request $request)
+    public function users(Request $request)
     {
         $data = [];
         $data['type'] = $type = $request->input('type') ?: 1;
@@ -50,86 +52,85 @@ class ProfileController extends BaseController
             $follows = Followed::where('user_id', $user_id)
                 ->orderBy('id', 'DESC')
                 ->with('userFollowing', 'user.datas', 'user.counts')
-                ->paginate(3);
+                ->paginate(6);
 
-            $data['follows'] = [];
+            $data['datas'] = [];
             foreach ($follows as $follow) {
                 $_data = [];
                 $_data['id'] = $follow->id;
-
-                // 获取用户设置
-                $_user = $follow->user->toArray();
-                $_data['user']['id'] = $_user['id'];
-                $_data['user']['phone'] = $_user['phone'];
-
-                // 统计信息
-                foreach ($_user['counts'] as $key => $value) {
-                    $_data['user'][$value['key']] = $value['value'];
-                }
-
-                // 个人资料
-                foreach ($_user['datas'] as $key => $value) {
-                    $_data['user'][$value['profile']] = $value['pivot']['user_profile_setting_data'];
-                }
-
+                // 获取用户信息
+                $_data['user'] = $this->formatUserDatas($follow->user);
                 // 关注状态
                 $_data['my_follow_status'] = $follow->userFollowing->where('following_user_id', $follow->follow_user_id)->isEmpty() ? 0 : 1;
-                $_data['follow_status'] = 1; //关注我的的列表  对方关注状态始终为1
-
                 // 最新微博图片
                 $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
-                                        ->where('feeds.user_id', '=', $_user['id'])
+                                        ->where('feeds.user_id', '=', $follow->user->id)
                                         ->orderBy('feed_storages.id', 'desc')
                                         ->take(3)
                                         ->pluck('feed_storages.feed_storage_id')
                                         ->toArray();
 
-                $data['follows'][] = $_data;
+                $data['datas'][] = $_data;
             }
-
-        } else { // 关注的人
+            $data['page'] = $follows->appends(['type'=>$type])->links('pcview::template.page');
+        } else if ($type == 2) { // 关注的人
             $follows = Following::where('user_id', $user_id)
                 ->orderBy('id', 'DESC')
                 ->with('userFollowed', 'user.datas', 'user.counts')
-                ->paginate(1);
-            $data['follows'] = [];
+                ->paginate(6);
+            $data['datas'] = [];
             foreach ($follows as $follow) {
                 $_data = [];
                 $_data['id'] = $follow->id;
-
-                // 获取用户设置
-                $_user = $follow->user->toArray();
-                $_data['user']['id'] = $_user['id'];
-                $_data['user']['phone'] = $_user['phone'];
-
-                // 统计信息
-                foreach ($_user['counts'] as $key => $value) {
-                    $_data['user'][$value['key']] = $value['value'];
-                }
-
-                // 个人资料
-                foreach ($_user['datas'] as $key => $value) {
-                    $_data['user'][$value['profile']] = $value['pivot']['user_profile_setting_data'];
-                }
-
+                // 获取用户信息
+                $_data['user'] = $this->formatUserDatas($follow->user);
                 // 关注状态
                 $_data['my_follow_status'] = 1; //我关注的列表  关注状态始终为1
-                $_data['follow_status'] = $follow->userFollowed->where('followed_user_id', $follow->following_user_id)->isEmpty() ? 0 : 1;
-
                 // 最新微博图片
                 $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
-                                        ->where('feeds.user_id', '=', $_user['id'])
+                                        ->where('feeds.user_id', '=', $follow->user->id)
                                         ->orderBy('feed_storages.id', 'desc')
                                         ->take(3)
                                         ->pluck('feed_storages.feed_storage_id')
                                         ->toArray();
 
-                $data['follows'][] = $_data;
+                $data['datas'][] = $_data;
             }
+            $data['page'] = $follows->appends(['type'=>$type])->links('pcview::template.page');
+        } else if ($type == 3) { // 访客
+
+        } else { // 推荐用户 
+            $recusers = UserDatas::where('key', 'feeds_count')
+            ->where('user_id', '!=', $this->mergeData['TS']['id'])
+            ->with('user.datas')
+            ->orderBy(DB::raw('-value', 'desc'))
+            ->paginate(1);
+
+            $data['datas'] = [];
+            foreach ($recusers as $recuser) {
+                $_data['user'] = $this->formatUserDatas($recuser->user);
+                if ($this->mergeData['TS']) {
+                    $_data['my_follow_status'] = 0;
+                } else {
+                    $_data['my_follow_status'] = Following::where('following_user_id', $recuser->user->id)
+                                                    ->where('user_id', $this->mergeData['TS']['id'])
+                                                    ->get()
+                                                    ->isEmpty() ? 0 : 1;
+                }
+                // 最新微博图片
+                $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
+                                        ->where('feeds.user_id', '=', $recuser->user->id)
+                                        ->orderBy('feed_storages.id', 'desc')
+                                        ->take(3)
+                                        ->pluck('feed_storages.feed_storage_id')
+                                        ->toArray();
+
+                $data['datas'][] = $_data;
+            }
+            $data['page'] = $recusers->appends(['type'=>$type])->links('pcview::template.page');
         }
 
-        $data['page'] = $follows->appends(['type'=>$type])->links('pcview::template.page');
-        return view('pcview::profile.myfans', $data, $this->mergeData);
+        return view('pcview::profile.users', $data, $this->mergeData);
     }
 
     public function rank()

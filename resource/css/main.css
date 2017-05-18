@@ -9,6 +9,19 @@ body.gray{
     background:#f3f6f7;
 }
 
+html,
+body,
+.wrap {
+  height: 100%;
+}
+
+.wrap {
+  height: auto;
+  min-height: 100%;
+  _height: 100%;
+  color: #fff;
+}
+
 ul {
     list-style: none;
     margin: 0;
@@ -210,12 +223,15 @@ textarea {
 }
 /*底部*/
 .dy_bottom {
+    position: relative;
+    z-index: 1;
+    margin-top: -277px;
+    height: 277px;
     width: 100%;
     background: #fff;
     border-top: 1px solid #e5e5e5;
     clear: both;
     text-align: center;
-    padding-bottom: 50px;
 }
 
 .dybCont {
@@ -685,6 +701,10 @@ textarea {
             color: #666;
             font-size: 12px;
             margin-top: 10px;
+        }
+
+        .dyrBottom li span a {
+            color: #333;
         }
 
 .dy_more {

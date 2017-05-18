@@ -21,7 +21,11 @@ class HomeController extends BaseController
     public function index(Request $request)
     {
     	$data['type'] = $request->input('type') ?: 1;
+
+        // 积分
         $data['credit'] = CreditSetting::where('name', 'check_in')->first();
+
+        // 前导
         $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
                             ->where(function($query){
                                 if ($this->mergeData) {
@@ -36,6 +40,19 @@ class HomeController extends BaseController
                                 }
                             })
                             ->first();
+
+        // 推荐用户
+        $_rec_users = UserDatas::where('key', 'feeds_count')
+        ->where('user_id', '!=', $this->mergeData['TS']['id'])
+        ->select('id', 'user_id')
+        ->with('user.datas')
+        ->orderBy(DB::raw('-value', 'desc'))
+        ->take(9)
+        ->get();
+        foreach ($_rec_users as $_rec_user) {
+            $data['rec_users'][] = $this->formatUserDatas($_rec_user->user);
+        }
+
     	return view('pcview::home.index', $data, $this->mergeData);
     }
 

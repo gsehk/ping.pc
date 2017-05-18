@@ -53,7 +53,7 @@ Route::prefix('profile')->group(function () {
     // Route::get('all', 'ProfileController@feedAll')->name('pc:feedAll');
     Route::get('index', 'ProfileController@index')->name('pc:myFeed');
     Route::get('related', 'ProfileController@related')->name('pc:related');
-    Route::get('fans', 'ProfileController@myFans')->name('pc:myFans');
+    Route::get('users', 'ProfileController@users')->name('pc:users');
     Route::get('following', 'ProfileController@following')->name('pc:following');
     Route::get('collection', 'ProfileController@collection')->name('pc:collection');
     Route::get('account', 'ProfileController@account')->name('pc:account');

@@ -26,13 +26,16 @@
 </head>
 
 <body @yield('body_class')>
+    <div class="wrap">
+        <!-- nav -->
+        @include('pcview::layouts.partials.nav')
 
-    <!-- nav -->
-    @include('pcview::layouts.partials.nav')
+        <!-- content -->
+        <div class="dy_bg">
+        @yield('content')
+        </div>
+    </div>
 
-    <!-- content -->
-    @yield('content')
-    
     <!-- footer -->
     @include('pcview::layouts.partials.footer')
 

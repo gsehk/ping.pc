@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('pcview::layouts.default')
 
 @section('body_class')class="gray"@endsection
 
@@ -263,9 +263,6 @@
                         <li><a href="javascript:;">关注</a></li>
                         <li><a href="{{Route('pc:myFans', ['type'=>3])}}">访客</a></li>
                     </ul>
-                    @component('related')
-                        {{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}
-                    @endcomponent
                 </div>
             </div>
         </div>
