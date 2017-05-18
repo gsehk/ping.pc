@@ -6,9 +6,14 @@
 <div class="dy_cont">
     <!--top-->
     <div class="dyn_top">
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="dynTop_bg" />
+        @if (!empty($user['cover']))
+        <img src="{{ $routes['storage'] }}{{ $user['cover'] }}" class="dynTop_bg" />
+        @else
+        <img src="{{ $routes['resource'] }}/images/default_cover.png" class="dynTop_bg" />
+        @endif
         @if ($user['id'] == $TS['id'])
-        <span class="dyn_huan">更换封面</span>
+        <input type="file" name="cover" style="display:none" id="cover">
+        <span class="dyn_huan" style="display:none">更换封面</span>
         @endif
         <div class="dyn_title">{{ $user['name'] }}</div>
         <div class="dynTop_cont">{{ $user['intro'] }}</div>
@@ -352,6 +357,7 @@
 
 
 @section('scripts')
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script type="text/javascript">
     $(function(){
         // 关注
@@ -363,19 +369,34 @@
             $('.userlist:eq(' + (index) + ')').css('display', 'inline-block');
         })
 
+        $('.dyn_huan').on('click', function(){
+            $('#cover').click();
+        })
+
+        $('#cover').on('change', function(e){
+            var file = e.target.files[0];
+            fileUpload(file, uploadPccover);
+        });
+
+        $('.dyn_top').hover(function(){
+            $('.dyn_huan').show();
+        },function(){
+            $('.dyn_huan').hide();
+        })
     })
 
-    // 关注回调
-    var afterdata = function(target){
-        if (target.attr('status') == 1) {
-            target.text('+关注');
-            target.attr('status', 0);
-            target.removeClass('c_ccc');
-        } else {
-            target.text('已关注');
-            target.attr('status', 1);
-            target.addClass('c_ccc');
-        }
+    var uploadPccover = function(image, f, task_id){
+        $.ajax({
+            url: '/api/v1/users',
+            type: 'PATCH',
+            data: {cover_storage_task_id: task_id},
+            dataType: 'json',
+            success: function(res) {
+                $('.dynTop_bg').attr('src', image.src);
+            }
+        });
     }
+
+
 </script>
 @endsection
