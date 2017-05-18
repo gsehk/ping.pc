@@ -10,6 +10,7 @@ var request_url = {
     comment_news:'/api/v1/news/{news_id}/comment',
     get_comment:'/information/{news_id}/comments',
     feed_comment:'/api/v1/feeds/{feed_id}/comment',
+    digg_feed:'/api/v1/feeds/{feed_id}/digg',
 };
 
 // Ajax 设置csrf Header

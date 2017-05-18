@@ -35,11 +35,12 @@ a:link, a:visited, a:hover {
 .icon {
     width: 1em;
     height: 1em;
-    vertical-align: -0.15em;
+    vertical-align: middle;
     fill: currentColor;
     overflow: hidden;
+    font-size: 2rem;
 }
-
+/* svg path{fill: inherit;} */
 textarea {
     resize: none;
     outline: none;

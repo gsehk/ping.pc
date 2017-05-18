@@ -16,13 +16,19 @@
             @endforeach
         @endif
         <div class="dy_comment">
-            <span class="digg">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                {{$post['tool']['feed_digg_count']}}
+            <span class="digg" id="digg{{$post['feed']['feed_id']}}" rel="{{$post['tool']['feed_digg_count']}}">
+                @if($post['tool']['is_digg_feed'] <= 0)
+                <a href="javascript:;" onclick="digg.addDigg({{$post['feed']['feed_id']}})">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
+                </a>
+                @else 
+                <a href="javascript:;" onclick="digg.delDigg({{$post['feed']['feed_id']}})">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
+                </a>
+                @endif
             </span>
             <span class="like J-comment-show" data-args="box=#warp_box{{$post['feed']['feed_id']}}&row_id={{$post['feed']['feed_id']}}&canload=0">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
-                {{$post['tool']['feed_comment_count']}}
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>{{$post['tool']['feed_comment_count']}}
             </span>
             <span class="vie">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>

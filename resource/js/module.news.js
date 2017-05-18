@@ -314,7 +314,7 @@ var digg = {
               var num = $digg.attr('rel');
               num++;
               $digg.attr('rel', num);
-              $('#digg'+news_id).html('<a href="javascript:;" onclick="digg.delDigg('+news_id+');"><i class="icon iconfont icon-xihuan-white" style="color: red;"></i><font class="digg_num">'+num+'</font>人喜欢</a>');
+              $('#digg'+news_id).html('<a href="javascript:;" onclick="digg.delDigg('+news_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>'+num+'</font>人喜欢</a>');
           }else{
               alert(res.message);
           }
@@ -345,7 +345,7 @@ var digg = {
               var num = $digg.attr('rel');
               num--;
               $digg.attr('rel', num);
-              $('#digg'+news_id).html('<a href="javascript:;" onclick="digg.addDigg('+news_id+');"><i class="icon iconfont icon-xihuan-white"></i><font class="digg_num">'+num+'</font>人喜欢</a>');
+              $('#digg'+news_id).html('<a href="javascript:;" onclick="digg.addDigg('+news_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font>人喜欢</a>');
           }else{
               alert(res.message);
           }
@@ -396,7 +396,7 @@ var collect = {
               var num = $collect.attr('rel');
               num++;
               $collect.attr('rel', num);
-              $('#collect'+news_id).html('<a href="javascript:;" onclick="collect.delCollect('+news_id+');"><i class="icon iconfont icon-shoucang-copy1" style="color: red;"></i><font class="collect_num">'+num+'</font>收藏</a>');
+              $('#collect'+news_id).html('<a href="javascript:;" onclick="collect.delCollect('+news_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">'+num+'</font>收藏</a>');
           }else{
               alert(res.message);
           }
@@ -427,7 +427,7 @@ var collect = {
               var num = $collect.attr('rel');
               num--;
               $collect.attr('rel', num);
-              $('#collect'+news_id).html('<a href="javascript:;" onclick="collect.addCollect('+news_id+');"><i class="icon iconfont icon-shoucang-copy1"></i><font class="collect_num">'+num+'</font>收藏</a>');
+              $('#collect'+news_id).html('<a href="javascript:;" onclick="collect.addCollect('+news_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="collect_num">'+num+'</font>收藏</a>');
           }else{
               alert(res.message);
           }
