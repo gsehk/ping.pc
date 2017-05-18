@@ -300,13 +300,13 @@ textarea {
 
 .dy_cont {
     width: 1080px;
-    margin: 0 auto;
+    margin: 36px auto 0px auto;
 }
 
 .dy_left {
     float: left;
     width: 150px;
-    padding-top: 64px;
+    padding-top: 28px;
 }
 
     .dy_left ul li {
@@ -610,7 +610,6 @@ textarea {
 .dy_right {
     width: 235px;
     float: left;
-    margin-top: 36px;
 }
 .dy_signed{
     margin-bottom: 30px;
@@ -938,7 +937,7 @@ textarea {
     float: left;
     width: 635px;
     min-height: 800px;
-    margin: 36px 30px 0;
+    margin: 0px 30px 0;
 }
 
 .artic_img {
