@@ -66,7 +66,7 @@ class InformationController extends BaseController
     {
         $uid = $this->mergeData['TS']['id'] ?? 0;
         $data = News::where('id', $news_id)
-                ->with('newsCount') //当前作者文章数
+                ->withCount('newsCount') //当前作者文章数
                 ->with('user')
                 ->with(['collection' => function( $query ){
                     return $query->count();
@@ -245,7 +245,7 @@ class InformationController extends BaseController
         $news->content = $request->content;
         $news->storage = $storage_id ?: '';
         $news->from = $request->source ?: '';
-        $news->state = $type;
+        $news->state = $type; 
         $news->save();
 
         $news_link = new NewsCateLink();

@@ -214,7 +214,7 @@ class ProfileController extends BaseController
                 break;
         }
         
-        return view('profile.'.$datas['page'], $datas, $this->mergeData);
+        return view('pcview::profile.'.$datas['page'], $datas, $this->mergeData);
     }
 
     public function score(Request $request)

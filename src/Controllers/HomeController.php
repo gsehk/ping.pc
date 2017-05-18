@@ -6,6 +6,7 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Models\UserDatas;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditSetting;
@@ -54,6 +55,61 @@ class HomeController extends BaseController
         }
 
     	return view('pcview::home.index', $data, $this->mergeData);
+    }
+
+    public function read(Request $request, int $feed_id)
+    {
+        $uid = $this->mergeData['TS']['id'] ?? 0;
+        if (! $feed_id) {
+
+            return response('动态ID不能为空');
+        }
+        $feed = Feed::byFeedId($feed_id)->with('storages')->first();
+
+        if (! $feed) {
+            return response('动态不存在或已被删除');
+        }
+        
+        // 组装数据
+        $data = [];
+        // 用户标识
+        $data['user_id'] = $feed->user_id;
+        // 动态内容
+        $data['feed'] = [];
+        $data['feed']['feed_id'] = $feed->id;
+        $data['feed']['feed_title'] = $feed->feed_title ?: '';
+        $data['feed']['feed_content'] = $feed->feed_content;
+        $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
+        $data['feed']['feed_from'] = $feed->feed_from;
+        $data['feed']['storages'] = $feed->storages->map(function ($storage) {
+            return ['storage_id' => $storage->id, 'width' => $storage->image_width, 'height' => $storage->image_height];
+        });
+
+        // 工具栏数据
+        $data['tool'] = [];
+        $data['tool']['feed_view_count'] = $feed->feed_view_count;
+        $data['tool']['feed_digg_count'] = $feed->feed_digg_count;
+        $data['tool']['feed_comment_count'] = $feed->feed_comment_count;
+        $data['tool']['feed_collection_count'] = count($feed->collection);
+        // 暂时剔除当前登录用户判定
+        $data['tool']['is_digg_feed'] = $uid ? FeedDigg::byFeedId($feed->id)->byUserId($uid)->count() : 0;
+        $data['tool']['is_collection_feed'] = $uid ? FeedCollection::where('feed_id', $feed->id)->where('user_id', $uid)->count() : 0;
+        // 动态评论,详情默认为空，自动获取评论列表接口
+        $data['comments'] = [];
+        // 分享者发布的文章信息
+        $news = News::where('author', $feed->user_id)
+                ->withCount('newsCount') //当前作者文章数
+                ->with('user.datas')
+                ->first();
+        $data['news']['user'] = $this->formatUserDatas($news->user); 
+        $data['news']['newsNum'] = $news->news_count_count;
+        $data['news']['list'] = $news->where('author', $feed->user_id)->orderBy('created_at', 'desc')->take(4)->select('id','title')->get();
+        $data['news']['hotsNum'] = $news->join('news_cates_links', 'news.id','=','news_cates_links.news_id')->where([['news.author','=',$feed->user_id], ['news_cates_links.cate_id','=',1]])->count();
+        
+        
+        Feed::byFeedId($feed_id)->increment('feed_view_count');
+
+        return view('pcview::home.read',$data, $this->mergeData);
     }
 
     public function formatFeedList($feeds, $uid)
@@ -338,6 +394,41 @@ class HomeController extends BaseController
             $credit_record->save();
         }
         return $credit_user;
+    }
+
+    /**
+     * 查看一条微博的评论列表.
+     *
+     * @author bs<414606094@qq.com>
+     * @param  Request $request [description]
+     * @param  int     $feed_id [description]
+     * @return [type]           [description]
+     */
+    public function getFeedCommentList(Request $request, int $feed_id)
+    {
+        $limit = $request->get('limit', '15');
+        $max_id = intval($request->get('max_id'));
+        if (! $feed_id) {
+            return response()->json([
+                'status' => false,
+                'code' => 6003,
+                'message' => '动态ID不能为空',
+            ])->setStatusCode(400);
+        }
+        $comments = FeedComment::byFeedId($feed_id)->take($limit)->where(function ($query) use ($max_id) {
+            if ($max_id > 0) {
+                $query->where('id', '<', $max_id);
+            }
+        })->with('user.datas')->select(['id', 'created_at', 'comment_content', 'user_id', 'to_user_id', 'reply_to_user_id', 'comment_mark'])->orderBy('id', 'desc')->get();
+        foreach ($comments as $key => $value) {
+            $value['uinfo'] = $this->formatUserDatas($value['user']);
+            unset($value['user']);
+        }
+
+        return response()->json(static::createJsonData([
+            'status' => true,
+            'data' => $comments,
+        ]))->setStatusCode(200);
     }
 
 }

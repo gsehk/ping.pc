@@ -69,6 +69,8 @@ Route::prefix('profile')->group(function () {
 
 	// 动态
     Route::get('/home/index', 'HomeController@index')->name('pc:feed');
+    Route::get('/home/{feed_id}/feed', 'HomeController@read')->where(['feed_id' => '[0-9]+'])->name('pc:feedetail');
+    Route::get('/home/{feed_id}/comments', 'HomeController@getFeedCommentList')->where(['feed_id' => '[0-9]+']);
     Route::get('/home/follows', 'HomeController@getFollowFeeds');
     Route::get('/home/hots', 'HomeController@getHotFeeds');
     Route::get('/home/feeds', 'HomeController@getNewFeeds');

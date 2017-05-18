@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('pcview::layouts.default')
 
 @section('content')
 

@@ -4,30 +4,22 @@
 <div class="dy_bg">
     <div class="dy_cont del_top">
         <div class="del_left">
-            <div class="del_title">{{$title}}</div>
-            <div class="top_list">
-                <a href="javascript:;" class="top_list_span">视点</a>
-                <a href="javascript:;">视点</a>
-                <div class="del_top_r">
-                    <span class="del_time">{{$created_at}}</span>
-                </div>
-            </div>
             <div class="post_content">
-                {!!$content!!}
+                {!!$feed['feed_content']!!}
             </div>
             <div class="del_pro">
-                <span id="collect{{$id}}" rel="{{count($collection)}}">
-                    @if($is_collect_news <= 0)
-                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{count($collection)}}</font>收藏</a>
+                <span id="collect{{$feed['feed_id']}}" rel="{{$tool['feed_collection_count']}}">
+                    @if($tool['is_collection_feed'] <= 0)
+                    <a href="javascript:;" onclick="collect.addCollect('{{$feed['feed_id']}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{count($collection)}}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
                     @endif
                 </span>
-                <span id="digg{{$id}}" rel="{{$digg_count}}">
-                    @if($is_digg_news <= 0)
-                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$digg_count}}</font>人喜欢</a>
+                <span id="digg{{$feed['feed_id']}}" rel="{{$tool['feed_digg_count']}}">
+                    @if($tool['is_digg_feed'] <= 0)
+                    <a tool="javascript:;" onclick="digg.addDigg('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$digg_count}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share">
@@ -43,7 +35,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="del_comment"><span>{{$comment_count}}</span>人评论</div>
+            <div class="del_comment"><span>{{$tool['feed_comment_count']}}</span>人评论</div>
             <div class="comment-box">
                 <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧"></textarea>
                 <div class="dy_company" style="margin: 0;">
@@ -52,7 +44,7 @@
                         表情
                     </span>
                     <span class="dy_cs" style="margin-left:420px;">可输入<span>255</span>字</span>
-                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{$id}}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
+                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{$feed['feed_id']}}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
                 </div>
             </div>
             <div class="delComment_cont" id="comment_detail"></div>
@@ -64,18 +56,18 @@
                     <div> <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" /></div>
                 </div>
                 <div class="delTop_right">
-                    <span>{{$user['name']}}</span>
-                    <p class="txt-hide">{{$user['intro']}}</p>
+                    <span>{{$news['user']['name']}}</span>
+                    <p class="txt-hide">{{$news['user']['name'] or ''}}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="javascript:;">文章<span>{{$news_count_count}}</span></a>
+                        <a href="javascript:;">文章<span>{{$news['newsNum']}}</span></a>
                     </li>
                     <li>
-                        <a href="javascript:;">热门<span>{{$hots}}</span></a>
+                        <a href="javascript:;">热门<span>{{$news['hotsNum']}}</span></a>
                     </li>
                 </ul>
-                @foreach($news as $post)
+                @foreach($news['list'] as $post)
                     <div class="del_rTop">
                         <span></span>
                         <a href="javascript:;">{{$post['title']}}</a>
@@ -101,7 +93,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.weibo.js') }}"></script>
 <script type="text/javascript">
 
 $('#J-comment-news').on('click', function(){
@@ -117,29 +109,13 @@ $('#J-comment-news').on('click', function(){
         $(_this).attr('to_uid','0');
         $(_this).attr('to_comment_id','0');
     }
-    comment.addComment(after, this);
+    comment.addReadComment(after, this);
 });
 
 $(document).ready(function(){
 
-  comment.init({row_id:'{{$id}}', canload:true});
+  comment.init({row_id:'{{$feed['feed_id']}}', canload:true});
 
-  recent_hot(1);
-  $('#j-recent-hot .week').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(1);
-  });
-  $('#j-recent-hot .meth').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(2);
-  });
-  $('#j-recent-hot .moth').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(3);
-  });
 });
 </script>
 @endsection

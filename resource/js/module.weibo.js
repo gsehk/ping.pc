@@ -206,6 +206,55 @@ var comment = {
       }
     });
   },
+   // 显示回复块
+  loadMore:function(){
+      comment.canload = false;
+      var url = request_url.get_feed_commnet.replace('{feed_id}', comment.row_id);
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: {max_id:comment.max_id, limit:comment.limit},
+        dataType: 'json',
+        error:function(xml){},
+        success:function(res){
+            if (res.data.length > 0) {
+              comment.canload = true;
+              comment.max_id = res.data[res.data.length-1].id;
+              var data = res.data,
+                  html = '';
+                for(var i in data) {
+                  var  avatar = data[i].uinfo.avatar ? API+'/storages/'+data[i].uinfo.avatar : AVATAR;
+                  html += '<div class="delComment_list">';
+                  html +='<div class="comment_left">';
+                  html +='<img src="'+avatar+'" class="c_leftImg" />';
+                  html +='</div>';
+                  html +='<div class="comment_right">';
+                  html +='<span class="del_ellen">'+data[i].uinfo.name+'</span>';
+                  html +='<span class="c_time">'+data[i].created_at+'</span>';
+                  html +='<i class="icon iconfont icon-gengduo-copy"></i>';
+                  html +='<p>'+data[i].comment_content+'';
+                  if (data[i].to_user_id != MID) {
+                    html +='<span class="del_huifu">';
+                    html +='<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname='+data[i].uinfo.name+'&canload=0&to_uid='+data[i].to_user_id+'"';
+                    html +='class="J-reply-comment">回复';
+                    html +='</a></span>';
+                  }
+                  html +='</p></div></div>';
+                }
+                $(comment.box).append(html);
+                $('.loading').remove();
+                $('.J-reply-comment').on('click', function(){
+                  var attrs = urlToObject($(this).data('args'));
+                  comment.initReply(attrs);
+                });
+            } else {
+              comment.canload = false;
+              $('.loading').html('暂时没有更多可显示的内容哟~');
+            }
+        }
+      });
+  },
+
   // 显示编辑框
   display:function(attr){
       var feedid = attr.row_id;
@@ -241,7 +290,7 @@ var comment = {
     _textarea.val(html);
     _textarea.focus();
   },
-  // 发表评论
+  // 列表发表评论
   addComment:function(afterComment,obj) {
     var to_uid = $(obj).attr('to_uid') || 0;
     var feedid = $(obj).attr('row_id') || 0;
@@ -287,6 +336,77 @@ var comment = {
               if("undefined" != typeof(commentBox)){
                 commentBox.prepend(html);
                 _textarea.value = '';
+              }
+          }else{
+              alert(res.message);
+          }
+        }
+    });
+  },
+    // 详情发表评论
+  addReadComment:function(afterComment,obj) {
+    var box = this.box;
+    var _textarea = $('#mini_editor');
+    if(_textarea.size() == 0) {
+      return;
+    }
+    _textarea = _textarea.get(0);
+    var strlen = getLength(_textarea.value);
+
+    var leftnums = initNums - strlen;
+    if(leftnums < 0 || leftnums == initNums) {
+      alert('内容不能大于255个字符');
+      return false;
+    }
+
+    var content = _textarea.value;  
+    if(content == '') {
+      alert('内容不能为空');
+    }
+    if("undefined" != typeof(this.addReadComment) && (this.addReadComment == true)) {
+      return false; //不要重复评论
+    }
+    var addToEnd = this.addToEnd;
+    var url = request_url.feed_comment.replace('{feed_id}',this.row_id);
+    var _this = this;
+    obj.innerHTML = '回复中..';
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data:{comment_content:content,reply_to_user_id:this.to_uid},
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
+    　　},
+        error:function(xml){},
+        success:function(res){
+          if (res.status == true) {
+              if ( obj != undefined ){
+                obj.innerHTML = '回复';
+              }
+              var html = '<div class="delComment_list">'+
+                '<div class="comment_left">'+
+                '<img src="'+API+'/storages/'+AVATAR+'" class="c_leftImg" />'+
+                '</div>'+
+                '<div class="comment_right">'+
+                '<span class="del_ellen">'+NAME+'</span>'+
+                '<span class="c_time">刚刚</span>'+
+                '<i class="icon iconfont icon-gengduo-copy"></i>'+
+                '<p>'+content+'</p>'+
+                '</div>'+
+                '</div>';
+              var commentBox = $(comment.box);
+              if("undefined" != typeof(commentBox)){
+                if(addToEnd == 1){
+                  commentBox.append(html);
+                }else{
+                  commentBox.prepend(html);
+                }
+                /*绑定回复操作*/
+                $('.J-reply-comment').on('click', function(){
+                    comment.initReply();
+                });
               }
           }else{
               alert(res.message);
