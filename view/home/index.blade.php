@@ -47,7 +47,7 @@
             @if (!empty($TS['avatar']))
             <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " class="dyrTop_img" alt="{{ $TS['name'] }}"/>
             @else
-            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" class="dyrTop_img" />
+            <img src="{{ $routes['resource'] }}/images/avatar.png" class="dyrTop_img"/>
             @endif
         </div>
         @if(empty($ischeck))
@@ -64,10 +64,10 @@
             @foreach ($rec_users as $rec_user)
             <li>
                 <a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">
-                @if (!empty($TS['avatar']))
+                @if (!empty($rec_user['avatar']))
                 <img src="{{ $rec_user['avatar'] }}" />
                 @else
-                <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}"/>
+                <img src="{{ $routes['resource'] }}/images/avatar.png"/>
                 @endif
                 </a>
                 <span><a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
