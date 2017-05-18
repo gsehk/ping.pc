@@ -16,7 +16,7 @@
         <span class="dyn_huan" style="display:none">更换封面</span>
         @endif
         <div class="dyn_title">{{ $user['name'] }}</div>
-        <div class="dynTop_cont">{{ $user['intro'] }}</div>
+        <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>
         <div class="dyn_lImg">
 
             @if (!empty($user['avatar']))
@@ -307,11 +307,14 @@
         <div class="dy_right" style="margin-left:27px">
             <div class="dyrBottom">
                 <ul class="infR_time">
-                    <li><a class="hover" href="{{ route('pc:users', ['type'=>1]) }}">粉丝</a></li>
-                    <li><a href="{{ route('pc:users', ['type'=>2]) }}">关注</a></li>
-                    <li><a href="{{ route('pc:users', ['type'=>3]) }}">访客</a></li>
+                    <li type="followeds"><a class="hover" href="{{ route('pc:users', ['type'=>1]) }}">粉丝</a></li>
+                    <li type="followings"><a href="{{ route('pc:users', ['type'=>2]) }}">关注</a></li>
+                    <li type="visitors"><a href="{{ route('pc:users', ['type'=>3]) }}">访客</a></li>
                 </ul>
-                <ul class="userlist" style="display:inline-block">
+
+                <div id="followeds" class="userdiv" style="display:block">
+                @if (!empty($followeds))
+                <ul class="userlist">
                     @foreach ($followeds as $followed)
                     <li>
                         <a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">
@@ -325,6 +328,14 @@
                     </li>
                     @endforeach
                 </ul>
+                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多</a>
+                @else
+                <span class="nodata">暂无内容</span>
+                @endif
+                </div>
+
+                <div id="followings" class="userdiv">
+                @if (!empty($followings))
                 <ul class="userlist">
                     @foreach ($followings as $following)
                     <li>
@@ -339,14 +350,34 @@
                     </li>
                     @endforeach
                 </ul>
-                <ul class="userlist">
-                    <li>
-                        <img src="../img/cicle.png">
-                        <span>大师</span>
-                    </li>
-                </ul>
+                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多</a>
+                @else
+                <span class="nodata">暂无内容</span>
+                @endif  
+                </div>
 
-                 <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a>
+
+                <div id="visitors" class="userdiv">
+                @if (!empty($visitors))
+                <ul class="userlist">
+                    @foreach ($visitors as $visitor)
+                    <li>
+                        <a href="{{ route('pc:myFeed', ['user_id' => $visitor['id']]) }}">
+                        @if (!empty($visitor['avatar']))
+                        <img src="{{ $routes['storage'] }}{{ $visitor['avatar'] }}" />
+                        @else
+                        <img src="{{ $routes['resource'] }}/images/avatar.png"/>
+                        @endif
+                        </a>
+                        <span><a href="{{ route('pc:myFeed', ['user_id' => $visitor['id']]) }}">{{ $visitor['name'] }}</a></span>
+                    </li>
+                    @endforeach
+                </ul>
+                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多</a>
+                @else
+                <span class="nodata">暂无内容</span>
+                @endif  
+                </div>
 
             </div>
         </div>
@@ -362,11 +393,13 @@
     $(function(){
         // 关注
         $('.infR_time li').hover(function(){
-            var index = $(this).index();
+            var type = $(this).attr('type');
+
             $(this).siblings().find('a').removeClass('hover');
             $(this).find('a').addClass('hover');
-            $('.dyrBottom .userlist').hide();
-            $('.userlist:eq(' + (index) + ')').css('display', 'inline-block');
+
+            $('.dyrBottom div').hide();
+            $('#' + type).show();
         })
 
         $('.dyn_huan').on('click', function(){

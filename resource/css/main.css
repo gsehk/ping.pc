@@ -19,7 +19,6 @@ body,
   height: auto;
   min-height: 100%;
   _height: 100%;
-  color: #fff;
 }
 
 ul {
@@ -669,6 +668,12 @@ textarea {
     background: #fff;
     border-radius: 3px;
     padding-left: 0;
+}
+
+.dyrBottom span.nodata{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
 }
 
     .dyrBottom ul {
@@ -1494,10 +1499,16 @@ textarea {
     border-bottom: 1px solid #ededed;
 }
 
+.dyrBottom .userdiv {
+    margin: 0;
+    text-align: center;
+    display: none;
+}
+
 .dyrBottom .userlist{
     padding-left: 0;
     margin: 0;
-    display: none;
+    text-align: center;
 }
 
 .infR_time {
@@ -3633,3 +3644,14 @@ img.load{margin-left:2px;height:16px;width:16px;-webkit-animation:icon-load 1.5s
 .select_ul li{line-height:36px;text-indent:10px;}
 .select_ul li:hover{color:#fff;background:#6AA7EA;}
 .select_ul li.cur{color:#fff;background:#195DA3;}
+
+.no_data {
+    width: 100%;
+}
+
+.no_data span{
+    line-height: 100%;
+    height: 100%;
+    background: url('../images/pic_default_people.png');
+    background-size: cover;
+}

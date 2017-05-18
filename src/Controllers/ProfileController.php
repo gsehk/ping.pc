@@ -32,15 +32,15 @@ class ProfileController extends BaseController
         }
 
         // 地区
-        if ($data['user']['province']) {
+        if (!empty($data['user']['province'])) {
             $data['user']['province'] = Area::where('id', $data['user']['province'])
                                         ->value('name');
         }
-        if ($data['user']['city']) {
+        if (!empty($data['user']['city'])) {
             $data['user']['city'] = Area::where('id', $data['user']['city'])
                                         ->value('name');
         }
-        if ($data['user']['area']) {
+        if (!empty($data['user']['area'])) {
             $data['user']['area'] = Area::where('id', $data['user']['area'])
                                         ->value('name');
         }

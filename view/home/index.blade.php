@@ -59,6 +59,7 @@
     @endif
 
     <!-- 推荐用户 -->
+    @if (!empty($rec_users))
     <div class="dyrBottom">
         <ul>
             @foreach ($rec_users as $rec_user)
@@ -76,6 +77,7 @@
         </ul>
         <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a>
     </div>
+    @endif
     <!-- 个人中心右侧推荐用户 -->
 
 
