@@ -667,7 +667,6 @@ textarea {
 
 .dyrBottom {
     width: 100%;
-    height: 340px;
     background: #fff;
     border-radius: 3px;
     padding-left: 0;
@@ -1495,20 +1494,25 @@ textarea {
 .autor_border {
     border-bottom: 1px solid #ededed;
 }
-.uc-feed-rightbox{
-    margin-left: 27px;
-    width: 235px;
+
+.dyrBottom .userlist{
+    padding-left: 0;
+    margin: 0;
+    display: none;
 }
+
 .infR_time {
+    width: 100%;
     height: 30px;
     padding-top: 16px;
     border-bottom: 1px solid #ededed;
     padding-bottom: 40px;
-    background-color: white;
+    background-color: #fff;
     margin: 0;
 }
 
     .infR_time li {
+        margin: 0;
         float: left;
         width: 33.3%;
         text-align: center;
@@ -1522,7 +1526,7 @@ textarea {
             padding: 0 10px;
         }
 
-            .infR_time li a:hover {
+            .infR_time li a.hover {
                 color: #333;
                 border-bottom: 2px solid #59b6d7;
             }
@@ -2145,7 +2149,7 @@ textarea {
         padding-right: 15px;
         border-right: 1px solid #ededed;
         margin-top: 16px;
-        margin-left: 15px;
+        margin-right: 15px;
     }
 
     .dynTop_b i {

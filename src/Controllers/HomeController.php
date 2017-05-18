@@ -47,7 +47,7 @@ class HomeController extends BaseController
         ->select('id', 'user_id')
         ->with('user.datas')
         ->orderBy(DB::raw('-value', 'desc'))
-        ->take(9)
+        ->take(5)
         ->get();
         foreach ($_rec_users as $_rec_user) {
             $data['rec_users'][] = $this->formatUserDatas($_rec_user->user);

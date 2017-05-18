@@ -65,7 +65,7 @@
             <li>
                 <a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">
                 @if (!empty($rec_user['avatar']))
-                <img src="{{ $rec_user['avatar'] }}" />
+                <img src="{{ $routes['storage'] }}{{ $rec_user['avatar'] }}" />
                 @else
                 <img src="{{ $routes['resource'] }}/images/avatar.png"/>
                 @endif

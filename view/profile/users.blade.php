@@ -27,10 +27,10 @@
         <div class="fan_c">
             <div class="fanList_top">
                 <div class="fan_header">
-                    @if (!empty($data['avatar']))
-                    <img src="{{ $routes['storage'] }}{{ $data['avatar']}} " class="head_img" alt="{{ $data['name'] }}"/>
+                    @if (!empty($data['user']['avatar']))
+                    <img src="{{ $routes['storage'] }}{{ $data['user']['avatar']}} " class="head_img" alt="{{ $data['user']['name'] }}"/>
                     @else
-                    <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" class="head_img" />
+                    <img src="{{ $routes['resource'] }}/images/avatar.png" class="head_img" />
                     @endif
                 </div>
                 <div class="fan_word">

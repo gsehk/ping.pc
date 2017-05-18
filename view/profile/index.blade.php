@@ -8,16 +8,60 @@
         <!--top-->
         <div class="dyn_top">
             <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="dynTop_bg" />
+            @if ($user['id'] == $TS['id'])
             <span class="dyn_huan">更换封面</span>
-            <div class="dyn_title">小鬼大王</div>
-            <div class="dynTop_cont">一觉睡到小时候，没有什么比这更舒服和向往的事</div>
-            <div class="dyn_lImg"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" /> </div>
+            @endif
+            <div class="dyn_title">{{ $user['name'] }}</div>
+            <div class="dynTop_cont">{{ $user['intro'] }}</div>
+            <div class="dyn_lImg">
+
+                @if (!empty($user['avatar']))
+                <img src="{{ $routes['storage'] }}{{ $user['avatar']}} " alt="{{ $user['name'] }}"/>
+                @else
+                <img src="{{ $routes['resource']}}/images/avatar.png"/>
+                @endif
+            </div>
         </div>
         <div class="dynTop_b">
-            <span class="dyn_zy"><i class="icon iconfont icon-gongsi"></i>智艺创想</span>
-            <span class="dyn_time"><i class="icon iconfont icon-shengri"></i>09.30<label>女</label></span>
-            <span class="dyn_address"><i class="icon iconfont icon-site"></i>成都·高新区</span>
-            <a href="{{Route('pc:newsrelease')}}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
+            @if (!empty($user['company']))
+            <span class="dyn_zy"><i class="icon iconfont icon-gongsi"></i>
+                {{ $user['company'] }}
+            </span>
+            @endif
+
+            @if (!empty($user['year']))
+            <span class="dyn_time"><i class="icon iconfont icon-shengri"></i>
+                {{ $user['year'] }}
+                @if (!empty($user['month']))
+                {{ '.'.$user['month'] }}
+                @endif
+                @if (!empty($user['day']))
+                {{ '.'.$user['day'] }}
+                @endif
+
+                @if (empty($user['sex']) || $user['sex'] == 3))
+                <label>其他</label>
+                @elseif($user['sex'] == 2)
+                <label>女</label>
+                @else
+                <label>男</label>
+                @endif
+            </span>
+            @endif
+
+            @if (!empty($user['province']))
+            <span class="dyn_address"><i class="icon iconfont icon-site"></i>
+                {{ $user['province'] }} 
+                @if (!empty($user['city']))
+                {{ '·'.$user['city'] }}
+                @endif
+
+                @if (!empty($user['area']))
+                {{ '·'.$user['area'] }}
+                @endif
+            </span>
+            @endif
+            <a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
         </div>
         <div>
             <!--left-->
@@ -256,16 +300,84 @@
                 </div>
             </div>
             <!--<right>-->
-            <div class="dy_right">
-                <div class="uc-feed-rightbox">
+            <div class="dy_right" style="margin-left:27px">
+                <div class="dyrBottom">
                     <ul class="infR_time">
-                        <li><a href="javascript:;">粉丝</a></li>
-                        <li><a href="javascript:;">关注</a></li>
-                        <li><a href="{{Route('pc:myFans', ['type'=>3])}}">访客</a></li>
+                        <li><a class="hover" href="{{ route('pc:users', ['type'=>1]) }}">粉丝</a></li>
+                        <li><a href="{{ route('pc:users', ['type'=>2]) }}">关注</a></li>
+                        <li><a href="{{ route('pc:users', ['type'=>3]) }}">访客</a></li>
                     </ul>
+                    <ul class="userlist" style="display:inline-block">
+                        @foreach ($followeds as $followed)
+                        <li>
+                            <a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">
+                            @if (!empty($followed['avatar']))
+                            <img src="{{ $routes['storage'] }}{{ $followed['avatar'] }}" />
+                            @else
+                            <img src="{{ $routes['resource'] }}/images/avatar.png"/>
+                            @endif
+                            </a>
+                            <span><a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">{{ $followed['name'] }}</a></span>
+                        </li>
+                        @endforeach
+                    </ul>
+                    <ul class="userlist">
+                        @foreach ($followings as $following)
+                        <li>
+                            <a href="{{ route('pc:myFeed', ['user_id' => $following['id']]) }}">
+                            @if (!empty($following['avatar']))
+                            <img src="{{ $routes['storage'] }}{{ $following['avatar'] }}" />
+                            @else
+                            <img src="{{ $routes['resource'] }}/images/avatar.png"/>
+                            @endif
+                            </a>
+                            <span><a href="{{ route('pc:myFeed', ['user_id' => $following['id']]) }}">{{ $following['name'] }}</a></span>
+                        </li>
+                        @endforeach
+                    </ul>
+                    <ul class="userlist">
+                        <li>
+                            <img src="../img/cicle.png">
+                            <span>大师</span>
+                        </li>
+                    </ul>
+
+                     <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+
+
+@section('scripts')
+<script type="text/javascript">
+    $(function(){
+        // 关注
+        $('.infR_time li').hover(function(){
+            var index = $(this).index();
+            $(this).siblings().find('a').removeClass('hover');
+            $(this).find('a').addClass('hover');
+            $('.dyrBottom .userlist').hide();
+            $('.userlist:eq(' + (index) + ')').css('display', 'inline-block');
+        })
+
+    })
+
+    // 关注回调
+    var afterdata = function(target){
+        if (target.attr('status') == 1) {
+            target.text('+关注');
+            target.attr('status', 0);
+            target.removeClass('c_ccc');
+        } else {
+            target.text('已关注');
+            target.attr('status', 1);
+            target.addClass('c_ccc');
+        }
+    }
+</script>
 @endsection

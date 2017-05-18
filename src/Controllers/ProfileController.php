@@ -9,6 +9,7 @@ use Zhiyi\Plus\Models\UserDatas;
 use Zhiyi\Plus\Models\Followed;
 use Zhiyi\Plus\Models\Following;
 use Zhiyi\Plus\Models\StorageTask;
+use Zhiyi\Plus\Models\Area;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedStorage;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
@@ -19,8 +20,55 @@ class ProfileController extends BaseController
     public function index(Request $request)
     {
         $type = $request->input('type') ?: 'all';
+        $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
 
-        return view('pcview::profile.index', ['type' => $type], $this->mergeData);
+        if (!empty($this->mergeData['TS']) && $this->mergeData['TS']['id'] == $user_id) {
+            $data['user'] = $this->mergeData['TS'];
+        } else {
+            $user = User::where('id', $user_id)
+                        ->with('datas', 'counts')
+                        ->first();
+            $data['user'] = $this->formatUserDatas($user);
+        }
+
+        // 地区
+        if ($data['user']['province']) {
+            $data['user']['province'] = Area::where('id', $data['user']['province'])
+                                        ->value('name');
+        }
+        if ($data['user']['city']) {
+            $data['user']['city'] = Area::where('id', $data['user']['city'])
+                                        ->value('name');
+        }
+        if ($data['user']['area']) {
+            $data['user']['area'] = Area::where('id', $data['user']['area'])
+                                        ->value('name');
+        }
+
+        $data['type'] = $type;
+
+        // 粉丝
+        $followeds = Followed::where('user_id', $user_id)
+            ->orderBy('id', 'DESC')
+            ->with('user.datas')
+            ->take(9)
+            ->get();
+        foreach ($followeds as $followed) {
+            $data['followeds'][] = $this->formatUserDatas($followed->user);
+        }
+
+        // 关注
+        $followings = Following::where('user_id', $user_id)
+            ->orderBy('id', 'DESC')
+            ->with('user.datas')
+            ->take(9)
+            ->get();
+        foreach ($followings as $following) {
+            $data['followings'][] = $this->formatUserDatas($following->user);
+        }
+        // 访客
+
+        return view('pcview::profile.index', $data, $this->mergeData);
     }
 
     public function article(Request $request)

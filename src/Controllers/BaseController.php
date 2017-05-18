@@ -27,15 +27,11 @@ class BaseController extends Controller
 
 			if ($this->mergeData['TS']) {
 				// 用户信息
-				$user_profile = User::where('id', '=', $this->mergeData['TS']['id'])->with('datas', 'counts')
-									->get()
-									->toArray();
+				$user = User::where('id', '=', $this->mergeData['TS']['id'])
+									->with('datas', 'counts')
+									->first();
 
-				foreach ($user_profile[0]['datas'] as $key => $value) {
-					$user_profile[0][$value['profile']] = $value['pivot']['user_profile_setting_data'];
-				}
-				unset($user_profile[0]['datas']);
-				$this->mergeData['TS'] = $user_profile[0];
+				$this->mergeData['TS'] = $this->formatUserDatas($user);
 
 				// 用户积分
 				$this->mergeData['TS']['credit'] = CreditUser::where('user_id', $this->mergeData['TS']['id'])
