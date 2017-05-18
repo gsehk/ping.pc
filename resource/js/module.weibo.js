@@ -233,9 +233,9 @@ var comment = {
                   html +='<span class="c_time">'+data[i].created_at+'</span>';
                   html +='<i class="icon iconfont icon-gengduo-copy"></i>';
                   html +='<p>'+data[i].comment_content+'';
-                  if (data[i].to_user_id != MID) {
+                  if (data[i].user_id != MID) {
                     html +='<span class="del_huifu">';
-                    html +='<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname='+data[i].uinfo.name+'&canload=0&to_uid='+data[i].to_user_id+'"';
+                    html +='<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname='+data[i].uinfo.name+'&canload=0&to_uid='+data[i].user_id+'"';
                     html +='class="J-reply-comment">回复';
                     html +='</a></span>';
                   }
@@ -245,7 +245,7 @@ var comment = {
                 $('.loading').remove();
                 $('.J-reply-comment').on('click', function(){
                   var attrs = urlToObject($(this).data('args'));
-                  comment.initReply(attrs);
+                  comment.initReadReply(attrs);
                 });
             } else {
               comment.canload = false;
@@ -290,6 +290,18 @@ var comment = {
     _textarea.val(html);
     _textarea.focus();
   },
+    // 初始化回复操作
+  initReadReply: function(obj) {
+    $('#J-comment-news').attr('to_uid', obj.to_uid);
+    var _textarea = $(obj.editor);
+    if(_textarea.size() == 0) _textarea = _textarea.find('input:eq(0)');
+    var html = '回复@'+obj.to_comment_uname+' ：';
+    //清空输入框
+    _textarea.val('');
+    _textarea.val(html);
+    _textarea.focus();
+  },
+
   // 列表发表评论
   addComment:function(afterComment,obj) {
     var to_uid = $(obj).attr('to_uid') || 0;
@@ -387,7 +399,7 @@ var comment = {
               }
               var html = '<div class="delComment_list">'+
                 '<div class="comment_left">'+
-                '<img src="'+API+'/storages/'+AVATAR+'" class="c_leftImg" />'+
+                '<img src="'+AVATAR+'" class="c_leftImg" />'+
                 '</div>'+
                 '<div class="comment_right">'+
                 '<span class="del_ellen">'+NAME+'</span>'+

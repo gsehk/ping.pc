@@ -97,14 +97,14 @@ class HomeController extends BaseController
         // 动态评论,详情默认为空，自动获取评论列表接口
         $data['comments'] = [];
         // 分享者发布的文章信息
-        $news = News::where('author', $feed->user_id)
+        $news = News::where('author', $uid)
                 ->withCount('newsCount') //当前作者文章数
                 ->with('user.datas')
                 ->first();
         $data['news']['user'] = $this->formatUserDatas($news->user); 
         $data['news']['newsNum'] = $news->news_count_count;
-        $data['news']['list'] = $news->where('author', $feed->user_id)->orderBy('created_at', 'desc')->take(4)->select('id','title')->get();
-        $data['news']['hotsNum'] = $news->join('news_cates_links', 'news.id','=','news_cates_links.news_id')->where([['news.author','=',$feed->user_id], ['news_cates_links.cate_id','=',1]])->count();
+        $data['news']['list'] = $news->where('author', $uid)->orderBy('created_at', 'desc')->take(4)->select('id','title')->get();
+        $data['news']['hotsNum'] = $news->join('news_cates_links', 'news.id','=','news_cates_links.news_id')->where([['news.author','=',$uid], ['news_cates_links.cate_id','=',1]])->count();
         
         
         Feed::byFeedId($feed_id)->increment('feed_view_count');
