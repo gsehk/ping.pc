@@ -11,7 +11,7 @@
         <p class="fs-14 cen_word">{{$post['feed']['feed_content']}}</p>
         @if($post['feed']['storages'])
         @php $imgNum = count($post['feed']['storages']); @endphp
-        <div style="position: relative; margin-bottom: 8px;">
+        <div style="position: relative; margin-bottom: 8px;" id="layer-photos-demo{{$post['feed']['feed_id']}}">
         @if($imgNum == 1)
             <img src="{{$routes['storage']}}{{$post['feed']['storages'][0]['storage_id']}}" class="img-responsive" style="margin: 0 auto;" />
         @elseif($imgNum == 2)
@@ -246,6 +246,11 @@
         <div class="f3"></div>
     </div>
 </div>
+<script type="text/javascript">
+layer.photos({
+  photos: '#layer-photos-demo{{$post["feed"]["feed_id"]}}'
+  ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+});
+</script>
 @endforeach
 @endif
-

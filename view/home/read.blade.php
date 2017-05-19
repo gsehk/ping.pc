@@ -4,6 +4,13 @@
 <div class="dy_bg">
     <div class="dy_cont del_top">
         <div class="del_left">
+            @if($feed['storages'])
+            <div style="background: rgb(247, 248, 250);" id="layer-photos-demo">
+            @foreach($feed['storages'] as $store)
+            <img src="{{$routes['storage']}}{{$store['storage_id']}}" class="img-responsive" style="margin: 0 auto;" />
+            @endforeach
+            </div>
+            @endif
             <div class="post_content">
                 {!!$feed['feed_content']!!}
             </div>
@@ -94,8 +101,12 @@
 
 @section('scripts')
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.weibo.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('layer/layer.js') }}"></script>
 <script type="text/javascript">
-
+layer.photos({
+  photos: '#layer-photos-demo'
+  ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+}); 
 $('#J-comment-news').on('click', function(){
     var attrs = urlToObject($(this).data('args'));
     attrs.to_uid = $(this).attr('to_uid');
