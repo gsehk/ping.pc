@@ -449,7 +449,7 @@ textarea {
 .dy_cen {
     width: 100%;
     background: white;
-    padding: 30px 40px 0;
+    padding: 22px 40px 0;
 }
 
     .dy_cen a {
@@ -492,7 +492,7 @@ textarea {
 .cen_word {
     color: #666;
     line-height: 24px;
-    margin: 20px 0;
+    margin: 15px 0;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -510,7 +510,7 @@ textarea {
     position: relative;
 }
 
-    .dy_comment .digg, .dy_comment .like, .dy_comment .vie{
+    .dy_comment .digg, .dy_comment .com, .dy_comment .vie{
         font-size: 14px;
         color: #cccccc;
         display: inline-block;
@@ -558,7 +558,10 @@ textarea {
     height: 6px;
     margin: 30px auto;
 }
-
+.feed-line{
+    border-bottom: 5px solid #f3f6f7;
+    margin-top: 20px;
+}
 .img4 {
     width: 274px;
     margin-bottom: 5px;
@@ -2215,6 +2218,7 @@ textarea {
     position: relative;
     padding-left: 164px;
     margin-left: -164px;
+    padding-bottom: 10px;
 }
 
     .cen_befor:before {
@@ -2284,7 +2288,10 @@ textarea {
     left: -40px;
     text-indent: 20px;
 }
-
+.dy_tab{
+    position: relative;
+    height: 38px;
+}
 .border_left {
     border-right: 1px solid #ededed;
     border-bottom: 1px solid #ededed;
@@ -3160,6 +3167,9 @@ textarea {
 
 .success_div {
     margin-top: 20px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
 }
 
 .set_success {
@@ -3655,3 +3665,26 @@ img.load{margin-left:2px;height:16px;width:16px;-webkit-animation:icon-load 1.5s
     background: url('../images/pic_default_people.png');
     background-size: cover;
 }
+
+/* 多图片样式 */
+  .showImgBox{
+    position: relative;
+    overflow: hidden;
+    padding: 0 2px;
+    left: -1px;
+    margin-bottom: 2px;
+  }
+  .showImgBox .perFeedImg{
+       position: absolute;
+      top: 0;
+      left: 2px;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+  }
+    
+  .showImgBox:before{
+      content: "";
+      display: block;
+      padding-top: 100%;
+    }

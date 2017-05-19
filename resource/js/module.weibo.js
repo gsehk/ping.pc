@@ -482,7 +482,7 @@ var digg = {
               var num = $digg.attr('rel');
               num++;
               $digg.attr('rel', num);
-              $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>'+num+'</font></a>');
+              $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font>人喜欢</a>');
           }else{
               alert(res.message);
           }
@@ -510,7 +510,7 @@ var digg = {
               var num = $digg.attr('rel');
               num--;
               $digg.attr('rel', num);
-              $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font></a>');
+              $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font>人喜欢</a>');
           }else{
               alert(res.message);
           }
@@ -521,6 +521,87 @@ var digg = {
   }
 };
 
+/**
+ * 收藏核心Js
+ * @type {Object}
+ */
+var collect = {
+  // 给工厂调用的接口
+  _init: function (attrs) {
+    collect.init();
+  },
+  init: function () {
+    collect.collectlock = 0;
+  },
+  addCollect: function (feed_id) {
+    // 未登录弹出弹出层
+    if(MID == 0){
+          alert('小伙子你还没登录~~');
+      return;
+    }
+    
+    if (collect.collectlock == 1) {
+      return false;
+    }
+    collect.collectlock = 1;
+
+    var url = request_url.collect_feed.replace('{feed_id}', feed_id);
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
+    　　},
+        error:function(xml){},
+        success:function(res){
+          if (res.status == true) {
+              $collect = $('#collect'+feed_id);
+              var num = $collect.attr('rel');
+              num++;
+              $collect.attr('rel', num);
+              $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.delCollect('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">'+num+'</font>人收藏</a>');
+          }else{
+              alert(res.message);
+          }
+
+          collect.collectlock = 0;
+        }
+    });
+
+  },
+  delCollect: function (feed_id) {
+
+    if (collect.collectlock == 1) {
+      return false;
+    }
+    collect.collectlock = 1;
+    var url = request_url.collect_feed.replace('{feed_id}', feed_id);
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        dataType: 'json',
+        beforeSend: function (xhr) {
+    　　　xhr.setRequestHeader('Authorization', TOKEN);
+    　　},
+        error:function(xml){},
+        success:function(res, data, xml){
+          if (xml.status == 204) {
+              $collect = $('#collect'+feed_id);
+              var num = $collect.attr('rel');
+              num--;
+              $collect.attr('rel', num);
+              $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.addCollect('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="collect_num">'+num+'</font>人收藏</a>');
+          }else{
+              alert(res.message);
+          }
+
+          collect.collectlock = 0;
+        }
+    });
+  }
+};
 
 // 图片删除时间绑定
 $(function(){

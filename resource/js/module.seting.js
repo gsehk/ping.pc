@@ -86,6 +86,9 @@ var getArgs = function () {
             delete args.data.name;
         }
       }
+      if ($(inp[i]).attr('name') == 'sex') {
+          args.set('sex', $('[name="sex"]:checked').val());
+      }
       if ($(inp[i]).attr('name') == 'province') {
           args.set('p', sel.find("option:selected").text());
       }
@@ -110,9 +113,9 @@ $('#J-submit').on('click', function(e){
         data: args,
         dataType: 'json',
         error:function(xml){
-          $('.success_div').html('<div class="set_success s_bg"><img src="" />资料修改失败</div>').fadeIn();
+          $('.success_div').html('<div class="set_success s_bg"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>资料修改失败</div>').fadeIn();
         },
-        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />资料修改成功</div>').fadeIn();}
+        success:function(res){$('.success_div').html('<div class="set_success s_bg"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>资料修改成功</div>').fadeIn();}
     });
     setTimeout("$('.success_div').fadeOut(1000)", 3000);
 });
@@ -131,9 +134,9 @@ var resetPwd = function () {
     　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){
-          $('.success_div').html('<div class="set_success s_bg"><img src="" />修改失败</div>').fadeIn();
+          $('.success_div').html('<div class="set_success s_bg"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>修改失败</div>').fadeIn();
         },
-        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />修改成功</div>').fadeIn();}
+        success:function(res){$('.success_div').html('<div class="set_success s_bg"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>修改成功</div>').fadeIn();}
     });
     setTimeout("$('.success_div').fadeOut(1000)", 3000);
 };

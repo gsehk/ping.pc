@@ -95,7 +95,6 @@ var checkin = function(){
     return;
   }
   var totalnum = {{$checkin['total_num'] or 0}} + 1;
-  var credit_score = {{$credit['score']}};
   $.get('/home/checkin' , {} , function (res){
     if ( res ){
       var totalnum = res.data.score;

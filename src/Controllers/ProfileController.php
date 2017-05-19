@@ -11,6 +11,8 @@ use Zhiyi\Plus\Models\Following;
 use Zhiyi\Plus\Models\StorageTask;
 use Zhiyi\Plus\Models\Area;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedStorage;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 
@@ -289,6 +291,97 @@ class ProfileController extends BaseController
             'code' => $response,
             'status' => true
         ])->setStatusCode(200);  
+    }
+
+    public function formatFeedList($feeds, $uid)
+    {
+        $datas = [];
+        foreach ($feeds as $feed) {
+            $data = [];
+            $data['user_id'] = $feed->user_id;
+            $data['feed_mark'] = $feed->feed_mark;
+            // 动态数据
+            $data['feed'] = [];
+            $data['feed']['feed_id'] = $feed->id;
+            $data['feed']['feed_title'] = $feed->feed_title ?? '';
+            $data['feed']['feed_content'] = $feed->feed_content;
+            $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
+            $data['feed']['feed_from'] = $feed->feed_from;
+            $data['feed']['storages'] = $feed->storages->map(function ($storage) {
+                return ['storage_id' => $storage->id, 'width' => $storage->image_width, 'height' => $storage->image_height];
+            });
+            // 工具数据
+            $data['tool'] = [];
+            $data['tool']['feed_view_count'] = $feed->feed_view_count;
+            $data['tool']['feed_digg_count'] = $feed->feed_digg_count;
+            $data['tool']['feed_comment_count'] = $feed->feed_comment_count;
+            // 暂时剔除当前登录用户判定
+            $data['tool']['is_digg_feed'] = $uid ? FeedDigg::byFeedId($feed->id)->byUserId($uid)->count() : 0;
+            $data['tool']['is_collection_feed'] = $uid ? FeedCollection::where('feed_id', $feed->id)->where('user_id', $uid)->count() : 0;
+            // 最新3条评论
+            $data['comments'] = [];
+
+            $getCommendsNumber = 5;
+            $data['comments'] = $feed->comments()
+                ->orderBy('id', 'desc')
+                ->take($getCommendsNumber)
+                ->select(['id', 'user_id', 'created_at', 'comment_content', 'reply_to_user_id', 'comment_mark'])
+                ->with('user')
+                ->get()
+                ->toArray();
+            $data['user'] = $feed->user()
+                ->select('id', 'name')
+                ->with('datas')
+                ->first()->toArray();
+            foreach ($data['user']['datas'] as $k => $v) {
+                $data['user'][$v['profile']] = $v['pivot']['user_profile_setting_data'];
+            }
+            $datas[] = $data;
+        }
+        
+        $feedList['data'] = $datas;
+        $feedData['html'] = view('pcview::template.profile-feed', $feedList, $this->mergeData)->render();
+        $feedData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['feed']['feed_id'] : 0;
+
+        return response()->json([
+                'status'  => true,
+                'code'    => 0,
+                'message' => '动态列表获取成功',
+                'data' => $feedData,
+            ])->setStatusCode(200);
+    }
+
+    /**
+     * 获取单个用户的动态列表.
+     *
+     * @author bs<414606094@qq.com>
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getUserFeeds(Request $request, int $user_id)
+    {
+        $auth_id = $this->mergeData['TS']['id'] ?? 0;
+        $limit = $request->input('limit', 15);
+        $max_id = intval($request->input('max_id'));
+
+        $feeds = Feed::orderBy('id', 'DESC')
+        ->where('user_id', $user_id)
+        ->where(function ($query) use ($max_id) {
+            if ($max_id > 0) {
+                $query->where('id', '<', $max_id);
+            }
+        })
+        ->withCount(['diggs' => function ($query) use ($user_id) {
+            if ($user_id) {
+                $query->where('user_id', $user_id);
+            }
+        }])
+        ->byAudit()
+        ->with('storages')
+        ->take($limit)
+        ->get();
+
+        return $this->formatFeedList($feeds, $auth_id);
     }
 
 }

@@ -19,7 +19,7 @@
                     @if($tool['is_digg_feed'] <= 0)
                     <a tool="javascript:;" onclick="digg.addDigg('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share">

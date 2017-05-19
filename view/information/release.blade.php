@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('pcview::layouts.default')
 
 @section('content')
 <div class="dy_bg">
@@ -23,7 +23,7 @@
                 @endif
             </div>
             <div class="con_place">
-                @component('editor')
+                @component('pcview::editor')
                     @slot('height') 530px @endslot
                 @endcomponent
             </div>
@@ -78,6 +78,14 @@
 <script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
 <script type="text/javascript">
 $('select.select').select();
-$('#J-file-upload').on('change', {id:'J-file-upload', callback:ajaxFileUpload},getImgInfo);
+
+$('#J-file-upload').on('change', function(e){
+    var file = e.target.files[0];
+    fileUpload(file, updateImg);
+});
+var updateImg = function(image, f, task_id){
+    $('#task_id').val(task_id);
+    $('#J-image-preview').attr('src', image.src);
+}
 </script>
 @endsection
