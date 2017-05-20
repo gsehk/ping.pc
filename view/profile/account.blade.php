@@ -1,29 +1,27 @@
 @extends('pcview::layouts.default')
 
+@section('bgcolor')style="background-color:#fff"@endsection
 @section('content')
 
-<div class="success_div">
-    
-</div>
     
 <div class="bas_cont">
     <div class="bas_left">
-        <a href="{{Route('pc:account')}}">
+        <a href="{{ route('pc:account') }}">
             <div class="bas_list">
                 <span @if($page == 'account') class="c_333" @endif>资料设置</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-auth'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-auth') class="c_333" @endif>认证</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-security'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-security']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-security') class="c_333" @endif>修改密码</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-bind'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-bind') class="c_333" @endif>绑定</span>
             </div>
@@ -31,7 +29,7 @@
     </div>
     <div class="bas_right" id="J-input">
         <div class="bas_header">
-            <img id="J-image-preview" src="@if($data['avatar']) {{$routes['storage']}}{{ $data['avatar'] }} @else {{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }} @endif" />
+            <img id="J-image-preview" src="@if($data['avatar']) {{ $routes['storage'] }}{{ $data['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" />
             <span class="con_cover ai_face_box">
                 <div class="ai_upload">
                     <input id="J-file-upload"
@@ -41,7 +39,7 @@
                            data-form="#release_form"
                            data-preview="#J-image-preview"
                            data-tips="#J-show-tips"
-                           data-token="{{ csrf_token() }}"
+                           data-token="{{ csrf_token()  }}"
                     >
                     <input name="storage_task_id" id="task_id" type="hidden" value="" />
                 </div>
@@ -51,11 +49,11 @@
         <div class="f_div">
             <div class="f_tel bas_div">
                 <label>昵称</label>
-                <span class="f_span"><input type="text" name="name" value="{{$data['name']}}" placeholder="输入昵称"></span>
+                <span class="f_span"><input type="text" name="name" value="{{$data['name'] }}" placeholder="输入昵称"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>简介</label>
-                <span class="f_span"><input type="text" name="intro" value="{{$data['intro']}}" placeholder="输入简介"></span>
+                <span class="f_span"><input type="text" name="intro" value="{{$data['intro'] }}" placeholder="输入简介"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>性别</label>
@@ -104,12 +102,12 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/birthday.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.seting.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/birthday.js')  }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.seting.js')  }}"></script>
+<script src="{{ $routes['resource'] }}/js/md5-min.js')  }}"></script>
 <script> 
-var username = "{{$data['name']}}";
-var arrSelect = ["{{$data['province']}}", "{{$data['city']}}", "{{$data['area']}}"];
+var username = "{{$data['name'] }}";
+var arrSelect = ["{{$data['province'] }}", "{{$data['city'] }}", "{{$data['area'] }}"];
 $('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];
     fileUpload(file, updateImg);

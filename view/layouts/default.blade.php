@@ -30,8 +30,13 @@
         <!-- nav -->
         @include('pcview::layouts.partials.nav')
 
+        <!-- noticebox -->
+        <div id="noticebox">
+            <input type="hidden">
+        </div>
+
         <!-- content -->
-        <div class="dy_bg">
+        <div class="dy_bg" @yield('bgcolor')>
         @yield('content')
         </div>
     </div>

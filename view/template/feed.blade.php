@@ -220,11 +220,12 @@
                     <li><a href="#"><i class="icon iconfont icon-zhiding-copy-copy1"></i>置顶</a></li>
                     @endif
                 </ul>
+                <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
             </div>
         </div>
         <div class="comment_box" id="warp_box{{$post['feed']['feed_id']}}" style="display: none;">
             <div class="dy_line">
-                <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/line.png') }}" />
+                <img src="{{ $routes['resource'] }}/images/line.png" />
             </div>
             <div class="dy_comit" id="comment_box{{$post['feed']['feed_id']}}">
             

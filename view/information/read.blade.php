@@ -4,30 +4,30 @@
 <div class="dy_bg">
     <div class="dy_cont del_top">
         <div class="del_left">
-            <div class="del_title">{{$title}}</div>
+            <div class="del_title">{{ $title }}</div>
             <div class="top_list">
                 <a href="javascript:;" class="top_list_span">视点</a>
                 <a href="javascript:;">视点</a>
                 <div class="del_top_r">
-                    <span class="del_time">{{$created_at}}</span>
+                    <span class="del_time">{{ $created_at }}</span>
                 </div>
             </div>
             <div class="post_content">
-                {!!$content!!}
+                { !!$content!! }
             </div>
             <div class="del_pro">
-                <span id="collect{{$id}}" rel="{{count($collection)}}">
+                <span id="collect{{$id}}" rel="{{ count($collection) }}">
                     @if($is_collect_news <= 0)
-                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{count($collection)}}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{ count($collection) }}</font>收藏</a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{count($collection)}}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{ count($collection) }}</font>收藏</a>
                     @endif
                 </span>
-                <span id="digg{{$id}}" rel="{{$digg_count}}">
+                <span id="digg{{ $id }}" rel="{{ $digg_count }}">
                     @if($is_digg_news <= 0)
-                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$digg_count}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{ $digg_count }}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$digg_count}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{ $digg_count }}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share">
@@ -43,7 +43,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="del_comment"><span>{{$comment_count}}</span>人评论</div>
+            <div class="del_comment"><span>{{ $comment_count }}</span>人评论</div>
             <div class="comment-box">
                 <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧"></textarea>
                 <div class="dy_company" style="margin: 0;">
@@ -61,24 +61,24 @@
         <div class="del_right">
             <div class="delTop">
                 <div class="delToP_left">
-                    <div> <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" /></div>
+                    <div> <img src="{{ $routes['resource'] }}/images/cicle.png" /></div>
                 </div>
                 <div class="delTop_right">
-                    <span>{{$user['name']}}</span>
-                    <p class="txt-hide">{{$user['intro']}}</p>
+                    <span>{{ $user['name'] }}</span>
+                    <p class="txt-hide">{{ $user['intro'] }}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="javascript:;">文章<span>{{$news_count_count}}</span></a>
+                        <a href="javascript:;">文章<span>{{ $news_count_count }}</span></a>
                     </li>
                     <li>
-                        <a href="javascript:;">热门<span>{{$hots}}</span></a>
+                        <a href="javascript:;">热门<span>{{ $hots }}</span></a>
                     </li>
                 </ul>
                 @foreach($news as $post)
                     <div class="del_rTop">
                         <span></span>
-                        <a href="javascript:;">{{$post['title']}}</a>
+                        <a href="javascript:;">{{ $post['title'] }}</a>
                     </div>
                 @endforeach
             </div>
@@ -92,7 +92,7 @@
                     <li><a href="javascript:;" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
-                    <div class='loading'><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" class='load'>加载中</div>
+                    <div class='loading'><img src="{{ $routes['resource'] }}/images/loading.png" class='load'>加载中</div>
                 </ul>
             </div>
         </div>
@@ -101,7 +101,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.news.js"></script>
 <script type="text/javascript">
 
 $('#J-comment-news').on('click', function(){

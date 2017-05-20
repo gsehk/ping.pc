@@ -5,22 +5,22 @@
 <div class="success_div"></div>
 <div class="bas_cont">
     <div class="bas_left">
-        <a href="{{Route('pc:account')}}">
+        <a href="{{ route('pc:account') }}">
             <div class="bas_list">
                 <span @if($page == 'account') class="c_333" @endif>资料设置</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-auth'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-auth') class="c_333" @endif>认证</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-security'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-security']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-security') class="c_333" @endif>修改密码</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-bind'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-bind') class="c_333" @endif>绑定</span>
             </div>
@@ -101,7 +101,7 @@
                     </tr>
                     <tr>
                         <td width="20%" class="td">认证资料</td>
-                        <td width="80%"><a target="_blank" href="{{$routes['storage']}}{{$auth['storage']}}">认证附件信息</a></td>
+                        <td width="80%"><a target="_blank" href="{{ $routes['storage']}}{{$auth['storage'] }}">认证附件信息</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -111,9 +111,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/easyform.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.seting.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/easyform.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.seting.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/md5-min.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function ()
 {

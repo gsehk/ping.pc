@@ -3,7 +3,7 @@
 @section('body_class')class="gray"@endsection
 
 @section('content')
-<div class="lodin_cont">
+<div class="login_cont">
     <div class="login_center">
         <div class="loginleft_bg">
             <div class="login_hy">欢迎来到ThinkSNS+</div>

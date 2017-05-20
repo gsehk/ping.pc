@@ -5,22 +5,22 @@
 <div class="success_div"></div>
 <div class="bas_cont">
     <div class="bas_left">
-        <a href="{{Route('pc:account')}}">
+        <a href="{{ route('pc:account') }}">
             <div class="bas_list">
                 <span @if($page == 'account') class="c_333" @endif>资料设置</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-auth'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-auth') class="c_333" @endif>认证</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-security'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-security']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-security') class="c_333" @endif>修改密码</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-bind'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-bind') class="c_333" @endif>绑定</span>
             </div>
@@ -46,7 +46,7 @@
                     <input name="new_password1" type="password" data-easyform="length:6 16;equal:#new_password;" data-message="两次密码输入要一致" data-easytip="class:easy-blue;">
                 </span>
             </div>
-            <input type="hidden" value="{{ csrf_token() }}" name="_token" id="token" />
+            <input type="hidden" value="{{ csrf_token()  }}" name="_token" id="token" />
             <button type="submit" id="J-reset-pwd" class="f_sure">保存</button>
         </form>
         </div>
@@ -55,8 +55,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/easyform.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.seting.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/easyform.js"></script>
+<script src="{{ $routes['resource'] }}js/module.seting.js"></script>
 <script type="text/javascript">
 $(document).ready(function ()
 {

@@ -43,7 +43,7 @@
     </div>
     <div class="comment_box" id="warp_box{{$post['id']}}" style="display: none;">
         <div class="dy_line">
-            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/line.png') }}">
+            <img src="{{ $routes['resource'] }}/images/line.png">
         </div>
         <div class="dy_comit" id="comment_box{{$post['id']}}">
             @if(!empty($post['comments']))    

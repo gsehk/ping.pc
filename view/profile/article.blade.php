@@ -76,10 +76,10 @@
                 <div class="dy_cen">
                     <div class="top-menu-left">
                         <div class="artic_left border_left">
-                            <a href="{{Route('pc:myFeed', ['type'=>'all'])}}" class="fs-16 @if($type == 'all') dy_cen_333 @endif">全部动态</a>
-                            <a href="{{Route('pc:myFeed', ['type'=>'img'])}}" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
+                            <a href="{{ route('pc:myFeed', ['type'=>'all']) }}" class="fs-16 @if($type == 'all') dy_cen_333 @endif">全部动态</a>
+                            <a href="{{ route('pc:myFeed', ['type'=>'img']) }}" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
                         </div>
-                        <a href="{{Route('pc:article')}}" class="artic_artic fs-16 border_left_no dy_cen_333"><div>文章</div></a>
+                        <a href="{{ route('pc:article') }}" class="artic_artic fs-16 border_left_no dy_cen_333"><div>文章</div></a>
                     </div>
                     <div class="article_state">
                         <a href="javascript:;" data-state="0" class="fs-14 dy_cen_333">已发布</a>
@@ -174,8 +174,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.profile.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/md5-min.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.profile.js') }}"></script>
 <script type="text/javascript">
 // 加载文章
 setTimeout(function() {

@@ -8,10 +8,10 @@
                 @foreach($recommend as $frv)
                     @if($loop->first)
                     <div class="inT_title">
-                        <img src="{{$routes['storage']}}{{$frv['user']['avatar']}}" />
-                        <span>{{$frv['user']['name']}}</span>
+                        <img src="{{ $routes['storage'] }}{{ $frv['user']['avatar'] }}" />
+                        <span>{{ $frv['user']['name'] }}</span>
                     </div>
-                    <div class="inT_word">{{$frv['title']}}</div>
+                    <div class="inT_word">{{ $frv['title'] }}</div>
                     @endif
                 @endforeach
             @endif
@@ -27,11 +27,11 @@
             </div>
         </div>
         <div class="inT_c">
-            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
+            <img src="{{ $routes['resource'] }}/images/picture.png" />
         </div>
         <div class="inT_r">
             <div class="inR_top">
-                <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" />
+                <img src="{{ $routes['resource'] }}/images/picture.png" />
                 <div class="inR_time">2017-4-10</div>
                 <span class="inR_qd">每日签到</span>
                 <div class="inR_lk">立即签到，赚取<span>5</span>积分</div>
@@ -84,7 +84,7 @@
             <ul>
             @foreach ($cate as $post)
                 @if ($loop->iteration < 10)
-                <a href="{{Route('pc:news', ['cid'=>$post['id']])}}"><li @if($cid == $post['id']) class="dy_59" @endif>{{$post['name']}}</li></a>
+                <a href="{{ routes('pc:news', ['cid'=>$post['id']]) }}"><li @if($cid == $post['id']) class="dy_59" @endif>{{ $post['name'] }}</li></a>
                 @endif
             @endforeach
             </ul>
@@ -98,7 +98,7 @@
                 @foreach ($author as $user)
                     <div class="R_list">
                         <div class="i_left">
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
+                            <img src="{{ $routes['resource'] }}/images/cicle.png" />
                         </div>
                         <div class="i_right">
                             <span>{{$user['user']['name']}}</span>
@@ -108,7 +108,7 @@
                 @endforeach
                 </div>
             </div>
-            <div class="i_right_img"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" /></div>
+            <div class="i_right_img"><img src="{{ $routes['resource'] }}/images/picture.png" /></div>
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
                 <ul class="infR_time" id="j-recent-hot">
@@ -117,7 +117,7 @@
                     <li><a href="javascript:;" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
-                    <div class='loading'><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" class='load'>加载中</div>
+                    <div class='loading'><img src="{{ $routes['resource'] }}/images/loading.png" class='load'>加载中</div>
                 </ul>
             </div>
         </div>
@@ -127,7 +127,7 @@
 
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.news.js"></script>
 <script type="text/javascript">
 setTimeout(function() {
     news.init({

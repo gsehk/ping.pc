@@ -49,6 +49,10 @@ textarea {
     textarea::-webkit-input-placeholder {
         color: #ccc;
     }
+
+img {
+    object-fit: cover;
+}
 .txt-hide{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .clearfix{*+height:1%;}
@@ -186,7 +190,7 @@ textarea {
     border-radius: 3px;
     padding-top: 20px;
     box-shadow: 0px 1px 22px #E2E0E0;
-    z-index: 555;
+    z-index: 99;
 }
 
 .p_cont .triangle {
@@ -326,14 +330,23 @@ textarea {
 }
 
 .cen_more {
-    background: url("../images/dongtai_icon.png") center no-repeat;
+    background: #fff;
     width: 125px;
     height: 208px;
     position: absolute;
-    top: 24px;
-    right: -49px;
+    top: 30px;
+    right: -50px;
+    border-radius: 3px;
+    box-shadow: 0px 1px 22px #E2E0E0;
+    z-index: 99;
     display: none;
 }
+
+    .cen_more .triangle {
+        position: absolute;
+        left: 47px;
+        top: -14px;
+    }
 
     .cen_more ul {
         padding-top: 20px;
@@ -779,6 +792,7 @@ textarea {
 
 .dy_calltop {
     position: fixed;
+    z-index: 99;
     bottom: 80px;
     right: 80px;
 }
@@ -1893,7 +1907,18 @@ textarea {
         color: #999 !important;
     }
 /*登陆*/
-.lodin_cont {
+.login_head {
+    width: 100%;
+    background: #fff;
+    height: 80px;
+}
+
+.login_head .header{
+    width: 1080px;
+    margin: auto;
+}
+
+.login_cont {
     background: #f3f6f7;
 }
 
@@ -1965,7 +1990,7 @@ textarea {
     background: #fff;
     width: 400px;
     height: 360px;
-    padding: 40px 50px 50px;
+    padding: 25px 50px 50px;
 }
 
 .l_tip {
@@ -2052,7 +2077,6 @@ textarea {
     color: #b3b3b3 !important;
     font-size: 12px;
     margin-top: 0;
-    margin-top: -6px;
 }
 
     .login_share svg {
@@ -2064,14 +2088,16 @@ textarea {
     }
 
 .login_word {
-    clear:both;
-    margin:0;
-    padding:0;
-    position:absolute;
-    bottom:30px;
-    width:100%;
+    position: relative;
+    z-index: 1;
+    margin-top: -50px;
+    height: 50px;
+    width: 100%;
+    clear: both;
     text-align: center;
+    color: #808080;
 }
+
 /*资讯详情页*/
 .zx_top {
     margin: 40px auto 90px;

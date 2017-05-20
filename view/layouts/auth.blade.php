@@ -27,16 +27,20 @@
 
 <body @yield('body_class')>
 
-    <!-- nav -->
-    @include('pcview::layouts.partials.authnav')
+    <div class="wrap">
+        <!-- nav -->
+        @include('pcview::layouts.partials.authnav')
 
-    <!-- noticebox -->
-    <div id="noticebox">
-        <input type="hidden">
+        <!-- noticebox -->
+        <div id="noticebox">
+            <input type="hidden">
+        </div>
+
+        <!-- content -->
+        <div class="dy_bg">
+        @yield('content')
+        </div>
     </div>
-
-    <!-- content -->
-    @yield('content')
     
     <!-- footer -->
     @include('pcview::layouts.partials.authfooter')

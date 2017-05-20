@@ -7,7 +7,7 @@
             @if($feed['storages'])
             <div style="background: rgb(247, 248, 250);" id="layer-photos-demo">
             @foreach($feed['storages'] as $store)
-            <img src="{{$routes['storage']}}{{$store['storage_id']}}" class="img-responsive" style="margin: 0 auto;" />
+            <img src="{{ $routes['storage']}}{{$store['storage_id'] }}" class="img-responsive" style="margin: 0 auto;" />
             @endforeach
             </div>
             @endif
@@ -15,18 +15,18 @@
                 {!!$feed['feed_content']!!}
             </div>
             <div class="del_pro">
-                <span id="collect{{$feed['feed_id']}}" rel="{{$tool['feed_collection_count']}}">
+                <span id="collect{{$feed['feed_id']}}" rel="{{ $tool['feed_collection_count'] }}">
                     @if($tool['is_collection_feed'] <= 0)
-                    <a href="javascript:;" onclick="collect.addCollect('{{$feed['feed_id']}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
+                    <a href="javascript:;" onclick="collect.addCollect('{{ $feed['feed_id'] }}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect('{{ $feed['feed_id'] }}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
                     @endif
                 </span>
-                <span id="digg{{$feed['feed_id']}}" rel="{{$tool['feed_digg_count']}}">
+                <span id="digg{{ $feed['feed_id'] }}" rel="{{ $tool['feed_digg_count'] }}">
                     @if($tool['is_digg_feed'] <= 0)
-                    <a tool="javascript:;" onclick="digg.addDigg('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
+                    <a tool="javascript:;" onclick="digg.addDigg('{{ $feed['feed_id'] }}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{$feed['feed_id']}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{ $feed['feed_id'] }}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share">
@@ -42,7 +42,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="del_comment"><span>{{$tool['feed_comment_count']}}</span>人评论</div>
+            <div class="del_comment"><span>{{ $tool['feed_comment_count'] }}</span>人评论</div>
             <div class="comment-box">
                 <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧"></textarea>
                 <div class="dy_company" style="margin: 0;">
@@ -51,7 +51,7 @@
                         表情
                     </span>
                     <span class="dy_cs" style="margin-left:420px;">可输入<span>255</span>字</span>
-                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{$feed['feed_id']}}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
+                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{ $feed['feed_id'] }}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
                 </div>
             </div>
             <div class="delComment_cont" id="comment_detail"></div>
@@ -60,24 +60,24 @@
         <div class="del_right">
             <div class="delTop">
                 <div class="delToP_left">
-                    <div> <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" /></div>
+                    <div> <img src="{{ $routes['resource'] }}/images/cicle.png" /></div>
                 </div>
                 <div class="delTop_right">
-                    <span>{{$news['user']['name']}}</span>
-                    <p class="txt-hide">{{$news['user']['name'] or ''}}</p>
+                    <span>{{ $news['user']['name'] }}</span>
+                    <p class="txt-hide">{{ $news['user']['name'] or '' }}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="javascript:;">文章<span>{{$news['newsNum']}}</span></a>
+                        <a href="javascript:;">文章<span>{{ $news['newsNum'] }}</span></a>
                     </li>
                     <li>
-                        <a href="javascript:;">热门<span>{{$news['hotsNum']}}</span></a>
+                        <a href="javascript:;">热门<span>{{ $news['hotsNum'] }}</span></a>
                     </li>
                 </ul>
                 @foreach($news['list'] as $post)
                     <div class="del_rTop">
                         <span></span>
-                        <a href="javascript:;">{{$post['title']}}</a>
+                        <a href="javascript:;">{{ $post['title'] }}</a>
                     </div>
                 @endforeach
             </div>
@@ -91,7 +91,7 @@
                     <li><a href="javascript:;" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
-                    <div class='loading'><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" class='load'>加载中</div>
+                    <div class='loading'><img src="{{ $routes['resource'] }}/images/loading.png" class='load'>加载中</div>
                 </ul>
             </div>
         </div>
@@ -100,8 +100,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.weibo.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('layer/layer.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.weibo.js"></script>
+<script src="{{ $routes['resource'] }}/layer/layer.js"></script>
 <script type="text/javascript">
 layer.photos({
   photos: '#layer-photos-demo'

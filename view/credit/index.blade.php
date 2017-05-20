@@ -10,12 +10,12 @@
             <span>{{$score or ''}}</span>
             <span class="int_this">当前积分</span>
         </div>
-        <div class="int_sign"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/jifen_03.png') }}" class="sign_img" />每日签到</div>
+        <div class="int_sign"><img src="{{ $routes['resource'] }}/images/jifen_03.png" class="sign_img" />每日签到</div>
     </div>
     <div class="int_cont">
         <ul class="list_ul int_rule">
-            <li class="int_li"><a href="{{Route('pc:credit',['type'=>1])}}" class="fs-16 @if($type == 1) a_border @endif">积分记录</a></li>
-            <li class="int_li2"><a href="{{Route('pc:credit',['type'=>2])}}" class="fs-16 @if($type == 2) a_border @endif">积分规则</a></li>
+            <li class="int_li"><a href="{{ routes('pc:credit',['type'=>1]) }}" class="fs-16 @if($type == 1) a_border @endif">积分记录</a></li>
+            <li class="int_li2"><a href="{{ reouts('pc:credit',['type'=>2]) }}" class="fs-16 @if($type == 2) a_border @endif">积分规则</a></li>
         </ul>
         @if($type == 1)
         <table class="score-table">

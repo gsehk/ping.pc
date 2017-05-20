@@ -74,8 +74,8 @@
 
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.profile.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('layer/layer.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.profile.js') }}"></script>
+<script src="{{ $routes['resource'] }}/layer/layer.js') }}"></script>
 <script type="text/javascript">
 var checkin = function(){
   if( MID == 0 ){

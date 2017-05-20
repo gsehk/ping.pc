@@ -94,7 +94,7 @@ $(function(){
                 url: url,
                 success : function(res) {
                     if (res.status) {
-                        window.location.href = '/home/index';
+                        noticebox('注册成功，跳转中...', 1, '/passport/index');
                     }
                     passlod = false;
                 },
@@ -176,7 +176,7 @@ $(function(){
             url: url,
             success : function(res) {
                 if (res.status) {
-                    window.location.href = '/passport/index';
+                    noticebox('修改成功，跳转中...', 1, '/passport/index');
                 }
             },
             error : function(xhr, textStatus, errorThrown){
@@ -203,16 +203,19 @@ $(function(){
         var captcha = $('input[name="captchacode"]').val();
         if (phone == '') {
             $('#phone_tip').html('请输入手机号').show();
+            $('input[name="phone"]').focus();
             return false;
         }
 
         if (!checkPhone(phone)) {
             $('#phone_tip').html('请输入正确的手机号').show();
+            $('input[name="phone"]').focus();
             return false;
         }
 
         if (!captcha) {
             $('#captcha_tip').html('请输入图形验证码').show();
+            $('input[name="captchacode"]').focus();
             return false;
         }
 

@@ -29,7 +29,7 @@
             </div>
             <div class="con_produce">
                 <span class="con_bq">
-                    <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/pro.png') }}" /><input placeholder="添加标签，多个标签用逗号分开" />
+                    <img src="{{ $routes['resource'] }}/images/pro.png" /><input placeholder="添加标签，多个标签用逗号分开" />
                 </span>
                 <span class="con_cover ai_face_box">
                     <span id="J-show-tips">封面555*393px</span>
@@ -53,8 +53,8 @@
             </div>
             <div class="con_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
             <div class="con_btn">
-                <button type="button" class="subject-submit button con_a1" data-url="{{route('pc:doSavePost',['type'=>2])}}">存草稿</button>
-                <button type="button" class="subject-submit button con_a2" data-url="{{route('pc:doSavePost',['type'=>1])}}">投稿</button>
+                <button type="button" class="subject-submit button con_a1" data-url="{{ route('pc:doSavePost',['type'=>2]) }}">存草稿</button>
+                <button type="button" class="subject-submit button con_a2" data-url="{{ route('pc:doSavePost',['type'=>1]) }}">投稿</button>
             </div>
         </div>
         </form>
@@ -66,7 +66,7 @@
                 <p>  3、韩媒集体摆乌龙:美否认三艘航母下周云集东北亚韩媒集体摆乌龙:美否认三艘航母下周云集东北亚</p>
             </div>
             <div class="conR_bottom">
-                我的草稿<a href=""><span class="conR_num">{{$count}}<i class="icon iconfont icon-icon07"></i></span></a>
+                我的草稿<a href=""><span class="conR_num">{{ $count }}<i class="icon iconfont icon-icon07"></i></span></a>
             </div>
         </div>
     </div>
@@ -74,8 +74,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.news.js') }}"></script>
-<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/md5-min.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.news.js"></script>
+<script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
 <script type="text/javascript">
 $('select.select').select();
 

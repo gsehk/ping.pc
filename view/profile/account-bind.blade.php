@@ -3,22 +3,22 @@
 @section('content')
 <div class="bas_cont">
     <div class="bas_left">
-        <a href="{{Route('pc:account')}}">
+        <a href="{{ route('pc:account') }}">
             <div class="bas_list">
                 <span @if($page == 'account') class="c_333" @endif>资料设置</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-auth'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-auth') class="c_333" @endif>认证</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-security'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-security']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-security') class="c_333" @endif>修改密码</span>
             </div>
         </a>
-        <a href="{{Route('pc:account', ['page'=>'account-bind'])}}">
+        <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-bind') class="c_333" @endif>绑定</span>
             </div>

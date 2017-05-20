@@ -18,7 +18,7 @@
             <div class="f_tel">
                 <label>图形验证码</label>
                 <span class="f_span w_280"><input type="text" placeholder="输入图形验证码" name="captchacode" maxlength="6"/></span>
-                <img onclick="re_captcha()" src="{{ Route('pc:captcha', ['tmp'=>1]) }}"  alt="验证码" title="刷新图片" id="captchacode" class="f_captcha">
+                <img onclick="re_captcha()" src="{{ route('pc:captcha', ['tmp'=>1]) }}"  alt="验证码" title="刷新图片" id="captchacode" class="f_captcha">
                 <label class="error" id="captcha_tip"></label>
             </div>
             <div class="f_tel ">

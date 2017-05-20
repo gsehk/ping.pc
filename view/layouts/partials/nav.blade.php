@@ -1,13 +1,13 @@
-@php $route = Route::currentRouteName(); @endphp
+@php $route = route::currentRouteName(); @endphp
 <div class="nav nav_border">
     <div class="nav_left">
-        <a href="{{ route('pc:feed') }}"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/logo.png') }}" class="nav_logo" /></a>
+        <a href="{{ route('pc:feed') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
         <span class="nav_beta fs-16">beta</span>
     </div>
     <div class="nav_list">
         <ul>
-            <li><a href="{{Route('pc:feed')}}" class="fs-18 @if($route == 'pc:feed') c_59b6d7 @endif">动态</a></li>
-            <li><a href="{{Route('pc:news')}}" class="fs-18 @if($route == 'pc:news') c_59b6d7 @endif">资讯</a></li>
+            <li><a href="{{ route('pc:feed')}}" class="fs-18 @if($route == 'pc:feed') c_59b6d7 @endif">动态</a></li>
+            <li><a href="{{ route('pc:news')}}" class="fs-18 @if($route == 'pc:news') c_59b6d7 @endif">资讯</a></li>
         </ul>
     </div>
     @if (!empty($TS))
@@ -40,7 +40,7 @@
                 <a href="{{ route('pc:logout')}}">退出</a>
             </li>
         </ul>
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/triangle.png') }}" class="triangle" />
+        <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
     </div>
     @else
     <div class="nav_right">
