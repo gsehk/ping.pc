@@ -284,8 +284,16 @@ var noticebox = function(msg, status, tourl = '') {
     }
 }
 
-var noticebox_cb = function(tourl){
+var noticebox_cb = function(tourl) {
     window.location.href = tourl;
+}
+
+var no_data = function(selector, type, txt) {
+  var image = type == 0 ? PUBLIC_URL + '/images/pic_default_content.png' : PUBLIC_URL + '/images/pic_default_people.png';
+  var html = '<div class="no_data"><img src="' + image  + '" /><p>' + txt + '</p></div>';
+  $(selector).css('display', 'table');
+  $(selector).css('margin', '0 auto');
+  $(selector).html(html);
 }
 
 ;(function($){

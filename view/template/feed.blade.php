@@ -3,7 +3,7 @@
 @foreach($data as $key => $post)
 <div class="feed-item">
     <div class="dy_c">
-        <img src="{{$routes['storage']}}{{$post['user']['avatar'] or 7}}" />
+        <img src="@if (!empty($post['user']['avatar'])) {{ $routes['storage']}}{{ $post['user']['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" />
         <span class="dy_name fs-14">{{$post['user']['name']}}</span>
         <span class="dy_time fs-12">{{$post['feed']['created_at']}}</span>
     </div>

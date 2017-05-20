@@ -110,6 +110,7 @@ var checkin = function(){
 setTimeout(function() {
     weibo.init({
         container: '#feeds-list',
+        loading: '.dy_cen',
         cid: "{{$type}}"
     });
 }, 300);

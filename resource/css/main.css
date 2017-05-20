@@ -456,13 +456,13 @@ img {
 
     .dy_share:link {
         text-decoration: none;
-        color: #fff;
+        color: #fff;    
     }
 
 .dy_cen {
     width: 100%;
     background: white;
-    padding: 22px 40px 0;
+    padding: 22px 40px;
 }
 
     .dy_cen a {
@@ -896,8 +896,7 @@ img {
 
 
 .dy_picture {
-    margin-top: 40px;
-    padding: 0 40px;
+    margin-top: 40px;f
     height: 60px;
     display: none;
 }
@@ -3635,7 +3634,7 @@ img {
     position: relative;
     height: 60px;
 }
-.loading{text-align:center;padding:10px 0;color:#999;}
+.loading{text-align:center;padding:20px 0 10px 0;color:#999;}
 img.load{margin-left:2px;height:16px;width:16px;-webkit-animation:icon-load 1.5s infinite linear;animation:icon-load 1.5s infinite linear;
 }
 @-webkit-keyframes icon-load {
@@ -3687,14 +3686,17 @@ img.load{margin-left:2px;height:16px;width:16px;-webkit-animation:icon-load 1.5s
 .select_ul li.cur{color:#fff;background:#195DA3;}
 
 .no_data {
-    width: 100%;
+    width:100%; 
+    height:500px; 
+    text-align:center; 
+    vertical-align:middle; 
+    display:table-cell;
 }
 
-.no_data span{
-    line-height: 100%;
-    height: 100%;
-    background: url('../images/pic_default_people.png');
-    background-size: cover;
+.no_data p{
+    font-size: 14px;
+    color: #59b6d7;
+    margin:10px 0px;
 }
 
 /* 多图片样式 */

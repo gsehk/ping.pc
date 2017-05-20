@@ -18,6 +18,7 @@ weibo.init = function(option)
     this.setting.cid = option.cid || 0;             //  微博分类ID
     this.setting.canload = option.canload || true;        // 是否能加载
     this.setting.page = option.page || 1;        // 页码
+    this.setting.loading = option.loading;        //加载图位置
     if (option.cid) {
         switch(parseInt(option.cid))
         {
@@ -38,7 +39,8 @@ weibo.init = function(option)
     weibo.bindScroll();
 
     if($(weibo.setting.container).length > 0 && this.setting.canload){
-        $(weibo.setting.container).append(loadHtml);
+        $(weibo.setting.loading).after(loadHtml);
+        // $(weibo.setting.container).append(loadHtml);
         weibo.loadMore();
     }
 };
@@ -57,7 +59,8 @@ weibo.bindScroll = function()
           var bodyHeight = $(document.body).height();
           if(bodyTop + $(window).height() >= bodyHeight - 250) {
               if($(weibo.setting.container).length > 0) {
-                  $(weibo.setting.container).append(loadHtml);
+                  $(weibo.setting.loading).after(loadHtml);
+                  // $(weibo.setting.container).append(loadHtml);
                   weibo.loadMore();
               }
         }
@@ -106,7 +109,8 @@ weibo.loadMore = function()
               if (weibo.setting.loadcount == 1) {
                   $(weibo.setting.container).html(html);
               } else {
-                  $(weibo.setting.container).append(html);
+                  $(weibo.setting.loading).after(loadHtml);
+                  // $(weibo.setting.container).append(html);
                   $('.loading').remove();
               }
             } else {
