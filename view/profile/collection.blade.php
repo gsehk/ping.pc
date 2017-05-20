@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('pcview::layouts.default')
 
 @section('body_class')class="gray"@endsection
 
@@ -6,146 +6,106 @@
 <div class="dy_bg">
     <div class="dy_cont">
         <!--左-->
-        @component('ucmenu')
-            555
+        @component('pcview::ucmenu')
         @endcomponent
         <!--中-->
         <div class="dy_cCont">
             <div class="dy_center">
-                <div class="dy_cen" style="border-top:0;">
-                    <div>
-                        <a href="{{Route('pc:collection', ['type'=>1])}}" class="fs-16 @if($type == 1) dy_cen_333 @endif">动态</a>
-                        <a href="{{Route('pc:collection', ['type'=>2])}}" class="fs-16 @if($type == 2) dy_cen_333 @endif">文章</a>
+                <div class="dy_cen">
+                    <div class="collection_memu">
+                        <a href="javascript:;" data-type="feed" class="fs-16 dy_cen_333">动态</a>
+                        <a href="javascript:;" data-type="news" class="fs-16">文章</a>
                     </div>
-                    <div>
-                        <div class="dy_c">
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-                            <span class="dy_name fs-14">大师</span>
-                            <span class="dy_time fs-12">5分钟前</span>
-                        </div>
-                        <div class="cen_img">
-                            <p class="fs-14 cen_word">你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候</p>
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/picture.png') }}" class="img-responsive img1" />
-                            <div class="dy_comment">
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                                    121
-                                </span>
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
-                                    121
-                                </span>
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
-                                    121
-                                </span>
-                                <span class="cen_right">
-                                    <i class="icon iconfont icon-gengduo-copy"></i>
-                                </span>
-                                <div class="cen_more">
-                                    <ul>
-                                        <li><a href="#"><i class="icon iconfont icon-shoucang-copy"></i>收藏</a></li>
-                                        <li><a href="#"><i class="icon iconfont icon-jubao-copy1"></i>举报</a></li>
-                                        <li><a href="#"><i class="icon iconfont icon-shanchu-copy1"></i>删除</a></li>
-                                        <li><a href="#"><i class="icon iconfont icon-zhiding-copy-copy1"></i>置顶</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="dy_line">
-                                <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/line.png') }}" />
-                            </div>
-                            <div class="dy_comit">
-                                <p>
-                                    <span>Ellen：</span> 第一条评论
-                                    <a class="fs-14">回复</a>
-                                </p>
-                                <p>
-                                    <span>Nick </span>回复<span>Ellen：</span>
-                                    第二条评论
-                                </p>
-                                <p>
-                                    <span>Woody：</span> 回复第一条评论
-                                </p>
-                                <div class="comit_all fs-12">查看全部评论</div>
-                            </div>
-                            <div class="f3"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="dy_c">
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-                            <span class="dy_name fs-14">大师</span>
-                            <span class="dy_time fs-12">5分钟前</span>
-                        </div>
-                        <div class="cen_img">
-                            <p class="fs-14 cen_word">你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候</p>
-                            <div class="dy_comment">
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                                    121
-                                </span>
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
-                                    121
-                                </span>
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
-                                    121
-                                </span>
-                                <span class="cen_right">
-                                    <i class="icon iconfont icon-gengduo-copy"></i>
-                                </span>
-                            </div>
-                            <div class="f3"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="dy_c">
-                            <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}" />
-                            <span class="dy_name fs-14">大师</span>
-                            <span class="dy_time fs-12">5分钟前</span>
-                        </div>
-                        <div class="cen_img">
-                            <p class="fs-14 cen_word">你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候你写ppt时候</p>
-                            <div class="dy_comment">
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                                    121
-                                </span>
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
-                                    121
-                                </span>
-                                <span>
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
-                                    121
-                                </span>
-                                <span class="cen_right">
-                                    <i class="icon iconfont icon-gengduo-copy"></i>
-                                </span>
-                            </div>
-                            <div class="f3"></div>
-                        </div>
+                    <div id="content-list" style="margin-top: 30px;">
                     </div>
                 </div>
             </div>
         </div>
         <!--右-->
         <div class="dy_right">
-            @component('signed')
-                555
-            @endcomponent
+            @if (!empty($TS))
+            <!-- 签到 -->
+            <div class="dy_signed">
+                <div class="dyrTop">
+                    <span class="dyrTop_r fs-14">
+                        已获积分
+                        <span class="totalnum">{{ $TS['credit'] or 0 }}</span>
+                    </span>
+                    @if (!empty($TS['avatar']))
+                    <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " class="dyrTop_img" alt="{{ $TS['name'] }}"/>
+                    @else
+                    <img src="{{ $routes['resource'] }}/images/avatar.png" class="dyrTop_img"/>
+                    @endif
+                </div>
+                @if(empty($ischeck))
+                    <div class="dy_qiandao" onclick="checkin();" id="checkin">每日签到<span>+5积分</span></div>
+                @else 
+                    <div class="dy_qiandao dy_qiandao_sign" id="checkin">已签到</div>
+                @endif
+            </div>
+            @endif
 
-            @component('related')
-                {{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/cicle.png') }}
-            @endcomponent
+            <!-- 推荐用户 -->
+            @if (!empty($rec_users))
+            <div class="dyrBottom">
+                <ul>
+                    @foreach ($rec_users as $rec_user)
+                    <li>
+                        <a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">
+                        @if (!empty($rec_user['avatar']))
+                        <img src="{{ $routes['storage'] }}{{ $rec_user['avatar'] }}" />
+                        @else
+                        <img src="{{ $routes['resource'] }}/images/avatar.png"/>
+                        @endif
+                        </a>
+                        <span><a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
+                    </li>
+                    @endforeach
+                </ul>
+                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a>
+            </div>
+            @endif
+            <!-- 个人中心右侧推荐用户 -->
+
         </div>
     </div>
-
-    <!--加载中-->
-    <div class="dy_loading">
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/loading.png') }}" />
-        加载中
-    </div>
 </div>
+@endsection
+
+
+@section('scripts')
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('js/module.profile.js') }}"></script>
+<script src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('layer/layer.js') }}"></script>
+<script type="text/javascript">
+var checkin = function(){
+  if( MID == 0 ){
+    return;
+  }
+  var totalnum = {{$checkin['total_num'] or 0}} + 1;
+  $.get('/home/checkin' , {} , function (res){
+    if ( res ){
+      var totalnum = res.score;
+      $('#checkin').html('已data签到');
+      $('.totalnum').text(totalnum);
+      $('#checkin').addClass('dy_qiandao_sign');
+    }
+  });
+};
+setTimeout(function() {
+    news.init({
+        container: '#content-list',
+        user_id:"{{$TS['id']}}",
+        type:"feed"
+    });
+}, 300);
+// 文章分类tab
+$('.collection_memu a').on('click', function(){
+    var type = $(this).data('type');
+    $('#content-list').html('');
+    news.init({container: '#content-list',user_id:"{{$TS['id']}}",type:type});
+    $('.collection_memu a').removeClass('dy_cen_333');
+    $(this).addClass('dy_cen_333');
+});
+
+</script>
 @endsection

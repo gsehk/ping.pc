@@ -4,12 +4,16 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Carbon\Carbon;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\UserDatas;
 use Zhiyi\Plus\Models\Followed;
 use Zhiyi\Plus\Models\Following;
 use Zhiyi\Plus\Models\StorageTask;
 use Zhiyi\Plus\Models\Area;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
@@ -19,6 +23,14 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 class ProfileController extends BaseController
 {
 
+    /**
+     * 个人中心首页
+     * 
+     * @author zw
+     * @date   2017-05-20
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
     public function index(Request $request)
     {
         $type = $request->input('type') ?: 'all';
@@ -73,18 +85,97 @@ class ProfileController extends BaseController
         return view('pcview::profile.index', $data, $this->mergeData);
     }
 
+    /**
+     * 个人中心文章栏
+     * 
+     * @author zw
+     * @date   2017-05-20
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
     public function article(Request $request)
     {
         $type = $request->input('type') ?: 'relase';
+        $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
 
-        return view('profile.article', ['type' => $type]);
+        if (!empty($this->mergeData['TS']) && $this->mergeData['TS']['id'] == $user_id) {
+            $data['user'] = $this->mergeData['TS'];
+        } else {
+            $user = User::where('id', $user_id)
+                        ->with('datas', 'counts')
+                        ->first();
+            $data['user'] = $this->formatUserDatas($user);
+        }
+
+        // 地区
+        if (!empty($data['user']['province'])) {
+            $data['user']['province'] = Area::where('id', $data['user']['province'])
+                                        ->value('name');
+        }
+        if (!empty($data['user']['city'])) {
+            $data['user']['city'] = Area::where('id', $data['user']['city'])
+                                        ->value('name');
+        }
+        if (!empty($data['user']['area'])) {
+            $data['user']['area'] = Area::where('id', $data['user']['area'])
+                                        ->value('name');
+        }
+
+        $data['type'] = $type;
+
+        // 粉丝
+        $followeds = Followed::where('user_id', $user_id)
+            ->orderBy('id', 'DESC')
+            ->with('user.datas')
+            ->take(9)
+            ->get();
+        foreach ($followeds as $followed) {
+            $data['followeds'][] = $this->formatUserDatas($followed->user);
+        }
+
+        // 关注
+        $followings = Following::where('user_id', $user_id)
+            ->orderBy('id', 'DESC')
+            ->with('user.datas')
+            ->take(9)
+            ->get();
+        foreach ($followings as $following) {
+            $data['followings'][] = $this->formatUserDatas($following->user);
+        }
+
+        return view('pcview::profile.article', $data, $this->mergeData);
     }
 
+    /**
+     * 我的收藏
+     * 
+     * @author zw
+     * @date   2017-05-20
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
     public function collection(Request $request)
     {
-        $type = $request->input('type') ?: 1;
+        $data['type'] = $request->input('type') ?: 1;
+        $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
+            ->where(function($query){
+                if ($this->mergeData) {
+                    $query->where('user_id', $this->mergeData['TS']['id']);
+                }
+            })->orderBy('created_at', 'desc')->first();
 
-        return view('profile.collection', ['type' => $type]);
+        // 推荐用户
+        $_rec_users = UserDatas::where('key', 'feeds_count')
+            ->where('user_id', '!=', $this->mergeData['TS']['id'])
+            ->select('id', 'user_id')
+            ->with('user.datas')
+            ->orderBy(DB::raw('-value', 'desc'))->take(5)->get();
+
+        foreach ($_rec_users as $_rec_user) {
+            $data['rec_users'][] = $this->formatUserDatas($_rec_user->user);
+        }
+
+        return view('pcview::profile.collection', $data, $this->mergeData);
     }
 
     public function users(Request $request)
@@ -293,8 +384,9 @@ class ProfileController extends BaseController
         ])->setStatusCode(200);  
     }
 
-    public function formatFeedList($feeds, $uid)
+    public function formatFeedList($feeds, $uid, $template = '')
     {
+        $template = $template ?: 'pcview::template.profile-feed';
         $datas = [];
         foreach ($feeds as $feed) {
             $data = [];
@@ -340,7 +432,7 @@ class ProfileController extends BaseController
         }
         
         $feedList['data'] = $datas;
-        $feedData['html'] = view('pcview::template.profile-feed', $feedList, $this->mergeData)->render();
+        $feedData['html'] = view($template, $feedList, $this->mergeData)->render();
         $feedData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['feed']['feed_id'] : 0;
 
         return response()->json([
@@ -382,6 +474,102 @@ class ProfileController extends BaseController
         ->get();
 
         return $this->formatFeedList($feeds, $auth_id);
+    }
+
+    /**
+     * 资讯列表.
+     * 
+     * @param  $state [文章状态]
+     * @return mixed 返回结果
+     */
+    public function getNewsList(Request $request, int $user_id)
+    {
+        $state = $request->type;
+        $max_id = $request->max_id;
+        $limit = $request->limit ?? 15;
+        $datas = News::where('audit_status', $state)
+                ->where('author', $user_id)
+                ->where(function ($query) use ($max_id) {
+                    if ($max_id > 0) {
+                        $query->where('id', '<', $max_id);
+                    }
+                })
+                ->orderBy('id', 'desc')
+                ->select('id','title','updated_at','storage','comment_count','hits','from','audit_status')
+                ->withCount('collection')
+                ->with('comments')
+                ->take($limit)
+                ->get();
+
+        $newsList['data'] = $datas;
+        $newsData['html'] = view('pcview::template.profile-news', $newsList, $this->mergeData)->render();
+        $newsData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['id'] : 0;
+
+        return response()->json(static::createJsonData([
+            'status'  => true,
+            'code'    => 0,
+            'message' => '获取成功',
+            'data'    => $newsData
+        ]))->setStatusCode(200);
+    }
+
+    /**
+     * 获取用户收藏列表
+     *  
+     * @author zw
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getCollectionList(Request $request, int $user_id)
+    {
+        $type = $request->type;
+        $max_id = $request->max_id;
+        $limit = $request->limit ?? 15;
+        if ($type == 'news') {
+            $datas = News::whereIn('id', NewsCollection::where('user_id', $user_id)->pluck('news_id'))
+            ->where(function ($query) use ($max_id) {
+                if ($max_id > 0) {
+                    $query->where('id', '<', $max_id);
+                }
+            })
+            ->orderBy('id', 'desc')
+            ->select('id','title','updated_at','storage','comment_count','hits','from','audit_status')
+            ->withCount('collection')
+            ->with(['comments' => function($query){
+                    $query->take(3);
+            }])
+            ->with('storage')
+            ->get();
+
+            $newsList['data'] = $datas;
+            $dataList['html'] = view('pcview::template.profile-collect', $newsList, $this->mergeData)->render();
+            $dataList['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['id'] : 0;
+
+            return response()->json(static::createJsonData([
+                'status'  => true,
+                'code'    => 0,
+                'message' => '获取成功',
+                'data'    => $dataList
+            ]))->setStatusCode(200);
+
+        } else {
+            $feeds = Feed::orderBy('id', 'DESC')
+                    ->where(function ($query) use ($max_id, $user_id) {
+                        $query->whereIn('id', FeedCollection::where('user_id', $user_id)->pluck('feed_id'));
+                        if ($max_id > 0) {
+                            $query->where('id', '<', $max_id);
+                        }
+                    })
+                    ->withCount(['diggs' => function ($query) use ($user_id) {
+                        $query->where('user_id', $user_id);
+                    }])
+                    ->byAudit()
+                    ->with('storages')
+                    ->take($limit)
+                    ->get();
+
+            return $this->formatFeedList($feeds, $user_id, 'pcview::template.feed');      
+        }
     }
 
 }

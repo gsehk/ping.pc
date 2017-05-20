@@ -229,18 +229,21 @@
             <div class="dy_comit" id="comment_box{{$post['feed']['feed_id']}}">
             
             <div class="comment_box{{$post['feed']['feed_id']}}">
-                @if(!empty($post['comments']))
-                @foreach($post['comments'] as $cv)
-                <p>
-                    <span>{{$cv['user']['name']}}：</span> {{$cv['comment_content']}}
-                    @if($cv['user_id'] != $TS['id'])
-                        <a class="fs-14 J-reply-comment" data-args="to_uname={{$cv['user']['name']}}&to_uid={{$cv['user_id']}}&row_id={{$post['feed']['feed_id']}}">回复</a>
-                    @endif
-                </p>
-                @endforeach
+            @if(count($post['comments']))
+            @foreach($post['comments'] as $cv)
+            <p>
+                <span>{{$cv['user']['name']}}：</span> {{$cv['comment_content']}}
+                @if($cv['user_id'] != $TS['id'])
+                    <a class="fs-14 J-reply-comment" data-args="to_uname={{$cv['user']['name']}}&to_uid={{$cv['user_id']}}&row_id={{$post['feed']['feed_id']}}">回复</a>
                 @endif
+            </p>
+            @endforeach
+            @endif
             </div>
-                <div class="comit_all fs-12"><a href="#">查看全部评论</a></div>
+            @if(count($post['comments']) == 3)
+            <div class="comit_all fs-12"><a href="/home/{{$post['feed']['feed_id']}}/feed">查看全部评论</a></div>
+            @endif
+            
             </div>
         </div>
         <div class="f3"></div>

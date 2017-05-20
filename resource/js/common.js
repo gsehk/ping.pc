@@ -14,6 +14,8 @@ var request_url = {
     get_feed_commnet:'/home/{feed_id}/comments',
     collect_feed:'/api/v1/feeds/{feed_id}/collection',
     get_user_feed:'/profile/users/{user_id}',
+    get_user_news:'/profile/news/{user_id}',
+    get_user_collect:'/profile/collection/{user_id}',
 };
 
 // Ajax 设置csrf Header

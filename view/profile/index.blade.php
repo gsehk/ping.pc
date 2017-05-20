@@ -78,10 +78,8 @@
                         <div class="artic_left">
                             <a href="javascript:;" data-type="all" class="fs-16 @if($type == 'all') dy_cen_333 @endif">全部动态</a>
                             <a href="javascript:;" data-type="img" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
-                            <a href="javascript:;" data-type="video" class="fs-16 @if($type == 'video') dy_cen_333 @endif">视频</a>
-                            <a href="javascript:;" data-type="news" class="fs-16 @if($type == 'news') dy_cen_333 @endif">资讯</a>
                         </div>
-                        <a href="{{Route('pc:article')}}"><div class="artic_artic fs-16">文章</div></a>
+                        <a href="{{Route('pc:article')}}" class="artic_artic fs-16"><div>文章</div></a>
                     </div>
                     <div id="feeds-list"></div>
                 </div>
@@ -162,7 +160,6 @@
                 <span class="nodata">暂无内容</span>
                 @endif  
                 </div>
-
             </div>
         </div>
     </div>

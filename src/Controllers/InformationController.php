@@ -40,7 +40,7 @@ class InformationController extends BaseController
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
 
         /*  热门作者 */
-        $datas['author'] = News::where([['state','=', 0],['author','!=', 0]])
+        $datas['author'] = News::where('author','!=', 0)
                         ->orderBy('hits', 'desc')
                         ->groupBy('author')
                         ->select('author')
@@ -92,6 +92,7 @@ class InformationController extends BaseController
                         ->select('id','title')
                         ->get()
                         ->toArray();
+        News::where('id', $news_id)->increment('hits');
 
         return view('pcview::information.read', $data, $this->mergeData);
     }
@@ -105,7 +106,8 @@ class InformationController extends BaseController
 
     public function release()
     {
-        $data['count'] = News::where('state', 2)->count();
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
+        $data['count'] = News::where('audit_status', 2)->where('author', $user_id)->count();
         $data['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get();
 
         return view('pcview::information.release', $data, $this->mergeData);
@@ -245,7 +247,7 @@ class InformationController extends BaseController
         $news->content = $request->content;
         $news->storage = $storage_id ?: '';
         $news->from = $request->source ?: '';
-        $news->state = $type; 
+        $news->audit_status = $type; 
         $news->save();
 
         $news_link = new NewsCateLink();
@@ -279,7 +281,7 @@ class InformationController extends BaseController
                     ->toArray();
         } else {
             //获取热门作者
-            $datas = News::where('state', 0)
+            $datas = News::where('audit_status', 0)
                     ->orderBy('hits', 'desc')
                     ->take($limit)
                     ->select('author')
