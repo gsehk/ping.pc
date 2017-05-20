@@ -26,7 +26,7 @@
                         <span class="l_forget">忘记密码</span>
                     </a>
                 </div>
-                <a class="login_login" id="login_btn">登陆</a>
+                <a class="login_login" id="login_btn">登录</a>
             </form>
 
             <div class="no_zh">

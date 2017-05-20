@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="_token" content="{{ csrf_token() }}"/>
     <title>@yield('title')</title>
+    
     <script>
         // 全局变量
         var PUBLIC_URL = '{{ $routes["resource"] }}';
@@ -19,6 +20,7 @@
     <link href="{{ $routes['resource'] }}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/font/iconfont.css" rel="stylesheet">
     <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
+    <script src="{{ $routes['resource'] }}/layer/layer.js"></script>
     <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
     <script src="{{ $routes['resource'] }}/js/common.js"></script>
 </head>
@@ -27,6 +29,11 @@
 
     <!-- nav -->
     @include('pcview::layouts.partials.authnav')
+
+    <!-- noticebox -->
+    <div id="noticebox">
+        <input type="hidden">
+    </div>
 
     <!-- content -->
     @yield('content')

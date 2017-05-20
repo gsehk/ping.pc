@@ -1,11 +1,10 @@
-@extends('layouts.auth')
+@extends('pcview::layouts.auth')
 
 @section('body_class')class="gray"@endsection
 
 @section('content')
 <div class="forget_cont" style="height:640px;">
     <ul class="forget_ul">
-
         <li><a href="{{ route('pc:register', ['type'=>1]) }}" class="forget_333">手机注册</a></li>
     </ul>
     
@@ -13,7 +12,7 @@
         <form method="POST" id="reg_form">
             <div class="f_tel">
                 <label>手机号</label>
-                <span class="f_span" id="phone"><input type="text" placeholder="输入11位手机号码" name="phone" maxlength="11"/></span>
+                <span class="f_span" id="phone"><input type="text" placeholder="输入11位手机号码" name="phone" maxlength="11" id="inputphone"/></span>
                 <label class="error" id="phone_tip"></label>
             </div>
             <div class="f_tel">
@@ -24,8 +23,8 @@
             </div>
             <div class="f_tel ">
                 <label>手机验证码</label>
-                <span class="f_span w_280"><input type="text" placeholder="输入手机验证码" name="code" maxlength="4"/></span>
-                <span class="get_code" id="smscode">获取短信验证码</span>
+                <span class="f_span w_280"><input type="text" placeholder="输入手机验证码" name="code" maxlength="6"/></span>
+                <span class="get_code" id="smscode" type="register">获取短信验证码</span>
                 <label class="error" id="smscode_tip"></label>
             </div>
             <div class="f_tel">
@@ -44,33 +43,8 @@
                 <label class="error" id="repassword_tip"></label>
             </div>
 
-            <input type="hidden" name="device"/ >
             <a id="reg_btn" class="f_sure">注册</a>
         </form>
-
-        <!-- 邮箱注册 -->
-        <!-- <div class="f_tel">
-            <label>常用邮箱</label>
-            <span class="f_span"><input type="text" placeholder="输入常用邮箱" /></span>
-        </div>
-        <div class="f_tel">
-            <label>图形验证码</label>
-            <span class="f_span"><input type="text" placeholder="输入图形验证码" /></span>
-            <div class="f_code"><img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/f_code.png') }}" /></div>
-        </div>
-        <div class="f_tel">
-            <label>设置昵称</label>
-            <span class="f_span"><input type="text" placeholder="2-10个字符" /></span>
-        </div>
-        <div class="f_tel">
-            <label>设置密码</label>
-            <span class="f_span"><input type="text" placeholder="限6-15个字符，区分大小写" /></span>
-        </div>
-        <div class="f_tel">
-            <label>确认密码</label>
-            <span class="f_span"><input type="text" placeholder="再次输入密码" /></span>
-        </div>
-        <a href="#" class="f_sure">注册</a> -->
     </div>
 
 </div>
@@ -78,5 +52,5 @@
 
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/jquery.form.js"></script>
-<script src="{{ $routes['resource'] }}/js/passport.js"></script>
+<script src="{{ $routes['resource'] }}/js/module.passport.js"></script>
 @endsection

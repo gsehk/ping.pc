@@ -260,6 +260,33 @@ var follow = function(status, user_id, target, callback){
     }
 }
 
+// 提示框
+var noticebox = function(msg, status, tourl = '') {
+
+    if (status == 0) {
+        var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>' + msg + '</div>';
+    } else {
+        var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>' + msg + '</div>';
+    }
+    $('#noticebox').html(html);
+
+
+    $('#noticebox').slideDown(200);
+
+    if (tourl == '') {
+        setTimeout(function(){
+            $('#noticebox').slideUp(200);
+        }, 1000);
+    } else {
+        setTimeout(function(){
+            noticebox_cb(tourl);
+        }, 1000);
+    }
+}
+
+var noticebox_cb = function(tourl){
+    window.location.href = tourl;
+}
 
 ;(function($){
     //默认参数
@@ -319,6 +346,7 @@ var follow = function(status, user_id, target, callback){
 })(jQuery);
 
 $(function(){
+  // 个人中心展开
   $('#menu_toggle').click(function(){
     $('.p_cont').toggle();
   })

@@ -2,8 +2,6 @@
 
 use Zhiyi\Plus\Http\Middleware;
 
-Route::any('/test2', 'TestController@show');
-
 // PC路由
 
 Route::prefix('passport')->group(function () {
@@ -22,11 +20,11 @@ Route::prefix('passport')->group(function () {
 
     // doregister
     Route::post('doregister', 'PassportController@doRegister')
-        ->middleware(Middleware\VerifyPhoneNumber::class) // 验证手机号码是否正确
-        ->middleware(Middleware\VerifyUserNameRole::class) // 验证用户名规则是否正确
-        ->middleware(Middleware\CheckUserByNameNotExisted::class) // 验证用户名是否被占用
-        ->middleware(Middleware\CheckUserByPhoneNotExisted::class) // 验证手机号码是否被占用
-        ->middleware(Middleware\VerifyPhoneCode::class) // 验证验证码释放正确
+        ->middleware(Middleware\V1\VerifyPhoneNumber::class) // 验证手机号码是否正确
+        ->middleware(Middleware\V1\VerifyUserNameRole::class) // 验证用户名规则是否正确
+        ->middleware(Middleware\V1\CheckUserByNameNotExisted::class) // 验证用户名是否被占用
+        ->middleware(Middleware\V1\CheckUserByPhoneNotExisted::class) // 验证手机号码是否被占用
+        ->middleware(Middleware\V1\VerifyPhoneCode::class) // 验证验证码释放正确
     ;
 
 
@@ -37,10 +35,17 @@ Route::prefix('passport')->group(function () {
     // checkcaptcha
     Route::post('checkcaptcha', 'PassportController@checkCaptcha')->name('pc:checkcaptcha');
 
-    // 找回密码 
+    // findpwd 
     Route::get('findpwd', 'PassportController@findPassword')->name('pc:findPassword');
 
-    // 完善第三方授权信息
+    // dofindpwd
+    Route::patch('dofindpwd', 'PassportController@doFindpwd')
+        ->middleware(Middleware\V1\VerifyPhoneNumber::class) // 验证手机号格式
+        ->middleware(Middleware\V1\CheckUserByPhoneExisted::class) // 验证手机号码用户是否存在
+        ->middleware(Middleware\V1\VerifyPhoneCode::class) // 验证手机号码验证码是否正确
+    ;
+
+    // perfect
     Route::get('perfect', 'PassportController@perfect')->name('pc:perfect');
 
 

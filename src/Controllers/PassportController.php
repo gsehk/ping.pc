@@ -135,7 +135,7 @@ class PassportController extends BaseController
      */
     public function register(Request $request)
     {
-        return view('passport.register');
+        return view('pcview::passport.register', $this->mergeData);
     }
 
     public function doRegister(Request $request)
@@ -143,15 +143,6 @@ class PassportController extends BaseController
         $name = $request->input('name');
         $phone = $request->input('phone');
         $password = $request->input('password', '');
-
-        // 图形验证码判断
-        $captcha = $request->input('captcha');
-
-        if (Session::get('milkcaptcha') != $captcha) {
-            return response()->json(static::createJsonData([
-                'code' => 91002,
-            ]))->setStatusCode(403);
-        }
 
         // 注册用户
         $user = new User();
@@ -166,14 +157,41 @@ class PassportController extends BaseController
     public function perfect()
     {
 
-        return view('passport.perfect');
+        return view('pcview::passport.perfect');
     }
 
+    /**
+     * [findPassword 找回密码]
+     * @Author Foreach<hhhcode@outlook.com>
+     * @param  Request $request [description]
+     * @return [type] [description]
+     */
     public function findPassword(Request $request)
     {
         $type = $request->input('type') ?: 1;
 
-        return view('passport.findpwd', ['type' => $type]);
+        return view('pcview::passport.findpwd', ['type' => $type], $this->mergeData);
+    }
+
+    /**
+     * [findPassword 找回密码]
+     * @Author Foreach<hhhcode@outlook.com>
+     * @param  Request $request [description]
+     * @return [type] [description]
+     */
+    public function doFindpwd(Request $request)
+    {
+        $password = $request->input('password', '');
+        $user = $request->attributes->get('user');
+        $user->createPassword($password);
+        $user->save();
+
+        return response()->json([
+            'status'  => true,
+            'code'    => 0,
+            'message' => '重置密码成功',
+            'data'    => null,
+        ]);
     }
 
     /**
@@ -208,9 +226,9 @@ class PassportController extends BaseController
      * @Author Foreach<hhhcode@outlook.com>
      * @return [type] [description]
      */
-    public function checkCaptcha()
+    public function checkCaptcha(Request $request)
     {
-        $userInput = \Request::get('captcha');
+        $userInput = $request->input('captcha');
 
         if (Session::get('milkcaptcha') == $userInput) {
             return response()->json(static::createJsonData([

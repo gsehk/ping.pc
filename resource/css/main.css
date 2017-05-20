@@ -3170,30 +3170,30 @@ textarea {
     border-bottom: 1px solid #ededed;
 }
 
-.success_div {
-    margin-top: 20px;
-    position: absolute;
+#noticebox {
+    display: none;
+    top:82px;
+    position: fixed;
     width: 100%;
     text-align: center;
 }
 
-.set_success {
-    width: 1080px;
-    height: 60px;
+#noticebox .notice {
+    height: 50px;
+    background: #fff;
     color: #666;
     font-size: 14px;
     text-align: center;
-    line-height: 60px;
+    line-height: 50px;
     margin: auto;
+    box-shadow: 0px 0px 22px #ededed;
+    z-index:9999;
 }
 
-.s_bg {
-    background: #f2f9fc;
-}
-
-.set_success img {
+#noticebox .notice img {
     margin-right: 10px;
 }
+
 /*退出弹框*/
 .exit_dialog {
     width: 400px !important;
