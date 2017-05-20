@@ -498,7 +498,9 @@ textarea {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
-
+.collection_memu>a{
+    margin-right: 20px;
+}
 .img1 {
     width: 554px;
     margin: 0 0 20px;
@@ -2203,17 +2205,19 @@ textarea {
 .artic_artic {
     color: #999;
     position: absolute;
-    width: 290px;
+    width: 332px;
     right: -40px;
     top: -22px;
     border-left: 1px solid #ededed;
     border-bottom: 1px solid #ededed;
     height: 60px;
     line-height: 60px;
-    padding-left: 30px;
     cursor: pointer;
+    text-align: center;
 }
-
+.article_state>a{
+    margin-right: 15px;
+}
 .cen_befor {
     position: relative;
     padding-left: 164px;
@@ -2283,10 +2287,11 @@ textarea {
     display: inline-block;
     height: 60px;
     position: absolute;
-    top: -20px;
+    top: -22px;
     line-height: 60px;
     left: -40px;
     text-indent: 20px;
+    width: 332px;
 }
 .dy_tab{
     position: relative;
@@ -2308,6 +2313,7 @@ textarea {
 }
 
     .artic_list img {
+        max-height: 400px;
         width: 100% !important;
     }
 
@@ -2318,7 +2324,6 @@ textarea {
     text-align: center;
     color: #999;
     cursor: pointer;
-    margin: 30px auto 30px 0;
     font-size: 16px;
     border-radius: 40px;
     display: block;
