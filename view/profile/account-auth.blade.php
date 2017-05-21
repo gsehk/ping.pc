@@ -1,9 +1,7 @@
-@extends('layouts.default')
-
+@extends('pcview::layouts.default')
+@section('bgcolor')style="background-color:#fff"@endsection
 @section('content')
-
-<div class="success_div"></div>
-<div class="bas_cont">
+<div class="bas_cont clearfix">
     <div class="bas_left">
         <a href="{{ route('pc:account') }}">
             <div class="bas_list">
@@ -32,16 +30,16 @@
         <form id="auth_form">
             <div class="f_tel bas_div">
                 <label><span class="cer_x">*</span>真实姓名</label>
-                <span class="f_span"><input name="realname" type="text" id="realname" data-easyform="char-chinese;length:4 16;" data-message="姓名必须为4—16位" data-easytip="class:easy-blue;"></span>
+                <span class="f_span"><input name="realname" type="text" id="realname" data-easyform="char-chinese;length:4 16;" data-message="姓名必须为4—16位" data-easytip="class:easy-red;"></span>
             </div>
             <div class="f_tel bas_div" style="margin-left: -15px;">
                 <label><span class="cer_x">*</span>身份证号码</label>
-                <span class="f_span"><input name="idcard" type="text" id="idcard" data-easyform="regex:(^\d{15}$)|(^\d{17}([0-9]|X)$);" data-message="证件号码错误" data-easytip="class:easy-blue;"></span>
+                <span class="f_span"><input name="idcard" type="text" id="idcard" data-easyform="regex:(^\d{15}$)|(^\d{17}([0-9]|X)$);" data-message="证件号码错误" data-easytip="class:easy-red;"></span>
             </div>
 
             <div class="f_tel bas_div">
                 <label><span class="cer_x">*</span>联系方式</label>
-                <span class="f_span"><input name="phone" type="text" id="phone" data-easyform="mobile;" data-message="手机号码错误" data-easytip="class:easy-blue;"></span>
+                <span class="f_span"><input name="phone" type="text" id="phone" data-easyform="mobile;" data-message="手机号码错误" data-easytip="class:easy-red;"></span>
             </div>
             <div class="f_tel bas_div">
                 <label style="margin-right: 6px !important;">认证补充</label>
@@ -111,9 +109,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/easyform.js') }}"></script>
-<script src="{{ $routes['resource'] }}/js/module.seting.js') }}"></script>
-<script src="{{ $routes['resource'] }}/js/md5-min.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/easyform.js"></script>
+<script src="{{ $routes['resource'] }}/js/module.seting.js"></script>
+<script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
 <script type="text/javascript">
 $(document).ready(function ()
 {

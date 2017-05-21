@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="post_content">
-                { !!$content!! }
+                {!!$content!!}
             </div>
             <div class="del_pro">
                 <span id="collect{{$id}}" rel="{{ count($collection) }}">

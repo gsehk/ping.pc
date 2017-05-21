@@ -921,7 +921,7 @@ if (typeof(easy_load_options) == "undefined")
                     "min-width": "120px"
                 });
 
-                tip.append("<div class=\"easytip-arrow\"></div>");
+                /*tip.append("<div class=\"easytip-arrow\"></div>");
                 var arrow = $("#" + this.id + " .easytip-arrow");
                 arrow.css({
                     "padding": "0",
@@ -930,7 +930,7 @@ if (typeof(easy_load_options) == "undefined")
                     "height": "0",
                     "position": "absolute",
                     "border": "10px solid"
-                });
+                });*/
 
                 if (this.options.hover_show == "true")
                 {

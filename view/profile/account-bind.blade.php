@@ -1,5 +1,5 @@
-@extends('layouts.default')
-
+@extends('pcview::layouts.default')
+@section('bgcolor')style="background-color:#fff"@endsection
 @section('content')
 <div class="bas_cont">
     <div class="bas_left">

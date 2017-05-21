@@ -105,7 +105,7 @@ news.loadMore = function()
       
     } else {
       news.setting.canload = false;
-      $('.loading').html('没有了~');
+      $('.loading').html('暂无相关内容');
     }
   });
 };
@@ -147,7 +147,7 @@ var recommend = {
                   $('.loading').remove();
               } else {
                 recommend.opt.canload = false;
-                $('.loading').html('暂时没有更多可显示的内容哟~');
+                $('.loading').html('暂无相关内容');
               }
           }
         });
@@ -248,15 +248,18 @@ var author_hot = function () {
     });
 };
 
-$('.subject-submit').on('click', function(){
+// $('.subject-submit').on('click', function(){
+  var release = function(){
   var $this = $(this);
-  var subject  = $('#subject-title'),
+  var subject  = $('#subject-abstract'),
+      title     = $('#subject-title'),
       task_id     = $('#task_id'),
       abstract = $('#subject-abstract'),
       froms    = $('#subject-from'),
       cate    = $('#subject-cate'),
       url      = $this.data('url');
       var args  = {
+        'title':title.val(),
         'subject' : subject.val(),
         'task_id'    : task_id.val(),
         'cate_id'    : cate.data('value') || 0,
@@ -273,7 +276,8 @@ $('.subject-submit').on('click', function(){
           alert(data.message);
         };
     }, 'json');
-});
+};
+// });
 
 /**
  * 赞核心Js
@@ -314,7 +318,7 @@ var digg = {
               var num = $digg.attr('rel');
               num++;
               $digg.attr('rel', num);
-              $('#digg'+news_id).html('<a href="javascript:;" onclick="digg.delDigg('+news_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>'+num+'</font>人喜欢</a>');
+              $('#digg'+news_id).html('<a href="javascript:;" onclick="digg.delDigg('+news_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font>人喜欢</a>');
           }else{
               alert(res.message);
           }

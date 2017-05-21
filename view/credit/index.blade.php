@@ -10,12 +10,18 @@
             <span>{{$score or ''}}</span>
             <span class="int_this">当前积分</span>
         </div>
-        <div class="int_sign"><img src="{{ $routes['resource'] }}/images/jifen_03.png" class="sign_img" />每日签到</div>
+        @if(empty($ischeck))
+            <div class="int_sign"  onclick="checkin();" id="checkin"><img src="{{ $routes['resource'] }}/images/jifen_03.png" class="sign_img"/>每日签到</div>
+        @else 
+            <div class="int_sign"><img src="{{ $routes['resource'] }}/images/jifen_03.png" class="sign_img"/>已签到</div>
+        @endif
+
+        
     </div>
     <div class="int_cont">
         <ul class="list_ul int_rule">
-            <li class="int_li"><a href="{{ routes('pc:credit',['type'=>1]) }}" class="fs-16 @if($type == 1) a_border @endif">积分记录</a></li>
-            <li class="int_li2"><a href="{{ reouts('pc:credit',['type'=>2]) }}" class="fs-16 @if($type == 2) a_border @endif">积分规则</a></li>
+            <li class="int_li"><a href="{{ route('pc:credit',['type'=>1]) }}" class="fs-16 @if($type == 1) a_border @endif">积分记录</a></li>
+            <li class="int_li2"><a href="{{ route('pc:credit',['type'=>2]) }}" class="fs-16 @if($type == 2) a_border @endif">积分规则</a></li>
         </ul>
         @if($type == 1)
         <table class="score-table">
@@ -55,8 +61,28 @@
                 @endforeach
             </tbody>
         </table>
-       
         @endif
     </div>
+    {!!$page or '' !!}
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+var checkin = function(){
+  if( MID == 0 ){
+    return;
+  }
+  console.log(111);
+  var totalnum = {{$checkin['total_num'] or 0}} + 1;
+  $.get('/home/checkin' , {} , function (res){
+    if ( res ){
+      var totalnum = res.data.score;
+      $('#checkin').html('已签到');
+      $('.totalnum').text(totalnum);
+      $('#checkin').addClass('dy_qiandao_sign');
+    }
+  });
+};
+</script>
 @endsection

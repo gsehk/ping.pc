@@ -74,8 +74,7 @@
 
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/module.profile.js') }}"></script>
-<script src="{{ $routes['resource'] }}/layer/layer.js') }}"></script>
+<script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
 <script type="text/javascript">
 var checkin = function(){
   if( MID == 0 ){

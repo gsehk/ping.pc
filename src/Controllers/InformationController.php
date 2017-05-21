@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Zhiyi\Plus\Models\StorageTask;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCate;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsDigg;
@@ -20,7 +21,19 @@ class InformationController extends BaseController
     {
         $datas['cid'] = $request->input('cid') ?: 1;
         /*  幻灯片  */
-        $datas['silid'] = $this->getRecommendList();
+        $datas['silid'] = NewsRecommend::with('cover')->get();
+
+        $datas['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
+            ->where(function($query){
+                if ($this->mergeData) {
+                    $query->where('user_id', $this->mergeData['TS']['id']);
+                }
+            })->orderBy('created_at', 'desc')->first();
+        $datas['checkin'] = CheckInfo::where(function($query){
+            if ($this->mergeData) {
+                $query->where('user_id', $this->mergeData['TS']['id']);
+            }
+            })->first();
 
         /* 推荐文章第一条 */
         $datas['recommend'] = News::where('is_recommend', 1)
@@ -95,13 +108,6 @@ class InformationController extends BaseController
         News::where('id', $news_id)->increment('hits');
 
         return view('pcview::information.read', $data, $this->mergeData);
-    }
-
-    public function getRecommendList(int $cate_id = 0)
-    {
-        $data = NewsRecommend::where('cate_id', $cate_id)->with('cover')->get()->toArray();
-
-        return $data;
     }
 
     public function release()
@@ -213,12 +219,12 @@ class InformationController extends BaseController
     public function doSavePost(Request $request)
     {
         $type = $request->type; // 1 待审核 2 草稿
-        if (!$request->cate_id) {
+        /*if (!$request->cate_id) {
             return response()->json([
                 'status' => false,
                 'message' => '请选择文章分类',
             ])->setStatusCode(201);
-        }
+        }*/
 
         if (!$request->task_id) {
             return response()->json([
@@ -242,7 +248,8 @@ class InformationController extends BaseController
         }
 
         $news = new News();
-        $news->title = $request->subject;
+        $news->title = $request->title;
+        $news->subject = $request->subject;
         $news->author = $this->mergeData['TS']['id'] ?? 0;
         $news->content = $request->content;
         $news->storage = $storage_id ?: '';
@@ -250,10 +257,10 @@ class InformationController extends BaseController
         $news->audit_status = $type; 
         $news->save();
 
-        $news_link = new NewsCateLink();
+        /*$news_link = new NewsCateLink();
         $news_link->news_id = $news->id;
         $news_link->cate_id = $request->cate_id;
-        $news_link->save();
+        $news_link->save();*/
 
         return response()->json(static::createJsonData([
             'status'  => true,

@@ -18,7 +18,7 @@ weibo.init = function(option)
     this.setting.cid = option.cid || 0;             //  微博分类ID
     this.setting.canload = option.canload || true;        // 是否能加载
     this.setting.page = option.page || 1;        // 页码
-    this.setting.loading = option.loading;        //加载图位置
+    this.setting.loading = option.loading || '.dy_cen';        //加载图位置
     if (option.cid) {
         switch(parseInt(option.cid))
         {
@@ -108,14 +108,18 @@ weibo.loadMore = function()
               var html = res.data.html;
               if (weibo.setting.loadcount == 1) {
                   $(weibo.setting.container).html(html);
-              } else {
-                  $(weibo.setting.loading).after(loadHtml);
-                  // $(weibo.setting.container).append(html);
                   $('.loading').remove();
+              } else {
+                  $(weibo.settingng.container).append(html);
               }
             } else {
               weibo.setting.canload = false;
-              $('.loading').html('暂时没有更多可显示的内容哟~');
+              if (weibo.setting.loadcount == 1) {
+                no_data(weibo.setting.container, 1, ' 暂无相关内容');
+                $('.loading').html('');
+              }else{
+                $('.loading').html('暂无相关内容');
+              }
             }
         }
     });
@@ -253,7 +257,7 @@ var comment = {
                 });
             } else {
               comment.canload = false;
-              $('.loading').html('暂时没有更多可显示的内容哟~');
+              $('.loading').html('暂无相关内容');
             }
         }
       });

@@ -102,9 +102,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/birthday.js')  }}"></script>
-<script src="{{ $routes['resource'] }}/js/module.seting.js')  }}"></script>
-<script src="{{ $routes['resource'] }}/js/md5-min.js')  }}"></script>
+<script src="{{ $routes['resource'] }}/js/birthday.js"></script>
+<script src="{{ $routes['resource'] }}/js/module.seting.js"></script>
+<script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
 <script> 
 var username = "{{$data['name'] }}";
 var arrSelect = ["{{$data['province'] }}", "{{$data['city'] }}", "{{$data['area'] }}"];

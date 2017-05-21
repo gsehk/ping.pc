@@ -15,5 +15,10 @@ class CreditRecord extends Model
 
         return $this->hasOne(CreditSetting::class, 'id', 'cid');
     }
+
+    public function scopeByUserId(Builder $query, int $userId): Builder
+    {
+        return $query->where('user_id', $userId);
+    }
 }
 

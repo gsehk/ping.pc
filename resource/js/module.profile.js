@@ -19,6 +19,7 @@ weibo.init = function(option)
     this.setting.user_id = option.user_id || 0;             //  用户user_id
     this.setting.type = option.type || 'all';             //  微博分类
     this.setting.canload = option.canload || true;        // 是否能加载
+    this.setting.loading = option.loading || '.dy_cen';        //加载图位置
     this.setting.page = option.page || 1;        // 页码
     if (option.type) {
         switch(option.type)
@@ -40,7 +41,8 @@ weibo.init = function(option)
     weibo.bindScroll();
 
     if($(weibo.setting.container).length > 0 && this.setting.canload){
-        $(weibo.setting.container).append(loadHtml);
+        $(weibo.setting.loading).after(loadHtml);
+        // $(weibo.setting.container).append(loadHtml);
         weibo.loadMore();
     }
 };
@@ -59,7 +61,8 @@ weibo.bindScroll = function()
           var bodyHeight = $(document.body).height();
           if(bodyTop + $(window).height() >= bodyHeight - 250) {
               if($(weibo.setting.container).length > 0) {
-                  $(weibo.setting.container).append(loadHtml);
+                $(weibo.setting.loading).after(loadHtml);
+                  // $(weibo.setting.container).append(loadHtml);
                   weibo.loadMore();
               }
         }
@@ -108,13 +111,18 @@ weibo.loadMore = function()
               var html = res.data.html;
               if (weibo.setting.loadcount == 1) {
                   $(weibo.setting.container).html(html);
+                  $('.loading').remove();
               } else {
                   $(weibo.setting.container).append(html);
-                  $('.loading').remove();
               }
             } else {
               weibo.setting.canload = false;
-              $('.loading').html('暂时没有更多可显示的内容哟~');
+              if (weibo.setting.loadcount == 1) {
+                no_data(weibo.setting.container, 1, ' 暂无相关内容');
+                $('.loading').html('');
+              }else{
+                $('.loading').html('暂无相关内容');
+              }
             }
         }
     });
@@ -139,6 +147,7 @@ news.init = function(option)
     this.setting.user_id = option.user_id || 0;             //  用户user_id
     this.setting.type = option.type || 0;             //  文章分类
     this.setting.canload = option.canload || true;        // 是否能加载
+    this.setting.loading = option.loading || '.dy_cen';        //加载图位置
     this.setting.page = option.page || 1;        // 页码
     
     if (option.type == 'feed' || option.type == 'news') {
@@ -149,7 +158,8 @@ news.init = function(option)
     news.bindScroll();
 
     if($(news.setting.container).length > 0 && this.setting.canload){
-        $(news.setting.container).append(loadHtml);
+        $(news.setting.loading).after(loadHtml);
+        // $(news.setting.container).append(loadHtml);
         news.loadMore();
     }
 };
@@ -168,7 +178,8 @@ news.bindScroll = function()
           var bodyHeight = $(document.body).height();
           if(bodyTop + $(window).height() >= bodyHeight - 250) {
               if($(news.setting.container).length > 0) {
-                  $(news.setting.container).append(loadHtml);
+                  $(news.setting.loading).after(loadHtml);
+                  // $(news.setting.container).append(loadHtml);
                   news.loadMore();
               }
         }
@@ -217,13 +228,18 @@ news.loadMore = function()
               var html = res.data.html;
               if (news.setting.loadcount == 1) {
                   $(news.setting.container).html(html);
+                  $('.loading').remove();
               } else {
                   $(news.setting.container).append(html);
-                  $('.loading').remove();
               }
             } else {
               news.setting.canload = false;
-              $('.loading').html('暂时没有更多可显示的内容哟~');
+              if (news.setting.loadcount == 1) {
+                no_data(news.setting.container, 1, ' 暂无相关内容');
+                $('.loading').html('');
+              }else{
+                $('.loading').html('暂无相关内容');
+              }
             }
         }
     });
@@ -491,8 +507,8 @@ var comment = {
     // 详情发表评论
   addNewComment:function(afterComment,obj) {
     var to_uid = $(obj).attr('to_uid') || 0;
-    var feedid = $(obj).attr('row_id') || 0;
-    var _textarea = $('#editor_box'+feedid).find('textarea');
+    var news_id = $(obj).attr('row_id') || 0;
+    var _textarea = $('#editor_box'+news_id).find('textarea');
     
     if(_textarea.size() == 0) {
       _textarea = $(obj).parent().find('input:eq(0)');
@@ -514,7 +530,7 @@ var comment = {
       return false; //不要重复评论
     }
 
-    var url = request_url.feed_comment.replace('{feed_id}', feedid);
+    var url = request_url.comment_news.replace('{news_id}', news_id);
 
     obj.innerHTML = '回复中..';
     
@@ -530,7 +546,7 @@ var comment = {
                 obj.innerHTML = '回复';
               }
               var html = '<p><span>'+NAME+'：</span>'+content+'</p>';
-              var commentBox = $('.comment_box'+feedid);
+              var commentBox = $('.comment_box'+news_id);
               if("undefined" != typeof(commentBox)){
                 commentBox.prepend(html);
                 _textarea.value = '';

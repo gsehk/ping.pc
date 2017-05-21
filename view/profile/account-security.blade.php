@@ -1,5 +1,5 @@
-@extends('layouts.default')
-
+@extends('pcview::layouts.default')
+@section('bgcolor')style="background-color:#fff"@endsection
 @section('content')
 
 <div class="success_div"></div>
@@ -31,19 +31,19 @@
         <form id="resetpwd_form">
             <div class="f_tel bas_div">
                 <label style=" margin-left: 15px;"><span class="cer_x">*</span>原密码</label>
-                <span class="f_span"><input name="password" type="password" id="password" placeholder="输入原密码"></span>
+                <span class="f_span"><input name="password" type="password" id="password" placeholder="输入原密码" data-easytip="class:easy-red;"></span>
             </div>
             <div class="f_tel bas_div" style="margin-left: -10px;">
                 <label><span class="cer_x">*</span>设置新密码</label>
                 <span class="f_span">
-                    <input name="new_password" type="password" id="new_password" data-easyform="length:6 16;" data-message="密码必须为6—16位" data-easytip="class:easy-blue;">
+                    <input name="new_password" type="password" id="new_password" data-easyform="length:6 16;" data-message="密码必须为6—16位" data-easytip="class:easy-red;">
                 </span>
             </div>
 
             <div class="f_tel bas_div" style="margin-left: -10px;">
                 <label><span class="cer_x">*</span>确认新密码</label>
                 <span class="f_span">
-                    <input name="new_password1" type="password" data-easyform="length:6 16;equal:#new_password;" data-message="两次密码输入要一致" data-easytip="class:easy-blue;">
+                    <input name="new_password1" type="password" data-easyform="length:6 16;equal:#new_password;" data-message="两次密码输入要一致" data-easytip="class:easy-red;">
                 </span>
             </div>
             <input type="hidden" value="{{ csrf_token()  }}" name="_token" id="token" />
@@ -56,7 +56,7 @@
 
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/easyform.js"></script>
-<script src="{{ $routes['resource'] }}js/module.seting.js"></script>
+<script src="{{ $routes['resource'] }}/js/module.seting.js"></script>
 <script type="text/javascript">
 $(document).ready(function ()
 {

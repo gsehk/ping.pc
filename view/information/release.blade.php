@@ -7,12 +7,12 @@
             <form id="release_form">
             <div class="con_title">
                 <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
-                <input type="text" id="subject-title" name="title" placeholder="请在此输入20字以内的标题" />
+                <input type="text" id="subject-title" name="title" placeholder="请在此输入20字以内的标题" data-easyform="length:6 20;" data-message="长度不合法" data-easytip="class:easy-red;"/>
             </div>
             <div class="con_title p_30">
-                <input type="text" id="subject-abstract" name="abstract" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字" />
+                <input type="text" id="subject-abstract" name="abstract" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字" data-easyform="length:6 60;" data-message="长度不合法" data-easytip="class:easy-red;"/>
             </div>
-            <div class="con_title">
+            <!-- <div class="con_title">
                 @if($cate)
                 <select class="select" name="cate_id" id="subject-cate">
                     <option value="0">请选择</option>
@@ -21,14 +21,15 @@
                     @endforeach
                 </select>
                 @endif
-            </div>
+            </div> -->
             <div class="con_place">
                 @component('pcview::editor')
+                    @slot('url') {{ $routes['resource'] }} @endslot
                     @slot('height') 530px @endslot
                 @endcomponent
             </div>
             <div class="con_produce">
-                <span class="con_bq">
+                <span class="con_bq" style="display: none">
                     <img src="{{ $routes['resource'] }}/images/pro.png" /><input placeholder="添加标签，多个标签用逗号分开" />
                 </span>
                 <span class="con_cover ai_face_box">
@@ -53,8 +54,8 @@
             </div>
             <div class="con_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
             <div class="con_btn">
-                <button type="button" class="subject-submit button con_a1" data-url="{{ route('pc:doSavePost',['type'=>2]) }}">存草稿</button>
-                <button type="button" class="subject-submit button con_a2" data-url="{{ route('pc:doSavePost',['type'=>1]) }}">投稿</button>
+                <button type="submit" class="subject-submit button con_a1" data-url="{{ route('pc:doSavePost',['type'=>2]) }}">存草稿</button>
+                <button type="submit" class="subject-submit button con_a2" data-url="{{ route('pc:doSavePost',['type'=>1]) }}">投稿</button>
             </div>
         </div>
         </form>
@@ -76,8 +77,24 @@
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/module.news.js"></script>
 <script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
+<script src="{{ $routes['resource'] }}/js/easyform.js"></script>
 <script type="text/javascript">
-$('select.select').select();
+// $('select.select').select();
+
+$(document).ready(function ()
+{
+    var v = $('#release_form').easyform();
+    // v.is_submit = false;
+    v.error = function (ef, i, r)
+    {
+        noticebox('用户名或密码错误', 0);
+    };
+    v.success = function (ef)
+    {
+        v.is_submit = false;
+        release();
+    };
+});
 
 $('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];

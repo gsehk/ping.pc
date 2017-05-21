@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{ $routes['resource'] }}/wangEditor/wangEditor.min.css">
+<link rel="stylesheet" type="text/css" href="{{ $url }}/wangEditor/wangEditor.min.css">
 <style type="text/css">
     #editor {
         width: 100%;
@@ -6,11 +6,12 @@
     }
 </style>
 <div id="editor"><p>请输入内容...</p></div>
-<script src="{{ $routes['resource'] }}/wangEditor/wangEditor.min.js"></script>
+<script src="{{ $url }}/wangEditor/wangEditor.min.js"></script>
 <script type="text/javascript">
     $(function () {
         var editor = new wangEditor('editor');
         // editor.config.hideLinkImg = true;
+        editor.config.menuFixed = false;
         editor.config.uploadImgUrl = '/';
         editor.config.menus = [
             // 'source',

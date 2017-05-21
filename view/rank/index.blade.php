@@ -102,7 +102,7 @@
                 <li>
                     <div class="fans_span1"><span>{{$pv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="{{ $routes['resource'] }}/images/cicle.png')" class="fans_img" />
+                        <img src="{{ $routes['resource'] }}/images/cicle.png" class="fans_img" />
                         {{$pv->user->name or ''}}
                     </div>
                     <div class="fans_span3">{{$pv->total}}</div>

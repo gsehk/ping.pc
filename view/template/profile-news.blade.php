@@ -16,7 +16,7 @@
         <span class="digg" id="collect{{$post['id']}}" rel="{{count($post['collection_count'])}}">
             <a href="javascript:;" onclick="collect.addCollect({{$post['id']}})"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$post['collection_count']}}</font></a>
         </span>
-        <span class="com J-comment-show" data-args="box=#warp_box{{$post['id']}}&row_id={{$post['id']}}&canload=0">
+        <span class="com J-comment-show" data-args="box=#warp_box{{$post['id']}}&row_id={{$post['id']}}&type=news&canload=0">
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>{{$post['comment_count']}}
         </span>
         <span class="vie">
@@ -46,9 +46,9 @@
             <img src="{{ $routes['resource'] }}/images/line.png">
         </div>
         <div class="dy_comit" id="comment_box{{$post['id']}}">
-            @if(!empty($post['comments']))    
-            <div class="comment_box{{$post['id']}}">
                 
+            <div class="comment_box{{$post['id']}}">
+            @if(!empty($post['comments']))
                 @foreach($post['comments'] as $cv)
                 <p>
                     <span>{{$cv['user']['name']}}：</span> {{$cv['comment_content']}}
@@ -57,7 +57,9 @@
                     @endif
                 </p>
                 @endforeach
+            @endif
             </div>
+            @if(count($post['comments']) == 3)
             <div class="comit_all fs-12"><a href="/information/read/{{$post['id']}}">查看全部评论</a></div>
             @endif
         </div>

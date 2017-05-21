@@ -363,7 +363,7 @@ class ProfileController extends BaseController
         $verif->idcard = $request->idcard;
         $verif->phone = $request->phone;
         $verif->info = $request->info ?: '';
-        $verif->storage = $storage_id ?: '';
+        $verif->storage = $storage_id ?? null;
         $verif->save();
 
         return response()->json([
@@ -500,7 +500,7 @@ class ProfileController extends BaseController
                 ->with('comments')
                 ->take($limit)
                 ->get();
-
+        // dump($datas->toArray());
         $newsList['data'] = $datas;
         $newsData['html'] = view('pcview::template.profile-news', $newsList, $this->mergeData)->render();
         $newsData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['id'] : 0;
