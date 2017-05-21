@@ -32,7 +32,7 @@
         @include('pcview::layouts.partials.authnav')
 
         <!-- noticebox -->
-        <div id="noticebox">
+        <div class="noticebox authnoticebox">
             <input type="hidden">
         </div>
 

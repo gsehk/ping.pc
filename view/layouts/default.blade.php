@@ -31,8 +31,7 @@
         @include('pcview::layouts.partials.nav')
 
         <!-- noticebox -->
-        <div id="noticebox">
-            <input type="hidden">
+        <div class="noticebox">
         </div>
 
         <!-- content -->

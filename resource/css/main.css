@@ -3193,16 +3193,20 @@ img {
     border-bottom: 1px solid #ededed;
 }
 
-#noticebox {
+.noticebox {
     display: none;
-    top:82px;
+    top:62px;
     position: fixed;
     width: 100%;
     text-align: center;
     z-index: 555;
 }
 
-#noticebox .notice {
+.authnoticebox{
+    top:82px;
+}
+
+.noticebox .notice {
     height: 50px;
     background: #fff;
     color: #666;
@@ -3214,7 +3218,7 @@ img {
     z-index:9999;
 }
 
-#noticebox .notice img {
+.noticebox .notice img {
     margin-right: 10px;
 }
 
