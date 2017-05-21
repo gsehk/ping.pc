@@ -4,13 +4,12 @@
 <div class="dy_bg">
     <div class="con_cont">
         <div class="con_left">
-            <form id="release_form">
             <div class="con_title">
                 <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
-                <input type="text" id="subject-title" name="title" placeholder="请在此输入20字以内的标题" data-easyform="length:6 20;" data-message="长度不合法" data-easytip="class:easy-red;"/>
+                <input type="text" id="subject-title" name="title" placeholder="请在此输入20字以内的标题"/>
             </div>
             <div class="con_title p_30">
-                <input type="text" id="subject-abstract" name="abstract" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字" data-easyform="length:6 60;" data-message="长度不合法" data-easytip="class:easy-red;"/>
+                <input type="text" id="subject-abstract" name="abstract" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字"/>
             </div>
             <!-- <div class="con_title">
                 @if($cate)
@@ -29,7 +28,7 @@
                 @endcomponent
             </div>
             <div class="con_produce">
-                <span class="con_bq" style="display: none">
+                <span class="con_bq" style="display: none;">
                     <img src="{{ $routes['resource'] }}/images/pro.png" /><input placeholder="添加标签，多个标签用逗号分开" />
                 </span>
                 <span class="con_cover ai_face_box">
@@ -58,7 +57,6 @@
                 <button type="submit" class="subject-submit button con_a2" data-url="{{ route('pc:doSavePost',['type'=>1]) }}">投稿</button>
             </div>
         </div>
-        </form>
         <div class="con_right">
             <div class="conR_title">投稿须知</div>
             <div class="conR_artic">
@@ -77,24 +75,8 @@
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/module.news.js"></script>
 <script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
-<script src="{{ $routes['resource'] }}/js/easyform.js"></script>
 <script type="text/javascript">
 // $('select.select').select();
-
-$(document).ready(function ()
-{
-    var v = $('#release_form').easyform();
-    // v.is_submit = false;
-    v.error = function (ef, i, r)
-    {
-        noticebox('用户名或密码错误', 0);
-    };
-    v.success = function (ef)
-    {
-        v.is_submit = false;
-        release();
-    };
-});
 
 $('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];
@@ -102,7 +84,7 @@ $('#J-file-upload').on('change', function(e){
 });
 var updateImg = function(image, f, task_id){
     $('#task_id').val(task_id);
-    $('#J-image-preview').attr('src', image.src);
+    $('#J-show-tips').text(f.name);
 }
 </script>
 @endsection

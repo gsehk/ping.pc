@@ -14,6 +14,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCateLink;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsComment;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
 
 class InformationController extends BaseController
 {
@@ -249,7 +250,7 @@ class InformationController extends BaseController
 
         $news = new News();
         $news->title = $request->title;
-        $news->subject = $request->subject;
+        $news->subject = $request->subject ?: getShort($request->content, 60);
         $news->author = $this->mergeData['TS']['id'] ?? 0;
         $news->content = $request->content;
         $news->storage = $storage_id ?: '';

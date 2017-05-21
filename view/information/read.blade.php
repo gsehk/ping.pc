@@ -12,6 +12,11 @@
                     <span class="del_time">{{ $created_at }}</span>
                 </div>
             </div>
+            <div class="zx_top">
+                <img src="{{ $routes['resource'] }}/images/zixun-left.png" class="zx_l"/>
+                <div class="zx_word">{{ $subject or '...'}}</div>
+                <img src="{{ $routes['resource'] }}/images/zixun-right.png" class="zx_r"/>
+            </div>
             <div class="post_content">
                 {!!$content!!}
             </div>

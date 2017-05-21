@@ -5,7 +5,7 @@
         height: {{$height}};
     }
 </style>
-<div id="editor"><p>请输入内容...</p></div>
+<div id="editor"></div>
 <script src="{{ $url }}/wangEditor/wangEditor.min.js"></script>
 <script type="text/javascript">
     $(function () {

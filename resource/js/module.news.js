@@ -248,8 +248,7 @@ var author_hot = function () {
     });
 };
 
-// $('.subject-submit').on('click', function(){
-  var release = function(){
+$('.subject-submit').on('click', function(){
   var $this = $(this);
   var subject  = $('#subject-abstract'),
       title     = $('#subject-title'),
@@ -268,16 +267,22 @@ var author_hot = function () {
         'source'  : froms.val(),
         '_token'  : $('#token').val()
       };
-
+      if (!args.title || getLength(args.title) > 20) {
+          noticebox('文章标题不合法', 0);
+          return false;
+      }
+      if (!$(editor).text() || getLength($(editor).text()) > 5000) {
+          noticebox('文章内容不合法', 0);
+          return false;
+      }
       $.post(url, args, function(data) {
         if (data.status == true) {
-          window.location.href = data.data.url;
-        } else {  
-          alert(data.message);
+          noticebox('发布成功', 0, data.data.url); 
+        } else { 
+          noticebox(data.message, 0); 
         };
-    }, 'json');
-};
-// });
+      }, 'json');
+});
 
 /**
  * 赞核心Js
@@ -589,7 +594,7 @@ var comment = {
               }
               var html = '<div class="delComment_list">'+
                 '<div class="comment_left">'+
-                '<img src="'+API+'/storages/'+AVATAR+'" class="c_leftImg" />'+
+                '<img src="'+AVATAR+'" class="c_leftImg" />'+
                 '</div>'+
                 '<div class="comment_right">'+
                 '<span class="del_ellen">'+NAME+'</span>'+
@@ -605,6 +610,7 @@ var comment = {
                 }else{
                   commentBox.prepend(html);
                 }
+                _textarea.value = '';
                 /*绑定回复操作*/
                 $('.J-reply-comment').on('click', function(){
                     comment.initReply();
