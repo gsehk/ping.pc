@@ -113,11 +113,12 @@ $('#J-submit').on('click', function(e){
         data: args,
         dataType: 'json',
         error:function(xml){
-          $('.success_div').html('<div class="set_success s_bg"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>资料修改失败</div>').fadeIn();
+            noticebox('资料修改失败', 0);
         },
-        success:function(res){$('.success_div').html('<div class="set_success s_bg"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>资料修改成功</div>').fadeIn();}
+        success:function(res){
+            noticebox('资料修改成功', 1);
+        }
     });
-    setTimeout("$('.success_div').fadeOut(1000)", 3000);
 });
 
 var resetPwd = function () {
@@ -134,11 +135,12 @@ var resetPwd = function () {
     　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){
-          $('.success_div').html('<div class="set_success s_bg"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>修改失败</div>').fadeIn();
+            noticebox('密码修改失败', 0);
         },
-        success:function(res){$('.success_div').html('<div class="set_success s_bg"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>修改成功</div>').fadeIn();}
+        success:function(res){
+            noticebox('密码修改成功', 1, 'refresh');
+        }
     });
-    setTimeout("$('.success_div').fadeOut(1000)", 3000);
 };
 
 /*  提交用户认证信息*/
@@ -162,10 +164,11 @@ var userVerif = function () {
     　　　xhr.setRequestHeader('Authorization', TOKEN);
     　　},
         error:function(xml){
-          // if (xml.responseJSON.code == 1004) {}
-          $('.success_div').html('<div class="set_success s_bg"><img src="" />认证失败</div>').fadeIn();
+            noticebox('认证失败', 0);
         },
-        success:function(res){$('.success_div').html('<div class="set_success s_bg"><img src="" />认证成功</div>').fadeIn();}
+        success:function(res){
+            noticebox('认证成功', 1, 'refresh');
+        }
     });
     setTimeout("$('.success_div').fadeOut(1000)", 3000);
 };

@@ -202,7 +202,7 @@ var noticebox = function(msg, status, tourl = '') {
 }
 
 var noticebox_cb = function(tourl) {
-    window.location.href = tourl;
+    window.location.href = tourl == 'refresh' ? window.location.href : tourl;
 }
 
 var no_data = function(selector, type, txt) {
