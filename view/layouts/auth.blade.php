@@ -33,7 +33,6 @@
 
         <!-- noticebox -->
         <div class="noticebox authnoticebox">
-            <input type="hidden">
         </div>
 
         <!-- content -->
