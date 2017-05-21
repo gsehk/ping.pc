@@ -14,7 +14,8 @@ $(function(){
                 url: url,
                 success : function(res) {
                     if (res.status) {
-                        noticebox('登录成功，跳转中...', 1, '/passport/index');
+                        var jump = res.data == '' ? '/passport/index' : res.data;
+                        noticebox('登录成功，跳转中...', 1, jump);
                     }
                     passlod = false;
                 },

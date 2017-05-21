@@ -65,7 +65,7 @@
             @endif
         </span>
         @endif
-        <a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
+        @if(!empty($TS) && $TS['id'] == $user['id'])<a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>@endif
     </div>
     <div class="dy_cont">
         <!--left-->
@@ -79,7 +79,7 @@
                             <a href="javascript:;" data-type="all" class="fs-16 @if($type == 'all') dy_cen_333 @endif">全部动态</a>
                             <a href="javascript:;" data-type="img" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
                         </div>
-                        <a href="{{Route('pc:article')}}" class="artic_artic fs-16"><div>文章</div></a>
+                        <a href="{{ route('pc:article', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16"><div>文章</div></a>
                     </div>
                     <div id="feeds-list"></div>
                 </div>
@@ -89,9 +89,9 @@
         <div class="dy_right" style="margin-left:27px">
             <div class="dyrBottom">
                 <ul class="infR_time">
-                    <li type="followeds"><a class="hover" href="{{ route('pc:users', ['type'=>1]) }}">粉丝</a></li>
-                    <li type="followings"><a href="{{ route('pc:users', ['type'=>2]) }}">关注</a></li>
-                    <li type="visitors"><a href="{{ route('pc:users', ['type'=>3]) }}">访客</a></li>
+                    <li type="followeds"><a class="hover" href="javascript:void(0);">粉丝</a></li>
+                    <li type="followings"><a href="javascript:void(0);">关注</a></li>
+                    <li type="visitors"><a href="javascript:void(0);">访客</a></li>
                 </ul>
 
                 <div id="followeds" class="userdiv" style="display:block">
@@ -110,9 +110,9 @@
                     </li>
                     @endforeach
                 </ul>
-                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多</a>
+                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>1, 'user_id'=>$followed['id']]) }}">更多</a>
                 @else
-                <span class="nodata">暂无内容</span>
+                <p class="nodata">暂无内容</p>
                 @endif
                 </div>
 
@@ -132,9 +132,9 @@
                     </li>
                     @endforeach
                 </ul>
-                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多</a>
+                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>2, 'user_id'=>$following['id']]) }}">更多</a>
                 @else
-                <span class="nodata">暂无内容</span>
+                <p class="nodata">暂无内容</p>
                 @endif  
                 </div>
 
@@ -155,9 +155,9 @@
                     </li>
                     @endforeach
                 </ul>
-                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多</a>
+                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4, 'user_id'=>$following['id']]) }}">更多</a>
                 @else
-                <span class="nodata">暂无内容</span>
+                <p class="nodata">暂无内容</p>
                 @endif  
                 </div>
             </div>

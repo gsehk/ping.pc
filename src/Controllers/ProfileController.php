@@ -182,11 +182,7 @@ class ProfileController extends BaseController
     {
         $data = [];
         $data['type'] = $type = $request->input('type') ?: 1;
-
-        if (!$this->mergeData['TS']) {
-            return redirect(route('pc:index'));
-        }
-        $user_id = $this->mergeData['TS']['id'];
+        $data['user_id'] = $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
 
         // 我的粉丝
         if ($type == 1) {
@@ -250,7 +246,7 @@ class ProfileController extends BaseController
             $data['datas'] = [];
             foreach ($recusers as $recuser) {
                 $_data['user'] = $this->formatUserDatas($recuser->user);
-                if ($this->mergeData['TS']) {
+                if (!$this->mergeData['TS']) {
                     $_data['my_follow_status'] = 0;
                 } else {
                     $_data['my_follow_status'] = Following::where('following_user_id', $recuser->user->id)

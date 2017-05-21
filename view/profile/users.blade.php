@@ -13,8 +13,8 @@
     </ul>
     @else
     <ul class="fan_ul">
-        <li><a href="{{ route('pc:users', ['type'=>1]) }}" @if($type == 1) class="a_border" @endif>粉丝</a></li>
-        <li><a href="{{ route('pc:users', ['type'=>2]) }}" @if($type == 2) class="a_border" @endif>关注</a></li>
+        <li><a href="{{ route('pc:users', ['type'=>1, 'user_id'=>$user_id]) }}" @if($type == 1) class="a_border" @endif>@if($user_id != $TS['id'])TA的@endif粉丝</a></li>
+        <li><a href="{{ route('pc:users', ['type'=>2, 'user_id'=>$user_id]) }}" @if($type == 2) class="a_border" @endif>@if($user_id != $TS['id'])TA的@endif关注</a></li>
     </ul>
     @endif
 
@@ -69,7 +69,9 @@
 
     @else
     <!-- 缺省图 -->
-
+    <div class="no_data_div">
+        <div class="no_data"><img src="{{ $routes['resource']}}/images/pic_default_people.png"/><p>暂无相关内容</p></div>
+    </div>
     @endif
 
 </div>

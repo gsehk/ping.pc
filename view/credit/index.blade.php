@@ -7,7 +7,7 @@
     <div class="int_top">
         <span class="intTop_left"></span>
         <div class="intTop_num">
-            <span>{{$score or ''}}</span>
+            <span class="totalnum">{{$score or 0}}</span>
             <span class="int_this">当前积分</span>
         </div>
         @if(empty($ischeck))
@@ -70,10 +70,6 @@
 @section('scripts')
 <script type="text/javascript">
 var checkin = function(){
-  if( MID == 0 ){
-    return;
-  }
-  console.log(111);
   var totalnum = {{$checkin['total_num'] or 0}} + 1;
   $.get('/home/checkin' , {} , function (res){
     if ( res ){

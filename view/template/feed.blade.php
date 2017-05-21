@@ -3,8 +3,8 @@
 @foreach($data as $key => $post)
 <div class="feed-item">
     <div class="dy_c">
-        <img src="@if (!empty($post['user']['avatar'])) {{ $routes['storage']}}{{ $post['user']['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" />
-        <span class="dy_name fs-14">{{$post['user']['name']}}</span>
+        <a href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}"><img src="@if (!empty($post['user']['avatar'])) {{ $routes['storage']}}{{ $post['user']['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" /></a>
+        <span class="dy_name fs-14"><a href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}">{{$post['user']['name']}}</a></span>
         <span class="dy_time fs-12">{{$post['feed']['created_at']}}</span>
     </div>
     <div class="cen_img">
@@ -213,10 +213,10 @@
                 <ul>
                     <li><a href="#"><i class="icon iconfont icon-shoucang-copy"></i>收藏</a></li>
                     <li><a href="#"><i class="icon iconfont icon-jubao-copy1"></i>举报</a></li>
-                    @if($post['user_id'] == $TS['id'])
+                    @if(!empty($TS['id']) && $post['user_id'] == $TS['id'])
                     <li><a href="#"><i class="icon iconfont icon-shanchu-copy1"></i>删除</a></li>
                     @endif
-                    @if($TS['role']->role_id == 1)
+                    @if(!empty($TS['role']) && $TS['role']->role_id == 1)
                     <li><a href="#"><i class="icon iconfont icon-zhiding-copy-copy1"></i>置顶</a></li>
                     @endif
                 </ul>

@@ -11,6 +11,7 @@
 </div>
 <div class="dy_cCont">
     <div class="dy_center">
+        @if(!empty($TS))
         <div class="dy_cTop">
             <textarea class="dy_ta" placeholder="说说新鲜事" id="feed_content" onPropertyChange="alert('test')"></textarea>
             <div class="dy_company">
@@ -25,9 +26,12 @@
                 <a href="javascript:;" class="dy_share" onclick="weibo.postFeed()">分享</a>
             </div>
         </div>
+        @endif
         <div class="dy_cen">
             <div class="show_tab">
+                @if (!empty($TS))
                 <a href="javascript:;" data-cid="1" class="fs-16 @if ($type == 1) dy_cen_333 @endif">关注的</a>
+                @endif
                 <a href="javascript:;" data-cid="2" class="fs-16 @if ($type == 2) dy_cen_333 @endif">热门</a>
                 <a href="javascript:;" data-cid="3" class="fs-16 @if ($type == 3) dy_cen_333 @endif">最新</a>
             </div>
@@ -118,7 +122,6 @@ $(function(){
     // 发布微博
     var loadgif = PUBLIC_URL + '/images/loading.png';
     var up = $('.dy_company').Huploadify({
-        fileTypeExts: '*.jpg,*.png',
         auto:true,
         multi:true,
         newUpload:true,

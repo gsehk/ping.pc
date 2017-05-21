@@ -106,8 +106,11 @@ class PassportController extends BaseController
             $user->loginRecords()->save($loginrecord);
         });
 
+        $history = Session::get('history') ?: '';
+
         return response()->json(static::createJsonData([
             'status'  => true,
+            'data' => $history
         ]));
     }
 

@@ -688,10 +688,12 @@ img {
     padding-left: 0;
 }
 
-.dyrBottom span.nodata{
+.dyrBottom p.nodata{
     width: 100%;
     height: 50px;
     line-height: 50px;
+    text-align: center;
+    margin: 0;
 }
 
     .dyrBottom ul {
@@ -703,7 +705,7 @@ img {
     .dyrBottom li {
         float: left;
         width: 50px;
-        text-align: center;
+        text-align: left;
         margin: 0 12px 0 15px;
     }
 
@@ -1519,14 +1521,13 @@ img {
 
 .dyrBottom .userdiv {
     margin: 0;
-    text-align: center;
     display: none;
 }
 
 .dyrBottom .userlist{
     padding-left: 0;
     margin: 0;
-    text-align: center;
+    text-align: left;
 }
 
 .infR_time {
@@ -3689,6 +3690,11 @@ img.load{margin-left:2px;height:16px;width:16px;-webkit-animation:icon-load 1.5s
 .unslider-nav ol>li{display: inline-block;float: none;width: 6px;height: 6px;margin: 0 4px;padding: 3px;border-radius: 5px;overflow: hidden;border: 3px solid #fff;cursor: pointer;}
 .unslider-nav .unslider-active{border:3px solid #f87e73;}
 .unslider-arrow{position:absolute;left:20px;z-index:2;cursor:pointer}.unslider-arrow.next{left:auto;right:20px;top: 50%;}.unslider-arrow.prev{left:auto;left:20px;top: 50%;} */
+.no_data_div {
+    display:table;
+    margin:0 auto;
+}
+
 .no_data {
     width:100%; 
     height:500px; 

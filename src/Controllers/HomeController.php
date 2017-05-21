@@ -21,12 +21,12 @@ class HomeController extends BaseController
 {
     public function index(Request $request)
     {
-    	$data['type'] = $request->input('type') ?: 1;
+    	$data['type'] = $request->input('type') ?: ($this->mergeData['TS'] ? 1 : 2);
 
         // 积分
         $data['credit'] = CreditSetting::where('name', 'check_in')->first();
 
-        // 前导
+        // 签到
         $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
                             ->where(function($query){
                                 if ($this->mergeData) {
@@ -375,10 +375,10 @@ class HomeController extends BaseController
                 $credit_user->score = $credit_user->score + $credit_ruls->score;
                 $credit_user->save();
             } else {
-                $creditUser = new CreditUser();
-                $creditUser->user_id = $user_id;
-                $creditUser->score = $credit_ruls->score;
-                $creditUser->save();
+                $credit_user = new CreditUser();
+                $credit_user->user_id = $user_id;
+                $credit_user->score = $credit_ruls->score;
+                $credit_user->save();
             }
             if ($credit_ruls->score > 0) {
                 $change = '<font color="lightskyblue">'.$credit_ruls->score.'</font>';

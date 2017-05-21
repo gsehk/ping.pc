@@ -1,8 +1,7 @@
 <?php
 
 use Zhiyi\Plus\Http\Middleware;
-
-// PC路由
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Middleware as PcMiddleware;
 
 Route::prefix('passport')->group(function () {
 
@@ -47,13 +46,13 @@ Route::prefix('passport')->group(function () {
 
     // perfect
     Route::get('perfect', 'PassportController@perfect')->name('pc:perfect');
-
-
 });
 
-// 个人中心菜单
 
-Route::prefix('profile')->group(function () {
+
+// UCenter
+
+Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
 
     // Route::get('all', 'ProfileController@feedAll')->name('pc:feedAll');
     Route::get('index', 'ProfileController@index')->name('pc:myFeed');
@@ -72,7 +71,6 @@ Route::prefix('profile')->group(function () {
 });
 
 
-//Route::middleware('auth:web')->group(function () {
 
 	// 动态
     Route::get('/home/index', 'HomeController@index')->name('pc:feed');
@@ -104,4 +102,3 @@ Route::prefix('profile')->group(function () {
     Route::get('/credit/index', 'CreditController@index')->name('pc:credit');
     // 排行榜
     Route::get('/rank/index', 'RankController@index')->name('pc:rank');
-//});

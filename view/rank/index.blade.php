@@ -7,7 +7,7 @@
   <div class="dy_cont list_bg">
     <ul class="list_ul">
       <li><a href="{{ route('pc:rank',['type'=>1]) }}" class="fs-16 @if($type == 1) a_border @endif">用户排行榜</a></li>
-      <li><a href="{{ route('pc:rank',['type'=>2]) }}" class="fs-16 @if($type == 2) a_border @endif">好友排行榜</a></li>
+      <!-- <li><a href="{{ route('pc:rank',['type'=>2]) }}" class="fs-16 @if($type == 2) a_border @endif">好友排行榜</a></li> -->
     </ul>
     <div class="fans_div">
       <div class="list_fans fans1">
@@ -32,7 +32,7 @@
                 <li>
                     <div class="fans_span1"><span>{{$fv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="{{ $routes['resource'] }}/images/cicle.png" class="fans_img" />
+                        <img src="@if(!empty($fv->avatar)) {{ $routes['storage'] }}{{ $fv->avatar }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$fv->name}}
                     </div>
                     <div class="fans_span3">{{$fv->value}}</div>
@@ -66,7 +66,7 @@
                 <li>
                     <div class="fans_span1"><span>{{$cv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="{{ $routes['resource'] }}/images/cicle.png" class="fans_img" />
+                        <img src="@if(!empty($fv->avatar)) {{ $routes['storage'] }}{{ $fv->avatar }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$cv->name}}
                     </div>
                     <div class="fans_span3">{{$cv->value}}</div>
@@ -102,7 +102,7 @@
                 <li>
                     <div class="fans_span1"><span>{{$pv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="{{ $routes['resource'] }}/images/cicle.png" class="fans_img" />
+                        <img src="@if(!empty($fv->avatar)) {{ $routes['storage'] }}{{ $fv->avatar }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$pv->user->name or ''}}
                     </div>
                     <div class="fans_span3">{{$pv->total}}</div>
@@ -136,7 +136,7 @@
                 <li>
                     <div class="fans_span1"><span>{{$tv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="{{ $routes['resource'] }}/images/cicle.png" class="fans_img" />
+                        <img src="@if(!empty($fv->avatar)) {{ $routes['storage'] }}{{ $fv->avatar }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$tv->user->name or ''}}
                     </div>
                     <div class="fans_span3">{{$tv->total}}</div>
