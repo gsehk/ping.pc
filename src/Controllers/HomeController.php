@@ -431,4 +431,23 @@ class HomeController extends BaseController
         ]))->setStatusCode(200);
     }
 
+    public function getFeedInfo(Request $request, int $feed_id) 
+    {
+        $user_id = $this->mergeData['TS']['id'];
+
+        $feed = Feed::orderBy('id', 'DESC')
+            ->whereIn('user_id', array_merge([$user_id], $request->user()->follows->pluck('following_user_id')->toArray()))
+            ->where('id', $feed_id)
+            ->withCount(['diggs' => function ($query) use ($user_id) {
+                if ($user_id) {
+                    $query->where('user_id', $user_id);
+                }
+            }])
+            ->byAudit()
+            ->with('storages')
+            ->get();
+
+        return $this->formatFeedList($feed, $user_id);
+    }
+
 }

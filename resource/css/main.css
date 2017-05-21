@@ -895,9 +895,10 @@ img {
 
 
 .dy_picture {
-    margin-top: 40px;f
+    margin-top: 20px;
     height: 60px;
     display: none;
+    overflow: hidden;
 }
 
 .dy_picture_span {

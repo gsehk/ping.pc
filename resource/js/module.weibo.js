@@ -163,15 +163,29 @@ weibo.postFeed = function() {
         type: 'post',
         data: data,
         dataType: 'json',
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', TOKEN);
-    　　},
         success: function(res) {
-            console.log(res);
+            noticebox('发布成功', 1);
+            $('.dy_picture').html('').hide();
+            $('#feed_content').val('');
+
+            weibo.afterPostFeed(res.data);
         }
 
     })
 };
+
+weibo.afterPostFeed = function(feed_id) {
+    var url = '/home/' + feed_id + '/feedinfo';
+    $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        success: function(res) {
+            $(res.data.html).hide().prependTo('#feeds-list').fadeIn('slow');
+        }
+
+    })
+}
 
 
 /**
