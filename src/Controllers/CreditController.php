@@ -24,7 +24,7 @@ class CreditController extends BaseController
                 $data['page'] = $setting->appends(['type'=>$type])->links('pcview::template.page');
                 break;
             default:
-                $credit = CreditUser::where('user_id', $user_id)->first();
+                $data = CreditUser::where('user_id', $user_id)->first();
                 $record = CreditRecord::byUserId($user_id)->orderBy('rid', 'DESC')->paginate(10);
                 $data['record'] = $record;
                 $data['page'] = $record->appends(['type'=>$type])->links('pcview::template.page');
