@@ -16,7 +16,7 @@
                         <a href="javascript:;" data-type="feed" class="fs-16 dy_cen_333">动态</a>
                         <a href="javascript:;" data-type="news" class="fs-16">文章</a>
                     </div>
-                    <div id="content-list" style="margin-top: 30px;">
+                    <div id="content-list">
                     </div>
                 </div>
             </div>

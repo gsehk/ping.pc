@@ -87,7 +87,7 @@
                         <a href="javascript:;" data-state="3" class="fs-14">被驳回</a>
                         <a href="javascript:;" data-state="2" class="fs-14">草稿</a>
                     </div>
-                    <div id="article-list" style="margin-top: 20px;">
+                    <div id="article-list">
                     </div>
                 </div>
             </div>

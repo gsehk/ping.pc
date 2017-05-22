@@ -21,6 +21,7 @@ news.init = function(option)
   news.bindScroll();
 
   if($(news.setting.container).length > 0 && this.setting.canload){
+    $('.loading').remove();
     $(news.setting.container).append(loadHtml);
     news.loadMore();
   }

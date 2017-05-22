@@ -39,6 +39,7 @@ weibo.init = function(option)
     weibo.bindScroll();
 
     if($(weibo.setting.container).length > 0 && this.setting.canload){
+        $('.loading').remove();
         $(weibo.setting.loading).after(loadHtml);
         // $(weibo.setting.container).append(loadHtml);
         weibo.loadMore();
