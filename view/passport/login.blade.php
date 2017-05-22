@@ -53,4 +53,13 @@
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/jquery.form.js"></script>
 <script src="{{ $routes['resource'] }}/js/module.passport.js"></script>
+<script type="text/javascript">
+$(function(){ 
+    $(document).keydown(function(event){ 
+        if(event.keyCode==13){ 
+            $("#login_btn").click(); 
+        }
+    });
+}); 
+</script>
 @endsection

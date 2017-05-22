@@ -275,5 +275,9 @@ $(function(){
   $('#menu_toggle').click(function(){
     $('.p_cont').toggle();
   })
+
+  $('#gotop').click(function(){
+    $(window).scrollTop(0);
+  })
 })
 

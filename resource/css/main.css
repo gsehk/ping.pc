@@ -163,11 +163,11 @@ img {
         cursor: pointer;
     }
 
-    .nav_right a, a:visited, .nav_right a:hover{
+    /*.nav_right a, a:visited, .nav_right a:hover{
         padding: 0px 10px;
         color: #59b6d7;
         font-size: 14px;
-    }
+    }*/
 
 .nav_name {
     color: #343434;
@@ -747,6 +747,10 @@ img {
     text-align: center;
     cursor: pointer;
 }
+    .dy_more:hover{
+        color: #999;
+    }
+
 
 .body_right {
     position: absolute;
@@ -2160,6 +2164,13 @@ img {
     padding-top: 280px;
     cursor: pointer;
 }
+    .dyn_title a {
+        color: #fff;
+    }
+
+        .dyn_title a:hover {
+            color: #fff;
+        }
 
 .dynTop_cont {
     color: #fff;
@@ -3165,6 +3176,8 @@ img {
 .bin_name {
     font-size: 16px;
     color: #666;
+    display: inline-block;
+    width: 75px;
 }
 
 .bin_line {

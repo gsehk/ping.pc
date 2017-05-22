@@ -645,6 +645,7 @@ var uploadPccover = function(image, f, task_id){
         data: {cover_storage_task_id: task_id},
         dataType: 'json',
         success: function(res) {
+            noticebox('更换背景图成功', 1);
             $('.dynTop_bg').attr('src', image.src);
         }
     });
