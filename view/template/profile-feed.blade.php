@@ -190,7 +190,7 @@
             </a>
             @else 
             <a href="javascript:;" onclick="digg.delDigg({{$post['feed']['feed_id']}})">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
             </a>
             @endif
         </span>

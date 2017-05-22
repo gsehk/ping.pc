@@ -511,7 +511,7 @@ var digg = {
               if (page == 'read') {
                 $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font>人喜欢</a>');
               }else{
-                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font></a>');
+                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>'+num+'</font></a>');
               }
               
           }else{
@@ -597,7 +597,7 @@ var collect = {
               var num = $collect.attr('rel');
               num++;
               $collect.attr('rel', num);
-              $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.delCollect('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">'+num+'</font>人收藏</a>');
+              $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.delCollect('+feed_id+');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">'+num+'</font>人收藏</a>');
           }else{
               alert(res.message);
           }

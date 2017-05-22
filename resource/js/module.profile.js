@@ -284,9 +284,9 @@ var digg = {
               num++;
               $digg.attr('rel', num);
               if (page == 'read') {
-                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font>人喜欢</a>');
+                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font>人喜欢</a>');
               }else{
-                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font></a>');
+                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>'+num+'</font></a>');
               }
 
           }else{
@@ -319,7 +319,7 @@ var digg = {
               if (page == 'read') {
                 $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font>人喜欢</a>');
               }else{
-                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font></a>');
+                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font></a>');
               }
 
           }else{

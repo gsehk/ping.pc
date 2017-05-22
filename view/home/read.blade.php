@@ -19,14 +19,14 @@
                     @if($tool['is_collection_feed'] <= 0)
                     <a href="javascript:;" onclick="collect.addCollect('{{ $feed['feed_id'] }}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect('{{ $feed['feed_id'] }}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect('{{ $feed['feed_id'] }}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{$tool['feed_collection_count']}}</font>人收藏</a>
                     @endif
                 </span>
                 <span id="digg{{ $feed['feed_id'] }}" rel="{{ $tool['feed_digg_count'] }}">
                     @if($tool['is_digg_feed'] <= 0)
                     <a href="javascript:;" onclick="digg.addDigg('{{ $feed['feed_id'] }}','read');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{ $feed['feed_id'] }}','read');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{ $feed['feed_id'] }}','read');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{$tool['feed_digg_count']}}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share">

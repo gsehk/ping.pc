@@ -1669,6 +1669,10 @@ img {
         border-radius: 3px;
         border: 1px solid #ededed;
     }
+    .del_pro a.act{
+        color: #59b6d7;
+        border: 1px solid #59b6d7;
+    }
 
         .del_pro span i {
             margin-right: 8px;
