@@ -260,7 +260,7 @@ var digg = {
   addDigg: function (feed_id) {
     // 未登录弹出弹出层
     if(MID == 0){
-          alert('小伙子你还没登录~~');
+      noticebox('请登录', 0, '/passport/index');
       return;
     }
     

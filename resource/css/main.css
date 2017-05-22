@@ -661,7 +661,7 @@ img {
 }
 
 .dy_qiandao {
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     height: 50px;
     background: #f87d72;
@@ -679,6 +679,11 @@ img {
         font-size: 12px;
         margin-left: 5px;
         display: inline-block;
+    }
+    .dy_qiandao>svg{
+        margin-right: 5px;
+        vertical-align: text-bottom;
+        font-size: 23px;
     }
 
 .dyrBottom {

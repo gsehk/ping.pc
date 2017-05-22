@@ -141,7 +141,7 @@ weibo.afterUpload = function(image, f, task_id) {
  */
 weibo.postFeed = function() {
     if (MID == 0) {
-        window.location.href = '/passport/index';
+        noticebox('请登录', 0, '/passport/index');
         return false;
     }
 
@@ -163,29 +163,15 @@ weibo.postFeed = function() {
         type: 'post',
         data: data,
         dataType: 'json',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', TOKEN);
+    　　},
         success: function(res) {
-            noticebox('发布成功', 1);
-            $('.dy_picture').html('').hide();
-            $('#feed_content').val('');
-
-            weibo.afterPostFeed(res.data);
+            console.log(res);
         }
 
     })
 };
-
-weibo.afterPostFeed = function(feed_id) {
-    var url = '/home/' + feed_id + '/feedinfo';
-    $.ajax({
-        url: url,
-        type: 'get',
-        dataType: 'json',
-        success: function(res) {
-            $(res.data.html).hide().prependTo('#feeds-list').fadeIn('slow');
-        }
-
-    })
-}
 
 
 /**
@@ -483,7 +469,7 @@ var digg = {
   addDigg: function (feed_id) {
     // 未登录弹出弹出层
     if(MID == 0){
-          alert('小伙子你还没登录~~');
+      noticebox('请登录', 0, '/passport/index');
       return;
     }
     
@@ -558,7 +544,7 @@ var collect = {
   addCollect: function (feed_id) {
     // 未登录弹出弹出层
     if(MID == 0){
-          alert('小伙子你还没登录~~');
+      noticebox('请登录', 0, '/passport/index');
       return;
     }
     

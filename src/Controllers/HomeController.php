@@ -327,7 +327,8 @@ class HomeController extends BaseController
                 if ($totalnum) {
                     $totalnum->value = $data['total_num'];
                     $totalnum->save();
-                } else {
+                } else { 
+                    // 第一次写入
                     $userData = new UserDatas();
                     $userData->user_id = $user_id;
                     $userData->key = 'check_totalnum';
