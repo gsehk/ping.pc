@@ -48,11 +48,13 @@
                 已获积分
                 <span class="totalnum">{{ $TS['credit'] or 0 }}</span>
             </span>
+            <a href="{{ route('pc:myFeed', ['user_id' => $TS['id']]) }}">
             @if (!empty($TS['avatar']))
             <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " class="dyrTop_img" alt="{{ $TS['name'] }}"/>
             @else
             <img src="{{ $routes['resource'] }}/images/avatar.png" class="dyrTop_img"/>
             @endif
+            </a>
         </div>
         @if(empty($ischeck))
             <div class="dy_qiandao" onclick="checkin();" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>每日签到<span>+5积分</span></div>

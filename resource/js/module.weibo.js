@@ -60,6 +60,7 @@ weibo.bindScroll = function()
           var bodyHeight = $(document.body).height();
           if(bodyTop + $(window).height() >= bodyHeight - 250) {
               if($(weibo.setting.container).length > 0) {
+                  $('.loading').remove();
                   $(weibo.setting.loading).after(loadHtml);
                   // $(weibo.setting.container).append(loadHtml);
                   weibo.loadMore();

@@ -65,7 +65,7 @@
             @endif
         </span>
         @endif
-        <a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
+        @if(!empty($TS) && $TS['id'] == $user['id'])<a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>@endif
     </div>
     <div class="dy_cont">
         <!--left-->
