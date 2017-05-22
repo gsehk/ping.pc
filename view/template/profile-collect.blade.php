@@ -22,7 +22,7 @@
         <span class="vie">
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>{{$post['hits']}}
         </span>
-        <span class="cen_right show_admin">
+        <!-- <span class="cen_right show_admin">
             <i class="icon iconfont icon-gengduo-copy"></i>
         </span>
         <div class="cen_more">
@@ -36,7 +36,7 @@
                 <li><a href="#"><i class="icon iconfont icon-zhiding-copy-copy1"></i>置顶</a></li>
                 @endif
             </ul>
-        </div>
+        </div> -->
         @elseif($post['audit_status'] == 2) 
             <a href="{{route('pc:newsrelease', ['id'=>$post['id']])}}" class="p_continue">继续编辑</a>
         @endif

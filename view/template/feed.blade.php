@@ -206,7 +206,7 @@
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
                 {{$post['tool']['feed_view_count']}}
             </span>
-            <span class="cen_right show_admin">
+            <!-- <span class="cen_right show_admin">
                 <i class="icon iconfont icon-gengduo-copy"></i>
             </span>
             <div class="cen_more">
@@ -221,7 +221,7 @@
                     @endif
                 </ul>
                 <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
-            </div>
+            </div> -->
         </div>
         <div class="comment_box" id="warp_box{{$post['feed']['feed_id']}}" style="display: none;">
             <div class="dy_line">

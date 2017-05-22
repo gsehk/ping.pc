@@ -201,7 +201,7 @@
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
             {{$post['tool']['feed_view_count']}}
         </span>
-        <span class="cen_right show_admin">
+        <!-- <span class="cen_right show_admin">
             <i class="icon iconfont icon-gengduo-copy"></i>
         </span>
         <div class="cen_more">
@@ -215,7 +215,7 @@
                 <li><a href="#"><i class="icon iconfont icon-zhiding-copy-copy1"></i>置顶</a></li>
                 @endif
             </ul>
-        </div>
+        </div> -->
     </div>
     <div class="comment_box" id="warp_box{{$post['feed']['feed_id']}}" style="display: none;">
         <div class="dy_line">
