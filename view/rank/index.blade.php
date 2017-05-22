@@ -29,10 +29,10 @@
             @foreach($follower['list'] as $followerk=>$followerv)
             <div rel="followerdiv" @if($followerk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($followerv as $fv)
-                <li>
+                <li> 
                     <div class="fans_span1"><span>{{$fv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="@if(!empty($fv->avatar)) {{ $routes['storage'] }}{{ $fv->avatar }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
+                        <img src="@if(!empty($fv->info['avatar'])) {{ $routes['storage'] }}{{ $fv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$fv->name}}
                     </div>
                     <div class="fans_span3">{{$fv->value}}</div>
@@ -66,7 +66,7 @@
                 <li>
                     <div class="fans_span1"><span>{{$cv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="@if(!empty($fv->avatar)) {{ $routes['storage'] }}{{ $fv->avatar }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
+                        <img src="@if(!empty($cv->info['avatar'])) {{ $routes['storage'] }}{{ $cv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$cv->name}}
                     </div>
                     <div class="fans_span3">{{$cv->value}}</div>
@@ -102,7 +102,7 @@
                 <li>
                     <div class="fans_span1"><span>{{$pv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="@if(!empty($fv->avatar)) {{ $routes['storage'] }}{{ $fv->avatar }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
+                        <img src="@if(!empty($pv->info['avatar'])) {{ $routes['storage'] }}{{ $pv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$pv->user->name or ''}}
                     </div>
                     <div class="fans_span3">{{$pv->total}}</div>
@@ -136,7 +136,7 @@
                 <li>
                     <div class="fans_span1"><span>{{$tv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="@if(!empty($fv->avatar)) {{ $routes['storage'] }}{{ $fv->avatar }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
+                        <img src="@if(!empty($tv->info['avatar'])) {{ $routes['storage'] }}{{ $tv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$tv->user->name or ''}}
                     </div>
                     <div class="fans_span3">{{$tv->total}}</div>

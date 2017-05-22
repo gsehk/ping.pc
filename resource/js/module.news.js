@@ -278,6 +278,10 @@ $('.subject-submit').on('click', function(){
           noticebox('文章内容不合法', 0);
           return false;
       }
+      if (!args.task_id) {
+          noticebox('请上传封面图片', 0);
+          return false;
+      }
       $.post(url, args, function(data) {
         if (data.status == true) {
           noticebox('发布成功', 0, data.data.url); 

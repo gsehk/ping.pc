@@ -15,10 +15,10 @@
         <div class="dy_cTop">
             <textarea class="dy_ta" placeholder="说说新鲜事" id="feed_content" onPropertyChange="alert('test')"></textarea>
             <div class="dy_company">
-                <span class="fs-14" id="feed_expression">
+                <!-- <span class="fs-14" id="feed_expression">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-biaoqing"></use></svg>
                     表情
-                </span>
+                </span> -->
                 <span class="fs-14" id="feed_pic">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
                     图片

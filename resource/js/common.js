@@ -61,6 +61,18 @@ var getLength = function(str, shortUrl) {
   }
 };
 
+var checkNums = function(obj, len, show){
+    var str = $(obj).val();
+    var _length = getLength(str);
+    var surplus = len - _length;
+    if(surplus < 0){
+        $('.'+show).text(surplus).css('color','red');
+        noticebox('字数不能大于'+len, 0);
+    }else{
+        $('.'+show).text(surplus);
+    }
+}
+
 // 文件上传
 var fileUpload = function(f, callback){
     var reader = new FileReader();

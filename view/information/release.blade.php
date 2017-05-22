@@ -5,12 +5,12 @@
     <div class="con_cont">
         <div class="con_left">
             <div class="con_title">
-                <input type="hidden" id="news_id" name="id" value="{{$info['id'] or 0}}" />
+                <input type="hidden" id="news_id" name="id" value="{{$id or 0}}" />
                 <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
-                <input type="text" id="subject-title" name="title" value="{{$info['title'] or ''}}" placeholder="请在此输入20字以内的标题"/>
+                <input type="text" id="subject-title" name="title" value="{{$title or ''}}" placeholder="请在此输入20字以内的标题"/>
             </div>
             <div class="con_title p_30">
-                <input type="text" id="subject-abstract" name="abstract" value="{{$info['subject'] or ''}}" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字"/>
+                <input type="text" id="subject-abstract" name="abstract" value="{{$subject or ''}}" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字"/>
             </div>
             <!-- <div class="con_title">
                 @if($cate)
@@ -27,7 +27,7 @@
                     [
                         'url'=>$routes['resource'],
                         'height'=>'530px', 
-                        'content'=>$info['content']
+                        'content'=>$content ?? ''
                     ])
                 @endcomponent
             </div>
@@ -48,12 +48,12 @@
                                data-tips="#J-show-tips"
                                data-token="{{ csrf_token() }}"
                         >
-                        <input name="task_id" id="task_id" type="hidden" value="{{$info['storage'] or 0}}" />
+                        <input name="task_id" id="task_id" type="hidden" value="{{$storage or 0}}" />
                     </div>
                 </span>
             </div>
             <div class="con_word">
-                <input type="text" id="subject-from" name="subject-from" value="{{$info['from'] or ''}}" placeholder="文章转载至何处（非转载可不填）" />
+                <input type="text" id="subject-from" name="subject-from" value="{{$from or ''}}" placeholder="文章转载至何处（非转载可不填）" />
             </div>
             <div class="con_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
             <div class="con_btn">

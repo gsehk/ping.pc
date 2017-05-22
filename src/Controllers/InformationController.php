@@ -59,20 +59,12 @@ class InformationController extends BaseController
                         ->groupBy('author')
                         ->select('author')
                         ->take(3)
-                        ->with('user')
+                        ->with('user.datas')
                         ->get();
-        foreach ($datas['author'] as $key => &$value) {
-            $value['user']['intro'] = '  暂无简介';
-            if ($value['user']['datas']) {
-                foreach ($value['user']['datas'] as $pk => $pv) {
-                    if ($pv['profile'] == 'intro') {
-                        $value['user'][$pv['profile']] = $pv['pivot']['user_profile_setting_data'];
-                    }
-                }
-            }
-            unset($value['user']['datas']);
+        foreach ($datas['author'] as $key => $value) {
+            $value['info'] = $this->formatUserDatas($value->user);
         }
-
+        
         return view('pcview::information.index', $datas, $this->mergeData);
     }
 
@@ -117,7 +109,9 @@ class InformationController extends BaseController
         
         $draft = News::where('audit_status', 2)->where('author', $user_id)->get();
         if ($request->id) {
-            $data['info'] = $draft->where('id', $request->id)->first();
+            $data = $draft->where('id', $request->id)->first();
+        }else{
+            $data = [];
         }
         $data['count'] = count($draft);
         $data['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get();

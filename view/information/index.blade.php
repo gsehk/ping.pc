@@ -123,14 +123,14 @@
             <div class="infR_top">
                 <div class="itop_autor">热门作者</div>
                 <div id="j-author-hot-wrapp">
-                @foreach ($author as $user)
+                @foreach ($author as $u)
                     <div class="R_list">
                         <div class="i_left">
-                            <img src="{{ $routes['resource'] }}/images/cicle.png" />
+                            <img src="@if(!empty($u->info['avatar'])) {{ $routes['storage'] }}{{ $u->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" />
                         </div>
                         <div class="i_right">
-                            <span>{{$user['user']['name']}}</span>
-                            <p>{{$user['user']['intro']}}</p>
+                            <span>{{$u->user['name']}}</span>
+                            <p>@if(!empty($u->info['intro'])) {{ $u->info['intro'] }} @else 暂无简介 @endif</p>
                         </div>
                     </div>
                 @endforeach

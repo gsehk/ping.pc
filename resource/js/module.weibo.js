@@ -291,10 +291,10 @@ var comment = {
       }
 
       var boxhtml = '<div class="dyBox_comment" id="editor_box'+feedid+'">'+
-                    '<textarea placeholder="" class="comment-editor"></textarea>'+
+                    '<textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, \'nums\');"></textarea>'+
                     '<div class="dy_company">'+
-                    '<span class="fs-14">'+
-                    '<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>表情</span>'+
+                    /*'<span class="fs-14">'+
+                    '<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>表情</span>'+*/
                     '<span class="dy_cs">可输入<span class="nums">255</span>字</span>'+
                     '<a href="javascript:;" class="dy_share a_link J-comment-feed'+feedid+'" to_uid="0" row_id='+feedid+'>评论</a>'+
                     '</div>'+

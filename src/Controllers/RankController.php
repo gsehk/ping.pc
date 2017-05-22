@@ -67,7 +67,7 @@ class RankController extends BaseController
                         })
                         ->select('user_id', DB::raw('count(*) as total'))
                         ->groupBy('user_id')
-                        ->with('user')
+                        ->with('user.datas')
                         ->orderBy('total', 'desc')
                         ->take(100)
                         ->get();
@@ -78,7 +78,7 @@ class RankController extends BaseController
                             return $query->whereIn('user_id', $fids);
                         })
                         ->select('user_id', DB::raw('count(*) as total'))
-                        ->with('user')
+                        ->with('user.datas')
                         ->groupBy('user_id')
                         ->orderBy('total', 'desc')
                         ->get();
@@ -162,6 +162,7 @@ class RankController extends BaseController
         $follower['userrank'] = $list['user_followed_rank'];
         $followerlist = [];
         foreach ($list['followedrank'] as $fk => $fv) {
+            $fv['info'] = $this->formatUserDatas($fv);
             $fv->rank = $fk+1;
             if ($fk < 10) {
                 $followerlist[1][] = $fv;
@@ -178,6 +179,7 @@ class RankController extends BaseController
         $credit['userrank'] = $list['user_score_rank'];
         $creditlist = [];
         foreach ($list['creditrank'] as $ck => $cv) {
+            $cv['info'] = $this->formatUserDatas($cv);
             $cv->rank = $ck+1;
             if ($ck < 10) {
                 $creditlist[1][] = $cv;
@@ -193,7 +195,8 @@ class RankController extends BaseController
         /*发布内容排行榜*/
         $post['userrank'] = $list['user_post_rank'];
         $postlist = [];
-        foreach ($list['postrank'] as $pk => $pv) {
+        foreach ($list['postrank'] as $pk => &$pv) {
+            $pv->info = $this->formatUserDatas($pv->user);
             $pv->rank = $pk+1;
             if ($pk < 10) {
                 $postlist[1][] = $pv;
@@ -201,6 +204,7 @@ class RankController extends BaseController
                 $fnum = floor($pk / 10);
                 $postlist[$fnum +1][] = $pv;
             }
+            
         }
         $post['ranknum'] = ceil(count($list['postrank']) / 10);
         $post['firstrank'] = $post['ranknum'] ? 1: 0;
@@ -211,6 +215,7 @@ class RankController extends BaseController
         $checktotallist = [];
         
         foreach ($list['checktotalrank'] as $ctk => $ctv) {
+            $ctv->info = $this->formatUserDatas($ctv->user);
             $ctv->rank = $ctk+1;
             if ($ctk < 10) {
                 $checktotallist[1][] = $ctv;
