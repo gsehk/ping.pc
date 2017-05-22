@@ -467,7 +467,7 @@ img {
 
     .dy_cen a {
         color: #999;
-        display: inline-block;
+        /* display: inline-block; */
     }
 
         .dy_cen a:hover {
@@ -1652,7 +1652,7 @@ img {
     margin-right: 5px;
     color: #999;
 }
-
+.post_content{margin: 20px 0;}
 .del_pro {
     border-bottom: 1px solid #ededed;
     padding-bottom: 40px;
@@ -2335,6 +2335,10 @@ img {
     left: -40px;
     text-indent: 20px;
     width: 332px;
+    padding: 0 20px;
+}
+.artic_left>a{
+    margin-right: 15px;
 }
 .dy_tab{
     position: relative;

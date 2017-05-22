@@ -5,7 +5,7 @@
         height: {{$height}};
     }
 </style>
-<div id="editor"></div>
+<div id="editor">{!!$content or ''!!}</div>
 <script src="{{ $url }}/wangEditor/wangEditor.min.js"></script>
 <script type="text/javascript">
     $(function () {

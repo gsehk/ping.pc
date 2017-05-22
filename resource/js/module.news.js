@@ -252,17 +252,19 @@ var author_hot = function () {
 $('.subject-submit').on('click', function(){
   var $this = $(this);
   var subject  = $('#subject-abstract'),
-      title     = $('#subject-title'),
-      task_id     = $('#task_id'),
+      title    = $('#subject-title'),
+      task_id  = $('#task_id'),
+      news_id  = $('#news_id'),
       abstract = $('#subject-abstract'),
       froms    = $('#subject-from'),
-      cate    = $('#subject-cate'),
+      cate     = $('#subject-cate'),
       url      = $this.data('url');
       var args  = {
         'title':title.val(),
         'subject' : subject.val(),
-        'task_id'    : task_id.val(),
-        'cate_id'    : cate.data('value') || 0,
+        'task_id' : task_id.val(),
+        'cate_id' : cate.data('value') || 0,
+        'news_id' : news_id.val() || 0,
         'abstract': abstract.val(),
         'content' : $(editor).html(),
         'source'  : froms.val(),

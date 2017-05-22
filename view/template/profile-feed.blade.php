@@ -190,7 +190,7 @@
             </a>
             @else 
             <a href="javascript:;" onclick="digg.delDigg({{$post['feed']['feed_id']}})">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
             </a>
             @endif
         </span>
@@ -226,16 +226,20 @@
             <div class="comment_box{{$post['feed']['feed_id']}}">
                 @if(!empty($post['comments']))
                 @foreach($post['comments'] as $cv)
+                @if($loop->index < 3)
                 <p>
                     <span>{{$cv['user']['name']}}：</span> {{$cv['comment_content']}}
                     @if($cv['user_id'] != $TS['id'])
                         <a class="fs-14 J-reply-comment" data-args="to_uname={{$cv['user']['name']}}&to_uid={{$cv['user_id']}}&row_id={{$post['feed']['feed_id']}}">回复</a>
                     @endif
                 </p>
+                @endif
                 @endforeach
                 @endif
             </div>
-            <div class="comit_all fs-12"><a href="#">查看全部评论</a></div>
+            @if(count($post['comments']) >= 3)
+            <div class="comit_all fs-12"><a href="/information/read/{{$post['feed']['feed_id']}}">查看全部评论</a></div>
+            @endif
         </div>
     </div>
     <div class="feed-line"></div>

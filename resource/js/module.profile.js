@@ -259,7 +259,7 @@ var digg = {
   init: function () {
     digg.digglock = 0;
   },
-  addDigg: function (feed_id) {
+  addDigg: function (feed_id, page) {
     // 未登录弹出弹出层
     if(MID == 0){
       noticebox('请登录', 0, '/passport/index');
@@ -283,7 +283,12 @@ var digg = {
               var num = $digg.attr('rel');
               num++;
               $digg.attr('rel', num);
-              $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font>人喜欢</a>');
+              if (page == 'read') {
+                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font>人喜欢</a>');
+              }else{
+                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>'+num+'</font></a>');
+              }
+
           }else{
               alert(res.message);
           }
@@ -293,7 +298,7 @@ var digg = {
     });
 
   },
-  delDigg: function (feed_id) {
+  delDigg: function (feed_id, page) {
     if (digg.digglock == 1) {
       return false;
     }
@@ -311,7 +316,12 @@ var digg = {
               var num = $digg.attr('rel');
               num--;
               $digg.attr('rel', num);
-              $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font>人喜欢</a>');
+              if (page == 'read') {
+                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font>人喜欢</a>');
+              }else{
+                $('#digg'+feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>'+num+'</font></a>');
+              }
+
           }else{
               alert(res.message);
           }
@@ -533,7 +543,7 @@ var comment = {
     }
 
     var url = request_url.comment_news.replace('{news_id}', news_id);
-
+    // console.log(url, content, to_uid);
     obj.innerHTML = '回复中..';
     
     $.ajax({

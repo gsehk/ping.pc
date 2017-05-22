@@ -111,10 +111,15 @@ class InformationController extends BaseController
         return view('pcview::information.read', $data, $this->mergeData);
     }
 
-    public function release()
+    public function release(Request $request)
     {
         $user_id = $this->mergeData['TS']['id'] ?? 0;
-        $data['count'] = News::where('audit_status', 2)->where('author', $user_id)->count();
+        
+        $draft = News::where('audit_status', 2)->where('author', $user_id)->get();
+        if ($request->id) {
+            $data['info'] = $draft->where('id', $request->id)->first();
+        }
+        $data['count'] = count($draft);
         $data['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get();
 
         return view('pcview::information.release', $data, $this->mergeData);
@@ -240,23 +245,40 @@ class InformationController extends BaseController
             ])->setStatusCode(201);
         }
 
-        $storage = StorageTask::where('id', $request->task_id)
+        if ($request->news_id) {
+            
+            $news = News::find($request->news_id);
+            if ($news) {
+                $news->title = $request->title;
+                $news->subject = $request->subject ?: getShort($request->content, 60);
+                $news->author = $this->mergeData['TS']['id'] ?? 0;
+                $news->content = $request->content;
+                $news->storage = $request->task_id;
+                $news->from = $request->source ?: '';
+                $news->audit_status = $type;
+                $news->save(); 
+            }
+
+        } else {
+            $storage = StorageTask::where('id', $request->task_id)
                     ->select('hash')
                     ->with('storage')
                     ->first();
-        if ($storage) {
-            $storage_id = $storage['storage']['id'];
-        }
+            if ($storage) {
+                $storage_id = $storage['storage']['id'];
+            }
 
-        $news = new News();
-        $news->title = $request->title;
-        $news->subject = $request->subject ?: getShort($request->content, 60);
-        $news->author = $this->mergeData['TS']['id'] ?? 0;
-        $news->content = $request->content;
-        $news->storage = $storage_id ?: '';
-        $news->from = $request->source ?: '';
-        $news->audit_status = $type; 
-        $news->save();
+            $news = new News();
+            $news->title = $request->title;
+            $news->subject = $request->subject ?: getShort($request->content, 60);
+            $news->author = $this->mergeData['TS']['id'] ?? 0;
+            $news->content = $request->content;
+            $news->storage = $storage_id ?: '';
+            $news->from = $request->source ?: '';
+            $news->audit_status = $type; 
+            $news->save();
+        }
+        
 
         /*$news_link = new NewsCateLink();
         $news_link->news_id = $news->id;

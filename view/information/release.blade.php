@@ -5,11 +5,12 @@
     <div class="con_cont">
         <div class="con_left">
             <div class="con_title">
+                <input type="hidden" id="news_id" name="id" value="{{$info['id'] or 0}}" />
                 <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
-                <input type="text" id="subject-title" name="title" placeholder="请在此输入20字以内的标题"/>
+                <input type="text" id="subject-title" name="title" value="{{$info['title'] or ''}}" placeholder="请在此输入20字以内的标题"/>
             </div>
             <div class="con_title p_30">
-                <input type="text" id="subject-abstract" name="abstract" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字"/>
+                <input type="text" id="subject-abstract" name="abstract" value="{{$info['subject'] or ''}}" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字"/>
             </div>
             <!-- <div class="con_title">
                 @if($cate)
@@ -22,9 +23,12 @@
                 @endif
             </div> -->
             <div class="con_place">
-                @component('pcview::editor')
-                    @slot('url') {{ $routes['resource'] }} @endslot
-                    @slot('height') 530px @endslot
+                @component('pcview::editor', 
+                    [
+                        'url'=>$routes['resource'],
+                        'height'=>'530px', 
+                        'content'=>$info['content']
+                    ])
                 @endcomponent
             </div>
             <div class="con_produce">
@@ -44,12 +48,12 @@
                                data-tips="#J-show-tips"
                                data-token="{{ csrf_token() }}"
                         >
-                        <input name="task_id" id="task_id" type="hidden" value="" />
+                        <input name="task_id" id="task_id" type="hidden" value="{{$info['storage'] or 0}}" />
                     </div>
                 </span>
             </div>
             <div class="con_word">
-                <input type="text" id="subject-from" name="subject-from" placeholder="文章转载至何处（非转载可不填）" />
+                <input type="text" id="subject-from" name="subject-from" value="{{$info['from'] or ''}}" placeholder="文章转载至何处（非转载可不填）" />
             </div>
             <div class="con_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
             <div class="con_btn">
@@ -60,13 +64,14 @@
         <div class="con_right">
             <div class="conR_title">投稿须知</div>
             <div class="conR_artic">
-                <p>  1、韩媒集体摆乌龙:美否认三美否认三艘航母下周云集东北亚韩媒集体摆母下周云集东北亚韩媒集体摆乌龙:美否认三艘航母下周云集东北亚</p>
-                <p>  2、韩媒集体摆乌龙:美否认三艘航母下周云集东北亚韩媒集体摆乌龙美否认三艘航母下周云集东北亚韩媒集体摆乌龙美否认三艘航母下周云集东北亚韩媒集体摆乌龙:美否认三艘航母下周云集东北亚</p>
-                <p>  3、韩媒集体摆乌龙:美否认三艘航母下周云集东北亚韩媒集体摆乌龙:美否认三艘航母下周云集东北亚</p>
+                <p>  1、绝不搞事情</p>
+                <p>  2、绝不搞事情</p>
+                <p>  3、绝不搞事情</p>
             </div>
+            <a href="{{route('pc:article',['type'=>2])}}">
             <div class="conR_bottom">
-                我的草稿<a href=""><span class="conR_num">{{ $count }}<i class="icon iconfont icon-icon07"></i></span></a>
-            </div>
+                我的草稿<span class="conR_num">{{ $count }}<i class="icon iconfont icon-icon07"></i></span>
+            </div></a>
         </div>
     </div>
 </div>

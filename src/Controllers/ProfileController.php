@@ -95,7 +95,7 @@ class ProfileController extends BaseController
      */
     public function article(Request $request)
     {
-        $type = $request->input('type') ?: 'relase';
+        $type = $request->input('type') ?: 0;
         $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
 
         if (!empty($this->mergeData['TS']) && $this->mergeData['TS']['id'] == $user_id) {
@@ -531,10 +531,10 @@ class ProfileController extends BaseController
             ->orderBy('id', 'desc')
             ->select('id','title','updated_at','storage','comment_count','hits','from','audit_status')
             ->withCount('collection')
-            ->with(['comments' => function($query){
+            /*->with(['comments' => function($query){
                     $query->take(3);
-            }])
-            ->with('storage')
+            }])*/
+            ->with(['storage', 'comments'])
             ->get();
 
             $newsList['data'] = $datas;

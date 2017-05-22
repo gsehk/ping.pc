@@ -39,8 +39,7 @@ class HomeController extends BaseController
                                 if ($this->mergeData) {
                                     $query->where('user_id', $this->mergeData['TS']['id']);
                                 }
-                            })
-                            ->first();
+                            })->orderBy('created_at', 'desc')->first();
 
         // 推荐用户
         $_rec_users = UserDatas::where('key', 'feeds_count')
@@ -325,7 +324,11 @@ class HomeController extends BaseController
                             ->where('key', 'check_totalnum')
                             ->first();
                 if ($totalnum) {
+                    // 更新总签到数
                     $totalnum->value = $data['total_num'];
+                    $totalnum->save();
+                    // 更新连续签到数
+                    $totalnum->where([['user_id', $user_id], ['key', 'check_connum']]);
                     $totalnum->save();
                 } else { 
                     // 第一次写入
@@ -333,6 +336,11 @@ class HomeController extends BaseController
                     $userData->user_id = $user_id;
                     $userData->key = 'check_totalnum';
                     $userData->value = $data['total_num'];
+                    $userData->save();
+
+                    $userData->user_id = $user_id;
+                    $userData->key = 'check_connum';
+                    $userData->value = $data['con_num'];
                     $userData->save();
                 }
             }

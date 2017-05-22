@@ -5,7 +5,7 @@
     <div class="dy_c">
         <a href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}"><img src="@if (!empty($post['user']['avatar'])) {{ $routes['storage']}}{{ $post['user']['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" /></a>
         <span class="dy_name fs-14"><a href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}">{{$post['user']['name']}}</a></span>
-        <span class="dy_time fs-12">{{$post['feed']['created_at']}}</span>
+        <a href="/home/{{$post['feed']['feed_id']}}/feed"><span class="dy_time fs-12">{{$post['feed']['created_at']}}</span></a>
     </div>
     <div class="cen_img">
         <p class="fs-14 cen_word">{{$post['feed']['feed_content']}}</p>
@@ -195,7 +195,7 @@
                 </a>
                 @else 
                 <a href="javascript:;" onclick="digg.delDigg({{$post['feed']['feed_id']}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
                 </a>
                 @endif
             </span>
@@ -241,7 +241,7 @@
             @endforeach
             @endif
             </div>
-            @if(count($post['comments']) == 3)
+            @if(count($post['comments']) >= 3)
             <div class="comit_all fs-12"><a href="/home/{{$post['feed']['feed_id']}}/feed">查看全部评论</a></div>
             @endif
             
