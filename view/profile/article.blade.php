@@ -119,7 +119,7 @@
                 </ul>
                 <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4, 'user_id'=>$user['id']]) }}">更多</a>
                 @else
-                <span class="nodata">暂无内容</span>
+                <p class="nodata">暂无内容</p>
                 @endif
                 </div>
 
@@ -141,7 +141,7 @@
                 </ul>
                 <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4, 'user_id'=>$user['id']]) }}">更多</a>
                 @else
-                <span class="nodata">暂无内容</span>
+                <p class="nodata">暂无内容</p>
                 @endif  
                 </div>
 
@@ -164,7 +164,7 @@
                 </ul>
                 <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4, 'user_id'=>$user['id']]) }}">更多</a>
                 @else
-                <span class="nodata">暂无内容</span>
+                <p class="nodata">暂无内容</p>
                 @endif  
                 </div>
             </div>

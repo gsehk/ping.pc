@@ -8,7 +8,7 @@
     @php $imgNum = count($post['feed']['storages']); @endphp
     <div style="position: relative; margin-bottom: 8px;">
     @if($imgNum == 1)
-        <img src="{{$routes['storage']}}{{$post['feed']['storages'][0]['storage_id']}}" class="img-responsive" style="margin: 0 auto;" />
+        <img src="{{$routes['storage']}}{{$post['feed']['storages'][0]['storage_id']}}" class="img-responsive"/>
     @elseif($imgNum == 2)
         <div style="width: 100%; display: flex;">
           <div style="width: 35vw;" class="showImgBox">
