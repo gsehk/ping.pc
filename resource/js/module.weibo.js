@@ -186,12 +186,55 @@ weibo.afterPostFeed = function(feed_id) {
         type: 'get',
         dataType: 'json',
         success: function(res) {
+          if ($('#feeds-list').find('.no_data_div').length > 0) {
+              $('#feeds-list').find('.no_data_div').remove();
+          }
             $(res.data.html).hide().prependTo('#feeds-list').fadeIn('slow');
         }
 
     })
 };
-
+weibo.delFeed = function(feed_id) {
+    layer.confirm(confirmTxt, {
+    }, function(){
+        var url = request_url.delete_feed.replace('{feed_id}', feed_id);
+        $.ajax({
+          url: url,
+          type: 'DELETE',
+          dataType: 'json',
+          error: function(){
+              layer.msg(' 删除失败请稍后再试', {icon: 0});
+          },
+          success: function(res) {
+            $('#feed'+feed_id).fadeOut(1000);
+             layer.closeAll();
+          }
+        });
+    });
+};
+weibo.denounce = function(obj) {
+    var feed_id = $(obj).attr('feed_id');
+    var to_uid = $(obj).attr('to_uid');
+    layer.prompt(function(val, index){
+        if (!val) {
+            layer.msg(' 请填写举报理由', {icon: 0});
+        }
+        var url = request_url.denounce_feed.replace('{feed_id}', feed_id);
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {aid:feed_id,to_uid:to_uid,reason:val,from:'weibo'},
+          dataType: 'json',
+          error: function(){
+              layer.msg(' 举报失败请稍后再试', {icon: 0});
+          },
+          success: function(res) {
+            layer.msg(' 举报成功', {icon: 1});
+          }
+        });
+      layer.close(index);
+    });
+};
 /**
  * 核心评论对象
  */
@@ -341,13 +384,8 @@ var comment = {
     var strlen = getLength(_textarea.value);
     var leftnums = initNums - strlen;
     if(leftnums < 0 || leftnums == initNums) {
-      alert('内容长度为1-255个字符');
+      noticebox('评论内容长度为1-'+initNums+'字', 0);
       return false;
-    }
-
-    var content = _textarea.value;  
-    if(content == '') {
-      alert('内容不能为空');
     }
 
     if("undefined" != typeof(this.addComment) && (this.addComment == true)) {
@@ -393,14 +431,11 @@ var comment = {
 
     var leftnums = initNums - strlen;
     if(leftnums < 0 || leftnums == initNums) {
-      alert('内容不能大于255个字符');
+      noticebox('评论内容长度为1-'+initNums+'字', 0);
       return false;
     }
-
     var content = _textarea.value;  
-    if(content == '') {
-      alert('内容不能为空');
-    }
+
     if("undefined" != typeof(this.addReadComment) && (this.addReadComment == true)) {
       return false; //不要重复评论
     }
@@ -569,7 +604,7 @@ var collect = {
   init: function () {
     collect.collectlock = 0;
   },
-  addCollect: function (feed_id) {
+  addCollect: function (feed_id, page) {
     // 未登录弹出弹出层
     if(MID == 0){
       noticebox('请登录', 0, '/passport/index');
@@ -597,7 +632,11 @@ var collect = {
               var num = $collect.attr('rel');
               num++;
               $collect.attr('rel', num);
-              $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.delCollect('+feed_id+');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">'+num+'</font>人收藏</a>');
+              if (page == 'read') {
+                $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.delCollect('+feed_id+', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">'+num+'</font>人收藏</a>');
+              }else{
+                $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.delCollect('+feed_id+');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
+              }
           }else{
               alert(res.message);
           }
@@ -607,7 +646,7 @@ var collect = {
     });
 
   },
-  delCollect: function (feed_id) {
+  delCollect: function (feed_id, page) {
 
     if (collect.collectlock == 1) {
       return false;
@@ -628,7 +667,11 @@ var collect = {
               var num = $collect.attr('rel');
               num--;
               $collect.attr('rel', num);
-              $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.addCollect('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="collect_num">'+num+'</font>人收藏</a>');
+              if (page == 'read') {
+                $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.addCollect('+feed_id+', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="collect_num">'+num+'</font>人收藏</a>');
+              }else{
+                $('#collect'+feed_id).html('<a href="javascript:;" onclick="collect.addCollect('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
+              }
           }else{
               alert(res.message);
           }
@@ -638,6 +681,10 @@ var collect = {
     });
   }
 };
+
+
+
+
 
 // 图片删除时间绑定
 $(function(){
@@ -663,6 +710,7 @@ $(function(){
     // 微博操作菜单
     $('#feeds-list').on('click', '.show_admin', function(){
         if ($(this).next('.cen_more').css('display') == 'none') {
+            $('.cen_more').hide();
             $(this).next('.cen_more').show();
         } else {
             $(this).next('.cen_more').hide();

@@ -332,7 +332,6 @@ img {
 .cen_more {
     background: #fff;
     width: 125px;
-    height: 208px;
     position: absolute;
     top: 30px;
     right: -50px;
@@ -348,8 +347,8 @@ img {
         top: -14px;
     }
 
-    .cen_more ul {
-        padding-top: 20px;
+    .cen_more>ul {
+        padding: 20px 0;
     }
 
         .cen_more ul li {
@@ -370,9 +369,11 @@ img {
                     color: #59b6d7;
                 }
 
-                .cen_more ul li a i {
-                    margin-right: 22px;
-                    font-size: 14px;
+                .cen_more  .icon {
+                    margin-right: 12px;
+                }
+                .cen_more .act{
+                    color: #59b6d7;
                 }
 
 .dy_num {
@@ -427,10 +428,10 @@ img {
     margin-top: 20px;
 }
 
-    .dy_company span {
+    .dy_company>span {
         color: #666;
         display: inline-block;
-        margin-right: 20px;
+        line-height:37px;
     }
 
     .dy_company svg {
@@ -858,7 +859,7 @@ img {
 }
 
 .dy_cs {
-    margin-left: 290px;
+    margin-left: 390px;
     font-size: 12px;
     color: #b3b3b3;
 }

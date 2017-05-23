@@ -11,6 +11,7 @@ use Zhiyi\Plus\Models\Followed;
 use Zhiyi\Plus\Models\Following;
 use Zhiyi\Plus\Models\StorageTask;
 use Zhiyi\Plus\Models\Area;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVisitor;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
@@ -33,6 +34,7 @@ class ProfileController extends BaseController
      */
     public function index(Request $request)
     {
+
         $type = $request->input('type') ?: 'all';
         $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
 
@@ -43,6 +45,15 @@ class ProfileController extends BaseController
                         ->with('datas', 'counts')
                         ->first();
             $data['user'] = $this->formatUserDatas($user);
+            $visitor = UserVisitor::where([['user_id', $this->mergeData['TS']['id']], ['to_uid', $user_id]])->first();
+            if ($visitor) {
+                $visitor->save();
+            }else{
+                $visitor = new UserVisitor();
+                $visitor->user_id = $this->mergeData['TS']['id'];
+                $visitor->to_uid = $user_id;
+                $visitor->save();
+            }
         }
 
         // 地区
@@ -81,6 +92,13 @@ class ProfileController extends BaseController
             $data['followings'][] = $this->formatUserDatas($following->user);
         }
         // 访客
+        $visitors = UserVisitor::where('to_uid', $user_id)
+                ->with('user.datas')
+                ->take(9)
+                ->get();
+        foreach ($visitors as $visitor) {
+            $data['visitors'][] = $this->formatUserDatas($visitor->user);
+        }
 
         return view('pcview::profile.index', $data, $this->mergeData);
     }
@@ -235,6 +253,32 @@ class ProfileController extends BaseController
             }
             $data['page'] = $follows->appends(['type'=>$type])->links('pcview::template.page');
         } else if ($type == 3) { // 访客
+            $visitors = UserVisitor::where('to_uid', $this->mergeData['TS']['id'])
+                ->with('user.datas')
+                ->paginate(6);
+            $data['datas'] = [];
+            $data['count'] = UserVisitor::where('to_uid', $this->mergeData['TS']['id'])->count();
+            foreach ($visitors as $visitor) {
+                $_data['user'] = $this->formatUserDatas($visitor->user);
+                if (!$this->mergeData['TS']) {
+                    $_data['my_follow_status'] = 0;
+                } else {
+                    $_data['my_follow_status'] = Following::where('following_user_id', $visitor->user->id)
+                                                    ->where('user_id', $this->mergeData['TS']['id'])
+                                                    ->get()
+                                                    ->isEmpty() ? 0 : 1;
+                }
+                // 最新微博图片
+                $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
+                                        ->where('feeds.user_id', '=', $visitor->user->id)
+                                        ->orderBy('feed_storages.id', 'desc')
+                                        ->take(3)
+                                        ->pluck('feed_storages.feed_storage_id')
+                                        ->toArray();
+
+                $data['datas'][] = $_data;
+            }
+            $data['page'] = $visitors->appends(['type'=>$type])->links('pcview::template.page');
 
         } else { // 推荐用户 
             $recusers = UserDatas::where('key', 'feeds_count')

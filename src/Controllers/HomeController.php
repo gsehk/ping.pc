@@ -145,15 +145,9 @@ class HomeController extends BaseController
                 ->take($getCommendsNumber)
                 ->select(['id', 'user_id', 'created_at', 'comment_content', 'reply_to_user_id', 'comment_mark'])
                 ->with('user')
-                ->get()
-                ->toArray();
-            $data['user'] = $feed->user()
-                ->select('id', 'name')
-                ->with('datas')
-                ->first()->toArray();
-            foreach ($data['user']['datas'] as $k => $v) {
-                $data['user'][$v['profile']] = $v['pivot']['user_profile_setting_data'];
-            }
+                ->get();
+            $user = $feed->user()->select('id', 'name')->with('datas')->first();
+            $data['user'] = $this->formatUserDatas($user); 
             $datas[] = $data;
         }
         $feedList['data'] = $datas;

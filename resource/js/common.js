@@ -1,15 +1,17 @@
 
 var initNums = 255;
 var loadHtml = "<div class='loading'><img src='"+PUBLIC_URL +"/images/loading.png' class='load'>加载中</div>";
+var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>  确定删除這条信息？';
 var request_url = {
-    login:'passport/index',
-    /* 获取文章列表 */
-    get_news:'/information/getNewsList',
-    digg_news:'/api/v1/news/{news_id}/digg',
-    collect_news:'/api/v1/news/{news_id}/collection',
-    comment_news:'/api/v1/news/{news_id}/comment',
+    login:'passport/index', /* 登录 */
+    get_news:'/information/getNewsList', /* 获取文章列表 */
+    digg_news:'/api/v1/news/{news_id}/digg', /* 文章点赞 */
+    collect_news:'/api/v1/news/{news_id}/collection', /* 文章收藏  */
+    comment_news:'/api/v1/news/{news_id}/comment', /* 评论文章 */
     get_comment:'/information/{news_id}/comments',
     feed_comment:'/api/v1/feeds/{feed_id}/comment',
+    delete_feed:'/api/v1/feeds/{feed_id}',
+    denounce_feed:'/feed/{feed_id}/denounce',
     digg_feed:'/api/v1/feeds/{feed_id}/digg',
     get_feed_commnet:'/home/{feed_id}/comments',
     collect_feed:'/api/v1/feeds/{feed_id}/collection',
@@ -67,9 +69,9 @@ var checkNums = function(obj, len, show){
     var surplus = len - _length;
     if(surplus < 0){
         $('.'+show).text(surplus).css('color','red');
-        noticebox('字数不能大于'+len, 0);
+        // noticebox('字数不能大于'+len, 0);
     }else{
-        $('.'+show).text(surplus);
+        $('.'+show).text(surplus).css('color','#59b6d7');
     }
 }
 

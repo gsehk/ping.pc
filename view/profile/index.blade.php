@@ -112,7 +112,7 @@
                     </li>
                     @endforeach
                 </ul>
-                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>1, 'user_id'=>$followed['id']]) }}">更多</a>
+                if(count($followeds >= 6))<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>1, 'user_id'=>$followed['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif
@@ -134,7 +134,7 @@
                     </li>
                     @endforeach
                 </ul>
-                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>2, 'user_id'=>$following['id']]) }}">更多</a>
+                if(count($followings >= 6))<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>2, 'user_id'=>$following['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif  
@@ -157,7 +157,7 @@
                     </li>
                     @endforeach
                 </ul>
-                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4, 'user_id'=>$following['id']]) }}">更多</a>
+                if(count($visitors >= 6))<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>3, 'user_id'=>$visitor['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif  

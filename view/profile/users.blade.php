@@ -6,7 +6,7 @@
 
 <div class="fan_cont">
     @if($type == 3)
-        <div class="visitor_div">近期有<span>30</span>位Tser看过我</div>
+        <div class="visitor_div">近期有<span>{{$count}}</span>位Tser看过我</div>
     @elseif($type == 4)
     <ul class="fan_ul">
         <li><a href="{{ route('pc:users', ['type'=>4]) }}" class="a_border">推荐</a></li>
@@ -27,15 +27,17 @@
         <div class="fan_c">
             <div class="fanList_top">
                 <div class="fan_header">
+                    <a href="{{route('pc:myFeed',['user_id'=>$data['user']['id']])}}">
                     @if (!empty($data['user']['avatar']))
                     <img src="{{ $routes['storage'] }}{{ $data['user']['avatar']}} " class="head_img" alt="{{ $data['user']['name'] }}"/>
                     @else
                     <img src="{{ $routes['resource'] }}/images/avatar.png" class="head_img" />
                     @endif
+                    </a>
                 </div>
                 <div class="fan_word">
                     <div>
-                        <span class="fan_name">{{ $data['user']['name'] or $data['user']['phone'] }}</span>
+                        <a href="{{route('pc:myFeed',['user_id'=>$data['user']['id']])}}"><span class="fan_name">{{ $data['user']['name'] or $data['user']['phone'] }}</span></a>
                         @if ($data['my_follow_status'] == 1)
                         <span id="data" class="fan_care c_ccc" uid="{{ $data['user']['id'] }}" status="1">已关注</span>
                         @else

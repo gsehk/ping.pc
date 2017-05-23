@@ -2,7 +2,13 @@
 @if(isset($data))
 @foreach($data as $key => $post)
 <div class="cen_img cen_befor ">
-    <span class="cen_beforColor"><span class="beforColor_span">{{date('m', strtotime($post['feed']['created_at']))}}</span>{{date('d', strtotime($post['feed']['created_at']))}}</span>
+    <span class="cen_beforColor">
+    @if(date('Y-m-d') == date('Y-m-d', strtotime($post['feed']['created_at'])))
+        今<br>天
+    @else
+    <span class="beforColor_span">{{date('m', strtotime($post['feed']['created_at']))}}</span>{{date('d', strtotime($post['feed']['created_at']))}}
+    @endif
+    </span>
     <p class="fs-14 cen_word ">{{$post['feed']['feed_content']}}</p>
     @if($post['feed']['storages'])
     @php $imgNum = count($post['feed']['storages']); @endphp

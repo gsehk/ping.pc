@@ -53,8 +53,6 @@ Route::prefix('passport')->group(function () {
 // UCenter
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
-
-    // Route::get('all', 'ProfileController@feedAll')->name('pc:feedAll');
     Route::get('index', 'ProfileController@index')->name('pc:myFeed');
     Route::get('related', 'ProfileController@related')->name('pc:related');
     Route::get('users', 'ProfileController@users')->name('pc:users');
@@ -82,6 +80,8 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('/home/checkin', 'HomeController@checkin');
     Route::get('/home/{feed_id}/feedinfo', 'HomeController@getFeedInfo')->where(['feed_id' => '[0-9]+'])->name('pc:getfeed');
     // Route::post('/home/{feed_id}/comment', 'HomeController@addComment')->where(['feed_id' => '[0-9]+']);
+    // 举报
+    Route::post('/feed/{feed_id}/denounce', 'FeedController@denounce')->where(['feed_id' => '[0-9]+']);
 
     // 资讯
     Route::get('/information/index', 'InformationController@index')->name('pc:news');

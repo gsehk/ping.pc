@@ -569,14 +569,11 @@ var comment = {
 
     var leftnums = initNums - strlen;
     if(leftnums < 0 || leftnums == initNums) {
-      alert('内容不能大于255个字符');
+      noticebox('评论内容长度为1-'+initNums+'字', 0);
       return false;
     }
-
     var content = _textarea.value;  
-    if(content == '') {
-      alert('内容不能为空');
-    }
+
     if("undefined" != typeof(this.addComment) && (this.addComment == true)) {
       return false; //不要重复评论
     }
