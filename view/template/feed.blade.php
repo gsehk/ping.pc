@@ -243,10 +243,13 @@
             <div class="comment_box{{$post['feed']['feed_id']}}">
             @if(count($post['comments']))
             @foreach($post['comments'] as $cv)
-            <p>
+            <p class="comment{{$cv['id']}}">
                 <span>{{$cv['user']['name']}}：</span> {{$cv['comment_content']}}
                 @if($cv['user_id'] != $TS['id'])
                     <a class="fs-14 J-reply-comment" data-args="to_uname={{$cv['user']['name']}}&to_uid={{$cv['user_id']}}&row_id={{$post['feed']['feed_id']}}">回复</a>
+                @endif
+                @if($cv['user_id'] == $TS['id'])
+                    <a class="fs-14 del_comment" onclick="comment.delComment({{$cv['id']}}, {{$cv['feed_id']}});">删除</a>
                 @endif
             </p>
             @endforeach

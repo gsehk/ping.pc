@@ -38,9 +38,9 @@
                     @endif
                 </div>
                 @if(empty($ischeck))
-                    <div class="dy_qiandao" onclick="checkin();" id="checkin">每日签到<span>+5积分</span></div>
+                    <div class="dy_qiandao" onclick="checkin();" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>每日签到<span>+5积分</span></div>
                 @else 
-                    <div class="dy_qiandao dy_qiandao_sign" id="checkin">已签到</div>
+                    <div class="dy_qiandao" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>已签到<span>连续签到<font class="colnum">{{$checkin['con_num']}}</font>天</span></div>
                 @endif
             </div>
             @endif
@@ -81,15 +81,16 @@ var checkin = function(){
     return;
   }
   var totalnum = {{$checkin['total_num'] or 0}} + 1;
+  var connum = {{$checkin['con_num'] or 0}} + 1;
   $.get('/home/checkin' , {} , function (res){
     if ( res ){
-      var totalnum = res.score;
-      $('#checkin').html('已data签到');
+      var totalnum = res.data.score;
+      $('#checkin').html('<svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>已签到<span>连续签到<font class="colnum">'+connum+'</font>天</span>');
       $('.totalnum').text(totalnum);
-      $('#checkin').addClass('dy_qiandao_sign');
     }
   });
 };
+
 setTimeout(function() {
     news.init({
         container: '#content-list',

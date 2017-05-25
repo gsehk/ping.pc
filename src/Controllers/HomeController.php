@@ -28,18 +28,18 @@ class HomeController extends BaseController
 
         // 签到
         $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
-                            ->where(function($query){
-                                if ($this->mergeData) {
-                                    $query->where('user_id', $this->mergeData['TS']['id']);
-                                }
-                            })
-                            ->orderBy('created_at', 'desc')
-                            ->first();
+            ->where(function($query){
+                if ($this->mergeData) {
+                    $query->where('user_id', $this->mergeData['TS']['id']);
+                }
+            })
+            ->orderBy('created_at', 'desc')
+            ->first();
         $data['checkin'] = CheckInfo::where(function($query){
-                                if ($this->mergeData) {
-                                    $query->where('user_id', $this->mergeData['TS']['id']);
-                                }
-                            })->orderBy('created_at', 'desc')->first();
+                if ($this->mergeData) {
+                    $query->where('user_id', $this->mergeData['TS']['id']);
+                }
+            })->orderBy('created_at', 'desc')->first();
 
         // 推荐用户
         $_rec_users = UserDatas::where('key', 'feeds_count')
@@ -143,7 +143,7 @@ class HomeController extends BaseController
             $data['comments'] = $feed->comments()
                 ->orderBy('id', 'desc')
                 ->take($getCommendsNumber)
-                ->select(['id', 'user_id', 'created_at', 'comment_content', 'reply_to_user_id', 'comment_mark'])
+                ->select(['id', 'user_id', 'created_at', 'comment_content', 'feed_id', 'reply_to_user_id', 'comment_mark'])
                 ->with('user')
                 ->get();
             $user = $feed->user()->select('id', 'name')->with('datas')->first();
@@ -422,9 +422,9 @@ class HomeController extends BaseController
             if ($max_id > 0) {
                 $query->where('id', '<', $max_id);
             }
-        })->with('user.datas')->select(['id', 'created_at', 'comment_content', 'user_id', 'to_user_id', 'reply_to_user_id', 'comment_mark'])->orderBy('id', 'desc')->get();
+        })->with('user.datas')->select(['id', 'created_at', 'comment_content', 'user_id', 'feed_id', 'to_user_id', 'reply_to_user_id', 'comment_mark'])->orderBy('id', 'desc')->get();
         foreach ($comments as $key => $value) {
-            $value['uinfo'] = $this->formatUserDatas($value['user']);
+            $value['info'] = $this->formatUserDatas($value['user']);
             unset($value['user']);
         }
 

@@ -50,13 +50,13 @@
             </div>
             <div class="del_comment"><span>{{ $comment_count }}</span>人评论</div>
             <div class="comment-box">
-                <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧"></textarea>
+                <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                 <div class="dy_company" style="margin: 0;">
                     <!-- <span class="fs-14">
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>
                         表情
                     </span> -->
-                    <span class="dy_cs" style="margin-left:420px;">可输入<span>255</span>字</span>
+                    <span class="dy_cs" style="margin-left: 500px;">可输入<span class="nums">255</span>字</span>
                     <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{$id}}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
                 </div>
             </div>

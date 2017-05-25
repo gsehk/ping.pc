@@ -207,7 +207,7 @@ var recent_hot = function(type) {
                 for (var i in data) {
                     html += '<li>' +
                         '<span>' + f + '</span>' +
-                        '<a href="javascript:;">' + data[i].title + type + '</a>' +
+                        '<a href="javascript:;">' + data[i].title + '</a>' +
                         '</li>';
                     f++;
                 }
@@ -502,22 +502,26 @@ var comment = {
                     var data = res.data,
                         html = '';
                     for (var i in data) {
-                        var avatar = data[i].user.avatar ? API + '/storages/' + data[i].user.avatar : AVATAR;
-                        html += '<div class="delComment_list">';
+                        var avatar = data[i].info.avatar ? API + '/storages/' + data[i].info.avatar : AVATAR;
+                        html += '<div class="delComment_list comment'+data[i].id+'">';
                         html += '<div class="comment_left">';
                         html += '<img src="' + avatar + '" class="c_leftImg" />';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<span class="del_ellen">' + data[i].user.name + '</span>';
+                        html += '<span class="del_ellen">' + data[i].info.name + '</span>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
-                        html += '<i class="icon iconfont icon-gengduo-copy"></i>';
+                        /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
                         html += '<p>' + data[i].comment_content + '';
+                        html += '<span class="del_huifu">';
                         if (data[i].user_id != MID) {
-                            html += '<span class="del_huifu">';
-                            html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].user.name + '&canload=0&to_uid=' + data[i].user_id + '"';
-                            html += 'class="J-reply-comment">回复';
-                            html += '</a></span>';
+                            html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].info.name + '&canload=0&to_uid=' + data[i].user_id + '"';
+                            html += 'class="J-reply-comment">回复</a>';
                         }
+                        if (data[i].user_id == MID) {
+                            html += '<a href="javascript:void(0)" onclick="comment.delComment('+data[i].id+', '+data[i].news_id+')"';
+                            html += 'class="del_comment">删除</a>';
+                        }
+                        html += '</span>';
                         html += '</p></div></div>';
                     }
                     $(comment.box).append(html);
@@ -574,24 +578,24 @@ var comment = {
             type: 'POST',
             data: { comment_content: content, reply_to_user_id: this.to_uid },
             dataType: 'json',
-            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
             error: function(xml) {},
             success: function(res) {
                 if (res.status == true) {
                     if (obj != undefined) {
                         obj.innerHTML = '回复';
                     }
-                    var html = '<div class="delComment_list">' +
-                        '<div class="comment_left">' +
-                        '<img src="' + AVATAR + '" class="c_leftImg" />' +
-                        '</div>' +
-                        '<div class="comment_right">' +
-                        '<span class="del_ellen">' + NAME + '</span>' +
-                        '<span class="c_time">刚刚</span>' +
-                        '<i class="icon iconfont icon-gengduo-copy"></i>' +
-                        '<p>' + content + '</p>' +
-                        '</div>' +
-                        '</div>';
+                    var html = '<div class="delComment_list comment'+res.data+'">';
+                        html += '<div class="comment_left">';
+                        html += '<img src="'+AVATAR+'" class="c_leftImg" />';
+                        html += '</div>';
+                        html += '<div class="comment_right">';
+                        html += '<span class="del_ellen">' + NAME + '</span>';
+                        html += '<span class="c_time">刚刚</span>';
+                        /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
+                        html += '<p>' + content + '';
+                        html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.data+', '+comment.row_id+')"';
+                        html += 'class="del_comment">删除</a>';
+                        html += '</p></div></div>';
                     var commentBox = $(comment.box);
                     if ("undefined" != typeof(commentBox)) {
                         if (addToEnd == 1) {
@@ -606,26 +610,21 @@ var comment = {
                         });
                     }
                 } else {
-                    alert(res.message);
+                    noticebox(res.message, 0);
                 }
             }
         });
     },
-    delComment: function(comment_id) {
-        $.post(U('widget/Comment/delcomment'), { comment_id: comment_id }, function(msg) {
-            // 动态添加字数
-            var commentDom = $('#feed' + comment.row_id).find('a[event-node="comment"]');
-            var oldHtml = commentDom.html();
-            if (oldHtml != null) {
-                var commentVal = oldHtml.replace(/\(\d+\)$/, function(num) {
-                    var cnum = parseInt(num.slice(1, -1)) - 1;
-                    if (cnum <= 0) {
-                        return '';
-                    }
-                    num = '(' + cnum + ')';
-                    return num;
-                });
-                commentDom.html(commentVal);
+    delComment: function(comment_id, news_id) {
+        var url = request_url.del_news_comment.replace('{news_id}', news_id);
+            url = url.replace('{comment_id}', comment_id);
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            error: function(xml) {noticebox('删除失败请重试', 0);},
+            success: function(res) {
+                $('.comment'+comment_id).fadeOut(1000);
             }
         });
     }

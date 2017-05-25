@@ -48,7 +48,7 @@
         <div class="dy_comit" id="comment_box{{$post['id']}}">
              
             <div class="comment_box{{$post['id']}}">
-            @if(count($post['comments']))   
+            @if(!empty($post['comments']))   
                 @foreach($post['comments'] as $cv)
                 @if($loop->index < 3)
                 <p>

@@ -44,13 +44,13 @@
             </div>
             <div class="del_comment"><span>{{ $tool['feed_comment_count'] }}</span>人评论</div>
             <div class="comment-box">
-                <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧"></textarea>
+                <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                 <div class="dy_company" style="margin: 0;">
                     <!-- <span class="fs-14">
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>
                         表情
                     </span> -->
-                    <span class="dy_cs" style="margin-left:420px;">可输入<span>255</span>字</span>
+                    <span class="dy_cs" style="margin-left: 500px;">可输入<span class="nums">255</span>字</span>
                     <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{ $feed['feed_id'] }}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
                 </div>
             </div>
@@ -86,9 +86,9 @@
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
                 <ul class="infR_time" id="j-recent-hot">
-                    <li><a href="javascript:;" class="week a_border">本周</a></li>
-                    <li><a href="javascript:;" class="meth">当月</a></li>
-                    <li><a href="javascript:;" class="moth">季度</a></li>
+                    <li><a href="javascript:;" cid="1" class="week a_border">本周</a></li>
+                    <li><a href="javascript:;" cid="2" class="meth">当月</a></li>
+                    <li><a href="javascript:;" cid="3" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
                     <div class='loading'><img src="{{ $routes['resource'] }}/images/loading.png" class='load'>加载中</div>
@@ -124,7 +124,13 @@ $('#J-comment-news').on('click', function(){
 });
 
 $(document).ready(function(){
-
+  recent_hot(1);
+  $('#j-recent-hot a').on('click', function(){
+        var cid = $(this).attr('cid');
+        recent_hot(cid);
+        $('#j-recent-hot a').removeClass('a_border');
+        $(this).addClass('a_border');
+  });
   comment.init({row_id:'{{$feed['feed_id']}}', canload:true});
 
 });

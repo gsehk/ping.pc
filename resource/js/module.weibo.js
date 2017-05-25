@@ -267,7 +267,7 @@ var comment = {
             }
         });
     },
-    // 显示回复块
+    // 分享详情加载评论列表
     loadMore: function() {
         comment.canload = false;
         var url = request_url.get_feed_commnet.replace('{feed_id}', comment.row_id);
@@ -284,22 +284,26 @@ var comment = {
                     var data = res.data,
                         html = '';
                     for (var i in data) {
-                        var avatar = data[i].uinfo.avatar ? API + '/storages/' + data[i].uinfo.avatar : AVATAR;
-                        html += '<div class="delComment_list">';
+                        var avatar = data[i].info.avatar ? API + '/storages/' + data[i].info.avatar : AVATAR;
+                        html += '<div class="delComment_list comment'+data[i].id+'">';
                         html += '<div class="comment_left">';
                         html += '<img src="' + avatar + '" class="c_leftImg" />';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<span class="del_ellen">' + data[i].uinfo.name + '</span>';
+                        html += '<span class="del_ellen">' + data[i].info.name + '</span>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
-                        html += '<i class="icon iconfont icon-gengduo-copy"></i>';
+                       /* html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
                         html += '<p>' + data[i].comment_content + '';
-                        if (data[i].user_id != MID) {
-                            html += '<span class="del_huifu">';
-                            html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].uinfo.name + '&canload=0&to_uid=' + data[i].user_id + '"';
-                            html += 'class="J-reply-comment">回复';
-                            html += '</a></span>';
-                        }
+                        html += '<span class="del_huifu">';
+                            if (data[i].user_id != MID) {
+                                html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].info.name + '&canload=0&to_uid=' + data[i].user_id + '"';
+                                html += 'class="J-reply-comment">回复</a>';
+                            }
+                            if (data[i].user_id == MID) {
+                                html += '<a href="javascript:void(0)" onclick="comment.delComment('+data[i].id+', '+data[i].feed_id+')"';
+                                html += 'class="del_comment">删除</a>';
+                            }
+                        html += '</span>';
                         html += '</p></div></div>';
                     }
                     $(comment.box).append(html);
@@ -384,6 +388,7 @@ var comment = {
             return false; //不要重复评论
         }
 
+        var content = _textarea.value;
         var url = request_url.feed_comment.replace('{feed_id}', feedid);
 
         obj.innerHTML = '回复中..';
@@ -399,7 +404,10 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '回复';
                     }
-                    var html = '<p><span>' + NAME + '：</span>' + content + '</p>';
+                    var html = '<p class="comment'+res.data+'">';
+                        html += '<span>' + NAME + '：</span>' + content + '';
+                        html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.data+', '+feedid+');">删除</a>';
+                        html += '</p>';
                     var commentBox = $('.comment_box' + feedid);
                     if ("undefined" != typeof(commentBox)) {
                         commentBox.prepend(html);
@@ -448,17 +456,18 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '回复';
                     }
-                    var html = '<div class="delComment_list">' +
-                        '<div class="comment_left">' +
-                        '<img src="' + AVATAR + '" class="c_leftImg" />' +
-                        '</div>' +
-                        '<div class="comment_right">' +
-                        '<span class="del_ellen">' + NAME + '</span>' +
-                        '<span class="c_time">刚刚</span>' +
-                        '<i class="icon iconfont icon-gengduo-copy"></i>' +
-                        '<p>' + content + '</p>' +
-                        '</div>' +
-                        '</div>';
+                    var html = '<div class="delComment_list comment'+res.data+'">';
+                        html += '<div class="comment_left">';
+                        html += '<img src="'+AVATAR+'" class="c_leftImg" />';
+                        html += '</div>';
+                        html += '<div class="comment_right">';
+                        html += '<span class="del_ellen">' + NAME + '</span>';
+                        html += '<span class="c_time">刚刚</span>';
+                        /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
+                        html += '<p>' + content + '';
+                        html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.data+', '+comment.row_id+')"';
+                        html += 'class="del_comment">删除</a>';
+                        html += '</p></div></div>';
                     var commentBox = $(comment.box);
                     if ("undefined" != typeof(commentBox)) {
                         if (addToEnd == 1) {
@@ -477,21 +486,16 @@ var comment = {
             }
         });
     },
-    delComment: function(comment_id) {
-        $.post(U('widget/Comment/delcomment'), { comment_id: comment_id }, function(msg) {
-            // 动态添加字数
-            var commentDom = $('#feed' + comment.row_id).find('a[event-node="comment"]');
-            var oldHtml = commentDom.html();
-            if (oldHtml != null) {
-                var commentVal = oldHtml.replace(/\(\d+\)$/, function(num) {
-                    var cnum = parseInt(num.slice(1, -1)) - 1;
-                    if (cnum <= 0) {
-                        return '';
-                    }
-                    num = '(' + cnum + ')';
-                    return num;
-                });
-                commentDom.html(commentVal);
+    delComment: function(comment_id, feed_id) {
+        var url = request_url.del_feed_comment.replace('{feed_id}', feed_id);
+            url = url.replace('{comment_id}', comment_id);
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            error: function(xml) {noticebox('删除失败请重试', 0);},
+            success: function(res) {
+                $('.comment'+comment_id).fadeOut(1000);
             }
         });
     }
@@ -668,6 +672,31 @@ var collect = {
     }
 };
 
+/** 
+ * 获取热点文章
+ * @param  type (1-本周 2-当月 3-季度)
+ */
+var recent_hot = function(type) {
+    if (type != undefined) {
+        $.get('/information/getRecentHot', { type: type }, function(res) {
+            if (res.data.length > 0) {
+                var html = '',
+                    f = 1;
+                var data = res.data;
+                for (var i in data) {
+                    html += '<li>' +
+                        '<span>' + f + '</span>' +
+                        '<a href="javascript:;">' + data[i].title + '</a>' +
+                        '</li>';
+                    f++;
+                }
+                $('#j-recent-hot-wrapp').html(html);
+            } else {
+                $('#j-recent-hot-wrapp').html('<div class="loading">暂无数据~</div>');
+            }
+        });
+    }
+};
 
 
 

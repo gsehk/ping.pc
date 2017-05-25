@@ -37,34 +37,38 @@ class InformationController extends BaseController
             })->first();
 
         /* 推荐文章第一条 */
-        $datas['recommend'] = News::where('is_recommend', 1)
-                            ->orderBy('news.id', 'desc')
-                            ->take(6)
-                            ->select('id','title','updated_at','storage','from','author')
-                            ->with('storage')
-                            ->with('user')
-                            ->get();
-        foreach ($datas['recommend'][0]['user']['datas'] as $k => &$v) {
-            if ($v['profile'] == 'avatar') {
-                $datas['recommend'][0]['user'][$v['profile']] = $v['pivot']['user_profile_setting_data'];
-            }
+        $rec = News::where('is_recommend', 1)
+            ->orderBy('news.id', 'desc')
+            ->take(6)
+            ->select('id','title','updated_at','storage','from','author')
+            ->with('storage')
+            ->with('user.datas')
+            ->get();
+        if (count($rec)) {
+            $rec[0]['info'] = $this->formatUserDatas($rec[0]['user']);
+            unset($rec[0]['user']);
+            $datas['recommend'] = $rec;
         }
-
+        
         /*  文章分类  */
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
 
         /*  热门作者 */
-        $datas['author'] = News::where('author','!=', 0)
-                        ->orderBy('hits', 'desc')
-                        ->groupBy('author')
-                        ->select('author')
-                        ->take(3)
-                        ->with('user.datas')
-                        ->get();
-        foreach ($datas['author'] as $key => $value) {
-            $value['info'] = $this->formatUserDatas($value->user);
+        $author = News::where('author','!=', 0)
+            ->orderBy('hits', 'desc')
+            ->groupBy('author')
+            ->select('author')
+            ->take(3)
+            ->with('user.datas')
+            ->get();
+        if (count($author)) {
+            foreach ($author as $k => $v) {
+                $v['info'] = $this->formatUserDatas($v->user);
+                unset($v['user']);
+            }
+            $datas['author'] = $author;
         }
-        
+
         return view('pcview::information.index', $datas, $this->mergeData);
     }
 
@@ -77,6 +81,9 @@ class InformationController extends BaseController
                 ->with(['collection' => function( $query ){
                     return $query->count();
                 }])->first();
+        if (!$data) {
+            return redirect( route('pc:news'), 302);
+        }
         $data['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         $data['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         if ($data['user']['datas']) {
@@ -339,18 +346,13 @@ class InformationController extends BaseController
                             $query->where('id', '<', $max_id);
                         }
                     })
-                    ->select(['id', 'created_at', 'comment_content', 'user_id', 'reply_to_user_id','comment_mark'])
+                    ->select(['id', 'created_at', 'comment_content', 'user_id', 'news_id', 'reply_to_user_id','comment_mark'])
                     ->with('user')
                     ->orderBy('id','desc')
-                    ->get(); 
+                    ->get();
         foreach ($comments as $key => &$value) {
-            $value['user']['intro'] = '  暂无简介';
-            if ($value['user']['datas']) {
-                foreach ($value['user']['datas'] as $pk => $pv) {
-                    $value['user'][$pv['profile']] = $pv['pivot']['user_profile_setting_data'];
-                }
-            }
-            unset($value['user']['datas']);
+            $value['info'] = $this->formatUserDatas($value['user']);
+            unset($value['user']);
         }
 
         return response()->json(static::createJsonData([

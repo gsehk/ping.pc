@@ -13,8 +13,15 @@ var request_url = {
     comment_news: '/api/v1/news/{news_id}/comment',
     /* 评论文章 */
     get_comment: '/information/{news_id}/comments',
+    /* 分享评论 */
     feed_comment: '/api/v1/feeds/{feed_id}/comment',
+    /*  删除分享评论  */
+    del_feed_comment: '/api/v1/feeds/{feed_id}/comment/{comment_id}',
+    /* 删除文章评论 */
+    del_news_comment: '/api/v1/news/{news_id}/comment/{comment_id}',
+    /* 删除分享 */
     delete_feed: '/api/v1/feeds/{feed_id}',
+    /*  举报分享  */
     denounce_feed: '/feed/{feed_id}/denounce',
     digg_feed: '/api/v1/feeds/{feed_id}/digg',
     get_feed_commnet: '/home/{feed_id}/comments',
@@ -200,7 +207,7 @@ var noticebox = function(msg, status, tourl = '') {
     _this.html(html);
 
 
-    _this.slideDown(200);
+    _this.slideDown(500);
 
     if (tourl == '') {
         setTimeout(function() {
@@ -209,7 +216,7 @@ var noticebox = function(msg, status, tourl = '') {
     } else {
         setTimeout(function() {
             noticebox_cb(tourl);
-        }, 1000);
+        }, 1500);
     }
 }
 

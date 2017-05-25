@@ -180,8 +180,14 @@ class ProfileController extends BaseController
                 if ($this->mergeData) {
                     $query->where('user_id', $this->mergeData['TS']['id']);
                 }
+            })
+            ->orderBy('created_at', 'desc')
+            ->first();
+        $data['checkin'] = CheckInfo::where(function($query){
+                if ($this->mergeData) {
+                    $query->where('user_id', $this->mergeData['TS']['id']);
+                }
             })->orderBy('created_at', 'desc')->first();
-
         // 推荐用户
         $_rec_users = UserDatas::where('key', 'feeds_count')
             ->where('user_id', '!=', $this->mergeData['TS']['id'])
