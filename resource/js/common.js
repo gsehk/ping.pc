@@ -1,155 +1,153 @@
-
 var initNums = 255;
-var loadHtml = "<div class='loading'><img src='"+PUBLIC_URL +"/images/loading.png' class='load'>加载中</div>";
+var loadHtml = "<div class='loading'><img src='" + PUBLIC_URL + "/images/loading.png' class='load'>加载中</div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>  确定删除這条信息？';
 var request_url = {
-    login:'passport/index', /* 登录 */
-    get_news:'/information/getNewsList', /* 获取文章列表 */
-    digg_news:'/api/v1/news/{news_id}/digg', /* 文章点赞 */
-    collect_news:'/api/v1/news/{news_id}/collection', /* 文章收藏  */
-    comment_news:'/api/v1/news/{news_id}/comment', /* 评论文章 */
-    get_comment:'/information/{news_id}/comments',
-    feed_comment:'/api/v1/feeds/{feed_id}/comment',
-    delete_feed:'/api/v1/feeds/{feed_id}',
-    denounce_feed:'/feed/{feed_id}/denounce',
-    digg_feed:'/api/v1/feeds/{feed_id}/digg',
-    get_feed_commnet:'/home/{feed_id}/comments',
-    collect_feed:'/api/v1/feeds/{feed_id}/collection',
-    get_user_feed:'/profile/users/{user_id}',
-    get_user_news:'/profile/news/{user_id}',
-    get_user_collect:'/profile/collection/{user_id}',
+    login: 'passport/index',
+    /* 登录 */
+    get_news: '/information/getNewsList',
+    /* 获取文章列表 */
+    digg_news: '/api/v1/news/{news_id}/digg',
+    /* 文章点赞 */
+    collect_news: '/api/v1/news/{news_id}/collection',
+    /* 文章收藏  */
+    comment_news: '/api/v1/news/{news_id}/comment',
+    /* 评论文章 */
+    get_comment: '/information/{news_id}/comments',
+    feed_comment: '/api/v1/feeds/{feed_id}/comment',
+    delete_feed: '/api/v1/feeds/{feed_id}',
+    denounce_feed: '/feed/{feed_id}/denounce',
+    digg_feed: '/api/v1/feeds/{feed_id}/digg',
+    get_feed_commnet: '/home/{feed_id}/comments',
+    collect_feed: '/api/v1/feeds/{feed_id}/collection',
+    get_user_feed: '/profile/users/{user_id}',
+    get_user_news: '/profile/news/{user_id}',
+    get_user_collect: '/profile/collection/{user_id}',
 };
 
 // Ajax 设置csrf Header
 $.ajaxSetup({
-   headers: {
-       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-       'Authorization':  TOKEN,
-   }
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
+        'Authorization': TOKEN,
+    }
 });
 
 var args = {
-  data: {},
-  set: function(name, value) {
-    this.data[name] = value;
-    return this;
-  },
-  get: function () {
-    return this.data;
-  }
+    data: {},
+    set: function(name, value) {
+        this.data[name] = value;
+        return this;
+    },
+    get: function() {
+        return this.data;
+    }
 };
 
-var urlToObject=function(url){   
-  var urlObject = {};    
-    var urlString=url.substring(url.indexOf("?")+1);   
-    var urlArray=urlString.split("&");   
-    for(var i=0,len=urlArray.length;i<len;i++){   
-      var urlItem=urlArray[i];   
-      var item = urlItem.split("=");   
-      urlObject[item[0]]=item[1];   
+var urlToObject = function(url) {
+    var urlObject = {};
+    var urlString = url.substring(url.indexOf("?") + 1);
+    var urlArray = urlString.split("&");
+    for (var i = 0, len = urlArray.length; i < len; i++) {
+        var urlItem = urlArray[i];
+        var item = urlItem.split("=");
+        urlObject[item[0]] = item[1];
     }
-    
-    return urlObject;      
+
+    return urlObject;
 };
 
 // 字符串长度 - 中文和全角符号为1；英文、数字和半角为0.5
 var getLength = function(str, shortUrl) {
-  if (true == shortUrl) {
-    // 一个URL当作十个字长度计算
-    return Math.ceil(str.replace(/((news|telnet|nttp|file|http|ftp|https):\/\/){1}(([-A-Za-z0-9]+(\.[-A-Za-z0-9]+)*(\.[-A-Za-z]{2,5}))|([0-9]{1,3}(\.[0-9]{1,3}){3}))(:[0-9]*)?(\/[-A-Za-z0-9_\$\.\+\!\*\(\),;:@&=\?\/~\#\%]*)*/ig, 'xxxxxxxxxxxxxxxxxxxx')
-              .replace(/^\s+|\s+$/ig,'').replace(/[^\x00-\xff]/ig,'xx').length/2);
-  } else {
-    return Math.ceil(str.replace(/^\s+|\s+$/ig,'').replace(/[^\x00-\xff]/ig,'xx').length/2);
-  }
+    if (true == shortUrl) {
+        // 一个URL当作十个字长度计算
+        return Math.ceil(str.replace(/((news|telnet|nttp|file|http|ftp|https):\/\/){1}(([-A-Za-z0-9]+(\.[-A-Za-z0-9]+)*(\.[-A-Za-z]{2,5}))|([0-9]{1,3}(\.[0-9]{1,3}){3}))(:[0-9]*)?(\/[-A-Za-z0-9_\$\.\+\!\*\(\),;:@&=\?\/~\#\%]*)*/ig, 'xxxxxxxxxxxxxxxxxxxx')
+            .replace(/^\s+|\s+$/ig, '').replace(/[^\x00-\xff]/ig, 'xx').length / 2);
+    } else {
+        return Math.ceil(str.replace(/^\s+|\s+$/ig, '').replace(/[^\x00-\xff]/ig, 'xx').length / 2);
+    }
 };
 
-var checkNums = function(obj, len, show){
+var checkNums = function(obj, len, show) {
     var str = $(obj).val();
     var _length = getLength(str);
     var surplus = len - _length;
-    if(surplus < 0){
-        $('.'+show).text(surplus).css('color','red');
+    if (surplus < 0) {
+        $('.' + show).text(surplus).css('color', 'red');
         // noticebox('字数不能大于'+len, 0);
-    }else{
-        $('.'+show).text(surplus).css('color','#59b6d7');
+    } else {
+        $('.' + show).text(surplus).css('color', '#59b6d7');
     }
 }
 
 // 文件上传
-var fileUpload = function(f, callback){
+var fileUpload = function(f, callback) {
     var reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = function(e) {
         var data = e.target.result;
         //加载图片获取图片真实宽度和高度
         var image = new Image();
-        image.onload=function(){
+        image.onload = function() {
             var width = image.width;
             var height = image.height;
             var size = f.size;
             doFileUpload(image, f, callback);
         };
-        image.src= data;
-   };
-   reader.readAsDataURL(f);
+        image.src = data;
+    };
+    reader.readAsDataURL(f);
 };
 
 var doFileUpload = function(image, f, callback) {
     var args = {
-        width  : image.width,
-        height : image.height,
-        mime_type : f.type,
-        origin_filename : f.name,
-        hash   : CryptoJS.MD5(f.name).toString(),
+        width: image.width,
+        height: image.height,
+        mime_type: f.type,
+        origin_filename: f.name,
+        hash: CryptoJS.MD5(f.name).toString(),
     };
     // 创建存储任务
-    $.ajax({  
-        url: '/api/v1/storages/task' ,  
-        type: 'POST', 
-        async: false,  
+    $.ajax({
+        url: '/api/v1/storages/task',
+        type: 'POST',
+        async: false,
         data: args,
-        beforeSend: function (xhr) {
-  　　　　  xhr.setRequestHeader('Authorization', TOKEN);
-  　　　}, 
-        success: function (res) {  
+        beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', TOKEN);　　　 },
+        success: function(res) {
             if (res.data.uri) {
                 var formData = new FormData();
                 formData.append("file", f);
 
                 if (res.data.options) {
-                    for(var i in res.data.options){
+                    for (var i in res.data.options) {
                         formData.append(i, res.data.options[i]);
                     }
                 }
 
                 // 上传文件
                 $.ajax({
-                      url: res.data.uri,  
-                      type: res.data.method,  
-                      data: formData,
-                      async: false,  
-                      cache: false,  
-                      contentType: false,  
-                      processData: false,
-                      beforeSend: function (xhr) {
-                　　　　  xhr.setRequestHeader('Authorization', res.data.headers.Authorization);
-                　　　}, 
-                      success: function (data) {
+                    url: res.data.uri,
+                    type: res.data.method,
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', res.data.headers.Authorization);　　　 },
+                    success: function(data) {
 
-                      // 上传通知 
+                        // 上传通知 
                         $.ajax({
-                            url: '/api/v1/storages/task/'+res.data.storage_task_id,  
+                            url: '/api/v1/storages/task/' + res.data.storage_task_id,
                             type: 'PATCH',
-                            async: false,  
-                            beforeSend: function (xhr) {
-                      　　　　  xhr.setRequestHeader('Authorization', res.data.headers.Authorization);
-                      　　　}, 
-                            success: function(response){
+                            async: false,
+                            beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', res.data.headers.Authorization);　　　 },
+                            success: function(response) {
                                 callback(image, f, res.data.storage_task_id);
                             }
                         });
-                      } 
-                }); 
-            }else{
+                    }
+                });
+            } else {
                 callback(image, f, res.data.storage_task_id);
             }
         }
@@ -157,24 +155,24 @@ var doFileUpload = function(image, f, callback) {
 };
 
 // 关注
-var follow = function(status, user_id, target, callback){
+var follow = function(status, user_id, target, callback) {
     if (status == 0) {
         var url = API + '/users/follow';
         $.ajax({
-            url: url,  
+            url: url,
             type: 'POST',
-            data: {user_id: user_id},
-            success: function(response){
+            data: { user_id: user_id },
+            success: function(response) {
                 callback(target);
             }
         })
     } else {
         var url = API + '/users/unFollow';
         $.ajax({
-            url: url,  
+            url: url,
             type: 'DELETE',
-            data: {user_id: user_id},
-            success: function(response){
+            data: { user_id: user_id },
+            success: function(response) {
                 callback(target);
             }
         })
@@ -205,11 +203,11 @@ var noticebox = function(msg, status, tourl = '') {
     _this.slideDown(200);
 
     if (tourl == '') {
-        setTimeout(function(){
+        setTimeout(function() {
             $('.noticebox').slideUp(200);
         }, 1000);
     } else {
-        setTimeout(function(){
+        setTimeout(function() {
             noticebox_cb(tourl);
         }, 1000);
     }
@@ -220,14 +218,15 @@ var noticebox_cb = function(tourl) {
 }
 
 var no_data = function(selector, type, txt) {
-  var image = type == 0 ? PUBLIC_URL + '/images/pic_default_content.png' : PUBLIC_URL + '/images/pic_default_people.png';
-  var html = '<div class="no_data_div"><div class="no_data"><img src="' + image  + '" /><p>' + txt + '</p></div></div>';
-  // $(selector).css('display', 'table');
-  // $(selector).css('margin', '0 auto');
-  $(selector).html(html);
+    var image = type == 0 ? PUBLIC_URL + '/images/pic_default_content.png' : PUBLIC_URL + '/images/pic_default_people.png';
+    var html = '<div class="no_data_div"><div class="no_data"><img src="' + image + '" /><p>' + txt + '</p></div></div>';
+    // $(selector).css('display', 'table');
+    // $(selector).css('margin', '0 auto');
+    $(selector).html(html);
 }
 
-;(function($){
+;
+(function($) {
     //默认参数
     var defaluts = {
         select: "select",
@@ -235,9 +234,9 @@ var no_data = function(selector, type, txt) {
         select_ul: "select_ul"
     };
     $.fn.extend({
-        "select": function(options){
+        "select": function(options) {
             var opts = $.extend({}, defaluts, options);
-            return this.each(function(){
+            return this.each(function() {
                 var $this = $(this);
                 //模拟下拉列表
                 if ($this.data("value") !== undefined && $this.data("value") !== '') {
@@ -245,13 +244,13 @@ var no_data = function(selector, type, txt) {
                 }
                 var _html = [];
                 _html.push("<div class=\"" + $this.attr('class') + "\">");
-                _html.push("<div class=\""+ opts.select_text +"\">" + $this.find(":selected").text() + "</div>");
-                _html.push("<ul class=\""+ opts.select_ul +"\">");
-                $this.children("option").each(function () {
+                _html.push("<div class=\"" + opts.select_text + "\">" + $this.find(":selected").text() + "</div>");
+                _html.push("<ul class=\"" + opts.select_ul + "\">");
+                $this.children("option").each(function() {
                     var option = $(this);
-                    if($this.data("value") == option.val()){
+                    if ($this.data("value") == option.val()) {
                         _html.push("<li class=\"cur\" data-value=\"" + option.val() + "\">" + option.text() + "</li>");
-                    }else{
+                    } else {
                         _html.push("<li data-value=\"" + option.val() + "\">" + option.text() + "</li>");
                     }
                 });
@@ -263,20 +262,20 @@ var no_data = function(selector, type, txt) {
                 $this.after(select);
                 $this.hide();
                 //下拉列表操作
-                select.click(function (event) {
+                select.click(function(event) {
                     $(this).find("." + opts.select_ul).slideToggle().end().siblings("div." + opts.select).find("." + opts.select_ul).slideUp();
                     event.stopPropagation();
                 });
-                $("body").click(function () {
+                $("body").click(function() {
                     select_ul.slideUp();
                 });
-                select_ul.on("click", "li", function () {
+                select_ul.on("click", "li", function() {
                     var li = $(this);
                     var val = li.addClass("cur").siblings("li").removeClass("cur").end().data("value").toString();
                     if (val !== $this.val()) {
                         select_text.text(li.text());
                         $this.val(val);
-                        $this.attr("data-value",val);
+                        $this.attr("data-value", val);
                     }
                 });
             });
@@ -284,14 +283,13 @@ var no_data = function(selector, type, txt) {
     });
 })(jQuery);
 
-$(function(){
-  // 个人中心展开
-  $('#menu_toggle').click(function(){
-    $('.p_cont').toggle();
-  })
+$(function() {
+    // 个人中心展开
+    $('#menu_toggle').click(function() {
+        $('.p_cont').toggle();
+    })
 
-  $('#gotop').click(function(){
-    $(window).scrollTop(0);
-  })
+    $('#gotop').click(function() {
+        $(window).scrollTop(0);
+    })
 })
-
