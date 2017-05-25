@@ -609,6 +609,8 @@ var comment = {
                             comment.initReply();
                         });
                     }
+                    var commentNum = $('.comment_count').text();
+                    $('.comment_count').text(parseInt(commentNum)+1);
                 } else {
                     noticebox(res.message, 0);
                 }
@@ -625,6 +627,8 @@ var comment = {
             error: function(xml) {noticebox('删除失败请重试', 0);},
             success: function(res) {
                 $('.comment'+comment_id).fadeOut(1000);
+                var commentNum = $('.comment_count').text();
+                $('.comment_count').text(parseInt(commentNum)-1);
             }
         });
     }

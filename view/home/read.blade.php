@@ -42,7 +42,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="del_comment"><span>{{ $tool['feed_comment_count'] }}</span>人评论</div>
+            <div class="del_comment"><span class="comment_count">{{ $tool['feed_comment_count'] }}</span>人评论</div>
             <div class="comment-box">
                 <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                 <div class="dy_company" style="margin: 0;">
