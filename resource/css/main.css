@@ -1644,6 +1644,10 @@ img {
     border-bottom: 2px solid #59b6d7;
 }
 
+.new_list {
+    margin-bottom: 0px;
+}
+
 .new_list li {
     padding-top: 30px;
 }
@@ -1768,6 +1772,13 @@ img {
     float: right;
     margin-top: 14px;
     color: #666;
+}
+
+.del_share a {
+    float: none;
+    padding: 0px;
+    margin: 0px;
+    background: none;
 }
 
 .del_share svg {
@@ -3851,6 +3862,8 @@ img.load {
 
 .post_content img {
     max-width: 100%;
+    height: auto;
+    object-fit: inherit;
     margin: 15px auto;
 }
 
@@ -4070,6 +4083,7 @@ img.load {
 .dy_cen .J-reply-comment,
 .comment_right .del_comment,
 .comment_right .J-reply-comment {
+    font-size: 12px;
     margin-left: 15px;
     cursor: pointer;
     color: #59b6d7;

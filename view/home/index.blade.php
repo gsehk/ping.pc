@@ -49,11 +49,7 @@
                 <span class="totalnum">{{ $TS['credit'] or 0 }}</span>
             </span>
             <a href="{{ route('pc:myFeed', ['user_id' => $TS['id']]) }}">
-            @if (!empty($TS['avatar']))
-            <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " class="dyrTop_img" alt="{{ $TS['name'] }}"/>
-            @else
-            <img src="{{ $routes['resource'] }}/images/avatar.png" class="dyrTop_img"/>
-            @endif
+            <img src="{{ $TS['avatar'] }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
             </a>
         </div>
         @if(empty($ischeck))
@@ -71,11 +67,7 @@
             @foreach ($rec_users as $rec_user)
             <li>
                 <a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">
-                @if (!empty($rec_user['avatar']))
-                <img src="{{ $routes['storage'] }}{{ $rec_user['avatar'] }}" />
-                @else
-                <img src="{{ $routes['resource'] }}/images/avatar.png"/>
-                @endif
+                <img src="{{ $rec_user['avatar'] }}" alt="{{ $rec_user['name'] }}"/>
                 </a>
                 <span><a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
             </li>

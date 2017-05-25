@@ -70,12 +70,16 @@ class BaseController extends Controller
     	$rs['phone'] = $user->phone;
     	$rs['email'] = $user->email;
 
+    	// 用户信息
 		if (!empty($user->datas)) {
 	        foreach ($user->datas as $value) {
 	            $rs[$value->profile] = $value->pivot->user_profile_setting_data;;
 	        }
 		}
+		// 默认头像
+		$rs['avatar'] = empty($rs['avatar']) ? asset('/images/avatar.png') : '/api/v1/storages/' . $rs['avatar'];
 
+		// 统计信息
 		if (!empty($user->counts)) {
     		// 统计信息
             foreach ($user->counts as $key => $value) {

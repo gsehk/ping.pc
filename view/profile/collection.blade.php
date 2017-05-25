@@ -31,11 +31,7 @@
                         已获积分
                         <span class="totalnum">{{ $TS['credit'] or 0 }}</span>
                     </span>
-                    @if (!empty($TS['avatar']))
-                    <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " class="dyrTop_img" alt="{{ $TS['name'] }}"/>
-                    @else
-                    <img src="{{ $routes['resource'] }}/images/avatar.png" class="dyrTop_img"/>
-                    @endif
+                    <img src="{{ $TS['avatar']}} " class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                 </div>
                 @if(empty($ischeck))
                     <div class="dy_qiandao" onclick="checkin();" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>每日签到<span>+5积分</span></div>
@@ -52,11 +48,7 @@
                     @foreach ($rec_users as $rec_user)
                     <li>
                         <a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">
-                        @if (!empty($rec_user['avatar']))
-                        <img src="{{ $routes['storage'] }}{{ $rec_user['avatar'] }}" />
-                        @else
-                        <img src="{{ $routes['resource'] }}/images/avatar.png"/>
-                        @endif
+                            <img src="{{ $rec_user['avatar'] }}" />
                         </a>
                         <span><a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
                     </li>

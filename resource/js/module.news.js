@@ -187,7 +187,7 @@ var recommend = {
                     $('.loading').remove();
                 } else {
                     recommend.opt.canload = false;
-                    $('.loading').html('暂时没有更多可显示的内容哟~');
+                    $('.loading').html('暂无相关内容');
                 }
             }
         });
@@ -213,7 +213,7 @@ var recent_hot = function(type) {
                 }
                 $('#j-recent-hot-wrapp').html(html);
             } else {
-                $('#j-recent-hot-wrapp').html('<div class="loading">暂无数据~</div>');
+                $('#j-recent-hot-wrapp').html('<div class="loading">暂无相关内容</div>');
             }
         });
     }
@@ -240,7 +240,7 @@ var author_hot = function() {
             }
             $('#j-author-hot-wrapp').html(html);
         } else {
-            $('#j-author-hot-wrapp').html('<div class="loading">暂无数据~</div>');
+            $('#j-author-hot-wrapp').html('<div class="loading">暂无相关内容</div>');
         }
     });
 };
@@ -532,7 +532,7 @@ var comment = {
                     });
                 } else {
                     comment.canload = false;
-                    $('.loading').html('暂时没有更多可显示的内容哟~');
+                    $('.loading').html('暂无相关内容');
                 }
             }
         });

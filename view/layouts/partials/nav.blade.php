@@ -12,11 +12,7 @@
     </div>
     @if (!empty($TS))
     <div class="nav_right">
-        @if (!empty($TS['avatar']))
-        <img src="{{ $routes['storage'] }}{{ $TS['avatar']}} " id="menu_toggle" alt="{{ $TS['name'] }}"/>
-        @else
-        <img src="{{ \Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset('images/avatar.png') }}" id="menu_toggle"/>
-        @endif
+        <img src="{{ $TS['avatar']}}" id="menu_toggle" alt="{{ $TS['name'] }}"/>
         <span class="fs-16 nav_name"></span>
     </div>
     <div class="p_cont">

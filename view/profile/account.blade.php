@@ -29,7 +29,7 @@
     </div>
     <div class="bas_right" id="J-input">
         <div class="bas_header">
-            <img id="J-image-preview" src="@if($data['avatar']) {{ $routes['storage'] }}{{ $data['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" />
+            <img id="J-image-preview" src="{{ $data['avatar'] }}" />
             <span class="con_cover ai_face_box">
                 <div class="ai_upload">
                     <input id="J-file-upload"

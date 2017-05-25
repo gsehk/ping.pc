@@ -28,11 +28,7 @@
             <div class="fanList_top">
                 <div class="fan_header">
                     <a href="{{route('pc:myFeed',['user_id'=>$data['user']['id']])}}">
-                    @if (!empty($data['user']['avatar']))
-                    <img src="{{ $routes['storage'] }}{{ $data['user']['avatar']}} " class="head_img" alt="{{ $data['user']['name'] }}"/>
-                    @else
-                    <img src="{{ $routes['resource'] }}/images/avatar.png" class="head_img" />
-                    @endif
+                        <img src="{{ $data['user']['avatar']}} " class="head_img" alt="{{ $data['user']['name'] }}"/>
                     </a>
                 </div>
                 <div class="fan_word">

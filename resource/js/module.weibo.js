@@ -696,7 +696,7 @@ var recent_hot = function(type) {
                 }
                 $('#j-recent-hot-wrapp').html(html);
             } else {
-                $('#j-recent-hot-wrapp').html('<div class="loading">暂无数据~</div>');
+                $('#j-recent-hot-wrapp').html('<div class="loading">暂无相关内容</div>');
             }
         });
     }

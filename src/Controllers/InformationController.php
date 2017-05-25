@@ -77,7 +77,7 @@ class InformationController extends BaseController
         $uid = $this->mergeData['TS']['id'] ?? 0;
         $data = News::where('id', $news_id)
                 ->withCount('newsCount') //当前作者文章数
-                ->with('user')
+                ->with('user', 'link')
                 ->with(['collection' => function( $query ){
                     return $query->count();
                 }])->first();
@@ -86,14 +86,9 @@ class InformationController extends BaseController
         }
         $data['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         $data['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
-        if ($data['user']['datas']) {
-            $data['user']['intro'] = '暂无简介';
-            foreach ($data['user']['datas'] as $k => $v) {
-                if ($v['profile'] == 'intro') {
-                    $data['user'][$v['profile']] = $v['pivot']['user_profile_setting_data'];
-                }
-            }
-        }
+        $user = $this->formatUserDatas($data->user);
+        unset($data['user']);
+        $data['user'] = $user;
 
         $data['hots'] = News::join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
                         ->where([['news.author','=',$data->author], ['news_cates_links.cate_id','=',1]])
@@ -107,6 +102,7 @@ class InformationController extends BaseController
                         ->toArray();
         News::where('id', $news_id)->increment('hits');
 
+        // dd($data);exit;
         return view('pcview::information.read', $data, $this->mergeData);
     }
 

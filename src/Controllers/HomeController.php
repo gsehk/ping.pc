@@ -139,7 +139,7 @@ class HomeController extends BaseController
             // 最新3条评论
             $data['comments'] = [];
 
-            $getCommendsNumber = 5;
+            $getCommendsNumber = 3;
             $data['comments'] = $feed->comments()
                 ->orderBy('id', 'desc')
                 ->take($getCommendsNumber)

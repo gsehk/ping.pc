@@ -18,13 +18,8 @@
         <div class="dyn_title"><a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}">{{ $user['name'] }}</a></div>
         <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>
         <div class="dyn_lImg">
-
             <a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}">
-            @if (!empty($user['avatar']))
-            <img src="{{ $routes['storage'] }}{{ $user['avatar']}} " alt="{{ $user['name'] }}"/>
-            @else
-            <img src="{{ $routes['resource']}}/images/avatar.png"/>
-            @endif
+                <img src="{{ $user['avatar']}} " alt="{{ $user['name'] }}"/>
             </a>
         </div>
     </div>
@@ -102,11 +97,7 @@
                     @foreach ($followeds as $followed)
                     <li>
                         <a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">
-                        @if (!empty($followed['avatar']))
-                        <img src="{{ $routes['storage'] }}{{ $followed['avatar'] }}" />
-                        @else
-                        <img src="{{ $routes['resource'] }}/images/avatar.png"/>
-                        @endif
+                            <img src="{{ $followed['avatar'] }}" />
                         </a>
                         <span><a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">{{ $followed['name'] }}</a></span>
                     </li>
@@ -124,11 +115,7 @@
                     @foreach ($followings as $following)
                     <li>
                         <a href="{{ route('pc:myFeed', ['user_id' => $following['id']]) }}">
-                        @if (!empty($following['avatar']))
-                        <img src="{{ $routes['storage'] }}{{ $following['avatar'] }}" />
-                        @else
-                        <img src="{{ $routes['resource'] }}/images/avatar.png"/>
-                        @endif
+                            <img src="{{ $following['avatar'] }}" />
                         </a>
                         <span><a href="{{ route('pc:myFeed', ['user_id' => $following['id']]) }}">{{ $following['name'] }}</a></span>
                     </li>
@@ -147,11 +134,7 @@
                     @foreach ($visitors as $visitor)
                     <li>
                         <a href="{{ route('pc:myFeed', ['user_id' => $visitor['id']]) }}">
-                        @if (!empty($visitor['avatar']))
-                        <img src="{{ $routes['storage'] }}{{ $visitor['avatar'] }}" />
-                        @else
-                        <img src="{{ $routes['resource'] }}/images/avatar.png"/>
-                        @endif
+                            <img src="{{ $visitor['avatar'] }}" />
                         </a>
                         <span><a href="{{ route('pc:myFeed', ['user_id' => $visitor['id']]) }}">{{ $visitor['name'] }}</a></span>
                     </li>

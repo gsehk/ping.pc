@@ -13,7 +13,7 @@
         // 用户属性
         var MID = "{{ $TS['id'] or 0 }}";
         var NAME = "{{ $TS['name'] or '' }}";
-        var AVATAR = "{{ $TS['avatar'] or $routes['resource'].'/images/avatar.png' }}";
+        var AVATAR = "{{ $TS['avatar'] }}";
         var TOKEN = "{{ $TS['token'] or '' }}";
     </script>
     <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">

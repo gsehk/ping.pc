@@ -291,7 +291,7 @@ class ProfileController extends BaseController
             ->where('user_id', '!=', $this->mergeData['TS']['id'])
             ->with('user.datas')
             ->orderBy(DB::raw('-value', 'desc'))
-            ->paginate(1);
+            ->paginate(6);
 
             $data['datas'] = [];
             foreach ($recusers as $recuser) {

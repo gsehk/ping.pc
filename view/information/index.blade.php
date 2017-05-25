@@ -126,7 +126,7 @@
                 @foreach ($author as $u)
                     <div class="R_list">
                         <div class="i_left">
-                            <img src="@if(!empty($u->info['avatar'])) {{ $routes['storage'] }}{{ $u->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" />
+                            <img src="{{ $u->info['avatar'] }}" />
                         </div>
                         <div class="i_right">
                             <span>{{$u->user['name']}}</span>

@@ -6,8 +6,11 @@
         <div class="del_left">
             <div class="del_title">{{ $title }}</div>
             <div class="top_list">
-                <a href="javascript:;" class="top_list_span">视点</a>
-                <a href="javascript:;">视点</a>
+                @if (!empty($link))
+                @foreach ($link as $li)
+                <a href="javascript:;" class="top_list_span">{{ $li['name'] }}</a>
+                @endforeach
+                @endif
                 <div class="del_top_r">
                     <span class="del_time">{{ $created_at }}</span>
                 </div>
@@ -66,7 +69,9 @@
         <div class="del_right">
             <div class="delTop">
                 <div class="delToP_left">
-                    <div> <img src="{{ $routes['resource'] }}/images/cicle.png" /></div>
+                    <div>
+                        <img src="{{ $user['avatar'] }}" />
+                    </div>
                 </div>
                 <div class="delTop_right">
                     <span>{{ $user['name'] }}</span>
@@ -83,7 +88,7 @@
                 @foreach($news as $post)
                     <div class="del_rTop">
                         <span></span>
-                        <a href="javascript:;">{{ $post['title'] }}</a>
+                        <a href="/information/read/{{ $post['id'] }}">{{ $post['title'] }}</a>
                     </div>
                 @endforeach
             </div>

@@ -403,7 +403,7 @@ var comment = {
                     });
                 } else {
                     comment.canload = false;
-                    $('.loading').html('暂时没有更多可显示的内容哟~');
+                    $('.loading').html('暂无相关内容');
                 }
             }
         });
