@@ -32,7 +32,7 @@
             <div class="no_zh">
                 <span class="no_span">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
                 <div class="del_share login_share" >
-                    三方登陆：
+                    三方登录：
                     <svg class="icon svdel_g1" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weibo"></use>
                     </svg>

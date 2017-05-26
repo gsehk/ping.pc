@@ -6,6 +6,13 @@ $(function() {
     $('#login_btn').click(function() {
         var _this = $(this);
 
+        var phone = $('input[name="phone"]').val();
+        if (!checkPhone(phone)) {
+            $('#phone_tip').html('请输入正确的手机号').show();
+            noticebox('请输入正确的手机号', 0);
+            $('input[name="phone"]').focus();
+            return false;
+        }
         if (!passlod) {
             var url = '/passport/dologin';
             passlod = true;
