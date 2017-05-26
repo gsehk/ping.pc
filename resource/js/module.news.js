@@ -199,21 +199,23 @@ var recommend = {
  */
 var recent_hot = function(type) {
     if (type != undefined) {
+        $('#j-recent-hot-wrapp').html(loadHtml);
         $.get('/information/getRecentHot', { type: type }, function(res) {
             if (res.data.length > 0) {
                 var html = '',
                     f = 1;
                 var data = res.data;
                 for (var i in data) {
+                    console.log(data);
                     html += '<li>' +
                         '<span>' + f + '</span>' +
-                        '<a href="javascript:;">' + data[i].title + '</a>' +
+                        '<a href="/information/read/'+data[i].id+'">' + data[i].title + '</a>' +
                         '</li>';
                     f++;
                 }
                 $('#j-recent-hot-wrapp').html(html);
             } else {
-                $('#j-recent-hot-wrapp').html('<div class="loading">暂无相关内容</div>');
+                $('.del_right .loading').html('暂无相关内容');
             }
         });
     }
@@ -324,7 +326,7 @@ var digg = {
                     var num = $digg.attr('rel');
                     num++;
                     $digg.attr('rel', num);
-                    $('#digg' + news_id).html('<a href="javascript:;" onclick="digg.delDigg(' + news_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>' + num + '</font>人喜欢</a>');
+                    $('#digg' + news_id).html('<a href="javascript:;" onclick="digg.delDigg(' + news_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>' + num + '</font>人喜欢</a>');
                 } else {
                     alert(res.message);
                 }
@@ -402,7 +404,7 @@ var collect = {
                     var num = $collect.attr('rel');
                     num++;
                     $collect.attr('rel', num);
-                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.delCollect(' + news_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">' + num + '</font>收藏</a>');
+                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.delCollect(' + news_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">' + num + '</font>收藏</a>');
                 } else {
                     alert(res.message);
                 }
@@ -502,10 +504,9 @@ var comment = {
                     var data = res.data,
                         html = '';
                     for (var i in data) {
-                        var avatar = data[i].info.avatar ? API + '/storages/' + data[i].info.avatar : AVATAR;
                         html += '<div class="delComment_list comment'+data[i].id+'">';
                         html += '<div class="comment_left">';
-                        html += '<img src="' + avatar + '" class="c_leftImg" />';
+                        html += '<img src="' + data[i].info.avatar + '" class="c_leftImg" />';
                         html += '</div>';
                         html += '<div class="comment_right">';
                         html += '<span class="del_ellen">' + data[i].info.name + '</span>';
@@ -532,7 +533,7 @@ var comment = {
                     });
                 } else {
                     comment.canload = false;
-                    $('.loading').html('暂无相关内容');
+                    $('.del_left .loading').html('暂无相关内容');
                 }
             }
         });

@@ -77,7 +77,7 @@ class BaseController extends Controller
 	        }
 		}
 		// 默认头像
-		$rs['avatar'] = empty($rs['avatar']) ? asset('/images/avatar.png') : '/api/v1/storages/' . $rs['avatar'];
+		$rs['avatar'] = empty($rs['avatar']) ? asset('images/avatar.png') : '/api/v1/storages/' . $rs['avatar'];
 
 		// 统计信息
 		if (!empty($user->counts)) {

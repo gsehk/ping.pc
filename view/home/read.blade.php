@@ -60,7 +60,7 @@
         <div class="del_right">
             <div class="delTop">
                 <div class="delToP_left">
-                    <div> <img src="{{ $routes['resource'] }}/images/cicle.png" /></div>
+                    <div> <img src="{{ $news['user']['avatar'] }}" /></div>
                 </div>
                 <div class="delTop_right">
                     <span>{{ $news['user']['name'] }}</span>
@@ -68,7 +68,7 @@
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="javascript:;">文章<span>{{ $news['newsNum'] }}</span></a>
+                        <a href="{{route('pc:article')}}">文章<span>{{ $news['newsNum'] }}</span></a>
                     </li>
                     <li>
                         <a href="javascript:;">热门<span>{{ $news['hotsNum'] }}</span></a>
@@ -81,7 +81,7 @@
                     </div>
                 @endforeach
             </div>
-            <a href="javascript:;" class="del_more">更多他的文章</a>
+            @if(count($news['list']) >= 3)<a href="javascript:;" class="del_more">更多他的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
@@ -112,7 +112,6 @@ $('#J-comment-news').on('click', function(){
     attrs.to_uid = $(this).attr('to_uid');
     attrs.addToEnd = $(this).attr('addtoend');
     attrs.to_comment_id = $(this).attr('to_comment_id');
-    console.log(attrs);
     comment.init(attrs);
 
     var _this = this;

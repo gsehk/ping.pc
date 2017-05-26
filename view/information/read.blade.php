@@ -28,14 +28,14 @@
                     @if($is_collect_news <= 0)
                     <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{ count($collection) }}</font>收藏</a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{ count($collection) }}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{ count($collection) }}</font>收藏</a>
                     @endif
                 </span>
                 <span id="digg{{ $id }}" rel="{{ $digg_count }}">
                     @if($is_digg_news <= 0)
                     <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{ $digg_count }}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{ $digg_count }}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{ $digg_count }}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share">
@@ -79,7 +79,7 @@
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="javascript:;">文章<span>{{ $news_count_count }}</span></a>
+                        <a href="{{route('pc:article')}}">文章<span>{{ $news_count_count }}</span></a>
                     </li>
                     <li>
                         <a href="javascript:;">热门<span>{{ $hots }}</span></a>
@@ -92,17 +92,17 @@
                     </div>
                 @endforeach
             </div>
-            <a href="javascript:;" class="del_more">更多他的文章</a>
+            @if(count($news) >= 3)<a href="javascript:;" class="del_more">更多他的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
                 <ul class="infR_time" id="j-recent-hot">
-                    <li><a href="javascript:;" class="week a_border">本周</a></li>
-                    <li><a href="javascript:;" class="meth">当月</a></li>
-                    <li><a href="javascript:;" class="moth">季度</a></li>
+                    <li><a href="javascript:;" cid="1" class="week a_border">本周</a></li>
+                    <li><a href="javascript:;" cid="2" class="meth">当月</a></li>
+                    <li><a href="javascript:;" cid="3" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
-                    <div class='loading'><img src="{{ $routes['resource'] }}/images/loading.png" class='load'>加载中</div>
+                    
                 </ul>
             </div>
         </div>
@@ -119,7 +119,6 @@ $('#J-comment-news').on('click', function(){
     attrs.to_uid = $(this).attr('to_uid');
     attrs.addToEnd = $(this).attr('addtoend');
     attrs.to_comment_id = $(this).attr('to_comment_id');
-    console.log(attrs);
     comment.init(attrs);
 
     var _this = this;
@@ -134,21 +133,12 @@ $(document).ready(function(){
 
   comment.init({row_id:'{{$id}}', canload:true});
 
-  recent_hot(1);
-  $('#j-recent-hot .week').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(1);
-  });
-  $('#j-recent-hot .meth').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(2);
-  });
-  $('#j-recent-hot .moth').on('click', function(){
-    $('#j-recent-hot a').removeClass('a_border');
-    $(this).addClass('a_border');
-    recent_hot(3);
+  recent_hot(1); 
+  $('#j-recent-hot a').on('click', function(){
+        var cid = $(this).attr('cid');
+        recent_hot(cid);
+        $('#j-recent-hot a').removeClass('a_border');
+        $(this).addClass('a_border');
   });
 });
 </script>
