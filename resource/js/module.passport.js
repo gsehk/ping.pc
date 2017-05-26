@@ -104,6 +104,9 @@ $(function() {
                         $('#phone_tip').html('请输入正确的手机号').show();
                         $('input[name="phone"]').focus();
                         re_captcha();
+                    } else if (xhr.responseJSON.code == 1002) {
+                        $('#name_tip').html('用户名长度错误').show();
+                        $('input[name="name"]').focus();
                     } else if (xhr.responseJSON.code == 1003) {
                         $('#name_tip').html('用户名格式错误').show();
                         $('input[name="name"]').focus();
