@@ -104,6 +104,13 @@ $(function() {
                         $('#phone_tip').html('请输入正确的手机号').show();
                         $('input[name="phone"]').focus();
                         re_captcha();
+                    } else if (xhr.responseJSON.code == 1010) {
+                        $('#phone_tip').html('手机号已存在').show();
+                        $('input[name="phone"]').focus();
+                        re_captcha();
+                    } else if (xhr.responseJSON.code == 1001) {
+                        $('#smscode_tip').html('手机验证码错误或失效').show();
+                        $('input[name="code"]').focus();
                     } else if (xhr.responseJSON.code == 1002) {
                         $('#name_tip').html('用户名长度错误').show();
                         $('input[name="name"]').focus();
@@ -113,14 +120,7 @@ $(function() {
                     } else if (xhr.responseJSON.code == 1004) {
                         $('#name_tip').html('用户名已存在').show();
                         $('input[name="name"]').focus();
-                    } else if (xhr.responseJSON.code == 1010) {
-                        $('#phone_tip').html('手机号已存在').show();
-                        $('input[name="phone"]').focus();
-                        re_captcha();
-                    } else if (xhr.responseJSON.code == 1001) {
-                        $('#smscode_tip').html('手机验证码错误或失效').show();
-                        $('input[name="code"]').focus();
-                    }
+                    } 
                     _this.text('注册');
                     passlod = false;
                 }
