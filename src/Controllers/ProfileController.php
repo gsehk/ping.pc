@@ -467,16 +467,14 @@ class ProfileController extends BaseController
                 ->with('user')
                 ->get()
                 ->toArray();
-            $data['user'] = $feed->user()
+            $user = $feed->user()
                 ->select('id', 'name')
                 ->with('datas')
-                ->first()->toArray();
-            foreach ($data['user']['datas'] as $k => $v) {
-                $data['user'][$v['profile']] = $v['pivot']['user_profile_setting_data'];
-            }
+                ->first();
+            $data['user'] = $this->formatUserDatas($user);
             $datas[] = $data;
         }
-        
+
         $feedList['data'] = $datas;
         $feedData['html'] = view($template, $feedList, $this->mergeData)->render();
         $feedData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['feed']['feed_id'] : 0;
