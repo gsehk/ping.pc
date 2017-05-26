@@ -1649,7 +1649,8 @@ img {
 }
 
 .new_list li {
-    padding-top: 30px;
+    padding: 15px 0px;
+    border-bottom: 1px solid #ededed;
 }
 
 .new_list li span {
@@ -1658,8 +1659,6 @@ img {
     display: inline-block;
     width: 16px;
     height: 16px;
-    margin-right: 10px;
-    margin-bottom: 23px;
     text-align: center;
     color: #fff;
     border-radius: 3px;

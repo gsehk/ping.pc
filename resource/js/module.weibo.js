@@ -284,10 +284,9 @@ var comment = {
                     var data = res.data,
                         html = '';
                     for (var i in data) {
-                        var avatar = data[i].info.avatar ? API + '/storages/' + data[i].info.avatar : AVATAR;
                         html += '<div class="delComment_list comment'+data[i].id+'">';
                         html += '<div class="comment_left">';
-                        html += '<img src="' + avatar + '" class="c_leftImg" />';
+                        html += '<img src="' + data[i].info.avatar + '" class="c_leftImg" />';
                         html += '</div>';
                         html += '<div class="comment_right">';
                         html += '<span class="del_ellen">' + data[i].info.name + '</span>';
@@ -314,7 +313,7 @@ var comment = {
                     });
                 } else {
                     comment.canload = false;
-                    $('.loading').html('暂无相关内容');
+                    $('.del_left .loading').html('暂无相关内容');
                 }
             }
         });
@@ -542,7 +541,7 @@ var digg = {
                     num++;
                     $digg.attr('rel', num);
                     if (page == 'read') {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>' + num + '</font>人喜欢</a>');
+                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>' + num + '</font>人喜欢</a>');
                     } else {
                         $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>' + num + '</font></a>');
                     }
@@ -682,6 +681,7 @@ var collect = {
  */
 var recent_hot = function(type) {
     if (type != undefined) {
+        $('#j-recent-hot-wrapp').html(loadHtml);
         $.get('/information/getRecentHot', { type: type }, function(res) {
             if (res.data.length > 0) {
                 var html = '',
@@ -696,7 +696,7 @@ var recent_hot = function(type) {
                 }
                 $('#j-recent-hot-wrapp').html(html);
             } else {
-                $('#j-recent-hot-wrapp').html('<div class="loading">暂无相关内容</div>');
+                $('.del_right .loading').html('暂无相关内容');
             }
         });
     }

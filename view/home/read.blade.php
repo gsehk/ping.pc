@@ -60,7 +60,7 @@
         <div class="del_right">
             <div class="delTop">
                 <div class="delToP_left">
-                    <div> <img src="{{ $routes['resource'] }}/images/cicle.png" /></div>
+                    <div> <img src="{{ $news['user']['avatar'] }}" /></div>
                 </div>
                 <div class="delTop_right">
                     <span>{{ $news['user']['name'] }}</span>
@@ -112,7 +112,6 @@ $('#J-comment-news').on('click', function(){
     attrs.to_uid = $(this).attr('to_uid');
     attrs.addToEnd = $(this).attr('addtoend');
     attrs.to_comment_id = $(this).attr('to_comment_id');
-    console.log(attrs);
     comment.init(attrs);
 
     var _this = this;

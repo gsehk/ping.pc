@@ -96,7 +96,7 @@ class HomeController extends BaseController
         // 动态评论,详情默认为空，自动获取评论列表接口
         $data['comments'] = [];
         // 分享者发布的文章信息
-        $news = News::where('author', $uid)
+        $news = News::where('author', $feed->user_id)
                 ->withCount('newsCount') //当前作者文章数
                 ->with('user.datas')
                 ->first();
@@ -418,11 +418,16 @@ class HomeController extends BaseController
                 'message' => '动态ID不能为空',
             ])->setStatusCode(400);
         }
-        $comments = FeedComment::byFeedId($feed_id)->take($limit)->where(function ($query) use ($max_id) {
-            if ($max_id > 0) {
-                $query->where('id', '<', $max_id);
-            }
-        })->with('user.datas')->select(['id', 'created_at', 'comment_content', 'user_id', 'feed_id', 'to_user_id', 'reply_to_user_id', 'comment_mark'])->orderBy('id', 'desc')->get();
+        $comments = FeedComment::byFeedId($feed_id)
+            ->take($limit)->where(function ($query) use ($max_id) {
+                if ($max_id > 0) {
+                    $query->where('id', '<', $max_id);
+                }
+            })
+            ->with('user.datas')
+            ->select(['id', 'created_at', 'comment_content', 'user_id', 'feed_id', 'to_user_id', 'reply_to_user_id', 'comment_mark'])
+            ->orderBy('id', 'desc')
+            ->get();
         foreach ($comments as $key => $value) {
             $value['info'] = $this->formatUserDatas($value['user']);
             unset($value['user']);
