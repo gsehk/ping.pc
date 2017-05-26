@@ -146,8 +146,14 @@ weibo.postFeed = function() {
         storage_task_ids.push($(this).attr('tid'));
     });
 
+    var feed_content = $('#feed_content').val();
+    if (getLength(feed_content) > 255) {
+        noticebox('请勿超过255字', 0);
+        return false;
+    }
+
     var data = {
-        feed_content: $('#feed_content').val(),
+        feed_content: feed_content,
         storage_task_ids: storage_task_ids,
         feed_from: 1,
         isatuser: 0
