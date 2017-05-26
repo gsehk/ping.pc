@@ -63,7 +63,7 @@ class HomeController extends BaseController
 
             return response('动态ID不能为空');
         }
-        $feed = Feed::byFeedId($feed_id)->with('storages')->first();
+        $feed = Feed::byFeedId($feed_id)->with('storages')->with('user.datas')->first();
 
         if (! $feed) {
             return response('动态不存在或已被删除');
@@ -100,11 +100,23 @@ class HomeController extends BaseController
                 ->withCount('newsCount') //当前作者文章数
                 ->with('user.datas')
                 ->first();
-        $data['news']['user'] = $this->formatUserDatas($news->user); 
-        $data['news']['newsNum'] = $news->news_count_count;
-        $data['news']['list'] = $news->where('author', $uid)->orderBy('created_at', 'desc')->take(4)->select('id','title')->get();
-        $data['news']['hotsNum'] = $news->join('news_cates_links', 'news.id','=','news_cates_links.news_id')->where([['news.author','=',$uid], ['news_cates_links.cate_id','=',1]])->count();
-        
+        if ($news) {
+            $data['news']['user'] = $this->formatUserDatas($news->user); 
+            $data['news']['newsNum'] = $news->news_count_count;
+            $data['news']['list'] = $news->where('author', $feed->user_id)
+                ->orderBy('created_at', 'desc')
+                ->take(4)
+                ->select('id','title')
+                ->get();
+            $data['news']['hotsNum'] = $news->join('news_cates_links', 'news.id','=','news_cates_links.news_id')
+                ->where([['news.author','=',$feed->user_id], ['news_cates_links.cate_id','=',1]])
+                ->count();
+        }else{
+            $data['news']['user'] = $this->formatUserDatas($feed->user);
+            $data['news']['newsNum'] = 0;
+            $data['news']['hotsNum'] = 0;
+            $data['news']['list'] = [];
+        }
         
         Feed::byFeedId($feed_id)->increment('feed_view_count');
 
