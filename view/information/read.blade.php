@@ -75,7 +75,7 @@
                 </div>
                 <div class="delTop_right">
                     <span>{{ $user['name'] }}</span>
-                    <p class="txt-hide">{{ $user['intro'] }}</p>
+                    <p class="txt-hide">{{ $user['intro'] or ''}}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
