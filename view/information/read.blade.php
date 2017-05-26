@@ -92,7 +92,7 @@
                     </div>
                 @endforeach
             </div>
-            <a href="javascript:;" class="del_more">更多他的文章</a>
+            @if(count($news) >= 3)<a href="javascript:;" class="del_more">更多他的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>

@@ -690,7 +690,7 @@ var recent_hot = function(type) {
                 for (var i in data) {
                     html += '<li>' +
                         '<span>' + f + '</span>' +
-                        '<a href="javascript:;">' + data[i].title + '</a>' +
+                        '<a href="/information/read/'+data[i].id+'">' + data[i].title + '</a>' +
                         '</li>';
                     f++;
                 }

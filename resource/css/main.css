@@ -1530,7 +1530,7 @@ img {
 .infR_top {
     width: 100%;
     margin-top: 15px;
-    padding: 15px;
+    padding: 15px 15px 0;
     border: 1px solid #ededed;
     border-radius: 3px;
     background-color: white;
@@ -1620,7 +1620,7 @@ img {
     margin: 0;
     padding-top: 16px;
     padding-bottom: 40px;
-    border-bottom: 1px solid #ededed;
+    /*border-bottom: 1px solid #ededed;*/
     background-color: #fff;
 }
 
@@ -1650,7 +1650,8 @@ img {
 
 .new_list li {
     padding: 15px 0px;
-    border-bottom: 1px solid #ededed;
+    border-top: 1px solid #ededed;
+    overflow: hidden;
 }
 
 .new_list li span {
