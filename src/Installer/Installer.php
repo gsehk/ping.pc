@@ -133,9 +133,6 @@ class Installer extends AbstractInstaller
         }
 
         $next();
-
-
-        $next();
     }
 
     /**

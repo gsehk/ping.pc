@@ -24,6 +24,5 @@
     "zhiyicx/plus-install-plugin": "^1.0",
     "gregwar/captcha": "1.*",
     "unicodeveloper/laravel-emoji": "1.0.*"
-  },
-  "version": "1.0.1"
+  }
 }

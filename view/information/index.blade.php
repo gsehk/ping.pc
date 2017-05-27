@@ -48,10 +48,10 @@
             <div class="inR_time">{{date('Y-m-d')}}</div>
             @if(empty($ischeck))
             <span class="inR_qd" onclick="checkin();" id="checkin">每日签到</span>
-            @else 
-                <span class="inR_qd">已签到</span>
-            @endif
             <div class="inR_lk">立即签到，赚取<span> 5 </span>积分</div>
+            @else 
+            <span class="inR_qd">已签到</span>
+            @endif
         </div>
         <div class="inR_bottom">
         <a href="{{ route('pc:users', ['type'=>2]) }}" title="">

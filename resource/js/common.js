@@ -1,31 +1,35 @@
 var initNums = 255;
 var loadHtml = "<div class='loading'><img src='" + PUBLIC_URL + "/images/loading.png' class='load'>加载中</div>";
-var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>  确定删除這条信息？';
+var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>  确定删除这条信息？';
 var request_url = {
-    login: 'passport/index',
     /* 登录 */
-    get_news: '/information/getNewsList',
+    login: '/passport/index',
+
     /* 获取文章列表 */
-    digg_news: '/api/v1/news/{news_id}/digg',
+    get_news: '/information/getNewsList',
     /* 文章点赞 */
-    collect_news: '/api/v1/news/{news_id}/collection',
+    digg_news: API + 'news/{news_id}/digg',
     /* 文章收藏  */
-    comment_news: '/api/v1/news/{news_id}/comment',
+    collect_news: API + 'news/{news_id}/collection',
     /* 评论文章 */
+    comment_news: API + 'news/{news_id}/comment',
+    // 新闻评论
     get_comment: '/information/{news_id}/comments',
+
     /* 分享评论 */
-    feed_comment: '/api/v1/feeds/{feed_id}/comment',
-    /*  删除分享评论  */
-    del_feed_comment: '/api/v1/feeds/{feed_id}/comment/{comment_id}',
+    feed_comment: API + 'feeds/{feed_id}/comment',
+    /* 删除分享评论  */
+    del_feed_comment: API + 'feeds/{feed_id}/comment/{comment_id}',
     /* 删除文章评论 */
-    del_news_comment: '/api/v1/news/{news_id}/comment/{comment_id}',
+    del_news_comment: API + 'news/{news_id}/comment/{comment_id}',
     /* 删除分享 */
-    delete_feed: '/api/v1/feeds/{feed_id}',
+    delete_feed: API + 'feeds/{feed_id}',
+
     /*  举报分享  */
     denounce_feed: '/feed/{feed_id}/denounce',
-    digg_feed: '/api/v1/feeds/{feed_id}/digg',
+    digg_feed: API + 'feeds/{feed_id}/digg',
     get_feed_commnet: '/home/{feed_id}/comments',
-    collect_feed: '/api/v1/feeds/{feed_id}/collection',
+    collect_feed: API + 'feeds/{feed_id}/collection',
     get_user_feed: '/profile/users/{user_id}',
     get_user_news: '/profile/news/{user_id}',
     get_user_collect: '/profile/collection/{user_id}',
@@ -114,7 +118,7 @@ var doFileUpload = function(image, f, callback) {
     };
     // 创建存储任务
     $.ajax({
-        url: '/api/v1/storages/task',
+        url: API + 'storages/task',
         type: 'POST',
         async: false,
         data: args,
@@ -144,7 +148,7 @@ var doFileUpload = function(image, f, callback) {
 
                         // 上传通知 
                         $.ajax({
-                            url: '/api/v1/storages/task/' + res.data.storage_task_id,
+                            url: API + 'storages/task/' + res.data.storage_task_id,
                             type: 'PATCH',
                             async: false,
                             beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', res.data.headers.Authorization);　　　 },

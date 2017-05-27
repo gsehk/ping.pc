@@ -55,6 +55,7 @@ class BaseController extends Controller
 	        ];
 	        $this->mergeData['site'] = $config;
 
+	        // 公共配置
             $this->mergeData['routes']['storage'] = '/api/v1/storages/';
             $this->mergeData['routes']['resource'] = asset('');
 

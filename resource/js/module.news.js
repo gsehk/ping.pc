@@ -101,7 +101,12 @@ news.loadMore = function() {
 
         } else {
             news.setting.canload = false;
-            $('.loading').html('暂无相关内容');
+            if (news.setting.loadcount == 1) {
+                no_data(news.setting.container, 1, ' 暂无相关内容');
+                $('.loading').html('');
+            } else {
+                $('.loading').html('暂无相关内容');
+            }
         }
     });
 };

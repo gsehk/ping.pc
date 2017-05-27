@@ -40,8 +40,8 @@
     </div>
     @else
     <div class="nav_right">
-        <a href="{{ route('pc:register') }}">注册</a>
-        <a href="{{ route('pc:index') }}">登录</a>
+        <a class="nava" href="{{ route('pc:register') }}">注册</a>
+        <a class="nava" href="{{ route('pc:index') }}">登录</a>
     </div>
     @endif
 </div>

@@ -37,6 +37,7 @@ class InformationController extends BaseController
             })->first();
 
         /* 推荐文章第一条 */
+        $datas['recommend'] = [];
         $rec = News::where('is_recommend', 1)
             ->orderBy('news.id', 'desc')
             ->take(6)
@@ -54,9 +55,10 @@ class InformationController extends BaseController
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
 
         /*  热门作者 */
+        $datas['author'] = [];
         $author = News::where('author','!=', 0)
             ->orderBy('hits', 'desc')
-            ->groupBy('author')
+            // ->groupBy('author')
             ->select('author')
             ->take(3)
             ->with('user.datas')
