@@ -228,7 +228,8 @@ class ProfileController extends BaseController
                                         ->where('feeds.user_id', '=', $follow->user->id)
                                         ->orderBy('feed_storages.id', 'desc')
                                         ->take(3)
-                                        ->pluck('feed_storages.feed_storage_id')
+                                        ->select('feeds.id', 'feed_storages.feed_storage_id')
+                                        ->get()
                                         ->toArray();
 
                 $data['datas'][] = $_data;
@@ -252,7 +253,8 @@ class ProfileController extends BaseController
                                         ->where('feeds.user_id', '=', $follow->user->id)
                                         ->orderBy('feed_storages.id', 'desc')
                                         ->take(3)
-                                        ->pluck('feed_storages.feed_storage_id')
+                                        ->select('feeds.id', 'feed_storages.feed_storage_id')
+                                        ->get()
                                         ->toArray();
 
                 $data['datas'][] = $_data;
@@ -279,7 +281,8 @@ class ProfileController extends BaseController
                                         ->where('feeds.user_id', '=', $visitor->user->id)
                                         ->orderBy('feed_storages.id', 'desc')
                                         ->take(3)
-                                        ->pluck('feed_storages.feed_storage_id')
+                                        ->select('feeds.id', 'feed_storages.feed_storage_id')
+                                        ->get()
                                         ->toArray();
 
                 $data['datas'][] = $_data;
@@ -309,7 +312,8 @@ class ProfileController extends BaseController
                                         ->where('feeds.user_id', '=', $recuser->user->id)
                                         ->orderBy('feed_storages.id', 'desc')
                                         ->take(3)
-                                        ->pluck('feed_storages.feed_storage_id')
+                                        ->select('feeds.id', 'feed_storages.feed_storage_id')
+                                        ->get()
                                         ->toArray();
 
                 $data['datas'][] = $_data;

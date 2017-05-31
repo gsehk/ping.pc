@@ -50,11 +50,11 @@
             <div class="fan_line"></div>
             <div class="fanList_bottom">
                 @foreach ($data['storages'] as $storage)
-                <a href="javascript:;"> <img src="{{$routes['storage']}}{{$storage}}" /></a>
+                <a href="/home/{{ $storage['id'] }}/feed"> <img src="{{ $routes['storage'] }}{{ $storage['feed_storage_id'] }}" /></a>
                 @endforeach
 
                 @for ($i = 0; $i < (3 -count($data['storages'])); $i++)
-                <a href="javascript:;"> <img src="{{$routes['resource']}}/images/default_picture.png" /></a>
+                <a href="javascript:;"> <img src="{{ $routes['resource'] }}/images/default_picture.png" /></a>
                 @endfor
             </div>
         </div>
