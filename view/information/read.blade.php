@@ -38,17 +38,11 @@
                     <a href="javascript:;" onclick="digg.delDigg('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{ $digg_count }}</font>人喜欢</a>
                     @endif
                 </span>
-                <div class="del_share">
+                <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
                     分享至：
-                    <svg class="icon svdel_g1" aria-hidden="true">
-                        <use xlink:href="#icon-weibo"></use>
-                    </svg>
-                    <svg class="icon svdel_g2" aria-hidden="true">
-                        <use xlink:href="#icon-qq"></use>
-                    </svg>
-                    <svg class="icon svdel_g3" aria-hidden="true">
-                        <use xlink:href="#icon-weixin"></use>
-                    </svg>
+                    <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
+                    <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
                 </div>
             </div>
             <div class="del_comment"><span class="comment_count">{{ $comment_count }}</span>人评论</div>
@@ -112,6 +106,7 @@
 
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/module.news.js"></script>
+<script src="{{ $routes['resource'] }}/js/module.bdshare.js"></script>
 <script type="text/javascript">
 
 $('#J-comment-news').on('click', function(){
@@ -140,6 +135,13 @@ $(document).ready(function(){
         $('#j-recent-hot a').removeClass('a_border');
         $(this).addClass('a_border');
   });
+});
+bdshare.addConfig('share', {
+    "tag" : "share_feedlist",
+    'bdText' : '{{ $title }}',
+    'bdDesc' : '{{ $title }}',
+    'bdUrl' : window.location.href,
+    'bdPic' : '{{ $routes['resource'] }}/images/default_cover.png'
 });
 </script>
 @endsection

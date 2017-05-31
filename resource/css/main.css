@@ -1743,7 +1743,7 @@ img {
     border-bottom: 1px solid #ededed;
 }
 
-.del_pro a {
+.del_pro>span a {
     font-size: 14px;
     line-height: 40px;
     display: inline-block;
@@ -1755,7 +1755,7 @@ img {
     border-radius: 3px;
 }
 
-.del_pro a.act {
+.del_pro>span a.act {
     color: #59b6d7;
     border: 1px solid #59b6d7;
 }
@@ -1777,18 +1777,28 @@ img {
     color: #666;
 }
 
-.del_share a {
+.del_share>a {
     float: none;
     padding: 0px;
     margin: 0px;
-    background: none;
+    background-image: none;
 }
 
 .del_share svg {
     font-size: 20px;
     margin-left: 4px;
 }
-
+.bdshare-button-style0-16 a{
+    width: 28px;
+    height: 20px !important;
+    display: inline-block;
+    float: none !important;
+    background-position: 0 0 !important;
+    font-size: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden;
+}
 .svdel_g1 {
     color: #f87d72;
 }
@@ -4090,4 +4100,14 @@ img.load {
     margin-left: 15px;
     cursor: pointer;
     color: #59b6d7;
+}
+
+.share_feedlist .bds_tsina{
+    background-image: url(../images/ico_detail_share_weibo_high.png) !important;
+}
+.share_feedlist .bds_tqq{
+    background-image: url(../images/ico_detail_share_qq_high.png) !important;
+}
+.share_feedlist .bds_weixin{
+    background-image: url(../images/ico_detail_share_wechat_high.png) !important;
 }

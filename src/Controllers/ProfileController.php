@@ -332,14 +332,11 @@ class ProfileController extends BaseController
         $datas['page'] = $request->input('page') ?: 'account';
         switch ($datas['page']) {
             case 'account':
-                $datas['data'] = User::where('id', $user_id)
+                $info = User::where('id', $user_id)
                                 ->select('id', 'name')
                                 ->with('datas')
                                 ->first();
-                foreach ($datas['data']['datas'] as $key => &$value) {
-                    $datas['data'][$value['profile']] = $value['pivot']['user_profile_setting_data'];
-                }
-                unset($datas['data']['datas']);
+                $datas['info'] = $this->formatUserDatas($info);
                 break;
             case 'account-auth':
                 $datas['auth'] = UserVerified::where('user_id', $user_id)
