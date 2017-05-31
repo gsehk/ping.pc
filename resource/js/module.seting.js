@@ -112,10 +112,10 @@ $('#J-submit').on('click', function(e) {
         data: args,
         dataType: 'json',
         error: function(xml) {
-            noticebox('资料修改失败', 0);
+            noticebox('资料修改失败', 0, 'refresh');
         },
         success: function(res) {
-            noticebox('资料修改成功', 1);
+            noticebox('资料修改成功', 1, 'refresh');
         }
     });
 });
