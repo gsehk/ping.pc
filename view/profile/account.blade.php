@@ -29,7 +29,7 @@
     </div>
     <div class="bas_right" id="J-input">
         <div class="bas_header">
-            <img id="J-image-preview" src="{{ $routes['storage']}}{{ $data['avatar'] }}" />
+            <img id="J-image-preview" src="{{ $info['avatar'] }}" />
             <span class="con_cover ai_face_box">
                 <div class="ai_upload">
                     <input id="J-file-upload"
@@ -49,36 +49,36 @@
         <div class="f_div">
             <div class="f_tel bas_div">
                 <label>昵称</label>
-                <span class="f_span"><input type="text" name="name" value="{{$data['name'] }}" placeholder="输入昵称"></span>
+                <span class="f_span"><input type="text" name="name" value="{{$info['name'] }}" placeholder="输入昵称"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>简介</label>
-                <span class="f_span"><input type="text" name="intro" value="{{$data['intro'] }}" placeholder="输入简介"></span>
+                <span class="f_span"><input type="text" name="intro" value="{{$info['intro'] or ''}}" placeholder="输入简介"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>性别</label>
-                  <span class="sex_item"><input name="sex" type="radio" value="1" class="s-ck" @if($data['sex'] == 1) checked="checked" @endif>男</span>
-                  <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" @if($data['sex'] == 2) checked="checked" @endif>女</span>
-                  <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck" @if($data['sex'] == 3) checked="checked" @endif>不方便透露</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="1" class="s-ck" @if($info['sex'] == 1) checked="checked" @endif>男</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" @if($info['sex'] == 2) checked="checked" @endif>女</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck" @if($info['sex'] == 3) checked="checked" @endif>不方便透露</span>
             </div>
             <div class="f_tel bas_div">
                 <label>生日</label>
                 <div class="f_select">
                     <span></span>
-                    <select name="y" class="sel_year" rel="2000"></select>
+                    <select name="year" class="sel_year" rel="{{$info['year'] or 2000}}"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select name="m" class="sel_month" rel="6"></select>
+                    <select name="moth" class="sel_month" rel="{{$info['moth'] or 6}}"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select name="d" class="sel_day" rel="14"></select>
+                    <select name="day" class="sel_day" rel="{{$info['day'] or 14}}"></select>
                 </div>
             </div>
             <div class="f_tel bas_div">
                 <label>公司</label>
-                <span class="f_span"><input type="text" name="company" placeholder="输入公司名称"></span>
+                <span class="f_span"><input type="text" name="company" placeholder="输入公司名称" value="{{$info['company'] or ''}}"></span>
             </div>
             <div class="f_tel bas_div" id="sel_area">
                 <label>地区</label>
@@ -106,8 +106,8 @@
 <script src="{{ $routes['resource'] }}/js/module.seting.js"></script>
 <script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
 <script> 
-var username = "{{$data['name'] }}";
-var arrSelect = ["{{$data['province'] }}", "{{$data['city'] }}", "{{$data['area'] }}"];
+var username = "{{$info['name'] }}";
+var arrSelect = ["{{$info['province'] or 0}}", "{{$info['city'] or 0}}", "{{$info['area'] or 0}}"];
 $('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];
     fileUpload(file, updateImg);
