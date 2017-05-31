@@ -9,7 +9,7 @@
     <script>
         // 全局变量
         var PUBLIC_URL = '{{ $routes["resource"] }}';
-        var API = '/api/v1';
+        var API = '/api/v1/';
         // 用户属性
         var MID = "{{ $TS['id'] or 0 }}";
         var NAME = "{{ $TS['name'] or '' }}";
