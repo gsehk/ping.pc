@@ -7,7 +7,7 @@
             @foreach($recommend as $frv)
                 @if($loop->first)
                 <div class="inT_title">
-                    <img src="{{ $routes['storage'] }}{{ $frv['info']['avatar'] }}" />
+                    <img src="{{ $frv['info']['avatar'] }}" />
                     <span>{{ $frv['info']['name'] }}</span>
                 </div>
                 <a href="/information/read/{{$frv['id']}}">
