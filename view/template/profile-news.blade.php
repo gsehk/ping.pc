@@ -7,8 +7,8 @@
     <div class="artic_div artic_list">
         <img src="{{$routes['storage']}}{{$post['storage']}}" class="img-responsive img1">
         <div class="img_title">
-            <p class="i_title fs-20">{{$post['title']}}</p>
-            <p class="i_subTiLe fs-12">{{$post['abstract'] or '这里是副标题'}}</p>
+            <p class="i_title fs-20"><a href="/information/read/{{$post['id']}}">{{$post['title']}}</a></p>
+            <p class="i_subTiLe fs-12">{{$post['abstract'] or ''}}</p>
         </div>
     </div>                  
     <div class="dy_comment">
