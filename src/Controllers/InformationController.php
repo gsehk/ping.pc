@@ -56,9 +56,9 @@ class InformationController extends BaseController
 
         /*  热门作者 */
         $datas['author'] = [];
-        $author = News::where('author','!=', 0)
+        $author = News::byAudit()
             ->orderBy('hits', 'desc')
-            // ->groupBy('author')
+            ->groupBy('author')
             ->select('author')
             ->take(3)
             ->with('user.datas')
@@ -311,9 +311,10 @@ class InformationController extends BaseController
                     ->toArray();
         } else {
             //获取热门作者
-            $datas = News::where('audit_status', 0)
+            $datas = News::byAudit()
                     ->orderBy('hits', 'desc')
                     ->take($limit)
+                    ->orderBy('author')
                     ->select('author')
                     ->with('user')
                     ->get();
