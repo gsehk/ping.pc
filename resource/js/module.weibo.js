@@ -286,10 +286,10 @@ var comment = {
                     for (var i in data) {
                         html += '<div class="delComment_list comment'+data[i].id+'">';
                         html += '<div class="comment_left">';
-                        html += '<img src="' + data[i].info.avatar + '" class="c_leftImg" />';
+                        html += '<a href="/profile/index?user_id='+data[i].user_id+'"><img src="' + data[i].info.avatar + '" class="c_leftImg" /></a>';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<span class="del_ellen">' + data[i].info.name + '</span>';
+                        html += '<a href="/profile/index?user_id='+data[i].user_id+'"><span class="del_ellen">' + data[i].info.name + '</span></a>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
                        /* html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
                         html += '<p>' + data[i].comment_content + '';
@@ -306,7 +306,7 @@ var comment = {
                         html += '</p></div></div>';
                     }
                     $(comment.box).append(html);
-                    $('.loading').remove();
+                    $('.del_left .loading').remove();
                     $('.J-reply-comment').on('click', function() {
                         var attrs = urlToObject($(this).data('args'));
                         comment.initReadReply(attrs);
@@ -411,6 +411,7 @@ var comment = {
                     if ("undefined" != typeof(commentBox)) {
                         commentBox.prepend(html);
                         _textarea.value = '';
+                        $('.nums').text(initNums);
                     }
                 } else {
                     alert(res.message);
@@ -457,10 +458,10 @@ var comment = {
                     }
                     var html = '<div class="delComment_list comment'+res.data+'">';
                         html += '<div class="comment_left">';
-                        html += '<img src="'+AVATAR+'" class="c_leftImg" />';
+                        html += '<a href="/profile/index?user_id='+MID+'"><img src="'+AVATAR+'" class="c_leftImg" /></a>';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<span class="del_ellen">' + NAME + '</span>';
+                        html += '<a href="/profile/index?user_id='+MID+'"><span class="del_ellen">' + NAME + '</span></a>';
                         html += '<span class="c_time">刚刚</span>';
                         /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
                         html += '<p>' + content + '';
@@ -474,6 +475,8 @@ var comment = {
                         } else {
                             commentBox.prepend(html);
                         }
+                        _textarea.value = '';
+                        $('.nums').text(initNums);
                         /*绑定回复操作*/
                         $('.J-reply-comment').on('click', function() {
                             comment.initReply();

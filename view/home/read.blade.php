@@ -85,7 +85,6 @@
                     <li><a href="javascript:;" cid="3" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
-                    <div class='loading'><img src="{{ $routes['resource'] }}/images/loading.png" class='load'>加载中</div>
                 </ul>
             </div>
         </div>
