@@ -1433,6 +1433,7 @@ img {
 .inf_cont {
     width: 100%;
     background: #fff;
+    padding-bottom: 50px;
 }
 
 .inf_left {
