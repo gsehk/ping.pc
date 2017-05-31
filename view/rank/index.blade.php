@@ -69,7 +69,7 @@
                         <img src="{{ $cv->info['avatar'] }}" class="fans_img" />
                         {{$cv->name}}
                     </div>
-                    <div class="fans_span3">{{$cv->value}}</div>
+                    <div class="fans_span3">{{$cv->score}}</div>
                 </li>
                 @endforeach
             </div>
