@@ -20,11 +20,11 @@
                 <span @if($page == 'account-security') class="c_333" @endif>修改密码</span>
             </div>
         </a>
-        <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
+        <!-- <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-bind') class="c_333" @endif>绑定</span>
             </div>
-        </a>
+        </a> -->
     </div>
     <div class="bas_right">
         <div class="f_div cer_div">

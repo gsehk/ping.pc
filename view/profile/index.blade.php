@@ -36,6 +36,7 @@
             @if (!empty($user['month']))
             {{ '.'.$user['month'] }}
             @endif
+            
             @if (!empty($user['day']))
             {{ '.'.$user['day'] }}
             @endif

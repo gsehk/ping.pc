@@ -12,6 +12,7 @@ use Zhiyi\Plus\Models\VerifyCode;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\AuthToken;
 use Zhiyi\Plus\Models\LoginRecord;
+use Zhiyi\Plus\Models\CommonConfig;
 use Session;
 
 class PassportController extends BaseController
@@ -147,6 +148,12 @@ class PassportController extends BaseController
         $phone = $request->input('phone');
         $password = $request->input('password', '');
 
+        $role = CommonConfig::byNamespace('user')
+            ->byName('default_role')
+            ->firstOr(function () {
+                throw new RuntimeException('Failed to get the defined user group.');
+            });
+
         // 注册用户
         $user = new User();
         $user->name = $name;
@@ -154,7 +161,11 @@ class PassportController extends BaseController
         $user->createPassword($password);
         $user->save();
 
-        return $this->doLogin($request);
+        if ($user->save()) {
+            // 添加默认用户组.
+            $user->attachRole($role->value);
+            return $this->doLogin($request);
+        }
     }
 
     public function perfect()

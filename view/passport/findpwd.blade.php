@@ -5,7 +5,7 @@
 @section('content')
 <div class="forget_cont" style="height:580px;">
     <ul class="forget_ul">
-        <li><a href="{{ route('pc:findPassword', ['type'=>1]) }}" class="forget_333">手机找回</a></li>
+        <li><a href="{{ route('pc:findPassword', ['type'=>1]) }}" class="forget_333">密码找回</a></li>
     </ul>
     <div class="f_div">
         <form method="POST" id="findpwd_form">

@@ -33,15 +33,21 @@
                 <span class="no_span">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
                 <div class="del_share login_share" >
                     三方登录：
+                    <a href="javascript:noticebox('暂未开放', 0)">
                     <svg class="icon svdel_g1" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weibo"></use>
                     </svg>
+                    </a>
+                    <a href="javascript:noticebox('暂未开放', 0)">
                     <svg class="icon svdel_g2" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qq"></use>
                     </svg>
+                    </a>
+                    <a href="javascript:noticebox('暂未开放', 0)">
                     <svg class="icon svdel_g3" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weixin"></use>
                     </svg>
+                    </a>
                 </div>
             </div>
 
