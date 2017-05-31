@@ -168,7 +168,7 @@ var doFileUpload = function(image, f, callback) {
 // 关注
 var follow = function(status, user_id, target, callback) {
     if (status == 0) {
-        var url = API + '/users/follow';
+        var url = API + 'users/follow';
         $.ajax({
             url: url,
             type: 'POST',
@@ -178,7 +178,7 @@ var follow = function(status, user_id, target, callback) {
             }
         })
     } else {
-        var url = API + '/users/unFollow';
+        var url = API + 'users/unFollow';
         $.ajax({
             url: url,
             type: 'DELETE',

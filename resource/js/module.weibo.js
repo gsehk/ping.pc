@@ -153,7 +153,7 @@ weibo.postFeed = function() {
         isatuser: 0
     }
 
-    var url = API + '/feeds';
+    var url = API + 'feeds';
     $.ajax({
         url: url,
         type: 'post',

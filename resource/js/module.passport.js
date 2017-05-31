@@ -246,7 +246,7 @@ $(function() {
                     re_captcha();
                 } else {
                     // 发送验证码
-                    var url = API + '/auth/phone/send-code';
+                    var url = API + 'auth/phone/send-code';
                     $.ajax({
                         type: 'post',
                         url: url,
