@@ -76,12 +76,14 @@
                         </div>
                         <a href="{{ route('pc:article', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16 border_left_no dy_cen_333"><div>文章</div></a>
                     </div>
+                    @if(!empty($TS) && $TS['id'] == $user['id'])
                     <div class="article_state">
                         <a href="javascript:;" data-state="0" class="fs-14 @if($type == 0) dy_cen_333 @endif">已发布</a>
                         <a href="javascript:;" data-state="1" class="fs-14 @if($type == 1) dy_cen_333 @endif">投稿中</a>
                         <a href="javascript:;" data-state="3" class="fs-14 @if($type == 3) dy_cen_333 @endif">被驳回</a>
                         <a href="javascript:;" data-state="2" class="fs-14 @if($type == 2) dy_cen_333 @endif">草稿</a>
                     </div>
+                    @endif
                     <div id="article-list">
                     </div>
                 </div>
