@@ -204,7 +204,7 @@ var recommend = {
  */
 var recent_hot = function(type) {
     if (type != undefined) {
-        // $('#j-recent-hot-wrapp').html(loadHtml);
+        $('#j-recent-hot-wrapp').html(loadHtml);
         $.get('/information/getRecentHot', { type: type }, function(res) {
             if (res.data.length > 0) {
                 var html = '',

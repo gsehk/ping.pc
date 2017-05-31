@@ -184,7 +184,7 @@ setTimeout(function() {
 $(document).ready(function(){
 $('.unslider').unslider({delay:3000});
   recent_hot(1);
-  $('#j-recent-hot a').on('mouseover', function(){
+  $('#j-recent-hot a').on('click', function(){
         var cid = $(this).attr('cid');
         recent_hot(cid);
         $('#j-recent-hot a').removeClass('a_border');
