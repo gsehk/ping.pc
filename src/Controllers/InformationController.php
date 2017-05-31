@@ -58,8 +58,8 @@ class InformationController extends BaseController
         $datas['author'] = [];
         $author = News::byAudit()
             ->orderBy('hits', 'desc')
-            ->groupBy('author')
             ->select('author')
+            ->groupBy('author')
             ->take(3)
             ->with('user.datas')
             ->get();
