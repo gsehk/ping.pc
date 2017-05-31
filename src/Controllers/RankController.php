@@ -36,7 +36,7 @@ class RankController extends BaseController
         $user_id = $this->mergeData['TS']['id'] ?? 0;
         $rank_list_key = 'user_rank_list_'.$type;
         $rank_list = Cache::get($rank_list_key);
-        if ($rank_list) {
+        // if ($rank_list) {
             /*粉丝排行榜*/
             $followed = User::join('user_datas', 'users.id', '=', 'user_datas.user_id')
                         ->where('user_datas.key', '=', 'followed_count')
@@ -90,11 +90,11 @@ class RankController extends BaseController
             ];
 
             Cache::put($rank_list_key, $rank_list, 600);
-        }
+        // }
 
         $user_rank_key = 'user_rank_list_'.$type.'_'.$user_id;
         $user_rank_list = Cache::get($user_rank_key);
-        if ($user_rank_list) {
+        // if ($user_rank_list) {
             $user_credit = CreditUser::where('user_id', $user_id)->first();
             $user_data = UserDatas::where('user_id', $user_id)
                         ->select('key', 'value')
@@ -104,7 +104,7 @@ class RankController extends BaseController
                 $user_key_data[$v['key']] = $v['value'];
             }
 
-            $followed_rank = UserDatas::where(function ($query){
+            $followed_rank = UserDatas::where(function ($query) use ($user_key_data){
                                 if (!empty($user_key_data['followed_count'])) {
                                     $query->where('value', '>', $user_key_data['followed_count']);
                                 }
@@ -113,7 +113,7 @@ class RankController extends BaseController
                             ->count();
             $followed_rank += 1;
 
-            $post_rank = UserDatas::where(function ($query){
+            $post_rank = UserDatas::where(function ($query) use ($user_key_data){
                                 if (!empty($user_key_data['feeds_count'])) {
                                     $query->where('value', '>', $user_key_data['feeds_count']);
                                 }
@@ -123,7 +123,7 @@ class RankController extends BaseController
             $post_rank += 1;
 
             /*数据库暂时写一条数据做操作 所以此条不准*/
-            $check_rank = UserDatas::where(function ($query){
+            $check_rank = UserDatas::where(function ($query) use ($user_key_data){
                                 if (!empty($user_key_data['check_totalnum'])) {
                                     $query->where('value', '>', $user_key_data['check_totalnum']);
                                 }
@@ -132,7 +132,7 @@ class RankController extends BaseController
                         ->count();
             $check_rank += 1;
             
-            $score_rank = CreditUser::where(function ($query){
+            $score_rank = CreditUser::where(function ($query) use ($user_credit){
                                 if (!empty($user_credit->score)) {
                                     $query->where('score', '>', $user_credit->score);
                                 }
@@ -148,7 +148,7 @@ class RankController extends BaseController
             ];
 
             Cache::put($user_rank_key, $user_rank_list, 600);
-        }
+        // }
         $res_list = array_merge($rank_list, $user_rank_list);
 
         return $res_list;
