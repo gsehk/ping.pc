@@ -13,13 +13,13 @@ if (!Schema::hasColumn($component_table_name, 'user_id')) {
 
 if (!Schema::hasColumn($component_table_name, 'con_num')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->integer('con_num')->default(0)->comment('连续签到次数');
+        $table->integer('con_num')->comment('连续签到次数');
     });
 }
 
 
 if (!Schema::hasColumn($component_table_name, 'total_num')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->integer('total_num')->default(0)->comment('总签到次数');
+        $table->integer('total_num')->comment('总签到次数');
     });
 }

@@ -7,7 +7,7 @@ $component_table_name = 'credit_record';
 
 if (!Schema::hasColumn($component_table_name, 'cid')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->integer('cid')->default(0)->comment('对应的积分设置ID');
+        $table->integer('cid')->comment('对应的积分设置ID');
     });
 }
 
@@ -20,37 +20,25 @@ if (!Schema::hasColumn($component_table_name, 'type')) {
 
 if (!Schema::hasColumn($component_table_name, 'user_id')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->integer('user_id')->default(NULL)->comment('用户ID');
+        $table->integer('user_id')->comment('用户ID');
     });
 }
 
 
 if (!Schema::hasColumn($component_table_name, 'action')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->string('action')->default(NULL)->comment('操作');
-    });
-}
-
-if (!Schema::hasColumn($component_table_name, 'des')) {
-    Schema::table($component_table_name, function (Blueprint $table) {
-        $table->text('des')->default(NULL)->comment('详情');
+        $table->string('action')->comment('操作');
     });
 }
 
 if (!Schema::hasColumn($component_table_name, 'change')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->string('change')->default(NULL)->comment('积分变更');
+        $table->string('change')->comment('积分变更');
     });
 }
 
 if (!Schema::hasColumn($component_table_name, 'detail')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->string('detail')->default(NULL)->comment('API所需描述');
-    });
-}
-
-if (!Schema::hasColumn($component_table_name, 'reason')) {
-    Schema::table($component_table_name, function (Blueprint $table) {
-        $table->string('reason')->default(NULL)->comment('驳回理由');
+        $table->string('detail')->comment('API所需描述');
     });
 }

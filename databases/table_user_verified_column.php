@@ -31,7 +31,7 @@ if (!Schema::hasColumn($component_table_name, 'phone')) {
 
 if (!Schema::hasColumn($component_table_name, 'info')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->string('info')->default(NULL)->comment('补充认证资料');
+        $table->string('info')->default('')->comment('补充认证资料');
     });
 }
 

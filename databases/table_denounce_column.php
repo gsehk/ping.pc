@@ -37,12 +37,12 @@ if (!Schema::hasColumn($component_table_name, 'to_uid')) {
 
 if (!Schema::hasColumn($component_table_name, 'reason')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->string('reason')->default(NULL)->comment('举报原因');
+        $table->string('reason')->default('')->comment('举报原因');
     });
 }
 
 if (!Schema::hasColumn($component_table_name, 'source_url')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->string('source_url')->default(NULL)->comment('资源来源页面url');
+        $table->string('source_url')->default('')->comment('资源来源页面url');
     });
 }

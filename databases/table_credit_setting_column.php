@@ -27,13 +27,13 @@ if (!Schema::hasColumn($component_table_name, 'type')) {
 
 if (!Schema::hasColumn($component_table_name, 'cycle')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->string('cycle')->default(NULL)->comment('周期范围');
+        $table->string('cycle')->default('')->comment('周期范围');
     });
 }
 
 if (!Schema::hasColumn($component_table_name, 'cycle_times')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->integer('cycle_times')->default(0)->comment('周期内最多奖励次数');
+        $table->integer('cycle_times')->default(1)->comment('周期内最多奖励次数');
     });
 }
 
@@ -51,6 +51,6 @@ if (!Schema::hasColumn($component_table_name, 'info')) {
 
 if (!Schema::hasColumn($component_table_name, 'score')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->integer('score')->default(NULL)->comment('得分');
+        $table->integer('score')->default(0)->comment('得分');
     });
 }

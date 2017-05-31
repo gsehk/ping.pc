@@ -13,6 +13,6 @@ if (!Schema::hasColumn($component_table_name, 'user_id')) {
 
 if (!Schema::hasColumn($component_table_name, 'score')) {
     Schema::table($component_table_name, function (Blueprint $table) {
-        $table->integer('score')->default(NULL)->comment('积分');
+        $table->integer('score')->comment('积分');
     });
 }
