@@ -19,7 +19,7 @@
         </li> -->
         <li>
             <a href="{{ route('pc:users') }}" class="fs-16 @if ($route == 'pc:users') dy_59 @endif">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bofang1-copy-copy-copy-copy-copy-copy-copy"></use></svg>我的粉丝
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_guanzhu"></use></svg>我的粉丝
             </a>
         </li>
         <li>
