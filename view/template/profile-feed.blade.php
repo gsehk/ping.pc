@@ -1,7 +1,7 @@
 
 @if(isset($data))
 @foreach($data as $key => $post)
-<div class="cen_img cen_befor" id="feed{{$post['feed']['feed_id']}}">
+<div class="cen_img cen_befor ">
     <span class="cen_beforColor">
     @if(date('Y-m-d') == date('Y-m-d', strtotime($post['feed']['created_at'])))
         今<br>天
@@ -12,7 +12,7 @@
     <p class="fs-14 cen_word ">{{$post['feed']['feed_content']}}</p>
     @if($post['feed']['storages'])
     @php $imgNum = count($post['feed']['storages']); @endphp
-    <div style="position: relative; margin-bottom: 8px;">
+    <div style="position: relative; margin-bottom: 8px;" id="layer-photos-demo{{$post['feed']['feed_id']}}">
     @if($imgNum == 1)
         <img src="{{$routes['storage']}}{{$post['feed']['storages'][0]['storage_id']}}" class="img-responsive"/>
     @elseif($imgNum == 2)
