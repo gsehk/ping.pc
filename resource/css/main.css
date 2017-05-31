@@ -563,7 +563,8 @@ img {
     overflow: hidden;
     margin: 15px 0;
     color: #666;
-    -webkit-line-clamp: 2;
+    word-break: break-word;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
 
