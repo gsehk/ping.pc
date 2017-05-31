@@ -78,7 +78,7 @@ news.loadMore = function() {
             for (var i in data) {
                 html += '<div class="inf_list">' +
                     '<div class="inf_img">' +
-                    '<a href="/information/read/' + data[i].id + '">' + '<img src="http://tsplus.zhibocloud.cn/api/v1/storages/' + data[i].storage + '/30" />' + '</a>' +
+                    '<a href="/information/read/' + data[i].id + '">' + '<img src="'+API+'storages/' + data[i].storage + '/30" />' + '</a>' +
                     '</div>' +
                     '<div class="inf_word">' +
                     '<a href="/information/read/' + data[i].id + '">' +
