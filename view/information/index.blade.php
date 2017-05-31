@@ -7,8 +7,10 @@
             @foreach($recommend as $frv)
                 @if($loop->first)
                 <div class="inT_title">
+                <a href="{{ route('pc:myFeed',['user_id'=>$frv['author']]) }}">
                     <img src="{{ $frv['info']['avatar'] }}" />
                     <span>{{ $frv['info']['name'] }}</span>
+                </a>
                 </div>
                 <a href="/information/read/{{$frv['id']}}">
                     <div class="inT_word">{{ $frv['title'] }}</div>
@@ -126,10 +128,10 @@
                 @foreach ($author as $u)
                     <div class="R_list">
                         <div class="i_left">
-                            <img src="{{ $u->info['avatar'] }}" />
+                            <a href="{{ route('pc:myFeed',['user_id'=>$u->info['id']]) }}"><img src="{{ $u->info['avatar'] }}" /></a>
                         </div>
                         <div class="i_right">
-                            <span>{{$u->user['name']}}</span>
+                            <span><a href="{{ route('pc:myFeed',['user_id'=>$u->info['id']]) }}">{{$u->user['name']}}</a></span>
                             <p>@if(!empty($u->info['intro'])) {{ $u->info['intro'] }} @else 暂无简介 @endif</p>
                         </div>
                     </div>
@@ -182,7 +184,7 @@ setTimeout(function() {
 $(document).ready(function(){
 $('.unslider').unslider({delay:3000});
   recent_hot(1);
-  $('#j-recent-hot a').on('click', function(){
+  $('#j-recent-hot a').on('mouseover', function(){
         var cid = $(this).attr('cid');
         recent_hot(cid);
         $('#j-recent-hot a').removeClass('a_border');
