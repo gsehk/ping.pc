@@ -40,7 +40,7 @@
             {{ '.'.$user['day'] }}
             @endif
 
-            @if (empty($user['sex']) || $user['sex'] == 3))
+            @if (empty($user['sex']) || $user['sex'] == 3)
             <label>其他</label>
             @elseif($user['sex'] == 2)
             <label>女</label>
