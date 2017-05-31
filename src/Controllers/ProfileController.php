@@ -222,7 +222,7 @@ class ProfileController extends BaseController
                 // 获取用户信息
                 $_data['user'] = $this->formatUserDatas($follow->user);
                 // 关注状态
-                $_data['my_follow_status'] = $follow->userFollowing->where('following_user_id', $follow->follow_user_id)->isEmpty() ? 0 : 1;
+                $_data['my_follow_status'] = $follow->userFollowing->where('following_user_id', $user_id)->isEmpty() ? 0 : 1;
                 // 最新微博图片
                 $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
                                         ->where('feeds.user_id', '=', $follow->user->id)
