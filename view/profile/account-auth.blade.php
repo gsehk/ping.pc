@@ -70,10 +70,10 @@
             <table width="100%" class="auth-table">
                 @if($auth['verified'] == 1)
                     <caption class="auth_caption">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>  您已经认证成功</caption>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>您已经认证成功</caption>
                 @elseif($auth['verified'] == 2) 
                     <caption class="auth_caption">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>  认证失败请  
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>认证失败请  
                             <a href="javascript:;" onclick="delUserAuth('{{$auth['user_id']}}');">重新认证</a></caption>
                 @else 
                     <caption class="auth_caption">
@@ -93,14 +93,18 @@
                         <td width="20%" class="td">联系方式</td>
                         <td width="80%">{{$auth['phone']}}</td>
                     </tr>
+                    @if (!empty($auth['info']))
                     <tr>
                         <td width="20%" class="td">认证补充</td>
-                        <td width="80%">{{$auth['info']}}</td>
+                        <td width="80%">{{ $auth['info'] }}</td>
                     </tr>
+                    @endif
+                    @if (!empty($auth['storage']))
                     <tr>
                         <td width="20%" class="td">认证资料</td>
-                        <td width="80%"><a target="_blank" href="{{ $routes['storage']}}{{$auth['storage'] }}">认证附件信息</a></td>
+                        <td width="80%"><a target="_blank" href="{{ $routes['storage'] }}{{ $auth['storage'] }}">认证附件信息</a></td>
                     </tr>
+                    @endif
                 </tbody>
             </table>
         @endif
