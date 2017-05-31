@@ -36,7 +36,7 @@ class RankController extends BaseController
         $user_id = $this->mergeData['TS']['id'] ?? 0;
         $rank_list_key = 'user_rank_list_'.$type;
         $rank_list = Cache::get($rank_list_key);
-        if (!$rank_list) {
+        if ($rank_list) {
             /*粉丝排行榜*/
             $followed = User::join('user_datas', 'users.id', '=', 'user_datas.user_id')
                         ->where('user_datas.key', '=', 'followed_count')
@@ -94,7 +94,7 @@ class RankController extends BaseController
 
         $user_rank_key = 'user_rank_list_'.$type.'_'.$user_id;
         $user_rank_list = Cache::get($user_rank_key);
-        if (!$user_rank_list) {
+        if ($user_rank_list) {
             $user_credit = CreditUser::where('user_id', $user_id)->first();
             $user_data = UserDatas::where('user_id', $user_id)
                         ->select('key', 'value')
