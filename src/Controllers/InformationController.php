@@ -143,6 +143,7 @@ class InformationController extends BaseController
                         $query->where('news.id', '<', $max_id);
                     }
                 })
+                ->byAudit()
                 ->orderBy('news.id', 'desc')
                 ->select('news.id','news.title','news.updated_at','news.storage','news.comment_count','news.from')
                 // ->with('storage')
