@@ -73,7 +73,7 @@
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="{{route('pc:article')}}">文章<span>{{ $news_count_count }}</span></a>
+                        <a href="{{route('pc:article',['user_id'=>$author])}}">文章<span>{{ $news_count_count }}</span></a>
                     </li>
                     <li>
                         <a href="javascript:;">热门<span>{{ $hots }}</span></a>
