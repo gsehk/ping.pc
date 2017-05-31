@@ -1076,6 +1076,14 @@ img {
     color: #fff;
 }
 
+.i_title a{
+    color:#fff;
+}
+
+.i_title a:hover{
+    color:#59b6d7;
+}
+
 .i_subTiLe {
     line-height: 24px;
     margin-bottom: 20px;
