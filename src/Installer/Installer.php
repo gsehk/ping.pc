@@ -98,6 +98,7 @@ class Installer extends AbstractInstaller
         if (!Schema::hasTable('credit_user')) {
             Schema::create('credit_user', function (Blueprint $table) {
                 $table->engine = 'InnoDB';
+                $table->timestamps();
                 $table->increments('id')->comment('主键');
             });
             include component_base_path('/databases/table_credit_user_column.php');
