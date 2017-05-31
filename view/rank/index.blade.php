@@ -32,7 +32,7 @@
                 <li> 
                     <div class="fans_span1"><span>{{$fv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="@if(!empty($fv->info['avatar'])) {{ $routes['storage'] }}{{ $fv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
+                        <img src="@if(!empty($fv->info['avatar'])) {{ $fv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
                         {{$fv->name}}
                     </div>
                     <div class="fans_span3">{{$fv->value}}</div>
