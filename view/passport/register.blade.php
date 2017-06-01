@@ -17,29 +17,29 @@
             </div>
             <div class="f_tel">
                 <label>图形验证码</label>
-                <span class="f_span w_280"><input type="text" placeholder="输入图形验证码" name="captchacode" maxlength="6"/></span>
+                <span class="f_span w_280"><input type="text" placeholder="输入图形验证码" name="captchacode" maxlength="6" autocomplete="off"/></span>
                 <img onclick="re_captcha()" src="{{ route('pc:captcha', ['tmp'=>1]) }}"  alt="验证码" title="刷新图片" id="captchacode" class="f_captcha">
                 <label class="error" id="captcha_tip"></label>
             </div>
             <div class="f_tel ">
                 <label>手机验证码</label>
-                <span class="f_span w_280"><input type="text" placeholder="输入手机验证码" name="code" maxlength="6"/></span>
+                <span class="f_span w_280"><input type="text" placeholder="输入手机验证码" name="code" maxlength="6" autocomplete="off"/></span>
                 <span class="get_code" id="smscode" type="register">获取短信验证码</span>
                 <label class="error" id="smscode_tip"></label>
             </div>
             <div class="f_tel">
                 <label>设置昵称</label>
-                <span class="f_span" id="name"><input type="text" placeholder="2-10个字符" name="name"/></span>
+                <span class="f_span" id="name"><input type="text" placeholder="2-10个字符" name="name" autocomplete="off"/></span>
                 <label class="error" id="name_tip"></label>
             </div>
             <div class="f_tel">
                 <label>设置密码</label>
-                <span class="f_span" id="password"><input type="password" placeholder="限6-15个字符，区分大小写" name="password"/></span>
+                <span class="f_span" id="password"><input type="password" placeholder="限6-15个字符，区分大小写" name="password" autocomplete="off"/></span>
                 <label class="error" id="password_tip"></label>
             </div>
             <div class="f_tel">
                 <label>确认密码</label>
-                <span class="f_span" id="repassword"><input type="password" placeholder="再次输入密码" name="repassword"/></span>
+                <span class="f_span" id="repassword"><input type="password" placeholder="再次输入密码" name="repassword" autocomplete="off"/></span>
                 <label class="error" id="repassword_tip"></label>
             </div>
 
