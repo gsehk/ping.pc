@@ -31,6 +31,12 @@ a {
     color: #333;
     text-decoration: none;
 }
+a:focus,
+a:link,
+a:visited,
+a:hover {
+    text-decoration: none !important;
+}
 
 .icon {
     font-size: 2rem;
