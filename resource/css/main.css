@@ -971,7 +971,7 @@ img {
 }
 
 .page_cur {
-    color: #fff;
+    color: #fff !important;
     background: #59b6d7;
 }
 
