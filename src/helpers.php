@@ -82,6 +82,7 @@ function getShort($str, $length = 40, $ext = '')
     $str = htmlspecialchars($str);
     $str = strip_tags($str);
     $str = htmlspecialchars_decode($str);
+    $str = preg_replace("/<([a-z]+)[^>]*>/i","",$str ); 
     $strlenth = 0;
     $out = '';
     $output = '';
