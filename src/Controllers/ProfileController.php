@@ -525,7 +525,7 @@ class ProfileController extends BaseController
             ->where('user_id', $user_id)
             ->where(function ($query) use ($max_id) {
                 if ($max_id > 0) {
-                    $query->where('id', '<', $max_id);
+                    $query->where('feeds.id', '<', $max_id);
                 }
             })
             ->withCount(['diggs' => function ($query) use ($user_id) {
