@@ -331,7 +331,7 @@ var digg = {
                     var num = $digg.attr('rel');
                     num++;
                     $digg.attr('rel', num);
-                    $('#digg' + news_id).html('<a href="javascript:;" onclick="digg.delDigg(' + news_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>' + num + '</font>人喜欢</a>');
+                    $('#digg' + news_id).html('<a href="javascript:;" onclick="digg.delDigg(' + news_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
                 } else {
                     alert(res.message);
                 }
@@ -360,7 +360,7 @@ var digg = {
                     var num = $digg.attr('rel');
                     num--;
                     $digg.attr('rel', num);
-                    $('#digg' + news_id).html('<a href="javascript:;" onclick="digg.addDigg(' + news_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>' + num + '</font>人喜欢</a>');
+                    $('#digg' + news_id).html('<a href="javascript:;" onclick="digg.addDigg(' + news_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
                 } else {
                     alert(res.message);
                 }
@@ -409,7 +409,7 @@ var collect = {
                     var num = $collect.attr('rel');
                     num++;
                     $collect.attr('rel', num);
-                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.delCollect(' + news_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">' + num + '</font>收藏</a>');
+                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.delCollect(' + news_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">' + num + '</font>收藏</a>');
                 } else {
                     alert(res.message);
                 }
@@ -438,7 +438,7 @@ var collect = {
                     var num = $collect.attr('rel');
                     num--;
                     $collect.attr('rel', num);
-                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.addCollect(' + news_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="collect_num">' + num + '</font>收藏</a>');
+                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.addCollect(' + news_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">' + num + '</font>收藏</a>');
                 } else {
                     alert(res.message);
                 }

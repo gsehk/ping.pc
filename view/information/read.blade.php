@@ -27,16 +27,16 @@
             <div class="del_pro">
                 <span id="collect{{$id}}" rel="{{ count($collection) }}">
                     @if($is_collect_news <= 0)
-                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{ count($collection) }}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">{{ count($collection) }}</font>收藏</a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{ count($collection) }}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">{{ count($collection) }}</font>收藏</a>
                     @endif
                 </span>
                 <span id="digg{{ $id }}" rel="{{ $digg_count }}">
                     @if($is_digg_news <= 0)
-                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{ $digg_count }}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">{{ $digg_count }}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font>{{ $digg_count }}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">{{ $digg_count }}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
