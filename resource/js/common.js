@@ -325,4 +325,15 @@ $(function() {
     $('#gotop').click(function() {
         $(window).scrollTop(0);
     })
+
+    $('body').click(function(e) {
+        var target = $(e.target);
+        if(!target.is('#menu_toggle') && target.parents('.p_cont').length == 0) {
+           $('.p_cont').hide();
+        }
+
+        if(!target.is('.icon-gengduo-copy') && target.parents('.cen_more').length == 0) {
+           $('.cen_more').hide();
+        }
+    });
 })
