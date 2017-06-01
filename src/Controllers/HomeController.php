@@ -397,9 +397,9 @@ class HomeController extends BaseController
                 $credit_user->save();
             }
             if ($credit_ruls->score > 0) {
-                $change = '<font color="lightskyblue">'.$credit_ruls->score.'</font>';
+                $change = '<font color="lightskyblue">+'.$credit_ruls->score.'</font>';
             } else {
-                $change = '<font color="red">'.$credit_ruls->score.'</font>';
+                $change = '<font color="red">-'.$credit_ruls->score.'</font>';
             }
             $credit_record = new CreditRecord();
             $credit_record->cid = $credit_ruls->id;
