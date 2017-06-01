@@ -596,21 +596,18 @@ var comment = {
             }
         });
     },
-    delComment: function(comment_id) {
-        $.post(U('widget/Comment/delcomment'), { comment_id: comment_id }, function(msg) {
-            // 动态添加字数
-            var commentDom = $('#feed' + comment.row_id).find('a[event-node="comment"]');
-            var oldHtml = commentDom.html();
-            if (oldHtml != null) {
-                var commentVal = oldHtml.replace(/\(\d+\)$/, function(num) {
-                    var cnum = parseInt(num.slice(1, -1)) - 1;
-                    if (cnum <= 0) {
-                        return '';
-                    }
-                    num = '(' + cnum + ')';
-                    return num;
-                });
-                commentDom.html(commentVal);
+    delComment: function(comment_id, feed_id) {
+        var url = request_url.del_feed_comment.replace('{feed_id}', feed_id);
+            url = url.replace('{comment_id}', comment_id);
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            error: function(xml) {noticebox('删除失败请重试', 0);},
+            success: function(res) {
+                $('.comment'+comment_id).fadeOut(1000);
+                var commentNum = $('.comment_count').text();
+                $('.comment_count').text(parseInt(commentNum)-1);
             }
         });
     }

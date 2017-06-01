@@ -2517,6 +2517,7 @@ img {
 .artic_list img {
     width: 100% !important;
     max-height: 400px;
+    height: 100%;
 }
 
 .p_continue {
