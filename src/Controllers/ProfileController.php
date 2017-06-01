@@ -500,23 +500,44 @@ class ProfileController extends BaseController
         $auth_id = $this->mergeData['TS']['id'] ?? 0;
         $limit = $request->input('limit', 15);
         $max_id = intval($request->input('max_id'));
+        $type = $request->input('type');
 
-        $feeds = Feed::orderBy('id', 'DESC')
-        ->where('user_id', $user_id)
-        ->where(function ($query) use ($max_id) {
-            if ($max_id > 0) {
-                $query->where('id', '<', $max_id);
-            }
-        })
-        ->withCount(['diggs' => function ($query) use ($user_id) {
-            if ($user_id) {
-                $query->where('user_id', $user_id);
-            }
-        }])
-        ->byAudit()
-        ->with('storages')
-        ->take($limit)
-        ->get();
+        if ($type == 'all') {
+            $feeds = Feed::orderBy('id', 'DESC')
+            ->where('user_id', $user_id)
+            ->where(function ($query) use ($max_id) {
+                if ($max_id > 0) {
+                    $query->where('id', '<', $max_id);
+                }
+            })
+            ->withCount(['diggs' => function ($query) use ($user_id) {
+                if ($user_id) {
+                    $query->where('user_id', $user_id);
+                }
+            }])
+            ->byAudit()
+            ->with('storages')
+            ->take($limit)
+            ->get();
+        } else {
+            $feeds = Feed::join('feed_storages', 'feeds.id', '=', 'feed_storages.feed_id')
+            ->orderBy('id', 'DESC')
+            ->where('user_id', $user_id)
+            ->where(function ($query) use ($max_id) {
+                if ($max_id > 0) {
+                    $query->where('id', '<', $max_id);
+                }
+            })
+            ->withCount(['diggs' => function ($query) use ($user_id) {
+                if ($user_id) {
+                    $query->where('user_id', $user_id);
+                }
+            }])
+            ->byAudit()
+            ->with('storages')
+            ->take($limit)
+            ->get();
+        }
 
         return $this->formatFeedList($feeds, $auth_id);
     }
