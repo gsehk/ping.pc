@@ -1233,6 +1233,14 @@ img {
     color: #333;
 }
 
+.fans_span2 a {
+    color: #333;
+}
+
+.fans_span2 a:hover {
+    color: #59b6d7;
+}
+
 .fans_span3 {
     font-size: 14px;
     float: right;
@@ -1725,8 +1733,7 @@ img {
 }
 
 .top_list a:hover {
-    color: #fff !important;
-    background: #999;
+    color: #428bca;
 }
 
 .top_list_span {

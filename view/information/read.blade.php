@@ -11,6 +11,7 @@
                 <a href="javascript:;" class="top_list_span">{{ $li['name'] }}</a>
                 @endforeach
                 @endif
+                <a href="{{ route('pc:myFeed', ['user_id'=>$user['id']]) }}">{{ $user['name'] }}</a>
                 <div class="del_top_r">
                     <span class="del_time">{{ $created_at }}</span>
                 </div>
@@ -86,7 +87,7 @@
                     </div>
                 @endforeach
             </div>
-            @if(count($news) >= 3)<a href="javascript:;" class="del_more">更多他的文章</a>@endif
+            @if(count($news) >= 3)<a href="javascript:;" class="del_more">更多TA的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>

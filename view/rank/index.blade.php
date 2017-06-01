@@ -32,8 +32,8 @@
                 <li> 
                     <div class="fans_span1"><span>{{$fv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="@if(!empty($fv->info['avatar'])) {{ $fv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" />
-                        {{$fv->name}}
+                        <a href="{{ route('pc:myFeed', ['user_id'=>$fv['id']]) }}"><img src="@if(!empty($fv->info['avatar'])) {{ $fv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" /></a>
+                        <a href="{{ route('pc:myFeed', ['user_id'=>$fv['id']]) }}">{{$fv->name}}</a>
                     </div>
                     <div class="fans_span3">{{$fv->value}}</div>
                 </li>
@@ -66,8 +66,8 @@
                 <li>
                     <div class="fans_span1"><span>{{$cv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="{{ $cv->info['avatar'] }}" class="fans_img" />
-                        {{$cv->name}}
+                        <a href="{{ route('pc:myFeed', ['user_id'=>$cv['id']]) }}"><img src="{{ $cv->info['avatar'] }}" class="fans_img" /></a>
+                        <a href="{{ route('pc:myFeed', ['user_id'=>$cv['id']]) }}">{{$cv->name}}</a>
                     </div>
                     <div class="fans_span3">{{$cv->score}}</div>
                 </li>
@@ -102,8 +102,8 @@
                 <li>
                     <div class="fans_span1"><span>{{$pv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="{{ $pv->info['avatar'] }}" class="fans_img" />
-                        {{$pv->user->name or ''}}
+                        <a href="{{ route('pc:myFeed', ['user_id'=>$pv['info']['id']]) }}"><img src="{{ $pv->info['avatar'] }}" class="fans_img" /></a>
+                        <a href="{{ route('pc:myFeed', ['user_id'=>$pv['info']['id']]) }}">{{$pv->user->name}}</a>
                     </div>
                     <div class="fans_span3">{{$pv->total}}</div>
                 </li>
@@ -136,8 +136,8 @@
                 <li>
                     <div class="fans_span1"><span>{{$tv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <img src="{{ $tv->info['avatar'] }}" class="fans_img" />
-                        {{$tv->user->name or ''}}
+                        <a href="{{ route('pc:myFeed', ['user_id'=>$tv['user']['id']]) }}"><img src="{{ $tv->info['avatar'] }}" class="fans_img" /></a>
+                        <a href="{{ route('pc:myFeed', ['user_id'=>$tv['user']['id']]) }}">{{$tv->user->name}}</a>
                     </div>
                     <div class="fans_span3">{{$tv->total}}</div>
                 </li>
