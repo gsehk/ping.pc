@@ -729,13 +729,13 @@ $(function() {
     });
 
     // 微博操作菜单
-    /*$('#feeds-list').on('click', '.show_admin', function() {
+    $('#feeds-list').on('click', '.show_admin', function() {
         if ($(this).next('.cen_more').css('display') == 'none') {
             $(this).next('.cen_more').show();
         } else {
             $(this).next('.cen_more').hide();
         }
-    });*/
+    });
     // 微博操作菜单
     $('#content-list').on('click', '.show_admin', function() {
         if ($(this).next('.cen_more').css('display') == 'none') {

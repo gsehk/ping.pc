@@ -207,21 +207,33 @@
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
             {{$post['tool']['feed_view_count']}}
         </span>
-        <!-- <span class="cen_right show_admin">
+        <span class="cen_right show_admin">
             <i class="icon iconfont icon-gengduo-copy"></i>
         </span>
         <div class="cen_more">
             <ul>
-                <li><a href="#"><i class="icon iconfont icon-shoucang-copy"></i>收藏</a></li>
-                <li><a href="#"><i class="icon iconfont icon-jubao-copy1"></i>举报</a></li>
+                <li class="collect" id="collect{{$post['feed']['feed_id']}}" rel="0"> 
+                    @if($post['tool']['is_collection_feed'])
+                    <a href="javascript:;" onclick="collect.delCollect({{$post['feed']['feed_id']}});" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
+                    </a>
+                    @else
+                    <a href="javascript:;" onclick="collect.addCollect({{$post['feed']['feed_id']}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
+                    </a>
+                    @endif
+                </li>
+                @if(!empty($TS['id']) && $post['user_id'] != $TS['id'])
+                <li><a href="javascript:;" onclick="weibo.denounce(this);" feed_id="{{$post['feed']['feed_id']}}" to_uid="{{$post['user']['id']}}">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jubao-copy1"></use></svg>举报</a></li>
+                @endif
                 @if(!empty($TS['id']) && $post['user_id'] == $TS['id'])
-                <li><a href="#"><i class="icon iconfont icon-shanchu-copy1"></i>删除</a></li>
+                <li><a href="javascript:;" onclick="weibo.delFeed({{$post['feed']['feed_id']}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
                 @endif
                 @if(!empty($TS['role']) && $TS['role']->role_id == 1)
-                <li><a href="#"><i class="icon iconfont icon-zhiding-copy-copy1"></i>置顶</a></li>
+                <li><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>置顶</a></li>
                 @endif
             </ul>
-        </div> -->
+            <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
+        </div>
     </div>
     <div class="comment_box" id="warp_box{{$post['feed']['feed_id']}}" style="display: none;">
         <div class="dy_line">
