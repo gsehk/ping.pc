@@ -3483,6 +3483,9 @@ img {
     border-radius: 3px;
     background: #59b6d7;
 }
+.exit_btn a{
+    color: #fff;
+}
 
 .exit_btn_bg {
     background: #ccc !important;

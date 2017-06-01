@@ -1,10 +1,11 @@
 var initNums = 255;
 var loadHtml = "<div class='loading'><img src='" + PUBLIC_URL + "/images/loading.png' class='load'>加载中</div>";
-var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>  确定删除这条信息？';
+var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var request_url = {
     /* 登录 */
     login: '/passport/index',
-
+    /* 注销 */
+    logout: '/passport/logout',
     /* 获取文章列表 */
     get_news: '/information/getNewsList',
     /* 文章点赞 */
@@ -234,6 +235,27 @@ var no_data = function(selector, type, txt) {
     // $(selector).css('display', 'table');
     // $(selector).css('margin', '0 auto');
     $(selector).html(html);
+}
+
+var logout = function() {
+    $('.p_cont').hide();
+
+    var html = '<div class="modal-content exit_content">'
+            + '<div class="modal-body exit_body">'
+            + '<div class="exit_ts">提示</div>'
+            + '<div class="exit_thinks">感谢您对ThinkSNS的信任，是否退出当前账号？</div>'
+            + '<div data-dismiss="modal" class="exit_btn">'
+            + '<a href="javascript:layer.closeAll()">取消</a>'
+            + '</div>'
+            + '<a href="' + request_url.logout + '"><span data-dismiss="modal" class="exit_btn exit_btn_bg">退出</span></a>'
+            + '</div></div>' 
+    layer.open({
+      type: 1,
+      title: false,
+      closeBtn: 0,
+      shadeClose: true,
+      content: html
+    });
 }
 
 ;

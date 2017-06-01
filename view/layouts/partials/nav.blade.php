@@ -33,7 +33,7 @@
                 <a href="{{ route('pc:myFeed')}}">个人主页</a>
             </li>
             <li>
-                <a href="{{ route('pc:logout')}}">退出</a>
+                <a href="javascript:void(0)" onclick="logout()">退出</a>
             </li>
         </ul>
         <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />

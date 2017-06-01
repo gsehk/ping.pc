@@ -195,7 +195,7 @@ weibo.afterPostFeed = function(feed_id) {
     })
 };
 weibo.delFeed = function(feed_id) {
-    layer.confirm(confirmTxt, {}, function() {
+    layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
         var url = request_url.delete_feed.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
