@@ -46,10 +46,15 @@ class PassportController extends BaseController
      * @Author Foreach<hhhcode@outlook.com>
      * @return [type] [description]
      */
-    public function index()
+    public function index(Request $request)
     {
         if ($this->guard()->check()) {
             return redirect(route('pc:feed'));
+        }
+
+        // 跳转链接
+        if ($request->url) {
+            Session::put('history', $request->url);
         }
 
     	return view('pcview::passport.login', [], $this->mergeData);

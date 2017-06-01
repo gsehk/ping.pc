@@ -162,6 +162,7 @@
 <script type="text/javascript">
 var checkin = function(){
     if( MID == 0 ){
+        window.location.href = "{{ route('pc:index', ['url'=>'/information/index']) }}"; 
         return;
     }
     var totalnum = {{$checkin['total_num'] or 0}} + 1;
