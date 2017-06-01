@@ -121,6 +121,51 @@ weibo.loadMore = function() {
         }
     });
 };
+weibo.delFeed = function(feed_id) {
+    layer.confirm(confirmTxt, {}, function() {
+        var url = request_url.delete_feed.replace('{feed_id}', feed_id);
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            error: function() {
+                layer.msg(' 删除失败请稍后再试', { icon: 0 });
+            },
+            success: function(res) {
+                $('#feed' + feed_id).fadeOut(1000);
+                layer.closeAll();
+            }
+        });
+    });
+};
+weibo.denounce = function(obj) {
+    var feed_id = $(obj).attr('feed_id');
+    var to_uid = $(obj).attr('to_uid');
+    layer.prompt(function(val, index) {
+        if (!val) {
+            layer.msg(' 请填写举报理由', { icon: 0 });
+        }
+        var url = request_url.denounce_feed.replace('{feed_id}', feed_id);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { aid: feed_id, to_uid: to_uid, reason: val, from: 'weibo' },
+            dataType: 'json',
+            error: function() {
+                layer.msg(' 举报失败请稍后再试', { icon: 0 });
+            },
+            success: function(res) {
+                if (res.status == true) {
+                    layer.msg(' 举报成功', { icon: 1 });
+                }else{
+                    layer.msg(res.message, { icon: 0 });
+                }
+                
+            }
+        });
+        layer.close(index);
+    });
+};
 
 var news = {};
 
@@ -419,7 +464,7 @@ var comment = {
         }
 
         var boxhtml = '<div class="dyBox_comment" id="editor_box' + feedid + '">' +
-            '<textarea placeholder="" class="comment-editor"></textarea>' +
+            '<textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, \'nums\');"></textarea>' +
             '<div class="dy_company">' +
             /*'<span class="fs-14">'+
             '<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>表情</span>'+*/
@@ -493,6 +538,7 @@ var comment = {
                     if ("undefined" != typeof(commentBox)) {
                         commentBox.prepend(html);
                         _textarea.value = '';
+                        $('.nums').text(initNums);
                     }
                 } else {
                     alert(res.message);
@@ -542,6 +588,7 @@ var comment = {
                     if ("undefined" != typeof(commentBox)) {
                         commentBox.prepend(html);
                         _textarea.value = '';
+                        $('.nums').text(initNums);
                     }
                 } else {
                     alert(res.message);
@@ -569,6 +616,91 @@ var comment = {
     }
 };
 
+/**
+ * 收藏核心Js
+ * @type {Object}
+ */
+var collect = {
+    // 给工厂调用的接口
+    _init: function(attrs) {
+        collect.init();
+    },
+    init: function() {
+        collect.collectlock = 0;
+    },
+    addCollect: function(feed_id, page) {
+        // 未登录弹出弹出层
+        if (MID == 0) {
+            noticebox('请登录', 0, '/passport/index');
+            return;
+        }
+
+        if (collect.collectlock == 1) {
+            return false;
+        }
+        collect.collectlock = 1;
+
+        var url = request_url.collect_feed.replace('{feed_id}', feed_id);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
+            error: function(xml) {},
+            success: function(res) {
+                if (res.status == true) {
+                    $collect = $('#collect' + feed_id);
+                    var num = $collect.attr('rel');
+                    num++;
+                    $collect.attr('rel', num);
+                    if (page == 'read') {
+                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">' + num + '</font>人收藏</a>');
+                    } else {
+                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
+                    }
+                } else {
+                    alert(res.message);
+                }
+
+                collect.collectlock = 0;
+            }
+        });
+
+    },
+    delCollect: function(feed_id, page) {
+
+        if (collect.collectlock == 1) {
+            return false;
+        }
+        collect.collectlock = 1;
+        var url = request_url.collect_feed.replace('{feed_id}', feed_id);
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
+            error: function(xml) {},
+            success: function(res, data, xml) {
+                if (xml.status == 204) {
+                    $collect = $('#collect' + feed_id);
+                    var num = $collect.attr('rel');
+                    num--;
+                    $collect.attr('rel', num);
+                    if (page == 'read') {
+                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="collect_num">' + num + '</font>人收藏</a>');
+                    } else {
+                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
+                    }
+                } else {
+                    alert(res.message);
+                }
+
+                collect.collectlock = 0;
+            }
+        });
+    }
+};
 
 
 
@@ -600,8 +732,17 @@ $(function() {
     });
 
     // 微博操作菜单
-    $('#feeds-list').on('click', '.show_admin', function() {
+    /*$('#feeds-list').on('click', '.show_admin', function() {
         if ($(this).next('.cen_more').css('display') == 'none') {
+            $(this).next('.cen_more').show();
+        } else {
+            $(this).next('.cen_more').hide();
+        }
+    });*/
+    // 微博操作菜单
+    $('#content-list').on('click', '.show_admin', function() {
+        if ($(this).next('.cen_more').css('display') == 'none') {
+            $('.cen_more').hide();
             $(this).next('.cen_more').show();
         } else {
             $(this).next('.cen_more').hide();
@@ -622,8 +763,7 @@ $(function() {
     // 回复初始化
     $('#feeds-list').on('click', '.J-reply-comment', function() {
         var attrs = urlToObject($(this).data('args'));
-
-        // comment.initReply(attrs);
+        comment.initReply(attrs);
     });
 
 })

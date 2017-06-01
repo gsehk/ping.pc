@@ -111,10 +111,10 @@
 <div class="inf_cont clearfix">
     <div class="inf_main">
         <div class="inf_left">
-            <ul>
+            <ul class="news_cate_tab">
             @foreach ($cate as $post)
                 @if ($loop->iteration < 10)
-                <a href="{{ route('pc:news', ['cid'=>$post['id']]) }}"><li @if($cid == $post['id']) class="dy_59" @endif>{{ $post['name'] }}</li></a>
+                <a href="javascript:;" data-cid="{{$post['id']}}" @if($cid == $post['id']) class="dy_59" @endif><li>{{ $post['name'] }}</li></a>
                 @endif
             @endforeach
             </ul>
@@ -161,19 +161,20 @@
 <script src="{{ $routes['resource'] }}/js/unslider.min.js"></script>
 <script type="text/javascript">
 var checkin = function(){
-  if( MID == 0 ){
-    return;
-  }
-  var totalnum = {{$checkin['total_num'] or 0}} + 1;
-  $.get('/home/checkin' , {} , function (res){
-    if ( res ){
-      var totalnum = res.data.score;
-      $('#checkin').html('已签到');
-      $('.totalnum').text(totalnum);
-      $('#checkin').addClass('dy_qiandao_sign');
+    if( MID == 0 ){
+        return;
     }
-  });
+    var totalnum = {{$checkin['total_num'] or 0}} + 1;
+    $.get('/home/checkin' , {} , function (res){
+        if ( res ){
+            var totalnum = res.data.score;
+            $('#checkin').html('已签到');
+            $('.totalnum').text(totalnum);
+            $('#checkin').addClass('dy_qiandao_sign');
+        }
+    });
 };
+
 setTimeout(function() {
     news.init({
         container: '#news-list',
@@ -182,14 +183,25 @@ setTimeout(function() {
 }, 300);
 
 $(document).ready(function(){
-$('.unslider').unslider({delay:3000});
-  recent_hot(1);
-  $('#j-recent-hot a').on('click', function(){
+
+    $('.unslider').unslider({delay:3000});
+        recent_hot(1);
+        $('#j-recent-hot a').on('click', function(){
         var cid = $(this).attr('cid');
         recent_hot(cid);
         $('#j-recent-hot a').removeClass('a_border');
         $(this).addClass('a_border');
-  });
+    });
+
+    // 资讯分类操作菜单
+    $('.news_cate_tab a').on('click', function() {
+        var cid = $(this).data('cid');
+        $('#news-list').html('');
+        news.init({ container: '#news-list', cid: cid });
+        $('.news_cate_tab a').removeClass('dy_59');
+        $(this).addClass('dy_59');
+    });
+
 });
 </script>
 @endsection
