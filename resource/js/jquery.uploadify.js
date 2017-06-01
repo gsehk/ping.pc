@@ -149,6 +149,12 @@
 					option.onInit && option.onInit(returnObj);
 				},
 				_filter: function(files) {		//选择文件组的过滤方法
+					var fileCount = $('.uploadify-queue .uploadify-queue-item').length;
+					if ((fileCount + files.length) > 9) {
+						noticebox('最多上传9张图片', 0);
+						return false;
+					}
+
 					var arr = [];
 					var typeArray = F.getFileTypes(option.fileTypeExts);
 					if(typeArray.length>0){
