@@ -63,7 +63,18 @@
             @endif
         </span>
         @endif
-        @if(!empty($TS) && $TS['id'] == $user['id'])<a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>@endif
+        @if(!empty($TS) && $TS['id'] == $user['id'])
+        <a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
+        @else
+        <div class="their_right">
+            @if ($my_follow_status == 0)
+            <div id="follow" status="0">+关注</div>
+            @else
+            <div id="follow" status="1" class="their_followed">已关注</div>
+            @endif
+            <!-- <div>私信</div> -->
+        </div>
+        @endif
     </div>
     <div class="dy_cont">
         <!--left-->
@@ -158,22 +169,42 @@
 <script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
 <script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
 <script type="text/javascript">
-// 加载微博
-setTimeout(function() {
-    weibo.init({
-        container: '#feeds-list',
-        user_id:"{{$user['id']}}",
-        type: "{{$type}}"
+    // 加载微博
+    setTimeout(function() {
+        weibo.init({
+            container: '#feeds-list',
+            user_id:"{{$user['id']}}",
+            type: "{{$type}}"
+        });
+    }, 300);
+    // 微博分类tab
+    $('.artic_left a').on('click', function(){
+        var type = $(this).data('type');
+        $('#feeds-list').html('');
+        weibo.init({container: '#feeds-list',user_id:"{{$user['id']}}",type: type});
+        $('.artic_left a').removeClass('dy_cen_333');
+        $(this).addClass('dy_cen_333');
     });
-}, 300);
-// 微博分类tab
-$('.artic_left a').on('click', function(){
-    var type = $(this).data('type');
-    $('#feeds-list').html('');
-    weibo.init({container: '#feeds-list',user_id:"{{$user['id']}}",type: type});
-    $('.artic_left a').removeClass('dy_cen_333');
-    $(this).addClass('dy_cen_333');
-});
 
+    // 关注
+    $('#follow').click(function(){
+        var _this = $(this);
+        var status = $(this).attr('status');
+        var user_id = '{{$user['id']}}';
+        follow(status, user_id, _this, afterdata);
+    })
+
+    // 关注回调
+    var afterdata = function(target){
+        if (target.attr('status') == 1) {
+            target.text('+关注');
+            target.attr('status', 0);
+            target.removeClass('their_followed');
+        } else {
+            target.text('已关注');
+            target.attr('status', 1);
+            target.addClass('their_followed');
+        }
+    }
 </script>
 @endsection

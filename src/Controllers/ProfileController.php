@@ -45,6 +45,13 @@ class ProfileController extends BaseController
                         ->with('datas', 'counts')
                         ->first();
             $data['user'] = $this->formatUserDatas($user);
+
+            // 是否关注
+            $data['my_follow_status'] = Followed::where('followed_user_id', $this->mergeData['TS']['id'])
+                                            ->where('user_id', $user_id)
+                                            ->first() ? 1 : 0;
+
+            // 访客
             $visitor = UserVisitor::where([['user_id', $this->mergeData['TS']['id']], ['to_uid', $user_id]])->first();
             if ($visitor) {
                 $visitor->save();
@@ -54,6 +61,7 @@ class ProfileController extends BaseController
                 $visitor->to_uid = $user_id;
                 $visitor->save();
             }
+
         }
 
         // 地区
