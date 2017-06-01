@@ -13,7 +13,7 @@
     @if (!empty($TS))
     <div class="nav_right">
         <img src="{{ $TS['avatar']}}" id="menu_toggle" alt="{{ $TS['name'] }}"/>
-        <span class="fs-16 nav_name"></span>
+        <span class="fs-16 nav_name">{{$TS['name']}}</span>
     </div>
     <div class="p_cont">
         <ul>
