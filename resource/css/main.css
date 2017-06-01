@@ -27,11 +27,15 @@ ul {
     padding: 0;
     list-style: none;
 }
+a {
+    color: #333;
+}
 
 a:link,
 a:visited,
 a:hover {
     text-decoration: none !important;
+    color: #59b6d7;
 }
 
 .icon {
