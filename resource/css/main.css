@@ -59,9 +59,6 @@ input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
     color: #ccc;
 }
-input:-webkit-autofill {  
-    -webkit-box-shadow: 0 0 0px 1000px white inset !important;  
-}  
 
 img {
     object-fit: cover;
@@ -447,6 +444,12 @@ img {
     border: 1px solid #fff;
     border-radius: 50%;
     background: #f24343;
+}
+.del_pro .cs,
+.del_pro .ds {
+    padding-left: 5px;
+    padding-right: 1px;
+    font-size: 15px;
 }
 
 .dy_left ul li a svg {
@@ -1781,7 +1784,6 @@ img {
     line-height: 40px;
     display: inline-block;
     width: 120px;
-    height: 40px;
     text-align: center;
     color: #666;
     border: 1px solid #ededed;
