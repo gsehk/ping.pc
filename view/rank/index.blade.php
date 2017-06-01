@@ -30,7 +30,7 @@
             <div rel="followerdiv" @if($followerk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($followerv as $fv)
                 <li> 
-                    <div class="fans_span1"><span>{{$fv->rank}}</span></div>
+                    <div class="fans_span1"><span @if($fv->rank <= 3) class="blue" @elseif($fv->rank >= 3 && $fv->rank <= 10) class="grey" @endif>{{$fv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
                         <a href="{{ route('pc:myFeed', ['user_id'=>$fv['id']]) }}"><img src="@if(!empty($fv->info['avatar'])) {{ $fv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" /></a>
                         <a href="{{ route('pc:myFeed', ['user_id'=>$fv['id']]) }}">{{$fv->name}}</a>
@@ -64,7 +64,7 @@
             <div rel="creditdiv" @if($creditk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($creditv as $cv)
                 <li>
-                    <div class="fans_span1"><span>{{$cv->rank}}</span></div>
+                    <div class="fans_span1"><span @if($cv->rank <= 3) class="blue" @elseif($cv->rank >= 3 && $cv->rank <= 10) class="grey" @endif>{{$cv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
                         <a href="{{ route('pc:myFeed', ['user_id'=>$cv['id']]) }}"><img src="{{ $cv->info['avatar'] }}" class="fans_img" /></a>
                         <a href="{{ route('pc:myFeed', ['user_id'=>$cv['id']]) }}">{{$cv->name}}</a>
@@ -100,7 +100,7 @@
             <div rel="postdiv" @if($postk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($postv as $pv)
                 <li>
-                    <div class="fans_span1"><span>{{$pv->rank}}</span></div>
+                    <div class="fans_span1"><span @if($pv->rank <= 3) class="blue" @elseif($pv->rank >= 3 && $pv->rank <= 10) class="grey" @endif>{{$pv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
                         <a href="{{ route('pc:myFeed', ['user_id'=>$pv['info']['id']]) }}"><img src="{{ $pv->info['avatar'] }}" class="fans_img" /></a>
                         <a href="{{ route('pc:myFeed', ['user_id'=>$pv['info']['id']]) }}">{{$pv->user->name}}</a>
@@ -134,7 +134,7 @@
             <div rel="checktotaldiv" @if($checktotalk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($checktotalv as $tv)
                 <li>
-                    <div class="fans_span1"><span>{{$tv->rank}}</span></div>
+                    <div class="fans_span1"><span @if($tv->rank <= 3) class="blue" @elseif($tv->rank >= 3 && $tv->rank <= 10) class="grey" @endif>{{$tv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
                         <a href="{{ route('pc:myFeed', ['user_id'=>$tv['user']['id']]) }}"><img src="{{ $tv->info['avatar'] }}" class="fans_img" /></a>
                         <a href="{{ route('pc:myFeed', ['user_id'=>$tv['user']['id']]) }}">{{$tv->user->name}}</a>

@@ -1220,12 +1220,17 @@ img {
     width: 16px;
     height: 16px;
     text-align: center;
-    color: #fff;
-    color: #fff;
+    color: #333;
     border-radius: 3px;
-    background: #59b6d7;
 }
-
+.fans_span1 span.grey{
+    background: #ccc;
+    color: #fff;
+}
+.fans_span1 span.blue{
+    background: #59b6d7;
+    color: #fff;
+}
 .bg_ccc {
     background: #ccc !important;
 }
