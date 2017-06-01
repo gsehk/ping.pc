@@ -128,12 +128,10 @@ $(document).ready(function(){
 
 });
 
-var str = "{{$feed['feed_content']}}";
-str = str.substring(0, 60);
 bdshare.addConfig('share', {
     "tag" : "share_feedlist",
-    'bdText' : str,
-    'bdDesc' : str,
+    'bdText' : '{{$feed['share_desc']}}',
+    'bdDesc' : '{{$feed['share_desc']}}',
     'bdUrl' : window.location.href,
     'bdPic' : '{{ $routes['resource'] }}/images/default_cover.png'
 });
