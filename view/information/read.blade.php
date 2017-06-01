@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="delTop_right">
-                    <span>{{ $user['name'] }}</span>
+                    <span><a href="{{ route('pc:myFeed', ['user_id'=>$user['id']]) }}">{{ $user['name'] }}</a></span>
                     <p class="txt-hide">{{ $user['intro'] or ''}}</p>
                 </div>
                 <ul class="del_ul">
