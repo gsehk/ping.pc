@@ -251,6 +251,7 @@ var author_hot = function() {
     });
 };
 
+// 投稿js
 $('.subject-submit').on('click', function() {
     var $this = $(this);
     var subject = $('#subject-abstract'),
@@ -286,7 +287,7 @@ $('.subject-submit').on('click', function() {
     }
     $.post(url, args, function(data) {
         if (data.status == true) {
-            noticebox('发布成功，请等待审核', 1, data.data.url);
+            noticebox(data.message, 1, data.data.url);
         } else {
             noticebox(data.message, 0);
         };

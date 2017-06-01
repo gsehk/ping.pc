@@ -288,7 +288,7 @@ class InformationController extends BaseController
         return response()->json(static::createJsonData([
             'status'  => true,
             'code'    => 0,
-            'message' => '操作成功',
+            'message' => $type == 1 ? '发布成功，请等待审核' : '保存成功',
             'data'    => ['url' => route('pc:news'),'id' => $news->id]
         ]))->setStatusCode(200);
     }
