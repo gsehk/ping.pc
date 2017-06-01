@@ -77,7 +77,8 @@ class InformationController extends BaseController
     public function read(int $news_id)
     {
         $uid = $this->mergeData['TS']['id'] ?? 0;
-        $data = News::where('id', $news_id)
+        $data = News::byAudit()
+                ->where('id', $news_id)
                 ->withCount('newsCount') //当前作者文章数
                 ->with('user', 'link')
                 ->with(['collection' => function( $query ){
@@ -92,11 +93,13 @@ class InformationController extends BaseController
         unset($data['user']);
         $data['user'] = $user;
 
-        $data['hots'] = News::join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
+        $data['hots'] = News::byAudit()
+                        ->join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
                         ->where([['news.author','=',$data->author], ['news_cates_links.cate_id','=',1]])
                         ->count();
 
-        $data['news'] = News::where('author', $data->author)
+        $data['news'] = News::byAudit()
+                        ->where('author', $data->author)
                         ->orderBy('created_at', 'desc')
                         ->take(4)
                         ->select('id','title')
