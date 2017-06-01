@@ -84,7 +84,7 @@ news.loadMore = function() {
                     '<a href="/information/read/' + data[i].id + '">' +
                     '<div class="infW_title">' + data[i].title + '</div>' +
                     '</a>' +
-                    '<p>' + data[i].title + '</p>' +
+                    '<p>' + data[i].subject + '</p>' +
                     '<div class="inf_bm">' +
                     '<span class="inf_time">' + data[i].updated_at + '</span>' +
                     '<span class="inf_comment">' + data[i].comment_count + '评论<span>|</span>' + data[i].collection_count + '收藏</span>' +
@@ -220,6 +220,7 @@ var recent_hot = function(type) {
                 $('#j-recent-hot-wrapp').html(html);
             } else {
                 $('.del_right .loading').html('暂无相关内容');
+                $('.news_list .loading').html('暂无相关内容');
             }
         });
     }

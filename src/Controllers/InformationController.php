@@ -148,7 +148,7 @@ class InformationController extends BaseController
                 })
                 ->byAudit()
                 ->orderBy('news.id', 'desc')
-                ->select('news.id','news.title','news.updated_at','news.storage','news.comment_count','news.from')
+                ->select('news.id','news.title','news.subject','news.updated_at','news.storage','news.comment_count','news.from')
                 // ->with('storage')
                 ->withCount('collection')
                 ->get()->toArray();

@@ -62,7 +62,7 @@
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="{{route('pc:article')}}">文章<span>{{ $news['newsNum'] }}</span></a>
+                        <a href="{{route('pc:article',['user_id'=>$user_id])}}">文章<span>{{ $news['newsNum'] }}</span></a>
                     </li>
                     <li>
                         <a href="javascript:;">热门<span>{{ $news['hotsNum'] }}</span></a>
@@ -71,7 +71,7 @@
                 @foreach($news['list'] as $post)
                     <div class="del_rTop">
                         <span></span>
-                        <a href="javascript:;">{{ $post['title'] }}</a>
+                        <a href="/information/read/{{$post['id']}}">{{ $post['title'] }}</a>
                     </div>
                 @endforeach
             </div>

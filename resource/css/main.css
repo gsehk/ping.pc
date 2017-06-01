@@ -1531,6 +1531,8 @@ img {
     float: left;
     width: 531px;
     margin-left: 50px;
+    height: 162px;
+    position: relative;
 }
 
 .infW_title {
@@ -1557,6 +1559,9 @@ img {
 .inf_bm {
     font-size: 12px;
     color: #b3b3b3;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .inf_comment {

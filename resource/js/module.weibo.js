@@ -152,6 +152,12 @@ weibo.postFeed = function() {
         feed_from: 1,
         isatuser: 0
     }
+    var strlen = getLength(data.feed_content);
+        var leftnums = initNums - strlen;
+        if (leftnums < 0 || leftnums == initNums) {
+            noticebox('分享内容长度为1-' + initNums + '字', 0);
+            return false;
+        }
 
     var url = API + 'feeds';
     $.ajax({
