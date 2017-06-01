@@ -29,13 +29,7 @@ ul {
 }
 a {
     color: #333;
-}
-
-a:link,
-a:visited,
-a:hover {
-    text-decoration: none !important;
-    color: #59b6d7;
+    text-decoration: none;
 }
 
 .icon {
