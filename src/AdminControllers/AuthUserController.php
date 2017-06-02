@@ -23,7 +23,7 @@ class AuthUserController extends Controller
                 		$query->where('realname', 'like', '%'.$key.'%');
                 	}
                 })
-			->where(function($query){
+			->where(function($query) use ($state){
 				if ($state) {
                     if ($state == -1) {$state = 0;}
                     $query->where('verified', $state);
