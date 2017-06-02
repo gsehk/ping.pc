@@ -1,7 +1,7 @@
 
 @if(isset($data))
 @foreach($data as $key => $post)
-<div class="cen_img cen_befor ">
+<div class="cen_img cen_befor" id="feed{{$post['feed']['feed_id']}}">
     <span class="cen_beforColor">
     @if(date('Y-m-d') == date('Y-m-d', strtotime($post['feed']['created_at'])))
         今<br>天
