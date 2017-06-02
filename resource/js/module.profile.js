@@ -614,6 +614,21 @@ var comment = {
                 nums.text(parseInt(nums.text())-1);
             }
         });
+    },
+    delNewsComment: function(comment_id, news_id) {
+        var url = request_url.del_news_comment.replace('{news_id}', news_id);
+            url = url.replace('{comment_id}', comment_id);
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            error: function(xml) {noticebox('删除失败请重试', 0);},
+            success: function(res) {
+                $('.comment'+comment_id).fadeOut(1000);
+                var nums = $('.cs' + news_id);
+                nums.text(parseInt(nums.text())-1);
+            }
+        });
     }
 };
 
