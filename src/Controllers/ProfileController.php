@@ -542,6 +542,7 @@ class ProfileController extends BaseController
                 }
             }])
             ->byAudit()
+            ->groupBy('id')
             ->with('storages')
             ->take($limit)
             ->get();
