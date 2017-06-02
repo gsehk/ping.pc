@@ -475,10 +475,18 @@ var comment = {
         comment_box.prepend(boxhtml);
         if (attr.type != 'news') {
             $('.J-comment-feed' + feedid).on('click', function() {
+                if (MID == 0) {
+                    noticebox('请登录', 0, '/passport/index');
+                    return false;
+                }
                 comment.addComment(null, this);
             });
         } else {
             $('.J-comment-feed' + feedid).on('click', function() {
+                if (MID == 0) {
+                    noticebox('请登录', 0, '/passport/index');
+                    return false;
+                }
                 comment.addNewComment(null, this);
             });
         }
@@ -520,7 +528,7 @@ var comment = {
 
         var url = request_url.feed_comment.replace('{feed_id}', feedid);
 
-        obj.innerHTML = '回复中..';
+        obj.innerHTML = '评论中..';
 
         $.ajax({
             url: url,
@@ -531,7 +539,7 @@ var comment = {
             success: function(res) {
                 if (res.status == true) {
                     if (obj != undefined) {
-                        obj.innerHTML = '回复';
+                        obj.innerHTML = '评论';
                     }
                     var html = '<p><span>' + NAME + '：</span>' + content + '</p>';
                     var commentBox = $('.comment_box' + feedid);
@@ -572,7 +580,7 @@ var comment = {
 
         var url = request_url.comment_news.replace('{news_id}', news_id);
         // console.log(url, content, to_uid);
-        obj.innerHTML = '回复中..';
+        obj.innerHTML = '评论中..';
 
         $.ajax({
             url: url,
@@ -583,7 +591,7 @@ var comment = {
             success: function(res) {
                 if (res.status == true) {
                     if (obj != undefined) {
-                        obj.innerHTML = '回复';
+                        obj.innerHTML = '评论';
                     }
                     var html = '<p><span>' + NAME + '：</span>' + content + '</p>';
                     var commentBox = $('.comment_box' + news_id);
@@ -831,6 +839,10 @@ $(function() {
 
     // 显示回复框
     $('#feeds-list, #article-list, #content-list').on('click', '.J-comment-show', function() {
+        if (MID == 0) {
+            noticebox('请登录', 0, '/passport/index');
+            return;
+        }
         var attrs = urlToObject($(this).data('args'));
         if ($(attrs.box).css('display') == 'none') {
             $(attrs.box).show();

@@ -578,7 +578,7 @@ var comment = {
         var addToEnd = this.addToEnd;
         var url = request_url.comment_news.replace('{news_id}', this.row_id);
         var _this = this;
-        obj.innerHTML = '回复中..';
+        obj.innerHTML = '评论中..';
 
         $.ajax({
             url: url,
@@ -589,7 +589,7 @@ var comment = {
             success: function(res) {
                 if (res.status == true) {
                     if (obj != undefined) {
-                        obj.innerHTML = '回复';
+                        obj.innerHTML = '评论';
                     }
                     var html = '<div class="delComment_list comment'+res.data+'">';
                         html += '<div class="comment_left">';

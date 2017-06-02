@@ -45,7 +45,7 @@
                         表情
                     </span> -->
                     <span class="dy_cs" style="margin-left: 500px;">可输入<span class="nums">255</span>字</span>
-                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{ $feed['feed_id'] }}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
+                    <button class="dy_share a_link" id="J-comment-feed" data-args="editor=#comment&box=#comment_detail&row_id={{ $feed['feed_id'] }}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
                 </div>
             </div>
             <div class="delComment_cont" id="comment_detail"></div>
@@ -101,7 +101,11 @@ layer.photos({
   photos: '#layer-photos-demo'
   ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
 }); 
-$('#J-comment-news').on('click', function(){
+$('#J-comment-feed').on('click', function(){
+    if (MID == 0) {
+        noticebox('请登录', 0, '/passport/index');
+        return false;
+    }
     var attrs = urlToObject($(this).data('args'));
     attrs.to_uid = $(this).attr('to_uid');
     attrs.addToEnd = $(this).attr('addtoend');
