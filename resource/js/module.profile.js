@@ -676,7 +676,7 @@ var collect = {
                         $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
                     }
                 } else {
-                    alert(res.message);
+                    noticebox(res.message, 0);
                 }
 
                 collect.collectlock = 0;
@@ -709,7 +709,71 @@ var collect = {
                         $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
                     }
                 } else {
-                    alert(res.message);
+                    noticebox(res.message, 0);
+                }
+
+                collect.collectlock = 0;
+            }
+        });
+    },
+    addNewsCollect: function(news_id) {
+        // 未登录弹出弹出层
+        if (MID == 0) {
+            noticebox('请登录', 0, '/passport/index');
+            return;
+        }
+
+        if (collect.collectlock == 1) {
+            return false;
+        }
+        collect.collectlock = 1;
+
+        var url = request_url.collect_news.replace('{news_id}', news_id);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
+            error: function(xml) {},
+            success: function(res) {
+                if (res.status == true) {
+                    $collect = $('#collect' + news_id);
+                    var num = $collect.attr('rel');
+                    num++;
+                    $collect.attr('rel', num);
+                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.delNewsCollect(' + news_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos">' + num + '</font></a>');
+                } else {
+                    noticebox(res.message, 0);
+                }
+
+                collect.collectlock = 0;
+            }
+        });
+
+    },
+    delNewsCollect: function(news_id) {
+
+        if (collect.collectlock == 1) {
+            return false;
+        }
+        collect.collectlock = 1;
+        var url = request_url.collect_news.replace('{news_id}', news_id);
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
+            error: function(xml) {},
+            success: function(res, data, xml) {
+                if (xml.status == 204) {
+                    $collect = $('#collect' + news_id);
+                    var num = $collect.attr('rel');
+                    num--;
+                    $collect.attr('rel', num);
+                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.addNewsCollect(' + news_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cos">' + num + '</font></a>');
+                } else {
+                    noticebox(res.message, 0);
                 }
 
                 collect.collectlock = 0;

@@ -373,7 +373,7 @@ var digg = {
 };
 
 /**
- * 赞核心Js
+ * 文章收藏
  * @type {Object}
  */
 var collect = {

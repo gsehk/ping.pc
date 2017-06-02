@@ -13,8 +13,14 @@
     </div>                  
     <div class="dy_comment">
         @if($post['audit_status'] == 0)
-        <span class="digg" id="collect{{$post['id']}}" rel="{{count($post['collection_count'])}}">
-            <a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$post['collection_count']}}</font></a>
+        <span class="collect" id="collect{{$post['id']}}" rel="{{$post['collection_count']}}"> 
+            @if($post['is_collection_news'])
+            <a href="javascript:;" onclick="collect.delNewsCollect({{$post['id']}});" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos">{{$post['collection_count']}}</font>
+            </a>
+            @else
+            <a href="javascript:;" onclick="collect.addNewsCollect({{$post['id']}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cos">{{$post['collection_count']}}</font>
+            </a>
+            @endif
         </span>
         <span class="com J-comment-show" data-args="box=#warp_box{{$post['id']}}&row_id={{$post['id']}}&type=news&canload=0">
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post['id']}}">{{$post['comment_count']}}</font>

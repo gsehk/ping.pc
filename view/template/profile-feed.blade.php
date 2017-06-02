@@ -260,7 +260,7 @@
                 @endif
             </div>
             @if(count($post['comments']) >= 3)
-            <div class="comit_all fs-12"><a href="/information/read/{{$post['feed']['feed_id']}}">查看全部评论</a></div>
+            <div class="comit_all fs-12"><a href="{{route('pc:feedetail',['feed_id'=>$post['feed']['feed_id']])}}">查看全部评论</a></div>
             @endif
         </div>
     </div>
