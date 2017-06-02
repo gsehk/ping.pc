@@ -232,11 +232,11 @@ img {
 .p_cont {
     position: absolute;
     z-index: 99;
-    top: 80px;
-    right: 69px;
+    top: 85px;
+    right: 120px;
     display: none;
     width: 180px;
-    padding-top: 20px;
+    padding-top: 10px;
     border-radius: 3px;
     background: #fff;
     box-shadow: 0 1px 22px #e2e0e0;
@@ -245,7 +245,7 @@ img {
 .p_cont .triangle {
     position: absolute;
     top: -14px;
-    left: 72px;
+    left: 120px;
 }
 
 .p_cont ul li {
@@ -455,9 +455,9 @@ img {
 }
 
 .dy_left ul li a svg {
-    font-size: 22px;
+    font-size: 30px;
     margin-right: 20px;
-    vertical-align: -4px;
+    vertical-align: -8px;
 }
 
 .dy_center {
@@ -469,8 +469,9 @@ img {
 .dy_cTop {
     width: 100%;
     margin-bottom: 20px;
-    padding: 20px 40px;
+    padding: 30px 40px;
     background: white;
+    border-radius: 3px;
 }
 
 .dy_ta {
@@ -528,6 +529,7 @@ img {
     width: 100%;
     padding: 22px 40px;
     background: white;
+    border-radius: 3px;
 }
 
 .dy_cen a {
@@ -939,7 +941,7 @@ img {
 
 .dy_cs {
     font-size: 12px;
-    margin-left: 390px;
+    margin-left: 385px;
     color: #b3b3b3;
 }
 
@@ -955,7 +957,7 @@ img {
 }
 
 .dy_pageCont {
-    margin: 30px auto;
+    margin: 0px auto;
     text-align: center;
 }
 
@@ -1086,6 +1088,7 @@ img {
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #fff;
+    margin-bottom: 5px;
 }
 
 .i_title a{
@@ -1342,7 +1345,7 @@ img {
 .inT_title span {
     font-size: 14px;
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 5px;
     color: #333;
 }
 
@@ -1878,7 +1881,7 @@ img {
 }
 
 .delComment_list {
-    margin-top: 20px;
+    margin-top: 30px;
     padding-bottom: 10px;
     border-bottom: 1px solid #ededed;
 }
@@ -1909,7 +1912,8 @@ img {
 .c_time {
     font-size: 12px;
     display: block;
-    margin-top: 12px;
+    margin-top: 10px;
+    margin-bottom: 18px;
     color: #ccc;
 }
 
@@ -2023,8 +2027,8 @@ img {
 }
 
 .del_rTop {
-    height: 40px;
     margin-top: 30px;
+    overflow: hidden;
 }
 
 .del_rTop a {
@@ -2048,9 +2052,8 @@ img {
     float: left;
     width: 4px;
     height: 4px;
-    margin-top: 5px;
+    margin-top: 8px;
     margin-right: 15px;
-    margin-bottom: 21px;
     background: #59b6d7;
 }
 
@@ -2675,7 +2678,7 @@ img {
 }
 
 .int_page {
-    margin: 50px auto;
+    margin: 30px auto 0px;
     text-align: center;
 }
 

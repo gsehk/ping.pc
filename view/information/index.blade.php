@@ -132,7 +132,7 @@
                         </div>
                         <div class="i_right">
                             <span><a href="{{ route('pc:myFeed',['user_id'=>$u->info['id']]) }}">{{$u->user['name']}}</a></span>
-                            <p>@if(!empty($u->info['intro'])) {{ $u->info['intro'] }} @else 暂无简介 @endif</p>
+                            <p>@if(!empty($u->info['intro'])) {{ $u->info['intro'] }} @else 这家伙很懒，什么都没留下 @endif</p>
                         </div>
                     </div>
                 @endforeach

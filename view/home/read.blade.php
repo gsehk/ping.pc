@@ -1,4 +1,4 @@
-    @extends('pcview::layouts.default')
+@extends('pcview::layouts.default')
 
 @section('content')
 <div class="dy_bg">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="delTop_right">
                     <span>{{ $news['user']['name'] }}</span>
-                    <p class="txt-hide">{{ $news['user']['name'] or '' }}</p>
+                    <p class="txt-hide">{{ $news['user']['intro'] or '这家伙很懒，什么都没留下！' }}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
