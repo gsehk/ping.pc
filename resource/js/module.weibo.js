@@ -727,12 +727,16 @@ $(function() {
     $(".dy_cTop").on("click", ".imgdel", function() {
         $(this).parent().remove();
         if ($('#file_upload_1-queue').find('.uploadify-queue-item').length == 0) {
+            $('.uploadify-queue-add').remove();
             $('#file_upload_1-queue').hide();
         }
-    });
-    //为删除文件按钮绑定删除文件事件
-    $(".dy_cTop").on("click", ".imgdel", function() {
-        $(this).parent().remove();　　
+        if ($('#file_upload_1-queue').find('.uploadify-queue-item').length != 0  && $('.uploadify-queue-add').length == 0 ){
+            var add = '<a class="dy_picture_span uploadify-queue-add">'
+                    + '<img src="'
+                    + PUBLIC_URL + '/images/picture-add.png"/>'
+                    + '</a>'
+            $('.uploadify-queue').append(add);
+        }
     });
 
     // 微博分类tab
@@ -743,6 +747,7 @@ $(function() {
         $('.show_tab a').removeClass('dy_cen_333');
         $(this).addClass('dy_cen_333');
     });
+    
     // 微博操作菜单
     $('#feeds-list').on('click', '.show_admin', function() {
         if ($(this).next('.cen_more').css('display') == 'none') {

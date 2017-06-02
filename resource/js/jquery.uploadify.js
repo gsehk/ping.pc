@@ -145,16 +145,21 @@
 					$('#feed_pic').on('click',function(){
 						_this.find('.selectbtn').trigger('click');
 					});
-				  
+
+				    $(".uploadify-queue").on("click", ".uploadify-queue-add", function() {
+						_this.find('.selectbtn').trigger('click');
+				    });
+
 					option.onInit && option.onInit(returnObj);
 				},
 				_filter: function(files) {		//选择文件组的过滤方法
 					var fileCount = $('.uploadify-queue .uploadify-queue-item').length;
+
+					// 图片张数判断
 					if ((fileCount + files.length) > 9) {
 						noticebox('最多上传9张图片', 0);
 						return false;
 					}
-
 					var arr = [];
 					var typeArray = F.getFileTypes(option.fileTypeExts);
 					if(typeArray.length>0){
@@ -186,7 +191,25 @@
 				_renderFile : function(file){
 					var $html = $(option.itemTemplate.replace(/\${fileID}/g,'fileupload_'+instanceNumber+'_'+file.index).replace(/\${fileName}/g,file.name).replace(/\${fileSize}/g,F.formatFileSize(file.size)).replace(/\${instanceID}/g,_this.attr('id')));
 
-					uploadManager._getFileList().show().append($html);
+					uploadManager._getFileList().show();
+
+					if ($('.uploadify-queue-add').length == 0) {
+						// 图片添加那妞
+						var add = '<a class="dy_picture_span uploadify-queue-add">'
+								+ '<img src="'
+								+ PUBLIC_URL + '/images/picture-add.png"/>'
+								+ '</a>'
+						$('.uploadify-queue').append(add);
+					}
+
+					// 图片加号处理
+					if (file.index == 9) {
+						$('.uploadify-queue-add').remove();
+						uploadManager._getFileList().append($html);
+					} else {
+						$('.uploadify-queue-add').before($html);
+					}
+
 
 					//触发select动作
 					option.onSelect && option.onSelect(file);
@@ -198,6 +221,7 @@
 			  		var files = e.target.files;
 			  		files = uploadManager._filter(files);
 			  		var fileCount = $('.uploadify-queue .uploadify-queue-item').length;//队列中已经有的文件个数
+
 		  			for(var i=0,len=files.length;i<len;i++){
 		  				files[i].index = ++fileCount;
 		  				files[i].status = 0;//标记为未开始上传
