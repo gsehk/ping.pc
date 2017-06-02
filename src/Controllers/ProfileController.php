@@ -601,6 +601,7 @@ class ProfileController extends BaseController
      */
     public function getCollectionList(Request $request, int $user_id)
     {
+        $uid = $this->mergeData['TS']['id'] ?? 0;
         $type = $request->type;
         $max_id = $request->max_id;
         $limit = $request->limit ?? 15;
@@ -619,7 +620,10 @@ class ProfileController extends BaseController
             }])*/
             ->with(['storage', 'comments'])
             ->get();
-
+            foreach ($datas as $key => &$value) {
+                $value['is_collection_news'] = $uid ? NewsCollection::where('user_id', $uid)->where('news_id', $value['id'])->count() : 0;
+                // $value['is_digg_news'] = $uid ? NewsDigg::where('user_id', $uid)->where('news_id', $value['id'])->count() : 0;
+            }
             $newsList['data'] = $datas;
             $dataList['html'] = view('pcview::template.profile-collect', $newsList, $this->mergeData)->render();
             $dataList['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['id'] : 0;
