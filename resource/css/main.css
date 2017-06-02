@@ -593,7 +593,6 @@ img {
     margin-top: 20px;
 }
 
-.dy_comment .collect,
 .dy_comment .digg,
 .dy_comment .com,
 .dy_comment .vie {
@@ -2463,6 +2462,7 @@ img {
     top: 2px;
     left: 22px;
     color: #fff;
+    width: 20px;
 }
 
 .cen_beforColor_two {

@@ -1,7 +1,12 @@
 
+
+<!-- 个人中心分享栏列表 -->
+
+
 @if(isset($data))
 @foreach($data as $key => $post)
 <div class="cen_img cen_befor" id="feed{{$post['feed']['feed_id']}}">
+    <a href="{{route('pc:feedetail',['feed_id'=>$post['feed']['feed_id']])}}">
     <span class="cen_beforColor">
     @if(date('Y-m-d') == date('Y-m-d', strtotime($post['feed']['created_at'])))
         今<br>天
@@ -9,6 +14,7 @@
     <span class="beforColor_span">{{date('m', strtotime($post['feed']['created_at']))}}</span>{{date('d', strtotime($post['feed']['created_at']))}}
     @endif
     </span>
+    </a>
     <p class="fs-14 cen_word ">{{$post['feed']['feed_content']}}</p>
     @if($post['feed']['storages'])
     @php $imgNum = count($post['feed']['storages']); @endphp

@@ -1,4 +1,8 @@
 
+
+<!-- 个人中心文章栏列表 -->
+
+
 @if(isset($data))
 @foreach($data as $key => $post)
 <div class="cen_img cen_befor b_bg" @if($loop->first) style="margin-top:20px;" @endif>
@@ -13,7 +17,7 @@
     </div>                  
     <div class="dy_comment">
         @if($post['audit_status'] == 0)
-        <span class="collect" id="collect{{$post['id']}}" rel="{{$post['collection_count']}}"> 
+        <span class="digg" id="collect{{$post['id']}}" rel="{{$post['collection_count']}}"> 
             @if($post['is_collection_news'])
             <a href="javascript:;" onclick="collect.delNewsCollect({{$post['id']}});" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos">{{$post['collection_count']}}</font>
             </a>

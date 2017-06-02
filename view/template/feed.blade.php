@@ -1,4 +1,8 @@
 
+
+<!-- 首页分享列表/个人收藏分享栏列表 -->
+
+
 @if(isset($data))
 @foreach($data as $key => $post)
 <div class="feed-item" id="feed{{$post['feed']['feed_id']}}">

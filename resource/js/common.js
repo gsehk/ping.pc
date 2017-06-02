@@ -91,6 +91,14 @@ var checkNums = function(obj, len, show) {
     }
 }
 
+var replaceUrl = function ($content){
+    
+    $content = str_replace('[SITE_URL]', SITE_URL, $content);
+    $content = preg_replace_callback('/((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)/u', '_parse_url', $content);
+
+    return $content;
+}
+
 // 文件上传
 var fileUpload = function(f, callback) {
     var reader = new FileReader();
