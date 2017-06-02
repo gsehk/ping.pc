@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 
 
 // components.
-import List from './component/pc/List.vue';
+import AuthList from './component/pc/AuthList.vue';
 
 Vue.use(VueRouter);
 
@@ -13,12 +13,12 @@ const router = new VueRouter({
     // root.
     {
       path: '/',
-      redirect: 'list'
+      redirect: 'authlist'
     },
     // Setting router.
     {
-      path: '/list',
-      component: List
+      path: '/authlist',
+      component: AuthList
     }]
 });
 
