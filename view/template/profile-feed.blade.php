@@ -201,7 +201,7 @@
             @endif
         </span>
         <span class="com J-comment-show" data-args="box=#warp_box{{$post['feed']['feed_id']}}&row_id={{$post['feed']['feed_id']}}&canload=0">
-            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>{{$post['tool']['feed_comment_count']}}
+            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post['feed']['feed_id']}}">{{$post['tool']['feed_comment_count']}}</font>
         </span>
         <span class="vie">
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
@@ -245,12 +245,16 @@
                 @if(!empty($post['comments']))
                 @foreach($post['comments'] as $cv)
                 @if($loop->index < 3)
-                <p>
+                <p class="comment{{$cv['id']}}">
                     <span>{{$cv['user']['name']}}：</span> {{$cv['comment_content']}}
                     @if($cv['user_id'] != $TS['id'])
                         <a class="fs-14 J-reply-comment" data-args="to_uname={{$cv['user']['name']}}&to_uid={{$cv['user_id']}}&row_id={{$post['feed']['feed_id']}}">回复</a>
                     @endif
+                    @if($cv['user_id'] == $TS['id'])
+                        <a class="fs-14 del_comment" onclick="comment.delComment({{$cv['id']}}, {{$post['feed']['feed_id']}})">删除</a>
+                    @endif
                 </p>
+
                 @endif
                 @endforeach
                 @endif

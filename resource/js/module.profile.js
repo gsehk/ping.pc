@@ -535,13 +535,15 @@ var comment = {
                     }
                     var html = '<p><span>' + NAME + '：</span>' + content + '</p>';
                     var commentBox = $('.comment_box' + feedid);
+                    var commentNum = $('.cs' + feedid);
                     if ("undefined" != typeof(commentBox)) {
                         commentBox.prepend(html);
                         _textarea.value = '';
                         $('.nums').text(initNums);
+                        commentNum.text(parseInt(commentNum.text())+1);
                     }
                 } else {
-                    alert(res.message);
+                    noticebox(res.message, 0);
                 }
             }
         });
@@ -591,7 +593,7 @@ var comment = {
                         $('.nums').text(initNums);
                     }
                 } else {
-                    alert(res.message);
+                    noticebox(res.message, 0);
                 }
             }
         });
@@ -608,6 +610,8 @@ var comment = {
                 $('.comment'+comment_id).fadeOut(1000);
                 var commentNum = $('.comment_count').text();
                 $('.comment_count').text(parseInt(commentNum)-1);
+                var nums = $('.cs' + feed_id);
+                nums.text(parseInt(nums.text())-1);
             }
         });
     }

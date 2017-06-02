@@ -414,10 +414,12 @@ var comment = {
                         html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.data+', '+feedid+');">删除</a>';
                         html += '</p>';
                     var commentBox = $('.comment_box' + feedid);
+                    var commentNum = $('.cs' + feedid);
                     if ("undefined" != typeof(commentBox)) {
                         commentBox.prepend(html);
                         _textarea.value = '';
                         $('.nums').text(initNums);
+                        commentNum.text(parseInt(commentNum.text())+1);
                     }
                 } else {
                     alert(res.message);
@@ -508,6 +510,8 @@ var comment = {
                 $('.comment'+comment_id).fadeOut(1000);
                 var commentNum = $('.comment_count').text();
                 $('.comment_count').text(parseInt(commentNum)-1);
+                var nums = $('.cs' + feed_id);
+                nums.text(parseInt(nums.text())-1);
             }
         });
     }

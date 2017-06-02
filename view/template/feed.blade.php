@@ -200,7 +200,7 @@
                 @endif
             </span>
             <span class="com J-comment-show" data-args="box=#warp_box{{$post['feed']['feed_id']}}&row_id={{$post['feed']['feed_id']}}&canload=0">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>{{$post['tool']['feed_comment_count']}}
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post['feed']['feed_id']}}">{{$post['tool']['feed_comment_count']}}</font>
             </span>
             <span class="vie">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
