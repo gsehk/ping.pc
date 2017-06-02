@@ -2918,6 +2918,7 @@ img {
     display: inline-block;
     padding-bottom: 30px;
     color: #333;
+    margin-top: -1px;
 }
 
 .fan_ul li a:hover {
