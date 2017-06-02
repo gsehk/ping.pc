@@ -54,6 +54,6 @@ class Info implements ComponentInfoInterface
      */
     public function getAdminEntry()
     {
-        return 'www.baidu.com';
+        return route('pc:admin');
     }
 }
