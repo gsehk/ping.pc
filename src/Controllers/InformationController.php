@@ -5,6 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Zhiyi\Plus\Models\Storage;
 use Zhiyi\Plus\Models\StorageTask;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
@@ -252,31 +253,40 @@ class InformationController extends BaseController
             
             $news = News::find($request->news_id);
             if ($news) {
+                $storage = Storage::find($request->task_id);
+                if ($storage) {
+                    $storage_id = $request->task_id;
+                } else {
+                    $task = StorageTask::where('id', $request->task_id)
+                        ->select('hash')
+                        ->with('storage')
+                        ->first();
+                    $storage_id =  $task ? $task['storage']['id'] : 0;
+                }
+
                 $news->title = $request->title;
                 $news->subject = $request->subject ?: getShort($request->content, 60);
                 $news->author = $this->mergeData['TS']['id'] ?? 0;
                 $news->content = $request->content;
-                $news->storage = $request->task_id;
+                $news->storage = $storage_id;
                 $news->from = $request->source ?: '';
                 $news->audit_status = $type;
                 $news->save(); 
             }
 
         } else {
-            $storage = StorageTask::where('id', $request->task_id)
+            $task = StorageTask::where('id', $request->task_id)
                     ->select('hash')
                     ->with('storage')
                     ->first();
-            if ($storage) {
-                $storage_id = $storage['storage']['id'];
-            }
+            $storage_id =  $task ? $task['storage']['id'] : 0;
 
             $news = new News();
             $news->title = $request->title;
             $news->subject = $request->subject ?: getShort($request->content, 60);
             $news->author = $this->mergeData['TS']['id'] ?? 0;
             $news->content = $request->content;
-            $news->storage = $storage_id ?: '';
+            $news->storage = $storage_id;
             $news->from = $request->source ?: '';
             $news->audit_status = $type; 
             $news->save();
