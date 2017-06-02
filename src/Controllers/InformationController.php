@@ -236,7 +236,7 @@ class InformationController extends BaseController
             ])->setStatusCode(201);
         }*/
 
-        if (!$request->task_id) {
+        if (!$request->task_id && !$request->storage_id) {
             return response()->json([
                 'status' => false,
                 'message' => '没有上传封面图片',
@@ -249,21 +249,22 @@ class InformationController extends BaseController
             ])->setStatusCode(201);
         }
 
+
+        if ($request->task_id) {
+            $task = StorageTask::where('id', $request->task_id)
+                ->select('hash')
+                ->with('storage')
+                ->first();
+            $storage_id =  $task ? $task['storage']['id'] : 0;
+        } else {
+            $storage_id = $request->storage_id;
+        }
+
         if ($request->news_id) {
             
             $news = News::find($request->news_id);
             if ($news) {
-                $storage = Storage::find($request->task_id);
-                if ($storage) {
-                    $storage_id = $request->task_id;
-                } else {
-                    $task = StorageTask::where('id', $request->task_id)
-                        ->select('hash')
-                        ->with('storage')
-                        ->first();
-                    $storage_id =  $task ? $task['storage']['id'] : 0;
-                }
-
+                
                 $news->title = $request->title;
                 $news->subject = $request->subject ?: getShort($request->content, 60);
                 $news->author = $this->mergeData['TS']['id'] ?? 0;
@@ -275,12 +276,6 @@ class InformationController extends BaseController
             }
 
         } else {
-            $task = StorageTask::where('id', $request->task_id)
-                    ->select('hash')
-                    ->with('storage')
-                    ->first();
-            $storage_id =  $task ? $task['storage']['id'] : 0;
-
             $news = new News();
             $news->title = $request->title;
             $news->subject = $request->subject ?: getShort($request->content, 60);

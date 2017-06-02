@@ -6,7 +6,8 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ $csrf_token }}">
   <title>Pc管理</title>
-  
+      <link rel="stylesheet" href="{{mix('css/index.css', 'zhiyicx/plus-component-news')}}">
+
   <!-- global config. -->
   <script type="text/javascript">
       window.PC = {!!
@@ -22,6 +23,9 @@
 
 <body>
   <div id="app"></div>
+  <script type="text/javascript" src="{{ mix('js/manifest.js', 'zhiyicx/plus-component-pc') }}"></script>
+  <script type="text/javascript" src="{{ mix('js/vendor.js', 'zhiyicx/plus-component-pc') }}"></script>
+  <script type="text/javascript" src="{{ mix('js/index.js', 'zhiyicx/plus-component-pc') }}"></script>
 </body>
 
 </html>

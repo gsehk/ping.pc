@@ -77,6 +77,11 @@ function resource_path()
     return base_path('/resource');
 }
 
+function asstes_path()
+{
+    return base_path('/asstes');
+}
+
 function getShort($str, $length = 40, $ext = '')
 {
     // $str = htmlspecialchars($str);

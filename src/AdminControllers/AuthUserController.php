@@ -16,12 +16,19 @@ class AuthUserController extends Controller
 	public function getAuthUserList(Request $request)
 	{
 		$key = $request->key;
+		$state = $request->state;
 		$datas = UserVerified::orderBy('id', 'desc')
 			->where(function($query) use ($key){
                 	if ($key) {
                 		$query->where('realname', 'like', '%'.$key.'%');
                 	}
                 })
+			->where(function($query) use ($state){
+				if ($state) {
+                    if ($state == -1) {$state = 0;}
+                    $query->where('verified', $state);
+                }
+			})
 			->with('user')
 			->get();
 
