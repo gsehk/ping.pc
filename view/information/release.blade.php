@@ -48,7 +48,8 @@
                                data-tips="#J-show-tips"
                                data-token="{{ csrf_token() }}"
                         >
-                        <input name="task_id" id="task_id" type="hidden" value="{{$storage or 0}}" />
+                        <input name="storage_id" id="storage_id" type="hidden" value="{{$storage or 0}}" />
+                        <input name="task_id" id="task_id" type="hidden" value="" />
                     </div>
                 </span>
             </div>

@@ -258,6 +258,7 @@ $('.subject-submit').on('click', function() {
     var subject = $('#subject-abstract'),
         title = $('#subject-title'),
         task_id = $('#task_id'),
+        storage_id = $('#storage_id'),
         news_id = $('#news_id'),
         abstract = $('#subject-abstract'),
         froms = $('#subject-from'),
@@ -267,6 +268,7 @@ $('.subject-submit').on('click', function() {
         'title': title.val(),
         'subject': subject.val(),
         'task_id': task_id.val(),
+        'storage_id': storage_id.val(),
         'cate_id': cate.data('value') || 0,
         'news_id': news_id.val() || 0,
         'abstract': abstract.val(),
@@ -282,7 +284,7 @@ $('.subject-submit').on('click', function() {
         noticebox('文章内容不合法', 0);
         return false;
     }
-    if (!args.task_id) {
+    if (!args.task_id && !args.storage_id) {
         noticebox('请上传封面图片', 0);
         return false;
     }
