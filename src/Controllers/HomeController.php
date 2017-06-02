@@ -16,6 +16,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedComment;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Services\FeedCount;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 
 class HomeController extends BaseController
 {
@@ -77,7 +78,7 @@ class HomeController extends BaseController
         $data['feed'] = [];
         $data['feed']['feed_id'] = $feed->id;
         $data['feed']['feed_title'] = $feed->feed_title ?: '';
-        $data['feed']['feed_content'] = $feed->feed_content;
+        $data['feed']['feed_content'] = replaceUrl($feed->feed_content);
         $data['feed']['share_desc'] = str_replace(PHP_EOL, '', substr($feed->feed_content, 0, 60));
         $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
         $data['feed']['feed_from'] = $feed->feed_from;
@@ -135,7 +136,7 @@ class HomeController extends BaseController
             $data['feed'] = [];
             $data['feed']['feed_id'] = $feed->id;
             $data['feed']['feed_title'] = $feed->feed_title ?? '';
-            $data['feed']['feed_content'] = $feed->feed_content;
+            $data['feed']['feed_content'] = replaceUrl($feed->feed_content);
             $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
             $data['feed']['feed_from'] = $feed->feed_from;
             $data['feed']['storages'] = $feed->storages->map(function ($storage) {

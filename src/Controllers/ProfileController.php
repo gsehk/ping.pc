@@ -20,6 +20,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedStorage;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
+use function zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 
 class ProfileController extends BaseController
 {
@@ -451,7 +452,7 @@ class ProfileController extends BaseController
             $data['feed'] = [];
             $data['feed']['feed_id'] = $feed->id;
             $data['feed']['feed_title'] = $feed->feed_title ?? '';
-            $data['feed']['feed_content'] = $feed->feed_content;
+            $data['feed']['feed_content'] = replaceUrl($feed->feed_content);
             $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
             $data['feed']['feed_from'] = $feed->feed_from;
             $data['feed']['storages'] = $feed->storages->map(function ($storage) {

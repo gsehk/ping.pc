@@ -28,8 +28,10 @@ ul {
     list-style: none;
 }
 a {
-    color: #333;
     text-decoration: none;
+    color: #111;
+    cursor: pointer;
+    outline: none;
 }
 a:focus,
 a:link,

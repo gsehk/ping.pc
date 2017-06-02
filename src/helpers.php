@@ -108,3 +108,12 @@ function getShort($str, $length = 40, $ext = '')
 
     return $output;
 }
+
+function replaceUrl($content)
+{
+    $content = preg_replace_callback('/((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)/u', function($url){
+        return '<a href="'.$url[0].'" target="_blank" style="color:#0096e6;">访问链接+</a>';
+    }, $content);
+
+    return $content;
+}

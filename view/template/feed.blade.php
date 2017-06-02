@@ -12,7 +12,7 @@
         <a href="/home/{{$post['feed']['feed_id']}}/feed"><span class="dy_time fs-12">{{$post['feed']['created_at']}}</span></a>
     </div>
     <div class="cen_img">
-        <p class="fs-14 cen_word">{{$post['feed']['feed_content']}}</p>
+        <p class="fs-14 cen_word">{!!$post['feed']['feed_content']!!}</p>
         @if($post['feed']['storages'])
         @php $imgNum = count($post['feed']['storages']); @endphp
         <div style="position: relative; margin-bottom: 8px;" id="layer-photos-demo{{$post['feed']['feed_id']}}">

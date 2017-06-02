@@ -15,7 +15,7 @@
     @endif
     </span>
     </a>
-    <p class="fs-14 cen_word ">{{$post['feed']['feed_content']}}</p>
+    <p class="fs-14 cen_word ">{!!$post['feed']['feed_content']!!}</p>
     @if($post['feed']['storages'])
     @php $imgNum = count($post['feed']['storages']); @endphp
     <div style="position: relative; margin-bottom: 8px;" id="layer-photos-demo{{$post['feed']['feed_id']}}">
