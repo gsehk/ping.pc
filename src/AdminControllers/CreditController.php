@@ -2,6 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\AdminControllers;
 
+use Validator;
 use Zhiyi\Plus\Models\User;
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Http\Controllers\Controller;
@@ -35,14 +36,14 @@ class CreditController extends Controller
 
     public function handleCreditRule(Request $request)
     {
-        /*$this->validate($request, [
-            'name' => 'bail|required|max:50',
-            'alias' => 'bail|required|max:50',
-            'type' => 'bail|nullable|alpha',
-            'cycle' => 'bail|nullable|alpha',
-            'cycle_times' => 'bail|required|integer',
-            'score' => 'bail|required|integer'
-        ]);*/
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|alpha|max:255',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' =>'参数输入错误'
+            ])->setStatusCode(400);
+        }
         $id = $request->id ?? 0;
         $setting = CreditSetting::find($id);
         if (!$setting) {
@@ -77,5 +78,5 @@ class CreditController extends Controller
         }
     }
 
-    
+
 }
