@@ -61,6 +61,7 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('account', 'ProfileController@account')->name('pc:account');
     Route::get('article', 'ProfileController@article')->name('pc:article');
     // 个人设置
+    Route::get('cropper', 'ProfileController@cropper'); 
     Route::post('doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
     Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
     Route::get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心

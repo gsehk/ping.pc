@@ -656,4 +656,8 @@ class ProfileController extends BaseController
         }
     }
 
+    public function cropper()
+    {
+        return view('pcview::profile.cropper', $this->mergeData);
+    }
 }

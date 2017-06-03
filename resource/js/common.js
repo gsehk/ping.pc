@@ -316,6 +316,113 @@ var logout = function() {
     });
 })(jQuery);
 
+//是否正在加载
+var load = 0;
+//layer弹窗
+var ly = {
+    /**
+     * 操作成功显示API
+     * @param string message 信息内容
+     * @param integer time 展示时间
+     * @return void
+     */
+    success: function(message, url, reload, close) {
+        reload = typeof(reload) == 'undefined' ? true : reload;
+        close = typeof(close) == 'undefined' ? false : close;
+
+        layer.msg(message, {
+          icon: 1,
+          time: 2000
+        },function(){
+            if(close){
+                layer.closeAll();
+            }
+            if(reload){
+                if(url == '' || typeof(url) == 'undefined') {
+                    url = location.href;
+                }
+                location.href = url;
+            }
+        });
+    },
+    /**
+     * 操作出错显示API
+     * @param string message 信息内容
+     * @param integer time 展示时间
+     * @return void
+     */
+    error: function(message, url, reload, close) {
+        reload = typeof(reload) == 'undefined' ? true : reload;
+        close = typeof(close) == 'undefined' ? false : close;
+        
+        layer.msg(message, {
+          icon: 2,
+          time: 2000
+        },function(){
+            if(close){
+                layer.closeAll();
+            }
+            if(reload){
+                if(url == '' || typeof(url) == 'undefined') {
+                    url = location.href;
+                }
+                location.href = url;
+            }
+        });     
+    },
+
+
+    load: function(requestUrl,title,width,height,type,requestData){
+        if(load == 1) return false;
+        layer.closeAll();
+        load = 1;
+
+        if(undefined != typeof(type)) {
+            var ajaxType = type;
+        }else{
+            var ajaxType = "GET";
+        }
+        var obj = this;
+        if(undefined == requestData) {
+            var requestData = {};
+        }
+        layer.load(0, {shade: false});
+        $.ajax({
+            url: requestUrl,
+            type: ajaxType,
+            data: requestData,
+            cache:false,
+            dataType:'html',
+            success:function(html){
+                layer.closeAll();
+                layer.open({
+                    type: 1,
+                    title: title,
+                    area: [width,height],
+                    shadeClose: true,
+                    shade:0.5,
+                    content: html
+                });
+                load = 0;
+            }
+        });
+    },
+
+    loadHtml: function(html,title,width,height){
+        layer.closeAll();
+
+        layer.open({
+            type: 1,
+            title: title,
+            area: [width,height],
+            shadeClose: true,
+            shade:0.5,
+            content: html
+        });
+    }
+};
+
+
 $(function() {
     // 个人中心展开
     $('#menu_toggle').click(function() {
