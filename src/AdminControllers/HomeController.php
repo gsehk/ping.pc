@@ -22,8 +22,8 @@ class HomeController extends Controller
 
         // token
         $token = AuthToken::where('user_id', $request->user()->id)
-                                                ->where('state', 1)
-                                                ->value('token');
+            ->where('state', 1)
+            ->value('token');
 
         return view('pcview::admin', [
             'token' => $token,
