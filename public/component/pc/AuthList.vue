@@ -93,7 +93,7 @@
       state: [{
         value: '',
         label: '全部'
-      },{
+      }, {
         value: -1,
         label: '未认证'
       }, {
@@ -134,7 +134,7 @@
       },
       manageAuth(auth) {
         let state = '',
-            _id = auth.id;
+          _id = auth.id;
         switch (auth.verified) {
           case 0:
             state = 1;
