@@ -38,6 +38,11 @@
         <div class="dy_bg" @yield('bgcolor')>
         @yield('content')
         </div>
+        
+        <div class="dy_calltop">
+            <a href="https://fir.im/ThinkSNSPlus" class="dy_1">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a>
+            <a href="javascript:;" class="dy_2" id="gotop"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-uptop"></use></svg></a>
+        </div>
     </div>
 
     <!-- footer -->
