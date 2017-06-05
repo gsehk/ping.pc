@@ -109,6 +109,7 @@ weibo.loadMore = function() {
                 } else {
                     $(weibo.setting.container).append(html);
                 }
+                hoverComment('.comment_con');
             } else {
                 weibo.setting.canload = false;
                 if (weibo.setting.loadcount == 1) {
@@ -268,6 +269,7 @@ news.loadMore = function() {
                 } else {
                     $(news.setting.container).append(html);
                 }
+                hoverComment('.comment_con');
             } else {
                 news.setting.canload = false;
                 if (news.setting.loadcount == 1) {
@@ -431,7 +433,7 @@ var comment = {
                         html += '<span class="del_ellen">' + data[i].uinfo.name + '</span>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
                         html += '<i class="icon iconfont icon-gengduo-copy"></i>';
-                        html += '<p>' + data[i].comment_content + '';
+                        html += '<p class="comment_con">' + data[i].comment_content + '';
                         if (data[i].user_id != MID) {
                             html += '<span class="del_huifu">';
                             html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].uinfo.name + '&canload=0&to_uid=' + data[i].user_id + '"';
@@ -446,6 +448,7 @@ var comment = {
                         var attrs = urlToObject($(this).data('args'));
                         comment.initReadReply(attrs);
                     });
+                    hoverComment('.comment_con');
                 } else {
                     comment.canload = false;
                     $('.loading').html('暂无相关内容');
@@ -853,7 +856,7 @@ $(function() {
     });
 
     // 回复初始化
-    $('#feeds-list').on('click', '.J-reply-comment', function() {
+    $('#feeds-list, #content-list').on('click', '.J-reply-comment', function() {
         var attrs = urlToObject($(this).data('args'));
         comment.initReply(attrs);
     });

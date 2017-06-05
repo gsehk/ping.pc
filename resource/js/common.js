@@ -91,6 +91,18 @@ var checkNums = function(obj, len, show) {
     }
 }
 
+//  显示隐藏评论操作
+var hoverComment = function(obj)
+{
+    $(obj).hover(function(){
+            if ($(this).find("a").css('display') == 'none') {
+                $(this).find("a").show();
+            }else{
+                $(this).find("a").hide();
+            }
+    }); 
+}
+
 // 文件上传
 var fileUpload = function(f, callback) {
     var reader = new FileReader();

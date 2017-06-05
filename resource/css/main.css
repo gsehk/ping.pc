@@ -1916,7 +1916,9 @@ img {
     margin-bottom: 18px;
     color: #ccc;
 }
-
+.comment_con a{
+    display: none;   
+}
 .comment_right i {
     float: right;
     margin-top: -30px;
@@ -1924,7 +1926,7 @@ img {
 
 .comment_right a {
     font-size: 14px;
-    line-height: 24px;
+    /*line-height: 24px;*/
     position: relative;
     margin-top: 20px;
     color: #666;
@@ -1940,6 +1942,7 @@ img {
 .del_huifu > a {
     font-size: 14px;
     color: #111;
+    display: none;
     /* left: 0;
     display: none;
     bottom: 0;

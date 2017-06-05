@@ -61,7 +61,7 @@
             @if(!empty($post['comments']))
                 @foreach($post['comments'] as $cv)
                 @if($loop->index < 3)
-                <p class="comment{{$cv['id']}}">
+                <p class="comment{{$cv['id']}} comment_con">
                     <span>{{$cv['user']['name']}}：</span> {{$cv['comment_content']}}
                     @if($cv['user_id'] != $TS['id'])
                         <a class="fs-14 J-reply-comment" data-args="to_uname={{$cv['user']['name']}}&to_uid={{$cv['user_id']}}&row_id={{$post['id']}}">回复</a>

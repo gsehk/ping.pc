@@ -520,7 +520,7 @@ var comment = {
                         html += '<a href="/profile/index?user_id='+data[i].user_id+'"><span class="del_ellen">' + data[i].info.name + '</span></a>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
                         /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                        html += '<p>' + data[i].comment_content + '';
+                        html += '<p class="comment_con">' + data[i].comment_content + '';
                         html += '<span class="del_huifu">';
                         if (data[i].user_id != MID) {
                             html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].info.name + '&canload=0&to_uid=' + data[i].user_id + '"';
@@ -539,6 +539,7 @@ var comment = {
                         var attrs = urlToObject($(this).data('args'));
                         comment.initReply(attrs);
                     });
+                    hoverComment('.comment_con');
                 } else {
                     comment.canload = false;
                     $('.del_left .loading').html('暂无相关内容');
@@ -601,7 +602,7 @@ var comment = {
                         html += '<a href="/profile/index?user_id='+MID+'"><span class="del_ellen">' + NAME + '</span></a>';
                         html += '<span class="c_time">刚刚</span>';
                         /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                        html += '<p>' + content + '';
+                        html += '<p class="comment_con">' + content + '';
                         html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.data+', '+comment.row_id+')"';
                         html += 'class="del_comment">删除</a>';
                         html += '</p></div></div>';

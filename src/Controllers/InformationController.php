@@ -40,7 +40,8 @@ class InformationController extends BaseController
 
         /* 推荐文章第一条 */
         $datas['recommend'] = [];
-        $rec = News::where('is_recommend', 1)
+        $rec = News::byAudit()
+            ->where('is_recommend', 1)
             ->orderBy('news.id', 'desc')
             ->take(6)
             ->select('id','title','updated_at','storage','from','author')
