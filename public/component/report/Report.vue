@@ -32,8 +32,8 @@
           </div>
         </div>
       </div>
-      <div class="panel-bady">
-        <table class="table table-hove text-center table-striped">
+      <div class="panel-body">
+        <table class="table table-hove text-center table-striped table-bordered">
           <thead>
             <tr>
               <th>举报者</th>
@@ -52,10 +52,10 @@
               <td>{{ report.created_at }}</td>
               <td>{{ state2label(report.state) }}</td>
               <td>
-                <!-- 审核 -->
-                <button type="button" class="btn btn-primary btn-sm" :disabled='report.verified === 1' @click='managereport(report)'>审核</button>
-                <!-- 驳回 -->
-                <button type="button" class="btn btn-danger btn-sm" :disabled='report.verified === 2' @click='managereport(report)'>驳回</button>
+                <!-- 处理 -->
+                <button type="button" class="btn btn-primary btn-sm" :disabled='report.state === 1' @click='managereport(report.id)'>处理</button>
+                <!-- 删除 -->
+                <button type="button" class="btn btn-danger btn-sm" :disabled='report.state === 2' @click='deletereport(report.id)'>删除</button>
               </td>
             </tr>
           </tbody>
@@ -80,7 +80,7 @@ export default {
       error: null,
       success: null
     },
-    auditID: '',
+    editID: '',
     state: [{
       value: -1,
       label: '未处理'
@@ -128,31 +128,32 @@ export default {
           this.loadding = false;
         });
     },
-    managereport(report) {
-      let state = '',
-        _id = report.id;
-      switch (report.verified) {
-        case 0:
-          state = 1;
-          break;
-        case 1:
-          state = 2;
-          break;
-        case 2:
-          state = 1;
-          break;
-        default:
-          state = 2;
-          break;
-      }
-      request.post('/pc/admin/report/audit/' + _id, {
-          state
+    managereport(_id) {
+      request.post('/pc/admin/denounce/handle/' + _id, {
+          state: 1
         })
         .then(response => {
-          if (response.data.status) {
-            this.auditID = null;
-            this.getReportList();
-          }
+          this.editID = null;
+          if (!response.data.status) return this.tips.error = '处理失败！';
+          this.getReportList();
+        }).catch(({
+          response: {
+            data: {
+              errors = ['处理失败']
+            } = {}
+          } = {}
+        }) => {
+          this.editID = null;
+        });
+    },
+    deletereport(_id) {
+      request.post('/pc/admin/denounce/handle/' + _id, {
+          state: -1
+        })
+        .then(response => {
+          this.deleteID = null;
+          if (!response.data.status) return this.tips.error = '删除失败！';
+          this.getReportList();
         }).catch(({
           response: {
             data: {

@@ -256,27 +256,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var _request = __webpack_require__(9);
 
 var _request2 = _interopRequireDefault(_request);
 
+var _Page = __webpack_require__(62);
+
+var _Page2 = _interopRequireDefault(_Page);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
+  name: 'authlist',
+  components: {
+    Page: _Page2.default
+  },
   data: function data() {
     return {
       loading: false,
-      error: null,
+      tips: {
+        error: null,
+        success: null
+      },
       auditID: '',
       state: [{
         value: '',
@@ -295,7 +297,8 @@ exports.default = {
         state: '',
         key: ''
       },
-      currentPage: 1,
+      current_page: 1,
+      last_page: 0,
       auth: []
     };
   },
@@ -305,15 +308,26 @@ exports.default = {
 
   methods: {
     dismisError: function dismisError() {
-      this.error = null;
+      this.tips.error = null;
+      this.tips.success = null;
     },
-    getAuthList: function getAuthList() {
+    getAuthList: function getAuthList(page) {
       var _this = this;
 
+      this.dismisError();
       this.loadding = true;
-      _request2.default.get('/pc/admin/auth').then(function (response) {
-        _this.auth = response.data.data;
+      _request2.default.get('/pc/admin/auth', {
+        params: _extends({
+          page: page || this.current_page
+        }, this.search)
+      }).then(function (response) {
         _this.loadding = false;
+        if (!response.data.status) return _this.tips.error = '获取数据失败！';
+        var _response$data$data = response.data.data,
+            data = _response$data$data === undefined ? [] : _response$data$data;
+
+        _this.auth = data;
+        if (!data.length) return _this.tips.error = '暂无数据！';
       }).catch(function (_ref) {
         var _ref$response = _ref.response;
         _ref$response = _ref$response === undefined ? {} : _ref$response;
@@ -347,17 +361,16 @@ exports.default = {
       _request2.default.post('/pc/admin/auth/audit/' + _id, {
         state: state
       }).then(function (response) {
-        if (response.data.status) {
-          _this2.auditID = null;
-          _this2.getAuthList();
-        }
+        _this2.auditID = null;
+        if (!response.data.status) return _this2.tips.error = '操作失败！';
+        _this2.getAuthList();
       }).catch(function (_ref2) {
         var _ref2$response = _ref2.response;
         _ref2$response = _ref2$response === undefined ? {} : _ref2$response;
         var _ref2$response$data = _ref2$response.data;
         _ref2$response$data = _ref2$response$data === undefined ? {} : _ref2$response$data;
         var _ref2$response$data$e = _ref2$response$data.errors,
-            errors = _ref2$response$data$e === undefined ? ['删除失败'] : _ref2$response$data$e;
+            errors = _ref2$response$data$e === undefined ? ['操作失败！'] : _ref2$response$data$e;
 
         _this2.deleteID = null;
       });
@@ -388,26 +401,9 @@ exports.default = {
           return 'info';
       }
     },
-    _search: function _search() {
-      var _this3 = this;
-
-      this.loadding = true;
-      this.auth = null;
-      _request2.default.get('/pc/admin/auth', {
-        params: _extends({}, this.search)
-      }).then(function (response) {
-        _this3.auth = response.data.data;
-        _this3.loadding = false;
-      }).catch(function (_ref3) {
-        var _ref3$response = _ref3.response;
-        _ref3$response = _ref3$response === undefined ? {} : _ref3$response;
-        var _ref3$response$data = _ref3$response.data;
-        _ref3$response$data = _ref3$response$data === undefined ? {} : _ref3$response$data;
-        var _ref3$response$data$e = _ref3$response$data.errors,
-            errors = _ref3$response$data$e === undefined ? ['加载数据失败'] : _ref3$response$data$e;
-
-        _this3.loadding = false;
-      });
+    pageGo: function pageGo(page) {
+      this.current_page = page;
+      this.getAuthList();
     }
   }
 };
@@ -512,7 +508,7 @@ exports.default = {
         error: null,
         success: null
       },
-      auditID: '',
+      editID: '',
       state: [{
         value: -1,
         label: '未处理'
@@ -562,41 +558,44 @@ exports.default = {
         _this.loadding = false;
       });
     },
-    managereport: function managereport(report) {
+    managereport: function managereport(_id) {
       var _this2 = this;
 
-      var state = '',
-          _id = report.id;
-      switch (report.verified) {
-        case 0:
-          state = 1;
-          break;
-        case 1:
-          state = 2;
-          break;
-        case 2:
-          state = 1;
-          break;
-        default:
-          state = 2;
-          break;
-      }
-      _request2.default.post('/pc/admin/report/audit/' + _id, {
-        state: state
+      _request2.default.post('/pc/admin/denounce/handle/' + _id, {
+        state: 1
       }).then(function (response) {
-        if (response.data.status) {
-          _this2.auditID = null;
-          _this2.getReportList();
-        }
+        _this2.editID = null;
+        if (!response.data.status) return _this2.tips.error = '处理失败！';
+        _this2.getReportList();
       }).catch(function (_ref2) {
         var _ref2$response = _ref2.response;
         _ref2$response = _ref2$response === undefined ? {} : _ref2$response;
         var _ref2$response$data = _ref2$response.data;
         _ref2$response$data = _ref2$response$data === undefined ? {} : _ref2$response$data;
         var _ref2$response$data$e = _ref2$response$data.errors,
-            errors = _ref2$response$data$e === undefined ? ['删除失败'] : _ref2$response$data$e;
+            errors = _ref2$response$data$e === undefined ? ['处理失败'] : _ref2$response$data$e;
 
-        _this2.deleteID = null;
+        _this2.editID = null;
+      });
+    },
+    deletereport: function deletereport(_id) {
+      var _this3 = this;
+
+      _request2.default.post('/pc/admin/denounce/handle/' + _id, {
+        state: -1
+      }).then(function (response) {
+        _this3.deleteID = null;
+        if (!response.data.status) return _this3.tips.error = '删除失败！';
+        _this3.getReportList();
+      }).catch(function (_ref3) {
+        var _ref3$response = _ref3.response;
+        _ref3$response = _ref3$response === undefined ? {} : _ref3$response;
+        var _ref3$response$data = _ref3$response.data;
+        _ref3$response$data = _ref3$response$data === undefined ? {} : _ref3$response$data;
+        var _ref3$response$data$e = _ref3$response$data.errors,
+            errors = _ref3$response$data$e === undefined ? ['删除失败'] : _ref3$response$data$e;
+
+        _this3.deleteID = null;
       });
     },
     state2label: function state2label(v) {
@@ -769,17 +768,13 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "component-container container-fluid"
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.error),
-      expression: "error"
-    }],
-    staticClass: "alert alert-danger alert-dismissible",
+  }, [_c('transition', {
     attrs: {
-      "role": "alert"
+      "name": "fade"
     }
+  }, [(!!_vm.tips.error || !!_vm.tips.success || false) ? _c('div', {
+    staticClass: "alert alert-dismissible",
+    class: _vm.tips.success ? 'alert-success' : 'alert-danger'
   }, [_c('button', {
     staticClass: "close",
     attrs: {
@@ -795,7 +790,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }, [_vm._v("×")])]), _vm._v("\n    " + _vm._s(_vm.error) + "\n  ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("×")])]), _vm._v(" " + _vm._s(_vm.tips.error || _vm.tips.success) + "\n    ")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-heading"
@@ -834,7 +829,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button"
     },
     on: {
-      "click": _vm._search
+      "click": function($event) {
+        _vm.getAuthList(1)
+      }
     }
   }, [_vm._v("搜索")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-3"
@@ -859,60 +856,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "checked": _vm._q(_vm.search.state, state.value)
       },
       on: {
-        "click": _vm._search,
+        "click": function($event) {
+          _vm.getAuthList(1)
+        },
         "__c": function($event) {
           _vm.search.state = state.value
         }
       }
     }), _vm._v(_vm._s(state.label) + "\n            ")])
   }))]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-2 col-xs-offset-4 text-right"
-  }, [_c('ul', {
-    staticClass: "pagination",
-    staticStyle: {
-      "margin": "0"
-    }
-  }, [_c('li', {
-    class: parseInt(this.currentPage) <= 1 ? 'disabled' : null
-  }, [_c('a', {
+    staticClass: "col-xs-4 text-right"
+  }, [_c('Page', {
     attrs: {
-      "href": "#",
-      "aria-label": "Previous"
+      "current": _vm.current_page,
+      "last": _vm.last_page
     },
     on: {
-      "click": function($event) {
-        $event.stopPropagation();
-        $event.preventDefault();
-        _vm.prevPage($event)
-      }
+      "pageGo": _vm.pageGo
     }
-  }, [_c('span', {
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }, [_vm._v("<<")])])]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "#",
-      "aria-label": "Next"
-    },
-    on: {
-      "click": function($event) {
-        $event.stopPropagation();
-        $event.preventDefault();
-        _vm.nextPage($event)
-      }
-    }
-  }, [_c('span', {
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }, [_vm._v(">>")])])])])])])]), _vm._v(" "), _c('table', {
-    staticClass: "table table-hove text-center table-striped"
+  })], 1)])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('table', {
+    staticClass: "table table-hove text-center table-striped table-bordered"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.auth), function(auth) {
     return _c('tr', {
       key: auth.id,
       class: _vm.verified2stye(auth.verified)
-    }, [_c('td', [_vm._v(_vm._s(auth.user_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.realname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.user.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.idcard))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.phone))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.info))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.storage))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.verified2label(auth.verified)))]), _vm._v(" "), _c('td', [_c('button', {
+    }, [_c('td', [_vm._v(_vm._s(auth.user_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.realname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.user.name || ''))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.idcard))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.phone))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.info))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(auth.storage))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.verified2label(auth.verified)))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-primary btn-sm",
       attrs: {
         "type": "button",
@@ -935,7 +905,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("驳回")])])])
-  }))])])])
+  }))])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("用户ID")]), _vm._v(" "), _c('th', [_vm._v("用户名")]), _vm._v(" "), _c('th', [_vm._v("真实姓名")]), _vm._v(" "), _c('th', [_vm._v("身份证号")]), _vm._v(" "), _c('th', [_vm._v("联系方式")]), _vm._v(" "), _c('th', [_vm._v("认证补充")]), _vm._v(" "), _c('th', [_vm._v("认证资料")]), _vm._v(" "), _c('th', [_vm._v("认证状态")]), _vm._v(" "), _c('th', [_vm._v("操作")])])])
 }]}
@@ -1065,9 +1035,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "pageGo": _vm.pageGo
     }
   })], 1)])]), _vm._v(" "), _c('div', {
-    staticClass: "panel-bady"
+    staticClass: "panel-body"
   }, [_c('table', {
-    staticClass: "table table-hove text-center table-striped"
+    staticClass: "table table-hove text-center table-striped table-bordered"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.report), function(report) {
     return _c('tr', {
       key: report.id,
@@ -1082,25 +1052,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-primary btn-sm",
       attrs: {
         "type": "button",
-        "disabled": report.verified === 1
+        "disabled": report.state === 1
       },
       on: {
         "click": function($event) {
-          _vm.managereport(report)
+          _vm.managereport(report.id)
         }
       }
-    }, [_vm._v("审核")]), _vm._v(" "), _c('button', {
+    }, [_vm._v("处理")]), _vm._v(" "), _c('button', {
       staticClass: "btn btn-danger btn-sm",
       attrs: {
         "type": "button",
-        "disabled": report.verified === 2
+        "disabled": report.state === 2
       },
       on: {
         "click": function($event) {
-          _vm.managereport(report)
+          _vm.deletereport(report.id)
         }
       }
-    }, [_vm._v("驳回")])])])
+    }, [_vm._v("删除")])])])
   }))])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("举报者")]), _vm._v(" "), _c('th', [_vm._v("资源连接")]), _vm._v(" "), _c('th', [_vm._v("举报理由")]), _vm._v(" "), _c('th', [_vm._v("举报时间")]), _vm._v(" "), _c('th', [_vm._v("处理状态")]), _vm._v(" "), _c('th', [_vm._v("操作")])])])
