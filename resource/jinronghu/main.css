@@ -2223,7 +2223,7 @@ img {
     letter-spacing: 5px;
     color: #fff;
     border-radius: 3px;
-    background: #ed4544;
+    background: #fcbe00;
 }
 
 .login_login:link,
@@ -2240,7 +2240,7 @@ img {
 
 .no_span span {
     cursor: pointer;
-    color: #ed4544;
+    color: #fcbe00;
 }
 
 .login_share {
