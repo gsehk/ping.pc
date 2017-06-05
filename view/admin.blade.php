@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -6,7 +6,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ $csrf_token }}">
   <title>Pc管理</title>
-      <link rel="stylesheet" href="{{mix('css/index.css', 'zhiyicx/plus-component-news')}}">
+      <link rel="stylesheet" href="{{mix('css/index.css', 'zhiyicx/plus-component-pc/asstes')}}">
 
   <!-- global config. -->
   <script type="text/javascript">
