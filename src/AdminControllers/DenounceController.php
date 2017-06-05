@@ -17,8 +17,7 @@ class DenounceController extends Controller
     {
         $key = $request->key;
         $state = $request->state;
-        $datas = Denounce::byAudit()
-            ->where( function ($query) use ($state) {
+        $datas = Denounce::where( function ($query) use ($state) {
                 if ($state) {
                     if ($state == -1) {$state = 0;}
                     $query->where('state', $state);
