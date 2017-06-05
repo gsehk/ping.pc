@@ -2,7 +2,7 @@
   "name": "plus-component-pc",
   "version": "1.0.0",
   "scripts": {
-    "clean-dist": "trash asstes/js asstes/mix-manifest.json asstes/images asstes/fonts asstes/css",
+    "clean-dist": "trash resource/asstes/js resource/asstes/mix-manifest.json resource/asstes/images resource/asstes/fonts resource/asstes/css",
     "dev": "npm run clean-dist && cross-env NODE_ENV=development webpack --progress --hide-modules --colors",
     "watch": "npm run dev -- -w",
     "watch-poll": "npm run dev -- -w --watch-poll",

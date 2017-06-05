@@ -16,7 +16,7 @@ const isProd = NODE_ENV === 'production';
 
 // 各项资源地址定义
 const Root = path.join(__dirname, 'public');
-const BuildRoot = path.resolve(__dirname, 'asstes/');
+const BuildRoot = path.resolve(__dirname, 'resource/asstes/');
 
 // 入口配置
 const entry = {

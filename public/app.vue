@@ -15,9 +15,11 @@
   width: 2px;
   height: 2px;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #33BBBA !important;
 }
+
 ::-webkit-scrollbar-track {
   background-color: transparent !important
 }
@@ -27,13 +29,16 @@
   margin: 0;
 }
 </style>
- <template>
+<template>
   <div>
     <ul class="nav nav-tabs component-controller-nav">
-      <router-link to="/" tag="li" active-class="active">
+      <router-link to="/authlist" tag="li" active-class="active">
         <a href="#">认证管理</a>
-      </router-link> 
-<!--
+      </router-link>
+      <router-link to="/report" tag="li" active-class="active">
+        <a href="#">举报管理</a>
+      </router-link>
+      <!--
       <router-link to="/news/add_news" tag="li" active-class="active">
         <a href="#">添加资讯</a>
       </router-link>
@@ -43,7 +48,7 @@
       <router-link to="/news/add_recommend" tag="li" active-class="active">
         <a href="#">添加推荐</a>
       </router-link>
--->
+      -->
     </ul>
     <router-view />
   </div>

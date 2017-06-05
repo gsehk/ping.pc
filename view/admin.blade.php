@@ -23,9 +23,9 @@
 
 <body>
   <div id="app"></div>
-  <script type="text/javascript" src="{{ mix('js/manifest.js', 'zhiyicx/plus-component-pc') }}"></script>
-  <script type="text/javascript" src="{{ mix('js/vendor.js', 'zhiyicx/plus-component-pc') }}"></script>
-  <script type="text/javascript" src="{{ mix('js/index.js', 'zhiyicx/plus-component-pc') }}"></script>
+  <script type="text/javascript" src="{{ mix('js/manifest.js', 'zhiyicx/plus-component-pc/asstes') }}"></script>
+  <script type="text/javascript" src="{{ mix('js/vendor.js', 'zhiyicx/plus-component-pc/asstes') }}"></script>
+  <script type="text/javascript" src="{{ mix('js/index.js', 'zhiyicx/plus-component-pc/asstes') }}"></script>
 </body>
 
 </html>
