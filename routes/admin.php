@@ -14,7 +14,7 @@ Route::prefix('auth')->group(function () {
 //举报
 Route::prefix('denounce')->group(function () {
 	Route::get('/', 'DenounceController@getDenounceList');
-	Route::post('/handle/{did}', 'DenounceController@handle')->where(['did'=>'[0-9+]']);
+	Route::post('/handle/{did}', 'DenounceController@handle')->where(['did'=>'[0-9]+']);
 });
 
 //积分规则
