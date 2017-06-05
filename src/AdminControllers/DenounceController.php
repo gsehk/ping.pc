@@ -20,6 +20,7 @@ class DenounceController extends Controller
         $datas = Denounce::byAudit()
             ->where( function ($query) use ($state) {
                 if ($state) {
+                    if ($state == -1) {$state = 0;}
                     $query->where('state', $state);
                 }
             })
