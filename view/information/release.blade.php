@@ -12,16 +12,20 @@
             <div class="con_title p_30">
                 <input type="text" id="subject-abstract" name="abstract" value="{{$subject or ''}}" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字"/>
             </div>
-            <!-- <div class="con_title">
-                @if($cate)
-                <select class="select" name="cate_id" id="subject-cate">
-                    <option value="0">请选择</option>
-                    @foreach($cate as $cat)
-                        <option value="{{$cat['id']}}">{{$cat['name']}}</option>
+            <div class="con_title p_30 news_cate">
+                @if(isset($cate))
+                    @foreach($cate as $k=>$cat)
+                        <span data-cid="{{$cat['id']}}" 
+                            @if(isset($links))
+                            @foreach($links as $link)
+                                @if($cat['id'] == $link['cate_id']) class="current" @endif
+                            @endforeach
+                            @endif
+                        >{{$cat['name']}}</span>
                     @endforeach
-                </select>
                 @endif
-            </div> -->
+                <input type="hidden" name="cate_ids" id="cate_ids">
+            </div>
             <div class="con_place">
                 @component('pcview::editor', 
                     [
@@ -92,5 +96,30 @@ var updateImg = function(image, f, task_id){
     $('#task_id').val(task_id);
     $('#J-show-tips').text(f.name);
 }
+$('.news_cate>span').on('click', function(e){
+    if ($(this).hasClass('current')) {
+        $(this).removeClass('current');
+    }else{
+        $(this).addClass('current');
+    }
+    var cid  = $(this).data('cid');
+    var cateVal= $('#cate_ids').val();
+    var cateArr = cateVal.split('|');
+    var newArr = [];
+    var type = $(this).hasClass('current');
+    type === true && cateArr.push(cid);
+    for (var i in cateArr) {
+        if (type == true) {
+            if (cateArr[i] != '') {
+                newArr.push(cateArr[i]);
+            }
+        }else{
+            if (cateArr[i] != '' && cateArr[i] != cid) {
+                newArr.push(cateArr[i]);
+            }
+        }
+    }
+    $('#cate_ids').val('|' + newArr.join('|') + '|');
+});
 </script>
 @endsection

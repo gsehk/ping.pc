@@ -2,6 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
+use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -119,6 +120,7 @@ class InformationController extends BaseController
         $draft = News::where('audit_status', 2)->where('author', $user_id)->get();
         if ($request->id) {
             $data = $draft->where('id', $request->id)->first();
+            $data['links'] = $data->links ?: '';
         }else{
             $data = [];
         }
@@ -259,12 +261,10 @@ class InformationController extends BaseController
         } else {
             $storage_id = $request->storage_id;
         }
-
+        $cate_ids = trim($request->cate_ids, '|');
         if ($request->news_id) {
-            
             $news = News::find($request->news_id);
             if ($news) {
-                
                 $news->title = $request->title;
                 $news->subject = $request->subject ?: getShort($request->content, 60);
                 $news->author = $this->mergeData['TS']['id'] ?? 0;
@@ -272,7 +272,19 @@ class InformationController extends BaseController
                 $news->storage = $storage_id;
                 $news->from = $request->source ?: '';
                 $news->audit_status = $type;
-                $news->save(); 
+                $news->save();
+                if ($cate_ids) {
+                    $cates = [];
+                    $cate_ids = explode('|', $cate_ids);
+                    foreach ($cate_ids as $k => $v) {
+                        $cates[$k]['news_id'] = $news->id;
+                        $cates[$k]['cate_id'] = $v;
+                    }
+                    DB::transaction(function () use ($news, $cates) {
+                        NewsCateLink::where('news_id', $news->id)->delete();
+                        NewsCateLink::insert($cates);
+                    });
+                }
             }
 
         } else {
@@ -285,13 +297,17 @@ class InformationController extends BaseController
             $news->from = $request->source ?: '';
             $news->audit_status = $type; 
             $news->save();
+            if ($cate_ids) {
+                $cates = [];
+                $cate_ids = explode('|', $cate_ids);
+                foreach ($cate_ids as $k => $v) {
+                    $cates[$k]['news_id'] = $news->id;
+                    $cates[$k]['cate_id'] = $v;
+                }
+                NewsCateLink::insert($cates);
+             }
+            
         }
-        
-
-        /*$news_link = new NewsCateLink();
-        $news_link->news_id = $news->id;
-        $news_link->cate_id = $request->cate_id;
-        $news_link->save();*/
 
         return response()->json(static::createJsonData([
             'status'  => true,

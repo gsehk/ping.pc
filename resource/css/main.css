@@ -3109,6 +3109,20 @@ img {
     outline: none;
 }
 
+.news_cate>span{
+    cursor: pointer;
+    font-size: 18px;
+    padding: 2px 15px;
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
+.news_cate>span.current{
+    background-color: #0096e6;
+    color: white;
+    border-radius: 2px;
+}
+
 .p_30 {
     font-size: 14px;
     padding-top: 28px;
@@ -3989,7 +4003,7 @@ img.load {
 
 /* select 模拟样式  */
 
-.select {
+/* .select {
     position: relative;
     width: 134px;
     min-width: 134px;
@@ -4043,7 +4057,7 @@ img.load {
 .select_ul li.cur {
     color: #fff;
     background: #195da3;
-}
+} */
 
 
 /* banner */
