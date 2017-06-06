@@ -24,7 +24,7 @@ class InformationController extends BaseController
     {
         $datas['cid'] = $request->input('cid') ?: 1;
         /*  幻灯片  */
-        $datas['silid'] = NewsRecommend::with('cover')->get();
+        $datas['slide'] = NewsRecommend::with('cover')->get();
 
         $datas['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
             ->where(function($query){
@@ -40,13 +40,9 @@ class InformationController extends BaseController
 
         /* 推荐文章第一条 */
         $datas['recommend'] = [];
-        $rec = News::byAudit()
-            ->where('is_recommend', 1)
-            ->orderBy('news.id', 'desc')
-            ->take(6)
+        $rec = News::byAudit()->where('is_recommend', 1)->orderBy('id', 'desc')->take(6)
             ->select('id','title','updated_at','storage','from','author')
-            ->with('storage')
-            ->with('user.datas')
+            ->with('storage', 'user.datas')
             ->get();
         if (count($rec)) {
             $rec[0]['info'] = $this->formatUserDatas($rec[0]['user']);

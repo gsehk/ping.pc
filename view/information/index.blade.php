@@ -3,7 +3,7 @@
 @section('content')
 <div class="in_cont">
     <div class="inT_l" id="first_recommend_news">
-        @if($recommend)
+        @if(isset($recommend))
             @foreach($recommend as $frv)
                 @if($loop->first)
                 <div class="inT_title">
@@ -20,7 +20,7 @@
         @endif
         <div class="inT_line"></div>
         <div class="inT_list" id="recommend_news">
-            @if($recommend)
+            @if(isset($recommend))
                 @foreach($recommend as $rv)
                     @if(!$loop->first)
                     <a href="/information/read/{{$rv['id']}}"><span class="inT_list">{{$rv['title']}}</span></a>
@@ -30,12 +30,17 @@
         </div>
     </div>
     <div class="inT_c">
-        @if($silid)
+        @if(isset($slide))
         <div class="unslider">
         <ul class="bannerList">
-            @foreach($silid as $banner)
+            @foreach($slide as $sv)
               <li>
-                <img src="{{$routes['storage']}}{{$banner['cover']}}" alt="">
+              @if($sv->type == 'news')
+              <a href="/information/read/{{$sv->data}}">
+              @elseif($sv->type == 'url') 
+              <a href="{{$sv->data}}" target="_blank">
+              @endif
+                <img src="{{$routes['storage']}}{{$sv->cover}}"></a>
               </li>
             @endforeach
         </ul>
@@ -112,11 +117,13 @@
     <div class="inf_main">
         <div class="inf_left">
             <ul class="news_cate_tab">
+            @if (isset($cate))
             @foreach ($cate as $post)
                 @if ($loop->iteration < 10)
                 <a href="javascript:;" data-cid="{{$post['id']}}" @if($cid == $post['id']) class="dy_59" @endif><li>{{ $post['name'] }}</li></a>
                 @endif
             @endforeach
+            @endif
             </ul>
             <div id="news-list">
             </div>
@@ -125,6 +132,7 @@
             <div class="infR_top">
                 <div class="itop_autor">热门作者</div>
                 <div id="j-author-hot-wrapp">
+                @if (isset($author))
                 @foreach ($author as $u)
                     <div class="R_list">
                         <div class="i_left">
@@ -136,6 +144,7 @@
                         </div>
                     </div>
                 @endforeach
+                @endif
                 </div>
             </div>
             <div class="i_right_img"><img src="{{ $routes['resource'] }}/images/picture.png" /></div>
