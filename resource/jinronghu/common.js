@@ -444,4 +444,13 @@ $(function() {
            $('.cen_more').hide();
         }
     });
+
+    //  显示隐藏评论操作
+    $(document).on("mouseover mouseout",".comment_con",function(event){
+        if(event.type == "mouseover"){
+            $(this).find("a").show();
+        }else if(event.type == "mouseout"){
+            $(this).find("a").hide();
+        }
+    });
 })
