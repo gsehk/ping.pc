@@ -57,7 +57,8 @@
               <td>{{ auth.phone }}</td>
               <td>{{ auth.info }}</td>
               <td>
-                <a :href="`/api/v1/storages/${auth.storage}`" target="_blank" title="">查看详情</a>
+                <a v-if="auth.storage" :href="`/api/v1/storages/${auth.storage}`" target="_blank" title="">查看详情</a>
+                <span v-else>暂无认证资料</span>
               </td>
               <td>{{ verified2label(auth.verified) }}</td>
               <td>
