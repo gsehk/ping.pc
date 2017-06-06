@@ -56,7 +56,9 @@
               <td>{{ auth.idcard }}</td>
               <td>{{ auth.phone }}</td>
               <td>{{ auth.info }}</td>
-              <td>{{ auth.storage }}</td>
+              <td>
+                <a :href="`/api/v1/storages/${auth.storage}`" target="_blank" title="">查看详情</a>
+              </td>
               <td>{{ verified2label(auth.verified) }}</td>
               <td>
                 <!-- 审核 -->
