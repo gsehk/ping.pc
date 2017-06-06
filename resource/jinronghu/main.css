@@ -2125,7 +2125,7 @@ img {
     float: left;
     width: 240px;
     height: 360px;
-    background: url('../images/login-leftBg.png') no-repeat;
+    background: url('login-leftBg.png') no-repeat;
 }
 
 .login_hy {
