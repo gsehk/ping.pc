@@ -40,7 +40,7 @@
               @elseif($sv->type == 'url') 
               <a href="{{$sv->data}}" target="_blank">
               @endif
-                <img src="{{$routes['storage']}}{{$sv->cover}}"></a>
+                <img class="lazy" data-original="{{$routes['storage']}}{{$sv->cover}}"></a>
               </li>
             @endforeach
         </ul>
@@ -211,7 +211,7 @@ $(document).ready(function(){
         $('.news_cate_tab a').removeClass('dy_59');
         $(this).addClass('dy_59');
     });
-
+    $("img.lazy").lazyload();
 });
 </script>
 @endsection

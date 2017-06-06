@@ -108,6 +108,7 @@ weibo.loadMore = function() {
                 } else {
                     $(weibo.setting.container).append(html);
                 }
+                $("img.lazy").lazyload();
             } else {
                 weibo.setting.canload = false;
                 if (weibo.setting.loadcount == 1) {

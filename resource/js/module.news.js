@@ -79,7 +79,7 @@ news.loadMore = function() {
             for (var i in data) {
                 html += '<div class="inf_list">' +
                     '<div class="inf_img">' +
-                    '<a href="/information/read/' + data[i].id + '">' + '<img src="'+API+'storages/' + data[i].storage + '/30" />' + '</a>' +
+                    '<a href="/information/read/' + data[i].id + '">' + '<img class="lazy" width="230" height="163" data-original="'+API+'storages/' + data[i].storage + '/30" />' + '</a>' +
                     '</div>' +
                     '<div class="inf_word">' +
                     '<a href="/information/read/' + data[i].id + '">' +
@@ -99,7 +99,7 @@ news.loadMore = function() {
                 $(news.setting.container).append(html);
                 $('.loading').remove();
             }
-
+            $("img.lazy").lazyload();
         } else {
             news.setting.canload = false;
             if (news.setting.loadcount == 1) {
