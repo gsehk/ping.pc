@@ -7,8 +7,8 @@
     </div>
     <div class="nav_list">
         <ul>
-            <li><a href="{{ route('pc:feed')}}" class="fs-18 @if($route == 'pc:feed') c_59b6d7 @endif">动态</a></li>
             <li><a href="{{ route('pc:news')}}" class="fs-18 @if($route == 'pc:news') c_59b6d7 @endif">资讯</a></li>
+            <li><a href="{{ route('pc:feed')}}" class="fs-18 @if($route == 'pc:feed') c_59b6d7 @endif">动态</a></li>
         </ul>
     </div>
     @if (!empty($TS))

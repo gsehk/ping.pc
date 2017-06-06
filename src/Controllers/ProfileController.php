@@ -53,16 +53,17 @@ class ProfileController extends BaseController
                                             ->first() ? 1 : 0;
 
             // 访客
-            $visitor = UserVisitor::where([['user_id', $this->mergeData['TS']['id']], ['to_uid', $user_id]])->first();
-            if ($visitor) {
-                $visitor->save();
-            }else{
-                $visitor = new UserVisitor();
-                $visitor->user_id = $this->mergeData['TS']['id'];
-                $visitor->to_uid = $user_id;
-                $visitor->save();
+            if (!empty($this->mergeData['TS'])) {
+                $visitor = UserVisitor::where([['user_id', $this->mergeData['TS']['id']], ['to_uid', $user_id]])->first();
+                if ($visitor) {
+                    $visitor->save();
+                }else{
+                    $visitor = new UserVisitor();
+                    $visitor->user_id = $this->mergeData['TS']['id'];
+                    $visitor->to_uid = $user_id;
+                    $visitor->save();
+                }
             }
-
         }
 
         // 地区

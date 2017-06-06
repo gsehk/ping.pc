@@ -37,6 +37,6 @@
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq"></use></svg>
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg>
         </div>
-        <div class="dy_bz">本站由<span>北京融虎信息技术有限公司</span>提供技术支持</div>
+        <!-- <div class="dy_bz">本站由<span>北京融虎信息技术有限公司</span>提供技术支持</div> -->
     </div>
 </div>

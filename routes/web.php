@@ -51,22 +51,21 @@ Route::prefix('passport')->group(function () {
 
 
 // UCenter
-
+Route::get('index', 'ProfileController@index')->name('pc:myFeed');
+Route::get('article', 'ProfileController@article')->name('pc:article');
+Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
+Route::prefix('profile')->get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
+Route::prefix('profile')->get('/collection/{user_id}', 'ProfileController@getCollectionList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
-    Route::get('index', 'ProfileController@index')->name('pc:myFeed');
     Route::get('related', 'ProfileController@related')->name('pc:related');
     Route::get('users', 'ProfileController@users')->name('pc:users');
     Route::get('following', 'ProfileController@following')->name('pc:following');
     Route::get('collection', 'ProfileController@collection')->name('pc:collection');
     Route::get('account', 'ProfileController@account')->name('pc:account');
-    Route::get('article', 'ProfileController@article')->name('pc:article');
     // 个人设置
     Route::get('cropper', 'ProfileController@cropper'); 
     Route::post('doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
     Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
-    Route::get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
-    Route::get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
-    Route::get('/collection/{user_id}', 'ProfileController@getCollectionList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
 });
 
 
