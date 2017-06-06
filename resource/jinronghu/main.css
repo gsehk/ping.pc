@@ -1915,6 +1915,10 @@ img {
     color: #ccc;
 }
 
+.comment_con a{
+    display: none;   
+}
+
 .comment_right i {
     float: right;
     margin-top: -30px;
