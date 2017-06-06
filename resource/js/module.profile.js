@@ -544,7 +544,10 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<p><span>' + NAME + '：</span>' + content + '</p>';
+                    var html = '<p class="comment'+res.data+' comment_con">';
+                        html += '<span>' + NAME + '：</span>' + content + '';
+                        html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.data+', '+feedid+');">删除</a>';
+                        html += '</p>';
                     var commentBox = $('.comment_box' + feedid);
                     var commentNum = $('.cs' + feedid);
                     if ("undefined" != typeof(commentBox)) {
@@ -559,7 +562,7 @@ var comment = {
             }
         });
     },
-    // 详情发表评论
+    // 文章列表评论
     addNewComment: function(afterComment, obj) {
         var to_uid = $(obj).attr('to_uid') || 0;
         var news_id = $(obj).attr('row_id') || 0;
@@ -582,7 +585,6 @@ var comment = {
         }
 
         var url = request_url.comment_news.replace('{news_id}', news_id);
-        // console.log(url, content, to_uid);
         obj.innerHTML = '评论中..';
 
         $.ajax({
@@ -597,6 +599,10 @@ var comment = {
                         obj.innerHTML = '评论';
                     }
                     var html = '<p><span>' + NAME + '：</span>' + content + '</p>';
+                    var html = '<p class="comment'+res.data+' comment_con">';
+                        html += '<span>' + NAME + '：</span>' + content + '';
+                        html += '<a class="fs-14 del_comment" onclick="comment.delNewsComment('+res.data+', '+news_id+');">删除</a>';
+                        html += '</p>';
                     var commentBox = $('.comment_box' + news_id);
                     if ("undefined" != typeof(commentBox)) {
                         commentBox.prepend(html);
