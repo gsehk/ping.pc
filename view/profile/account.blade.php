@@ -65,15 +65,15 @@
                 <label>生日</label>
                 <div class="f_select">
                     <span></span>
-                    <select name="year" class="sel_year" rel="{{$info['year'] or '请选择'}}"></select>
+                    <select name="year" class="sel_year" rel="{{$info['year']}}"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select name="month" class="sel_month" rel="{{$info['month'] or '请选择'}}"></select>
+                    <select name="moth" class="sel_month" rel="{{$info['moth']}}"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select name="day" class="sel_day" rel="{{$info['day'] or '请选择'}}"></select>
+                    <select name="day" class="sel_day" rel="{{$info['day']}}"></select>
                 </div>
             </div>
             <div class="f_tel bas_div">
@@ -120,7 +120,8 @@ $(function () {
     $.ms_DatePicker({
         YearSelector: ".sel_year",
         MonthSelector: ".sel_month",
-        DaySelector: ".sel_day"
+        DaySelector: ".sel_day",
+        FirstText:'请选择'
     });
     $.ms_DatePicker();
     
