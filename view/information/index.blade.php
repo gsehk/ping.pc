@@ -64,7 +64,7 @@
         <a href="{{ route('pc:users', ['type'=>2]) }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-bofang1-copy-copy-copy-copy-copy-copy-copy"></use>
+                    <use xlink:href="#icon-attention"></use>
                 </svg>
                 <span>关注的人</span>
             </div>
@@ -72,7 +72,7 @@
         <a href="{{ route('pc:collection') }}" title="">
             <div class="inR_bottom_list">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-bofang1-copy-copy-copy-copy"></use>
+                    <use xlink:href="#icon-collection"></use>
                 </svg>
                 <span>收藏的</span>
             </div>
@@ -80,7 +80,7 @@
         <a href="{{ route('pc:feed') }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-bofang1-copy"></use>
+                    <use xlink:href="#icon-dynamic"></use>
                 </svg>
                 <span>全部动态</span>
             </div>
@@ -88,7 +88,7 @@
         <a href="{{ route('pc:rank')}}" title="">
             <div class="inR_bottom_list">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-bofang1-copy-copy"></use>
+                    <use xlink:href="#icon-rank"></use>
                 </svg>
                 <span>排行榜</span>
             </div>
@@ -96,7 +96,7 @@
         <a href="{{ route('pc:myFeed') }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-bofang1-copy-copy-copy-copy-copy"></use>
+                    <use xlink:href="#icon-mydynamic"></use>
                 </svg>
                 <span>我的动态</span>
             </div>
@@ -104,7 +104,7 @@
         <a href="{{ route('pc:account') }}" title="">
             <div class="inR_bottom_list">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-bofang1-copy-copy-copy"></use>
+                    <use xlink:href="#icon-setting"></use>
                 </svg>
                 <span>设置</span>
             </div>
