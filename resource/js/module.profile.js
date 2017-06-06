@@ -53,9 +53,10 @@ weibo.bindScroll = function() {
 
         // 加载指定次数后，将不能自动加载
         if (weibo.isLoading()) {
-            var bodyTop = document.documentElement.scrollTop + document.body.scrollTop;
-            var bodyHeight = $(document.body).height();
-            if (bodyTop + $(window).height() >= bodyHeight - 250) {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            if(scrollTop + windowHeight == scrollHeight){
                 if ($(weibo.setting.container).length > 0) {
                     $('.loading').remove();
                     $(weibo.setting.loading).after(loadHtml);
@@ -212,9 +213,10 @@ news.bindScroll = function() {
 
         // 加载指定次数后，将不能自动加载
         if (news.isLoading()) {
-            var bodyTop = document.documentElement.scrollTop + document.body.scrollTop;
-            var bodyHeight = $(document.body).height();
-            if (bodyTop + $(window).height() >= bodyHeight - 250) {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            if(scrollTop + windowHeight == scrollHeight){
                 if ($(news.setting.container).length > 0) {
                     $(news.setting.loading).after(loadHtml);
                     // $(news.setting.container).append(loadHtml);
@@ -394,9 +396,10 @@ var comment = {
         // 底部触发事件绑定
         $(window).bind('scroll resize', function() {
             if (comment.canload == true) {
-                var bodyTop = document.documentElement.scrollTop + document.body.scrollTop;
-                var bodyHeight = $(document.body).height();
-                if (bodyTop + $(window).height() >= bodyHeight - 250) {
+                var scrollTop = $(this).scrollTop();
+                var scrollHeight = $(document).height();
+                var windowHeight = $(this).height();
+                if(scrollTop + windowHeight == scrollHeight){
                     if ($(comment.box).length > 0) {
                         $(comment.box).append(loadHtml);
                         comment.loadMore();
