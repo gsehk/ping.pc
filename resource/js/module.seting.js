@@ -105,6 +105,10 @@ var getArgs = function() {
 
 $('#J-submit').on('click', function(e) {
     var args = getArgs();
+    if (getLength(args.intro) > 50) {
+        noticebox('个人简介不能超过50个字符', 0);
+        return false;
+    }
     args['location'] = args['p'] + ' ' + args['c'] + ' ' + args['a'];
     $.ajax({
         url: '/api/v1/users',
