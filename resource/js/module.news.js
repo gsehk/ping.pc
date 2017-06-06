@@ -539,7 +539,6 @@ var comment = {
                         var attrs = urlToObject($(this).data('args'));
                         comment.initReply(attrs);
                     });
-                    hoverComment('.comment_con');
                 } else {
                     comment.canload = false;
                     $('.del_left .loading').html('暂无相关内容');

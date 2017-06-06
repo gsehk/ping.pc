@@ -91,18 +91,6 @@ var checkNums = function(obj, len, show) {
     }
 }
 
-//  显示隐藏评论操作
-var hoverComment = function(obj)
-{
-    $(obj).hover(function(){
-            if ($(this).find("a").css('display') == 'none') {
-                $(this).find("a").show();
-            }else{
-                $(this).find("a").hide();
-            }
-    }); 
-}
-
 // 文件上传
 var fileUpload = function(f, callback) {
     var reader = new FileReader();
@@ -127,8 +115,9 @@ var doFileUpload = function(image, f, callback) {
         height: image.height,
         mime_type: f.type,
         origin_filename: f.name,
-        hash: CryptoJS.MD5(f.name).toString(),
+        hash: CryptoJS.MD5(f.name+f.size).toString(),
     };
+
     // 创建存储任务
     $.ajax({
         url: API + 'storages/task',
@@ -454,6 +443,15 @@ $(function() {
 
         if(!target.is('.icon-gengduo-copy') && target.parents('.cen_more').length == 0) {
            $('.cen_more').hide();
+        }
+    });
+
+    //  显示隐藏评论操作
+    $(document).on("mouseover mouseout",".comment_con",function(event){
+        if(event.type == "mouseover"){
+            $(this).find("a").show();
+        }else if(event.type == "mouseout"){
+            $(this).find("a").hide();
         }
     });
 })

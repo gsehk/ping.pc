@@ -108,7 +108,6 @@ weibo.loadMore = function() {
                 } else {
                     $(weibo.setting.container).append(html);
                 }
-                hoverComment('.comment_con');
             } else {
                 weibo.setting.canload = false;
                 if (weibo.setting.loadcount == 1) {
@@ -318,7 +317,6 @@ var comment = {
                         var attrs = urlToObject($(this).data('args'));
                         comment.initReadReply(attrs);
                     });
-                    hoverComment('.comment_con'); 
                 } else {
                     comment.canload = false;
                     $('.del_left .loading').html('暂无相关内容');
