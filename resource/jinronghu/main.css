@@ -1557,7 +1557,7 @@ img {
     line-height: 24px;
     display: -webkit-box;
     overflow: hidden;
-    margin: 22px auto 25px;
+    margin: 25px auto 25px;
     color: #808080;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -1625,7 +1625,7 @@ img {
 }
 .i_right span>a{color: #333;}
 .i_right p {
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
     display: -webkit-box;
     overflow: hidden;

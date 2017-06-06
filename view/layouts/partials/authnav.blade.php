@@ -15,7 +15,8 @@
                     <a href="{{ route('pc:index') }}" class="fs-16 ">登录</a>
                     @endif
                     <a href="{{ route('pc:feed') }}" class="fs-16 ">随便看看</a>
-                    <a href="http://www.thinksns.com" class="fs-16 ">TS+官网</a>
+                    <!-- <a href="http://www.thinksns.com" class="fs-16 ">TS+官网</a> -->
+                    <a href="http://www.jinronghu.com" class="fs-16 ">金融虎官网</a>
                 </div>
             </div>
         </div>
