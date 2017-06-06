@@ -150,7 +150,7 @@ export default {
     },
     backAuth(auth) {
       request.post('/pc/admin/auth/audit/' +auth.id, {
-          state: -1
+          state: 2
         })
         .then(response => {
           this.auditID = null;
@@ -195,7 +195,7 @@ export default {
         case 2:
           return '失败';
         default:
-          return '未认证';
+          return '未知状态';
       }
     },
     verified2stye(v) {
