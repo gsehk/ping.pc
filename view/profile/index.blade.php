@@ -65,7 +65,8 @@
         @endif
         @if(!empty($TS) && $TS['id'] == $user['id'])
         <a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
-        @else
+        @endif
+        @if(!empty($TS) && $TS['id'] != $user['id'])
         <div class="their_right">
             @if ($my_follow_status == 0)
             <div id="follow" status="0">+关注</div>
