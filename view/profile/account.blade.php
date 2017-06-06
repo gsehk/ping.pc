@@ -65,15 +65,15 @@
                 <label>生日</label>
                 <div class="f_select">
                     <span></span>
-                    <select name="year" class="sel_year" rel="{{$info['year']}}"></select>
+                    <select name="year" class="sel_year" rel="{{$info['year'] or 0}}"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select name="moth" class="sel_month" rel="{{$info['moth']}}"></select>
+                    <select name="moth" class="sel_month" rel="{{$info['moth'] or 0}}"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select name="day" class="sel_day" rel="{{$info['day']}}"></select>
+                    <select name="day" class="sel_day" rel="{{$info['day'] or 0}}"></select>
                 </div>
             </div>
             <div class="f_tel bas_div">
