@@ -161,14 +161,13 @@ class RankController extends BaseController
         /*粉丝排行*/
         $follower['userrank'] = $list['user_followed_rank'];
         $followerlist = [];
-        $fnum = 1;
         foreach ($list['followedrank'] as $fk => $fv) {
             $fv['info'] = $this->formatUserDatas($fv);
             $fv->rank = $fk+1;
             if ($fk < 10) {
                 $followerlist[1][] = $fv;
             } else {
-                $funm = floor($fk / 10);
+                $fnum = floor($fk / 10);
                 $followerlist[$fnum + 1][] = $fv;
             }
         }
