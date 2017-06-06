@@ -51,8 +51,8 @@
           <tbody>
             <tr v-for="auth in auth" :key="auth.id" :class="verified2stye(auth.verified)">
               <td>{{ auth.user_id }}</td>
-              <td>{{ auth.realname }}</td>
               <td>{{ auth.user.name || '' }}</td>
+              <td>{{ auth.realname }}</td>
               <td>{{ auth.idcard }}</td>
               <td>{{ auth.phone }}</td>
               <td>{{ auth.info }}</td>
