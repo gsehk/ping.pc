@@ -9,7 +9,7 @@
     <a href="{{route('pc:feedetail',['feed_id'=>$post['feed']['feed_id']])}}">
     <span class="cen_beforColor">
     @if(date('Y-m-d') == date('Y-m-d', strtotime($post['feed']['created_at'])))
-        今<br>天
+        今天
     @else
     <span class="beforColor_span">{{date('m', strtotime($post['feed']['created_at']))}}</span>{{date('d', strtotime($post['feed']['created_at']))}}
     @endif
