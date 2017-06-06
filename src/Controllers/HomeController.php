@@ -356,7 +356,7 @@ class HomeController extends BaseController
             return response()->json([
                 'status'  => true,
                 'message' => '签到成功',
-                'data' => $credit_user
+                'data' => $data
             ])->setStatusCode(200);
         }
     }

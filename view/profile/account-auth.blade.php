@@ -26,7 +26,7 @@
     </div>
     <div class="bas_right">
         @if(empty($auth))
-        <div class="f_div cer_div">
+        <div class="">
         <form id="auth_form">
             <div class="f_tel bas_div">
                 <label><span class="cer_x">*</span>真实姓名</label>

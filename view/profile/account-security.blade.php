@@ -27,7 +27,7 @@
         </a> -->
     </div>
     <div class="bas_right">
-        <div class="f_div cer_div">
+        <div class="">
         <form id="resetpwd_form">
             <div class="f_tel bas_div">
                 <label style=" margin-left: 15px;"><span class="cer_x">*</span>原密码</label>
