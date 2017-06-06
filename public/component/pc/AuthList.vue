@@ -62,7 +62,7 @@
                 <!-- 审核 -->
                 <button type="button" class="btn btn-primary btn-sm" :disabled='auth.verified === 1' @click='manageAuth(auth)'>审核</button>
                 <!-- 驳回 -->
-                <button type="button" class="btn btn-danger btn-sm" :disabled='auth.verified === 2' @click='manageAuth(auth)'>驳回</button>
+                <button type="button" class="btn btn-danger btn-sm" :disabled='auth.verified === 2' @click='backAuth(auth)'>驳回</button>
               </td>
             </tr>
           </tbody>
@@ -78,8 +78,8 @@ import request, {
 
 import Page from '../Page.vue';
 export default {
-  name:'authlist',
-  components:{
+  name: 'authlist',
+  components: {
     Page
   },
   data: () => ({
@@ -145,25 +145,28 @@ export default {
           this.loadding = false;
         });
     },
+    backAuth(auth) {
+      request.post('/pc/admin/auth/audit/' +auth.id, {
+          state: -1
+        })
+        .then(response => {
+          this.auditID = null;
+          if (!response.data.status) return this.tips.error = '操作失败！';
+          this.getAuthList();
+        }).catch(({
+          response: {
+            data: {
+              errors = ['操作失败！']
+            } = {}
+          } = {}
+        }) => {
+          this.deleteID = null;
+        });
+    },
     manageAuth(auth) {
-      let state = '',
-        _id = auth.id;
-      switch (auth.verified) {
-        case 0:
-          state = 1;
-          break;
-        case 1:
-          state = 2;
-          break;
-        case 2:
-          state = 1;
-          break;
-        default:
-          state = 2;
-          break;
-      }
-      request.post('/pc/admin/auth/audit/' + _id, {
-          state
+      // 认证状态，0：未认证；1：成功 2 :  失败
+      request.post('/pc/admin/auth/audit/' + auth.id, {
+          state:1
         })
         .then(response => {
           this.auditID = null;
@@ -205,7 +208,7 @@ export default {
           return 'info';
       }
     },
-    pageGo(page){
+    pageGo(page) {
       this.current_page = page;
       this.getAuthList();
     }
