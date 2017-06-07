@@ -191,6 +191,7 @@ weibo.afterPostFeed = function(feed_id) {
                 $('#feeds-list').find('.no_data_div').remove();
             }
             $(res.data.html).hide().prependTo('#feeds-list').fadeIn('slow');
+            $("img.lazy").lazyload({effect: "fadeIn"});
         }
 
     })
