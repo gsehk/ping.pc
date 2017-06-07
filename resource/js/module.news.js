@@ -99,7 +99,7 @@ news.loadMore = function() {
                 $(news.setting.container).append(html);
                 $('.loading').remove();
             }
-            $("img.lazy").lazyload();
+            $("img.lazy").lazyload({effect: "fadeIn"});
         } else {
             news.setting.canload = false;
             if (news.setting.loadcount == 1) {

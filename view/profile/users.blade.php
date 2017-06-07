@@ -50,7 +50,7 @@
             <div class="fan_line"></div>
             <div class="fanList_bottom">
                 @foreach ($data['storages'] as $storage)
-                <a href="/home/{{ $storage['id'] }}/feed"> <img src="{{ $routes['storage'] }}{{ $storage['feed_storage_id'] }}" /></a>
+                <a href="/home/{{ $storage['id'] }}/feed"> <img  class="lazy" data-original="{{ $routes['storage'] }}{{ $storage['feed_storage_id'] }}" /></a>
                 @endforeach
 
                 @for ($i = 0; $i < (3 -count($data['storages'])); $i++)
@@ -91,7 +91,7 @@
             var user_id = $(this).attr('uid');
             follow(status, user_id, _this, afterdata);
         })
-
+        $("img.lazy").lazyload({effect: "fadeIn"});
     })
 
     // 关注回调

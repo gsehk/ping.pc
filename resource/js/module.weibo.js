@@ -108,7 +108,7 @@ weibo.loadMore = function() {
                 } else {
                     $(weibo.setting.container).append(html);
                 }
-                $("img.lazy").lazyload();
+                $("img.lazy").lazyload({effect: "fadeIn"});
             } else {
                 weibo.setting.canload = false;
                 if (weibo.setting.loadcount == 1) {

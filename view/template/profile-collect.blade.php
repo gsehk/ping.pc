@@ -9,7 +9,7 @@
     <span class="cen_beforColor_two"><span class="beforColor_span">{{date('m', strtotime($post['created_at']))}}</span>{{date('d', strtotime($post['created_at']))}}</span>
     <!-- <p class="fs-14 cen_word "></p> -->
     <div class="artic_div artic_list" style="width: 100%;">
-        <img src="{{$routes['storage']}}{{$post['storage']}}" class="img-responsive img1">
+        <img data-original="{{$routes['storage']}}{{$post['storage']}}" class="lazy img-responsive img1">
         <div class="img_title">
             <p class="i_title fs-20"><a href="/information/read/{{$post['id']}}">{{$post['title']}}</a></p>
             <p class="i_subTiLe fs-12">{{$post['subject'] or ''}}</p>

@@ -110,6 +110,7 @@ weibo.loadMore = function() {
                 } else {
                     $(weibo.setting.container).append(html);
                 }
+                $("img.lazy").lazyload({effect: "fadeIn"});
             } else {
                 weibo.setting.canload = false;
                 if (weibo.setting.loadcount == 1) {
@@ -218,6 +219,7 @@ news.bindScroll = function() {
             var windowHeight = $(this).height();
             if(scrollTop + windowHeight == scrollHeight){
                 if ($(news.setting.container).length > 0) {
+                    $('.loading').remove();
                     $(news.setting.loading).after(loadHtml);
                     // $(news.setting.container).append(loadHtml);
                     news.loadMore();
@@ -270,6 +272,7 @@ news.loadMore = function() {
                 } else {
                     $(news.setting.container).append(html);
                 }
+                $("img.lazy").lazyload({effect: "fadeIn"});
             } else {
                 news.setting.canload = false;
                 if (news.setting.loadcount == 1) {

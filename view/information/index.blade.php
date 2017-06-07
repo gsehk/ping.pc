@@ -211,7 +211,7 @@ $(document).ready(function(){
         $('.news_cate_tab a').removeClass('dy_59');
         $(this).addClass('dy_59');
     });
-    $("img.lazy").lazyload();
+    $("img.lazy").lazyload({effect: "fadeIn"});
 });
 </script>
 @endsection
