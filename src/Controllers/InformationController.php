@@ -122,7 +122,7 @@ class InformationController extends BaseController
             $data = [];
         }
         $data['count'] = count($draft);
-        $data['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get();
+        $data['cate'] = NewsCate::where('id', '!=', 1)->orderBy('rank', 'desc')->select('id','name')->get();
 
         return view('pcview::information.release', $data, $this->mergeData);
     }
