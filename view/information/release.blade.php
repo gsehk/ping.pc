@@ -97,13 +97,14 @@ var updateImg = function(image, f, task_id){
     $('#J-show-tips').text(f.name);
 }
 $('.news_cate>span').on('click', function(e){
-    if ($('.news_cate').find('.current').length >= 3) {
-        return false;
-    }
     if ($(this).hasClass('current')) {
         $(this).removeClass('current');
     }else{
         $(this).addClass('current');
+    }
+    if ($('.news_cate').find('.current').length > 3) {
+        $(this).removeClass('current');
+        return false;
     }
     var cid  = $(this).data('cid');
     var cateVal= $('#cate_ids').val();
