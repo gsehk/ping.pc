@@ -113,6 +113,7 @@ var username = "{{$info['name'] }}";
 var arrSelect = ["{{$info['province'] or 0}}", "{{$info['city'] or 0}}", "{{$info['area'] or 0}}"];
 $('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];
+    console.log(file);
     fileUpload(file, updateImg);
 });
 var updateImg = function(image, f, task_id){
