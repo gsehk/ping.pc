@@ -196,8 +196,7 @@
 					if ($('.uploadify-queue-add').length == 0) {
 						// 图片添加那妞
 						var add = '<a class="dy_picture_span uploadify-queue-add">'
-								+ '<img src="'
-								+ PUBLIC_URL + '/images/picture-add.png"/>'
+								
 								+ '</a>'
 						$('.uploadify-queue').append(add);
 					}

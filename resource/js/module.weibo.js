@@ -127,11 +127,16 @@ weibo.loadMore = function() {
  * @return void
  */
 weibo.afterUpload = function(image, f, task_id) {
-    var img = '<img class="imgloaded" src="' + image.src + '" tid="' + task_id + '"/>';
+    var img = '<img class="imgloaded" onclick="weibo.showImg();" src="' + image.src + '" tid="' + task_id + '"/>';
     var del = '<span class="imgdel"><i class="icon iconfont icon-close"></i></span>'
     $('#' + 'fileupload_1_' + f.index).css('border', 'none').html(img + del);
 };
-
+weibo.showImg = function(){
+    layer.photos({
+      photos: '#file_upload_1-queue'
+      ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+    });
+};
 /**
  * 发布动态
  * @return void
@@ -735,8 +740,7 @@ $(function() {
         }
         if ($('#file_upload_1-queue').find('.uploadify-queue-item').length != 0  && $('.uploadify-queue-add').length == 0 ){
             var add = '<a class="dy_picture_span uploadify-queue-add">'
-                    + '<img src="'
-                    + PUBLIC_URL + '/images/picture-add.png"/>'
+                    
                     + '</a>'
             $('.uploadify-queue').append(add);
         }

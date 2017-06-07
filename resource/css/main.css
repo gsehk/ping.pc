@@ -1010,6 +1010,12 @@ img {
     border: 1px solid #ededed;
 }
 
+.uploadify-queue-add{
+    background-image: url(../images/picture-add.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .dy_picture_span .imgload {
     margin-top: 20px;
     margin-left: 20px;
