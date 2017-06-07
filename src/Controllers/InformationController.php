@@ -310,7 +310,7 @@ class InformationController extends BaseController
             'status'  => true,
             'code'    => 0,
             'message' => $type == 1 ? '发布成功，请等待审核' : '保存成功',
-            'data'    => ['url' => ($type == 1) ? route('pc:news') : route('pc:article', ['type' => 2]),'id' => $news->id]
+            'data'    => ['url' => ($type == 1) ? route('pc:article', ['type' => 1]) : route('pc:article', ['type' => 2]),'id' => $news->id]
         ]))->setStatusCode(200);
     }
 
