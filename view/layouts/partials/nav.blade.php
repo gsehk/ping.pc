@@ -1,8 +1,7 @@
 @php $route = route::currentRouteName(); @endphp
 <div class="nav nav_border">
     <div class="nav_left">
-        <!-- <a href="{{ route('pc:feed') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a> -->
-        <a href="{{ route('pc:feed') }}"><img src="{{ $routes['resource'] }}/jinronghu/logo.png" class="nav_logo" /></a>
+        <a href="{{ route('pc:feed') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
         <!-- <span class="nav_beta fs-16">beta</span> -->
     </div>
     <div class="nav_list">

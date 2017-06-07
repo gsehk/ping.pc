@@ -16,17 +16,14 @@
         var AVATAR = "{{ $TS['avatar'] }}";
         var TOKEN = "{{ $TS['token'] or '' }}";
     </script>
-    <!-- <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet"> -->
-    <link href="{{ $routes['resource'] }}/jinronghu/main.css" rel="stylesheet">
+    <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/font/iconfont.css" rel="stylesheet">
     <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
     <script src="{{ $routes['resource'] }}/layer/layer.js"></script>
     <script src="{{ $routes['resource'] }}/js/jquery.lazyload.min.js"></script>
-    <!-- <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script> -->
-    <script src="{{ $routes['resource'] }}/jinronghu/iconfont.js"></script>
-    <!-- <script src="{{ $routes['resource'] }}/js/common.js"></script> -->
-    <script src="{{ $routes['resource'] }}/jinronghu/common.js"></script>
+    <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
+    <script src="{{ $routes['resource'] }}/js/common.js"></script>
 </head>
 
 <body @yield('body_class')>
@@ -44,8 +41,7 @@
         </div>
 
         <div class="dy_calltop">
-            <!-- <a href="https://fir.im/ThinkSNSPlus" class="dy_1">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a> -->
-            <a href="javascript:;" class="dy_1">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a>
+            <a href="https://fir.im/ThinkSNSPlus" class="dy_1">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a>
             <a href="javascript:;" class="dy_2" id="gotop"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-uptop"></use></svg></a>
         </div>
     </div>

@@ -68,8 +68,7 @@
     @else
     <!-- 缺省图 -->
     <div class="no_data_div">
-        <!-- <div class="no_data"><img src="{{ $routes['resource']}}/images/pic_default_people.png"/><p>暂无相关内容</p></div> -->
-        <div class="no_data"><img src="{{ $routes['resource']}}/jinronghu/pic_default_people.png"/><p>暂无相关内容</p></div>
+        <div class="no_data"><img src="{{ $routes['resource']}}/images/pic_default_people.png"/><p>暂无相关内容</p></div>
     </div>
     @endif
 

@@ -106,6 +106,9 @@
 <script src="{{ $routes['resource'] }}/js/module.seting.js"></script>
 <script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
 <script> 
+$('#J-image-preview').on('click',function(){
+        ly.load('cropper', '上传头像', '600px', '500px;');
+});
 var username = "{{$info['name'] }}";
 var arrSelect = ["{{$info['province'] or 0}}", "{{$info['city'] or 0}}", "{{$info['area'] or 0}}"];
 $('#J-file-upload').on('change', function(e){
@@ -124,7 +127,7 @@ $(function () {
         FirstText:'请选择'
     });
     $.ms_DatePicker();
-    
+    //地区选择初始化
     init(1);
 }); 
 </script> 

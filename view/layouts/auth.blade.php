@@ -16,16 +16,13 @@
         var AVATAR = "{{ $TS['avatar'] }}";
         var TOKEN = "{{ $TS['token'] or '' }}";
     </script>
-    <!-- <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet"> -->
-    <link href="{{ $routes['resource'] }}/jinronghu/main.css" rel="stylesheet">
+    <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/font/iconfont.css" rel="stylesheet">
     <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
     <script src="{{ $routes['resource'] }}/layer/layer.js"></script>
-    <!-- <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script> -->
-    <script src="{{ $routes['resource'] }}/jinronghu/iconfont.js"></script>
-    <!-- <script src="{{ $routes['resource'] }}/js/common.js"></script> -->
-    <script src="{{ $routes['resource'] }}/jinronghu/common.js"></script>
+    <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
+    <script src="{{ $routes['resource'] }}/js/common.js"></script>
 </head>
 
 <body @yield('body_class')>

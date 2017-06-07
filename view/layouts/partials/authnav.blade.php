@@ -3,8 +3,7 @@
             <div class="nav" style=" padding-top: 11px;">
                 <div class="nav_left">
                     <a href="{{ route('pc:feed') }}">
-                        <!-- <img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /> -->
-                        <img src="{{ $routes['resource'] }}/jinronghu/logo.png" class="nav_logo" />
+                        <img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" />
                     </a>
                     <!-- <span class="nav_beta fs-16">beta</span> -->
                 </div>
@@ -15,8 +14,7 @@
                     <a href="{{ route('pc:index') }}" class="fs-16 ">登录</a>
                     @endif
                     <a href="{{ route('pc:feed') }}" class="fs-16 ">随便看看</a>
-                    <!-- <a href="http://www.thinksns.com" class="fs-16 ">TS+官网</a> -->
-                    <a href="http://www.jinronghu.com" class="fs-16 ">金融虎官网</a>
+                    <a href="http://www.thinksns.com" class="fs-16 ">TS+官网</a>
                 </div>
             </div>
         </div>
