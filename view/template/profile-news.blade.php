@@ -5,8 +5,14 @@
 
 @if(isset($data))
 @foreach($data as $key => $post)
-<div class="cen_img cen_befor b_bg" @if($loop->first) style="margin-top:20px;" @endif>
-    <span class="cen_beforColor_two"><span class="beforColor_span">{{date('m', strtotime($post['created_at']))}}</span>{{date('d', strtotime($post['created_at']))}}</span>
+<div class="cen_img cen_befor" @if($loop->first) style="margin-top:20px;" @endif>
+    <span class="cen_beforColor">
+    @if(date('Y-m-d') == date('Y-m-d', strtotime($post['created_at'])))
+        今天
+    @else
+        <span style="font-size: 20px; writing-mode: horizontal-tb; "><sup>{{date('m', strtotime($post['created_at']))}}</sup> <sub>{{date('d', strtotime($post['created_at']))}} </sub></span>
+    @endif
+    </span>
     <!-- <p class="fs-14 cen_word "></p> -->
     <div class="artic_div artic_list">
         <img data-original="{{$routes['storage']}}{{$post['storage']}}" class="lazy img-responsive img1">

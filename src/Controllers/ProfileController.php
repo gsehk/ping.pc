@@ -573,7 +573,7 @@ class ProfileController extends BaseController
                     }
                 })
                 ->orderBy('id', 'desc')
-                ->select('id','title','updated_at','storage','comment_count','hits','from','subject','audit_status')
+                ->select('id','title','updated_at','created_at','storage','comment_count','hits','from','subject','audit_status')
                 ->withCount('collection')
                 ->with('comments')
                 ->take($limit)

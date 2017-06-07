@@ -11,7 +11,7 @@
     @if(date('Y-m-d') == date('Y-m-d', strtotime($post['feed']['created_at'])))
         今天
     @else
-    <span class="beforColor_span">{{date('m', strtotime($post['feed']['created_at']))}}</span>{{date('d', strtotime($post['feed']['created_at']))}}
+    <span style="font-size: 20px; writing-mode: horizontal-tb; "><sup>{{date('m', strtotime($post['feed']['created_at']))}}</sup> <sub>{{date('d', strtotime($post['feed']['created_at']))}} </sub></span>
     @endif
     </span>
     </a>

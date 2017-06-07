@@ -24,7 +24,7 @@
     @if(($loop->iteration) % 3 == 1)
     <div class="fan_list">
     @endif
-        <div class="fan_c">
+        <div class="fan_c"  @if(($loop->iteration) % 3 == 1) style="border-right:0;" @endif>
             <div class="fanList_top">
                 <div class="fan_header">
                     <a href="{{route('pc:myFeed',['user_id'=>$data['user']['id']])}}">
