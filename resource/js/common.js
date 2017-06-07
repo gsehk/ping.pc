@@ -193,7 +193,8 @@ var follow = function(status, user_id, target, callback) {
 }
 
 // 提示框
-var noticebox = function(msg, status, tourl = '') {
+var noticebox = function(msg, status, tourl) {
+    tourl = tourl || '';
     var _this = $('.noticebox');
     if ($(document).scrollTop() > 62) {
         _this.css('top', '0px');
