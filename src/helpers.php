@@ -85,7 +85,6 @@ function asstes_path()
 function getShort($str, $length = 40, $ext = '')
 {
     $str = nl2br($str);
-    $str = real_strip_tags($str);
     $str = addslashes($str);
     $str = trim($str);
     $str = strip_tags($str);
