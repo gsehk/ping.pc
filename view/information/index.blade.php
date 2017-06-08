@@ -194,7 +194,7 @@ setTimeout(function() {
 
 $(document).ready(function(){
 
-    $('.unslider').unslider({delay:3000});
+    $('.unslider').unslider({delay:3000,dots: true});
         recent_hot(1);
         $('#j-recent-hot a').on('click', function(){
         var cid = $(this).attr('cid');
