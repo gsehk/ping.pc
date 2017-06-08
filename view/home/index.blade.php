@@ -93,11 +93,10 @@ var checkin = function(){
     return;
   }
   var totalnum = {{$checkin['total_num'] or 0}} + 1;
-  var connum = {{$checkin['con_num'] or 0}} + 1;
   $.get('/home/checkin' , {} , function (res){
     if ( res ){
       var totalnum = res.data.score;
-      $('#checkin').html('<svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>已签到<span>连续签到<font class="colnum">'+connum+'</font>天</span>');
+      $('#checkin').html('<svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>已签到<span>连续签到<font class="colnum">'+res.data.con_num+'</font>天</span>');
       $('.totalnum').text(totalnum);
     }
   });

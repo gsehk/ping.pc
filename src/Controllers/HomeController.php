@@ -327,6 +327,7 @@ class HomeController extends BaseController
 
             if ($check_info->save()) {
                 $credit_user = $this->setUserCredit($user_id, 'check_in', 1);
+                $credit_user->con_num = $data['con_num'];
                 // 更新连续签到和累计签到的数据
                 $totalnum = UserDatas::where('user_id', $user_id)
                             ->where('key', 'check_totalnum')
@@ -356,7 +357,7 @@ class HomeController extends BaseController
             return response()->json([
                 'status'  => true,
                 'message' => '签到成功',
-                'data' => $data
+                'data' => $credit_user
             ])->setStatusCode(200);
         }
     }
