@@ -2961,7 +2961,7 @@ img {
 }
 
 .fan_c:hover {
-    border: 1px solid #59b6d7;
+    border: 1px solid #59b6d7 !important;
 }
 
 .fan_list .fan_c:nth-of-type(2):hover {
