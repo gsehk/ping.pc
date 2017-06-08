@@ -4228,3 +4228,45 @@ img.load {
 #bdshare_weixin_qrcode_dialog{
     height: 300px !important;
 }
+.avatar-container{
+    margin: 20px;
+}
+.avatar-upload{
+    margin:10px 0;
+}
+.save-btn{
+    text-align: right;
+}
+.save-btn>span{
+    margin-right: 20px;
+    color:#ccc; 
+}
+.avatar-wrapper {
+    height: 314px;
+    width: 100%;
+    margin: 15px auto;
+    box-shadow: inset 0 0 5px rgba(0,0,0,.25);
+    background-color: #fcfcfc;
+    overflow: hidden;
+}
+.avatar-preview {
+    float: left;
+    margin-top: 15px;
+    margin-right: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #fff;
+    overflow: hidden;
+}
+.avatar-upload label {
+    display: block;
+    float: left;
+    clear: left;
+    width: 100px;
+}
+
+/* Override Cropper's styles */
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
