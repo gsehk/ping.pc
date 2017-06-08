@@ -6,7 +6,7 @@
 <div class="login_cont">
     <div class="login_center">
         <div class="loginleft_bg">
-            <div class="login_hy">欢迎来到金融虎+</div>
+            <div class="login_hy">欢迎来到TS+</div>
             <div class="login_code">
                 <!-- <img src="{{ $routes['resource'] }}/images/login_code.png" /> -->
                 <img src="{{ $routes['resource'] }}/images/login_code.png" />
