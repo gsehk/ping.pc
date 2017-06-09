@@ -70,6 +70,7 @@ var urlToObject = function(url) {
 
 // 字符串长度 - 中文和全角符号为1；英文、数字和半角为0.5
 var getLength = function(str, shortUrl) {
+    str = str || '';
     if (true == shortUrl) {
         // 一个URL当作十个字长度计算
         return Math.ceil(str.replace(/((news|telnet|nttp|file|http|ftp|https):\/\/){1}(([-A-Za-z0-9]+(\.[-A-Za-z0-9]+)*(\.[-A-Za-z]{2,5}))|([0-9]{1,3}(\.[0-9]{1,3}){3}))(:[0-9]*)?(\/[-A-Za-z0-9_\$\.\+\!\*\(\),;:@&=\?\/~\#\%]*)*/ig, 'xxxxxxxxxxxxxxxxxxxx')
