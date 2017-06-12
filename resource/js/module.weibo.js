@@ -143,7 +143,7 @@ weibo.showImg = function(){
  */
 weibo.postFeed = function() {
     if (MID == 0) {
-        noticebox('请登录', 0, '/passport/index');
+        window.location.href = '/passport/index';
         return false;
     }
 
@@ -355,7 +355,7 @@ var comment = {
 
         $('.J-comment-feed' + feedid).on('click', function() {
             if (MID == 0) {
-                noticebox('请登录', 0, '/passport/index');
+                window.location.href = '/passport/index';
                 return false;
             }
             comment.addComment(null, this);
@@ -544,7 +544,7 @@ var digg = {
     addDigg: function(feed_id, page) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
 
@@ -629,7 +629,7 @@ var collect = {
     addCollect: function(feed_id, page) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
 
@@ -768,7 +768,7 @@ $(function() {
     // 显示回复框
     $('#feeds-list').on('click', '.J-comment-show', function() {
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
         var attrs = urlToObject($(this).data('args'));

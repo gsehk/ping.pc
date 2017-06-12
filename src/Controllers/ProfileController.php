@@ -4,6 +4,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Session;
 use Carbon\Carbon;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\UserDatas;
@@ -35,9 +36,12 @@ class ProfileController extends BaseController
      */
     public function index(Request $request)
     {
-
-        $type = $request->input('type') ?: 'all';
+        if(empty($this->mergeData['TS']) && empty($request->input('user_id'))) {
+            Session::put('history', route('pc:myFeed'));
+            return redirect(route('pc:index'));
+        }
         $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
+        $type = $request->input('type') ?: 'all';
 
         if (!empty($this->mergeData['TS']) && $this->mergeData['TS']['id'] == $user_id) {
             $data['user'] = $this->mergeData['TS'];

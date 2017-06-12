@@ -103,7 +103,7 @@ layer.photos({
 }); 
 $('#J-comment-feed').on('click', function(){
     if (MID == 0) {
-        noticebox('请登录', 0, '/passport/index');
+        window.location.href = '/passport/index';
         return false;
     }
     var attrs = urlToObject($(this).data('args'));

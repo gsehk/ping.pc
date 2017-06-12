@@ -301,7 +301,7 @@ var digg = {
     addDigg: function(feed_id, page) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
 
@@ -482,7 +482,7 @@ var comment = {
         if (attr.type != 'news') {
             $('.J-comment-feed' + feedid).on('click', function() {
                 if (MID == 0) {
-                    noticebox('请登录', 0, '/passport/index');
+                    window.location.href = '/passport/index';
                     return false;
                 }
                 comment.addComment(null, this);
@@ -490,7 +490,7 @@ var comment = {
         } else {
             $('.J-comment-feed' + feedid).on('click', function() {
                 if (MID == 0) {
-                    noticebox('请登录', 0, '/passport/index');
+                    window.location.href = '/passport/index';
                     return false;
                 }
                 comment.addNewComment(null, this);
@@ -667,7 +667,7 @@ var collect = {
     addCollect: function(feed_id, page) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
 
@@ -739,7 +739,7 @@ var collect = {
     addNewsCollect: function(news_id) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
 
@@ -852,7 +852,7 @@ $(function() {
     // 显示回复框
     $('#feeds-list, #article-list, #content-list').on('click', '.J-comment-show', function() {
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
         var attrs = urlToObject($(this).data('args'));

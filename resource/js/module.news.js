@@ -212,8 +212,9 @@ var recent_hot = function(type) {
                     f = 1;
                 var data = res.data;
                 for (var i in data) {
+                    var bg = i > 2 ? 'class="gray"' : '';
                     html += '<li>' +
-                        '<span>' + f + '</span>' +
+                        '<span' + bg + '>' + f + '</span>' +
                         '<a href="/information/read/'+data[i].id+'">' + data[i].title + '</a>' +
                         '</li>';
                     f++;
@@ -313,7 +314,7 @@ var digg = {
     addDigg: function(news_id) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
 
@@ -390,7 +391,7 @@ var collect = {
     addCollect: function(news_id) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            noticebox('请登录', 0, '/passport/index');
+            window.location.href = '/passport/index';
             return;
         }
 

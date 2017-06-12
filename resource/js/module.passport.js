@@ -19,19 +19,28 @@ $(function() {
             $('#login_form').ajaxSubmit({
                 type: 'post',
                 url: url,
+                beforeSend: function() {
+                    _this.text('登录中...');
+                    _this.css('cursor', 'no-drop');
+                },
                 success: function(res) {
                     if (res.status) {
-                        // var jump = res.data == '' ? '/home/index' : res.data;
-                        var jump = res.data == '' ? '/information/index' : res.data;
+                        var jump = res.data == '' ? '/home/index' : res.data;
                         noticebox('登录成功，跳转中...', 1, jump);
                     }
-                    passlod = false;
                 },
                 error: function(xhr, textStatus, errorThrown) {　　
                     if (xhr.status == 422) {
                         noticebox('用户名或密码错误', 0);
                         $('input[name="password"]').focus();
                     }
+                    if (xhr.status == 423) {
+                        noticebox('登录次数超过限制，请稍后再试', 0);
+                    }
+                },
+                complete: function() {
+                    _this.text('登录');
+                    _this.css('cursor', 'pointer');
                     passlod = false;
                 }
             });
@@ -93,19 +102,21 @@ $(function() {
             return false;
         }
 
-
-        _this.text('注册中');
         if (!passlod) {
             var url = '/passport/doregister';
+            passlod = true;
             $('#reg_form').ajaxSubmit({
                 type: 'post',
                 async: false,
                 url: url,
+                beforeSend: function() {
+                    _this.text('注册中...');
+                    _this.css('cursor', 'no-drop');
+                },
                 success: function(res) {
                     if (res.status) {
                         noticebox('注册成功，跳转中...', 1, '/passport/index');
                     }
-                    passlod = false;
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     if (xhr.responseJSON.code == 1000) {
@@ -129,7 +140,10 @@ $(function() {
                         $('#name_tip').html('用户名已存在').show();
                         $('input[name="name"]').focus();
                     } 
+                },
+                complete: function() {
                     _this.text('注册');
+                    _this.css('cursor', 'pointer');
                     passlod = false;
                 }
             });
@@ -139,6 +153,7 @@ $(function() {
 
     // 找回密码提交
     $('#findpwd_btn').click(function() {
+        var _this = $(this);
         var phone = $('input[name="phone"]').val();
         var captcha = $('input[name="captchacode"]').val();
         var smscode = $('input[name="code"]').val();
@@ -182,26 +197,37 @@ $(function() {
         }
 
 
-        var url = '/passport/dofindpwd';
-        $('#findpwd_form').ajaxSubmit({
-            type: 'patch',
-            url: url,
-            success: function(res) {
-                if (res.status) {
-                    noticebox('修改成功，跳转中...', 1, '/passport/index');
+        if (!passlod) {
+            var url = '/passport/dofindpwd';
+            passlod = true;
+            $('#findpwd_form').ajaxSubmit({
+                type: 'patch',
+                url: url,
+                beforeSend: function() {
+                    _this.text('找回中...');
+                    _this.css('cursor', 'no-drop');
+                },
+                success: function(res) {
+                    if (res.status) {
+                        noticebox('修改成功，跳转中...', 1, '/passport/index');
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    if (xhr.responseJSON.code == 1000) {
+                        $('#phone_tip').html('请输入正确的手机号').show();
+                    } else if (xhr.responseJSON.code == 1005) {
+                        $('#user_tip').html('该用户不存在').show();
+                    } else if (xhr.responseJSON.code == 1001) {
+                        $('#smscode_tip').html('手机验证码错误或失效').show();
+                        re_captcha();
+                    }
+                },
+                complete: function() {
+                    _this.text('找回');
+                    _this.css('cursor', 'pointer');
                 }
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                if (xhr.responseJSON.code == 1000) {
-                    $('#phone_tip').html('请输入正确的手机号').show();
-                } else if (xhr.responseJSON.code == 1005) {
-                    $('#user_tip').html('该用户不存在').show();
-                } else if (xhr.responseJSON.code == 1001) {
-                    $('#smscode_tip').html('手机验证码错误或失效').show();
-                    re_captcha();
-                }
-            }
-        });
+            });
+        }
         return false;
     });
 
@@ -226,6 +252,7 @@ $(function() {
         }
 
         if (!captcha) {
+            ('#phone_tip').html('').hide();
             $('#captcha_tip').html('请输入图形验证码').show();
             $('input[name="captchacode"]').focus();
             return false;
