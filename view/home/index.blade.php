@@ -3,7 +3,7 @@
 @section('body_class')class="gray"@endsection
 
 @section('content')
-<div class="dy_cont">
+<div class="dy_cont clearfix">
     <!--左-->
     @component('pcview::ucmenu')
         555
