@@ -649,6 +649,7 @@ img {
 }
 
 .dy_comit p {
+    word-break: break-all;
     margin-bottom: 16px;
 }
 
