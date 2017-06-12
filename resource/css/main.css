@@ -1726,6 +1726,10 @@ img {
     background: #59b6d7;
 }
 
+.new_list li span.gray {
+    background: #ccc;
+}
+
 .new_list li a {
     line-height: 22px;
     display: -webkit-box;
