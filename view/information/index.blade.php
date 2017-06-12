@@ -174,12 +174,11 @@ var checkin = function(){
         window.location.href = "{{ route('pc:index', ['url'=>'/information/index']) }}"; 
         return;
     }
-    var totalnum = {{$checkin['total_num'] or 0}} + 1;
+    
     $.get('/home/checkin' , {} , function (res){
         if ( res ){
-            var totalnum = res.data.score;
             $('#checkin').html('已签到');
-            $('.totalnum').text(totalnum);
+            $('.inR_lk').remove();
             $('#checkin').addClass('dy_qiandao_sign');
         }
     });
