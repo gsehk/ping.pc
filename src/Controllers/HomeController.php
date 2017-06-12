@@ -137,7 +137,7 @@ class HomeController extends BaseController
             $data['feed']['feed_id'] = $feed->id;
             $data['feed']['feed_title'] = $feed->feed_title ?? '';
             $data['feed']['feed_content'] = replaceUrl($feed->feed_content);
-            $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
+            $data['feed']['created_at'] = $this->getTime($feed->created_at);
             $data['feed']['feed_from'] = $feed->feed_from;
             $data['feed']['storages'] = $feed->storages->map(function ($storage) {
                 return ['storage_id' => $storage->id, 'width' => $storage->image_width, 'height' => $storage->image_height];

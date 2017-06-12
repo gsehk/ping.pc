@@ -151,7 +151,11 @@ class InformationController extends BaseController
                 ->select('news.id','news.title','news.subject','news.updated_at','news.storage','news.comment_count','news.from')
                 // ->with('storage')
                 ->withCount('collection')
-                ->get()->toArray();
+                ->get();
+
+        foreach ($datas as $key => &$value) {
+            $value['updated_at'] = $this->getTime($value['updated_at']);
+        }
 
         return response()->json(static::createJsonData([
             'status'  => true,
@@ -176,10 +180,12 @@ class InformationController extends BaseController
         
         switch ($type) {
             case 1:
-                $stime = Carbon::createFromTimestamp($time->timestamp - $time->dayOfWeek*60*60*24);// 本周开始时间
-                $etime = Carbon::createFromTimestamp($time->timestamp + (6-$time->dayOfWeek)*60*60*24); // 本周结束时间
+                // $stime = Carbon::createFromTimestamp($time->timestamp - $time->dayOfWeek*60*60*24);// 本周开始时间
+                // $etime = Carbon::createFromTimestamp($time->timestamp + (6-$time->dayOfWeek)*60*60*24); // 本周结束时间
 
-                $datas = News::whereBetween('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                // $datas = News::where('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                $stime = $time->subDays(7)->toDateTimeString();
+                $datas = News::where('created_at', '>', $stime)
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
                         ->select('id','title','updated_at','storage','content','from')

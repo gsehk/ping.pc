@@ -3,6 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Models\Role;
 use Zhiyi\Plus\Models\User;
@@ -90,5 +91,11 @@ class BaseController extends Controller
             }
 		}
 		return $rs;
+    }
+
+    public function getTime($time)
+    {
+    	$new = $time->addHours(8);
+    	return $new;
     }
 }
