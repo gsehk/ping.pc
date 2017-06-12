@@ -19,7 +19,7 @@ news.init = function(option) {
     news.bindScroll();
 
     if ($(news.setting.container).length > 0 && this.setting.canload) {
-        $('.loading').remove();
+        $(news.setting.container + ' .loading').remove();
         $(news.setting.container).append(loadHtml);
         news.loadMore();
     }
@@ -97,16 +97,16 @@ news.loadMore = function() {
                 $(news.setting.container).html(html);
             } else {
                 $(news.setting.container).append(html);
-                $('.loading').remove();
+                $(news.setting.container + ' .loading').remove();
             }
             $("img.lazy").lazyload({effect: "fadeIn"});
         } else {
             news.setting.canload = false;
             if (news.setting.loadcount == 1) {
                 no_data(news.setting.container, 1, ' 暂无相关内容');
-                $('.loading').html('');
+                $(news.setting.container + ' .loading').html('');
             } else {
-                $('.loading').html('暂无相关内容');
+                $(news.setting.container + ' .loading').html('暂无相关内容');
             }
         }
     });
@@ -146,10 +146,10 @@ var recommend = {
                         html += '<span>' + data[i].title + '</span>';
                     }
                     $(recommend.opt.container).append(html);
-                    $('.loading').remove();
+                    $(news.setting.container + ' .loading').remove();
                 } else {
                     recommend.opt.canload = false;
-                    $('.loading').html('暂无相关内容');
+                    $(news.setting.container + ' .loading').html('暂无相关内容');
                 }
             }
         });
@@ -190,10 +190,10 @@ var recommend = {
                         html += '<span>' + data[i].title + '</span>';
                     }
                     $(recommend.opt.container).append(html);
-                    $('.loading').remove();
+                    $(news.setting.container + ' .loading').remove();
                 } else {
                     recommend.opt.canload = false;
-                    $('.loading').html('暂无相关内容');
+                    $(news.setting.container + ' .loading').html('暂无相关内容');
                 }
             }
         });
@@ -214,15 +214,14 @@ var recent_hot = function(type) {
                 for (var i in data) {
                     var bg = i > 2 ? 'class="gray"' : '';
                     html += '<li>' +
-                        '<span' + bg + '>' + f + '</span>' +
+                        '<span ' + bg + '>' + f + '</span>' +
                         '<a href="/information/read/'+data[i].id+'">' + data[i].title + '</a>' +
                         '</li>';
                     f++;
                 }
                 $('#j-recent-hot-wrapp').html(html);
             } else {
-                $('.del_right .loading').html('暂无相关内容');
-                $('.news_list .loading').html('暂无相关内容');
+                $('#j-recent-hot-wrapp .loading').html('暂无相关内容');
             }
         });
     }
