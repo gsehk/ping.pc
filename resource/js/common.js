@@ -428,7 +428,7 @@ var ly = {
 
 $(function() {
     // 个人中心展开
-    $('#menu_toggle').click(function() {
+    $('.nav_right').hover(function() {
         $('.p_cont').toggle();
     })
 

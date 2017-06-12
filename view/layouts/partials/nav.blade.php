@@ -14,29 +14,32 @@
     <div class="nav_right">
         <img src="{{ $TS['avatar']}}" id="menu_toggle" alt="{{ $TS['name'] }}"/>
         <span class="fs-16 nav_name">{{$TS['name']}}</span>
-    </div>
-    <div class="p_cont">
-        <ul>
-            <li>
-                <a href="{{ route('pc:collection') }}"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
-            </li>
-            <li>
-                <a href="{{ route('pc:credit') }}"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>
-            </li>
-            <li>
-                <a href="{{ route('pc:account', ['page'=>'account-auth']) }}"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
-            </li>
-            <li>
-                <a href="{{ route('pc:account') }}"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
-            </li>
-            <li style="border-top: 1px solid #ededed; padding-top: 20px;">
-                <a href="{{ route('pc:myFeed')}}">个人主页</a>
-            </li>
-            <li style="padding-bottom: 10px;">
-                <a href="javascript:void(0)" onclick="logout()">退出</a>
-            </li>
-        </ul>
-        <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
+
+        <div class="p_cont">
+            <div class="hover_cover clearfix">
+            </div>
+            <ul>
+                <li>
+                    <a href="{{ route('pc:collection') }}"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
+                </li>
+                <li>
+                    <a href="{{ route('pc:credit') }}"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>
+                </li>
+                <li>
+                    <a href="{{ route('pc:account', ['page'=>'account-auth']) }}"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
+                </li>
+                <li>
+                    <a href="{{ route('pc:account') }}"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
+                </li>
+                <li style="border-top: 1px solid #ededed; padding-top: 20px;">
+                    <a href="{{ route('pc:myFeed')}}">个人主页</a>
+                </li>
+                <li style="padding-bottom: 10px;">
+                    <a href="javascript:void(0)" onclick="logout()">退出</a>
+                </li>
+            </ul>
+            <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
+        </div>
     </div>
     @else
     <div class="nav_right">

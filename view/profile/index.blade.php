@@ -86,7 +86,7 @@
                 <div class="dy_cen">
                     <div class="dy_tab">
                         <div class="artic_left">
-                            <a href="javascript:;" data-type="all" class="fs-16 @if($type == 'all') dy_cen_333 @endif">全部动态</a>
+                            <a href="javascript:;" data-type="all" class="fs-16 @if($type == 'all') dy_cen_333 @endif">动态</a>
                             <a href="javascript:;" data-type="img" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
                         </div>
                         <a href="{{ route('pc:article', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16"><div>文章</div></a>

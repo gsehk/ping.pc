@@ -71,7 +71,7 @@
                 <div class="dy_cen">
                     <div class="top-menu-left">
                         <div class="artic_left border_left">
-                            <a href="{{ route('pc:myFeed', ['type'=>'all', 'user_id'=> $user['id']]) }}" class="fs-16 @if($type == 'all') dy_cen_333 @endif">全部动态</a>
+                            <a href="{{ route('pc:myFeed', ['type'=>'all', 'user_id'=> $user['id']]) }}" class="fs-16 @if($type == 'all') dy_cen_333 @endif">动态</a>
                             <a href="{{ route('pc:myFeed', ['type'=>'img', 'user_id'=> $user['id']]) }}" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
                         </div>
                         <a href="{{ route('pc:article', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16 border_left_no dy_cen_333"><div>文章</div></a>
