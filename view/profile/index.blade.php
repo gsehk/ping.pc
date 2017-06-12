@@ -53,14 +53,9 @@
 
         @if (!empty($user['province']))
         <span class="dyn_address"><i class="icon iconfont icon-site"></i>
-            {{ $user['province'] }} 
-            @if (!empty($user['city']))
-            {{ '·'.$user['city'] }}
-            @endif
-
-            @if (!empty($user['area']))
-            {{ '·'.$user['area'] }}
-            @endif
+            {{$user['province']}}
+            @if(!empty($user['city'])){{'· '.$user['city']}}@endif
+            @if(!empty($user['area'])){{'· '.$user['area']}}@endif
         </span>
         @endif
         @if(!empty($TS) && $TS['id'] == $user['id'])

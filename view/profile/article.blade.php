@@ -50,14 +50,9 @@
 
         @if (!empty($user['province']))
         <span class="dyn_address"><i class="icon iconfont icon-site"></i>
-            {{ $user['province'] }} 
-            @if (!empty($user['city']))
-            {{ '·'.$user['city'] }}
-            @endif
-
-            @if (!empty($user['area']))
-            {{ '·'.$user['area'] }}
-            @endif
+            {{$user['province']}}
+            @if(!empty($user['city'])){{'· '.$user['city']}}@endif
+            @if(!empty($user['area'])){{'· '.$user['area']}}@endif
         </span>
         @endif
         @if(!empty($TS) && $TS['id'] == $user['id'])<a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>@endif
