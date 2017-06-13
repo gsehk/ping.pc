@@ -337,6 +337,7 @@ class HomeController extends BaseController
                     $totalnum->value = $data['total_num'];
                     $totalnum->save();
                     // 更新连续签到数
+                    $totalnum->value = $data['con_num'];
                     $totalnum->where([['user_id', $user_id], ['key', 'check_connum']]);
                     $totalnum->save();
                 } else { 
@@ -347,6 +348,7 @@ class HomeController extends BaseController
                     $userData->value = $data['total_num'];
                     $userData->save();
 
+                    $userData = new UserDatas();
                     $userData->user_id = $user_id;
                     $userData->key = 'check_connum';
                     $userData->value = $data['con_num'];
