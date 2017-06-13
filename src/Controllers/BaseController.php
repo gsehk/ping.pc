@@ -95,7 +95,13 @@ class BaseController extends Controller
 
     public function getTime($time)
     {
-    	$new = $time->addHours(8);
-    	return $new;
+    	// 本地化
+    	Carbon::setLocale('zh');
+
+    	// 一小时内显示文字
+    	if (Carbon::now()->subHours(8) < $time) {
+        	return $time->diffForHumans();
+        }
+		return $time->addHours(8);
     }
 }
