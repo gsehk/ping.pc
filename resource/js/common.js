@@ -128,12 +128,12 @@ var doFileUpload = function(image, f, callback) {
         beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', TOKEN);　　　 },
         success: function(res) {
             if (res.data.uri) {
-                var formData = new FormData();
-                formData.append("file", f);
+                var formDatas = new FormData();
+                formDatas.append("file", f);
 
                 if (res.data.options) {
                     for (var i in res.data.options) {
-                        formData.append(i, res.data.options[i]);
+                        formDatas.append(i, res.data.options[i]);
                     }
                 }
 
@@ -141,12 +141,12 @@ var doFileUpload = function(image, f, callback) {
                 $.ajax({
                     url: res.data.uri,
                     type: res.data.method,
-                    data: formData,
+                    data: formDatas,
                     async: false,
                     cache: false,
                     contentType: false,
                     processData: false,
-                    beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', res.data.headers.Authorization);　　　 },
+                    beforeSend: function(xhr) {　　　　 xhr.setRequestHeader(res.data.headers);　　　 },
                     success: function(data) {
 
                         // 上传通知 
@@ -154,7 +154,7 @@ var doFileUpload = function(image, f, callback) {
                             url: API + 'storages/task/' + res.data.storage_task_id,
                             type: 'PATCH',
                             async: false,
-                            beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', res.data.headers.Authorization);　　　 },
+                            beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', TOKEN);　　　 },
                             success: function(response) {
                                 callback(image, f, res.data.storage_task_id);
                             }
