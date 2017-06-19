@@ -13,7 +13,7 @@
         @endif
         @if ($user['id'] == $TS['id'])
         <input type="file" name="cover" style="display:none" id="cover">
-        <span class="dyn_huan" style="display:none">更换封面</span>
+        <span class="dyn_huan">更换封面</span>
         @endif
         <div class="dyn_title"><a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}">{{ $user['name'] }}</a></div>
         <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>

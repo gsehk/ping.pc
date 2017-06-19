@@ -2347,8 +2347,15 @@ img {
     text-align: center;
     color: #fff;
     border-radius: 20px;
-    background: #59b6d7;
+    border: 1px solid #fff;
+    transition: background .3s;
 }
+
+.dyn_huan:hover {
+  background: #59b6d7;
+  border-color: #59b6d7;
+}
+
 
 .dyn_title {
     font-size: 36px;

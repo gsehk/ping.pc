@@ -825,11 +825,11 @@ $(function() {
         fileUpload(file, uploadPccover);
     });
 
-    $('.dyn_top').hover(function() {
-        $('.dyn_huan').show();
-    }, function() {
-        $('.dyn_huan').hide();
-    });
+    // $('.dyn_top').hover(function() {
+    //     $('.dyn_huan').show();
+    // }, function() {
+    //     $('.dyn_huan').hide();
+    // });
 
     // 微博操作菜单
     $('#feeds-list').on('click', '.show_admin', function() {
