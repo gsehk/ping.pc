@@ -77,7 +77,7 @@
                         <a href="{{route('pc:article',['user_id'=>$author])}}">文章<span>{{ $news_count_count }}</span></a>
                     </li>
                     <li>
-                        <a href="javascript:;">热门<span>{{ $hots }}</span></a>
+                        <a href="javascript:;">热门<span>{{ $hotNum }}</span></a>
                     </li>
                 </ul>
                 @foreach($news as $post)
@@ -93,11 +93,46 @@
                 <div class="itop_autor autor_border">近期热点</div>
                 <ul class="infR_time" id="j-recent-hot">
                     <li><a href="javascript:;" cid="1" class="week a_border">一周</a></li>
-                    <li><a href="javascript:;" cid="2" class="meth">月度</a></li>
-                    <li><a href="javascript:;" cid="3" class="moth">季度</a></li>
+                    <li><a href="javascript:;" cid="2" class="month">月度</a></li>
+                    <li><a href="javascript:;" cid="3" class="quarter">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
-                    
+                    <div class="list list1">
+                        @if(!empty($hots['week']->toArray()))
+                        @foreach($hots['week'] as $week)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$week->id}}">{{$week->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
+                    <div class="list list2">
+                        @if(!empty($hots['month']->toArray()))
+                        @foreach($hots['month'] as $month)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$month->id}}">{{$month->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
+                    <div class="list list3">
+                        @if(!empty($hots['quarter']->toArray()))
+                        @foreach($hots['quarter'] as $quarter)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$quarter->id}}">{{$quarter->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
                 </ul>
             </div>
         </div>
@@ -109,44 +144,37 @@
 <script src="{{ $routes['resource'] }}/js/module.news.js"></script>
 <script src="{{ $routes['resource'] }}/js/module.bdshare.js"></script>
 <script type="text/javascript">
-
-$('#J-comment-news').on('click', function(){
-    if (MID == 0) {
-        window.location.href = '/passport/index';
-        return false;
-    }
-    var attrs = urlToObject($(this).data('args'));
-    attrs.to_uid = $(this).attr('to_uid');
-    attrs.addToEnd = $(this).attr('addtoend');
-    attrs.to_comment_id = $(this).attr('to_comment_id');
-    comment.init(attrs);
-
-    var _this = this;
-    var after = function(){
-        $(_this).attr('to_uid','0');
-        $(_this).attr('to_comment_id','0');
-    }
-    comment.addComment(after, this);
-});
-
 $(document).ready(function(){
 
-  comment.init({row_id:'{{$id}}', canload:true});
+    comment.init({row_id:'{{$id}}', canload:true});
 
-  recent_hot(1); 
-  $('#j-recent-hot a').on('click', function(){
-        var cid = $(this).attr('cid');
-        recent_hot(cid);
-        $('#j-recent-hot a').removeClass('a_border');
-        $(this).addClass('a_border');
-  });
+    $('#J-comment-news').on('click', function(){
+        if (MID == 0) {
+            window.location.href = '/passport/index';
+            return false;
+        }
+        var attrs = urlToObject($(this).data('args'));
+        attrs.to_uid = $(this).attr('to_uid');
+        attrs.addToEnd = $(this).attr('addtoend');
+        attrs.to_comment_id = $(this).attr('to_comment_id');
+        comment.init(attrs);
+
+        var _this = this;
+        var after = function(){
+            $(_this).attr('to_uid','0');
+            $(_this).attr('to_comment_id','0');
+        }
+        comment.addComment(after, this);
+    });
+
+    bdshare.addConfig('share', {
+        "tag" : "share_feedlist",
+        'bdText' : '{{ $title }}',
+        'bdDesc' : '{{ $title }}',
+        'bdUrl' : window.location.href,
+        'bdPic' : '{{ $routes['resource'] }}/images/default_cover.png'
+    });
 });
-bdshare.addConfig('share', {
-    "tag" : "share_feedlist",
-    'bdText' : '{{ $title }}',
-    'bdDesc' : '{{ $title }}',
-    'bdUrl' : window.location.href,
-    'bdPic' : '{{ $routes['resource'] }}/images/default_cover.png'
-});
+
 </script>
 @endsection

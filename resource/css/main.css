@@ -1720,6 +1720,10 @@ img {
 .new_list {
     margin-bottom: 0px;
 }
+.new_list .list2,
+.new_list .list3 {
+    display: none;
+}
 
 .new_list li {
     padding: 15px 0px;
@@ -1739,7 +1743,7 @@ img {
     background: #59b6d7;
 }
 
-.new_list li span.gray {
+.new_list li span.grey {
     background: #ccc;
 }
 

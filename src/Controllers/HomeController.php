@@ -120,6 +120,13 @@ class HomeController extends BaseController
             $data['news']['list'] = [];
         }
         
+        /* 近期热点 */
+        $data['hots'] = [
+            'week' => $this->getRecentHot(1),
+            'month' => $this->getRecentHot(2),
+            'quarter' => $this->getRecentHot(3),
+        ];
+
         Feed::byFeedId($feed_id)->increment('feed_view_count');
 
         return view('pcview::home.read',$data, $this->mergeData);
@@ -283,6 +290,58 @@ class HomeController extends BaseController
         return $this->formatFeedList($feeds, $user_id);
     }
 
+        /**
+     * 获取近期资讯列表
+     * 
+     * @date   2017-04-28
+     * @param  type     [分类id]
+     * @return mixed  返回结果
+     */
+    public function getRecentHot($type = 1, $limit = 5)
+    {
+        $time = Carbon::now();
+        switch ($type) {
+            case 1:
+                // $stime = Carbon::createFromTimestamp($time->timestamp - $time->dayOfWeek*60*60*24);// 本周开始时间
+                // $etime = Carbon::createFromTimestamp($time->timestamp + (6-$time->dayOfWeek)*60*60*24); // 本周结束时间
+
+                // $datas = News::where('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                $stime = $time->subDays(7)->toDateTimeString();
+                $datas = News::where('created_at', '>', $stime)
+                        ->orderBy('news.hits', 'desc')
+                        ->take($limit)
+                        ->select('id','title','updated_at','storage','content','from')
+                        ->with('storage')
+                        ->get();
+                break;
+            case 2:
+                $stime = Carbon::create(null, null, 01);// 本月开始时间
+                $etime = Carbon::create(null, null, $time->daysInMonth); // 本月结束时间
+
+                $datas = News::whereBetween('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                        ->orderBy('news.hits', 'desc')
+                        ->take($limit)
+                        ->select('id','title','updated_at','storage','content','from')
+                        ->with('storage')
+                        ->get();
+                break;
+            case 3:
+                $season = ceil($time->month/3);//当月是第几季度
+                $stime = Carbon::create($time->year, $season*3-3+1, 01, 0, 0, 0);// 本季度开始时间
+                $etime = Carbon::create($time->year, $season*3, $time->daysInMonth, 23, 59, 59); // 本季度结束时间
+
+                $datas = News::whereBetween('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                        ->orderBy('news.hits', 'desc')
+                        ->take($limit)
+                        ->select('id','title','updated_at','storage','content','from')
+                        ->with('storage')
+                        ->get();
+                break;
+        }
+
+        return $datas;
+    }
+    
     /**
      * 签到
      * 

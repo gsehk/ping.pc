@@ -42,8 +42,7 @@ class InformationController extends BaseController
         $datas['recommend'] = [];
         $rec = News::byAudit()->where('is_recommend', 1)->orderBy('id', 'desc')->take(6)
             ->select('id','title','updated_at','storage','from','author')
-            ->with('storage', 'user.datas')
-            ->get();
+            ->with('storage', 'user.datas')->get();
         if (count($rec)) {
             $rec[0]['info'] = $this->formatUserDatas($rec[0]['user']);
             unset($rec[0]['user']);
@@ -52,16 +51,19 @@ class InformationController extends BaseController
         
         /*  文章分类  */
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
-
+        /* 近期热点 */
+        $datas['hots'] = [
+            'week' => $this->getRecentHot(1),
+            'month' => $this->getRecentHot(2),
+            'quarter' => $this->getRecentHot(3),
+        ];
         /*  热门作者 */
         $datas['author'] = [];
         $author = News::byAudit()
             ->orderBy('hits', 'desc')
             ->select('author')
             ->groupBy('author')
-            ->take(3)
-            ->with('user.datas')
-            ->get();
+            ->take(3)->with('user.datas')->get();
         if (count($author)) {
             foreach ($author as $k => $v) {
                 $v['info'] = $this->formatUserDatas($v->user);
@@ -92,10 +94,17 @@ class InformationController extends BaseController
         unset($data['user']);
         $data['user'] = $user;
 
-        $data['hots'] = News::byAudit()
+        $data['hotNum'] = News::byAudit()
                         ->join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
                         ->where([['news.author','=',$data->author], ['news_cates_links.cate_id','=',1]])
                         ->count();
+
+        /* 近期热点 */
+        $data['hots'] = [
+            'week' => $this->getRecentHot(1),
+            'month' => $this->getRecentHot(2),
+            'quarter' => $this->getRecentHot(3),
+        ];
 
         $data['news'] = News::byAudit()
                         ->where('author', $data->author)
@@ -172,12 +181,9 @@ class InformationController extends BaseController
      * @param  type     [分类id]
      * @return mixed  返回结果
      */
-    public function getRecentHot(Request $request)
+    public function getRecentHot($type = 1, $limit = 5)
     {
         $time = Carbon::now();
-        $type = $request->type;
-        $limit = $request->limit ?? 5;
-        
         switch ($type) {
             case 1:
                 // $stime = Carbon::createFromTimestamp($time->timestamp - $time->dayOfWeek*60*60*24);// 本周开始时间
@@ -191,7 +197,6 @@ class InformationController extends BaseController
                         ->select('id','title','updated_at','storage','content','from')
                         ->with('storage')
                         ->get();
-
                 break;
             case 2:
                 $stime = Carbon::create(null, null, 01);// 本月开始时间
@@ -203,7 +208,6 @@ class InformationController extends BaseController
                         ->select('id','title','updated_at','storage','content','from')
                         ->with('storage')
                         ->get();
-
                 break;
             case 3:
                 $season = ceil($time->month/3);//当月是第几季度
@@ -216,19 +220,10 @@ class InformationController extends BaseController
                         ->select('id','title','updated_at','storage','content','from')
                         ->with('storage')
                         ->get();
-
-                break;
-            default:
-                # code...
                 break;
         }
 
-        return response()->json(static::createJsonData([
-            'status'  => true,
-            'code'    => 0,
-            'message' => '获取成功',
-            'data'    => $datas
-        ]))->setStatusCode(200);
+        return $datas;
     }
 
     public function doSavePost(Request $request)

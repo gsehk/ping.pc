@@ -85,6 +85,42 @@
                     <li><a href="javascript:;" cid="3" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
+                    <div class="list list1">
+                        @if(!empty($hots['week']->toArray()))
+                        @foreach($hots['week'] as $week)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$week->id}}">{{$week->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
+                    <div class="list list2">
+                        @if(!empty($hots['month']->toArray()))
+                        @foreach($hots['month'] as $month)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$month->id}}">{{$month->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
+                    <div class="list list3">
+                        @if(!empty($hots['quarter']->toArray()))
+                        @foreach($hots['quarter'] as $quarter)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$quarter->id}}">{{$quarter->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
                 </ul>
             </div>
         </div>
@@ -101,43 +137,46 @@ layer.photos({
   photos: '#layer-photos-demo'
   ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
 }); 
-$('#J-comment-feed').on('click', function(){
-    if (MID == 0) {
-        window.location.href = '/passport/index';
-        return false;
-    }
-    var attrs = urlToObject($(this).data('args'));
-    attrs.to_uid = $(this).attr('to_uid');
-    attrs.addToEnd = $(this).attr('addtoend');
-    attrs.to_comment_id = $(this).attr('to_comment_id');
-    comment.init(attrs);
-
-    var _this = this;
-    var after = function(){
-        $(_this).attr('to_uid','0');
-        $(_this).attr('to_comment_id','0');
-    }
-    comment.addReadComment(after, this);
-});
 
 $(document).ready(function(){
-  recent_hot(1);
-  $('#j-recent-hot a').on('click', function(){
-        var cid = $(this).attr('cid');
-        recent_hot(cid);
+
+    comment.init({row_id:'{{$feed['feed_id']}}', canload:true});
+
+    $('#j-recent-hot a').hover(function(){
+        $('.list').hide();
+        $('.list'+$(this).attr('cid')).show();
         $('#j-recent-hot a').removeClass('a_border');
         $(this).addClass('a_border');
-  });
-  comment.init({row_id:'{{$feed['feed_id']}}', canload:true});
+    });
 
+    $('#J-comment-feed').on('click', function(){
+        if (MID == 0) {
+            window.location.href = '/passport/index';
+            return false;
+        }
+        var attrs = urlToObject($(this).data('args'));
+        attrs.to_uid = $(this).attr('to_uid');
+        attrs.addToEnd = $(this).attr('addtoend');
+        attrs.to_comment_id = $(this).attr('to_comment_id');
+        comment.init(attrs);
+
+        var _this = this;
+        var after = function(){
+            $(_this).attr('to_uid','0');
+            $(_this).attr('to_comment_id','0');
+        }
+        comment.addReadComment(after, this);
+    });
+
+    bdshare.addConfig('share', {
+        "tag" : "share_feedlist",
+        'bdText' : '{{$feed['share_desc']}}',
+        'bdDesc' : '{{$feed['share_desc']}}',
+        'bdUrl' : window.location.href,
+        'bdPic' : '{{ $routes['resource'] }}/images/default_cover.png'
+    });
 });
 
-bdshare.addConfig('share', {
-    "tag" : "share_feedlist",
-    'bdText' : '{{$feed['share_desc']}}',
-    'bdDesc' : '{{$feed['share_desc']}}',
-    'bdUrl' : window.location.href,
-    'bdPic' : '{{ $routes['resource'] }}/images/default_cover.png'
-});
+
 </script>
 @endsection

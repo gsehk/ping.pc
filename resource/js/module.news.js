@@ -199,59 +199,6 @@ var recommend = {
         });
     },
 };
-/** 
- * 获取热点文章
- * @param  type (1-本周 2-当月 3-季度)
- */
-var recent_hot = function(type) {
-    if (type != undefined) {
-        $('#j-recent-hot-wrapp').html(loadHtml);
-        $.get('/information/getRecentHot', { type: type }, function(res) {
-            if (res.data.length > 0) {
-                var html = '',
-                    f = 1;
-                var data = res.data;
-                for (var i in data) {
-                    var bg = i > 2 ? 'class="gray"' : '';
-                    html += '<li>' +
-                        '<span ' + bg + '>' + f + '</span>' +
-                        '<a href="/information/read/'+data[i].id+'">' + data[i].title + '</a>' +
-                        '</li>';
-                    f++;
-                }
-                $('#j-recent-hot-wrapp').html(html);
-            } else {
-                $('#j-recent-hot-wrapp .loading').html('暂无相关内容');
-            }
-        });
-    }
-};
-
-/**
- * 获取热门作者
- */
-var author_hot = function() {
-    $.get('/information/getAuthorHot', function(res) {
-        if (res.data.length > 0) {
-            var html = '';
-            var data = res.data;
-            for (var i in data) {
-                html += '<div class="R_list">' +
-                    '<div class="i_left">' +
-                    '<img src="" />' +
-                    '</div>' +
-                    '<div class="i_right">' +
-                    '<span>' + data[i].author + ' <img src="" class="vip_icon" /></span>' +
-                    '<p>' + data[i].desc + '</p>' +
-                    '</div>' +
-                    '</div>';
-            }
-            $('#j-author-hot-wrapp').html(html);
-        } else {
-            $('#j-author-hot-wrapp').html('<div class="loading">暂无相关内容</div>');
-        }
-    });
-};
 
 // 投稿js
 $('.subject-submit').on('click', function() {
@@ -645,3 +592,13 @@ var comment = {
         });
     }
 };
+
+$(document).ready(function(){
+    // 近期热点切换
+    $('#j-recent-hot a').hover(function(){
+        $('.list').hide();
+        $('.list'+$(this).attr('cid')).show();
+        $('#j-recent-hot a').removeClass('a_border');
+        $(this).addClass('a_border');
+    });
+});

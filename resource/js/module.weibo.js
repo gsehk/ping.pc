@@ -700,36 +700,6 @@ var collect = {
     }
 };
 
-/** 
- * 获取热点文章
- * @param  type (1-本周 2-当月 3-季度)
- */
-var recent_hot = function(type) {
-    if (type != undefined) {
-        $('#j-recent-hot-wrapp').html(loadHtml);
-        $.get('/information/getRecentHot', { type: type }, function(res) {
-            if (res.data.length > 0) {
-                var html = '',
-                    f = 1;
-                var data = res.data;
-                for (var i in data) {
-                    html += '<li>' +
-                        '<span>' + f + '</span>' +
-                        '<a href="/information/read/'+data[i].id+'">' + data[i].title + '</a>' +
-                        '</li>';
-                    f++;
-                }
-                $('#j-recent-hot-wrapp').html(html);
-            } else {
-                $('.del_right .loading').html('暂无相关内容');
-            }
-        });
-    }
-};
-
-
-
-
 // 图片删除时间绑定
 $(function() {
     $(".dy_cTop").on("click", ".imgdel", function() {

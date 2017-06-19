@@ -156,7 +156,42 @@
                     <li><a href="javascript:;" cid="3" class="moth">季度</a></li>
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
-                    <div class='loading'><img src="{{ $routes['resource'] }}/images/loading.png" class='load'>加载中</div>
+                    <div class="list list1">
+                        @if(!empty($hots['week']->toArray()))
+                        @foreach($hots['week'] as $week)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$week->id}}">{{$week->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
+                    <div class="list list2">
+                        @if(!empty($hots['month']->toArray()))
+                        @foreach($hots['month'] as $month)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$month->id}}">{{$month->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
+                    <div class="list list3">
+                        @if(!empty($hots['quarter']->toArray()))
+                        @foreach($hots['quarter'] as $quarter)
+                            <li>
+                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
+                                <a href="/information/read/{{$quarter->id}}">{{$quarter->title}}</a>
+                            </li>
+                        @endforeach
+                        @else
+                            <div class="loading">暂无相关信息</div>
+                        @endif
+                    </div>
                 </ul>
             </div>
         </div>
@@ -192,18 +227,8 @@ setTimeout(function() {
 }, 300);
 
 $(document).ready(function(){
-
-    // 近期热点
-    recent_hot(1);
-
     // banner
     $('.unslider').unslider({delay:3000,dots: true});
-    $('#j-recent-hot a').on('click', function(){
-        var cid = $(this).attr('cid');
-        recent_hot(cid);
-        $('#j-recent-hot a').removeClass('a_border');
-        $(this).addClass('a_border');
-    });
 
     // 资讯分类操作菜单
     $('.news_cate_tab a').on('click', function() {
