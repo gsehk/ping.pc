@@ -42,7 +42,9 @@
             @endforeach
             @endif
         </ul>
+        @if(!empty($TS))
         <div class="fans_ranking">您在全站粉丝排行榜中排第<span>{{$follower['userrank']}}</span>名</div>
+        @endif
       </div>
       <div class="list_fans">
         <div class="rank-tit"> 
@@ -76,7 +78,9 @@
             @endforeach
             @endif
         </ul>
+        @if(!empty($TS))
         <div class="fans_ranking">您在全站积分排行榜中排第<span>{{$credit['userrank']}}</span>名</div>
+        @endif
       </div>
     </div>
     <div class="fans_div">
@@ -112,7 +116,9 @@
             @endforeach
             @endif
         </ul>
+        @if(!empty($TS))
         <div class="fans_ranking">您在全站内容发布排行榜中排第<span>{{$post['userrank']}}</span>名</div>
+        @enif
       </div>
       <div class="list_fans">
         <div class="rank-tit"> 
@@ -146,7 +152,9 @@
             @endforeach
             @endif
         </ul>
+        @if(!empty($TS))
         <div class="fans_ranking">您在全站积分排行榜中排第<span>{{$checktotal['userrank']}}</span>名</div>
+        @endif
       </div>
     </div>
   </div>
