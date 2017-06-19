@@ -118,7 +118,7 @@
         </ul>
         @if(!empty($TS))
         <div class="fans_ranking">您在全站内容发布排行榜中排第<span>{{$post['userrank']}}</span>名</div>
-        @enif
+        @endif
       </div>
       <div class="list_fans">
         <div class="rank-tit"> 
