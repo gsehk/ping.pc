@@ -146,7 +146,7 @@ var doFileUpload = function(image, f, callback) {
                     cache: false,
                     contentType: false,
                     processData: false,
-                    beforeSend: function(xhr) {xhr.setRequestHeader(res.data.headers);},
+                    beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', TOKEN);},
                     success: function(data) {
 
                         // 上传通知 
