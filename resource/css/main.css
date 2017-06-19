@@ -555,14 +555,12 @@ img {
     /* display: inline-block; */
 }
 
-.dy_cen a:hover {
-    color: #333;
-}
-
 .show_tab > a {
     margin-right: 20px;
 }
-
+.show_tab > a:hover{
+    color: #333;
+}
 .dy_cen_333 {
     color: #333 !important;
 }
