@@ -146,7 +146,7 @@ var doFileUpload = function(image, f, callback) {
                     cache: false,
                     contentType: false,
                     processData: false,
-                    beforeSend: function(xhr) {　　　　 xhr.setRequestHeader(res.data.headers);　　　 },
+                    beforeSend: function(xhr) {xhr.setRequestHeader(res.data.headers);},
                     success: function(data) {
 
                         // 上传通知 
@@ -154,7 +154,7 @@ var doFileUpload = function(image, f, callback) {
                             url: API + 'storages/task/' + res.data.storage_task_id,
                             type: 'PATCH',
                             async: false,
-                            beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', TOKEN);　　　 },
+                            beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', TOKEN);},
                             success: function(response) {
                                 callback(image, f, res.data.storage_task_id);
                             }
