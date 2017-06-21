@@ -77,6 +77,9 @@ class InformationController extends BaseController
 
     public function read(int $news_id)
     {
+        if (!$news_id) {
+            return redirect( route('pc:news'), 302);
+        }
         $uid = $this->mergeData['TS']['id'] ?? 0;
         $data = News::byAudit()
                 ->where('id', $news_id)
@@ -85,9 +88,7 @@ class InformationController extends BaseController
                 ->with(['collection' => function( $query ){
                     return $query->count();
                 }])->first();
-        if (!$data) {
-            return redirect( route('pc:news'), 302);
-        }
+                
         $data['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         $data['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         $user = $this->formatUserDatas($data->user);
