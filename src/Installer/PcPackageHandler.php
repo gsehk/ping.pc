@@ -3,6 +3,9 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Installer;
 
 use Closure;
+use Carbon\Carbon;
+use Zhiyi\Plus\Models\Comment;
+use Zhiyi\Plus\Models\Permission;
 use Zhiyi\Component\Installer\PlusInstallPlugin\AbstractInstaller;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
     route_path,
@@ -11,56 +14,27 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
 };
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Zhiyi\Plus\Support\Configuration;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Providers\PcProvider;
+use Zhiyi\Plus\Support\PackageHandler;
 
-class Installer extends AbstractInstaller
+class PcPackageHandler extends PackageHandler
 {
-    /**
-     * Get the component info onject.
-     *
-     * @return Zhiyi\Component\ZiyiPlus\PlusComponentPc\Installer\Info
-     * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://Zhiyi.cn
-     */
-    public function getComponentInfo()
+    public function removeHandle($command)
     {
-        return new Info();
+        if ($command->confirm('This will delete your datas for pc, continue?')) {
+            Comment::where('component', 'pc')->delete();
+            Schema::dropIfExists('check_info');
+            Schema::dropIfExists('credit_record');
+            Schema::dropIfExists('credit_setting');
+            Schema::dropIfExists('credit_user');
+            Schema::dropIfExists('user_verified');
+            Schema::dropIfExists('user_visitor');
+            Schema::dropIfExists('denounce');
+
+            $command->info('The Pc Component has been removed');
+        }
     }
 
-    /**
-     * Get the component route file.
-     *
-     * @return string
-     * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://Zhiyi.cn
-     */
-    public function router()
-    {
-        return route_path();
-    }
-
-    /**
-     * Get the component resource dir.
-     *
-     * @return string
-     * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://Zhiyi.cn
-     */
-    public function resource()
-    {
-        return resource_path();
-    }
-
-    /**
-     * Do run the cpmponent install.
-     *
-     * @param Closure $next
-     *
-     * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://Zhiyi.cn
-     */
-    public function install(Closure $next)
+    public function installHandle($command)
     {
         // 注册view
         $config = app(Configuration::class);
@@ -134,24 +108,6 @@ class Installer extends AbstractInstaller
             include component_base_path('/databases/table_denounce_column.php');
         }
 
-        $next();
-    }
-
-    /**
-     * Do run update the compoent.
-     *
-     * @param Closure $next
-     *
-     * @author Seven Du <shiweidu@outlook.com>
-     * @homepage http://Zhiyi.cn
-     */
-    public function update(Closure $next)
-    {
-        $next();
-    }
-
-    public function uninstall(Closure $next)
-    {
-        $next();
+        $command->info('Install Successfully');
     }
 }
