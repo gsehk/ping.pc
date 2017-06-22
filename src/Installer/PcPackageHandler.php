@@ -15,6 +15,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Zhiyi\Plus\Support\PackageHandler;
+use Zhiyi\Plus\Support\Configuration;
 
 class PcPackageHandler extends PackageHandler
 {
