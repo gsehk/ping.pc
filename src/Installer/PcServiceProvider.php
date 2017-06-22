@@ -20,14 +20,14 @@ class PcServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load views.
-        $this->loadViewsFrom(dirname(__DIR__).'/../../view', 'pcview');
+        $this->loadViewsFrom(dirname(__DIR__).'/../view', 'pcview');
 
         $this->publishes([
-            dirname(__DIR__).'/../../resource' => $this->app->PublicPath().'/zhiyicx/plus-component-pc',
+            dirname(__DIR__).'/../resource' => $this->app->PublicPath().'/zhiyicx/plus-component-pc',
         ], 'public');
 
         $this->loadRoutesFrom(
-            dirname(__DIR__).'/../../router.php'
+            dirname(__DIR__).'/../router.php'
         );
 
         PackageHandler::loadHandleFrom('pc', PcPackageHandler::class);
