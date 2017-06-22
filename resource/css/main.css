@@ -51,7 +51,6 @@ a:hover {
     height: 1em;
     vertical-align: middle;
     fill: currentColor;
-    margin-bottom: 4px;
 }
 
 
@@ -1817,7 +1816,9 @@ img {
     padding-bottom: 40px;
     border-bottom: 1px solid #ededed;
 }
-
+.del_pro svg{
+    margin-bottom: 4px;
+}
 .del_pro>span a {
     font-size: 14px;
     line-height: 40px;
