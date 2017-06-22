@@ -15,7 +15,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Zhiyi\Plus\Support\PackageHandler;
-use Zhiyi\Plus\Support\Configuration;
 
 class PcPackageHandler extends PackageHandler
 {
@@ -37,9 +36,6 @@ class PcPackageHandler extends PackageHandler
 
     public function installHandle($command)
     {
-        // 注册view
-        $config = app(Configuration::class);
-        $config->set(sprintf('app.providers.%s', PcProvider::class), PcProvider::class);
 
         // 签到表
         if (!Schema::hasTable('check_info')) {
