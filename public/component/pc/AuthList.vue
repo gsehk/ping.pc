@@ -63,7 +63,7 @@
               <td>{{ verified2label(auth.verified) }}</td>
               <td>
                 <!-- 审核 -->
-                <button type="button" class="btn btn-primary btn-sm" :disabled='auth.verified === 1' @click='manageAuth(auth)'>审核</button>
+                <button type="button" class="btn btn-primary btn-sm" :disabled='auth.verified === 1' @click='manageAuth(auth)'>通过</button>
                 <!-- 驳回 -->
                 <button type="button" class="btn btn-danger btn-sm" :disabled='auth.verified === 2' @click='backAuth(auth)'>驳回</button>
               </td>
