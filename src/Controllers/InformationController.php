@@ -163,8 +163,8 @@ class InformationController extends BaseController
                 ->withCount('collection')
                 ->get();
 
-        foreach ($datas as $key => &$value) {
-            $value['updated_at'] = $this->getTime($value['updated_at']);
+        foreach ($datas as $value) {
+            $value['_updated_at'] = $this->getTime($value->updated_at);
         }
 
         return response()->json(static::createJsonData([

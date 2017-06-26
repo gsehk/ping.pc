@@ -85,7 +85,7 @@ class BaseController extends Controller
 
 		// 统计信息
 		if (!empty($user->counts)) {
-    		// 统计信息
+    		// 统计信息 
             foreach ($user->counts as $key => $value) {
                 $rs[$value->key] = $value->value;
             }
@@ -99,7 +99,7 @@ class BaseController extends Controller
     	Carbon::setLocale('zh');
 
     	// 一小时内显示文字
-    	if (Carbon::now()->subHours(8) < $time) {
+    	if (Carbon::now()->subHours(1) < $time) {
         	return $time->diffForHumans();
         }
 		return $time->addHours(8);

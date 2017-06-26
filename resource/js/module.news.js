@@ -87,7 +87,7 @@ news.loadMore = function() {
                     '</a>' +
                     '<p>' + data[i].subject + '</p>' +
                     '<div class="inf_bm">' +
-                    '<span class="inf_time">' + data[i].updated_at + '</span>' +
+                    '<span class="inf_time">' + data[i]._updated_at + '</span>' +
                     '<span class="inf_comment">' + data[i].comment_count + '评论<span>|</span>' + data[i].collection_count + '收藏</span>' +
                     '</div>' +
                     '</div>' +
