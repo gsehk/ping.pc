@@ -22,7 +22,7 @@ class InformationController extends BaseController
 {
     public function index(Request $request)
     {
-        $datas['cid'] = $request->input('cid') ?: 1;
+        $datas['cid'] = $request->input('cid') ?: 0;
         /*  幻灯片  */
         $datas['slide'] = NewsRecommend::with('cover')->get();
 
@@ -148,7 +148,9 @@ class InformationController extends BaseController
         $max_id = $request->max_id;
         $limit = $request->limit ?? 15;
 
-        $datas = News::Join('news_cates_links', function ($query) use ($cate_id) {
+        if ($cate_id) {
+            $datas = News::byAudit()
+                ->Join('news_cates_links', function ($query) use ($cate_id) {
                     $query->on('news.id', '=', 'news_cates_links.news_id')->where('news_cates_links.cate_id', $cate_id);
                 })
                 ->where(function ($query) use ($max_id) {
@@ -156,12 +158,22 @@ class InformationController extends BaseController
                         $query->where('news.id', '<', $max_id);
                     }
                 })
-                ->byAudit()
                 ->orderBy('news.id', 'desc')
                 ->select('news.id','news.title','news.subject','news.updated_at','news.storage','news.comment_count','news.from')
-                // ->with('storage')
                 ->withCount('collection')
                 ->get();
+        } else {
+            $datas = News::byAudit()
+                ->where(function ($query) use ($max_id) {
+                    if ($max_id > 0) {
+                        $query->where('id', '<', $max_id);
+                    }
+                })
+                ->orderBy('id', 'desc')
+                ->select('id','title','subject','updated_at','storage','comment_count','from')
+                ->withCount('collection')
+                ->get();
+        }
 
         foreach ($datas as $value) {
             $value['_updated_at'] = $this->getTime($value->updated_at);
