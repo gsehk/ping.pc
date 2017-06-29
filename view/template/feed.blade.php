@@ -10,7 +10,7 @@
         <a class="avatar_box" href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}">
         <img class="avatar" src="{{ $post['user']['avatar'] }}" />
         @if($post['user']['user_verified'])
-            <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.png">
+            <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
         @endif
         </a>
         <span class="dy_name fs-14"><a href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}">{{$post['user']['name']}}</a></span>

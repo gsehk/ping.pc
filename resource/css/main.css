@@ -581,9 +581,8 @@ img {
     height: 20px;
     width: 20px;
     position: absolute;
-    bottom: 0px;
+    bottom: -5px;
     right: 0px;
-    border: 2px solid rgb(252,190,0);
     border-radius: 50%;
 }
 .dy_name {
