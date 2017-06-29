@@ -159,7 +159,7 @@ class InformationController extends BaseController
                     }
                 })
                 ->orderBy('news.id', 'desc')
-                ->select('news.id','news.title','news.subject','news.updated_at','news.storage','news.comment_count','news.from')
+                ->select('news.id','news.title','news.subject','news.created_at','news.storage','news.comment_count','news.from')
                 ->withCount('collection')
                 ->get();
         } else {
@@ -170,13 +170,13 @@ class InformationController extends BaseController
                     }
                 })
                 ->orderBy('id', 'desc')
-                ->select('id','title','subject','updated_at','storage','comment_count','from')
+                ->select('id','title','subject','created_at','storage','comment_count','from')
                 ->withCount('collection')
                 ->get();
         }
 
         foreach ($datas as $value) {
-            $value['_updated_at'] = $this->getTime($value->updated_at);
+            $value['_created_at'] = $this->getTime($value->created_at);
         }
 
         return response()->json(static::createJsonData([

@@ -11,6 +11,7 @@ use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Zhiyi\Plus\Models\AuthToken;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
 
@@ -90,18 +91,25 @@ class BaseController extends Controller
                 $rs[$value->key] = $value->value;
             }
 		}
+		if (!$user->user_verified) {
+			$user->user_verified = UserVerified::byAudit()
+								->where('user_id', $user->id)
+								->first();
+			$rs['user_verified'] = $user->user_verified ?: "";
+		}
 		return $rs;
     }
 
-    public function getTime($time)
+    public function getTime($date)
     {
     	// 本地化
     	Carbon::setLocale('zh');
 
     	// 一小时内显示文字
-    	if (Carbon::now()->subHours(1) < $time) {
-        	return $time->diffForHumans();
+    	if (Carbon::now()->subHours(1) > Carbon::parse($date)) {
+            return Carbon::parse($date)->toDateTimeString();
         }
-		return $time->addHours(8);
+
+        return Carbon::parse($date)->diffForHumans();
     }
 }
