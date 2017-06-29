@@ -7,7 +7,12 @@
 @foreach($data as $key => $post)
 <div class="feed-item" id="feed{{$post['feed']['feed_id']}}">
     <div class="dy_c">
-        <a href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}"><img src="{{ $post['user']['avatar'] }}" /></a>
+        <a class="avatar_box" href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}">
+        <img class="avatar" src="{{ $post['user']['avatar'] }}" />
+        @if($post['user']['user_verified'])
+            <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.png">
+        @endif
+        </a>
         <span class="dy_name fs-14"><a href="{{ route('pc:myFeed', ['user_id'=>$post['user']['id']]) }}">{{$post['user']['name']}}</a></span>
         <a href="/home/{{$post['feed']['feed_id']}}/feed"><span class="dy_time fs-12">{{$post['feed']['created_at']}}</span></a>
     </div>

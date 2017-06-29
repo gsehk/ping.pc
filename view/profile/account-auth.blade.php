@@ -102,7 +102,7 @@
                     @if (!empty($auth['storage']))
                     <tr>
                         <td width="20%" class="td">认证资料</td>
-                        <td width="80%"><a target="_blank" href="{{ $routes['storage'] }}{{ $auth['storage'] }}">认证附件信息</a></td>
+                        <td width="80%"><a target="_blank" style="text-decoration: underline" href="{{ $routes['storage'] }}{{ $auth['storage'] }}">认证附件</a></td>
                     </tr>
                     @endif
                 </tbody>
