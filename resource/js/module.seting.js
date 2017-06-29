@@ -163,13 +163,12 @@ var userVerif = function() {
         dataType: 'json',
         beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
         error: function(xml) {
-            noticebox('认证失败', 0);
+            noticebox('操作失败', 0);
         },
         success: function(res) {
-            noticebox('认证成功', 1, 'refresh');
+            noticebox('操作成功', 1, 'refresh');
         }
     });
-    setTimeout("$('.success_div').fadeOut(1000)", 3000);
 };
 
 /*  删除用户认证资料 重新认证*/
@@ -186,7 +185,7 @@ var delUserAuth = function(uid) {
                 if (res.code == 1) {
                     window.location.href = res.uri;
                 } else {
-                    alert('操作失败请重试')
+                    noticebox('操作失败请重试', 0);
                 }
             }
         });
