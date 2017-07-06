@@ -11,7 +11,6 @@ use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Plus\Models\VerifyCode;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\AuthToken;
-use Zhiyi\Plus\Models\LoginRecord;
 use Zhiyi\Plus\Models\CommonConfig;
 use Session;
 
@@ -92,24 +91,10 @@ class PassportController extends BaseController
         $token->expires = 0;
         $token->state = 1;
 
-        // 登录记录
-        $clientIp = $request->getClientIp();
-        $loginrecord = new LoginRecord();
-        $loginrecord->ip = $clientIp;
-
-        $location = (array)Ip::find($clientIp);
-        array_filter($location);
-        $loginrecord->address = trim(implode(' ', $location));
-        $loginrecord->device_system = '';
-        $loginrecord->device_name = '';
-        $loginrecord->device_model = '';
-        $loginrecord->device_code = $deviceCode;
-
-        DB::transaction(function () use ($token, $user, $loginrecord) {
+        DB::transaction(function () use ($token, $user) {
             $user->tokens()->update(['state' => 0]);
             $user->tokens()->delete();
             $token->save();
-            $user->loginRecords()->save($loginrecord);
         });
 
         $history = Session::pull('history') ?: '';
