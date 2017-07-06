@@ -40,7 +40,6 @@ class PcPackageHandler extends PackageHandler
         // 签到表
         if (!Schema::hasTable('check_info')) {
             Schema::create('check_info', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
                 $table->timestamps();
                 $table->softDeletes();
             });
@@ -50,7 +49,6 @@ class PcPackageHandler extends PackageHandler
         // 积分记录
         if (!Schema::hasTable('credit_record')) {
             Schema::create('credit_record', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
                 $table->timestamps();
                 $table->increments('id')->comment('主键');
             });
@@ -60,7 +58,6 @@ class PcPackageHandler extends PackageHandler
         // 积分配置
         if (!Schema::hasTable('credit_setting')) {
             Schema::create('credit_setting', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
                 $table->increments('id')->comment('主键');
             });
             include component_base_path('/databases/table_credit_setting_column.php');
@@ -69,7 +66,6 @@ class PcPackageHandler extends PackageHandler
         // 用户积分
         if (!Schema::hasTable('credit_user')) {
             Schema::create('credit_user', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
                 $table->timestamps();
                 $table->increments('id')->comment('主键');
             });
@@ -79,7 +75,6 @@ class PcPackageHandler extends PackageHandler
         // 用户认证
         if (!Schema::hasTable('user_verified')) {
             Schema::create('user_verified', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
                 $table->increments('id')->comment('主键');
                 $table->timestamps();
             });
@@ -89,7 +84,6 @@ class PcPackageHandler extends PackageHandler
         // 访客
         if (!Schema::hasTable('user_visitor')) {
             Schema::create('user_visitor', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
                 $table->timestamps();
             });
             include component_base_path('/databases/table_user_visitor_column.php');
@@ -98,7 +92,6 @@ class PcPackageHandler extends PackageHandler
         // 举报
         if (!Schema::hasTable('denounce')) {
             Schema::create('denounce', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
                 $table->increments('id')->comment('主键');
                 $table->timestamps();
             });
@@ -107,4 +100,58 @@ class PcPackageHandler extends PackageHandler
 
         $command->info('Install Successfully');
     }
+
+    /**
+     * Create a soft link to public.
+     *
+     * @param \Illuminate\Console\Command $command
+     * @return mixed
+     * @author Seven Du <shiweidu@outlook.com>
+     */
+    public function linkHandle($command)
+    {
+        if (! $command->confirm('Use a soft link to publish assets')) {
+            return;
+        }
+        $this->unlink();
+        $files = app('files');
+        
+        foreach ($this->getPaths() as $target => $link) {
+            $parentDir = dirname($link);
+            if (! $files->isDirectory($parentDir)) {
+                $files->makeDirectory($parentDir);
+            }
+            $files->link($target, $link);
+            $command->line(sprintf('<info>Created Link</info> <comment>[%s]</comment> <info>To</info> <comment>[%s]</comment>', $target, $link));
+        }
+        $command->info('Linking complete.');
+    }
+
+    /**
+     * Delete links.
+     *
+     * @return void
+     * @author Seven Du <shiweidu@outlook.com>
+     */
+    protected function unlink()
+    {
+        $files = app('files');
+        foreach ($this->getPaths() as $path) {
+            if (! $files->delete($path)) {
+                $files->deleteDirectory($path, false);
+            }
+        }
+    }
+    
+    /**
+     * Get the Publish path,
+     *
+     * @return array
+     * @author Seven Du <shiweidu@outlook.com>
+     */
+    protected function getPaths(): array
+    {
+        return PcServiceProvider::pathsToPublish(PcServiceProvider::class, 'public');
+    }
+
 }
