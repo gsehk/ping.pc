@@ -92,8 +92,87 @@ var checkNums = function(obj, len, show) {
     }
 }
 
-// 文件上传
-var fileUpload = function(f, callback) {
+
+function readAsBuffer(f){
+    var reader = new FileReader();
+    reader.onload = function(e){
+        console.log(md5(e.target.result));
+    }
+    reader.readAsArrayBuffer(f);
+}
+
+function readAsDataUrl(f){
+    var reader = new FileReader();
+    reader.onload = function(e){
+        console.log(md5(e.target.result));
+    }
+    reader.readAsDataURL(f);
+}
+
+/**
+ * 文件上传 V2
+ */
+var fileUpload = {
+
+    init: function(f, callback){
+        var _this = this;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var data = e.target.result;
+            var image = new Image();
+                image.src = data;
+            _this.isUploaded(image, f, callback);
+        };
+        reader.readAsDataURL(f);
+    },
+    isUploaded:function(image, f, callback){
+        var _this = this;
+        var reader = new FileReader();
+        reader.onload = function(e){
+            var hash = md5(e.target.result);
+            $.ajax({
+                url: '/api/v2/files/uploaded/' + hash,
+                type: 'GET',
+                async: false,
+                beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', 'Bearer'+' '+TOKEN);},
+                success: function(response) {
+                    if(response.id > 0) callback(image, f, response.id);
+                    console.log(response)
+                },
+                error: function(error){
+                    error.status === 404 && _this.uploadFile(image, f, callback);
+                    console.log(error.statusText)
+                }
+            });
+        }
+        reader.readAsArrayBuffer(f);
+    },
+    uploadFile: function(image, f, callback){
+        var formDatas = new FormData();
+        formDatas.append("file", f);
+        // 上传文件
+        $.ajax({
+            url: '/api/v2/files',
+            type: 'POST',
+            data: formDatas,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', 'Bearer'+' '+TOKEN);},
+            success: function(response) {
+                if(response.id > 0) callback(image, f, response.id);
+                console.log(response)
+            },
+            error: function(error){
+                console.log(error.statusText)
+            }
+        });
+    }
+};
+
+// 文件上传 V1
+/*var fileUpload = function(f, callback) {
     var reader = new FileReader();
     reader.onload = function(e) {
         var data = e.target.result;
@@ -166,7 +245,7 @@ var doFileUpload = function(image, f, callback) {
             }
         }
     });
-};
+};*/
 
 // 关注
 var follow = function(status, user_id, target, callback) {
