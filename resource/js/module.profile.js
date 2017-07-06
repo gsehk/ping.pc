@@ -428,7 +428,7 @@ var comment = {
                     var data = res.data,
                         html = '';
                     for (var i in data) {
-                        var avatar = data[i].uinfo.avatar ? API + '/storages/' + data[i].uinfo.avatar : AVATAR;
+                        var avatar = data[i].uinfo.avatar ? request_url.images + data[i].uinfo.avatar : AVATAR;
                         html += '<div class="delComment_list">';
                         html += '<div class="comment_left">';
                         html += '<img src="' + avatar + '" class="c_leftImg" />';

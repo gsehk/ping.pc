@@ -5,9 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Zhiyi\Plus\Models\Storage;
-use Zhiyi\Plus\Models\StorageTask;
+use Zhiyi\Plus\Models\FileWith;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCate;
@@ -242,36 +240,19 @@ class InformationController extends BaseController
     public function doSavePost(Request $request)
     {
         $type = $request->type; // 1 待审核 2 草稿
-        /*if (!$request->cate_id) {
-            return response()->json([
-                'status' => false,
-                'message' => '请选择文章分类',
-            ])->setStatusCode(201);
-        }*/
-
-        if (!$request->task_id && !$request->storage_id) {
+        if (!$request->storage_id) {
             return response()->json([
                 'status' => false,
                 'message' => '没有上传封面图片',
-            ])->setStatusCode(201);
+            ]);
         }
         if (mb_strlen($request->content, 'utf8') > 5000) {
             return response()->json([
                 'status' => false,
                 'message' => '内容不能大于5000字',
-            ])->setStatusCode(201);
+            ]);
         }
 
-
-        if ($request->task_id) {
-            $task = StorageTask::where('id', $request->task_id)
-                ->select('hash')
-                ->with('storage')
-                ->first();
-            $storage_id =  $task ? $task['storage']['id'] : 0;
-        } else {
-            $storage_id = $request->storage_id;
-        }
         $cate_ids = trim($request->cate_ids, '|');
         if ($request->news_id) {
             $news = News::find($request->news_id);
@@ -280,7 +261,7 @@ class InformationController extends BaseController
                 $news->subject = $request->subject ?: getShort($request->content, 60);
                 $news->author = $this->mergeData['TS']['id'] ?? 0;
                 $news->content = $request->content;
-                $news->storage = $storage_id;
+                $news->storage = $request->storage_id;
                 $news->from = $request->source ?: '';
                 $news->audit_status = $type;
                 $news->save();
@@ -304,7 +285,7 @@ class InformationController extends BaseController
             $news->subject = $request->subject ?: getShort($request->content, 60);
             $news->author = $this->mergeData['TS']['id'] ?? 0;
             $news->content = $request->content;
-            $news->storage = $storage_id;
+            $news->storage = $request->storage_id;
             $news->from = $request->source ?: '';
             $news->audit_status = $type; 
             $news->save();
@@ -319,12 +300,25 @@ class InformationController extends BaseController
              }
             
         }
+        if ($request->storage_id) {
+            $fileWith = FileWith::find($request->storage_id);
+            if ($fileWith) {
+                $fileWith->channel = 'news:storage';
+                $fileWith->raw = $news->id;
+                $fileWith->save();
+            }
+        }
 
         return response()->json(static::createJsonData([
             'status'  => true,
             'code'    => 0,
             'message' => $type == 1 ? '发布成功，请等待审核' : '保存成功',
-            'data'    => ['url' => ($type == 1) ? route('pc:article', ['type' => 1]) : route('pc:article', ['type' => 2]),'id' => $news->id]
+            'data'    => [
+                'url' => ($type == 1) 
+                ? route('pc:article', ['type' => 1]) 
+                : route('pc:article', ['type' => 2])
+                ,'id' => $news->id
+            ]
         ]))->setStatusCode(200);
     }
 

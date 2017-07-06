@@ -17,6 +17,8 @@ var request_url = {
     // 新闻评论
     get_comment: '/information/{news_id}/comments',
 
+    /* 分享 */
+    feeds: '/api/v2/feeds',
     /* 分享评论 */
     feed_comment: API + 'feeds/{feed_id}/comment',
     /* 删除分享评论  */
@@ -25,7 +27,6 @@ var request_url = {
     del_news_comment: API + 'news/{news_id}/comment/{comment_id}',
     /* 删除分享 */
     delete_feed: API + 'feeds/{feed_id}',
-
     /*  举报分享  */
     denounce_feed: '/feed/{feed_id}/denounce',
     digg_feed: API + 'feeds/{feed_id}/digg',
@@ -34,6 +35,9 @@ var request_url = {
     get_user_feed: '/profile/users/{user_id}',
     get_user_news: '/profile/news/{user_id}',
     get_user_collect: '/profile/collection/{user_id}',
+
+    /* 获取附件 */
+    images: '/api/v2/files/',
 };
 
 // Ajax 设置csrf Header

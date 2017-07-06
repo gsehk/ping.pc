@@ -96,7 +96,7 @@
 <script src="{{ $routes['resource'] }}/cropper/cropper.min.js"></script>
 <script src="{{ $routes['resource'] }}/js/birthday.js"></script>
 <script src="{{ $routes['resource'] }}/js/module.seting.js"></script>
-<script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
+<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
 <script> 
 $('#J-image-preview, #J-file-upload-btn').on('click',function(){
     var html = '<div id="model">'

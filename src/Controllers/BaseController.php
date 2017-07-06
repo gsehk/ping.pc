@@ -59,7 +59,7 @@ class BaseController extends Controller
 	        $this->mergeData['site'] = $config;
 
 	        // 公共配置
-            $this->mergeData['routes']['storage'] = '/api/v1/storages/';
+            $this->mergeData['routes']['storage'] = '/api/v2/files/';
             $this->mergeData['routes']['resource'] = asset('');
 
     		return $next($request);
@@ -81,7 +81,7 @@ class BaseController extends Controller
 	        }
 		}
 		// 默认头像
-		$rs['avatar'] = empty($rs['avatar']) ? asset('images/avatar.png') : '/api/v1/storages/' . $rs['avatar'];
+		$rs['avatar'] = empty($rs['avatar']) ? asset('images/avatar.png') : '/api/v2/files/' . $rs['avatar'];
 		$rs['sex'] = empty($rs['sex']) ? 3 : $rs['sex'];
 
 		// 统计信息

@@ -148,16 +148,16 @@ weibo.postFeed = function() {
         return false;
     }
 
-    var storage_task_ids = [];
+    var images = [];
     $('.dy_picture').find('img').each(function() {
-        storage_task_ids.push($(this).attr('tid'));
+        images.push({'id':$(this).attr('tid')});
     });
 
     var data = {
         feed_content: $('#feed_content').val(),
-        storage_task_ids: storage_task_ids,
+        images: images,
         feed_from: 1,
-        isatuser: 0
+        feed_mark: MID + new Date().getTime(),
     }
     var strlen = getLength(data.feed_content);
         var leftnums = initNums - strlen;
@@ -165,22 +165,19 @@ weibo.postFeed = function() {
             noticebox('分享内容长度为1-' + initNums + '字', 0);
             return false;
         }
-
-    var url = API + 'feeds';
     $.ajax({
-        url: url,
+        url: request_url.feeds,
         type: 'post',
         data: data,
         dataType: 'json',
         beforeSend: function(xhr) {
-            xhr.setRequestHeader('Authorization', TOKEN);　　
+            xhr.setRequestHeader('Authorization', 'Bearer'+' '+TOKEN);　　
         },
         success: function(res) {
             noticebox('发布成功', 1);
             $('.dy_picture').html('').hide();
             $('#feed_content').val('');
-
-            weibo.afterPostFeed(res.data);
+            weibo.afterPostFeed(res.id);
         }
 
     })

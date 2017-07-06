@@ -53,7 +53,6 @@
                                data-token="{{ csrf_token() }}"
                         >
                         <input name="storage_id" id="storage_id" type="hidden" value="{{$storage or 0}}" />
-                        <input name="task_id" id="task_id" type="hidden" value="" />
                     </div>
                 </span>
             </div>
@@ -84,16 +83,14 @@
 
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/module.news.js"></script>
-<script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
+<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
 <script type="text/javascript">
-// $('select.select').select();
-
 $('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];
     fileUpload.init(file, updateImg);
 });
-var updateImg = function(image, f, task_id){
-    $('#task_id').val(task_id);
+var updateImg = function(image, f, storage_id){
+    $('#storage_id').val(storage_id);
     $('#J-show-tips').text(f.name);
 }
 $('.news_cate>span').on('click', function(e){

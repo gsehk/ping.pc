@@ -64,7 +64,7 @@ class HomeController extends BaseController
 
             return response('动态ID不能为空');
         }
-        $feed = Feed::byFeedId($feed_id)->with('storages')->with('user.datas')->first();
+        $feed = Feed::byFeedId($feed_id)->with('images')->with('user.datas')->first();
 
         if (! $feed) {
             return response('动态不存在或已被删除');
@@ -82,8 +82,8 @@ class HomeController extends BaseController
         $data['feed']['share_desc'] = str_replace(PHP_EOL, '', substr($feed->feed_content, 0, 60));
         $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
         $data['feed']['feed_from'] = $feed->feed_from;
-        $data['feed']['storages'] = $feed->storages->map(function ($storage) {
-            return ['storage_id' => $storage->id, 'width' => $storage->image_width, 'height' => $storage->image_height];
+        $data['feed']['storages'] = $feed->images->map(function ($images) {
+            return ['storage_id' => $images->id, 'width' => explode('x', $images->size)[0], 'height' => explode('x', $images->size)[1]];
         });
 
         // 工具栏数据
@@ -146,9 +146,10 @@ class HomeController extends BaseController
             $data['feed']['feed_content'] = replaceUrl($feed->feed_content);
             $data['feed']['created_at'] = $this->getTime($feed->created_at);
             $data['feed']['feed_from'] = $feed->feed_from;
-            $data['feed']['storages'] = $feed->storages->map(function ($storage) {
-                return ['storage_id' => $storage->id, 'width' => $storage->image_width, 'height' => $storage->image_height];
+            $data['feed']['storages'] = $feed->images->map(function ($images) {
+                return ['storage_id' => $images->id, 'width' => explode('x', $images->size)[0], 'height' => explode('x', $images->size)[1]];
             });
+
             // 工具数据
             $data['tool'] = [];
             $data['tool']['feed_view_count'] = $feed->feed_view_count;
@@ -208,7 +209,7 @@ class HomeController extends BaseController
                 }
             }])
             ->byAudit()
-            ->with('storages')
+            ->with('images')
             ->take($limit)
             ->get();
 
@@ -246,7 +247,7 @@ class HomeController extends BaseController
                 }
             }])
             ->byAudit()
-            ->with('storages')
+            ->with('images')
             ->get();
 
         return $this->formatFeedList($feeds, $user_id);
@@ -283,7 +284,7 @@ class HomeController extends BaseController
                 }
             }])
             ->byAudit()
-            ->with('storages')
+            ->with('images')
             ->take($limit)
             ->get();
 
@@ -528,7 +529,7 @@ class HomeController extends BaseController
                 }
             }])
             ->byAudit()
-            ->with('storages')
+            ->with('images')
             ->get();
 
         return $this->formatFeedList($feed, $user_id);

@@ -115,7 +115,7 @@
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/easyform.js"></script>
 <script src="{{ $routes['resource'] }}/js/module.seting.js"></script>
-<script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
+<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function ()
 {

@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use Carbon\Carbon;
+use Zhiyi\Plus\Models\Area;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\UserDatas;
 use Zhiyi\Plus\Models\Followed;
 use Zhiyi\Plus\Models\Following;
-use Zhiyi\Plus\Models\StorageTask;
-use Zhiyi\Plus\Models\Area;
+use Zhiyi\Plus\Models\FileWith;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVisitor;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
@@ -19,7 +19,6 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedStorage;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 use function zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 
@@ -238,11 +237,11 @@ class ProfileController extends BaseController
                 // 关注状态
                 $_data['my_follow_status'] = $follow->userFollowing->where('following_user_id', $follow->followed_user_id)->isEmpty() ? 0 : 1;
                 // 最新微博图片
-                $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
+                $_data['storages'] = FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
                                         ->where('feeds.user_id', '=', $follow->user->id)
-                                        ->orderBy('feed_storages.id', 'desc')
+                                        ->orderBy('file_withs.id', 'desc')
                                         ->take(3)
-                                        ->select('feeds.id', 'feed_storages.feed_storage_id')
+                                        ->select('feeds.id', 'file_withs.file_id')
                                         ->get()
                                         ->toArray();
 
@@ -263,11 +262,11 @@ class ProfileController extends BaseController
                 // 关注状态
                 $_data['my_follow_status'] = 1; //我关注的列表  关注状态始终为1
                 // 最新微博图片
-                $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
+                $_data['storages'] = FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
                                         ->where('feeds.user_id', '=', $follow->user->id)
-                                        ->orderBy('feed_storages.id', 'desc')
+                                        ->orderBy('file_withs.id', 'desc')
                                         ->take(3)
-                                        ->select('feeds.id', 'feed_storages.feed_storage_id')
+                                        ->select('feeds.id', 'file_withs.file_id')
                                         ->get()
                                         ->toArray();
 
@@ -291,11 +290,11 @@ class ProfileController extends BaseController
                                                     ->isEmpty() ? 0 : 1;
                 }
                 // 最新微博图片
-                $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
+                $_data['storages'] = FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
                                         ->where('feeds.user_id', '=', $visitor->user->id)
-                                        ->orderBy('feed_storages.id', 'desc')
+                                        ->orderBy('file_withs.id', 'desc')
                                         ->take(3)
-                                        ->select('feeds.id', 'feed_storages.feed_storage_id')
+                                        ->select('feeds.id', 'file_withs.file_id')
                                         ->get()
                                         ->toArray();
 
@@ -322,11 +321,11 @@ class ProfileController extends BaseController
                                                     ->isEmpty() ? 0 : 1;
                 }
                 // 最新微博图片
-                $_data['storages'] = FeedStorage::join('feeds', 'feed_storages.feed_id', '=', 'feeds.id')
+                $_data['storages'] = FeedStorage::join('feeds', 'file_withs.raw', '=', 'feeds.id')
                                         ->where('feeds.user_id', '=', $recuser->user->id)
-                                        ->orderBy('feed_storages.id', 'desc')
+                                        ->orderBy('file_withs.id', 'desc')
                                         ->take(3)
-                                        ->select('feeds.id', 'feed_storages.feed_storage_id')
+                                        ->select('feeds.id', 'file_withs.file_id')
                                         ->get()
                                         ->toArray();
 
@@ -407,26 +406,22 @@ class ProfileController extends BaseController
                 'message' => '身份证号码错误',
             ])->setStatusCode(201);
         }
-
+        $verified = new UserVerified();
+        $verified->user_id = $this->mergeData['TS']['id'];
+        $verified->realname = $request->realname;
+        $verified->idcard = $request->idcard;
+        $verified->phone = $request->phone;
+        $verified->info = $request->info ?: '';
+        $verified->storage = $request->task_id ?? null;
+        $verified->save();
         if ($request->task_id) {
-            $storage = StorageTask::where('id', $request->task_id)
-                    ->select('hash')
-                    ->with('storage')
-                    ->first();
-            if ($storage) {
-                $storage_id = $storage['storage']['id'];
+            $fileWith = FileWith::find($request->task_id);
+            if ($fileWith) {
+                $fileWith->channel = 'verified:storage';
+                $fileWith->raw = $verified->id;
+                $fileWith->save();
             }
         }
-        $verif = new UserVerified();
-
-        $verif->user_id = $this->mergeData['TS']['id'];
-        $verif->realname = $request->realname;
-        $verif->idcard = $request->idcard;
-        $verif->phone = $request->phone;
-        $verif->info = $request->info ?: '';
-        $verif->storage = $storage_id ?? null;
-        $verif->save();
-
         return response()->json([
             'status' => true
         ])->setStatusCode(200);        
@@ -460,8 +455,8 @@ class ProfileController extends BaseController
             $data['feed']['feed_content'] = replaceUrl($feed->feed_content);
             $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
             $data['feed']['feed_from'] = $feed->feed_from;
-            $data['feed']['storages'] = $feed->storages->map(function ($storage) {
-                return ['storage_id' => $storage->id, 'width' => $storage->image_width, 'height' => $storage->image_height];
+            $data['feed']['storages'] = $feed->images->map(function ($images) {
+                return ['storage_id' => $images->id, 'width' => explode('x', $images->size)[0], 'height' => explode('x', $images->size)[1]];
             });
             // 工具数据
             $data['tool'] = [];
@@ -530,13 +525,14 @@ class ProfileController extends BaseController
                 }
             }])
             ->byAudit()
-            ->with('storages')
+            ->with('images')
             ->take($limit)
             ->get();
         } else {
-            $feeds = Feed::join('feed_storages', 'feeds.id', '=', 'feed_storages.feed_id')
-            ->orderBy('id', 'DESC')
-            ->where('user_id', $user_id)
+            $feeds = Feed::byAudit()
+            ->join('file_withs', 'feeds.id', '=', 'file_withs.raw')
+            ->where('file_withs.channel', 'feed:image')
+            ->where('file_withs.user_id', $user_id)
             ->where(function ($query) use ($max_id) {
                 if ($max_id > 0) {
                     $query->where('feeds.id', '<', $max_id);
@@ -547,9 +543,8 @@ class ProfileController extends BaseController
                     $query->where('user_id', $user_id);
                 }
             }])
-            ->byAudit()
-            ->groupBy('id')
-            ->with('storages')
+            ->orderBy('id', 'DESC')
+            ->with('images')
             ->take($limit)
             ->get();
         }
@@ -653,7 +648,7 @@ class ProfileController extends BaseController
                         $query->where('user_id', $user_id);
                     }])
                     ->byAudit()
-                    ->with('storages')
+                    ->with('images')
                     ->take($limit)
                     ->get();
 
