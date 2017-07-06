@@ -135,7 +135,7 @@ $(document).ready(function ()
 
 $('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];
-    fileUpload(file, updateImg);
+    fileUpload.init(file, updateImg);
 });
 var updateImg = function(image, f, task_id){
     $('#task_id').val(task_id);

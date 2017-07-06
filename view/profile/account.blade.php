@@ -170,7 +170,7 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
                 var blob = dataURLtoBlob(roundedCanvas.toDataURL());
                       blob.name = this.fileUpload.origin_filename;
                 this.$avatarSave.text('上传中...');
-                fileUpload(blob, updateImg);
+                fileUpload.init(blob, updateImg);
             },
             change: function () {
                 var files,file;
@@ -233,7 +233,7 @@ var username = "{{$info['name'] }}";
 var arrSelect = ["{{$info['province'] or 0}}", "{{$info['city'] or 0}}", "{{$info['area'] or 0}}"];
 /*$('#J-file-upload').on('change', function(e){
     var file = e.target.files[0];
-    fileUpload(file, updateImg);
+    fileUpload.init(file, updateImg);
 });*/
 var updateImg = function(image, f, task_id){
     $('#task_id').val(task_id);

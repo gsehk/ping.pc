@@ -822,7 +822,7 @@ $(function() {
 
     $('#cover').on('change', function(e) {
         var file = e.target.files[0];
-        fileUpload(file, uploadPccover);
+        fileUpload.init(file, uploadPccover);
     });
 
     // $('.dyn_top').hover(function() {

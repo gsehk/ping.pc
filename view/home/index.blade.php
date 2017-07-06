@@ -86,7 +86,7 @@
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/module.weibo.js"></script>
 <script src="{{ $routes['resource'] }}/js/jquery.uploadify.js"></script>
-<script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
+<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
 <script type="text/javascript">
 
 var checkin = function(){
