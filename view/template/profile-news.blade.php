@@ -15,7 +15,7 @@
     </span>
     <!-- <p class="fs-14 cen_word "></p> -->
     <div class="artic_div artic_list">
-        <img data-original="{{$routes['storage']}}{{$post['storage']}}" class="lazy img-responsive img1">
+        <img data-original="{{$routes['storage']}}{{$post['storage']}}?w=584&h=400" class="lazy img-responsive img1">
         <div class="img_title">
             <p class="i_title fs-20"><a href="/information/read/{{$post['id']}}">{{$post['title']}}</a></p>
             <p class="i_subTiLe fs-12">{{$post['subject'] or ''}}</p>

@@ -7,7 +7,7 @@
             @if($feed['storages'])
             <div style="background: rgb(247, 248, 250);" id="layer-photos-demo">
             @foreach($feed['storages'] as $store)
-            <img src="{{ $routes['storage']}}{{$store['storage_id'] }}" class="img-responsive" style="margin: 0 auto;" />
+            <img src="{{ $routes['storage']}}{{$store['storage_id'] }}?w=675" class="img-responsive" style="margin: 0 auto;" />
             @endforeach
             </div>
             @endif

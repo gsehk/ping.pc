@@ -79,7 +79,7 @@ news.loadMore = function() {
             for (var i in data) {
                 html += '<div class="inf_list">' +
                     '<div class="inf_img">' +
-                    '<a href="/information/read/' + data[i].id + '">' + '<img class="lazy" width="230" height="163" data-original="'+request_url.images + data[i].storage+'" />' + '</a>' +
+                    '<a href="/information/read/' + data[i].id + '">' + '<img class="lazy" width="230" height="163" data-original="'+request_url.images + data[i].storage+'?w=230&h=163" />' + '</a>' +
                     '</div>' +
                     '<div class="inf_word">' +
                     '<a href="/information/read/' + data[i].id + '">' +

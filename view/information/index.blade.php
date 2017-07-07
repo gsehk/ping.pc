@@ -40,7 +40,7 @@
               @elseif($sv->type == 'url') 
               <a href="{{$sv->data}}" target="_blank">
               @endif
-                <img src="{{$routes['storage']}}{{$sv->cover}}"></a>
+                <img src="{{$routes['storage']}}{{$sv->cover}}?w=580&h=414"></a>
               </li>
             @endforeach
         </ul>
