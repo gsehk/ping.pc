@@ -69,6 +69,9 @@ class BaseController extends Controller
 
     public function formatUserDatas($user)
     {
+    	if (!$user) {
+    		return false;
+    	}
     	$rs['id'] = $user->id;
     	$rs['name'] = $user->name;
     	$rs['phone'] = $user->phone;

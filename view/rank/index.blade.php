@@ -25,7 +25,7 @@
           <span class="pm_3">粉丝数</span>
         </div>
         <ul class="fans_ul">
-            @if(isset($follower))
+            @if(!empty($follower['list']))
             @foreach($follower['list'] as $followerk=>$followerv)
             <div rel="followerdiv" @if($followerk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($followerv as $fv)
@@ -61,7 +61,7 @@
             <span class="pm_3">积分数</span>
         </div>
         <ul class="fans_ul">
-            @if(isset($credit))
+            @if(!empty($credit['list']))
             @foreach($credit['list'] as $creditk=>$creditv)
             <div rel="creditdiv" @if($creditk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($creditv as $cv)
@@ -99,7 +99,7 @@
           <span class="pm_3">分享发布数</span>
         </div>
         <ul class="fans_ul">
-            @if(isset($post))
+            @if(!empty($post['list']))
             @foreach($post['list'] as $postk=>$postv)
             <div rel="postdiv" @if($postk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($postv as $pv)
@@ -135,7 +135,7 @@
             <span class="pm_3">累计签到数</span>
         </div>
         <ul class="fans_ul">
-            @if(isset($checktotal))
+            @if(!empty($checktotal['list']))
             @foreach($checktotal['list'] as $checktotalk=>$checktotalv)
             <div rel="checktotaldiv" @if($checktotalk > 1) style="display:none;" @else current="1" @endif>
                 @foreach($checktotalv as $tv)
