@@ -734,11 +734,12 @@ function(e, t) {
                     u = [],
                     p.find(t.img).each(function(e) {
                         var t = i(this);
+                        var url = t.attr("layer-src") || t.attr("data-original") || t.attr("src");
                         t.attr("layer-index", e),
                         u.push({
                             alt: t.attr("alt"),
                             pid: t.attr("layer-pid"),
-                            src: t.attr("layer-src") || t.attr("data-original") || t.attr("src"),
+                            src: url.split('?')[0],
                             thumb: t.attr("data-original")
                         })
                     })
