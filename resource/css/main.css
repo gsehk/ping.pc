@@ -2392,16 +2392,15 @@ img {
 
 .dynTop_cont {
     font-size: 16px;
-    position: relative;
     margin-top: 14px;
-    padding-left: 210px;
+    padding-left: 220px;
     color: #fff;
 }
 
 .dyn_lImg {
     position: absolute;
     bottom: -20px;
-    left: 10px;
+    left: 18px;
 }
 
 .dyn_lImg img {
@@ -2463,7 +2462,18 @@ img {
 .dyn_contribute:visited {
     color: #fff;
 }
-
+.dyn_footer{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 108px;
+    background: rgba(0,0,0,0.1);
+}
+.dyn_footer .dynTop_user{
+    color: white;
+    font-size: 32px;
+    padding-left: 220px;
+}
 .artic_artic {
     line-height: 60px;
     position: absolute;

@@ -15,10 +15,18 @@
         <input type="file" name="cover" style="display:none" id="cover">
         <span class="dyn_huan" style="display:none">更换封面</span>
         @endif
-        <div class="dyn_title">{{ $user['name'] }}</div>
-        <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>
-        <div class="dyn_lImg">
-            <img src="{{ $user['avatar']}} " alt="{{ $user['name'] }}"/>
+        <div class="dyn_footer">
+            <div class="dynTop_user">{{ $user['name'] }}
+            @if($user['user_verified'])
+                <img width="35" src="{{ $routes['resource'] }}/images/vip_icon.svg">
+            @endif
+            </div>
+            <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>
+            <div class="dyn_lImg">
+                <!-- <a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}"> -->
+                    <img src="{{ $user['avatar']}} " alt="{{ $user['name'] }}"/>
+                <!-- </a> -->
+            </div>
         </div>
     </div>
     <div class="dynTop_b">
