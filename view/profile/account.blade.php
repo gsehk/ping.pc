@@ -106,7 +106,7 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
                     + '<label for="avatarInput">选择上传图片</label>'
                     + '<input type="file" class="avatar-input" id="avatarInput" name="avatar_file">'
                     + '</div>'
-                    + '<div class="avatar-wrapper"></div>'
+                    + '<div class="avatar-wrapper upload-box"></div>'
                     + '<div class="save-btn"><span>上传完成记得点击保存按钮</span><button type="button" class="btn btn-primary avatar-save">完成</button></div>'
                     + '</div></div>';
     ly.loadHtml(html, '上传头像', '600px', '500px;');
