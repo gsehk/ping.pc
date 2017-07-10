@@ -16,9 +16,10 @@ var request_url = {
     comment_news: API + 'news/{news_id}/comment',
     // 新闻评论
     get_comment: '/information/{news_id}/comments',
-
     /* 分享 */
     feeds: '/api/v2/feeds',
+    /* 获取附件 */
+    images: '/api/v2/files/',
     /* 分享评论 */
     feed_comment: API + 'feeds/{feed_id}/comment',
     /* 删除分享评论  */
@@ -29,18 +30,25 @@ var request_url = {
     delete_feed: API + 'feeds/{feed_id}',
     /*  举报分享  */
     denounce_feed: '/feed/{feed_id}/denounce',
+    /* 分享点赞 */
     digg_feed: API + 'feeds/{feed_id}/digg',
+    /* 获取分享评论 */
     get_feed_commnet: '/home/{feed_id}/comments',
+    /* 收藏分享  */
     collect_feed: API + 'feeds/{feed_id}/collection',
+    /* 获取用户的分享 */
     get_user_feed: '/profile/users/{user_id}',
+    /* 获取用户的文章 */
     get_user_news: '/profile/news/{user_id}',
+    /* 获取用户的收藏 */
     get_user_collect: '/profile/collection/{user_id}',
-
-    /* 获取附件 */
-    images: '/api/v2/files/',
+    
 };
 
-// Ajax 设置csrf Header
+/**
+ * Ajax 设置csrf Header
+ * @type {Object}
+ */
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
@@ -48,6 +56,10 @@ $.ajaxSetup({
     }
 });
 
+/**
+ * 创建一个存储对象
+ * @type {Object}
+ */
 var args = {
     data: {},
     set: function(name, value) {
@@ -59,6 +71,11 @@ var args = {
     }
 };
 
+/**
+ * url参数转换为对象
+ * @param  string url a=1&b=2&c=3
+ * @return {Object}
+ */
 var urlToObject = function(url) {
     var urlObject = {};
     var urlString = url.substring(url.indexOf("?") + 1);
@@ -72,7 +89,12 @@ var urlToObject = function(url) {
     return urlObject;
 };
 
-// 字符串长度 - 中文和全角符号为1；英文、数字和半角为0.5
+/**
+ * 字符串长度计算 - 中文和全角符号为1；英文、数字和半角为0.5
+ * @param  string str      字符串
+ * @param  bool shortUrl 
+ * @return int
+ */
 var getLength = function(str, shortUrl) {
     str = str || '';
     if (true == shortUrl) {
@@ -84,33 +106,25 @@ var getLength = function(str, shortUrl) {
     }
 };
 
+/**
+ * 统计输入字符串长度(用于评论回复最大字数计算)
+ * @param  object obj  使用对象
+ * @param  int len  最大长度
+ * @param  bool show 提示class
+ */
 var checkNums = function(obj, len, show) {
     var str = $(obj).val();
     var _length = getLength(str);
     var surplus = len - _length;
     if (surplus < 0) {
-        $('.' + show).text(surplus).css('color', 'red');
-        // noticebox('字数不能大于'+len, 0);
+        $('.' + show)
+            .text(surplus)
+            .css('color', 'red');
     } else {
-        $('.' + show).text(surplus).css('color', '#59b6d7');
+        $('.' + show)
+            .text(surplus)
+            .css('color', '#59b6d7');
     }
-}
-
-
-function readAsBuffer(f){
-    var reader = new FileReader();
-    reader.onload = function(e){
-        console.log(md5(e.target.result));
-    }
-    reader.readAsArrayBuffer(f);
-}
-
-function readAsDataUrl(f){
-    var reader = new FileReader();
-    reader.onload = function(e){
-        console.log(md5(e.target.result));
-    }
-    reader.readAsDataURL(f);
 }
 
 /**
@@ -175,82 +189,6 @@ var fileUpload = {
     }
 };
 
-// 文件上传 V1
-/*var fileUpload = function(f, callback) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-        var data = e.target.result;
-        //加载图片获取图片真实宽度和高度
-        var image = new Image();
-        image.onload = function() {
-            var width = image.width;
-            var height = image.height;
-            var size = f.size;
-            doFileUpload(image, f, callback);
-        };
-        image.src = data;
-    };
-    reader.readAsDataURL(f);
-};
-
-var doFileUpload = function(image, f, callback) {
-    var args = {
-        width: image.width,
-        height: image.height,
-        mime_type: f.type,
-        origin_filename: f.name,
-        hash: CryptoJS.MD5(f.name+f.size).toString(),
-    };
-
-    // 创建存储任务
-    $.ajax({
-        url: API + 'storages/task',
-        type: 'POST',
-        async: false,
-        data: args,
-        beforeSend: function(xhr) {　　　　 xhr.setRequestHeader('Authorization', TOKEN);　　　 },
-        success: function(res) {
-            if (res.data.uri) {
-                var formDatas = new FormData();
-                formDatas.append("file", f);
-
-                if (res.data.options) {
-                    for (var i in res.data.options) {
-                        formDatas.append(i, res.data.options[i]);
-                    }
-                }
-
-                // 上传文件
-                $.ajax({
-                    url: res.data.uri,
-                    type: res.data.method,
-                    data: formDatas,
-                    async: false,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', TOKEN);},
-                    success: function(data) {
-
-                        // 上传通知 
-                        $.ajax({
-                            url: API + 'storages/task/' + res.data.storage_task_id,
-                            type: 'PATCH',
-                            async: false,
-                            beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', TOKEN);},
-                            success: function(response) {
-                                callback(image, f, res.data.storage_task_id);
-                            }
-                        });
-                    }
-                });
-            } else {
-                callback(image, f, res.data.storage_task_id);
-            }
-        }
-    });
-};*/
-
 // 关注
 var follow = function(status, user_id, target, callback) {
     if (status == 0) {
@@ -276,7 +214,12 @@ var follow = function(status, user_id, target, callback) {
     }
 }
 
-// 提示框
+/**
+ * 警告提示弹出框
+ * @param  string   msg    提示文字
+ * @param  int      status 0:失败 1:成功
+ * @param  string   tourl  跳转链接
+ */
 var noticebox = function(msg, status, tourl) {
     tourl = tourl || '';
     var _this = $('.noticebox');
@@ -289,17 +232,13 @@ var noticebox = function(msg, status, tourl) {
             _this.css('top', '62px');
         }
     }
-
     if (status == 0) {
         var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>' + msg + '</div>';
     } else {
         var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>' + msg + '</div>';
     }
     _this.html(html);
-
-
     _this.slideDown(500);
-
     if (tourl == '') {
         setTimeout(function() {
             $('.noticebox').slideUp(200);
@@ -315,26 +254,33 @@ var noticebox_cb = function(tourl) {
     window.location.href = tourl == 'refresh' ? window.location.href : tourl;
 }
 
+/**
+ * 无数据提示dom
+ * @param  string   selector 显示容器
+ * @param  string   txt      提示文字
+ * @return bool
+ */
 var no_data = function(selector, type, txt) {
     var image = type == 0 ? PUBLIC_URL + '/images/pic_default_content.png' : PUBLIC_URL + '/images/pic_default_people.png';
     var html = '<div class="no_data_div"><div class="no_data"><img src="' + image + '" /><p>' + txt + '</p></div></div>';
-    // $(selector).css('display', 'table');
-    // $(selector).css('margin', '0 auto');
     $(selector).html(html);
 }
 
+/**
+ * 退出登录提示框
+ * @return bool
+ */
 var logout = function() {
     $('.p_cont').hide();
-
     var html = '<div class="modal-content exit_content">'
-            + '<div class="modal-body exit_body">'
-            + '<div class="exit_ts">提示</div>'
-            + '<div class="exit_thinks">感谢您对ThinkSNS的信任，是否退出当前账号？</div>'
-            + '<div data-dismiss="modal" class="exit_btn">'
-            + '<a href="javascript:layer.closeAll()">取消</a>'
-            + '</div>'
-            + '<a href="' + request_url.logout + '"><span data-dismiss="modal" class="exit_btn exit_btn_bg">退出</span></a>'
-            + '</div></div>' 
+        + '<div class="modal-body exit_body">'
+        + '<div class="exit_ts">提示</div>'
+        + '<div class="exit_thinks">感谢您对ThinkSNS的信任，是否退出当前账号？</div>'
+        + '<div data-dismiss="modal" class="exit_btn">'
+        + '<a href="javascript:layer.closeAll()">取消</a>'
+        + '</div>'
+        + '<a href="' + request_url.logout + '"><span data-dismiss="modal" class="exit_btn exit_btn_bg">退出</span></a>'
+        + '</div></div>' 
     layer.open({
       type: 1,
       title: false,
@@ -343,64 +289,6 @@ var logout = function() {
       content: html
     });
 }
-
-;
-(function($) {
-    //默认参数
-    var defaluts = {
-        select: "select",
-        select_text: "select_text",
-        select_ul: "select_ul"
-    };
-    $.fn.extend({
-        "select": function(options) {
-            var opts = $.extend({}, defaluts, options);
-            return this.each(function() {
-                var $this = $(this);
-                //模拟下拉列表
-                if ($this.data("value") !== undefined && $this.data("value") !== '') {
-                    $this.val($this.data("value"));
-                }
-                var _html = [];
-                _html.push("<div class=\"" + $this.attr('class') + "\">");
-                _html.push("<div class=\"" + opts.select_text + "\">" + $this.find(":selected").text() + "</div>");
-                _html.push("<ul class=\"" + opts.select_ul + "\">");
-                $this.children("option").each(function() {
-                    var option = $(this);
-                    if ($this.data("value") == option.val()) {
-                        _html.push("<li class=\"cur\" data-value=\"" + option.val() + "\">" + option.text() + "</li>");
-                    } else {
-                        _html.push("<li data-value=\"" + option.val() + "\">" + option.text() + "</li>");
-                    }
-                });
-                _html.push("</ul>");
-                _html.push("</div>");
-                var select = $(_html.join(""));
-                var select_text = select.find("." + opts.select_text);
-                var select_ul = select.find("." + opts.select_ul);
-                $this.after(select);
-                $this.hide();
-                //下拉列表操作
-                select.click(function(event) {
-                    $(this).find("." + opts.select_ul).slideToggle().end().siblings("div." + opts.select).find("." + opts.select_ul).slideUp();
-                    event.stopPropagation();
-                });
-                $("body").click(function() {
-                    select_ul.slideUp();
-                });
-                select_ul.on("click", "li", function() {
-                    var li = $(this);
-                    var val = li.addClass("cur").siblings("li").removeClass("cur").end().data("value").toString();
-                    if (val !== $this.val()) {
-                        select_text.text(li.text());
-                        $this.val(val);
-                        $this.attr("data-value", val);
-                    }
-                });
-            });
-        }
-    });
-})(jQuery);
 
 //是否正在加载
 var load = 0;
@@ -456,8 +344,6 @@ var ly = {
             }
         });     
     },
-
-
     load: function(requestUrl,title,width,height,type,requestData){
         if(load == 1) return false;
         layer.closeAll();
@@ -493,7 +379,6 @@ var ly = {
             }
         });
     },
-
     loadHtml: function(html,title,width,height){
         layer.closeAll();
 
