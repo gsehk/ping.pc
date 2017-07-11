@@ -165,7 +165,8 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
                 this.$avatarSave.on('click', $.proxy(this.click, this));
             },
             click: function () {
-                var croppedCanvas = this.$img.cropper('getCroppedCanvas');
+                // 默认宽高 160
+                var croppedCanvas = this.$img.cropper('getCroppedCanvas', { width: 160, height: 90 });
                 var roundedCanvas = getRoundedCanvas(croppedCanvas); // 获取圆形头像
                 var blob = dataURLtoBlob(roundedCanvas.toDataURL());
                       blob.name = this.fileUpload.origin_filename;
