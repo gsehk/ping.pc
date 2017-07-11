@@ -70,6 +70,9 @@
 @section('scripts')
 <script type="text/javascript">
 var checkin = function(){
+    if( MID == 0 ){
+        return;
+    }
   var totalnum = {{$checkin['total_num'] or 0}} + 1;
   $.get('/home/checkin' , {} , function (res){
     if ( res ){
