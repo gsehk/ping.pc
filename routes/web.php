@@ -51,7 +51,7 @@ Route::prefix('passport')->group(function () {
 
 
 // UCenter
-Route::get('index', 'ProfileController@index')->name('pc:myFeed');
+Route::get('index/{user_id?}', 'ProfileController@index')->name('pc:myFeed');
 Route::get('article', 'ProfileController@article')->name('pc:article');
 Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
 Route::prefix('profile')->get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表

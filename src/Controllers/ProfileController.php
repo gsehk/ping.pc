@@ -28,18 +28,16 @@ class ProfileController extends BaseController
     /**
      * 个人中心首页
      * 
-     * @author zw
-     * @date   2017-05-20
-     * @param  Request    $request [description]
-     * @return [type]              [description]
+     * @param  int|null $user_id 用户id
+     * @return [type]            [description]
      */
-    public function index(Request $request)
+    public function index(Request $request, int $user_id = null)
     {
-        if(empty($this->mergeData['TS']) && empty($request->input('user_id'))) {
+        if(empty($this->mergeData['TS']) && empty($user_id)) {
             Session::put('history', route('pc:myFeed'));
             return redirect(route('pc:index'));
         }
-        $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
+        $user_id = $user_id ?: $this->mergeData['TS']['id'];
         $type = $request->input('type') ?: 'all';
 
         if (!empty($this->mergeData['TS']) && $this->mergeData['TS']['id'] == $user_id) {
@@ -52,8 +50,8 @@ class ProfileController extends BaseController
 
             // 是否关注
             $data['my_follow_status'] = Followed::where('followed_user_id', $this->mergeData['TS']['id'])
-                                            ->where('user_id', $user_id)
-                                            ->first() ? 1 : 0;
+                                    ->where('user_id', $user_id)
+                                    ->first() ? 1 : 0;
 
             // 访客
             if (!empty($this->mergeData['TS'])) {
@@ -119,9 +117,7 @@ class ProfileController extends BaseController
     /**
      * 个人中心文章栏
      * 
-     * @author zw
      * @date   2017-05-20
-     * @param  Request    $request [description]
      * @return [type]              [description]
      */
     public function article(Request $request)
@@ -133,23 +129,22 @@ class ProfileController extends BaseController
             $data['user'] = $this->mergeData['TS'];
         } else {
             $user = User::where('id', $user_id)
-                        ->with('datas', 'counts')
-                        ->first();
+                ->with('datas', 'counts')
+                ->first();
             $data['user'] = $this->formatUserDatas($user);
         }
-
         // 地区
         if (!empty($data['user']['province'])) {
             $data['user']['province'] = Area::where('id', $data['user']['province'])
-                                        ->value('name');
+                                    ->value('name');
         }
         if (!empty($data['user']['city'])) {
             $data['user']['city'] = Area::where('id', $data['user']['city'])
-                                        ->value('name');
+                                ->value('name');
         }
         if (!empty($data['user']['area'])) {
             $data['user']['area'] = Area::where('id', $data['user']['area'])
-                                        ->value('name');
+                                 ->value('name');
         }
 
         $data['type'] = $type;
@@ -180,9 +175,7 @@ class ProfileController extends BaseController
     /**
      * 我的收藏
      * 
-     * @author zw
      * @date   2017-05-20
-     * @param  Request    $request [description]
      * @return [type]              [description]
      */
     public function collection(Request $request)
@@ -215,6 +208,12 @@ class ProfileController extends BaseController
         return view('pcview::profile.collection', $data, $this->mergeData);
     }
 
+    /**
+     * 我的粉丝
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function users(Request $request)
     {
         $data = [];
@@ -263,12 +262,12 @@ class ProfileController extends BaseController
                 $_data['my_follow_status'] = 1; //我关注的列表  关注状态始终为1
                 // 最新微博图片
                 $_data['storages'] = FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                        ->where('feeds.user_id', '=', $follow->user->id)
-                                        ->orderBy('file_withs.id', 'desc')
-                                        ->take(3)
-                                        ->select('feeds.id', 'file_withs.file_id')
-                                        ->get()
-                                        ->toArray();
+                                ->where('feeds.user_id', '=', $follow->user->id)
+                                ->orderBy('file_withs.id', 'desc')
+                                ->take(3)
+                                ->select('feeds.id', 'file_withs.file_id')
+                                ->get()
+                                ->toArray();
 
                 $data['datas'][] = $_data;
             }
@@ -285,18 +284,18 @@ class ProfileController extends BaseController
                     $_data['my_follow_status'] = 0;
                 } else {
                     $_data['my_follow_status'] = Following::where('following_user_id', $visitor->user->id)
-                                                    ->where('user_id', $this->mergeData['TS']['id'])
-                                                    ->get()
-                                                    ->isEmpty() ? 0 : 1;
+                                            ->where('user_id', $this->mergeData['TS']['id'])
+                                            ->get()
+                                            ->isEmpty() ? 0 : 1;
                 }
                 // 最新微博图片
                 $_data['storages'] = FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                        ->where('feeds.user_id', '=', $visitor->user->id)
-                                        ->orderBy('file_withs.id', 'desc')
-                                        ->take(3)
-                                        ->select('feeds.id', 'file_withs.file_id')
-                                        ->get()
-                                        ->toArray();
+                                ->where('feeds.user_id', '=', $visitor->user->id)
+                                ->orderBy('file_withs.id', 'desc')
+                                ->take(3)
+                                ->select('feeds.id', 'file_withs.file_id')
+                                ->get()
+                                ->toArray();
 
                 $data['datas'][] = $_data;
             }
@@ -316,18 +315,18 @@ class ProfileController extends BaseController
                     $_data['my_follow_status'] = 0;
                 } else {
                     $_data['my_follow_status'] = Following::where('following_user_id', $recuser->user->id)
-                                                    ->where('user_id', $this->mergeData['TS']['id'])
-                                                    ->get()
-                                                    ->isEmpty() ? 0 : 1;
+                                            ->where('user_id', $this->mergeData['TS']['id'])
+                                            ->get()
+                                            ->isEmpty() ? 0 : 1;
                 }
                 // 最新微博图片
                 $_data['storages'] = FeedStorage::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                        ->where('feeds.user_id', '=', $recuser->user->id)
-                                        ->orderBy('file_withs.id', 'desc')
-                                        ->take(3)
-                                        ->select('feeds.id', 'file_withs.file_id')
-                                        ->get()
-                                        ->toArray();
+                                ->where('feeds.user_id', '=', $recuser->user->id)
+                                ->orderBy('file_withs.id', 'desc')
+                                ->take(3)
+                                ->select('feeds.id', 'file_withs.file_id')
+                                ->get()
+                                ->toArray();
 
                 $data['datas'][] = $_data;
             }
@@ -337,12 +336,12 @@ class ProfileController extends BaseController
         return view('pcview::profile.users', $data, $this->mergeData);
     }
 
-    public function rank()
-    {
-
-        return view('profile.rank');
-    }
-
+    /**
+     * 个人中心设置
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function account(Request $request)
     {
         $user_id = $this->mergeData['TS']['id'] ?? 0;
@@ -350,9 +349,9 @@ class ProfileController extends BaseController
         switch ($datas['page']) {
             case 'account':
                 $info = User::where('id', $user_id)
-                                ->select('id', 'name')
-                                ->with('datas')
-                                ->first();
+                    ->select('id', 'name')
+                    ->with('datas')
+                    ->first();
                 $datas['info'] = $this->formatUserDatas($info);
                 break;
             case 'account-auth':
@@ -370,14 +369,12 @@ class ProfileController extends BaseController
         return view('pcview::profile.'.$datas['page'], $datas, $this->mergeData);
     }
 
-    public function score(Request $request)
-    {
-        $type = $request->input('type') ?: '1';
-
-        return view('profile.scoredetail', ['type' => $type]);
-    }
-
-
+    /**
+     * 用户认证操作
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function doSaveAuth(Request $request)
     {
         $isVerif = UserVerified::where('user_id', $this->mergeData['TS']['id'])
@@ -427,6 +424,12 @@ class ProfileController extends BaseController
         ])->setStatusCode(200);        
     }
 
+    /**
+     * 删除用户认证
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function delUserAuth(Request $request)
     {
         $user_id = $request->input('user_id');
@@ -440,6 +443,14 @@ class ProfileController extends BaseController
         ])->setStatusCode(200);  
     }
 
+    /**
+     * 格式化分享数据
+     * 
+     * @param  [type] $feeds    [description]
+     * @param  [type] $uid      [description]
+     * @param  string $template [description]
+     * @return [type]           [description]
+     */
     public function formatFeedList($feeds, $uid, $template = '')
     {
         $template = $template ?: 'pcview::template.profile-feed';
@@ -654,10 +665,5 @@ class ProfileController extends BaseController
 
             return $this->formatFeedList($feeds, $user_id, 'pcview::template.feed');      
         }
-    }
-
-    public function cropper()
-    {
-        return view('pcview::profile.cropper', $this->mergeData);
     }
 }

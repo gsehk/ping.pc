@@ -28,8 +28,8 @@
             <tbody>
                 <tr>
                     <th width="40%">操作</th>
-                    <th width="40%">积分</th>
-                    <th width="20%">时间</th>
+                    <th width="30%">积分</th>
+                    <th width="30%">时间</th>
                 </tr>
                 @if(isset($record))
                     @foreach ($record as $post)

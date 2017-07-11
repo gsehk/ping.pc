@@ -20,6 +20,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 
 class HomeController extends BaseController
 {
+    /**
+     * 微博首页
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function index(Request $request)
     {
     	$data['type'] = $request->input('type') ?: ($this->mergeData['TS'] ? 1 : 2);
@@ -57,6 +63,13 @@ class HomeController extends BaseController
     	return view('pcview::home.index', $data, $this->mergeData);
     }
 
+    /**
+     * 微博详情页
+     * 
+     * @param  Request $request [description]
+     * @param  int     $feed_id [description]
+     * @return [type]           [description]
+     */
     public function read(Request $request, int $feed_id)
     {
         $uid = $this->mergeData['TS']['id'] ?? 0;
@@ -132,6 +145,13 @@ class HomeController extends BaseController
         return view('pcview::home.read',$data, $this->mergeData);
     }
 
+    /**
+     * 格式化分享数据
+     * 
+     * @param  [type] $feeds [description]
+     * @param  [type] $uid   [description]
+     * @return [type]        [description]
+     */
     public function formatFeedList($feeds, $uid)
     {
         $datas = [];
@@ -346,9 +366,7 @@ class HomeController extends BaseController
     /**
      * 签到
      * 
-     * @author zw
-     * @date   2017-05-16
-     * @return state
+     * @return [type] [description]
      */
     public function checkin()
     {
@@ -427,8 +445,6 @@ class HomeController extends BaseController
     /**
      * 设置用户积分
      * 
-     * @author zw
-     * @date   2017-05-16
      * @param  int        $user_id 用户ID
      * @param  string     $action  系统设定的积分规则的名称
      * @param  [type]     $type    reset:按照操作的值直接重设积分值，整型：作为操作的系数，-1可实现增减倒置
@@ -516,6 +532,12 @@ class HomeController extends BaseController
         ]))->setStatusCode(200);
     }
 
+    /**
+     * 获取一条微博信息
+     * 
+     * @param  int     $feed_id 分享id
+     * @return [type]           [description]
+     */
     public function getFeedInfo(Request $request, int $feed_id) 
     {
         $user_id = $this->mergeData['TS']['id'];

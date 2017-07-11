@@ -18,54 +18,53 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
 
 class InformationController extends BaseController
 {
+    /**
+     * 文章首页
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function index(Request $request)
     {
-        $datas['cid'] = $request->input('cid') ?: 0;
-        /*  幻灯片  */
-        $datas['slide'] = NewsRecommend::with('cover')->get();
 
+        $datas['author'] = [];
+        $datas['recommend'] = [];
+        $datas['cid'] = $request->input('cid') ?: 0;
+        $datas['slide'] = NewsRecommend::with('cover')->get();
+        $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
+        $datas['hots'] = ['week' => $this->getRecentHot(1), 'month' => $this->getRecentHot(2), 'quarter' => $this->getRecentHot(3)];
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
         $datas['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
-            ->where(function($query){
-                if ($this->mergeData) {
-                    $query->where('user_id', $this->mergeData['TS']['id']);
+            ->where(function($query) use ($user_id) {
+                if ($user_id) {
+                    $query->where('user_id', $user_id);
                 }
-            })->orderBy('created_at', 'desc')->first();
-        $datas['checkin'] = CheckInfo::where(function($query){
-            if ($this->mergeData) {
-                $query->where('user_id', $this->mergeData['TS']['id']);
+            })->orderBy('created_at', 'desc')
+            ->first();
+        $datas['checkin'] = CheckInfo::where(function($query) use ($user_id) {
+            if ($user_id) {
+                $query->where('user_id', $user_id);
             }
             })->first();
 
-        /* 推荐文章第一条 */
-        $datas['recommend'] = [];
-        $rec = News::byAudit()->where('is_recommend', 1)->orderBy('id', 'desc')->take(6)
-            ->select('id','title','updated_at','storage','from','author')
-            ->with('storage', 'user.datas')->get();
-        if (count($rec)) {
-            $rec[0]['info'] = $this->formatUserDatas($rec[0]['user']);
-            unset($rec[0]['user']);
-            $datas['recommend'] = $rec;
+        $recommend = News::byAudit()
+                ->where('is_recommend', 1)
+                ->orderBy('id', 'desc')->take(6)
+                ->select('id','title','updated_at','storage','from','author')
+                ->with('storage', 'user.datas')
+                ->get();
+        if (!$recommend->isEmpty()) {
+            $recommend->first()->info = $this->formatUserDatas($recommend->first()->user);
+            $datas['recommend'] = $recommend;
         }
-        
-        /*  文章分类  */
-        $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
-        /* 近期热点 */
-        $datas['hots'] = [
-            'week' => $this->getRecentHot(1),
-            'month' => $this->getRecentHot(2),
-            'quarter' => $this->getRecentHot(3),
-        ];
-        /*  热门作者 */
-        $datas['author'] = [];
+
         $author = News::byAudit()
-            ->orderBy('hits', 'desc')
-            ->select('author')
-            ->groupBy('author')
-            ->take(3)->with('user.datas')->get();
-        if (count($author)) {
+                ->orderBy('hits', 'desc')->select('author')
+                ->groupBy('author')->take(3)->with('user.datas')
+                ->get();
+        if (!$author->isEmpty()) {
             foreach ($author as $k => $v) {
-                $v['info'] = $this->formatUserDatas($v->user);
-                unset($v['user']);
+                $v->info = $this->formatUserDatas($v->user);
             }
             $datas['author'] = $author;
         }
@@ -73,63 +72,61 @@ class InformationController extends BaseController
         return view('pcview::information.index', $datas, $this->mergeData);
     }
 
+    /**
+     * 文章详情页
+     * 
+     * @param  int    $news_id [description]
+     * @return [type]          [description]
+     */
     public function read(int $news_id)
     {
         if (!$news_id) {
             return redirect( route('pc:news'), 302);
         }
+        News::where('id', $news_id)->increment('hits');
         $uid = $this->mergeData['TS']['id'] ?? 0;
-        $data = News::byAudit()
-                ->where('id', $news_id)
-                ->withCount('newsCount') //当前作者文章数
-                ->with('user', 'link')
-                ->with(['collection' => function( $query ){
+        $news = News::byAudit()->where('id', $news_id)
+                ->withCount('newsCount')->with('link')
+                ->with(['collection' => function ($query) {
                     return $query->count();
                 }])->first();
-                
-        $data['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
-        $data['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
-        $user = $this->formatUserDatas($data->user);
-        unset($data['user']);
-        $data['user'] = $user;
+        if ($news->user) {
+            $user = $this->formatUserDatas($news->user);
+            unset($news->user);
+            $news->user = $user;
+        }
 
-        $data['hotNum'] = News::byAudit()
-                        ->join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
-                        ->where([['news.author','=',$data->author], ['news_cates_links.cate_id','=',1]])
-                        ->count();
+        $news['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
+        $news['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
+        $news['hots'] = ['week' => $this->getRecentHot(1), 'month' => $this->getRecentHot(2), 'quarter' => $this->getRecentHot(3)];
+        $news['hotNum'] = News::byAudit()
+                    ->join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
+                    ->where([['news.author','=',$news->author], ['news_cates_links.cate_id','=',1]])
+                    ->count();
+        $news['news'] = News::byAudit()->where('author', $news->author)
+                    ->orderBy('created_at', 'desc')->take(4)
+                    ->select('id','title')
+                    ->get();
 
-        /* 近期热点 */
-        $data['hots'] = [
-            'week' => $this->getRecentHot(1),
-            'month' => $this->getRecentHot(2),
-            'quarter' => $this->getRecentHot(3),
-        ];
-
-        $data['news'] = News::byAudit()
-                        ->where('author', $data->author)
-                        ->orderBy('created_at', 'desc')
-                        ->take(4)
-                        ->select('id','title')
-                        ->get()
-                        ->toArray();
-        News::where('id', $news_id)->increment('hits');
-
-        // dd($data);exit;
-        return view('pcview::information.read', $data, $this->mergeData);
+        return view('pcview::information.read', $news, $this->mergeData);
     }
 
+    /**
+     * 文章投稿页面
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function release(Request $request)
     {
+        $data = [];
         $user_id = $this->mergeData['TS']['id'] ?? 0;
-        
         $draft = News::where('audit_status', 2)->where('author', $user_id)->get();
         if ($request->id) {
             $data = $draft->where('id', $request->id)->first();
             $data['links'] = $data->links ?: '';
-        }else{
-            $data = [];
         }
-        $data['count'] = count($draft);
+        $data['count'] = $draft->count();
         $data['cate'] = NewsCate::where('id', '!=', 1)->orderBy('rank', 'desc')->select('id','name')->get();
 
         return view('pcview::information.release', $data, $this->mergeData);
@@ -172,11 +169,9 @@ class InformationController extends BaseController
                 ->withCount('collection')
                 ->get();
         }
-
         foreach ($datas as $value) {
             $value['_created_at'] = $this->getTime($value->created_at);
         }
-
         return response()->json(static::createJsonData([
             'status'  => true,
             'code'    => 0,
@@ -237,6 +232,12 @@ class InformationController extends BaseController
         return $datas;
     }
 
+    /**
+     * 添加/修改 投稿
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function doSavePost(Request $request)
     {
         $type = $request->type; // 1 待审核 2 草稿
@@ -323,40 +324,11 @@ class InformationController extends BaseController
     }
 
     /**
-    * 获取热门作者
-    * @param  uid  [获取某个作者最新的文章]
-    */
-    public function getAuthorHot(Request $request)
-    {
-        $uid = $request->uid;
-        $limit = $request->limit ?? 3;
-        if ($uid) {
-            // 获取uid对应的作者文章
-            $datas = News::where('author', $uid)
-                    ->orderBy('created_at', 'desc')
-                    ->take($limit)
-                    ->select('id','title')
-                    ->get()
-                    ->toArray();
-        } else {
-            //获取热门作者
-            $datas = News::byAudit()
-                    ->orderBy('hits', 'desc')
-                    ->take($limit)
-                    ->orderBy('author')
-                    ->select('author')
-                    ->with('user')
-                    ->get();
-        }
-
-        return response()->json(static::createJsonData([
-            'status'  => true,
-            'code'    => 0,
-            'message' => '获取成功',
-            'data'    => $datas
-        ]))->setStatusCode(200);
-    }
-
+     * 获取文章评论列表
+     * 
+     * @param  int     $news_id 文章id
+     * @return [type]           [description]
+     */
     public function getCommentList(Request $request, int $news_id)
     {
         $limit = $request->get('limit',15);
@@ -369,16 +341,16 @@ class InformationController extends BaseController
             ])->setStatusCode(400);
         }
         $comments = NewsComment::byNewsId($news_id)
-                    ->take($limit)
-                    ->where(function($query) use ($max_id) {
-                        if ($max_id > 0) {
-                            $query->where('id', '<', $max_id);
-                        }
-                    })
-                    ->select(['id', 'created_at', 'comment_content', 'user_id', 'news_id', 'reply_to_user_id','comment_mark'])
-                    ->with('user')
-                    ->orderBy('id','desc')
-                    ->get();
+                ->take($limit)
+                ->where(function($query) use ($max_id) {
+                    if ($max_id > 0) {
+                        $query->where('id', '<', $max_id);
+                    }
+                })
+                ->select(['id', 'created_at', 'comment_content', 'user_id', 'news_id', 'reply_to_user_id','comment_mark'])
+                ->with('user')
+                ->orderBy('id','desc')
+                ->get();
         foreach ($comments as $key => &$value) {
             $value['info'] = $this->formatUserDatas($value['user']);
             unset($value['user']);
