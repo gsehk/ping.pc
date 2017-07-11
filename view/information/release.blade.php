@@ -64,11 +64,12 @@
         <div class="con_right">
             <div class="conR_title">投稿须知</div>
             <div class="conR_artic">
-                <p>  1、绝不搞事情</p>
-                <p>  2、绝不搞事情</p>
-                <p>  3、绝不搞事情</p>
+                <p>请用准确的语言描述您发布的资讯的主旨</p>
+                <p>选择适合的资讯分类, 让您发布的资讯能快速在相应的分类中得到展示.</p>
+                <p>详细补充您的咨询内容, 并提供一些相关的素材以供参与者更多的了解您所要表述的资讯思想。</p>
+                <p>注：如果您的内容不够正式，为了数据更美观，您的投稿将不会通过；投稿内容一经审核通过，所投递的内容将共所有人可以阅读，并在您发布资讯中进行分享、点赞和评论</p>
             </div>
-            <a href="{{route('pc:article',['type'=>2])}}">
+            <a href="{{route('pc:article',['user_id'=>$user_id,'type'=>2])}}">
             <div class="conR_bottom">
                 我的草稿<span class="conR_num">{{ $count }}<i class="icon iconfont icon-icon07"></i></span>
             </div></a>
