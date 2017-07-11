@@ -18,7 +18,7 @@
             <span class="dy_num">33</span>
         </li> -->
         <li>
-            <a href="{{ route('pc:users') }}" class="fs-16 @if ($route == 'pc:users') dy_59 @endif">
+            <a href="{{ route('pc:users', ['type'=>1]) }}" class="fs-16 @if ($route == 'pc:users') dy_59 @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-myfans"></use></svg>我的粉丝
             </a>
         </li>

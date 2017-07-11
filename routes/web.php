@@ -51,14 +51,14 @@ Route::prefix('passport')->group(function () {
 
 
 // UCenter
-Route::get('index/{user_id?}', 'ProfileController@index')->name('pc:myFeed');
-Route::get('article', 'ProfileController@article')->name('pc:article');
+Route::get('index/{user_id?}', 'ProfileController@index')->where(['user_id' => '[0-9]+'])->name('pc:myFeed');
+Route::get('article/{user_id?}/{type?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:article');
 Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
 Route::prefix('profile')->get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
 Route::prefix('profile')->get('/collection/{user_id}', 'ProfileController@getCollectionList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
     Route::get('related', 'ProfileController@related')->name('pc:related');
-    Route::get('users', 'ProfileController@users')->name('pc:users');
+    Route::get('nexus/{type?}/{user_id?}', 'ProfileController@users')->name('pc:users');
     Route::get('following', 'ProfileController@following')->name('pc:following');
     Route::get('collection', 'ProfileController@collection')->name('pc:collection');
     Route::get('account', 'ProfileController@account')->name('pc:account');
@@ -99,6 +99,6 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::post('/information/uploadImg', 'InformationController@uploadImg')->name('pc:uploadImg');
     
     // 积分规则
-    Route::get('/credit/index', 'CreditController@index')->name('pc:credit');
+    Route::get('/credit/index/{type?}', 'CreditController@index')->name('pc:credit');
     // 排行榜
     Route::get('/rank/index', 'RankController@index')->name('pc:rank');

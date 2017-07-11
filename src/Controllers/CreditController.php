@@ -12,10 +12,9 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditSetting;
 
 class CreditController extends BaseController
 {
-    public function index(Request $request)
+    public function index(Request $request, int $type = 1)
     {
         $user_id = $this->mergeData['TS']['id'] ?? 0;
-        $type = $request->input('type') ?: '1';
         switch ($type) {
             case 2:
                 $data = CreditUser::where('user_id', $user_id)->first();

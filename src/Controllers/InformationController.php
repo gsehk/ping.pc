@@ -121,6 +121,7 @@ class InformationController extends BaseController
     {
         $data = [];
         $user_id = $this->mergeData['TS']['id'] ?? 0;
+        $data['user_id'] = $user_id;
         $draft = News::where('audit_status', 2)->where('author', $user_id)->get();
         if ($request->id) {
             $data = $draft->where('id', $request->id)->first();

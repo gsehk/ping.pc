@@ -115,15 +115,15 @@ class ProfileController extends BaseController
     }
 
     /**
-     * 个人中心文章栏
+     * 用户中心文章
      * 
-     * @date   2017-05-20
-     * @return [type]              [description]
+     * @param  int|null    $user_id 用户id
+     * @param  int|integer $type    文章类型
+     * @return [type]               [description]
      */
-    public function article(Request $request)
+    public function article(Request $request, int $user_id = null, int $type = 0)
     {
-        $type = $request->input('type') ?: 0;
-        $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
+        $user_id = $user_id ?: $this->mergeData['TS']['id'];
 
         if (!empty($this->mergeData['TS']) && $this->mergeData['TS']['id'] == $user_id) {
             $data['user'] = $this->mergeData['TS'];
@@ -209,17 +209,18 @@ class ProfileController extends BaseController
     }
 
     /**
-     * 我的粉丝
+     * 获取关联用户列表
      * 
-     * @param  Request $request [description]
-     * @return [type]           [description]
+     * @param  int|integer $type    1:我的粉丝 2:关注的人 3:访客
+     * @param  int|integer $user_id   用户id
+     * @return [type]               [description]
      */
-    public function users(Request $request)
+    public function users(Request $request, int $type = 1, int $user_id = 0)
     {
         $data = [];
-        $data['type'] = $type = $request->input('type') ?: 1;
-        $data['user_id'] = $user_id = $request->input('user_id') ?: $this->mergeData['TS']['id'];
-
+        $data['type'] = $type;
+        $data['user_id'] = $user_id = $user_id ?: $this->mergeData['TS']['id'];
+        
         // 我的粉丝
         if ($type == 1) {
             $follows = Followed::where('user_id', $user_id)
