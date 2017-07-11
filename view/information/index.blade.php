@@ -46,7 +46,9 @@
         </ul>
         </div>
         @else 
-            <img src="{{ $routes['resource'] }}/images/picture.png" />
+            <a href="http://www.thinksns.com/zx/reader.php?id=94" target="_blank">
+                <img src="{{ $routes['resource'] }}/images/ad_news.png" />
+            </a>
         @endif
     </div>
     <div class="inT_r">
@@ -148,7 +150,10 @@
                 @endif
                 </div>
             </div>
-            <div class="i_right_img"><img src="{{ $routes['resource'] }}/images/picture.png" /></div>
+            <div class="i_right_img">
+            <a href="http://www.thinksns.com/zx/reader.php?id=94" target="_blank">
+            <img src="{{ $routes['resource'] }}/images/ad_news.png" /></a>
+            </div>
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
                 <ul class="infR_time" id="j-recent-hot">
