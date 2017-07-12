@@ -27,7 +27,7 @@ class RankController extends BaseController
 
         $list = $this->_parseRankList($ranList);
         $list['type'] = $type;
-        // dump($list);exit;
+        
         return view('pcview::rank.index', $list, $this->mergeData);
     }
 
@@ -61,7 +61,18 @@ class RankController extends BaseController
                         ->get();
 
             /*内容发布排行榜join('feeds', 'users.id', '=', 'feeds.user_id')*/
-            $post = Feed::where('audit_status', '=', 1)
+            $post = User::join('user_datas', 'users.id', '=', 'user_datas.user_id')
+                        ->where('user_datas.key', '=', 'feeds_count')
+                        ->when($fids, function ($query) use ($fids) {
+                            return $query->whereIn('user_datas.user_id', $fids);
+                        })
+                        ->select('users.id','users.name', 'user_datas.value')
+                        ->with('datas')
+                        ->orderBy('value', 'desc')
+                        ->take(100)
+                        ->get();
+
+           /* $post = Feed::where('audit_status', '=', 1)
                         ->when($fids, function ($query) use ($fids) {
                             return $query->whereIn('user_id', $fids);
                         })
@@ -70,10 +81,20 @@ class RankController extends BaseController
                         ->with('user.datas')
                         ->orderBy('total', 'desc')
                         ->take(100)
-                        ->get();
+                        ->get();*/
 
             /*累计签到排行榜*/
-            $check = CheckInfo::
+            $check = User::join('user_datas', 'users.id', '=', 'user_datas.user_id')
+                        ->where('user_datas.key', '=', 'check_totalnum')
+                        ->when($fids, function ($query) use ($fids) {
+                            return $query->whereIn('user_datas.user_id', $fids);
+                        })
+                        ->select('users.id','users.name', 'user_datas.value')
+                        ->with('datas')
+                        ->orderBy('value', 'desc')
+                        ->take(100)
+                        ->get();
+            /*$check = CheckInfo::
                         when($fids, function ($query) use ($fids) {
                             return $query->whereIn('user_id', $fids);
                         })
@@ -81,7 +102,7 @@ class RankController extends BaseController
                         ->with('user.datas')
                         ->groupBy('user_id')
                         ->orderBy('total', 'desc')
-                        ->get();
+                        ->get();*/
             $rank_list = [
                 'followedrank' => $followed,
                 'creditrank' => $credit,
@@ -98,10 +119,10 @@ class RankController extends BaseController
             $user_credit = CreditUser::where('user_id', $user_id)->first();
             $user_data = UserDatas::where('user_id', $user_id)
                         ->select('key', 'value')
-                        ->get()->toArray();
+                        ->get();
             $user_key_data = [];
             foreach ($user_data as $k => $v) {
-                $user_key_data[$v['key']] = $v['value'];
+                $user_key_data[$v->key] = $v->value;
             }
 
             $followed_rank = UserDatas::where(function ($query) use ($user_key_data){
@@ -122,7 +143,6 @@ class RankController extends BaseController
                         ->count();
             $post_rank += 1;
 
-            /*数据库暂时写一条数据做操作 所以此条不准*/
             $check_rank = UserDatas::where(function ($query) use ($user_key_data){
                                 if (!empty($user_key_data['check_totalnum'])) {
                                     $query->where('value', '>', $user_key_data['check_totalnum']);
@@ -162,7 +182,7 @@ class RankController extends BaseController
         $follower['userrank'] = $list['user_followed_rank'];
         $followerlist = [];
         foreach ($list['followedrank'] as $fk => $fv) {
-            $fv['info'] = $this->formatUserDatas($fv);
+            $fv->info = $this->formatUserDatas($fv);
             $fv->rank = $fk+1;
             if ($fk < 10) {
                 $followerlist[1][] = $fv;
@@ -179,7 +199,7 @@ class RankController extends BaseController
         $credit['userrank'] = $list['user_score_rank'];
         $creditlist = [];
         foreach ($list['creditrank'] as $ck => $cv) {
-            $cv['info'] = $this->formatUserDatas($cv);
+            $cv->info = $this->formatUserDatas($cv);
             $cv->rank = $ck+1;
             if ($ck < 10) {
                 $creditlist[1][] = $cv;
@@ -195,8 +215,8 @@ class RankController extends BaseController
         /*发布内容排行榜*/
         $post['userrank'] = $list['user_post_rank'];
         $postlist = [];
-        foreach ($list['postrank'] as $pk => &$pv) {
-            $pv->info = $this->formatUserDatas($pv->user);
+        foreach ($list['postrank'] as $pk => $pv) {
+            $pv->info = $this->formatUserDatas($pv);
             $pv->rank = $pk+1;
             if ($pk < 10) {
                 $postlist[1][] = $pv;
@@ -215,7 +235,7 @@ class RankController extends BaseController
         $checktotallist = [];
         
         foreach ($list['checktotalrank'] as $ctk => $ctv) {
-            $ctv->info = $this->formatUserDatas($ctv->user);
+            $ctv->info = $this->formatUserDatas($ctv);
             $ctv->rank = $ctk+1;
             if ($ctk < 10) {
                 $checktotallist[1][] = $ctv;

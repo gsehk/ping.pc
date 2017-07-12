@@ -414,23 +414,25 @@ class HomeController extends BaseController
                     // 更新总签到数
                     $totalnum->value = $data['total_num'];
                     $totalnum->save();
-                    // 更新连续签到数
-                    $totalnum->value = $data['con_num'];
-                    $totalnum->where([['user_id', $user_id], ['key', 'check_connum']]);
-                    $totalnum->save();
-                } else { 
-                    // 第一次写入
-                    $userData = new UserDatas();
-                    $userData->user_id = $user_id;
-                    $userData->key = 'check_totalnum';
-                    $userData->value = $data['total_num'];
-                    $userData->save();
 
-                    $userData = new UserDatas();
-                    $userData->user_id = $user_id;
-                    $userData->key = 'check_connum';
-                    $userData->value = $data['con_num'];
-                    $userData->save();
+                    // 更新连续签到数
+                    UserDatas::where('user_id', $user_id)
+                        ->where('key', 'check_connum')
+                        ->update([
+                            'value' => $data['con_num']
+                        ]);
+                } else {
+                    // 第一次写入
+                    UserDatas::create([
+                        'user_id' => $user_id,
+                        'key' => 'check_totalnum',
+                        'value' => $data['total_num'],
+                    ]);
+                    UserDatas::create([
+                        'user_id' => $user_id,
+                        'key' => 'check_connum',
+                        'value' => $data['con_num'],
+                    ]);
                 }
             }
 
