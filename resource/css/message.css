@@ -287,6 +287,28 @@
     border-radius: 50%;
 }
 
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
+::-webkit-scrollbar  
+{  
+    width: 2px;  
+    background-color: #F5F5F5;  
+}  
+  
+/*定义滚动条轨道 内阴影+圆角*/  
+::-webkit-scrollbar-track  
+{  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+    border-radius: 10px;  
+    background-color: #F5F5F5;  
+}  
+  
+/*定义滑块 内阴影+圆角*/  
+::-webkit-scrollbar-thumb  
+{  
+    border-radius: 10px;  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+    background-color: #555;  
+} 
 
 /**/
 
@@ -433,8 +455,8 @@
     z-index: 998;
     top: 12%;
     left: 50%;
-    width: 550px;
-    height: 70%;
+    width: 720px;
+    height: 575px;
     margin-left: -275px;
     -webkit-transform: scale(1, 1);
     -moz-transform: scale(1, 1);
@@ -472,7 +494,7 @@
 }
 
 .msgbox-title-wrap {
-    width: 550px;
+    width: 720px;
     height: 39px;
     margin: -39px 0 0 -1px;
     border: 1px solid #ddd;
@@ -605,36 +627,9 @@
     scrollbar-base-color: #a8a8a8;
 }
 
-.msgbox-body::-webkit-scrollbar {
-    width: 9px;
-    background: #fff;
-}
-
-.msgbox-body::-webkit-scrollbar-track,
-.friend .groupusers::-webkit-scrollbar-track-piece {
-    width: 4.5px;
-    border-right: 3px solid #fff;
-    border-left: 3px solid #fff;
-    border-radius: 4px;
-    background: #f5f5f5;
-}
-
-.msgbox-body::-webkit-scrollbar-thumb {
-    width: 3px;
-    border-right: 3px solid #fff;
-    border-left: 3px solid #fff;
-    border-radius: 4.5px;
-    background: #999;
-}
-
-.msgbox-body::-webkit-scrollbar-corner,
-.friend .groupusers::-webkit-resizer,
-.friend .groupusers::-webkit-scrollbar-button {
-    display: none;
-}
 
 .msgbox-loading {
-    background: url(../image/message/ajax-loader.gif) no-repeat center center;
+    background: url(../images/message/ajax-loader.gif) no-repeat center center;
 }
 
 .msgbox-body #set-data {
@@ -1818,30 +1813,6 @@
     margin: 5px auto;
     background-color: #5d5d5d;
 }
-
-
-/* # 系统弹出框圆角处理 */
-
-#msgbox-main,
-#msgbox-main .msgbox-body {
-    border-bottom-width: 8px;
-    border-bottom-style: solid;
-    border-bottom-color: #fff;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-}
-
-#msgbox-main .msgbox-title-wrap {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-}
-
-#msgbox-main .msgbox-footer-wrap {
-    margin-top: -8px;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-}
-
 
 /* # At me */
 

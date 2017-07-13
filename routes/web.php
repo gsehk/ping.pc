@@ -102,3 +102,6 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('/credit/index/{type?}', 'CreditController@index')->name('pc:credit');
     // 排行榜
     Route::get('/rank/index', 'RankController@index')->name('pc:rank');
+
+    Route::get('/webMessage/index/{type?}', 'MessageController@index');
+    Route::get('/webMessage/getBody/{type?}', 'MessageController@getMessageBody');

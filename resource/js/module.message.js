@@ -4,7 +4,7 @@ var message = new function() {
     self.params = {
         /*任务栏配置*/
         taskbar: {
-            clickLi: function(li, e) {},
+            clickLi: function(li, e) {console.log(li)},
             clickLiClearMsgnum: true,
             removeLi: function(li, e) {},
             lis: {
@@ -74,7 +74,7 @@ var message = new function() {
             taskbar.remove();
 
             $('body').append(taskbar.el);
-            taskbar.initEvents();
+            taskbar.initEvents();  
 
             try {
                 var lis = self.params.taskbar.lis;
@@ -92,7 +92,10 @@ var message = new function() {
             } catch (e) {}
         },
 
-        /* # 初始化SmartButton */
+        /**
+         * 初始化SmartButton（显示或者隐藏联系人按钮）
+         * @return void
+         */
         initSmartButton: function() {
             /* # 针对非chrome浏览器的兼容处理 */
             //if (/*navigator.userAgent.toLowerCase().match(/edge/) == null && */window.chrome) {
@@ -128,7 +131,7 @@ var message = new function() {
 
             /* # 初始化 */
             taskbar.jq().css({
-                top: '59px',
+                top: 0,
                 right: '-45px'
             });
             taskbar.messageStatus && taskbar.jq('.smartButton').show().animate({
@@ -137,7 +140,7 @@ var message = new function() {
             }, 900, function() {
                 taskbar.jq().animate({
                     right: '-32px',
-                    top: '59px'
+                    top: 0
                 }, 450);
                 taskbar.jq('.wrap').animate({
                     marginLeft: '5px'
@@ -357,7 +360,10 @@ var message = new function() {
         hasId: function(id) {
             return taskbar.getId(id).length > 0;
         },
-        //初始化事件
+        /**
+         * 初始化消息数量
+         * 给聊天中li元素绑定移动清除事件
+         */
         initEvents: function() {
             if (taskbar.isBindEvents) return;
             taskbar.isBindEvents = true;
@@ -369,7 +375,7 @@ var message = new function() {
             var mousedownY = 0;
             var lis = taskbar.jq('.message-list li');
 
-            lis.on('mousedown', function(e) { //开始移动
+            $(document).on('mousedown', '.message-list li', function(e) { //开始移动
                 var li = $(this);
                 if (li.data('type') == 'fixed' || li.hasClass('move')) {
                     return false;
@@ -383,7 +389,7 @@ var message = new function() {
                     mousedownY = e.pageY;
                 }, 500);
                 return false;
-            }).on('click', function(e) { //单击事件
+            }).on('click', '.message-list li', function(e) { //单击事件
                 //还未激活移动则取消
                 if (noActiveMove) {
                     clearTimeout(noActiveMove);
@@ -402,7 +408,7 @@ var message = new function() {
                     taskbar.setSmartShow(true);
                 } catch (e) {}
                 return false;
-            }).on('mouseup', function() {
+            }).on('mouseup', '.message-list li', function() {
                 //还未激活移动则取消
                 if (noActiveMove) {
                     clearTimeout(noActiveMove);
@@ -449,15 +455,6 @@ var message = new function() {
     var msgbox = {
         el: '<div id="msgbox-shield"></div>\
               <div id="msgbox-main">\
-                <div class="msgbox-title-wrap">\
-                 <div class="msgbox-title">\
-                  <h3></h3>\
-                  <div class="rt">\
-                    <div class="btn"></div>\
-                    <div class="close"><a href="javascript:;">×</a></div>\
-                  </div>\
-                 </div>\
-                </div>\
                 <div class="msgbox-body"></div>\
                 <div class="msgbox-footer-wrap">\
                  <div class="msgbox-footer">\
@@ -605,7 +602,7 @@ var message = new function() {
             taskbar.build();
             self.params.taskbar.clickLi = function(li) {
                 if (li.data('type') == 'fixed' && !li.data('roomid')) {
-                    // msgbox.openUrl(U('public/WebMessage/'+li.data('id')));
+                    msgbox.openUrl('/webMessage/index/'+li.data('id'));
                 } else {
                     msgbox.openRoom('roomid=' + li.data('roomid'));
                 }
@@ -651,7 +648,7 @@ var message = new function() {
 
             self.params.taskbar.removeLi = function(li) {
                 var data = { roomid: li.data('roomid') };
-                // $.get(U('public/WebMessage/clearMessage'), data, function(res){}, 'json');
+                $.get('public/WebMessage/clearMessage', data, function(res){}, 'json');
                 /* # 清理本地缓存的消息数量 */
                 taskbar.messageNumList['room' + data.roomid] = 0;
             }
