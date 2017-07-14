@@ -41,13 +41,14 @@
                     <img src="{{ $routes['resource'] }}/images/pro.png" /><input placeholder="添加标签，多个标签用逗号分开" />
                 </span>
                 <span class="ai_face_box">
-                    <img src="{{$routes['resource']}}/images/pic_upload.png" id="J-image-preview" />
+                    <img src="
+                    @if ($storage)
+                        {{$routes['storage']}}{{$storage}}?w=230&h=163
+                    @else
+                        {{$routes['resource']}}/images/pic_upload.png
+                    @endif
+                    " id="J-image-preview" />
                     <div class="ai_upload">
-                        <!-- <input id="J-file-upload"
-                               type="file"
-                               name="poster-input"
-                               data-token="{{ csrf_token() }}"
-                        > -->
                         <input name="storage_id" id="storage_id" type="hidden" value="{{$storage or 0}}" />
                     </div>
                 </span>

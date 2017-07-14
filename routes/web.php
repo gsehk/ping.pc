@@ -90,7 +90,7 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // 评论列表
     Route::get('/information/{news_id}/comments', 'InformationController@getCommentList')->where(['news_id' => '[0-9]+']);
     // 投稿
-    Route::get('/information/release', 'InformationController@release')->name('pc:newsrelease');
+    Route::get('/information/release/{news_id?}', 'InformationController@release')->name('pc:newsrelease');
 
     Route::get('/information/getNewsList', 'InformationController@getNewsList');
     Route::get('/information/getRecentHot', 'InformationController@getRecentHot');

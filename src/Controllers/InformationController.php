@@ -117,16 +117,16 @@ class InformationController extends BaseController
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function release(Request $request)
+    public function release(Request $request, int $news_id)
     {
         $data = [];
         $user_id = $this->mergeData['TS']['id'] ?? 0;
-        $data['user_id'] = $user_id;
         $draft = News::where('audit_status', 2)->where('author', $user_id)->get();
-        if ($request->id) {
-            $data = $draft->where('id', $request->id)->first();
+        if ($news_id) {
+            $data = $draft->where('id', $news_id)->first();
             $data['links'] = $data->links ?: '';
         }
+        $data['user_id'] = $user_id;
         $data['count'] = $draft->count();
         $data['cate'] = NewsCate::where('id', '!=', 1)->orderBy('rank', 'desc')->select('id','name')->get();
 
@@ -317,8 +317,8 @@ class InformationController extends BaseController
             'message' => $type == 1 ? '发布成功，请等待审核' : '保存成功',
             'data'    => [
                 'url' => ($type == 1) 
-                ? route('pc:article', ['type' => 1]) 
-                : route('pc:article', ['type' => 2])
+                ? route('pc:article', ['user_id'=>$this->mergeData['TS']['id'],'type' => 1]) 
+                : route('pc:article', ['user_id'=>$this->mergeData['TS']['id'],'type' => 2])
                 ,'id' => $news->id
             ]
         ]))->setStatusCode(200);
