@@ -24,24 +24,19 @@ class MessageController extends BaseController
 		$uid = $request->user()->id;
         $limit = $request->input('limit', 15);
         $max_id = $request->input('max_id', 0);
-        $comment = Comment::join('users', 'users.id', '=', 'comments.user_id')
-        ->where(function ($query) use ($uid) {
-            $query->where('comments.target_user', $uid)->orWhere('comments.reply_user', $uid);
-        })
-        ->where('comments.user_id', '!=', $uid)
-        ->where(function ($query) use ($max_id) {
-            if ($max_id > 0) {
-                $query->where('comments.id', '<', $max_id);
-            }
-        })
-        ->with('user.datas')
-        ->select('comments.*')
-        ->paginate(1);
+        $comment = Comment::
+            where(function ($query) use ($uid) {
+                $query->where('target_user', $uid)->orWhere('reply_user', $uid);
+            })
+            ->where('user_id', '!=', $uid)
+            ->with('user.datas')
+            ->paginate(1);
         
         $data['list'] = $comment->map(function ($data) {
         	$data->info = $this->formatUserDatas($data->user);
 			return $this->formmatOldDate($data);
         });
+
         $data['type'] = 'pl';
         $data['page'] = $comment->appends(['type'=>'pl'])->links('pcview::template.page');
 		$html = view('pcview::template.message-body', $data, $this->mergeData)->render();
@@ -52,23 +47,16 @@ class MessageController extends BaseController
 	public function zan(Request $request)
 	{
 		$uid = $request->user()->id;
-        $limit = $request->input('limit', 15);
-        $max_id = $request->input('max_id', 0);
-        $digg = Digg::join('users', 'users.id', '=', 'diggs.user_id')
-        ->where('diggs.to_user_id', $uid)
-        ->where(function ($query) use ($max_id) {
-            if ($max_id > 0) {
-                $query->where('diggs.id', '<', $max_id);
-            }
-        })
-        ->with('user.datas')
-        ->select('diggs.*')
-        ->paginate(1);
+        $digg = Digg::
+            where('to_user_id', $uid)
+            ->with('user.datas')
+            ->paginate(1);
 
         $data['list'] = $digg->map(function ($data) {
         	$data->info = $this->formatUserDatas($data->user);
 			return $data;
         });
+
         $data['type'] = 'zan';
         $data['page'] = $digg->appends(['type'=>'zan'])->links('pcview::template.page');
         $html = view('pcview::template.message-body', $data, $this->mergeData)->render();
@@ -96,7 +84,6 @@ class MessageController extends BaseController
     {
         $arr = [
             'id' => $data->id,
-            'name' => $data->name,
             'user' => $data->info,
             'user_id' => $data->user_id,
             'to_user_id' => $data->target_user,
