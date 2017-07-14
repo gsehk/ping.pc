@@ -52,3 +52,16 @@
 </div>
 @endif
 <div>{{ $page }}</div>
+<script>
+$('.dy_pageCont>a').on('click', function(e){
+    e.preventDefault();
+    if (!$(this).hasClass('page_cur')) {
+        var link = $(this).attr('href');
+        $.get(link, function(html) {
+            var html = JSON.parse(html);
+            $('.message-body').html(html);
+            $("img.lazy").lazyload({effect: "fadeIn"});
+        });            
+    }
+})
+</script>

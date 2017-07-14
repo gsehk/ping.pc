@@ -43,7 +43,7 @@ class MessageController extends BaseController
 			return $this->formmatOldDate($data);
         });
         $data['type'] = 'pl';
-        $data['page'] = $comment->appends(['type'=>'pl'])->links('pcview::template.ajaxpage');
+        $data['page'] = $comment->appends(['type'=>'pl'])->links('pcview::template.page');
 		$html = view('pcview::template.message-body', $data, $this->mergeData)->render();
 
 		echo json_encode($html);
@@ -70,7 +70,7 @@ class MessageController extends BaseController
 			return $data;
         });
         $data['type'] = 'zan';
-        $data['page'] = $digg->appends(['type'=>'zan'])->links('pcview::template.ajaxpage');
+        $data['page'] = $digg->appends(['type'=>'zan'])->links('pcview::template.page');
         $html = view('pcview::template.message-body', $data, $this->mergeData)->render();
 
         echo json_encode($html);
