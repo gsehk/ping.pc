@@ -11,12 +11,14 @@ var message = new function() {
                 "pl": {
                     id: 'pl',
                     title: "评论",
-                    src: PUBLIC_URL + '/images/message/pl.png'
+                    src: PUBLIC_URL + '/images/message/pl.png',
+                    icon:'<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xuanzedui-copy-copy-copy"></use></svg>',
                 },
                 "zan": {
                     id: 'zan',
                     title: "赞",
-                    src: PUBLIC_URL + '/images/message/zan.png'
+                    src: PUBLIC_URL + '/images/message/zan.png',
+                    icon:'<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xihuande-copy"></use></svg>',
                 },
                 /*"tz": {
                     id: 'tz',
@@ -26,7 +28,8 @@ var message = new function() {
                 "at": {
                     id: 'at',
                     title: 'At我的',
-                    src: PUBLIC_URL + '/images/message/at.png'
+                    src: PUBLIC_URL + '/images/message/at.png',
+                    icon:'<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xiangguande-copy"></use></svg>',
                 },
                 /*"lxr": {
                     id: 'lxr',
@@ -281,7 +284,7 @@ var message = new function() {
             }
 
             var li = $(taskbar.li); //li标签
-            var img = li.find('img'); //img标签
+            var a = li.find('a'); //img标签
             var i = li.find('i'); //i标签
             var number = params.num || 0; //消息数
             var type, isReplace, method;
@@ -295,7 +298,7 @@ var message = new function() {
             li.data('realId', 'message-' + params.id);
             // li.attr('title', params.title || '');
             li.attr('data-tooltip', params.title || '');
-            img.attr('src', params.src);
+            a.html(params.icon);
             i.data('num', number).text(
                 number > 9 ? '···' : number
             );
