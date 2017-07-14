@@ -86,7 +86,10 @@ class InformationController extends BaseController
         News::where('id', $news_id)->increment('hits');
         $uid = $this->mergeData['TS']['id'] ?? 0;
         $news = News::byAudit()->where('id', $news_id)
-                ->withCount('newsCount')->with('link')
+                ->withCount(['newsCount' => function($query){
+                    $query->where('audit_status', 0);
+                }])
+                ->with('link')
                 ->with(['collection' => function ($query) {
                     return $query->count();
                 }])->first();
@@ -95,7 +98,6 @@ class InformationController extends BaseController
             unset($news->user);
             $news->user = $user;
         }
-
         $news['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         $news['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         $news['hots'] = ['week' => $this->getRecentHot(1), 'month' => $this->getRecentHot(2), 'quarter' => $this->getRecentHot(3)];
