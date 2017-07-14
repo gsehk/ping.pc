@@ -3,7 +3,7 @@
     <div class="chat_title">
         评论的
         <span class="close_btn close">
-            <a href="javascript:;">×</a>
+            <a href="javascript:;" onclick="message.msgbox.close();">×</a>
         </span>
     </div>
     <div class="comment_list">
@@ -31,7 +31,7 @@
     <div class="chat_title">
         点赞的
         <span class="close_btn close">
-            <a href="javascript:;">×</a>
+            <a href="javascript:;" onclick="message.msgbox.close();">×</a>
         </span>
     </div>
     <div class="comment_list">

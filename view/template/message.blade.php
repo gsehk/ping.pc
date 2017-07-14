@@ -66,15 +66,6 @@ $(function(){
 	}
 })
 
-var close = function(){
-	$('.close>a').on('click',function(){
-		$('#msgbox-shield').remove();
-	    $('#msgbox-main').attr('id', 'msgbox-remove');
-	    setTimeout(function() {
-	        $('#msgbox-remove').remove();
-	    }, 1000);
-	});
-};
 var getMsgBody = function(type){
 	if (type) {
 		$('.message-body').html(loadHtml);
@@ -82,7 +73,6 @@ var getMsgBody = function(type){
 			var html = JSON.parse(html);
 			$('.message-body').html(html);
 			$("img.lazy").lazyload({effect: "fadeIn"});
-			close();
 		});
 	}
 };
