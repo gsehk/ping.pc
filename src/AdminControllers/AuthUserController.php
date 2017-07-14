@@ -56,7 +56,7 @@ class AuthUserController extends Controller
 
             return response()->json(static::createJsonData([
                 'status'  => true,
-                'message' => '认证成功',
+                'message' => '提交成功，请等待审核',
             ]))->setStatusCode(200);
         }
     }
