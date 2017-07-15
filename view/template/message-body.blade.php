@@ -4,6 +4,7 @@
         评论的
     </div>
     <div class="comment_list">
+        @if($list->count())
         @foreach($list as $val) 
             <div class="com_list">
                 <div class="com_img"><a href="/index/{{$val['user_id']}}" target="_blank"><img src="{{$val['user']['avatar']}}" /></a></div>
@@ -21,6 +22,9 @@
                 </div>
             </div>
         @endforeach
+        @else
+            <div class="no_data_div"><div class="no_data"><img src="{{$routes['resource']}}/images/pic_default_people.png" /><p>暂无评论消息</p></div></div>
+        @endif        
     </div>
 </div>
 @elseif($type == 'zan')
@@ -29,6 +33,7 @@
         点赞的
     </div>
     <div class="comment_list">
+        @if($list->count())
         @foreach($list as $val) 
             <div class="com_list">
                 <div class="com_img zan_img"><a href="/index/{{$val['user_id']}}" target="_blank"><img src="{{$val['info']['avatar']}}" /></a></div>
@@ -42,6 +47,9 @@
                 </div>
             </div>
         @endforeach
+        @else
+            <div class="no_data_div"><div class="no_data"><img src="{{$routes['resource']}}/images/pic_default_people.png" /><p>暂无点赞消息</p></div></div>
+        @endif
     </div>
 </div>
 @endif

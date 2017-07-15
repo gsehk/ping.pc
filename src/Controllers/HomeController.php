@@ -216,8 +216,9 @@ class HomeController extends BaseController
         $user_id = $this->mergeData['TS']['id'] ?? 0;
         // 设置单页数量
         $limit = $request->limit ?? 15;
+        $following_user_id = $request->user()->follows ? $request->user()->follows->pluck('following_user_id')->toArray() : [0];
         $feeds = Feed::orderBy('id', 'DESC')
-            ->whereIn('user_id', array_merge([$user_id], $request->user()->follows->pluck('following_user_id')->toArray()))
+            ->whereIn('user_id', array_merge([$user_id], $following_user_id))
             ->where(function ($query) use ($request) {
                 if ($request->max_id > 0) {
                     $query->where('id', '<', $request->max_id);

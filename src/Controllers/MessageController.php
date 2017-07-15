@@ -5,6 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Zhiyi\Plus\Models\Digg;
 use Illuminate\Http\Request;
+use Zhiyi\Plus\Models\Like as LikeModel;
 use Zhiyi\Plus\Models\Comment;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
@@ -19,63 +20,88 @@ class MessageController extends BaseController
 		return view('pcview::template.message', $data, $this->mergeData);
 	}
 
-	public function pl(Request $request)
+	public function pl(Request $request, Comment $model)
 	{
-		$uid = $request->user()->id;
-        $limit = $request->input('limit', 15);
-        $max_id = $request->input('max_id', 0);
-        $comment = Comment::
-            where(function ($query) use ($uid) {
-                $query->where('target_user', $uid)->orWhere('reply_user', $uid);
+        $user = $request->user();
+        $limit = $request->query('limit', 1);
+        $after = (int) $request->query('after', 0);
+
+        $comments = $model->getConnection()->transaction(function () use ($user, $limit, $after, $model) {
+            return $model->where(function ($query) use ($user) {
+                return $query->where('target_user', $user->id)
+                    ->orWhere('reply_user', $user->id);
             })
-            ->where('user_id', '!=', $uid)
-            ->with('user.datas')
-            ->paginate(1);
-        
-        $data['list'] = $comment->map(function ($data) {
-        	$data->info = $this->formatUserDatas($data->user);
-			return $this->formmatOldDate($data);
+            ->where('user_id', '!=', $user->id)
+            ->when($after, function ($query) use ($after) {
+                return $query->where('id', '<', $after);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
         });
+        $data['list'] = $comments->map(function ($data) {
+            $data->info = $this->formatUserDatas($data->user);
+            return $this->formmatOldDate($data);
+        });        
 
         $data['type'] = 'pl';
-        $data['page'] = $comment->appends(['type'=>'pl'])->links('pcview::template.page');
-		$html = view('pcview::template.message-body', $data, $this->mergeData)->render();
+        $data['page'] = $comments->appends(['type'=>'pl'])->links('pcview::template.page');
+        $html = view('pcview::template.message-body', $data, $this->mergeData)->render();        
 
-		echo json_encode($html);
+        echo json_encode($html);
 	}
 
 	public function zan(Request $request)
 	{
-		$uid = $request->user()->id;
-        $digg = Digg::
-            where('to_user_id', $uid)
-            ->with('user.datas')
-            ->paginate(1);
+        $limit = $request->query('limit', 1);
+        $after = $request->query('after', false);
+        $user = $request->user();        
 
-        $data['list'] = $digg->map(function ($data) {
+        $likes = LikeModel::with('likeable')
+            ->where('target_user', $user->id)
+            ->when($after, function ($query) use ($after) {
+                return $query->where('id', '<', $after);
+            })
+            ->paginate($limit);      
+
+        $data['list'] = $likes->map(function ($data) {
         	$data->info = $this->formatUserDatas($data->user);
 			return $data;
         });
 
         $data['type'] = 'zan';
-        $data['page'] = $digg->appends(['type'=>'zan'])->links('pcview::template.page');
+        $data['page'] = $likes->appends(['type'=>'zan'])->links('pcview::template.page');
         $html = view('pcview::template.message-body', $data, $this->mergeData)->render();
 
         echo json_encode($html);
 	}
 
-	public function getMessageBody(Request $request, $type)
+    public function tz(Request $request)
+    {
+        $app = app(\Zhiyi\Plus\Http\Controllers\APIs\V1\UserController::class)->flushMessages($request);
+        if ($app->original['status'] === true) {
+            $data = $app->original['data'];
+            foreach ($data as $key => $value) {
+                # code...
+            }
+            echo json_encode($data);
+        }
+    }
+
+	public function getMessageBody(Request $request, Comment $model, $type)
 	{
 		switch ($type) {
 			case 'pl':
-				$this->pl($request);
+                $this->pl($request, $model);
 				break;
 			case 'zan':
 				$this->zan($request);
 				break;
-			case 'at':
-				# code...
+			case 'tz':
+				$this->tz($request);
 				break;
+            case 'at':
+                # code...
+                break;            
 		}
 	}
 
