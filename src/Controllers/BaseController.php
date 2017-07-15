@@ -64,9 +64,9 @@ class BaseController extends Controller
             $this->mergeData['routes']['resource'] = asset('');
 
             // Socket地址
-	        $imserviceconfig = CommonConfig::byNamespace('common')->byName('im:serve')->first();
-	        $imserviceconfig->value = '119.23.200.80';
-	        $this->mergeData['routes']['socket'] = 'http://' . $imserviceconfig->value;
+	        // $imserviceconfig = CommonConfig::byNamespace('common')->byName('im:serve')->first();
+	        // $imserviceconfig->value = ;
+	        $this->mergeData['routes']['socket_url'] = '114.215.203.142:9900';
 
     		return $next($request);
     	});

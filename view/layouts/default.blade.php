@@ -15,7 +15,7 @@
         var NAME = "{{ $TS['name'] or '' }}";
         var AVATAR = "{{ $TS['avatar'] }}";
         var TOKEN = "{{ $TS['token'] or '' }}";
-        var SOCKET = "{{ $TS['routes']['socket'] or ''}}"
+        var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
     <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/message.css" rel="stylesheet">
@@ -26,6 +26,7 @@
     <script src="{{ $routes['resource'] }}/js/jquery.lazyload.min.js"></script>
     <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
     <script src="{{ $routes['resource'] }}/js/common.js"></script>
+    <script src="{{ $routes['resource'] }}/js/module.socket.js"></script>
     <script src="{{ $routes['resource'] }}/js/module.message.js"></script>
 </head>
 

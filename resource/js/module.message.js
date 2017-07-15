@@ -432,9 +432,37 @@ var message = new function() {
 
     self.init = function(args) {
         if (MID <= 0) return;
-        /* Socket连接 */
-        if (SOCKET) {
-        } 
+
+        if(SOCKET_URL) { //判断是否配置im聊天服务器
+            
+            // var webSocket = null;
+            // var options = {
+            //     url: SOCKET_URL,
+            //     onOpen : function(event) {
+            //         console.log('打开Socket连接：ws://' + SOCKET_URL);
+            //     },
+            //     onSend : function(message) {
+            //         console.log('发送数据包：' + message);
+            //     },
+            //     onMessage : function(message) {
+            //         console.log('服务器数据包：' + message);
+            //     },
+            //     onError : function(event) {
+            //         console.log('WebSocket错误：view console');
+            //     },
+            //     onClose : function(event) {
+            //         if(!webSocket) return;
+            //         webSocket = null;
+            //         console.log('WebSocket关闭：ws://' + SOCKET_URL);
+            //     }
+            // };
+
+            // // 非连接状态及未连接状态 连接SOCKET
+            // if ((webSocket && webSocket.socket.readyState != 1) || webSocket == null) {
+            //     SOCKET_URL  = SOCKET_URL + '?token=tzfx1Yg6hJNoMUBxdxn6fwIAAAA';
+            //     webSocket = $.websocket(options);
+            // }
+        }
 
 
         $(function() {
