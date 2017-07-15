@@ -22,7 +22,7 @@
         @php $imgNum = count($post['feed']['storages']); @endphp
         <div style="position: relative; margin-bottom: 8px;" id="layer-photos-demo{{$post['feed']['feed_id']}}">
         @if($imgNum == 1)
-          <img class="lazy img-responsive" style="min-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$post['feed']['storages'][0]['storage_id']}}?w=555&h=312"/>
+          <img class="lazy img-responsive" style="min-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$post['feed']['storages'][0]['storage_id']}}"/>
         @elseif($imgNum == 2)
             <div style="width: 100%; display: flex;">
               <div style="width: 35vw;" class="showImgBox">
