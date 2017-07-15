@@ -545,8 +545,9 @@ class HomeController extends BaseController
     {
         $user_id = $this->mergeData['TS']['id'];
 
+        $following_user_id = $request->user()->follows ? $request->user()->follows->pluck('following_user_id')->toArray() : [0];
         $feed = Feed::orderBy('id', 'DESC')
-            ->whereIn('user_id', array_merge([$user_id], $request->user()->follows->pluck('following_user_id')->toArray()))
+            ->whereIn('user_id', array_merge([$user_id], $following_user_id))
             ->where('id', $feed_id)
             ->withCount(['diggs' => function ($query) use ($user_id) {
                 if ($user_id) {
