@@ -1,8 +1,9 @@
 var message = new function() {
 
     var self = this;
+
+    /* 任务栏配置 */
     self.params = {
-        /*任务栏配置*/
         taskbar: {
             clickLi: function(li, e) {console.log(li)},
             clickLiClearMsgnum: true,
@@ -19,34 +20,17 @@ var message = new function() {
                     title: "赞",
                     src: PUBLIC_URL + '/images/message/zan.png',
                     icon:'<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xihuande-copy"></use></svg>',
-                },
-                /*"tz": {
-                    id: 'tz',
-                    title: "通知",
-                    src: PUBLIC_URL + '/images/message/tz.png'
-                },*/
-                "at": {
-                    id: 'at',
-                    title: 'At我的',
-                    src: PUBLIC_URL + '/images/message/at.png',
-                    icon:'<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xiangguande-copy"></use></svg>',
-                },
-                /*"lxr": {
-                    id: 'lxr',
-                    title: "联系人",
-                    src: PUBLIC_URL + '/images/message/lxr.png'
-                }*/
+                }
             }
-        } //任务栏配置结束
+        }
     };
 
-    /* 任务栏 开始 */
+    /* 任务栏 */
     var taskbar = {
 
         el: '<div id="message-taskbar">\
                <div class="wrap">\
                  <ul id="message-fixed" class="message-list"></ul>\
-                 <i class="sys-user"></i>\
                  <ul id="message-users" class="message-list"></ul>\
                </div>\
                <div class="smartButton" show="1">\
@@ -66,7 +50,6 @@ var message = new function() {
         /* # 储存消息总数 */
         messageCount: 0,
 
-        /* #  */
         limitHeight: 47,
 
         /**
@@ -108,17 +91,6 @@ var message = new function() {
             /* # 前置判断，判断分辨率问题 */
             taskbar.messageStatus = $(document).width() < 1140;
             if (!taskbar.messageStatus) {
-                // taskbar.jq().animate({
-                //     right: '0',
-                //     top: 0
-                // }, 1500);
-                // taskbar.jq('.smartButton').show().animate({
-                //     left: 0,
-                //     opacity: 0
-                // }, 450);
-                // taskbar.jq('.wrap').animate({
-                //         marginLeft: 0
-                // }, 100);
                 taskbar.jq().css({
                     right: 0,
                     top: 0
@@ -128,7 +100,6 @@ var message = new function() {
                     opacity: 0
                 });
                 taskbar.jq('.wrap').css('margin-left', 0);
-                /* # 中断，不执行初始化 */
                 return false;
             };
 
@@ -408,7 +379,6 @@ var message = new function() {
                     if (typeof self.params.taskbar.clickLi == 'function') {
                         self.params.taskbar.clickLi(li, e);
                     }
-                    taskbar.setSmartShow(true);
                 } catch (e) {}
                 return false;
             }).on('mouseup', '.message-list li', function() {
@@ -455,145 +425,6 @@ var message = new function() {
 
     }; /* 任务栏 结束 */
 
-    var msgbox = {
-        el: '<div id="msgbox-shield"></div>\
-              <div id="msgbox-main">\
-                <div class="msgbox-body"></div>\
-                <div class="msgbox-footer-wrap">\
-                 <div class="msgbox-footer">\
-                 </div>\
-                </div>\
-              </div>',
-        open: function(data) {
-            if (!msgbox.exist()) {
-                $('body').append(msgbox.el);
-                $('#msgbox-shield').data('st', $(window).scrollTop());
-                $('#msgbox-shield,#msgbox-main .close a').click(function() {
-                    msgbox.close();
-                });
-            } else {
-                msgbox.onclose();
-            }
-            msgbox.setData(data || {});
-        },
-        close: function() {
-            msgbox.onclose();
-            $('#msgbox-shield').remove();
-            $('#msgbox-main').attr('id', 'msgbox-remove');
-            setTimeout(function() {
-                $('#msgbox-remove').remove();
-            }, 1000);
-        },
-        exist: function() {
-            return $('#msgbox-main').length > 0;
-        },
-        setData: function(data) {
-            if (!msgbox.exist()) return;
-            var title = $('#msgbox-main .msgbox-title');
-            /*标题 系统消息[<span>ThinkSNS是智士软件旗下开源社交软件</span>] */
-            data.title = data.title || '消息盒子';
-            title.find('h3').children().remove();
-            title.find('h3').empty().append(data.title);
-            /*导航链接 <a href="">全部</a><a href="">微吧</a><a href="">分享</a> */
-            data.navs = data.navs || '';
-            if (data.navs) {
-                title.find('h3').append('<span class="navs"></span>');
-                title.find('h3 .navs:last').append(data.navs);
-            }
-            /*按钮 <a href="javascript:;">按钮名称</a> */
-            data.btn = data.btn || '';
-            title.find('.btn').children().remove();
-            if (data.btn) {
-                title.find('.btn').empty().append(data.btn);
-            }
-            /*内容*/
-            var msgbody = $('#msgbox-main .msgbox-body');
-            if (data.loading) {
-                msgbody.addClass('msgbox-loading');
-            } else {
-                msgbody.removeClass('msgbox-loading');
-            }
-            msgbody.children().remove();
-            msgbody.empty();
-            msgbody.append(data.content);
-            /*底部*/
-            var footer = $('#msgbox-main .msgbox-footer');
-            footer.children().remove();
-            footer.empty();
-            if (data.footer) {
-                footer.parent().show();
-                footer.append(data.footer);
-            } else {
-                footer.parent().hide();
-            }
-            msgbox.scrollY(data.scrollY || 0, data.scrollYTime);
-        },
-        scrollY: function(y, time) {
-            if (y == 'same') return;
-            var msgbody = $('#msgbox-main .msgbox-body');
-            if (y == 'top') {
-                y = 0;
-            } else if (y == 'bottom') {
-                y = 0;
-                msgbody.children().each(function(i, c) {
-                    y += $(c).outerHeight(true);
-                });
-                y = y - msgbody.height() + 100;
-            }
-            time = time === undefined ? 200 : time;
-            if (time <= 0) {
-                msgbody.stop().scrollTop(y);
-            } else {
-                msgbody.stop().animate({
-                    scrollTop: parseInt(y)
-                }, time);
-            }
-        },
-        openUrl: function(url, loading) {
-            if (loading !== false) {
-                msgbox.open({
-                    title: 'loading...',
-                    loading: true,
-                });
-            }
-            $.get(url, function(html) {
-                if (!msgbox.exist()) return;
-                var content = $(html).filter('#set-data');
-                var data = {
-                    content: html,
-                    loading: false,
-                    scrollY: 0
-                };
-                if (content.length > 0) {
-                    data.title = content.data('title');
-                    data.navs = content.data('navs');
-                    data.btn = content.data('btn');
-                    data.footer = content.data('footer');
-                    if (content.data('scrolly')) {
-                        data.scrollY = content.data('scrolly');
-                    }
-                    var time = parseInt(content.data('scrollytime'));
-                    if (!isNaN(time)) {
-                        data.scrollYTime = time;
-                    }
-                }
-                msgbox.open(data);
-            });
-        },
-        openRoom: function(query) {
-            // var url = U('public/WebMessage/room')+'&'+query;
-            msgbox.openUrl(url, !msgbox.exist());
-        },
-        oncloseCallback: null,
-        onclose: function(callback) {
-            if (callback) {
-                msgbox.oncloseCallback = callback;
-            } else if (msgbox.oncloseCallback) {
-                msgbox.oncloseCallback();
-                msgbox.oncloseCallback = null;
-            }
-        }
-    };
 
     self._init = function(args) {
         self.init(args);
@@ -601,13 +432,19 @@ var message = new function() {
 
     self.init = function(args) {
         if (MID <= 0) return;
+        /* Socket连接 */
+        if (SOCKET) {
+            if 
+        } 
+
+
         $(function() {
             taskbar.build();
             self.params.taskbar.clickLi = function(li) {
                 if (li.data('type') == 'fixed' && !li.data('roomid')) {
-                    msgbox.openUrl('/webMessage/index/'+li.data('id'));
+                    ly.load('/webMessage/index/' + li.data('id'), '');
                 } else {
-                    msgbox.openRoom('roomid=' + li.data('roomid'));
+                    ly.load('/webMessage/room/' + li.data('roomid'));
                 }
             }
 
@@ -659,12 +496,6 @@ var message = new function() {
     };
 
     self.taskbar = taskbar;
-    self.msgbox = msgbox;
-    self.openUrl = msgbox.openUrl;
-    self.openRoom = msgbox.openRoom;
-    self.close = msgbox.close;
     self.setMessageNumber = taskbar.setMessageNumber;
-    self.scrollY = msgbox.scrollY;
-    self.onclose = msgbox.onclose;
     return undefined;
 };

@@ -15,6 +15,7 @@
         var NAME = "{{ $TS['name'] or '' }}";
         var AVATAR = "{{ $TS['avatar'] }}";
         var TOKEN = "{{ $TS['token'] or '' }}";
+        var SOCKET = "{{ $TS['routes']['socket'] or ''}}"
     </script>
     <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/message.css" rel="stylesheet">

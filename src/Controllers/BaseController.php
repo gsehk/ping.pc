@@ -10,6 +10,7 @@ use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Zhiyi\Plus\Models\AuthToken;
+use Zhiyi\Plus\Models\CommonConfig;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
@@ -61,6 +62,11 @@ class BaseController extends Controller
 	        // 公共配置
             $this->mergeData['routes']['storage'] = '/api/v2/files/';
             $this->mergeData['routes']['resource'] = asset('');
+
+            // Socket地址
+	        $imserviceconfig = CommonConfig::byNamespace('common')->byName('im:serve')->first();
+	        $imserviceconfig->value = '119.23.200.80';
+	        $this->mergeData['routes']['socket'] = 'http://' . $imserviceconfig->value;
 
     		return $next($request);
     	});
