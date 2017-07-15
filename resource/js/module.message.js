@@ -432,9 +432,8 @@ var message = new function() {
 
     self.init = function(args) {
         if (MID <= 0) return;
-
+        return;
         if(SOCKET_URL) { //判断是否配置im聊天服务器
-            
             // var webSocket = null;
             // var options = {
             //     url: SOCKET_URL,
@@ -459,7 +458,7 @@ var message = new function() {
 
             // // 非连接状态及未连接状态 连接SOCKET
             // if ((webSocket && webSocket.socket.readyState != 1) || webSocket == null) {
-            //     SOCKET_URL  = SOCKET_URL + '?token=tzfx1Yg6hJNoMUBxdxn6fwIAAAA';
+            //     SOCKET_URL  = SOCKET_URL + '?token=Kl77IrETrRVCh6aup1MFdg8AAAA';
             //     webSocket = $.websocket(options);
             // }
         }
