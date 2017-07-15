@@ -434,7 +434,6 @@ var message = new function() {
         if (MID <= 0) return;
         /* Socket连接 */
         if (SOCKET) {
-            if 
         } 
 
 
