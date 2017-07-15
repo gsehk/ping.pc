@@ -116,8 +116,9 @@
 </div>
 
 <div class="inf_cont clearfix">
-    <div class="inf_main">
+    <div class="inf_main clearfix">
         <div class="inf_left">
+            <span class="more"></span>
             <ul class="news_cate_tab">
             <a href="javascript:;" data-cid="0" @if($cid == 0) class="dy_59" @endif><li>全部</li></a>
             @if (isset($cate))
@@ -232,6 +233,13 @@ setTimeout(function() {
 }, 300);
 
 $(document).ready(function(){
+    var cateH = $('.news_cate_tab').innerHeight();
+                $('.news_cate_tab').css('height', '86px');
+    if (cateH > 86) {
+        $('.more').show();
+    } else {
+        $('.more').hide();
+    }
     // banner
     $('.unslider').unslider({delay:3000,dots: true});
 
@@ -244,6 +252,16 @@ $(document).ready(function(){
         $(this).addClass('dy_59');
     });
     $("img.lazy").lazyload({effect: "fadeIn"});
+
+    $('.more').on('click', function(){
+        if ($(this).hasClass('more_up')) {
+            $('.news_cate_tab').animate({height: '86px'});
+            $(this).removeClass('more_up');
+        } else {
+            $('.news_cate_tab').animate({height: cateH});
+            $(this).addClass('more_up');
+        }
+    })
 });
 </script>
 @endsection
