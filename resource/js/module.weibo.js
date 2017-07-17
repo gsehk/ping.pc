@@ -650,10 +650,9 @@ var collect = {
             url: url,
             type: 'POST',
             dataType: 'json',
-            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
             error: function(xml) {},
-            success: function(res) {
-                if (res.status == true) {
+            success: function(res, data, xml) {
+                if (xml.status == 201) {
                     $collect = $('#collect' + feed_id);
                     var num = $collect.attr('rel');
                     num++;
@@ -673,17 +672,15 @@ var collect = {
 
     },
     delCollect: function(feed_id, page) {
-
         if (collect.collectlock == 1) {
             return false;
         }
         collect.collectlock = 1;
-        var url = request_url.collect_feed.replace('{feed_id}', feed_id);
+        var url = request_url.del_collect_feed.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
             type: 'DELETE',
             dataType: 'json',
-            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
             error: function(xml) {},
             success: function(res, data, xml) {
                 if (xml.status == 204) {

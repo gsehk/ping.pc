@@ -15,6 +15,8 @@ var request_url = {
     collect_news: API + 'news/{news_id}/collection',
     /* 评论文章 */
     comment_news: API + 'news/{news_id}/comment',
+    /* 删除文章评论 */
+    del_news_comment: API + 'news/{news_id}/comment/{comment_id}',    
     // 新闻评论
     get_comment: '/information/{news_id}/comments',
     /* 分享 */
@@ -25,22 +27,22 @@ var request_url = {
     feed_comment: '/api/v2/feeds/{feed_id}/comments',
     /* 删除分享评论  */
     del_feed_comment: '/api/v2/feeds/{feed_id}/comments/{comment_id}',
-    /* 删除文章评论 */
-    del_news_comment: API + 'news/{news_id}/comment/{comment_id}',
     /* 删除分享 */
-    delete_feed: API + 'feeds/{feed_id}',
+    delete_feed: '/api/v2/feeds/{feed_id}',
     /*  举报分享  */
     denounce_feed: '/feed/{feed_id}/denounce',
     /* 分享点赞 */
     feed_like: '/api/v2/feeds/{feed_id}/like',
     /* 分享点赞 */
     feed_unlike: '/api/v2/feeds/{feed_id}/unlike',
-    /* 获取分享评论 */
-    get_feed_commnet: '/home/{feed_id}/comments',
     /* 收藏分享  */
-    collect_feed: API + 'feeds/{feed_id}/collection',
+    collect_feed: '/api/v2/feeds/{feed_id}/collections',
+    /* 删除分享*/
+    del_collect_feed: '/api/v2/feeds/{feed_id}/uncollect',
     /* 获取用户的分享 */
     get_user_feed: '/profile/users/{user_id}',
+    /* 获取分享评论 */
+    get_feed_commnet: '/home/{feed_id}/comments',    
     /* 获取用户的文章 */
     get_user_news: '/profile/news/{user_id}',
     /* 获取用户的收藏 */
