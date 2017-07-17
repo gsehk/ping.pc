@@ -119,7 +119,7 @@ class InformationController extends BaseController
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function release(Request $request, int $news_id)
+    public function release(Request $request, int $news_id = null)
     {
         $data = [];
         $user_id = $this->mergeData['TS']['id'] ?? 0;

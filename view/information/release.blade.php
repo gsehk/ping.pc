@@ -42,7 +42,7 @@
                 </span>
                 <span class="ai_face_box">
                     <img src="
-                    @if ($storage)
+                    @if (!empty($storage))
                         {{$routes['storage']}}{{$storage}}?w=230&h=163
                     @else
                         {{$routes['resource']}}/images/pic_upload.png
