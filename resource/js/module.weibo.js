@@ -402,26 +402,30 @@ var comment = {
         if ("undefined" != typeof(this.addComment) && (this.addComment == true)) {
             return false; //不要重复评论
         }
-
-        var content = _textarea.value;
+        var formData = {
+            comment_content: _textarea.value,
+            comment_mark: mark_time,
+        };
+        if (to_uid > 0) {
+            formData.reply_to_user_id = to_uid;
+        }
         var url = request_url.feed_comment.replace('{feed_id}', feedid);
-
         obj.innerHTML = '评论中..';
 
         $.ajax({
             url: url,
             type: 'POST',
-            data: { comment_content: content, reply_to_user_id: to_uid },
+            data: formData,
             dataType: 'json',
             error: function(xml) {},
-            success: function(res) {
-                if (res.status == true) {
+            success: function(res, data, xml) {
+                if (xml.status == 201) {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<p class="comment'+res.data+' comment_con">';
-                        html += '<span>' + NAME + '：</span>' + content + '';
-                        html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.data+', '+feedid+');">删除</a>';
+                    var html = '<p class="comment'+res.id+' comment_con">';
+                        html += '<span>' + NAME + '：</span>' + formData.comment_content + '';
+                        html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.id+', '+feedid+');">删除</a>';
                         html += '</p>';
                     var commentBox = $('.comment_box' + feedid);
                     var commentNum = $('.cs' + feedid);
@@ -452,7 +456,13 @@ var comment = {
             noticebox('评论内容长度为1-' + initNums + '字', 0);
             return false;
         }
-        var content = _textarea.value;
+        var formData = {
+            comment_content: _textarea.value,
+            comment_mark: mark_time,
+        };
+        if (this.to_uid > 0) {
+            formData.reply_to_user_id = this.to_uid;
+        }        
 
         if ("undefined" != typeof(this.addReadComment) && (this.addReadComment == true)) {
             return false; //不要重复评论
@@ -465,7 +475,7 @@ var comment = {
         $.ajax({
             url: url,
             type: 'POST',
-            data: { comment_content: content, reply_to_user_id: this.to_uid },
+            data: formData,
             dataType: 'json',
             beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
             error: function(xml) {},
@@ -474,7 +484,7 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<div class="delComment_list comment'+res.data+'">';
+                    var html = '<div class="delComment_list comment'+res.id+'">';
                         html += '<div class="comment_left">';
                         html += '<a href="/profile/index?user_id='+MID+'"><img src="'+AVATAR+'" class="c_leftImg" /></a>';
                         html += '</div>';
@@ -482,8 +492,8 @@ var comment = {
                         html += '<a href="/profile/index?user_id='+MID+'"><span class="del_ellen">' + NAME + '</span></a>';
                         html += '<span class="c_time">刚刚</span>';
                         /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                        html += '<p class="comment_con">' + content + '';
-                        html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.data+', '+comment.row_id+')"';
+                        html += '<p class="comment_con">' + formData.comment_content + '';
+                        html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.id+', '+comment.row_id+')"';
                         html += 'class="del_comment">删除</a>';
                         html += '</p></div></div>';
                     var commentBox = $(comment.box);
@@ -603,7 +613,7 @@ var digg = {
                 } else {
                     alert(res.message);
                 }
-                
+
                 digg.digglock = 0;
             }
         });

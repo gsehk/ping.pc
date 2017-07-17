@@ -1,6 +1,7 @@
 var initNums = 255;
 var loadHtml = "<div class='loading'><img src='" + PUBLIC_URL + "/images/loading.png' class='load'>加载中</div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
+var mark_time = MID + new Date().getTime();
 var request_url = {
     /* 登录 */
     login: '/passport/index',
@@ -21,9 +22,9 @@ var request_url = {
     /* 获取附件 */
     images: '/api/v2/files/',
     /* 分享评论 */
-    feed_comment: API + 'feeds/{feed_id}/comment',
+    feed_comment: '/api/v2/feeds/{feed_id}/comments',
     /* 删除分享评论  */
-    del_feed_comment: API + 'feeds/{feed_id}/comment/{comment_id}',
+    del_feed_comment: '/api/v2/feeds/{feed_id}/comments/{comment_id}',
     /* 删除文章评论 */
     del_news_comment: API + 'news/{news_id}/comment/{comment_id}',
     /* 删除分享 */
@@ -32,7 +33,7 @@ var request_url = {
     denounce_feed: '/feed/{feed_id}/denounce',
     /* 分享点赞 */
     feed_like: '/api/v2/feeds/{feed_id}/like',
-    /* 分享取消赞 */
+    /* 分享点赞 */
     feed_unlike: '/api/v2/feeds/{feed_id}/unlike',
     /* 获取分享评论 */
     get_feed_commnet: '/home/{feed_id}/comments',

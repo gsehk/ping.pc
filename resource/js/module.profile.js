@@ -310,14 +310,14 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = request_url.digg_feed.replace('{feed_id}', feed_id);
+        var url = request_url.feed_like.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
             type: 'POST',
             dataType: 'json',
             error: function(xml) {},
-            success: function(res) {
-                if (res.status == true) {
+            success: function(res, data, xml) {
+                if (xml.status == 201) {
                     $digg = $('#digg' + feed_id);
                     var num = $digg.attr('rel');
                     num++;
@@ -343,7 +343,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = request_url.digg_feed.replace('{feed_id}', feed_id);
+        var url = request_url.feed_unlike.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -526,12 +526,16 @@ var comment = {
             noticebox('评论内容长度为1-' + initNums + '字', 0);
             return false;
         }
-        var content = _textarea.value;
-
         if ("undefined" != typeof(this.addComment) && (this.addComment == true)) {
             return false; //不要重复评论
-        }
-
+        }        
+        var formData = {
+            comment_content: _textarea.value,
+            comment_mark: mark_time,
+        };
+        if (to_uid > 0) {
+            formData.reply_to_user_id = to_uid;
+        }        
         var url = request_url.feed_comment.replace('{feed_id}', feedid);
 
         obj.innerHTML = '评论中..';
@@ -539,7 +543,7 @@ var comment = {
         $.ajax({
             url: url,
             type: 'POST',
-            data: { comment_content: content, reply_to_user_id: to_uid },
+            data: formData,
             dataType: 'json',
             error: function(xml) {},
             success: function(res) {
@@ -547,9 +551,9 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<p class="comment'+res.data+' comment_con">';
-                        html += '<span>' + NAME + '：</span>' + content + '';
-                        html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.data+', '+feedid+');">删除</a>';
+                    var html = '<p class="comment'+res.id+' comment_con">';
+                        html += '<span>' + NAME + '：</span>' + formData.comment_content + '';
+                        html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.id+', '+feedid+');">删除</a>';
                         html += '</p>';
                     var commentBox = $('.comment_box' + feedid);
                     var commentNum = $('.cs' + feedid);
