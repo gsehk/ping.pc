@@ -196,7 +196,7 @@
     @endif
     <div class="dy_comment">
         <span class="digg" id="digg{{$post['feed']['feed_id']}}" rel="{{$post['tool']['feed_digg_count']}}">
-            @if($post['tool']['is_digg_feed'] <= 0)
+            @if(!$post['tool']['is_digg_feed'])
             <a href="javascript:;" onclick="digg.addDigg({{$post['feed']['feed_id']}})">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post['tool']['feed_digg_count']}}</font>
             </a>

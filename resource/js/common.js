@@ -31,7 +31,9 @@ var request_url = {
     /*  举报分享  */
     denounce_feed: '/feed/{feed_id}/denounce',
     /* 分享点赞 */
-    digg_feed: API + 'feeds/{feed_id}/digg',
+    feed_like: '/api/v2/feeds/{feed_id}/like',
+    /* 分享取消赞 */
+    feed_unlike: '/api/v2/feeds/{feed_id}/unlike',
     /* 获取分享评论 */
     get_feed_commnet: '/home/{feed_id}/comments',
     /* 收藏分享  */
@@ -52,7 +54,7 @@ var request_url = {
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-        'Authorization': TOKEN,
+        'Authorization': 'Bearer'+' '+TOKEN,
     }
 });
 

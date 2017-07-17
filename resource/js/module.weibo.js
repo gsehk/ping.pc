@@ -551,14 +551,14 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = request_url.digg_feed.replace('{feed_id}', feed_id);
+        var url = request_url.feed_like.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
             type: 'POST',
             dataType: 'json',
             error: function(xml) {},
-            success: function(res) {
-                if (res.status == true) {
+            success: function(res, data, xml) {
+                if (xml.status == 201) {
                     $digg = $('#digg' + feed_id);
                     var num = $digg.attr('rel');
                     num++;
@@ -568,7 +568,6 @@ var digg = {
                     } else {
                         $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>' + num + '</font></a>');
                     }
-
                 } else {
                     alert(res.message);
                 }
@@ -584,7 +583,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = request_url.digg_feed.replace('{feed_id}', feed_id);
+        var url = request_url.feed_unlike.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -601,11 +600,10 @@ var digg = {
                     } else {
                         $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>' + num + '</font></a>');
                     }
-
                 } else {
                     alert(res.message);
                 }
-
+                
                 digg.digglock = 0;
             }
         });

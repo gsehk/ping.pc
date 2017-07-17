@@ -72,7 +72,7 @@ class HomeController extends BaseController
      */
     public function read(Request $request, int $feed_id)
     {
-        $uid = $this->mergeData['TS']['id'] ?? 0;
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
         if (! $feed_id) {
 
             return response('动态ID不能为空');
@@ -98,16 +98,14 @@ class HomeController extends BaseController
         $data['feed']['storages'] = $feed->images->map(function ($images) {
             return ['storage_id' => $images->id, 'width' => explode('x', $images->size)[0], 'height' => explode('x', $images->size)[1]];
         });
-
-        // 工具栏数据
-        $data['tool'] = [];
-        $data['tool']['feed_view_count'] = $feed->feed_view_count;
-        $data['tool']['feed_digg_count'] = $feed->feed_digg_count;
-        $data['tool']['feed_comment_count'] = $feed->feed_comment_count;
-        $data['tool']['feed_collection_count'] = count($feed->collection);
+        $data['feed']['feed_view_count'] = $feed->feed_view_count;
+        $data['feed']['feed_digg_count'] = $feed->like_count;
+        $data['feed']['feed_comment_count'] = $feed->feed_comment_count;
+        $data['feed']['feed_collection_count'] = count($feed->collection);
         // 暂时剔除当前登录用户判定
-        $data['tool']['is_digg_feed'] = $uid ? FeedDigg::byFeedId($feed->id)->byUserId($uid)->count() : 0;
-        $data['tool']['is_collection_feed'] = $uid ? FeedCollection::where('feed_id', $feed->id)->where('user_id', $uid)->count() : 0;
+        $data['feed']['is_digg_feed'] = $feed->liked($user_id);
+        $data['feed']['is_collection_feed'] = $feed->collected($user_id);
+
         // 动态评论,详情默认为空，自动获取评论列表接口
         $data['comments'] = [];
         // 分享者发布的文章信息
@@ -154,6 +152,7 @@ class HomeController extends BaseController
      */
     public function formatFeedList($feeds, $uid)
     {
+        $user_id = $this->mergeData['TS']['id'] ?? 0;
         $datas = [];
         foreach ($feeds as $feed) {
             $data = [];
@@ -173,11 +172,11 @@ class HomeController extends BaseController
             // 工具数据
             $data['tool'] = [];
             $data['tool']['feed_view_count'] = $feed->feed_view_count;
-            $data['tool']['feed_digg_count'] = $feed->feed_digg_count;
+            $data['tool']['feed_digg_count'] = $feed->like_count;
             $data['tool']['feed_comment_count'] = $feed->feed_comment_count;
             // 暂时剔除当前登录用户判定
-            $data['tool']['is_digg_feed'] = $uid ? FeedDigg::byFeedId($feed->id)->byUserId($uid)->count() : 0;
-            $data['tool']['is_collection_feed'] = $uid ? FeedCollection::where('feed_id', $feed->id)->where('user_id', $uid)->count() : 0;
+            $data['tool']['is_digg_feed'] = $feed->liked($user_id);
+            $data['tool']['is_collection_feed'] = $feed->collected($user_id);
             // 最新3条评论
             $data['comments'] = [];
 
@@ -224,7 +223,7 @@ class HomeController extends BaseController
                     $query->where('id', '<', $request->max_id);
                 }
             })
-            ->withCount(['diggs' => function ($query) use ($user_id) {
+            ->withCount(['likes' => function ($query) use ($user_id) {
                 if ($user_id) {
                     $query->where('user_id', $user_id);
                 }
@@ -262,7 +261,7 @@ class HomeController extends BaseController
                 ->skip($skip)
                 ->pluck('feed_id')
                 )
-            ->withCount(['diggs' => function ($query) use ($user_id) {
+            ->withCount(['likes' => function ($query) use ($user_id) {
                 if ($user_id) {
                     $query->where('user_id', $user_id);
                 }
@@ -299,7 +298,7 @@ class HomeController extends BaseController
                     $query->whereIn('id', $feed_ids);
                 }
             })
-            ->withCount(['diggs' => function ($query) use ($user_id) {
+            ->withCount(['likes' => function ($query) use ($user_id) {
                 if ($user_id) {
                     $query->where('user_id', $user_id);
                 }
@@ -549,7 +548,7 @@ class HomeController extends BaseController
         $feed = Feed::orderBy('id', 'DESC')
             ->whereIn('user_id', array_merge([$user_id], $following_user_id))
             ->where('id', $feed_id)
-            ->withCount(['diggs' => function ($query) use ($user_id) {
+            ->withCount(['likes' => function ($query) use ($user_id) {
                 if ($user_id) {
                     $query->where('user_id', $user_id);
                 }
