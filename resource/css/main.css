@@ -758,6 +758,9 @@ img {
     display: inline-block;
     margin: 40px 0 0 20px;
     color: #f87d72;
+    width: 94px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .index_intro {
