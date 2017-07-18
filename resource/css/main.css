@@ -1759,6 +1759,10 @@ img {
     text-align: center;
 }
 
+.infR_time .infR_time_3 {
+    width: 33.3%;
+}
+
 .infR_time li a {
     display: inline-block;
     height: 40px;
