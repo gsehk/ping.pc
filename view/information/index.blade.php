@@ -52,7 +52,7 @@
         @endif
     </div>
     <div class="inT_r">
-        {{ --<div class="inR_top">
+        {{-- <div class="inR_top">
             <img src="{{ $routes['resource'] }}/images/sign_bg.png" />
             <div class="inR_time">{{date('Y-m-d')}}</div>
             @if(empty($ischeck))
