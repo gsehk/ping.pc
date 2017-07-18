@@ -8,21 +8,21 @@
                 <span @if($page == 'account') class="c_333" @endif>资料设置</span>
             </div>
         </a>
-        <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
+        {{-- <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-auth') class="c_333" @endif>认证</span>
             </div>
-        </a>
+        </a>--}}
         <a href="{{ route('pc:account', ['page'=>'account-security']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-security') class="c_333" @endif>修改密码</span>
             </div>
         </a>
-        <!-- <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
+        {{-- <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-bind') class="c_333" @endif>绑定</span>
             </div>
-        </a> -->
+        </a> --}}
     </div>
     <div class="bas_right">
         @if(empty($auth))

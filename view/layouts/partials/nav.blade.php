@@ -22,12 +22,12 @@
                 <li>
                     <a href="{{ route('pc:collection') }}"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ route('pc:credit') }}"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>
                 </li>
                 <li>
                     <a href="{{ route('pc:account', ['page'=>'account-auth']) }}"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
-                </li>
+                </li> --}}
                 <li>
                     <a href="{{ route('pc:account') }}"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
                 </li>

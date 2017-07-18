@@ -48,18 +48,19 @@
         <div class="dy_signed">
             <div class="dyrTop">
                 <span class="dyrTop_r fs-14">
-                    已获积分
-                    <span class="totalnum">{{ $TS['credit'] or 0 }}</span>
+                    {{$TS['name']}}
+                    {{-- <span class="totalnum">{{ $TS['credit'] or 0 }}</span> --}}
                 </span>
                 <a href="{{ route('pc:myFeed', ['user_id' => $TS['id']]) }}">
                 <img src="{{ $TS['avatar'] }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                 </a>
             </div>
-            @if(empty($ischeck))
+            <div class="index_intro">{{$TS['intro']}}</div>
+            {{-- @if(empty($ischeck))
                 <div class="dy_qiandao" onclick="checkin();" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>每日签到<span>+5积分</span></div>
             @else 
                 <div class="dy_qiandao" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>已签到<span>连续签到<font class="colnum">{{$checkin['con_num']}}</font>天</span></div>
-            @endif
+            @endif --}}
         </div>
         @endif
 

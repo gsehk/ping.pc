@@ -10,21 +10,21 @@
                 <span @if($page == 'account') class="c_333" @endif>资料设置</span>
             </div>
         </a>
-        <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
+        {{-- <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-auth') class="c_333" @endif>认证</span>
             </div>
-        </a>
+        </a> --}}
         <a href="{{ route('pc:account', ['page'=>'account-security']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-security') class="c_333" @endif>修改密码</span>
             </div>
         </a>
-        <!-- <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
+        {{-- <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
             <div class="bas_list">
                 <span @if($page == 'account-bind') class="c_333" @endif>绑定</span>
             </div>
-        </a> -->
+        </a> --}}
     </div>
     <div class="bas_right" id="J-input">
         <div class="bas_header">
@@ -52,7 +52,7 @@
                   <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" @if($info['sex'] == 2) checked="checked" @endif>女</span>
                   <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck" @if($info['sex'] == 3) checked="checked" @endif>不方便透露</span>
             </div>
-            <div class="f_tel bas_div">
+            {{-- <div class="f_tel bas_div">
                 <label>生日</label>
                 <div class="f_select">
                     <span></span>
@@ -70,7 +70,7 @@
             <div class="f_tel bas_div">
                 <label>公司</label>
                 <span class="f_span"><input type="text" name="company" placeholder="输入公司名称" value="{{$info['company'] or ''}}"></span>
-            </div>
+            </div> --}}
             <div class="f_tel bas_div" id="sel_area">
                 <label>地区</label>
                 <div class="f_select">
