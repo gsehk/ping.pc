@@ -159,6 +159,7 @@ class InformationController extends BaseController
                 ->orderBy('news.id', 'desc')
                 ->select('news.id','news.title','news.subject','news.created_at','news.storage','news.comment_count','news.from')
                 ->withCount('collection')
+                ->take($limit)
                 ->get();
         } else {
             $datas = News::byAudit()
@@ -170,6 +171,7 @@ class InformationController extends BaseController
                 ->orderBy('id', 'desc')
                 ->select('id','title','subject','created_at','storage','comment_count','from')
                 ->withCount('collection')
+                ->take($limit)
                 ->get();
         }
         foreach ($datas as $value) {
