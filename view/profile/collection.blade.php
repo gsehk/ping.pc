@@ -57,7 +57,7 @@
                     </li>
                     @endforeach
                 </ul>
-                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a>
+                {{-- <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a> --}}
             </div>
             @endif
             <!-- 个人中心右侧推荐用户 -->
