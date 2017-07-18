@@ -834,6 +834,7 @@ img {
     display: inline-block;
     margin: 0;
     padding-left: 0;
+    margin-bottom: 15px;
 }
 
 .dyrBottom li {
