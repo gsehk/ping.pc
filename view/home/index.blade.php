@@ -71,7 +71,7 @@
                 @foreach ($rec_users as $rec_user)
                 <li>
                     <a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">
-                    <img src="{{ $rec_user['avatar'] }}?w=50&h=50" alt="{{ $rec_user['name'] }}"/>
+                    <img src="{{ $rec_user['avatar'] }}" alt="{{ $rec_user['name'] }}"/>
                     </a>
                     <span><a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
                 </li>
