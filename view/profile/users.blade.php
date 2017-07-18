@@ -42,15 +42,15 @@
                     </div>
                     <div class="fan_subtitle">{{ $data['user']['intro'] or '这家伙什么都没有写'}}</div>
                     <div class="fan_number">
-                        <span class="fan_num">粉丝<span>{{ $data['user']['data_count'] or 0}}</span></span>
-                        <span class="fan_careNum">关注<span>{{ $data['user']['dataing_count'] or 0}}</span></span>
+                        <span class="fan_num">粉丝<span>{{ $data['extra']['followers_count'] or 0}}</span></span>
+                        <span class="fan_careNum">关注<span>{{ $data['extra']['followings_count'] or 0}}</span></span>
                     </div>
                 </div>
             </div>
             <div class="fan_line"></div>
             <div class="fanList_bottom">
                 @foreach ($data['storages'] as $storage)
-                <a href="/home/{{ $storage['id'] }}/feed"> <img  class="lazy" data-original="{{ $routes['storage'] }}{{ $storage['feed_storage_id'] }}" /></a>
+                <a href="/home/{{$storage->id}}/feed"> <img  class="lazy" data-original="{{$routes['storage']}}{{$storage->file_id}}?w=100&h=100" /></a>
                 @endforeach
 
                 @for ($i = 0; $i < (3 -count($data['storages'])); $i++)
