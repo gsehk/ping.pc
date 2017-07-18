@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="dy_cont">
-    <!--top-->
+    {{-- top --}}
     <div class="dyn_top">
         @if (!empty($user['cover']))
         <img src="{{ $routes['storage'] }}{{ $user['cover'] }}" class="dynTop_bg" />
@@ -23,9 +23,9 @@
             </div>
             <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>
             <div class="dyn_lImg">
-                <!-- <a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}"> -->
+                {{-- <a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}"> --}}
                     <img src="{{ $user['avatar']}} " alt="{{ $user['name'] }}"/>
-                <!-- </a> -->
+                {{-- </a> --}}
             </div>
         </div>
     </div>
@@ -57,12 +57,8 @@
         </span>
         @endif
 
-        @if (!empty($user['province']))
-        <span class="dyn_address"><i class="icon iconfont icon-site"></i>
-            {{$user['province']}}
-            @if(!empty($user['city'])){{'· '.$user['city']}}@endif
-            @if(!empty($user['area'])){{'· '.$user['area']}}@endif
-        </span>
+        @if (!empty($user['location']))
+        <span class="dyn_address"><i class="icon iconfont icon-site"></i>{{$user['location']}}</span>
         @endif
         @if(!empty($TS) && $TS['id'] == $user['id'])
         <a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
@@ -74,14 +70,14 @@
             @else
             <div id="follow" status="1" class="their_followed">已关注</div>
             @endif
-            <!-- <div>私信</div> -->
+            {{-- <div>私信</div> --}}
         </div>
         @endif
     </div>
     <div class="dy_cont">
-        <!--left-->
+        {{-- left --}}
         <div class="dy_left"></div>
-        <!--《center》-->
+        {{-- 《center》 --}}
         <div class="dy_cCont dy_left_border">
             <div class="dy_center" style="width:664px;">
                 <div class="dy_cen">
@@ -96,17 +92,17 @@
                 </div>
             </div>
         </div>
-        <!--<right>-->
+        {{-- <right> --}}
         <div class="dy_right" style="margin-left:27px">
             <div class="dyrBottom">
                 <ul class="infR_time">
                     <li type="followeds"><a class="hover" href="javascript:void(0);">粉丝</a></li>
                     <li type="followings"><a href="javascript:void(0);">关注</a></li>
-                    <li type="visitors"><a href="javascript:void(0);">访客</a></li>
+                    {{-- <li type="visitors"><a href="javascript:void(0);">访客</a></li> --}}
                 </ul>
 
                 <div id="followeds" class="userdiv" style="display:block">
-                @if (!empty($followeds))
+                @if (!$followeds->isEmpty())
                 <ul class="userlist">
                     @foreach ($followeds as $followed)
                     <li>
@@ -117,14 +113,14 @@
                     </li>
                     @endforeach
                 </ul>
-                @if(count($followeds >= 6))<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>1, 'user_id'=>$followed['id']]) }}">更多</a>@endif
+                @if($followeds->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>1, 'user_id'=>$followed['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif
                 </div>
 
                 <div id="followings" class="userdiv">
-                @if (!empty($followings))
+                @if (!$followings->isEmpty())
                 <ul class="userlist">
                     @foreach ($followings as $following)
                     <li>
@@ -135,14 +131,13 @@
                     </li>
                     @endforeach
                 </ul>
-                @if(count($followings >= 6))<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>2, 'user_id'=>$following['id']]) }}">更多</a>@endif
+                @if($followings->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>2, 'user_id'=>$following['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif  
                 </div>
 
-
-                <div id="visitors" class="userdiv">
+                {{-- <div id="visitors" class="userdiv">
                 @if (!empty($visitors))
                 <ul class="userlist">
                     @foreach ($visitors as $visitor)
@@ -158,7 +153,7 @@
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif  
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

@@ -274,7 +274,7 @@ var digg = {
             url: url,
             type: 'POST',
             dataType: 'json',
-            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
+            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN); },
             error: function(xml) {},
             success: function(res) {
                 if (res.status == true) {
@@ -303,7 +303,7 @@ var digg = {
             url: url,
             type: 'DELETE',
             dataType: 'json',
-            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
+            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN); },
             error: function(xml) {},
             success: function(res, data, xml) {
                 if (xml.status == 204) {
@@ -352,7 +352,7 @@ var collect = {
             url: url,
             type: 'POST',
             dataType: 'json',
-            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
+            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN); },
             error: function(xml) {},
             success: function(res) {
                 if (res.status == true) {
@@ -536,6 +536,7 @@ var comment = {
             type: 'POST',
             data: { comment_content: content, reply_to_user_id: this.to_uid },
             dataType: 'json',
+            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN); },
             error: function(xml) {},
             success: function(res) {
                 if (res.status == true) {

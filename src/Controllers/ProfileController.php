@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use Carbon\Carbon;
-use Zhiyi\Plus\Models\Area;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\UserDatas;
-use Zhiyi\Plus\Models\Followed;
-use Zhiyi\Plus\Models\Following;
 use Zhiyi\Plus\Models\FileWith;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVisitor;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
@@ -31,85 +28,38 @@ class ProfileController extends BaseController
      * @param  int|null $user_id 用户id
      * @return [type]            [description]
      */
-    public function index(Request $request, int $user_id = null)
+    public function index(Request $request, User $model, int $user_id = null)
     {
         if(empty($this->mergeData['TS']) && empty($user_id)) {
             Session::put('history', route('pc:myFeed'));
             return redirect(route('pc:index'));
         }
+        $current_user = $request->user();
         $user_id = $user_id ?: $this->mergeData['TS']['id'];
-        $type = $request->input('type') ?: 'all';
+        $data['type'] = $type = $request->input('type') ?: 'all';
 
-        if (!empty($this->mergeData['TS']) && $this->mergeData['TS']['id'] == $user_id) {
-            $data['user'] = $this->mergeData['TS'];
-        } else {
-            $user = User::where('id', $user_id)
-                        ->with('datas', 'counts')
-                        ->first();
-            $data['user'] = $this->formatUserDatas($user);
+        $user = $model->where('id', $user_id)
+                ->with('datas', 'counts')
+                ->first();
+        $data['user'] = $this->formatUserDatas($user);
+        $data['user']['location'] = str_replace(' ', ' · ', $data['user']['location']);
 
-            // 是否关注
-            $data['my_follow_status'] = Followed::where('followed_user_id', $this->mergeData['TS']['id'])
-                                    ->where('user_id', $user_id)
-                                    ->first() ? 1 : 0;
-
-            // 访客
-            if (!empty($this->mergeData['TS'])) {
-                $visitor = UserVisitor::where([['user_id', $this->mergeData['TS']['id']], ['to_uid', $user_id]])->first();
-                if ($visitor) {
-                    $visitor->save();
-                }else{
-                    $visitor = new UserVisitor();
-                    $visitor->user_id = $this->mergeData['TS']['id'];
-                    $visitor->to_uid = $user_id;
-                    $visitor->save();
-                }
-            }
-        }
-
-        // 地区
-        if (!empty($data['user']['province'])) {
-            $data['user']['province'] = Area::where('id', $data['user']['province'])
-                                        ->value('name');
-        }
-        if (!empty($data['user']['city'])) {
-            $data['user']['city'] = Area::where('id', $data['user']['city'])
-                                        ->value('name');
-        }
-        if (!empty($data['user']['area'])) {
-            $data['user']['area'] = Area::where('id', $data['user']['area'])
-                                        ->value('name');
-        }
-
-        $data['type'] = $type;
-
+        // 是否关注
+        $data['my_follow_status'] = $current_user ? $current_user->hasFollwing($user->id) ? 1 : 0 : 0;
+        
         // 粉丝
-        $followeds = Followed::where('user_id', $user_id)
-            ->orderBy('id', 'DESC')
-            ->with('user.datas')
-            ->take(9)
-            ->get();
-        foreach ($followeds as $followed) {
-            $data['followeds'][] = $this->formatUserDatas($followed->user);
-        }
+        $followers = $user->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
+        $data['followeds'] = [];
+        $data['followeds'] = $followers->map(function ($follower) {
+                return $this->formatUserDatas($follower);
+            });
 
         // 关注
-        $followings = Following::where('user_id', $user_id)
-            ->orderBy('id', 'DESC')
-            ->with('user.datas')
-            ->take(9)
-            ->get();
-        foreach ($followings as $following) {
-            $data['followings'][] = $this->formatUserDatas($following->user);
-        }
-        // 访客
-        $visitors = UserVisitor::where('to_uid', $user_id)
-                ->with('user.datas')
-                ->take(9)
-                ->get();
-        foreach ($visitors as $visitor) {
-            $data['visitors'][] = $this->formatUserDatas($visitor->user);
-        }
+        $followings = $user->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();        
+        $data['followings'] = [];
+        $data['followings'] = $followings->map(function ($following) {
+                return $this->formatUserDatas($following);
+            });
 
         return view('pcview::profile.index', $data, $this->mergeData);
     }
@@ -121,53 +71,35 @@ class ProfileController extends BaseController
      * @param  int|integer $type    文章类型
      * @return [type]               [description]
      */
-    public function article(Request $request, int $user_id = null, int $type = 0)
+    public function article(Request $request, User $model, int $user_id = null, int $type = 0)
     {
+        $current_user = $request->user();
         $user_id = $user_id ?: $this->mergeData['TS']['id'];
+        $data['type'] = $type;        
 
-        if (!empty($this->mergeData['TS']) && $this->mergeData['TS']['id'] == $user_id) {
-            $data['user'] = $this->mergeData['TS'];
-        } else {
-            $user = User::where('id', $user_id)
+        $user = $model->where('id', $user_id)
                 ->with('datas', 'counts')
                 ->first();
-            $data['user'] = $this->formatUserDatas($user);
-        }
-        // 地区
-        if (!empty($data['user']['province'])) {
-            $data['user']['province'] = Area::where('id', $data['user']['province'])
-                                    ->value('name');
-        }
-        if (!empty($data['user']['city'])) {
-            $data['user']['city'] = Area::where('id', $data['user']['city'])
-                                ->value('name');
-        }
-        if (!empty($data['user']['area'])) {
-            $data['user']['area'] = Area::where('id', $data['user']['area'])
-                                 ->value('name');
-        }
+        $data['user'] = $this->formatUserDatas($user);
+        $data['user']['location'] = str_replace(' ', ' · ', $data['user']['location']);
 
+        // 是否关注
+        $data['my_follow_status'] = $current_user ? $current_user->hasFollwing($user->id) ? 1 : 0 : 0;        
         $data['type'] = $type;
 
         // 粉丝
-        $followeds = Followed::where('user_id', $user_id)
-            ->orderBy('id', 'DESC')
-            ->with('user.datas')
-            ->take(9)
-            ->get();
-        foreach ($followeds as $followed) {
-            $data['followeds'][] = $this->formatUserDatas($followed->user);
-        }
+        $followers = $user->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
+        $data['followeds'] = [];
+        $data['followeds'] = $followers->map(function ($follower) {
+                return $this->formatUserDatas($follower);
+            });
 
         // 关注
-        $followings = Following::where('user_id', $user_id)
-            ->orderBy('id', 'DESC')
-            ->with('user.datas')
-            ->take(9)
-            ->get();
-        foreach ($followings as $following) {
-            $data['followings'][] = $this->formatUserDatas($following->user);
-        }
+        $followings = $user->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();        
+        $data['followings'] = [];
+        $data['followings'] = $followings->map(function ($following) {
+                return $this->formatUserDatas($following);
+            });
 
         return view('pcview::profile.article', $data, $this->mergeData);
     }
@@ -531,7 +463,7 @@ class ProfileController extends BaseController
                     $query->where('id', '<', $max_id);
                 }
             })
-            ->withCount(['diggs' => function ($query) use ($user_id) {
+            ->withCount(['likes' => function ($query) use ($user_id) {
                 if ($user_id) {
                     $query->where('user_id', $user_id);
                 }
@@ -550,7 +482,7 @@ class ProfileController extends BaseController
                     $query->where('feeds.id', '<', $max_id);
                 }
             })
-            ->withCount(['diggs' => function ($query) use ($user_id) {
+            ->withCount(['likes' => function ($query) use ($user_id) {
                 if ($user_id) {
                     $query->where('user_id', $user_id);
                 }
@@ -656,7 +588,7 @@ class ProfileController extends BaseController
                             $query->where('id', '<', $max_id);
                         }
                     })
-                    ->withCount(['diggs' => function ($query) use ($user_id) {
+                    ->withCount(['likes' => function ($query) use ($user_id) {
                         $query->where('user_id', $user_id);
                     }])
                     ->byAudit()

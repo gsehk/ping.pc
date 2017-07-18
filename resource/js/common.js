@@ -202,6 +202,7 @@ var follow = function(status, user_id, target, callback) {
             url: url,
             type: 'POST',
             data: { user_id: user_id },
+            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN) },
             success: function(response) {
                 callback(target);
             }
@@ -212,6 +213,7 @@ var follow = function(status, user_id, target, callback) {
             url: url,
             type: 'DELETE',
             data: { user_id: user_id },
+            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN) },
             success: function(response) {
                 callback(target);
             }

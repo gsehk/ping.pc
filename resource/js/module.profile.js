@@ -599,6 +599,7 @@ var comment = {
             type: 'POST',
             data: { comment_content: content, reply_to_user_id: to_uid },
             dataType: 'json',
+            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN); },
             error: function(xml) {},
             success: function(res) {
                 if (res.status == true) {
