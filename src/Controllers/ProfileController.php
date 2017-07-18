@@ -131,7 +131,7 @@ class ProfileController extends BaseController
             ->where('user_id', '!=', $this->mergeData['TS']['id'])
             ->select('id', 'user_id')
             ->with('user.datas')
-            ->orderBy(DB::raw('-value', 'desc'))->take(5)->get();
+            ->orderBy(DB::raw('-value', 'desc'))->take(9)->get();
 
         foreach ($_rec_users as $_rec_user) {
             $data['rec_users'][] = $this->formatUserDatas($_rec_user->user);
