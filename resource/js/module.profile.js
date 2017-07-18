@@ -546,8 +546,8 @@ var comment = {
             data: formData,
             dataType: 'json',
             error: function(xml) {},
-            success: function(res) {
-                if (res.status == true) {
+            success: function(res, data, xml) {
+                if (xml.status == 201) {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }

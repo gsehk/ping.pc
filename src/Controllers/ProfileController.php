@@ -212,7 +212,7 @@ class ProfileController extends BaseController
                     'id' => $following->pivot->id,
                     'user_id' => $following->pivot->target,
                     'user' => $this->formatUserDatas($following),
-                    'extra' => $follower->extra,
+                    'extra' => $following->extra,
                     'my_follow_status' => $current_user ? $current_user->hasFollwing($following->id) ? 1 : 0 : 0, // 当前用户对该用户的关注状态
                     'follow_status' => $following->hasFollwing($current_user_id) ? 1 : 0, // 该用户对当前用户的关注状态
                     'storages' => FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
@@ -444,11 +444,11 @@ class ProfileController extends BaseController
             // 工具数据
             $data['tool'] = [];
             $data['tool']['feed_view_count'] = $feed->feed_view_count;
-            $data['tool']['feed_digg_count'] = $feed->feed_digg_count;
+            $data['tool']['feed_digg_count'] = $feed->like_count;
             $data['tool']['feed_comment_count'] = $feed->feed_comment_count;
             // 暂时剔除当前登录用户判定
-            $data['tool']['is_digg_feed'] = $uid ? FeedDigg::byFeedId($feed->id)->byUserId($uid)->count() : 0;
-            $data['tool']['is_collection_feed'] = $uid ? FeedCollection::where('feed_id', $feed->id)->where('user_id', $uid)->count() : 0;
+            $data['tool']['is_digg_feed'] = $feed->liked($uid);
+            $data['tool']['is_collection_feed'] = $feed->collected($uid);            
             // 最新3条评论
             $data['comments'] = [];
 
@@ -457,13 +457,8 @@ class ProfileController extends BaseController
                 ->orderBy('id', 'desc')
                 ->take($getCommendsNumber)
                 ->select(['id', 'user_id', 'created_at', 'comment_content', 'reply_to_user_id', 'comment_mark'])
-                ->with('user')
-                ->get()
-                ->toArray();
-            $user = $feed->user()
-                ->select('id', 'name')
-                ->with('datas')
-                ->first();
+                ->with('user')->get();
+            $user = $feed->user()->select('id', 'name')->with('datas')->first();
             $data['user'] = $this->formatUserDatas($user);
             $datas[] = $data;
         }
