@@ -52,7 +52,7 @@
         @endif
     </div>
     <div class="inT_r">
-        <div class="inR_top">
+        {{ --<div class="inR_top">
             <img src="{{ $routes['resource'] }}/images/sign_bg.png" />
             <div class="inR_time">{{date('Y-m-d')}}</div>
             @if(empty($ischeck))
@@ -61,7 +61,7 @@
             @else 
             <span class="inR_qd">已签到</span>
             @endif
-        </div>
+        </div> --}} 
         <div class="inR_bottom">
         <a href="{{ route('pc:users', ['type'=>2]) }}" title="">
             <div class="inR_bottom_list border_r">
