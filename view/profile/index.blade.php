@@ -107,7 +107,7 @@
                     @foreach ($followeds as $followed)
                     <li>
                         <a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">
-                            <img src="{{ $followed['avatar'] }}" />
+                            <img src="{{ $followed['avatar'] }}?w=50&h=50" />
                         </a>
                         <span><a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">{{ $followed['name'] }}</a></span>
                     </li>
