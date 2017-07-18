@@ -883,6 +883,7 @@ var uploadPccover = function(image, f, task_id) {
         type: 'PATCH',
         data: { cover_storage_task_id: task_id },
         dataType: 'json',
+        beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
         success: function(res) {
             noticebox('更换背景图成功', 1);
             $('.dynTop_bg').attr('src', image.src);
