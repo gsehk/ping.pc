@@ -115,8 +115,9 @@ $('#J-submit').on('click', function(e) {
         type: 'PATCH',
         data: args,
         dataType: 'json',
+        beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
         error: function(xml) {
-            // noticebox('资料修改失败', 0, 'refresh');
+            noticebox('资料修改失败', 0, 'refresh');
         },
         success: function(res) {
             noticebox('资料修改成功', 1, 'refresh');
@@ -134,6 +135,7 @@ var resetPwd = function() {
         type: 'PATCH',
         data: { password: password, new_password: new_pwd, _token: token },
         dataType: 'json',
+        beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
         error: function(xml) {
             noticebox('密码修改失败', 0);
         },
