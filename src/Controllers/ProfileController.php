@@ -81,7 +81,7 @@ class ProfileController extends BaseController
                 ->with('datas', 'counts')
                 ->first();
         $data['user'] = $this->formatUserDatas($user);
-        $data['user']['location'] = str_replace(' ', ' · ', $data['user']['location']);
+        $data['user']['location'] = !empty($data['user']['location']) ? str_replace(' ', ' · ', $data['user']['location']) : '';
 
         // 是否关注
         $data['my_follow_status'] = $current_user ? $current_user->hasFollwing($user->id) ? 1 : 0 : 0;        
