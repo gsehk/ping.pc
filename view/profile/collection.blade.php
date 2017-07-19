@@ -35,7 +35,7 @@
                     <img src="{{ $TS['avatar'] }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                     </a>
                 </div>
-                <div class="index_intro">{{$TS['intro']}}</div>
+                <div class="index_intro">{{ $TS['intro'] or '' }}</div>
                 {{-- @if(empty($ischeck))
                 <div class="dy_qiandao" onclick="checkin();" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>每日签到<span>+5积分</span></div>
                 @else 
