@@ -7,7 +7,6 @@ use DB;
 use Session;
 use Carbon\Carbon;
 use Zhiyi\Plus\Models\User;
-use Zhiyi\Plus\Models\UserDatas;
 use Zhiyi\Plus\Models\FileWith;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVisitor;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;

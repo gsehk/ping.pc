@@ -31,9 +31,9 @@
 </head>
 
 <body @yield('body_class')>
-<script type="text/javascript">
-    message.init();
-</script>
+    @php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+    @endphp
     <div class="wrap">
         <!-- nav -->
         @include('pcview::layouts.partials.nav')
@@ -66,5 +66,8 @@
     <!-- js -->
     @yield('scripts')
 
+    <script type="text/javascript">
+        message.init();
+    </script>
 </body>
 </html>

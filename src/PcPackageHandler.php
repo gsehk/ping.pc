@@ -1,6 +1,6 @@
 <?php
 
-namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Installer;
+namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
 use Closure;
 use Carbon\Carbon;

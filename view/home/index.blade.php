@@ -6,9 +6,7 @@
 <div class="dy_cont clearfix">
     <!--左-->
     @component('pcview::ucmenu')
-        555
     @endcomponent
-
     <!-- 中 -->
     <div class="dy_cCont">
         <div class="dy_center">

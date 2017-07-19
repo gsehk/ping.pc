@@ -5,7 +5,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Zhiyi\Plus\Models\UserDatas;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
@@ -29,36 +28,6 @@ class HomeController extends BaseController
     public function index(Request $request)
     {
     	$data['type'] = $request->input('type') ?: ($this->mergeData['TS'] ? 1 : 2);
-
-        // 积分
-        $data['credit'] = CreditSetting::where('name', 'check_in')->first();
-
-        // 签到
-        $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
-            ->where(function($query){
-                if ($this->mergeData) {
-                    $query->where('user_id', $this->mergeData['TS']['id']);
-                }
-            })
-            ->orderBy('created_at', 'desc')
-            ->first();
-        $data['checkin'] = CheckInfo::where(function($query){
-                if ($this->mergeData) {
-                    $query->where('user_id', $this->mergeData['TS']['id']);
-                }
-            })->orderBy('created_at', 'desc')->first();
-
-        // 推荐用户
-        $_rec_users = UserDatas::where('key', 'feeds_count')
-        ->where('user_id', '!=', $this->mergeData['TS']['id'])
-        ->select('id', 'user_id')
-        ->with('user.datas')
-        ->orderBy(DB::raw('-value', 'desc'))
-        ->take(9)
-        ->get();
-        foreach ($_rec_users as $_rec_user) {
-            $data['rec_users'][] = $this->formatUserDatas($_rec_user->user);
-        }
 
     	return view('pcview::home.index', $data, $this->mergeData);
     }

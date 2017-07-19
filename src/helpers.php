@@ -2,6 +2,9 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use function asset as plus_asset;
 use function view as plus_view;
 
@@ -118,4 +121,12 @@ function replaceUrl($content)
     }, $content);
 
     return $content;
+}
+
+function createRequest($method = 'POST', $url = '', $params = array())
+{
+    $request = Request::create($url, $method, $params);
+    $request->headers->add(['Authorization'=>'123']);
+    $response = Route::dispatch($request)->getData();
+    return $response;
 }
