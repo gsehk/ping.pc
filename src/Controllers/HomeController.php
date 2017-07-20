@@ -5,6 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Zhiyi\Plus\Models\User as UserModel;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
@@ -16,6 +17,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedComment;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Services\FeedCount;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class HomeController extends BaseController
 {
@@ -27,7 +29,7 @@ class HomeController extends BaseController
      */
     public function index(Request $request)
     {
-    	$data['type'] = $request->input('type') ?: ($this->mergeData['TS'] ? 1 : 2);
+    	$data['type'] = $request->input('type') ?: ($this->mergeData['TS'] ? 'follow' : 'hot');
 
     	return view('pcview::home.index', $data, $this->mergeData);
     }
@@ -41,75 +43,57 @@ class HomeController extends BaseController
      */
     public function read(Request $request, int $feed_id)
     {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
-        if (! $feed_id) {
-
-            return response('动态ID不能为空');
-        }
-        $feed = Feed::byFeedId($feed_id)->with('images')->with('user.datas')->first();
-
-        if (! $feed) {
-            return response('动态不存在或已被删除');
-        }
-        
-        // 组装数据
-        $data = [];
-        // 用户标识
-        $data['user_id'] = $feed->user_id;
-        // 动态内容
-        $data['feed'] = [];
-        $data['feed']['feed_id'] = $feed->id;
-        $data['feed']['feed_title'] = $feed->feed_title ?: '';
-        $data['feed']['feed_content'] = replaceUrl($feed->feed_content);
-        $data['feed']['share_desc'] = str_replace(PHP_EOL, '', substr($feed->feed_content, 0, 60));
-        $data['feed']['created_at'] = $feed->created_at->toDateTimeString();
-        $data['feed']['feed_from'] = $feed->feed_from;
-        $data['feed']['storages'] = $feed->images->map(function ($images) {
-            return ['storage_id' => $images->id, 'width' => explode('x', $images->size)[0], 'height' => explode('x', $images->size)[1]];
-        });
-        $data['feed']['feed_view_count'] = $feed->feed_view_count;
-        $data['feed']['feed_digg_count'] = $feed->like_count;
-        $data['feed']['feed_comment_count'] = $feed->feed_comment_count;
-        $data['feed']['feed_collection_count'] = count($feed->collection);
-        // 暂时剔除当前登录用户判定
-        $data['feed']['is_digg_feed'] = $feed->liked($user_id);
-        $data['feed']['is_collection_feed'] = $feed->collected($user_id);
-
-        // 动态评论,详情默认为空，自动获取评论列表接口
-        $data['comments'] = [];
+        $feed = createRequest('GET', '/api/v2/feeds/'.$feed_id);
+        $feed->collect_count = $feed->collection->count();
+        $data['feed'] = $feed;
         // 分享者发布的文章信息
-        $news = News::where('author', $feed->user_id)
-                ->withCount('newsCount') //当前作者文章数
-                ->with('user.datas')
-                ->first();
+        $news = News::byAudit()->where('author', $feed->user_id)->first();
         if ($news) {
-            $data['news']['user'] = $this->formatUserDatas($news->user); 
-            $data['news']['newsNum'] = $news->news_count_count;
-            $data['news']['list'] = $news->where('author', $feed->user_id)
-                ->orderBy('created_at', 'desc')
-                ->take(4)
-                ->select('id','title')
-                ->get();
-            $data['news']['hotsNum'] = $news->join('news_cates_links', 'news.id','=','news_cates_links.news_id')
-                ->where([['news.author','=',$feed->user_id], ['news_cates_links.cate_id','=',1]])
-                ->count();
+            $data['user'] = $news->user;
+            $data['news'] = [
+                'newsNum' => $news->newsCount->where('audit_status', 0)->count(),
+                'list' => $news->where('author', $feed->user_id)->select('id','title')->take(4)->get(),
+                'hotsNum' => $news->join('news_cates_links', 'news.id','=','news_cates_links.news_id')
+                 ->where([['news.author','=',$feed->user_id], ['news_cates_links.cate_id','=',1]])->count(),
+            ];
         }else{
-            $data['news']['user'] = $this->formatUserDatas($feed->user);
-            $data['news']['newsNum'] = 0;
-            $data['news']['hotsNum'] = 0;
-            $data['news']['list'] = [];
+            $data['user'] = UserModel::find($feed->user_id);
+            $data['news'] = [
+                'list' => [],
+                'newsNum' => 0,
+                'hotsNum' => 0
+            ];
         }
-        
-        /* 近期热点 */
         $data['hots'] = [
             'week' => $this->getRecentHot(1),
             'month' => $this->getRecentHot(2),
             'quarter' => $this->getRecentHot(3),
         ];
-
+        // dump($feed->toArray());exit;
         Feed::byFeedId($feed_id)->increment('feed_view_count');
 
         return view('pcview::home.read',$data, $this->mergeData);
+    }
+
+    /**
+     * 分享列表
+     * 
+     * @param  Request $request [description]
+     * @return feed
+     */
+    public function feeds(Request $request)
+    {
+        $type = $request->type ?? null;
+        $after = $request->max_id ?? null;
+        $limit = $request->limit ?? null;
+        $feeds = createRequest('GET', '/api/v2/feeds', ['type' => $type, 'after' => $after]);
+        $feedData['html'] = view('pcview::template.feed', $feeds, $this->mergeData)->render();
+        $feedData['maxid'] = $feeds['feeds']->count()>0 ? $feeds['feeds'][$feeds['feeds']->count()-1]['id'] : 0;
+
+        return response()->json([
+                'status'  => true,
+                'data' => $feedData,
+        ]);
     }
 
     /**

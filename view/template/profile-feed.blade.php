@@ -6,7 +6,7 @@
 @if(isset($data))
 @foreach($data as $key => $post)
 <div class="cen_img cen_befor" id="feed{{$post['feed']['feed_id']}}">
-    <a href="{{route('pc:feedetail',['feed_id'=>$post['feed']['feed_id']])}}">
+    <a href="{{route('PC:FeedRead',['feed_id'=>$post['feed']['feed_id']])}}">
     <span class="cen_beforColor">
     @if(date('Y-m-d') == date('Y-m-d', strtotime($post['feed']['created_at'])))
         今天
@@ -266,7 +266,7 @@
                 @endif
             </div>
             @if(count($post['comments']) >= 3)
-            <div class="comit_all fs-12"><a href="{{route('pc:feedetail',['feed_id'=>$post['feed']['feed_id']])}}">查看全部评论</a></div>
+            <div class="comit_all fs-12"><a href="{{route('PC:FeedRead',['feed_id'=>$post['feed']['feed_id']])}}">查看全部评论</a></div>
             @endif
         </div>
     </div>

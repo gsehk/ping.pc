@@ -4,29 +4,31 @@
 <div class="dy_bg">
     <div class="dy_cont del_top">
         <div class="del_left">
-            @if($feed['storages'])
+            @if($feed->images)
             <div style="background: rgb(247, 248, 250);" id="layer-photos-demo">
-            @foreach($feed['storages'] as $store)
-            <img src="{{ $routes['storage']}}{{$store['storage_id'] }}?w=675" class="img-responsive" style="margin: 0 auto;" />
+            @foreach($feed->images as $store)
+            <img data-original="{{ $routes['storage']}}{{$store['file'] }}?w=675&h=380" 
+                class="lazy img-responsive" 
+                style="margin: 0 auto;width: 100%;" />
             @endforeach
             </div>
             @endif
             <div class="post_content">
-                {!!$feed['feed_content']!!}
+                {!!$feed->feed_content!!}
             </div>
             <div class="del_pro">
-                <span id="collect{{$feed['feed_id']}}" rel="{{ $feed['feed_collection_count'] }}">
-                    @if(!$feed['is_collection_feed'])
-                    <a href="javascript:;" onclick="collect.addCollect({{$feed['feed_id']}}, 'read')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">{{$feed['feed_collection_count']}}</font>人收藏</a>
+                <span id="collect{{$feed->id}}" rel="{{ $feed->collect_count }}">
+                    @if(!$feed->has_collect)
+                    <a href="javascript:;" onclick="collect.addCollect({{$feed->id}}, 'read')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">{{$feed->collect_count}}</font>人收藏</a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect({{$feed['feed_id']}}, 'read');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">{{$feed['feed_collection_count']}}</font>人收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect({{$feed->id}}, 'read');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">{{$feed->collect_count}}</font>人收藏</a>
                     @endif
                 </span>
-                <span id="digg{{ $feed['feed_id'] }}" rel="{{ $feed['feed_digg_count'] }}">
-                    @if(!$feed['is_digg_feed'])
-                    <a href="javascript:;" onclick="digg.addDigg('{{ $feed['feed_id'] }}','read');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">{{$feed['feed_digg_count']}}</font>人喜欢</a>
+                <span id="digg{{ $feed->id }}" rel="{{ $feed->like_count }}">
+                    @if(!$feed->has_like)
+                    <a href="javascript:;" onclick="digg.addDigg('{{ $feed->id }}','read');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">{{$feed->like_count}}</font>人喜欢</a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{ $feed['feed_id'] }}','read');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">{{$feed['feed_digg_count']}}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{ $feed->id }}','read');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">{{$feed->like_count}}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
@@ -36,16 +38,16 @@
                     <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
                 </div>
             </div>
-            <div class="del_comment"><span class="comment_count">{{ $feed['feed_comment_count'] }}</span>人评论</div>
+            <div class="del_comment"><span class="comment_count">{{ $feed->feed_comment_count }}</span>人评论</div>
             <div class="comment-box">
                 <textarea class="del_ta" id="mini_editor" placeholder="说点什么吧" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                 <div class="dy_company" style="margin: 0;">
-                    <!-- <span class="fs-14">
+                    {{-- <span class="fs-14">
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>
                         表情
-                    </span> -->
+                    </span> --}}
                     <span class="dy_cs" style="margin-left: 500px;">可输入<span class="nums">255</span>字</span>
-                    <button class="dy_share a_link" id="J-comment-feed" data-args="editor=#comment&box=#comment_detail&row_id={{ $feed['feed_id'] }}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
+                    <button class="dy_share a_link" id="J-comment-feed" data-args="editor=#comment&box=#comment_detail&row_id={{ $feed->id }}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
                 </div>
             </div>
             <div class="delComment_cont" id="comment_detail"></div>
@@ -54,15 +56,15 @@
         <div class="del_right">
             <div class="delTop">
                 <div class="delToP_left">
-                    <div> <img src="{{ $news['user']['avatar'] }}" /></div>
+                    <div> <img src="@if($user->avatar) {{$user->avatar}} @else {{$routes['resource']}}/images/avatar.png @endif" /></div>
                 </div>
                 <div class="delTop_right">
-                    <span>{{ $news['user']['name'] }}</span>
-                    <p class="txt-hide">{{ $news['user']['intro'] or '这家伙很懒，什么都没留下！' }}</p>
+                    <span>{{ $user->name }}</span>
+                    <p class="txt-hide">{{ $user->intro or '这家伙很懒，什么都没留下！' }}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="{{route('pc:article',['user_id'=>$user_id])}}">文章<span>{{ $news['newsNum'] }}</span></a>
+                        <a href="{{route('pc:article',['user_id'=>$feed->user_id])}}">文章<span>{{ $news['newsNum'] }}</span></a>
                     </li>
                     <li>
                         <a href="javascript:;">热门<span>{{ $news['hotsNum'] }}</span></a>
@@ -71,11 +73,11 @@
                 @foreach($news['list'] as $post)
                     <div class="del_rTop">
                         <span></span>
-                        <a href="/information/read/{{$post['id']}}">{{ $post['title'] }}</a>
+                        <a href="/information/read/{{$post->id}}">{{ $post->title }}</a>
                     </div>
                 @endforeach
             </div>
-            @if(count($news['list']) >= 3)<a href="{{route('pc:myFeed',['user_id'=>$user_id])}}" class="del_more">更多TA的文章</a>@endif
+            @if(count($news['list']) >= 3)<a href="{{route('pc:myFeed',['user_id'=>$feed->user_id])}}" class="del_more">更多TA的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
@@ -140,8 +142,8 @@ layer.photos({
 }); 
 
 $(document).ready(function(){
-
-    comment.init({row_id:'{{$feed['feed_id']}}', canload:true});
+    $("img.lazy").lazyload({effect: "fadeIn"});
+    comment.init({row_id:'{{$feed->id}}', canload:true});
 
     $('#j-recent-hot a').hover(function(){
         $('.list').hide();

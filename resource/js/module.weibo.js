@@ -12,33 +12,14 @@ weibo.init = function(option) {
     this.setting.loadcount = option.loadcount || 0; // 加载次数
     this.setting.loadmax = option.loadmax || 40; // 加载最大次数
     this.setting.maxid = option.maxid || 0; // 最大微博ID
-    this.setting.loadlimit = option.loadlimit || 10; // 每次加载的数目，默认为10
-    this.setting.cid = option.cid || 0; //  微博分类ID
+    this.setting.type = option.type || 0; //  微博分类
     this.setting.canload = option.canload || true; // 是否能加载
-    this.setting.page = option.page || 1; // 页码
     this.setting.loading = option.loading || '.dy_cen'; //加载图位置
-    if (option.cid) {
-        switch (parseInt(option.cid)) {
-            /* 热门微博 */
-            case 2:
-                this.setting.url = '/home/hots';
-                break;
-                /* 最新微博 */
-            case 3:
-                this.setting.url = '/home/feeds';
-                break;
-                /* 关注的微博 */
-            default:
-                this.setting.url = '/home/follows';
-        }
-    }
-
+    this.setting.url = request_url.feeds_list;
     weibo.bindScroll();
-
     if ($(weibo.setting.container).length > 0 && this.setting.canload) {
         $('.loading').remove();
         $(weibo.setting.loading).after(loadHtml);
-        // $(weibo.setting.container).append(loadHtml);
         weibo.loadMore();
     }
 };
@@ -58,7 +39,6 @@ weibo.bindScroll = function() {
                 if ($(weibo.setting.container).length > 0) {
                     $('.loading').remove();
                     $(weibo.setting.loading).after(loadHtml);
-                    // $(weibo.setting.container).append(loadHtml);
                     weibo.loadMore();
                 }
             }
@@ -86,9 +66,7 @@ weibo.loadMore = function() {
 
     var postArgs = {};
     postArgs.max_id = weibo.setting.maxid;
-    postArgs.limit = weibo.setting.loadlimit;
-    postArgs.cate_id = weibo.setting.cid;
-    postArgs.page = weibo.setting.page;
+    postArgs.type = weibo.setting.type;
     $.ajax({
         url: weibo.setting.url,
         type: 'GET',
@@ -99,7 +77,6 @@ weibo.loadMore = function() {
             if (res.data.maxid > 0) {
                 weibo.setting.canload = true;
                 // 修改加载ID
-                weibo.setting.page++;
                 weibo.setting.maxid = res.data.maxid;
                 var html = res.data.html;
                 if (weibo.setting.loadcount == 1) {
@@ -721,9 +698,9 @@ $(function() {
 
     // 微博分类tab
     $('.show_tab a').on('click', function() {
-        var cid = $(this).data('cid');
+        var type = $(this).data('type');
         $('#feeds-list').html('');
-        weibo.init({ container: '#feeds-list', cid: cid });
+        weibo.init({ container: '#feeds-list', type: type });
         $('.show_tab a').removeClass('dy_cen_333');
         $(this).addClass('dy_cen_333');
     });

@@ -29,10 +29,10 @@
             <div class="dy_cen">
                 <div class="show_tab">
                     @if (!empty($TS))
-                    <a href="javascript:;" data-cid="1" class="fs-16 @if ($type == 1) dy_cen_333 @endif">关注的</a>
+                    <a href="javascript:;" data-type="follow" class="fs-16 @if ($type == 'follow') dy_cen_333 @endif">关注的</a>
                     @endif
-                    <a href="javascript:;" data-cid="2" class="fs-16 @if ($type == 2) dy_cen_333 @endif">热门</a>
-                    <a href="javascript:;" data-cid="3" class="fs-16 @if ($type == 3) dy_cen_333 @endif">最新</a>
+                    <a href="javascript:;" data-type="hot" class="fs-16 @if ($type == 'hot') dy_cen_333 @endif">热门</a>
+                    <a href="javascript:;" data-type="new" class="fs-16 @if ($type == 'new') dy_cen_333 @endif">最新</a>
                 </div>
                 <div id="feeds-list"></div>
             </div>
@@ -107,7 +107,7 @@ setTimeout(function() {
     weibo.init({
         container: '#feeds-list',
         loading: '.dy_cen',
-        cid: "{{$type}}"
+        type: "{{$type}}"
     });
 }, 300);
 

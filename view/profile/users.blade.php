@@ -50,7 +50,7 @@
             <div class="fan_line"></div>
             <div class="fanList_bottom">
                 @foreach ($data['storages'] as $storage)
-                <a href="/home/{{$storage->id}}/feed"> <img  class="lazy" data-original="{{$routes['storage']}}{{$storage->file_id}}?w=100&h=100" /></a>
+                <a href="{{Route('PC:FeedRead', $storage->id)}}"> <img  class="lazy" data-original="{{$routes['storage']}}{{$storage->file_id}}?w=100&h=100" /></a>
                 @endforeach
 
                 @for ($i = 0; $i < (3 -count($data['storages'])); $i++)

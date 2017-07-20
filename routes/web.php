@@ -68,7 +68,14 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
 });
 
+Route::prefix('pc')->group(function () {
+    /* 动态列表 */
+    Route::get('/feeds', 'HomeController@feeds');
+    /* 动态详情 */
+    Route::get('feeds/{feed}', 'HomeController@read')->name('PC:FeedRead');
 
+
+});
 
 	// 动态
     Route::get('/home/index', 'HomeController@index')->name('pc:feed');
