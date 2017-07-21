@@ -70,23 +70,20 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
 Route::prefix('pc')->group(function () {
     /* 动态列表 */
-    Route::get('/feeds', 'HomeController@feeds');
+    Route::get('feeds', 'HomeController@feeds');
     /* 动态详情 */
-    Route::get('feeds/{feed}', 'HomeController@read')->name('PC:FeedRead');
-
-
+    Route::get('feeds/{feed}', 'HomeController@read')->name('PC:FeedRead')->where(['feed' => '[0-9]+']);
+    /* 动态评论列表 */
+    Route::get('feeds/{feed}/comments', 'HomeController@comments');
+    /* 动态收藏 */
+    Route::get('feeds/collection', 'HomeController@collection');
+    /* 文章收藏 */
+    Route::get('news/collection', 'HomeController@newsCollect');
 });
 
 	// 动态
     Route::get('/home/index', 'HomeController@index')->name('pc:feed');
-    Route::get('/home/{feed_id}/feed', 'HomeController@read')->where(['feed_id' => '[0-9]+'])->name('pc:feedetail');
-    Route::get('/home/{feed_id}/comments', 'HomeController@getFeedCommentList')->where(['feed_id' => '[0-9]+']);
-    Route::get('/home/follows', 'HomeController@getFollowFeeds');
-    Route::get('/home/hots', 'HomeController@getHotFeeds');
-    Route::get('/home/feeds', 'HomeController@getNewFeeds');
     Route::get('/home/checkin', 'HomeController@checkin');
-    Route::get('/home/{feed_id}/feedinfo', 'HomeController@getFeedInfo')->where(['feed_id' => '[0-9]+'])->name('pc:getfeed');
-    // Route::post('/home/{feed_id}/comment', 'HomeController@addComment')->where(['feed_id' => '[0-9]+']);
     // 举报
     Route::post('/feed/{feed_id}/denounce', 'FeedController@denounce')->where(['feed_id' => '[0-9]+']);
 
