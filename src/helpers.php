@@ -2,7 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
-
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use function asset as plus_asset;
@@ -126,7 +126,7 @@ function replaceUrl($content)
 function createRequest($method = 'POST', $url = '', $params = array())
 {
     $request = Request::create($url, $method, $params);
-    $request->headers->add(['Authorization'=>'123']);
+    $request->headers->add(['Authorization'=> 'Bearer '.Session::get('token')]);
     $response = Route::dispatch($request)->original;
     return $response;
 }
