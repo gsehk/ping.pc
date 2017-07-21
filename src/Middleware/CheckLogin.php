@@ -17,7 +17,7 @@ class CheckLogin
 
     public function handle(Request $request, Closure $next)
     {   
-        if (!$this->guard()->check()) {
+        if ( !Session::get('token') ) {
             $history = '/' . Route::getCurrentRoute()->uri;
             Session::put('history', $history);
             return redirect(route('pc:index'));
