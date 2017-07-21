@@ -127,6 +127,6 @@ function createRequest($method = 'POST', $url = '', $params = array())
 {
     $request = Request::create($url, $method, $params);
     $request->headers->add(['Authorization'=>'123']);
-    $response = Route::dispatch($request)->getData();
+    $response = Route::dispatch($request)->original;
     return $response;
 }

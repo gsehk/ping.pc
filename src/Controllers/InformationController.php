@@ -51,7 +51,7 @@ class InformationController extends BaseController
                 ->where('is_recommend', 1)
                 ->orderBy('id', 'desc')->take(6)
                 ->select('id','title','updated_at','storage','from','author')
-                ->with('storage', 'user.datas')
+                ->with('images', 'user.datas')
                 ->get();
         if (!$recommend->isEmpty()) {
             $recommend->first()->info = $this->formatUserDatas($recommend->first()->user);
@@ -200,13 +200,12 @@ class InformationController extends BaseController
                 // $stime = Carbon::createFromTimestamp($time->timestamp - $time->dayOfWeek*60*60*24);// 本周开始时间
                 // $etime = Carbon::createFromTimestamp($time->timestamp + (6-$time->dayOfWeek)*60*60*24); // 本周结束时间
 
-                // $datas = News::where('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                // $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                 $stime = $time->subDays(7)->toDateTimeString();
                 $datas = News::where('updated_at', '>', $stime)
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','content','from')
-                        ->with('storage')
+                        ->select('id','title')
                         ->get();
                 break;
             case 2:
@@ -216,8 +215,7 @@ class InformationController extends BaseController
                 $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','content','from')
-                        ->with('storage')
+                        ->select('id','title')
                         ->get();
                 break;
             case 3:
@@ -228,8 +226,7 @@ class InformationController extends BaseController
                 $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','content','from')
-                        ->with('storage')
+                        ->select('id','title')
                         ->get();
                 break;
         }

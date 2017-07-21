@@ -11,7 +11,7 @@ weibo.init = function(option) {
     this.setting.container = option.container; // 容器ID
     this.setting.loadcount = option.loadcount || 0; // 加载次数
     this.setting.loadmax = option.loadmax || 40; // 加载最大次数
-    this.setting.maxid = option.maxid || 0; // 最大微博ID
+    this.setting.after = option.after || 0; // 最后一条微博id
     this.setting.type = option.type || 0; //  微博分类
     this.setting.canload = option.canload || true; // 是否能加载
     this.setting.loading = option.loading || '.dy_cen'; //加载图位置
@@ -65,7 +65,7 @@ weibo.loadMore = function() {
     weibo.setting.loadcount++;
 
     var postArgs = {};
-    postArgs.max_id = weibo.setting.maxid;
+    postArgs.after = weibo.setting.after;
     postArgs.type = weibo.setting.type;
     $.ajax({
         url: weibo.setting.url,
@@ -74,10 +74,10 @@ weibo.loadMore = function() {
         dataType: 'json',
         error: function(xml) {},
         success: function(res) {
-            if (res.data.maxid > 0) {
+            if (res.data.after > 0) {
                 weibo.setting.canload = true;
                 // 修改加载ID
-                weibo.setting.maxid = res.data.maxid;
+                weibo.setting.after = res.data.after;
                 var html = res.data.html;
                 if (weibo.setting.loadcount == 1) {
                     $(weibo.setting.container).html(html);
@@ -223,7 +223,7 @@ var comment = {
     // 初始化评论对象
     init: function(attrs) {
         this.row_id = attrs.row_id || 0;
-        this.max_id = attrs.max_id || 0;
+        this.after = attrs.after || 0;
         this.limit = attrs.limit || 5;
         this.to_uid = attrs.to_uid || 0;
         this.canload = attrs.canload || 1;
@@ -259,36 +259,35 @@ var comment = {
     // 分享详情加载评论列表
     loadMore: function() {
         comment.canload = false;
-        var url = request_url.get_feed_commnet.replace('{feed_id}', comment.row_id);
+        var url = request_url.feed_commnets.replace('{feed_id}', comment.row_id);
         $.ajax({
             url: url,
             type: 'GET',
-            data: { max_id: comment.max_id, limit: comment.limit },
+            data: { after: comment.after},
             dataType: 'json',
             error: function(xml) {},
             success: function(res) {
                 if (res.data.length > 0) {
                     comment.canload = true;
-                    comment.max_id = res.data[res.data.length - 1].id;
+                    comment.after = res.after;
                     var data = res.data,
                         html = '';
                     for (var i in data) {
                         html += '<div class="delComment_list comment'+data[i].id+'">';
                         html += '<div class="comment_left">';
-                        html += '<a href="/profile/index?user_id='+data[i].user_id+'"><img src="' + data[i].info.avatar + '" class="c_leftImg" /></a>';
+                        html += '<a href="/index/'+data[i].user_id+'"><img src="' + data[i].user.avatar + '" class="c_leftImg" /></a>';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<a href="/profile/index?user_id='+data[i].user_id+'"><span class="del_ellen">' + data[i].info.name + '</span></a>';
+                        html += '<a href="/index/'+data[i].user_id+'"><span class="del_ellen">' + data[i].user.name + '</span></a>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
-                       /* html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                        html += '<p class="comment_con">' + data[i].comment_content + '';
+                        html += '<p class="comment_con">' + data[i].body + '';
                         html += '<span class="del_huifu">';
                             if (data[i].user_id != MID) {
-                                html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].info.name + '&canload=0&to_uid=' + data[i].user_id + '"';
+                                html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].user.name + '&canload=0&to_uid=' + data[i].user_id + '"';
                                 html += 'class="J-reply-comment">回复</a>';
                             }
                             if (data[i].user_id == MID) {
-                                html += '<a href="javascript:void(0)" onclick="comment.delComment('+data[i].id+', '+data[i].feed_id+')"';
+                                html += '<a href="javascript:void(0)" onclick="comment.delComment('+data[i].id+', '+data[i].commentable_id+')"';
                                 html += 'class="del_comment">删除</a>';
                             }
                         html += '</span>';
@@ -380,15 +379,13 @@ var comment = {
             return false; //不要重复评论
         }
         var formData = {
-            comment_content: _textarea.value,
-            comment_mark: mark_time,
+            body: _textarea.value,
         };
         if (to_uid > 0) {
-            formData.reply_to_user_id = to_uid;
+            formData.reply_user = to_uid;
         }
         var url = request_url.feed_comment.replace('{feed_id}', feedid);
         obj.innerHTML = '评论中..';
-
         $.ajax({
             url: url,
             type: 'POST',
@@ -401,7 +398,7 @@ var comment = {
                         obj.innerHTML = '评论';
                     }
                     var html = '<p class="comment'+res.id+' comment_con">';
-                        html += '<span>' + NAME + '：</span>' + formData.comment_content + '';
+                        html += '<span>' + NAME + '：</span>' + formData.body + '';
                         html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.id+', '+feedid+');">删除</a>';
                         html += '</p>';
                     var commentBox = $('.comment_box' + feedid);
@@ -434,11 +431,10 @@ var comment = {
             return false;
         }
         var formData = {
-            comment_content: _textarea.value,
-            comment_mark: mark_time,
+            body: _textarea.value,
         };
         if (this.to_uid > 0) {
-            formData.reply_to_user_id = this.to_uid;
+            formData.reply_user = this.to_uid;
         }        
 
         if ("undefined" != typeof(this.addReadComment) && (this.addReadComment == true)) {
@@ -469,7 +465,7 @@ var comment = {
                         html += '<a href="/profile/index?user_id='+MID+'"><span class="del_ellen">' + NAME + '</span></a>';
                         html += '<span class="c_time">刚刚</span>';
                         /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                        html += '<p class="comment_con">' + formData.comment_content + '';
+                        html += '<p class="comment_con">' + formData.body + '';
                         html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.id+', '+comment.row_id+')"';
                         html += 'class="del_comment">删除</a>';
                         html += '</p></div></div>';

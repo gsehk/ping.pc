@@ -27,6 +27,8 @@ var request_url = {
     images: '/api/v2/files/',
     /* 分享评论 */
     feed_comment: '/api/v2/feeds/{feed_id}/comments',
+    /* 获取分享评论 */
+    feed_commnets: '/pc/feeds/{feed_id}/comments',    
     /* 删除分享评论  */
     del_feed_comment: '/api/v2/feeds/{feed_id}/comments/{comment_id}',
     /* 删除分享 */
@@ -43,12 +45,12 @@ var request_url = {
     del_collect_feed: '/api/v2/feeds/{feed_id}/uncollect',
     /* 获取用户的分享 */
     get_user_feed: '/profile/users/{user_id}',
-    /* 获取分享评论 */
-    get_feed_commnet: '/home/{feed_id}/comments',    
+        
     /* 获取用户的文章 */
     get_user_news: '/profile/news/{user_id}',
-    /* 获取用户的收藏 */
-    get_user_collect: '/profile/collection/{user_id}',
+    /* 获取动态收藏 */
+    get_feed_collect: '/pc/feeds/collection',
+    get_news_collect: '/pc/news/collection',
     
 };
 
@@ -59,7 +61,7 @@ var request_url = {
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-        'Authorization': 'Bearer'+' '+TOKEN,
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly90c3MuaW8vYXBpL3YyL3Rva2VucyIsImlhdCI6MTUwMDYwMTk1NywiZXhwIjoxNTAxODExNTU3LCJuYmYiOjE1MDA2MDE5NTcsImp0aSI6IjdFT3BQNlZMTTg1Yml4WHcifQ.gE2oMtREpb-yfI_dkxoKrcpYD_d83sBaiFYyk-DCF0M',
     }
 });
 

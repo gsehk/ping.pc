@@ -5,10 +5,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 @if(isset($feeds))
 @foreach($feeds as $key => $post)
-@php
-  /*$user = createRequest('GET', '/api/v2/users/'.$post->user_id);
-  dump($user->toArray());*/
-@endphp
 <div class="feed-item" id="feed{{$post->id}}">
     <div class="dy_c">
         <a class="avatar_box" href="{{Route('pc:myFeed', $post->id)}}">
@@ -240,9 +236,9 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
                     <li><a href="javascript:;" onclick="weibo.delFeed({{$post->id}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
                     @endif
-                    @if(!empty($TS['role']) && $TS['role']->role_id == 1)
+                    {{-- @if(!empty($TS['role']) && $TS['role']->role_id == 1)
                     <li><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>置顶</a></li>
-                    @endif
+                    @endif --}}
                 </ul>
                 <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
             </div>
@@ -256,13 +252,14 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
             <div class="comment_box{{$post->id}}">
             @if($post->comments->count())
             @foreach($post->comments as $cv)
-            <p class="comment{{$cv['id']}} comment_con">
-                <span>{{$cv['user']['name']}}：</span> {{$cv['comment_content']}}
-                @if($cv['user_id'] != $TS['id'])
-                    <a class="fs-14 J-reply-comment" data-args="to_uname={{$cv['user']['name']}}&to_uid={{$cv['user_id']}}&row_id={{$post->id}}">回复</a>
+            @php $user = createRequest('GET', '/api/v2/users/'.$cv->user_id); @endphp
+            <p class="comment{{$cv->id}} comment_con">
+                <span>{{$user->name}}：</span> {{$cv->body}}
+                @if($cv->user_id != $TS['id'])
+                    <a class="fs-14 J-reply-comment" data-args="to_uname={{$user->name}}&to_uid={{$cv->user_id}}&row_id={{$post->id}}">回复</a>
                 @endif
-                @if($cv['user_id'] == $TS['id'])
-                    <a class="fs-14 del_comment" onclick="comment.delComment({{$cv['id']}}, {{$post->id}})">删除</a>
+                @if($cv->user_id == $TS['id'])
+                    <a class="fs-14 del_comment" onclick="comment.delComment({{$cv->id}}, {{$post->id}})">删除</a>
                 @endif
             </p>
             @endforeach

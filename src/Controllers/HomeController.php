@@ -7,16 +7,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Models\User as UserModel;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditUser;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditSetting;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CreditRecord;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedComment;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Services\FeedCount;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class HomeController extends BaseController
@@ -24,8 +19,7 @@ class HomeController extends BaseController
     /**
      * 微博首页
      * 
-     * @param  Request $request [description]
-     * @return [type]           [description]
+     * @return page
      */
     public function index(Request $request)
     {
@@ -35,11 +29,28 @@ class HomeController extends BaseController
     }
 
     /**
-     * 微博详情页
+     * 分享列表
      * 
-     * @param  Request $request [description]
-     * @param  int     $feed_id [description]
-     * @return [type]           [description]
+     * @return feed
+     */
+    public function feeds(Request $request)
+    {
+        $feeds = createRequest('GET', '/api/v2/feeds');
+        $feed = clone $feeds['feeds'];
+        $feedData['after'] = $feed->pop()->id ?? 0;
+        $feedData['html'] = view('pcview::template.feed', $feeds, $this->mergeData)->render();
+
+        return response()->json([
+                'status'  => true,
+                'data' => $feedData,
+        ]);
+    }
+
+    /**
+     * 分享详情
+     * 
+     * @param  int     $feed_id 
+     * @return page
      */
     public function read(Request $request, int $feed_id)
     {
@@ -69,202 +80,102 @@ class HomeController extends BaseController
             'month' => $this->getRecentHot(2),
             'quarter' => $this->getRecentHot(3),
         ];
-        // dump($feed->toArray());exit;
         Feed::byFeedId($feed_id)->increment('feed_view_count');
 
         return view('pcview::home.read',$data, $this->mergeData);
     }
 
     /**
-     * 分享列表
+     * 动态评论
      * 
-     * @param  Request $request [description]
-     * @return feed
+     * @return mixed
      */
-    public function feeds(Request $request)
+    public function comments(Request $request, int $comment_id)
     {
-        $type = $request->type ?? null;
-        $after = $request->max_id ?? null;
-        $limit = $request->limit ?? null;
-        $feeds = createRequest('GET', '/api/v2/feeds', ['type' => $type, 'after' => $after]);
-        $feedData['html'] = view('pcview::template.feed', $feeds, $this->mergeData)->render();
-        $feedData['maxid'] = $feeds['feeds']->count()>0 ? $feeds['feeds'][$feeds['feeds']->count()-1]['id'] : 0;
+        $comments = createRequest('GET', '/api/v2/feeds/'.$comment_id.'/comments');
+        $comment = clone $comments['comments'];
+        $comment->map(function($comment){
+            return [
+                'user' => $comment->user,
+            ];
+        });
+        $after = $comment->pop()->id ?? 0;        
 
         return response()->json([
-                'status'  => true,
-                'data' => $feedData,
+            'status'  => true,
+            'after' => $after,
+            'data' => $comments['comments'],
         ]);
     }
 
     /**
-     * 格式化分享数据
+     * 动态收藏
      * 
-     * @param  [type] $feeds [description]
-     * @param  [type] $uid   [description]
-     * @return [type]        [description]
+     * @param  \Illuminate\Http\Request $request
+     * @return mixed
      */
-    public function formatFeedList($feeds, $uid)
+    public function collection(Request $request)
     {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
-        $datas = [];
-        foreach ($feeds as $feed) {
-            $data = [];
-            $data['user_id'] = $feed->user_id;
-            $data['feed_mark'] = $feed->feed_mark;
-            // 动态数据
-            $data['feed'] = [];
-            $data['feed']['feed_id'] = $feed->id;
-            $data['feed']['feed_title'] = $feed->feed_title ?? '';
-            $data['feed']['feed_content'] = replaceUrl($feed->feed_content);
-            $data['feed']['created_at'] = $this->getTime($feed->created_at);
-            $data['feed']['feed_from'] = $feed->feed_from;
-            $data['feed']['storages'] = $feed->images->map(function ($images) {
-                return ['storage_id' => $images->id, 'width' => explode('x', $images->size)[0], 'height' => explode('x', $images->size)[1]];
-            });
-
-            // 工具数据
-            $data['tool'] = [];
-            $data['tool']['feed_view_count'] = $feed->feed_view_count;
-            $data['tool']['feed_digg_count'] = $feed->like_count;
-            $data['tool']['feed_comment_count'] = $feed->feed_comment_count;
-            // 暂时剔除当前登录用户判定
-            $data['tool']['is_digg_feed'] = $feed->liked($user_id);
-            $data['tool']['is_collection_feed'] = $feed->collected($user_id);
-            // 最新3条评论
-            $data['comments'] = [];
-
-            $getCommendsNumber = 3;
-            $data['comments'] = $feed->comments()
-                ->orderBy('id', 'desc')
-                ->take($getCommendsNumber)
-                ->select(['id', 'user_id', 'created_at', 'comment_content', 'feed_id', 'reply_to_user_id', 'comment_mark'])
-                ->with('user')
-                ->get();
-            $user = $feed->user()->select('id', 'name')->with('datas')->first();
-            $data['user'] = $this->formatUserDatas($user); 
-            $datas[] = $data;
-        }
-        $feedList['data'] = $datas;
-        $feedData['html'] = view('pcview::template.feed', $feedList, $this->mergeData)->render();
-        $feedData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['feed']['feed_id'] : 0;
-
+        $collects = createRequest('GET', '/api/v2/feeds/collections');
+        $collects->map(function($collect){
+            return [
+                'user' => $collect->user,
+            ];
+        });
+        $collect = clone $collects;
+        $datas['feeds'] = $collects;
+        $after = $collect->pop()->id ?? 0;
+        $html = view('pcview::template.feed', $datas, $this->mergeData)->render();
+        
         return response()->json([
-                'status'  => true,
-                'code'    => 0,
-                'message' => '动态列表获取成功',
-                'data' => $feedData,
-            ])->setStatusCode(200);
+            'status' => true,
+            'after' => $after,
+            'data' => $html,
+        ]);
     }
 
     /**
-     * 我关注的动态列表构建.
-     *
-     * @author bs<414606094@qq.com>
-     * @param  Request $request [description]
-     * @return [type]           [description]
+     * 文章收藏
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection $collect
+     * @return mixed
      */
-    public function getFollowFeeds(Request $request)
+    public function newsCollect(Request $request, News $NewsModel, NewsCollection $collect)
     {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
-        // 设置单页数量
-        $limit = $request->limit ?? 15;
-        $following_user_id = $request->user()->follows ? $request->user()->follows->pluck('following_user_id')->toArray() : [0];
-        $feeds = Feed::orderBy('id', 'DESC')
-            ->whereIn('user_id', array_merge([$user_id], $following_user_id))
-            ->where(function ($query) use ($request) {
-                if ($request->max_id > 0) {
-                    $query->where('id', '<', $request->max_id);
+        $user_id = $request->user()->id ?? 0;
+        $after = $request->after;
+        $news = $NewsModel->whereIn('id', $collect->pluck('news_id'))
+            ->where(function ($query) use ($after) {
+                if ($after > 0) {
+                    $query->where('id', '<', $after);
                 }
-            })
-            ->withCount(['likes' => function ($query) use ($user_id) {
-                if ($user_id) {
-                    $query->where('user_id', $user_id);
-                }
-            }])
-            ->byAudit()
-            ->with('images')
-            ->take($limit)
-            ->get();
+            })->orderBy('id', 'desc')->get();
 
-        return $this->formatFeedList($feeds, $user_id);
+        $news->map(function($news) use ($user_id, $collect) {
+            $news->images = $news->images;
+            $news->comments = $news->comments;
+            $news->collect_count = $news->collection->count();
+            $news->has_collect = $user_id ? $collect->where('news_id', $news->id)->count() : 0;
+            unset($news->collection);
+
+            return $news;
+        });
+        $new = clone $news;
+        $datas['data'] = $news;
+        $after = $new->pop()->id ?? 0;
+        $html = view('pcview::template.profile-collect', $datas, $this->mergeData)->render();
+
+        return response()->json(static::createJsonData([
+            'status' => true,
+            'after' => $after,
+            'data' => $html
+        ]));        
+
     }
 
-   /**
-     * 热门动态列表构建.
-     *
-     * @author bs<414606094@qq.com>
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function getHotFeeds(Request $request)
-    {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
-        // 设置单页数量
-        $limit = $request->limit ?? 15;
-        $page = $request->page ?? 1;
-        $skip = ($page - 1) * $limit;
-
-        $feeds = Feed::orderBy('id', 'DESC')
-            ->whereIn('id', FeedDigg::groupBy('feed_id')
-                ->take($limit)
-                ->select('feed_id', DB::raw('COUNT(user_id) as diggcount'))
-                ->where('created_at', '>', Carbon::now()->subMonth()->toDateTimeString())
-                ->orderBy('diggcount', 'desc')
-                ->orderBy('feed_id', 'desc')
-                ->skip($skip)
-                ->pluck('feed_id')
-                )
-            ->withCount(['likes' => function ($query) use ($user_id) {
-                if ($user_id) {
-                    $query->where('user_id', $user_id);
-                }
-            }])
-            ->byAudit()
-            ->with('images')
-            ->get();
-
-        return $this->formatFeedList($feeds, $user_id);
-    }
 
     /**
-     * 最新动态列表构建.
-     *
-     * @author bs<414606094@qq.com>
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function getNewFeeds(Request $request)
-    {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
-        $feed_ids = $request->input('feed_ids');
-        is_string($feed_ids) && $feed_ids = explode(',', $feed_ids);
-        // 设置单页数量
-        $limit = $request->limit ?? 15;
-        $feeds = Feed::orderBy('id', 'DESC')
-            ->where(function ($query) use ($request) {
-                if ($request->max_id > 0) {
-                    $query->where('id', '<', $request->max_id);
-                }
-            })
-            ->where(function ($query) use ($feed_ids) {
-                if (count($feed_ids) > 0) {
-                    $query->whereIn('id', $feed_ids);
-                }
-            })
-            ->withCount(['likes' => function ($query) use ($user_id) {
-                if ($user_id) {
-                    $query->where('user_id', $user_id);
-                }
-            }])
-            ->byAudit()
-            ->with('images')
-            ->take($limit)
-            ->get();
-
-        return $this->formatFeedList($feeds, $user_id);
-    }
-
-        /**
      * 获取近期资讯列表
      * 
      * @date   2017-04-28
@@ -278,14 +189,12 @@ class HomeController extends BaseController
             case 1:
                 // $stime = Carbon::createFromTimestamp($time->timestamp - $time->dayOfWeek*60*60*24);// 本周开始时间
                 // $etime = Carbon::createFromTimestamp($time->timestamp + (6-$time->dayOfWeek)*60*60*24); // 本周结束时间
-
-                // $datas = News::where('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                // $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                 $stime = $time->subDays(7)->toDateTimeString();
                 $datas = News::where('updated_at', '>', $stime)
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','content','from')
-                        ->with('storage')
+                        ->select('id','title')
                         ->get();
                 break;
             case 2:
@@ -295,8 +204,7 @@ class HomeController extends BaseController
                 $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','content','from')
-                        ->with('storage')
+                        ->select('id','title')
                         ->get();
                 break;
             case 3:
@@ -307,8 +215,7 @@ class HomeController extends BaseController
                 $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                         ->orderBy('news.hits', 'desc')
                         ->take($limit)
-                        ->select('id','title','updated_at','storage','content','from')
-                        ->with('storage')
+                        ->select('id','title')
                         ->get();
                 break;
         }
@@ -319,7 +226,7 @@ class HomeController extends BaseController
     /**
      * 签到
      * 
-     * @return [type] [description]
+     * @return mixed
      */
     public function checkin()
     {
@@ -330,7 +237,6 @@ class HomeController extends BaseController
                     ->first();
         // 未签到
         if (!$check_info) {
-
             $last = CheckInfo::where('created_at', '<', Carbon::today())
                     ->where('user_id', $user_id)
                     ->orderBy('created_at', 'desc')
@@ -407,18 +313,13 @@ class HomeController extends BaseController
     public function setUserCredit(int $user_id, string $action, $type)
     {
         if (!$user_id) {
-
             return false;
         }
-
         $credit_ruls = CreditSetting::where('name', $action)->first();
         if (!$credit_ruls) {
-
             return false;
         }
-
         $credit_user = CreditUser::where('user_id', $user_id)->first();
-
         if ($type == 'reset') {
             # code...
         } else {
@@ -445,72 +346,6 @@ class HomeController extends BaseController
             $credit_record->save();
         }
         return $credit_user;
-    }
-
-    /**
-     * 查看一条微博的评论列表.
-     *
-     * @author bs<414606094@qq.com>
-     * @param  Request $request [description]
-     * @param  int     $feed_id [description]
-     * @return [type]           [description]
-     */
-    public function getFeedCommentList(Request $request, int $feed_id)
-    {
-        $limit = $request->get('limit', '15');
-        $max_id = intval($request->get('max_id'));
-        if (! $feed_id) {
-            return response()->json([
-                'status' => false,
-                'code' => 6003,
-                'message' => '动态ID不能为空',
-            ])->setStatusCode(400);
-        }
-        $comments = FeedComment::byFeedId($feed_id)
-            ->take($limit)->where(function ($query) use ($max_id) {
-                if ($max_id > 0) {
-                    $query->where('id', '<', $max_id);
-                }
-            })
-            ->with('user.datas')
-            ->select(['id', 'created_at', 'comment_content', 'user_id', 'feed_id', 'to_user_id', 'reply_to_user_id', 'comment_mark'])
-            ->orderBy('id', 'desc')
-            ->get();
-        foreach ($comments as $key => $value) {
-            $value['info'] = $this->formatUserDatas($value['user']);
-            unset($value['user']);
-        }
-
-        return response()->json(static::createJsonData([
-            'status' => true,
-            'data' => $comments,
-        ]))->setStatusCode(200);
-    }
-
-    /**
-     * 获取一条微博信息
-     * 
-     * @param  int     $feed_id 分享id
-     * @return [type]           [description]
-     */
-    public function getFeedInfo(Request $request, int $feed_id) 
-    {
-        $user_id = $this->mergeData['TS']['id'];
-
-        $following_user_id = $request->user()->follows ? $request->user()->follows->pluck('following_user_id')->toArray() : [0];
-        $feed = Feed::orderBy('id', 'DESC')
-            ->whereIn('user_id', array_merge([$user_id], $following_user_id))
-            ->where('id', $feed_id)
-            ->withCount(['likes' => function ($query) use ($user_id) {
-                if ($user_id) {
-                    $query->where('user_id', $user_id);
-                }
-            }])
-            ->byAudit()
-            ->with('images')
-            ->get();
-
-        return $this->formatFeedList($feed, $user_id);
     }
 
 }

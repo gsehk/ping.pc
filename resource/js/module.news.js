@@ -10,7 +10,7 @@ news.setting = {};
 news.init = function(option) {
     this.setting.container = option.container; // 容器ID
     this.setting.loadcount = option.loadcount || 0; // 加载次数
-    this.setting.loadmax = option.loadmax || 4; // 加载最大次数
+    this.setting.loadmax = option.loadmax || 40; // 加载最大次数
     this.setting.maxid = option.maxid || 0; // 最大文章ID
     this.setting.loadlimit = option.loadlimit || 10; // 每次加载的数目，默认为10
     this.setting.cid = option.cid || 0; //  文章分类ID
@@ -31,7 +31,6 @@ news.init = function(option) {
 news.bindScroll = function() {
     // 底部触发事件绑定
     $(window).bind('scroll resize', function() {
-
         // 加载指定次数后，将不能自动加载
         if (news.isLoading()) {
             var scrollTop = $(this).scrollTop();
@@ -352,7 +351,7 @@ var collect = {
             url: url,
             type: 'POST',
             dataType: 'json',
-            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN); },
+            // beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN); },
             error: function(xml) {},
             success: function(res) {
                 if (res.status == true) {

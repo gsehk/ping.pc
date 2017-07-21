@@ -169,71 +169,67 @@ weibo.denounce = function(obj) {
     });
 };
 
-var news = {};
-
-news.setting = {};
-
+var collection = {};
+collection.setting = {};
 /**
- * 文章初始化
- * $param object option 文章配置相关数据
+ * 收藏初始化
  * @return void
  */
-news.init = function(option) {
+collection.init = function(option) {
     this.setting.container = option.container; // 容器ID
     this.setting.loadcount = option.loadcount || 0; // 加载次数
     this.setting.loadmax = option.loadmax || 40; // 加载最大次数
-    this.setting.maxid = option.maxid || 0; // 最大文章ID
-    this.setting.loadlimit = option.loadlimit || 10; // 每次加载的数目，默认为10
+    this.setting.after = option.after || 0; // 最后一条数据id
     this.setting.user_id = option.user_id || 0; //  用户user_id
-    this.setting.type = option.type || 0; //  文章分类
+    this.setting.type = option.type || 0; //   分类
     this.setting.canload = option.canload || true; // 是否能加载
     this.setting.loading = option.loading || '.dy_cen'; //加载图位置
-    this.setting.page = option.page || 1; // 页码
-
-    if (option.type == 'feed' || option.type == 'news') {
-        this.setting.url = request_url.get_user_collect.replace('{user_id}', option.user_id);
-    } else {
-        this.setting.url = request_url.get_user_news.replace('{user_id}', option.user_id);
+    switch (option.type) {
+        case 'feed':
+            this.setting.url = request_url.get_feed_collect;
+            break;
+        case 'news':
+            this.setting.url = request_url.get_news_collect;
+            break;
+        default:
+            this.setting.url = request_url.get_user_news.replace('{user_id}', option.user_id);
+            break;
     }
-    news.bindScroll();
-
-    if ($(news.setting.container).length > 0 && this.setting.canload) {
+    collection.bindScroll();
+    if ($(collection.setting.container).length > 0 && this.setting.canload) {
         $('.loading').remove();
-        $(news.setting.loading).after(loadHtml);
-        // $(news.setting.container).append(loadHtml);
-        news.loadMore();
+        $(collection.setting.loading).after(loadHtml);
+        collection.loadMore();
     }
 };
 /**
  * 页面底部触发事件
  * @return void
  */
-news.bindScroll = function() {
+collection.bindScroll = function() {
     // 底部触发事件绑定
     $(window).bind('scroll resize', function() {
 
         // 加载指定次数后，将不能自动加载
-        if (news.isLoading()) {
+        if (collection.isLoading()) {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();
             if(scrollTop + windowHeight == scrollHeight){
-                if ($(news.setting.container).length > 0) {
+                if ($(collection.setting.container).length > 0) {
                     $('.loading').remove();
-                    $(news.setting.loading).after(loadHtml);
-                    // $(news.setting.container).append(loadHtml);
-                    news.loadMore();
+                    $(collection.setting.loading).after(loadHtml);
+                    collection.loadMore();
                 }
             }
         }
     });
 };
-
 /**
- * 判断是否文章时候能自动加载
- * @return boolean 文章是否能自动加载
+ * 判断是否能自动加载
+ * @return boolean
  */
-news.isLoading = function() {
+collection.isLoading = function() {
     var status = (this.setting.loadcount >= this.setting.loadmax || this.setting.canload == false) ? false : true;
     return status;
 };
@@ -242,41 +238,38 @@ news.isLoading = function() {
  * 获取加载的数据信息
  * @return void
  */
-news.loadMore = function() {
+collection.loadMore = function() {
     // 将能加载参数关闭
-    news.setting.canload = false;
-    news.setting.loadcount++;
+    collection.setting.canload = false;
+    collection.setting.loadcount++;
 
     var postArgs = {};
-    postArgs.max_id = news.setting.maxid;
-    postArgs.limit = news.setting.loadlimit;
-    postArgs.type = news.setting.type;
-    postArgs.page = news.setting.page;
-
+    postArgs.after = collection.setting.after;
+    postArgs.type = collection.setting.type;
     $.ajax({
-        url: news.setting.url,
+        url: collection.setting.url,
         type: 'GET',
         data: postArgs,
         dataType: 'json',
         error: function(xml) {},
         success: function(res) {
-            if (res.data.maxid > 0) {
-                news.setting.canload = true;
+            if (res.data.length > 0) {
+                console.log(res)
+                collection.setting.canload = true;
                 // 修改加载ID
-                news.setting.page++;
-                news.setting.maxid = res.data.maxid;
-                var html = res.data.html;
-                if (news.setting.loadcount == 1) {
-                    $(news.setting.container).html(html);
+                collection.setting.after = res.after;
+                var html = res.data;
+                if (collection.setting.loadcount == 1) {
+                    $(collection.setting.container).html(html);
                     $('.loading').remove();
                 } else {
-                    $(news.setting.container).append(html);
+                    $(collection.setting.container).append(html);
                 }
                 $("img.lazy").lazyload({effect: "fadeIn"});
             } else {
-                news.setting.canload = false;
-                if (news.setting.loadcount == 1) {
-                    no_data(news.setting.container, 1, ' 暂无相关内容');
+                collection.setting.canload = false;
+                if (collection.setting.loadcount == 1) {
+                    no_data(collection.setting.container, 1, ' 暂无相关内容');
                     $('.loading').html('');
                 } else {
                     $('.loading').html('暂无相关内容');
@@ -414,7 +407,7 @@ var comment = {
     // 显示回复块
     loadMore: function() {
         comment.canload = false;
-        var url = request_url.get_feed_commnet.replace('{feed_id}', comment.row_id);
+        var url = request_url.feed_commnets.replace('{feed_id}', comment.row_id);
         $.ajax({
             url: url,
             type: 'GET',
@@ -530,11 +523,10 @@ var comment = {
             return false; //不要重复评论
         }        
         var formData = {
-            comment_content: _textarea.value,
-            comment_mark: mark_time,
+            body: _textarea.value,
         };
         if (to_uid > 0) {
-            formData.reply_to_user_id = to_uid;
+            formData.reply_user = to_uid;
         }        
         var url = request_url.feed_comment.replace('{feed_id}', feedid);
 
@@ -552,7 +544,7 @@ var comment = {
                         obj.innerHTML = '评论';
                     }
                     var html = '<p class="comment'+res.id+' comment_con">';
-                        html += '<span>' + NAME + '：</span>' + formData.comment_content + '';
+                        html += '<span>' + NAME + '：</span>' + formData.body + '';
                         html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.id+', '+feedid+');">删除</a>';
                         html += '</p>';
                     var commentBox = $('.comment_box' + feedid);

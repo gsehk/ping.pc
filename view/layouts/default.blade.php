@@ -17,7 +17,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
         var MID = "{{ $TS['id'] or 0 }}";
         var NAME = "{{ $TS['name'] or '' }}";
         var AVATAR = "{{ $TS['avatar'] }}";
-        var TOKEN = "{{ $TS['token'] or '' }}";
+        var TOKEN = "{{ $token or '' }}";
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
     <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">

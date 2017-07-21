@@ -71,7 +71,7 @@
 @section('scripts')
 <script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
 <script type="text/javascript">
-var checkin = function(){
+/*var checkin = function(){
   if( MID == 0 ){
     return;
   }
@@ -84,10 +84,10 @@ var checkin = function(){
       $('.totalnum').text(totalnum);
     }
   });
-};
+};*/
 
 setTimeout(function() {
-    news.init({
+    collection.init({
         container: '#content-list',
         user_id:"{{$TS['id']}}",
         type:"feed"
@@ -97,7 +97,7 @@ setTimeout(function() {
 $('.collection_memu a').on('click', function(){
     var type = $(this).data('type');
     $('#content-list').html('');
-    news.init({container: '#content-list',user_id:"{{$TS['id']}}",type:type});
+    collection.init({container: '#content-list',user_id:"{{$TS['id']}}",type:type});
     $('.collection_memu a').removeClass('dy_cen_333');
     $(this).addClass('dy_cen_333');
 });
