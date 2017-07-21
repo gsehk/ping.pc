@@ -23,12 +23,12 @@ class BaseController extends Controller
     	$this->middleware(function($request, $next){
 
     		$token = session('token') ?: '';
+    		$this->mergeData['token'] = $token;
     		$this->mergeData['TS'] = $token ? (app(JWTAuth::class)->toUser($token) ?: null) : null;
 
 			if ($this->mergeData['TS']) {
 	            // user role
-	            $this->mergeData['TS']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['TS']['id'])
-            										->first();
+	            $this->mergeData['TS']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['TS']['id'])->first();
 			}
 			// 站点配置
 	        $config = [
