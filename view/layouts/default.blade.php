@@ -1,3 +1,6 @@
+@php
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,9 +34,6 @@
 </head>
 
 <body @yield('body_class')>
-    @php
-    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
-    @endphp
     <div class="wrap">
         <!-- nav -->
         @include('pcview::layouts.partials.nav')

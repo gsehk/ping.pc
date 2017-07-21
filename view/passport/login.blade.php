@@ -17,7 +17,7 @@
             <form method="POST" id="login_form">
                 <span class="l_tip" id="login_tip"> </span>
                 <div class="l_tel">
-                    <input type="text" placeholder="输入手机号" name="phone"/>
+                    <input type="text" placeholder="输入手机号" name="login"/>
                 </div>
                 <div class="l_tel">
                     <input type="password" placeholder="输入密码" name="password"/>

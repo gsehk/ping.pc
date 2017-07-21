@@ -23,7 +23,7 @@
             </div>
             <div class="f_tel ">
                 <label>手机验证码</label>
-                <span class="f_span w_280"><input type="text" placeholder="输入手机验证码" name="code" maxlength="6" autocomplete="off"/></span>
+                <span class="f_span w_280"><input type="text" placeholder="输入手机验证码" name="verifiable_code" maxlength="6" autocomplete="off"/></span>
                 <span class="get_code" id="smscode" type="register">获取短信验证码</span>
                 <label class="error" id="smscode_tip"></label>
             </div>
@@ -42,6 +42,7 @@
                 <span class="f_span" id="repassword"><input type="password" placeholder="再次输入密码" name="repassword" autocomplete="off"/></span>
                 <label class="error" id="repassword_tip"></label>
             </div>
+            <input type="hidden" name="verifiable_type" value="sms">
 
             <a id="reg_btn" class="f_sure">注册</a>
         </form>
