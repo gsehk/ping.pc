@@ -17,6 +17,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 use function zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class ProfileController extends BaseController
 {
@@ -313,17 +314,14 @@ class ProfileController extends BaseController
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function account(Request $request)
+    public function account(Request $request, User $model)
     {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
-        $datas['page'] = $request->input('page') ?: 'account';
-        switch ($datas['page']) {
+        $user_id = $this->mergeData['TS']->id ?? 0;
+        $page = $request->page ?? 'account';
+        $datas['page'] = $page;
+        switch ($page) {
             case 'account':
-                $info = User::where('id', $user_id)
-                    ->select('id', 'name')
-                    ->with('datas')
-                    ->first();
-                $datas['info'] = $this->formatUserDatas($info);
+                $datas['user'] = $this->mergeData['TS'];
                 break;
             case 'account-auth':
                 $datas['auth'] = UserVerified::where('user_id', $user_id)
@@ -337,7 +335,7 @@ class ProfileController extends BaseController
                 break;
         }
         
-        return view('pcview::profile.'.$datas['page'], $datas, $this->mergeData);
+        return view('pcview::profile.'.$page, $datas, $this->mergeData);
     }
 
     /**

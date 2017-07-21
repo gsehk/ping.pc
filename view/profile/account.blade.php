@@ -28,7 +28,7 @@
     </div>
     <div class="bas_right" id="J-input">
         <div class="bas_header">
-            <img id="J-image-preview" src="{{ $info['avatar'] }}" />
+            <img id="J-image-preview" src="{{ $user['avatar'] }}" />
             <span class="con_cover ai_face_box">
                 <div class="ai_upload">
                     
@@ -40,36 +40,36 @@
         <div class="f_div">
             <div class="f_tel bas_div">
                 <label>昵称</label>
-                <span class="f_span"><input type="text" name="name" value="{{$info['name'] }}" placeholder="输入昵称"></span>
+                <span class="f_span"><input type="text" name="name" value="{{$user['name'] }}" placeholder="输入昵称"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>简介</label>
-                <span class="f_span"><input type="text" name="intro" value="{{$info['intro'] or ''}}" placeholder="输入简介"></span>
+                <span class="f_span"><input type="text" name="intro" value="{{$user['intro'] or ''}}" placeholder="输入简介"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>性别</label>
-                  <span class="sex_item"><input name="sex" type="radio" value="1" class="s-ck" @if($info['sex'] == 1) checked="checked" @endif>男</span>
-                  <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" @if($info['sex'] == 2) checked="checked" @endif>女</span>
-                  <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck" @if($info['sex'] == 3) checked="checked" @endif>不方便透露</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="1" class="s-ck" @if($user['sex'] == 1) checked="checked" @endif>男</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" @if($user['sex'] == 2) checked="checked" @endif>女</span>
+                  <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck" @if($user['sex'] == 3) checked="checked" @endif>不方便透露</span>
             </div>
             {{-- <div class="f_tel bas_div">
                 <label>生日</label>
                 <div class="f_select">
                     <span></span>
-                    <select name="year" class="sel_year" rel="{{$info['year'] or 0}}"></select>
+                    <select name="year" class="sel_year" rel="{{$user['year'] or 0}}"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select name="moth" class="sel_month" rel="{{$info['moth'] or 0}}"></select>
+                    <select name="moth" class="sel_month" rel="{{$user['moth'] or 0}}"></select>
                 </div>
                 <div class="f_select">
                     <span></span>
-                    <select name="day" class="sel_day" rel="{{$info['day'] or 0}}"></select>
+                    <select name="day" class="sel_day" rel="{{$user['day'] or 0}}"></select>
                 </div>
             </div>
             <div class="f_tel bas_div">
                 <label>公司</label>
-                <span class="f_span"><input type="text" name="company" placeholder="输入公司名称" value="{{$info['company'] or ''}}"></span>
+                <span class="f_span"><input type="text" name="company" placeholder="输入公司名称" value="{{$user['company'] or ''}}"></span>
             </div> --}}
             <div class="f_tel bas_div" id="sel_area">
                 <label>地区</label>
@@ -107,7 +107,7 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
                     + '<input type="file" class="avatar-input" id="avatarInput" name="avatar_file">'
                     + '</div>'
                     + '<div class="avatar-wrapper upload-box"></div>'
-                    + '<div class="save-btn"><span>上传完成记得点击保存按钮</span><button type="button" class="btn btn-primary avatar-save">完成</button></div>'
+                    + '<div class="save-btn"><span></span><button type="button" class="btn btn-primary avatar-save">保存</button></div>'
                     + '</div></div>';
     ly.loadHtml(html, '上传头像', '600px', '500px;');
     $(function () {
@@ -165,13 +165,39 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
                 this.$avatarSave.on('click', $.proxy(this.click, this));
             },
             click: function () {
-                // 默认宽高 160
-                var croppedCanvas = this.$img.cropper('getCroppedCanvas', { width: 160, height: 90 });
-                var roundedCanvas = getRoundedCanvas(croppedCanvas); // 获取圆形头像
-                var blob = dataURLtoBlob(roundedCanvas.toDataURL());
-                      blob.name = this.fileUpload.origin_filename;
-                this.$avatarSave.text('上传中...');
-                fileUpload.init(blob, updateImg);
+                if (this.fileUpload.mime_type) {
+                    // 默认宽高 160
+                    var croppedCanvas = this.$img.cropper('getCroppedCanvas', { width: 160, height: 90 });
+                    var roundedCanvas = getRoundedCanvas(croppedCanvas); // 获取圆形头像
+                    var blob = dataURLtoBlob(roundedCanvas.toDataURL());
+                    var dataurl = roundedCanvas.toDataURL('image/png');
+                    /*blob.name = this.fileUpload.origin_filename;
+                    this.$avatarSave.text('上传中...');
+                    fileUpload.init(blob, updateImg);*/
+                    this.upload(blob, dataurl);                    
+                } else {
+                    ly.error('请选择上传文件', false);
+                }
+            },
+            upload: function(file, url) {
+                var _this = this;
+                var formDatas = new FormData();
+                    formDatas.append("avatar", file); 
+                $.ajax({
+                    url: '/api/v2/user/avatar',
+                    type: 'POST',
+                    data: formDatas,
+                    contentType: false,
+                    processData: false,                    
+                    error: function(xml) {noticebox('修改失败请重试', 0);},
+                    success: function(res) {
+                        _this.insert(url);
+                    }
+                });                
+            },
+            insert: function(src) {
+                $('#J-image-preview').attr('src', src);
+                layer.closeAll();                
             },
             change: function () {
                 var files,file;
@@ -181,7 +207,6 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
                         file = files[0];
                         this.fileUpload.mime_type = file.type;
                         this.fileUpload.origin_filename = file.name;
-                        this.fileUpload.hash = '123456'+file.name;
                         if (this.isImageFile(file)) {
                             if (this.url) {
                                 URL.revokeObjectURL(this.url); // Revoke the old one
@@ -230,17 +255,8 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
         return new CropAvatar($('#crop-avatar'));
     });  
 });
-var username = "{{$info['name'] }}";
-var arrSelect = ["{{$info['province'] or 0}}", "{{$info['city'] or 0}}", "{{$info['area'] or 0}}"];
-/*$('#J-file-upload').on('change', function(e){
-    var file = e.target.files[0];
-    fileUpload.init(file, updateImg);
-});*/
-var updateImg = function(image, f, task_id){
-    $('#task_id').val(task_id);
-    $('#J-image-preview').attr('src', image.src);
-    layer.closeAll();
-}
+var username = "{{$user['name'] }}";
+var arrSelect = ["{{$user['province'] or 0}}", "{{$user['city'] or 0}}", "{{$user['area'] or 0}}"];
 $(function () {
     $.ms_DatePicker({
         YearSelector: ".sel_year",

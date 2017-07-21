@@ -311,16 +311,16 @@ var ly = {
      * @param integer time 展示时间
      * @return void
      */
-    success: function(message, url, reload, close) {
+    success: function(message, reload, url, close) {
         reload = typeof(reload) == 'undefined' ? true : reload;
         close = typeof(close) == 'undefined' ? false : close;
 
         layer.msg(message, {
           icon: 1,
           time: 2000
-        },function(){
+        },function(index){
             if(close){
-                layer.closeAll();
+                layer.close(index);
             }
             if(reload){
                 if(url == '' || typeof(url) == 'undefined') {
@@ -336,16 +336,16 @@ var ly = {
      * @param integer time 展示时间
      * @return void
      */
-    error: function(message, url, reload, close) {
+    error: function(message, reload, url, close) {
         reload = typeof(reload) == 'undefined' ? true : reload;
         close = typeof(close) == 'undefined' ? false : close;
         
         layer.msg(message, {
           icon: 2,
           time: 2000
-        },function(){
+        },function(index){
             if(close){
-                layer.closeAll();
+                layer.close(index);
             }
             if(reload){
                 if(url == '' || typeof(url) == 'undefined') {
