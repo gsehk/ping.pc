@@ -14,8 +14,9 @@ use function Zhiyi\Plus\username;
 class PassportController extends BaseController
 {
 
-    public function token(Request $request, string $token)
+    public function token(Request $request, int $mid, string $token)
     {
+        Session::put('mid', $mid);
         Session::put('token', $token);
         return redirect(route('pc:feed'));
     }
@@ -31,9 +32,7 @@ class PassportController extends BaseController
 
     public function logout(Request $request)
     {
-        $request->session()->flush();
-        $request->session()->regenerate();
-
+        Session::flush();
         return redirect(route('pc:index'));
     }
 

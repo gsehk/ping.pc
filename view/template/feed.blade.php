@@ -7,8 +7,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 @foreach($feeds as $key => $post)
 <div class="feed-item" id="feed{{$post->id}}">
     <div class="dy_c">
-        <a class="avatar_box" href="{{Route('pc:myFeed', $post->id)}}">
-        <img class="avatar" src="{{ $post->user->avatar }}" />
+        <a class="avatar_box" href="{{Route('pc:myFeed', $post->user->id)}}">
+        <img class="avatar" src="{{ $post->user->avatar or $routes['resource'] . '/images/avatar.png' }}" />
         {{-- @if($post->user->user_verified)
             <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
         @endif --}}

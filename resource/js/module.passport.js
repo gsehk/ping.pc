@@ -19,7 +19,7 @@ $(function() {
                 },
                 success: function(res) {
                     noticebox('登录成功，跳转中...', 1);
-                    window.location.href = '/passport/token/' + res.token;
+                    window.location.href = '/passport/mid/' + res.user.id + '/token/' + res.token;
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     for (var key in xhr.responseJSON) 

@@ -50,7 +50,7 @@
                     {{-- <span class="totalnum">{{ $TS['credit'] or 0 }}</span> --}}
                 </span>
                 <a href="{{ route('pc:myFeed', ['user_id' => $TS['id']]) }}">
-                <img src="{{ $TS['avatar'] }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
+                <img src="{{ $TS['avatar'] or $routes['resource'] . '/images/avatar.png' }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                 </a>
             </div>
             <div class="index_intro">{{ $TS['intro'] or '' }}</div>

@@ -12,7 +12,7 @@ use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Plus\Models\CommonConfig;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class BaseController extends Controller
 {
@@ -21,15 +21,15 @@ class BaseController extends Controller
     public function __construct()
     {
     	$this->middleware(function($request, $next){
+    		$this->mergeData['token'] = session('token') ?: '';
+    		$this->mergeData['mid'] = session('mid') ?: '';
 
-    		$token = session('token') ?: '';
-    		$this->mergeData['token'] = $token;
-    		$this->mergeData['TS'] = $token ? (app(JWTAuth::class)->toUser($token) ?: null) : null;
-
-			if ($this->mergeData['TS']) {
-	            // user role
+    		$this->mergeData['TS'] = null;
+    		if ($this->mergeData['mid']) {
+    			$this->mergeData['TS'] = createRequest('GET', '/api/v2/users/' . $this->mergeData['mid']);
 	            $this->mergeData['TS']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['TS']['id'])->first();
-			}
+    		}
+
 			// 站点配置
 	        $config = [
 	            'title' => 'ThinkSNS Plus Title',
@@ -42,6 +42,7 @@ class BaseController extends Controller
 	        // 公共配置
             $this->mergeData['routes']['storage'] = '/api/v2/files/';
             $this->mergeData['routes']['resource'] = asset('');
+            $this->mergeData['routes']['app_url'] = getenv('APP_URL');
 
     		return $next($request);
     	});

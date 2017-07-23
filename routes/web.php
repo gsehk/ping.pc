@@ -9,7 +9,7 @@ Route::prefix('passport')->group(function () {
     Route::get('index', 'PassportController@index')->name('pc:index');
 
     // token
-    Route::get('token/{token}', 'PassportController@token')->name('pc:token');
+    Route::get('/mid/{mid}/token/{token}', 'PassportController@token')->name('pc:token');
 
     // logout
     Route::any('logout', 'PassportController@logout')->name('pc:logout');
@@ -32,15 +32,15 @@ Route::prefix('passport')->group(function () {
 
 Route::prefix('pc')->group(function () {
     /* 动态列表 */
-    Route::get('feeds', 'HomeController@feeds');
+    Route::get('feeds', 'FeedController@feeds');
     /* 动态详情 */
-    Route::get('feeds/{feed}', 'HomeController@read')->name('PC:FeedRead')->where(['feed' => '[0-9]+']);
+    Route::get('feeds/{feed}', 'FeedController@read')->name('PC:FeedRead')->where(['feed' => '[0-9]+']);
     /* 动态评论列表 */
-    Route::get('feeds/{feed}/comments', 'HomeController@comments');
+    Route::get('feeds/{feed}/comments', 'FeedController@comments');
     /* 动态收藏 */
-    Route::get('feeds/collection', 'HomeController@collection');
+    Route::get('feeds/collection', 'FeedController@collection');
     /* 文章收藏 */
-    Route::get('news/collection', 'HomeController@newsCollect');
+    Route::get('news/collection', 'FeedController@newsCollect');
 });
 
 // UCenter
@@ -62,8 +62,8 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 });
 
 // 动态
-Route::get('/home/index', 'HomeController@index')->name('pc:feed');
-Route::get('/home/checkin', 'HomeController@checkin');
+Route::get('/home/index', 'FeedController@index')->name('pc:feed');
+Route::get('/home/checkin', 'FeedController@checkin');
 // 举报
 Route::post('/feed/{feed_id}/denounce', 'FeedController@denounce')->where(['feed_id' => '[0-9]+']);
 

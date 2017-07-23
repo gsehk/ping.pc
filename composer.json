@@ -19,13 +19,12 @@
   "extra": {
     "laravel": {
         "providers": [
-            "Zhiyi\\Component\\ZhiyiPlus\\PlusComponentPc\\Installer\\PcServiceProvider"
+            "Zhiyi\\Component\\ZhiyiPlus\\PlusComponentPc\\PcServiceProvider"
         ]
     }
   },
   "require": {
     "zhiyicx/plus-installer": "^1.0",
     "gregwar/captcha": "1.*",
-    "unicodeveloper/laravel-emoji": "1.0.*"
   }
 }

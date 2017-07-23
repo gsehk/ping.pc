@@ -8,14 +8,11 @@ use Session;
 use Carbon\Carbon;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\FileWith;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVisitor;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\UserVerified;
 use function zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -34,32 +31,11 @@ class ProfileController extends BaseController
             Session::put('history', route('pc:myFeed'));
             return redirect(route('pc:index'));
         }
-        $current_user = $request->user();
-        $user_id = $user_id ?: $this->mergeData['TS']['id'];
+
+        $uid = $user_id ?: $this->mergeData['TS']['id'];
+        $api = $user_id ? '/api/v2/users/' . $uid  : '/api/v2/user';
         $data['type'] = $type = $request->input('type') ?: 'all';
-
-        $user = $model->where('id', $user_id)
-                ->with('datas', 'counts')
-                ->first();
-        $data['user'] = $this->formatUserDatas($user);
-        $data['user']['location'] = !empty($data['user']['location']) ? str_replace(' ', ' · ', $data['user']['location']) : '';
-
-        // 是否关注
-        $data['my_follow_status'] = $current_user ? $current_user->hasFollwing($user->id) ? 1 : 0 : 0;
-        
-        // 粉丝
-        $followers = $user->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
-        $data['followeds'] = [];
-        $data['followeds'] = $followers->map(function ($follower) {
-                return $this->formatUserDatas($follower);
-            });
-
-        // 关注
-        $followings = $user->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();        
-        $data['followings'] = [];
-        $data['followings'] = $followings->map(function ($following) {
-                return $this->formatUserDatas($following);
-            });
+        $data['user'] = createRequest('GET', $api);
 
         return view('pcview::profile.index', $data, $this->mergeData);
     }

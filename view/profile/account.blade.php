@@ -28,7 +28,7 @@
     </div>
     <div class="bas_right" id="J-input">
         <div class="bas_header">
-            <img id="J-image-preview" src="{{ $user['avatar'] }}" />
+            <img id="J-image-preview" src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
             <span class="con_cover ai_face_box">
                 <div class="ai_upload">
                     

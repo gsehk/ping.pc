@@ -34,18 +34,6 @@ class InformationController extends BaseController
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
         $datas['hots'] = ['week' => $this->getRecentHot(1), 'month' => $this->getRecentHot(2), 'quarter' => $this->getRecentHot(3)];
         $user_id = $this->mergeData['TS']['id'] ?? 0;
-        $datas['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
-            ->where(function($query) use ($user_id) {
-                if ($user_id) {
-                    $query->where('user_id', $user_id);
-                }
-            })->orderBy('created_at', 'desc')
-            ->first();
-        $datas['checkin'] = CheckInfo::where(function($query) use ($user_id) {
-            if ($user_id) {
-                $query->where('user_id', $user_id);
-            }
-            })->first();
 
         $recommend = News::byAudit()
                 ->where('is_recommend', 1)

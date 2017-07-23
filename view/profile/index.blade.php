@@ -17,15 +17,12 @@
         @endif
         <div class="dyn_footer">
             <div class="dynTop_user">{{ $user['name'] }}
-            @if($user['user_verified'])
-                <img width="35" src="{{ $routes['resource'] }}/images/vip_icon.svg">
-            @endif
             </div>
             <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>
             <div class="dyn_lImg">
-                {{-- <a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}"> --}}
-                    <img src="{{ $user['avatar']}} " alt="{{ $user['name'] }}"/>
-                {{-- </a> --}}
+                <a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}">
+                    <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }} " alt="{{ $user['name'] }}"/>
+                </a> 
             </div>
         </div>
     </div>
@@ -65,7 +62,7 @@
         @endif
         @if(!empty($TS) && $TS['id'] != $user['id'])
         <div class="their_right">
-            @if ($my_follow_status == 0)
+            @if ($user['following'] == 0)
             <div id="follow" status="0">+关注</div>
             @else
             <div id="follow" status="1" class="their_followed">已关注</div>
@@ -102,7 +99,7 @@
                 </ul>
 
                 <div id="followeds" class="userdiv" style="display:block">
-                @if (!$followeds->isEmpty())
+                {{-- @if (!$followeds->isEmpty())
                 <ul class="userlist">
                     @foreach ($followeds as $followed)
                     <li>
@@ -135,7 +132,7 @@
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif  
-                </div>
+                </div> --}}
 
                 {{-- <div id="visitors" class="userdiv">
                 @if (!empty($visitors))
@@ -171,15 +168,15 @@
     setTimeout(function() {
         weibo.init({
             container: '#feeds-list',
-            user_id:"{{$user['id']}}",
-            type: "{{$type}}"
+            user_id:"{{ $user['id'] }}",
+            type: "{{ $type }}"
         });
     }, 300);
     // 微博分类tab
     $('.artic_left a').on('click', function(){
         var type = $(this).data('type');
         $('#feeds-list').html('');
-        weibo.init({container: '#feeds-list',user_id:"{{$user['id']}}",type: type});
+        weibo.init({container: '#feeds-list',user_id:"{{ $user['id'] }}",type: type});
         $('.artic_left a').removeClass('dy_cen_333');
         $(this).addClass('dy_cen_333');
     });
@@ -188,7 +185,7 @@
     $('#follow').click(function(){
         var _this = $(this);
         var status = $(this).attr('status');
-        var user_id = '{{$user['id']}}';
+        var user_id = "{{ $user['id'] }}";
         follow(status, user_id, _this, afterdata);
     })
 
