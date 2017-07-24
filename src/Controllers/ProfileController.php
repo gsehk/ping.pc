@@ -27,17 +27,17 @@ class ProfileController extends BaseController
      */
     public function index(Request $request, User $model, int $user_id = null)
     {
-        if(empty($this->mergeData['TS']) && empty($user_id)) {
+        if(empty($this->PlusData['TS']) && empty($user_id)) {
             Session::put('history', route('pc:myFeed'));
             return redirect(route('pc:index'));
         }
 
-        $uid = $user_id ?: $this->mergeData['TS']['id'];
+        $uid = $user_id ?: $this->PlusData['TS']['id'];
         $api = $user_id ? '/api/v2/users/' . $uid  : '/api/v2/user';
         $data['type'] = $type = $request->input('type') ?: 'all';
         $data['user'] = createRequest('GET', $api);
 
-        return view('pcview::profile.index', $data, $this->mergeData);
+        return view('pcview::profile.index', $data, $this->PlusData);
     }
 
     /**
@@ -50,7 +50,7 @@ class ProfileController extends BaseController
     public function article(Request $request, User $model, int $user_id = null, int $type = 0)
     {
         $current_user = $request->user();
-        $user_id = $user_id ?: $this->mergeData['TS']['id'];
+        $user_id = $user_id ?: $this->PlusData['TS']['id'];
         $data['type'] = $type;        
 
         $user = $model->where('id', $user_id)
@@ -77,7 +77,7 @@ class ProfileController extends BaseController
                 return $this->formatUserDatas($following);
             });
 
-        return view('pcview::profile.article', $data, $this->mergeData);
+        return view('pcview::profile.article', $data, $this->PlusData);
     }
 
     /**
@@ -91,20 +91,20 @@ class ProfileController extends BaseController
         $data['type'] = $request->input('type') ?: 1;
         $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
             ->where(function($query){
-                if ($this->mergeData) {
-                    $query->where('user_id', $this->mergeData['TS']['id']);
+                if ($this->PlusData) {
+                    $query->where('user_id', $this->PlusData['TS']['id']);
                 }
             })
             ->orderBy('created_at', 'desc')
             ->first();
         $data['checkin'] = CheckInfo::where(function($query){
-                if ($this->mergeData) {
-                    $query->where('user_id', $this->mergeData['TS']['id']);
+                if ($this->PlusData) {
+                    $query->where('user_id', $this->PlusData['TS']['id']);
                 }
             })->orderBy('created_at', 'desc')->first();
         // 推荐用户
         $_rec_users = UserDatas::where('key', 'feeds_count')
-            ->where('user_id', '!=', $this->mergeData['TS']['id'])
+            ->where('user_id', '!=', $this->PlusData['TS']['id'])
             ->select('id', 'user_id')
             ->with('user.datas')
             ->orderBy(DB::raw('-value', 'desc'))->take(9)->get();
@@ -113,7 +113,7 @@ class ProfileController extends BaseController
             $data['rec_users'][] = $this->formatUserDatas($_rec_user->user);
         }
 
-        return view('pcview::profile.collection', $data, $this->mergeData);
+        return view('pcview::profile.collection', $data, $this->PlusData);
     }
 
     /**
@@ -123,165 +123,29 @@ class ProfileController extends BaseController
      * @param  int|integer $user_id   用户id
      * @return [type]               [description]
      */
-    public function users(Request $request, User $model, int $type = 1, int $user_id = 0)
+    public function followers(Request $request, User $model, int $type = 1, int $user_id = 0)
     {
-        $current_user = $request->user();
-        $current_user_id = $this->mergeData['TS']['id'] ?? 0;
-        $data = [];
-        $data['type'] = $type;
-        $data['user_id'] = $user_id = $user_id ?: $this->mergeData['TS']['id'];
-        $user = $model->find($user_id);
-
-        // 我的粉丝
-        if ($type == 1) {
-            /*$follows = Followed::where('user_id', $user_id)
-                ->orderBy('id', 'DESC')
-                ->with('userFollowing', 'user.datas', 'user.counts')
-                ->paginate(6);*/
-            $followers = $user->followers()->paginate(6);
-            $data['datas'] = [];
-            $data['datas'] = $followers->map(function ($follower) use ($current_user, $current_user_id) {
-                // dump($this->formatUserDatas($follower));
-                return [
-                    'id' => $follower->pivot->id,
-                    'user_id' => $follower->pivot->user_id,
-                    'user' => $this->formatUserDatas($follower),
-                    'extra' => $follower->extra,
-                    'my_follow_status' => $current_user ? $current_user->hasFollwing($follower->id) ? 1 : 0 : 0, // 当前用户对该用户的关注状态
-                    'follow_status' => $follower->hasFollwing($current_user_id) ? 1 : 0, // 该用户对当前用户的关注状态
-                    'storages' => FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                        ->where('feeds.user_id', '=', $follower->id)
-                                        ->orderBy('file_withs.id', 'desc')
-                                        ->take(3)
-                                        ->select('feeds.id', 'file_withs.file_id')
-                                        ->get()
-                ];
-            });
-            /*foreach ($follows as $follow) {
-                $_data = [];
-                $_data['id'] = $follow->id;
-                // 获取用户信息
-                $_data['user'] = $this->formatUserDatas($follow->user);
-                // 关注状态
-                $_data['my_follow_status'] = $follow->userFollowing->where('following_user_id', $follow->followed_user_id)->isEmpty() ? 0 : 1;
-                // 最新微博图片
-                $_data['storages'] = FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                        ->where('feeds.user_id', '=', $follow->user->id)
-                                        ->orderBy('file_withs.id', 'desc')
-                                        ->take(3)
-                                        ->select('feeds.id', 'file_withs.file_id')
-                                        ->get()
-                                        ->toArray();
-
-                $data['datas'][] = $_data;
-            }*/
-            $data['page'] = $followers->appends(['type'=>$type])->links('pcview::template.page');
-        } else if ($type == 2) { // 关注的人
-            /*$follows = Following::where('user_id', $user_id)
-                ->orderBy('id', 'DESC')
-                ->with('userFollowed', 'user.datas', 'user.counts')
-                ->paginate(6);*/
-            $followings = $user->followings()->paginate(6);
-            $data['datas'] = [];
-            $data['datas'] = $followings->map(function ($following) use ($current_user, $current_user_id) {
-                return [
-                    'id' => $following->pivot->id,
-                    'user_id' => $following->pivot->target,
-                    'user' => $this->formatUserDatas($following),
-                    'extra' => $following->extra,
-                    'my_follow_status' => $current_user ? $current_user->hasFollwing($following->id) ? 1 : 0 : 0, // 当前用户对该用户的关注状态
-                    'follow_status' => $following->hasFollwing($current_user_id) ? 1 : 0, // 该用户对当前用户的关注状态
-                    'storages' => FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                ->where('feeds.user_id', '=', $following->id)
-                                ->orderBy('file_withs.id', 'desc')
-                                ->take(3)
-                                ->select('feeds.id', 'file_withs.file_id')
-                                ->get()
-                ];
-            });
-            /*foreach ($follows as $follow) {
-                $_data = [];
-                $_data['id'] = $follow->id;
-                // 获取用户信息
-                $_data['user'] = $this->formatUserDatas($follow->user);
-                // 关注状态
-                $_data['my_follow_status'] = 1; //我关注的列表  关注状态始终为1
-                // 最新微博图片
-                $_data['storages'] = FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                ->where('feeds.user_id', '=', $follow->user->id)
-                                ->orderBy('file_withs.id', 'desc')
-                                ->take(3)
-                                ->select('feeds.id', 'file_withs.file_id')
-                                ->get()
-                                ->toArray();
-
-                $data['datas'][] = $_data;
-            }*/
-            $data['page'] = $followings->appends(['type'=>$type])->links('pcview::template.page');
-        } /*else if ($type == 3) { // 访客
-            $visitors = UserVisitor::where('to_uid', $this->mergeData['TS']['id'])
-                ->with('user.datas')
-                ->paginate(6);
-            $data['datas'] = [];
-            $data['count'] = UserVisitor::where('to_uid', $this->mergeData['TS']['id'])->count();
-            foreach ($visitors as $visitor) {
-                $_data['user'] = $this->formatUserDatas($visitor->user);
-                if (!$this->mergeData['TS']) {
-                    $_data['my_follow_status'] = 0;
-                } else {
-                    $_data['my_follow_status'] = Following::where('following_user_id', $visitor->user->id)
-                                            ->where('user_id', $this->mergeData['TS']['id'])
-                                            ->get()
-                                            ->isEmpty() ? 0 : 1;
-                }
-                // 最新微博图片
-                $_data['storages'] = FileWith::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                ->where('feeds.user_id', '=', $visitor->user->id)
-                                ->orderBy('file_withs.id', 'desc')
-                                ->take(3)
-                                ->select('feeds.id', 'file_withs.file_id')
-                                ->get()
-                                ->toArray();
-
-                $data['datas'][] = $_data;
-            }
-            $data['page'] = $visitors->appends(['type'=>$type])->links('pcview::template.page');
-
-        }*/ else { // 推荐用户 
-            $recusers = UserDatas::where('key', 'feeds_count')
-                    ->where('user_id', '!=', $this->mergeData['TS']['id'])
-                    ->with('user.datas')
-                    ->orderBy(DB::raw('-value', 'desc'))
-                    ->paginate(6);
-
-            $data['datas'] = [];
-
-            /*foreach ($recusers as $recuser) {
-                $_data['user'] = $this->formatUserDatas($recuser->user);
-                if (!$this->mergeData['TS']) {
-                    $_data['my_follow_status'] = 0;
-                } else {
-                    $_data['my_follow_status'] = Following::where('following_user_id', $recuser->user->id)
-                                            ->where('user_id', $this->mergeData['TS']['id'])
-                                            ->get()
-                                            ->isEmpty() ? 0 : 1;
-                }
-                // 最新微博图片
-                $_data['storages'] = FeedStorage::join('feeds', 'file_withs.raw', '=', 'feeds.id')
-                                ->where('feeds.user_id', '=', $recuser->user->id)
-                                ->orderBy('file_withs.id', 'desc')
-                                ->take(3)
-                                ->select('feeds.id', 'file_withs.file_id')
-                                ->get()
-                                ->toArray();
-
-                $data['datas'][] = $_data;
-            }*/
-            $data['page'] = $recusers->appends(['type'=>$type])->links('pcview::template.page');
-        }
-
-        return view('pcview::profile.users', $data, $this->mergeData);
+        exit;
+        $data['page'] = $recusers->appends(['type'=>$type])->links('pcview::template.page');
+        
+        return view('pcview::profile.users', $data, $this->PlusData);
     }
+
+    /**
+     * 获取关联用户列表
+     * 
+     * @param  int|integer $type    1:我的粉丝 2:关注的人 3:访客
+     * @param  int|integer $user_id   用户id
+     * @return [type]               [description]
+     */
+    public function followings(Request $request, User $model, int $type = 1, int $user_id = 0)
+    {
+        exit;
+        $data['page'] = $recusers->appends(['type'=>$type])->links('pcview::template.page');
+        
+        return view('pcview::profile.users', $data, $this->PlusData);
+    }
+
 
 
     /**
@@ -292,12 +156,12 @@ class ProfileController extends BaseController
      */
     public function account(Request $request, User $model)
     {
-        $user_id = $this->mergeData['TS']->id ?? 0;
+        $user_id = $this->PlusData['TS']->id ?? 0;
         $page = $request->page ?? 'account';
         $datas['page'] = $page;
         switch ($page) {
             case 'account':
-                $datas['user'] = $this->mergeData['TS'];
+                $datas['user'] = $this->PlusData['TS'];
                 break;
             case 'account-auth':
                 $datas['auth'] = UserVerified::where('user_id', $user_id)
@@ -311,7 +175,7 @@ class ProfileController extends BaseController
                 break;
         }
         
-        return view('pcview::profile.'.$page, $datas, $this->mergeData);
+        return view('pcview::profile.'.$page, $datas, $this->PlusData);
     }
 
     /**
@@ -322,7 +186,7 @@ class ProfileController extends BaseController
      */
     public function doSaveAuth(Request $request)
     {
-        $isVerif = UserVerified::where('user_id', $this->mergeData['TS']['id'])
+        $isVerif = UserVerified::where('user_id', $this->PlusData['TS']['id'])
                     ->count();
         if ($isVerif) {
             return response()->json([
@@ -349,7 +213,7 @@ class ProfileController extends BaseController
             ])->setStatusCode(201);
         }
         $verified = new UserVerified();
-        $verified->user_id = $this->mergeData['TS']['id'];
+        $verified->user_id = $this->PlusData['TS']['id'];
         $verified->realname = $request->realname;
         $verified->idcard = $request->idcard;
         $verified->phone = $request->phone;
@@ -437,7 +301,7 @@ class ProfileController extends BaseController
         }
 
         $feedList['data'] = $datas;
-        $feedData['html'] = view($template, $feedList, $this->mergeData)->render();
+        $feedData['html'] = view($template, $feedList, $this->PlusData)->render();
         $feedData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['feed']['feed_id'] : 0;
 
         return response()->json([
@@ -457,7 +321,7 @@ class ProfileController extends BaseController
      */
     public function getUserFeeds(Request $request, int $user_id)
     {
-        $auth_id = $this->mergeData['TS']['id'] ?? 0;
+        $auth_id = $this->PlusData['TS']['id'] ?? 0;
         $limit = $request->input('limit', 15);
         $max_id = intval($request->input('max_id'));
         $type = $request->input('type');
@@ -511,7 +375,7 @@ class ProfileController extends BaseController
      */
     public function getNewsList(Request $request, int $user_id)
     {
-        $uid = $this->mergeData['TS']['id'] ?? 0;
+        $uid = $this->PlusData['TS']['id'] ?? 0;
         $state = $request->type;
         $max_id = $request->max_id;
         $limit = $request->limit ?? 15;
@@ -533,7 +397,7 @@ class ProfileController extends BaseController
             // $value['is_digg_news'] = $uid ? NewsDigg::where('user_id', $uid)->where('news_id', $value['id'])->count() : 0;
         }
         $newsList['data'] = $datas;
-        $newsData['html'] = view('pcview::template.profile-news', $newsList, $this->mergeData)->render();
+        $newsData['html'] = view('pcview::template.profile-news', $newsList, $this->PlusData)->render();
         $newsData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['id'] : 0;
 
         return response()->json(static::createJsonData([
@@ -553,7 +417,7 @@ class ProfileController extends BaseController
      */
     public function getCollectionList(Request $request, int $user_id)
     {
-        $uid = $this->mergeData['TS']['id'] ?? 0;
+        $uid = $this->PlusData['TS']['id'] ?? 0;
         $type = $request->type;
         $max_id = $request->max_id;
         $limit = $request->limit ?? 15;
@@ -577,7 +441,7 @@ class ProfileController extends BaseController
                 // $value['is_digg_news'] = $uid ? NewsDigg::where('user_id', $uid)->where('news_id', $value['id'])->count() : 0;
             }
             $newsList['data'] = $datas;
-            $dataList['html'] = view('pcview::template.profile-collect', $newsList, $this->mergeData)->render();
+            $dataList['html'] = view('pcview::template.profile-collect', $newsList, $this->PlusData)->render();
             $dataList['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['id'] : 0;
 
             return response()->json(static::createJsonData([

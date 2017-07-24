@@ -14,7 +14,7 @@ class CreditController extends BaseController
 {
     public function index(Request $request, int $type = 1)
     {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
+        $user_id = $this->PlusData['TS']['id'] ?? 0;
         switch ($type) {
             case 2:
                 $data = CreditUser::where('user_id', $user_id)->first();
@@ -34,19 +34,19 @@ class CreditController extends BaseController
 
         $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
                             ->where(function($query) use ($user_id) {
-                                if ($this->mergeData) {
+                                if ($this->PlusData) {
                                     $query->where('user_id', $user_id);
                                 }
                             })
                             ->orderBy('created_at', 'desc')
                             ->first();
         $data['checkin'] = CheckInfo::where(function($query) use ($user_id){
-                                if ($this->mergeData) {
+                                if ($this->PlusData) {
                                     $query->where('user_id', $user_id);
                                 }
                             })
                             ->first();
 
-        return view('pcview::credit.index', $data, $this->mergeData);
+        return view('pcview::credit.index', $data, $this->PlusData);
     }
 }

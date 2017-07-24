@@ -1,12 +1,12 @@
 @php $route = route::currentRouteName(); @endphp
 <div class="nav nav_border">
     <div class="nav_left">
-        <a href="{{ route('pc:feed') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
+        <a href="{{ route('pc:index') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
         <!-- <span class="nav_beta fs-16">beta</span> -->
     </div>
     <div class="nav_list">
         <ul>
-            <li><a href="{{ route('pc:feed')}}" class="fs-18 @if($route == 'pc:feed') c_59b6d7 @endif">动态</a></li>
+            <li><a href="{{ route('pc:index')}}" class="fs-18 @if($route == 'pc:index') c_59b6d7 @endif">动态</a></li>
             <li><a href="{{ route('pc:news')}}" class="fs-18 @if($route == 'pc:news') c_59b6d7 @endif">资讯</a></li>
         </ul>
     </div>
@@ -32,7 +32,7 @@
                     <a href="{{ route('pc:account') }}"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
                 </li>
                 <li style="border-top: 1px solid #ededed; padding-top: 20px;">
-                    <a href="{{ route('pc:myFeed')}}">个人主页</a>
+                    <a href="{{ route('pc:mainpage')}}">个人主页</a>
                 </li>
                 <li style="padding-bottom: 10px;">
                     <a href="javascript:void(0)" onclick="logout()">退出</a>
@@ -44,7 +44,7 @@
     @else
     <div class="nav_right">
         <a class="nava" href="{{ route('pc:register') }}">注册</a>
-        <a class="nava" href="{{ route('pc:index') }}">登录</a>
+        <a class="nava" href="{{ route('pc:login') }}">登录</a>
     </div>
     @endif
 </div>

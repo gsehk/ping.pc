@@ -23,7 +23,7 @@
             </div>
             <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>
             <div class="dyn_lImg">
-                {{-- <a href="{{ route('pc:myFeed', ['user_id' => $user['id']]) }}"> --}}
+                {{-- <a href="{{ route('pc:mainpage', ['user_id' => $user['id']]) }}"> --}}
                     <img src="{{ $user['avatar']}} " alt="{{ $user['name'] }}"/>
                 {{-- </a> --}}
             </div>
@@ -83,8 +83,8 @@
                 <div class="dy_cen">
                     <div class="top-menu-left">
                         <div class="artic_left border_left">
-                            <a href="{{ route('pc:myFeed', ['type'=>'all', 'user_id'=> $user['id']]) }}" class="fs-16 @if($type == 'all') dy_cen_333 @endif">动态</a>
-                            <a href="{{ route('pc:myFeed', ['type'=>'img', 'user_id'=> $user['id']]) }}" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
+                            <a href="{{ route('pc:mainpage', ['type'=>'all', 'user_id'=> $user['id']]) }}" class="fs-16 @if($type == 'all') dy_cen_333 @endif">动态</a>
+                            <a href="{{ route('pc:mainpage', ['type'=>'img', 'user_id'=> $user['id']]) }}" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
                         </div>
                         <a href="{{ route('pc:article', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16 border_left_no dy_cen_333"><div>文章</div></a>
                     </div>
@@ -115,10 +115,10 @@
                 <ul class="userlist">
                     @foreach ($followeds as $followed)
                     <li>
-                        <a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">
+                        <a href="{{ route('pc:mainpage', ['user_id' => $followed['id']]) }}">
                             <img src="{{ $followed['avatar'] }}" />
                         </a>
-                        <span><a href="{{ route('pc:myFeed', ['user_id' => $followed['id']]) }}">{{ $followed['name'] }}</a></span>
+                        <span><a href="{{ route('pc:mainpage', ['user_id' => $followed['id']]) }}">{{ $followed['name'] }}</a></span>
                     </li>
                     @endforeach
                 </ul>
@@ -133,10 +133,10 @@
                 <ul class="userlist">
                     @foreach ($followings as $following)
                     <li>
-                        <a href="{{ route('pc:myFeed', ['user_id' => $following['id']]) }}">
+                        <a href="{{ route('pc:mainpage', ['user_id' => $following['id']]) }}">
                             <img src="{{ $following['avatar'] }}" />
                         </a>
-                        <span><a href="{{ route('pc:myFeed', ['user_id' => $following['id']]) }}">{{ $following['name'] }}</a></span>
+                        <span><a href="{{ route('pc:mainpage', ['user_id' => $following['id']]) }}">{{ $following['name'] }}</a></span>
                     </li>
                     @endforeach
                 </ul>
@@ -152,10 +152,10 @@
                 <ul class="userlist">
                     @foreach ($visitors as $visitor)
                     <li>
-                        <a href="{{ route('pc:myFeed', ['user_id' => $visitor['id']]) }}">
+                        <a href="{{ route('pc:mainpage', ['user_id' => $visitor['id']]) }}">
                             <img src="{{ $visitor['avatar'] }}" />
                         </a>
-                        <span><a href="{{ route('pc:myFeed', ['user_id' => $visitor['id']]) }}">{{ $visitor['name'] }}</a></span>
+                        <span><a href="{{ route('pc:mainpage', ['user_id' => $visitor['id']]) }}">{{ $visitor['name'] }}</a></span>
                     </li>
                     @endforeach
                 </ul>

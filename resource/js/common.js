@@ -1,5 +1,5 @@
 var initNums = 255;
-var loadHtml = "<div class='loading'><img src='" + PUBLIC_URL + "/images/loading.png' class='load'>加载中</div>";
+var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/loading.png' class='load'>加载中</div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var mark_time = MID + new Date().getTime();
 var request_url = {
@@ -272,7 +272,7 @@ var noticebox_cb = function(tourl) {
  * @return bool
  */
 var no_data = function(selector, type, txt) {
-    var image = type == 0 ? PUBLIC_URL + '/images/pic_default_content.png' : PUBLIC_URL + '/images/pic_default_people.png';
+    var image = type == 0 ? RESOURCE_URL + '/images/pic_default_content.png' : RESOURCE_URL + '/images/pic_default_people.png';
     var html = '<div class="no_data_div"><div class="no_data"><img src="' + image + '" /><p>' + txt + '</p></div></div>';
     $(selector).html(html);
 }

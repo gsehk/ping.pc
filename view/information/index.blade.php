@@ -7,7 +7,7 @@
             @foreach($recommend as $frv)
                 @if($loop->first)
                 <div class="inT_title">
-                <a href="{{ route('pc:myFeed',['user_id'=>$frv['author']]) }}">
+                <a href="{{ route('pc:mainpage',['user_id'=>$frv['author']]) }}">
                     <img src="{{ $frv['info']['avatar'] }}" />
                     <span>{{ $frv['info']['name'] }}</span>
                 </a>
@@ -79,7 +79,7 @@
                 <span>收藏的</span>
             </div>
         </a>
-        <a href="{{ route('pc:feed') }}" title="">
+        <a href="{{ route('pc:index') }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-dynamic"></use>
@@ -95,7 +95,7 @@
                 <span>排行榜</span>
             </div>
         </a>
-        <a href="{{ route('pc:myFeed') }}" title="">
+        <a href="{{ route('pc:mainpage') }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-mydynamic"></use>
@@ -140,10 +140,10 @@
                 @foreach ($author as $u)
                     <div class="R_list">
                         <div class="i_left">
-                            <a href="{{ route('pc:myFeed',['user_id'=>$u->info['id']]) }}"><img src="{{ $u->info['avatar'] }}" /></a>
+                            <a href="{{ route('pc:mainpage',['user_id'=>$u->info['id']]) }}"><img src="{{ $u->info['avatar'] }}" /></a>
                         </div>
                         <div class="i_right">
-                            <span><a href="{{ route('pc:myFeed',['user_id'=>$u->info['id']]) }}">{{$u->user['name']}}</a></span>
+                            <span><a href="{{ route('pc:mainpage',['user_id'=>$u->info['id']]) }}">{{$u->user['name']}}</a></span>
                             <p>@if(!empty($u->info['intro'])) {{ $u->info['intro'] }} @else 这家伙很懒，什么都没留下 @endif</p>
                         </div>
                     </div>

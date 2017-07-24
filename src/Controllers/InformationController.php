@@ -33,7 +33,7 @@ class InformationController extends BaseController
         $datas['slide'] = NewsRecommend::with('cover')->get();
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
         $datas['hots'] = ['week' => $this->getRecentHot(1), 'month' => $this->getRecentHot(2), 'quarter' => $this->getRecentHot(3)];
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
+        $user_id = $this->PlusData['TS']['id'] ?? 0;
 
         $recommend = News::byAudit()
                 ->where('is_recommend', 1)
@@ -57,7 +57,7 @@ class InformationController extends BaseController
             $datas['author'] = $author;
         }
 
-        return view('pcview::information.index', $datas, $this->mergeData);
+        return view('pcview::information.index', $datas, $this->PlusData);
     }
 
     /**
@@ -72,7 +72,7 @@ class InformationController extends BaseController
             return redirect( route('pc:news'), 302);
         }
         News::where('id', $news_id)->increment('hits');
-        $uid = $this->mergeData['TS']['id'] ?? 0;
+        $uid = $this->PlusData['TS']['id'] ?? 0;
         $news = News::byAudit()->where('id', $news_id)
                 ->withCount(['newsCount' => function($query){
                     $query->where('audit_status', 0);
@@ -98,7 +98,7 @@ class InformationController extends BaseController
                     ->select('id','title')
                     ->get();
 
-        return view('pcview::information.read', $news, $this->mergeData);
+        return view('pcview::information.read', $news, $this->PlusData);
     }
 
     /**
@@ -110,7 +110,7 @@ class InformationController extends BaseController
     public function release(Request $request, int $news_id = null)
     {
         $data = [];
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
+        $user_id = $this->PlusData['TS']['id'] ?? 0;
         $draft = News::where('audit_status', 2)->where('author', $user_id)->get();
         if ($news_id) {
             $data = $draft->where('id', $news_id)->first();
@@ -120,7 +120,7 @@ class InformationController extends BaseController
         $data['count'] = $draft->count();
         $data['cate'] = NewsCate::where('id', '!=', 1)->orderBy('rank', 'desc')->select('id','name')->get();
 
-        return view('pcview::information.release', $data, $this->mergeData);
+        return view('pcview::information.release', $data, $this->PlusData);
     }
 
     /**
@@ -250,7 +250,7 @@ class InformationController extends BaseController
             if ($news) {
                 $news->title = $request->title;
                 $news->subject = $request->subject ?: getShort($request->content, 60);
-                $news->author = $this->mergeData['TS']['id'] ?? 0;
+                $news->author = $this->PlusData['TS']['id'] ?? 0;
                 $news->content = $request->content;
                 $news->storage = $request->storage_id;
                 $news->from = $request->source ?: '';
@@ -274,7 +274,7 @@ class InformationController extends BaseController
             $news = new News();
             $news->title = $request->title;
             $news->subject = $request->subject ?: getShort($request->content, 60);
-            $news->author = $this->mergeData['TS']['id'] ?? 0;
+            $news->author = $this->PlusData['TS']['id'] ?? 0;
             $news->content = $request->content;
             $news->storage = $request->storage_id;
             $news->from = $request->source ?: '';
@@ -306,8 +306,8 @@ class InformationController extends BaseController
             'message' => $type == 1 ? '发布成功，请等待审核' : '保存成功',
             'data'    => [
                 'url' => ($type == 1) 
-                ? route('pc:article', ['user_id'=>$this->mergeData['TS']['id'],'type' => 1]) 
-                : route('pc:article', ['user_id'=>$this->mergeData['TS']['id'],'type' => 2])
+                ? route('pc:article', ['user_id'=>$this->PlusData['TS']['id'],'type' => 1]) 
+                : route('pc:article', ['user_id'=>$this->PlusData['TS']['id'],'type' => 2])
                 ,'id' => $news->id
             ]
         ]))->setStatusCode(200);

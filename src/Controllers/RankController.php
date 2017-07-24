@@ -28,12 +28,12 @@ class RankController extends BaseController
         $list = $this->_parseRankList($ranList);
         $list['type'] = $type;
         
-        return view('pcview::rank.index', $list, $this->mergeData);
+        return view('pcview::rank.index', $list, $this->PlusData);
     }
 
     public function _getRankList($type, $fids)
     {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
+        $user_id = $this->PlusData['TS']['id'] ?? 0;
         $rank_list_key = 'user_rank_list_'.$type;
         $rank_list = Cache::get($rank_list_key);
         // if ($rank_list) {

@@ -7,14 +7,14 @@
     <title>@yield('title')</title>
     
     <script>
-        // 全局变量
-        var PUBLIC_URL = '{{ $routes["resource"] }}';
-        var API = '/api/v1/';
-        // 用户属性
+        var API = '{{ $routes["api"] }}';
         var MID = "{{ $TS['id'] or 0 }}";
         var NAME = "{{ $TS['name'] or '' }}";
         var AVATAR = "{{ $TS['avatar'] }}";
-        var TOKEN = "{{ $TS['token'] or '' }}";
+        var TOKEN = "{{ $token or '' }}";
+        var SITE_URL = "{{ $routes['siteurl'] }}";
+        var RESOURCE_URL = '{{ $routes["resource"] }}';
+        var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
     <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/bootstrap.min.css" rel="stylesheet">

@@ -16,33 +16,33 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class BaseController extends Controller
 {
-	protected $mergeData;
+	protected $PlusData;
 
     public function __construct()
     {
     	$this->middleware(function($request, $next){
-    		$this->mergeData['token'] = session('token') ?: '';
-    		$this->mergeData['mid'] = session('mid') ?: '';
+            // user info
+    		$this->PlusData['token'] = session('token') ?: '';
+    		$this->PlusData['mid'] = session('mid') ?: '';
 
-    		$this->mergeData['TS'] = null;
-    		if ($this->mergeData['mid']) {
-    			$this->mergeData['TS'] = createRequest('GET', '/api/v2/users/' . $this->mergeData['mid']);
-	            $this->mergeData['TS']['role'] = DB::table('role_user')->where('user_id', $this->mergeData['TS']['id'])->first();
+    		$this->PlusData['TS'] = null;
+    		if ($this->PlusData['mid']) {
+    			$this->PlusData['TS'] = createRequest('GET', '/api/v2/users/' . $this->PlusData['mid']);
+                $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
     		}
 
-			// 站点配置
+			// site config
 	        $config = [
-	            'title' => 'ThinkSNS Plus Title',
-	            'keywords' => 'ThinkSNS Plus Keywords',
-	            'description' => 'ThinkSNS Plus Description',	
-	            'nav' => ['feed'=>route('pc:feed'), 'news'=>route('pc:news')]
+	            'nav' => ['feed'=>route('pc:index'), 'news'=>route('pc:news')]
 	        ];
-	        $this->mergeData['site'] = $config;
+	        $this->PlusData['site'] = $config;
 
-	        // 公共配置
-            $this->mergeData['routes']['storage'] = '/api/v2/files/';
-            $this->mergeData['routes']['resource'] = asset('');
-            $this->mergeData['routes']['app_url'] = getenv('APP_URL');
+	        // common config
+            $app_url = getenv('APP_URL');
+            $this->PlusData['routes']['siteurl'] = getenv('APP_URL');
+            $this->PlusData['routes']['api'] = $app_url . '/api/v2';
+            $this->PlusData['routes']['storage'] = $app_url . '/api/v2/files/';
+            $this->PlusData['routes']['resource'] = asset('');
 
     		return $next($request);
     	});

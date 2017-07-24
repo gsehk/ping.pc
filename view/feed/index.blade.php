@@ -5,7 +5,7 @@
 @section('content')
 <div class="dy_cont clearfix">
     <!--左-->
-    @component('pcview::ucmenu')
+    @component('pcview::feed.menu')
     @endcomponent
     <!-- 中 -->
     <div class="dy_cCont">
@@ -49,7 +49,7 @@
                     {{$TS['name']}}
                     {{-- <span class="totalnum">{{ $TS['credit'] or 0 }}</span> --}}
                 </span>
-                <a href="{{ route('pc:myFeed', ['user_id' => $TS['id']]) }}">
+                <a href="{{ route('pc:mainpage', ['user_id' => $TS['id']]) }}">
                 <img src="{{ $TS['avatar'] or $routes['resource'] . '/images/avatar.png' }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                 </a>
             </div>
@@ -68,10 +68,10 @@
             <ul>
                 @foreach ($rec_users as $rec_user)
                 <li>
-                    <a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">
+                    <a href="{{ route('pc:mainpage', ['user_id' => $rec_user['id']]) }}">
                     <img src="{{ $rec_user['avatar'] }}" alt="{{ $rec_user['name'] }}"/>
                     </a>
-                    <span><a href="{{ route('pc:myFeed', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
+                    <span><a href="{{ route('pc:mainpage', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
                 </li>
                 @endforeach
             </ul>
@@ -113,7 +113,7 @@ setTimeout(function() {
 
 $(function(){
     // 发布微博
-    var loadgif = PUBLIC_URL + '/images/loading.png';
+    var loadgif = RESOURCE_URL + '/images/loading.png';
     var up = $('.dy_company').Huploadify({
         auto:true,
         multi:true,

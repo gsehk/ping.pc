@@ -6,86 +6,113 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Middleware as PcMiddleware;
 Route::prefix('passport')->group(function () {
 
     // login
-    Route::get('index', 'PassportController@index')->name('pc:index');
+    Route::get('/login', 'PassportController@index')->name('pc:login');
 
     // token
     Route::get('/mid/{mid}/token/{token}', 'PassportController@token')->name('pc:token');
 
     // logout
-    Route::any('logout', 'PassportController@logout')->name('pc:logout');
+    Route::any('/logout', 'PassportController@logout')->name('pc:logout');
 
     // register 
-    Route::get('register', 'PassportController@register')->name('pc:register');
+    Route::get('/register', 'PassportController@register')->name('pc:register');
 
     // captcha
-    Route::get('captcha/{tmp}', 'PassportController@captcha')->name('pc:captcha');
+    Route::get('/captcha/{tmp}', 'PassportController@captcha')->name('pc:captcha');
 
     // checkcaptcha
-    Route::post('checkcaptcha', 'PassportController@checkCaptcha')->name('pc:checkcaptcha');
+    Route::post('/checkcaptcha', 'PassportController@checkCaptcha')->name('pc:checkcaptcha');
 
     // findpwd 
-    Route::get('findpwd', 'PassportController@findPassword')->name('pc:findPassword');
+    Route::get('/findpwd', 'PassportController@findPassword')->name('pc:findpassword');
 
     // perfect
-    Route::get('perfect', 'PassportController@perfect')->name('pc:perfect');
+    Route::get('/perfect', 'PassportController@perfect')->name('pc:perfect');
 });
 
-Route::prefix('pc')->group(function () {
-    /* 动态列表 */
-    Route::get('feeds', 'FeedController@feeds');
-    /* 动态详情 */
-    Route::get('feeds/{feed}', 'FeedController@read')->name('PC:FeedRead')->where(['feed' => '[0-9]+']);
-    /* 动态评论列表 */
-    Route::get('feeds/{feed}/comments', 'FeedController@comments');
-    /* 动态收藏 */
-    Route::get('feeds/collection', 'FeedController@collection');
-    /* 文章收藏 */
-    Route::get('news/collection', 'FeedController@newsCollect');
+// feeds
+Route::prefix('feeds')->group(function () {
+    // feeds index
+    Route::get('/index', 'FeedController@index')->name('pc:index');
+    // feeds list
+    Route::get('/', 'FeedController@feeds')->name('pc:feeds');
+    // feed detail
+    Route::get('/{feed}', 'FeedController@read')->where(['feed' => '[0-9]+'])->name('pc:feedread');
+    // feed comments list
+    Route::get('/{feed}/comments', 'FeedController@comments')->where(['feed' => '[0-9]+'])->name('pc:feedcomments');
+    // feed collections
+    Route::get('/feeds/collection', 'FeedController@collection')->name('pc:feedcollections');
 });
 
-// UCenter
-Route::get('index/{user_id?}', 'ProfileController@index')->where(['user_id' => '[0-9]+'])->name('pc:myFeed');
-Route::get('article/{user_id?}/{type?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:article');
-Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
-Route::prefix('profile')->get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
-Route::prefix('profile')->get('/collection/{user_id}', 'ProfileController@getCollectionList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
-Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
-    Route::get('related', 'ProfileController@related')->name('pc:related');
-    Route::get('nexus/{type?}/{user_id?}', 'ProfileController@users')->name('pc:users');
-    Route::get('following', 'ProfileController@following')->name('pc:following');
-    Route::get('collection', 'ProfileController@collection')->name('pc:collection');
-    Route::get('account', 'ProfileController@account')->name('pc:account');
-    // 个人设置
-    Route::get('cropper', 'ProfileController@cropper'); 
-    Route::post('doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
-    Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
+
+// user profile
+Route::prefix('profile')->group(function () {
+
+    // user mainpage
+    Route::get('/index/{user_id?}', 'ProfileController@index')->where(['user_id' => '[0-9]+'])->name('pc:mainpage');
+
+    // user followers
+    Route::get('/followers/{user_id?}', 'ProfileController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
+
+    // user followings
+    Route::get('/followings/{user_id?}', 'ProfileController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
+
+
+    Route::get('article/{user_id?}/{type?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:article');
+    Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
+    Route::prefix('profile')->get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
+    Route::prefix('profile')->get('/collection/{user_id}', 'ProfileController@getCollectionList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
+    Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
+        Route::get('related', 'ProfileController@related')->name('pc:related');
+        Route::get('following', 'ProfileController@following')->name('pc:following');
+        Route::get('collection', 'ProfileController@collection')->name('pc:collection');
+        Route::get('account', 'ProfileController@account')->name('pc:account');
+        // 个人设置
+        Route::get('cropper', 'ProfileController@cropper'); 
+        Route::post('doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
+        Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
+    });
+
+
 });
 
-// 动态
-Route::get('/home/index', 'FeedController@index')->name('pc:feed');
-Route::get('/home/checkin', 'FeedController@checkin');
-// 举报
-Route::post('/feed/{feed_id}/denounce', 'FeedController@denounce')->where(['feed_id' => '[0-9]+']);
 
-// 资讯
-Route::get('/information/index', 'InformationController@index')->name('pc:news');
-// 资讯详情
-Route::get('/information/read/{news_id}', 'InformationController@read')->where(['news_id' => '[0-9]+']);
-// 评论列表
-Route::get('/information/{news_id}/comments', 'InformationController@getCommentList')->where(['news_id' => '[0-9]+']);
-// 投稿
-Route::get('/information/release/{news_id?}', 'InformationController@release')->name('pc:newsrelease');
+// news
+Route::prefix('news')->group(function () {
+    // news index
+    Route::get('/index', 'InformationController@index')->name('pc:news');
+    
+    // news detail
+    Route::get('/read/{news_id}', 'InformationController@read')->where(['news_id' => '[0-9]+']);
+    
+    // news comments list
+    Route::get('/{news_id}/comments', 'InformationController@getCommentList')->where(['news_id' => '[0-9]+']);
+    
+    // news release
+    Route::get('/release/{news_id?}', 'InformationController@release')->name('pc:newsrelease');
 
-Route::get('/information/getNewsList', 'InformationController@getNewsList');
-Route::get('/information/getRecentHot', 'InformationController@getRecentHot');
-Route::get('/information/getAuthorHot', 'InformationController@getAuthorHot');
-Route::post('/information/doSavePost', 'InformationController@doSavePost')->name('pc:doSavePost');
-Route::post('/information/uploadImg', 'InformationController@uploadImg')->name('pc:uploadImg');
+    // get news list
+    Route::get('/getNewsList', 'InformationController@getNewsList');
 
-// 积分规则
-Route::get('/credit/index/{type?}', 'CreditController@index')->name('pc:credit');
-// 排行榜
-Route::get('/rank/index', 'RankController@index')->name('pc:rank');
+    // get recent and hot news 
+    Route::get('/getRecentHot', 'InformationController@getRecentHot');
 
-Route::get('/webMessage/index/{type?}', 'MessageController@index');
-Route::get('/webMessage/getBody/{type?}', 'MessageController@getMessageBody');
+    // get author's hot news
+    Route::get('/getAuthorHot', 'InformationController@getAuthorHot');
+
+    // do save and post
+    Route::post('/doSavePost', 'InformationController@doSavePost')->name('pc:doSavePost');
+
+    // upload img
+    Route::post('/uploadImg', 'InformationController@uploadImg')->name('pc:uploadImg');
+
+    // news collections
+    Route::get('/collection', 'FeedController@newsCollect')->name('pc:newscollections');
+});
+
+// webmessage
+Route::prefix('webmessage')->group(function () {
+    Route::get('/webMessage/index/{type?}', 'MessageController@index');
+    Route::get('/webMessage/getBody/{type?}', 'MessageController@getMessageBody');
+});
+

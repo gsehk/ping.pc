@@ -19,8 +19,8 @@ class FeedController extends BaseController
      */
     public function index(Request $request)
     {
-        $data['type'] = $request->input('type') ?: ($this->mergeData['TS'] ? 'follow' : 'hot');
-        return view('pcview::home.index', $data, $this->mergeData);
+        $data['type'] = $request->input('type') ?: ($this->PlusData['TS'] ? 'follow' : 'hot');
+        return view('pcview::feed.index', $data, $this->PlusData);
     }
 
     /**
@@ -33,7 +33,7 @@ class FeedController extends BaseController
         $feeds = createRequest('GET', '/api/v2/feeds');
         $feed = clone $feeds['feeds'];
         $feedData['after'] = $feed->pop()->id ?? 0;
-        $feedData['html'] = view('pcview::template.feed', $feeds, $this->mergeData)->render();
+        $feedData['html'] = view('pcview::template.feed', $feeds, $this->PlusData)->render();
 
         return response()->json([
                 'status'  => true,
@@ -77,7 +77,7 @@ class FeedController extends BaseController
         ];
         Feed::byFeedId($feed_id)->increment('feed_view_count');
 
-        return view('pcview::home.read',$data, $this->mergeData);
+        return view('pcview::home.read',$data, $this->PlusData);
     }
 
     /**
@@ -120,7 +120,7 @@ class FeedController extends BaseController
         $collect = clone $collects;
         $datas['feeds'] = $collects;
         $after = $collect->pop()->id ?? 0;
-        $html = view('pcview::template.feed', $datas, $this->mergeData)->render();
+        $html = view('pcview::template.feed', $datas, $this->PlusData)->render();
         
         return response()->json([
             'status' => true,
@@ -159,7 +159,7 @@ class FeedController extends BaseController
         $new = clone $news;
         $datas['data'] = $news;
         $after = $new->pop()->id ?? 0;
-        $html = view('pcview::template.profile-collect', $datas, $this->mergeData)->render();
+        $html = view('pcview::template.profile-collect', $datas, $this->PlusData)->render();
 
         return response()->json(static::createJsonData([
             'status' => true,
@@ -225,7 +225,7 @@ class FeedController extends BaseController
      */
     public function checkin()
     {
-        $user_id = $this->mergeData['TS']['id'] ?? 0;
+        $user_id = $this->PlusData['TS']['id'] ?? 0;
 
         $check_info = CheckInfo::where('user_id', $user_id)
                     ->where('created_at', '>', Carbon::today())

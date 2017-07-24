@@ -23,7 +23,7 @@
                     <input type="password" placeholder="输入密码" name="password"/>
                 </div>
                 <div class="l_mm">
-                    <a href="{{ route('pc:findPassword') }}">
+                    <a href="{{ route('pc:findpassword') }}">
                         <span class="l_forget">忘记密码</span>
                     </a>
                 </div>

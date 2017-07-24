@@ -11,7 +11,7 @@
                 <a href="javascript:;" class="top_list_span">{{ $li['name'] }}</a>
                 @endforeach
                 @endif
-                <a href="{{ route('pc:myFeed', ['user_id'=>$user['id']]) }}">{{ $user['name'] }}</a>
+                <a href="{{ route('pc:mainpage', ['user_id'=>$user['id']]) }}">{{ $user['name'] }}</a>
                 <div class="del_top_r">
                     <span class="del_time">{{ $created_at }}</span>
                 </div>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="delTop_right">
-                    <span><a href="{{ route('pc:myFeed', ['user_id'=>$user['id']]) }}">{{ $user['name'] }}</a></span>
+                    <span><a href="{{ route('pc:mainpage', ['user_id'=>$user['id']]) }}">{{ $user['name'] }}</a></span>
                     <p class="txt-hide">{{ $user['intro'] or ''}}</p>
                 </div>
                 <ul class="del_ul">

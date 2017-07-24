@@ -15,7 +15,7 @@ weibo.init = function(option) {
     this.setting.type = option.type || 0; //  微博分类
     this.setting.canload = option.canload || true; // 是否能加载
     this.setting.loading = option.loading || '.dy_cen'; //加载图位置
-    this.setting.url = request_url.feeds_list;
+    this.setting.url = SITE_URL + '/feeds';
     weibo.bindScroll();
     if ($(weibo.setting.container).length > 0 && this.setting.canload) {
         $('.loading').remove();
@@ -67,6 +67,7 @@ weibo.loadMore = function() {
     var postArgs = {};
     postArgs.after = weibo.setting.after;
     postArgs.type = weibo.setting.type;
+    console.log(weibo.setting.url);
     $.ajax({
         url: weibo.setting.url,
         type: 'GET',

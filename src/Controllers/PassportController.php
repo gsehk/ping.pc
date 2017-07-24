@@ -18,16 +18,16 @@ class PassportController extends BaseController
     {
         Session::put('mid', $mid);
         Session::put('token', $token);
-        return redirect(route('pc:feed'));
+        return redirect(route('pc:index'));
     }
 
     public function index(Request $request)
     {
-        if ($this->mergeData['TS'] != null) {
-            return redirect(route('pc:feed'));
+        if ($this->PlusData['TS'] != null) {
+            return redirect(route('pc:index'));
         }
 
-    	return view('pcview::passport.login', [], $this->mergeData);
+    	return view('pcview::passport.login', [], $this->PlusData);
     }
 
     public function logout(Request $request)
@@ -43,14 +43,14 @@ class PassportController extends BaseController
 
     public function register()
     {
-        return view('pcview::passport.register', [], $this->mergeData);
+        return view('pcview::passport.register', [], $this->PlusData);
     }
 
     public function findPassword(Request $request)
     {
         $type = $request->input('type') ?: 1;
 
-        return view('pcview::passport.findpwd', ['type' => $type], $this->mergeData);
+        return view('pcview::passport.findpwd', ['type' => $type], $this->PlusData);
     }
 
     public function doFindpwd(Request $request)

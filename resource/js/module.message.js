@@ -12,13 +12,13 @@ var message = new function() {
                 "pl": {
                     id: 'pl',
                     title: "评论",
-                    src: PUBLIC_URL + '/images/message/pl.png',
+                    src: RESOURCE_URL + '/images/message/pl.png',
                     icon:'<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xuanzedui-copy-copy-copy"></use></svg>',
                 },
                 "zan": {
                     id: 'zan',
                     title: "赞",
-                    src: PUBLIC_URL + '/images/message/zan.png',
+                    src: RESOURCE_URL + '/images/message/zan.png',
                     icon:'<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xihuande-copy"></use></svg>',
                 }
             }

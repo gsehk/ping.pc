@@ -32,8 +32,8 @@
                 <li> 
                     <div class="fans_span1"><span @if($fv->rank <= 3) class="blue" @elseif($fv->rank >= 3 && $fv->rank <= 10) class="grey" @endif>{{$fv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <a href="{{ route('pc:myFeed', ['user_id'=>$fv['id']]) }}"><img src="@if(!empty($fv->info['avatar'])) {{ $fv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" /></a>
-                        <a href="{{ route('pc:myFeed', ['user_id'=>$fv['id']]) }}">{{$fv->name}}</a>
+                        <a href="{{ route('pc:mainpage', ['user_id'=>$fv['id']]) }}"><img src="@if(!empty($fv->info['avatar'])) {{ $fv->info['avatar'] }} @else {{ $routes['resource'] }}/images/avatar.png @endif" class="fans_img" /></a>
+                        <a href="{{ route('pc:mainpage', ['user_id'=>$fv['id']]) }}">{{$fv->name}}</a>
                     </div>
                     <div class="fans_span3">{{$fv->value}}</div>
                 </li>
@@ -68,8 +68,8 @@
                 <li>
                     <div class="fans_span1"><span @if($cv->rank <= 3) class="blue" @elseif($cv->rank >= 3 && $cv->rank <= 10) class="grey" @endif>{{$cv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <a href="{{ route('pc:myFeed', ['user_id'=>$cv['id']]) }}"><img src="{{ $cv->info['avatar'] }}" class="fans_img" /></a>
-                        <a href="{{ route('pc:myFeed', ['user_id'=>$cv['id']]) }}">{{$cv->name}}</a>
+                        <a href="{{ route('pc:mainpage', ['user_id'=>$cv['id']]) }}"><img src="{{ $cv->info['avatar'] }}" class="fans_img" /></a>
+                        <a href="{{ route('pc:mainpage', ['user_id'=>$cv['id']]) }}">{{$cv->name}}</a>
                     </div>
                     <div class="fans_span3">{{$cv->score}}</div>
                 </li>
@@ -106,8 +106,8 @@
                 <li>
                     <div class="fans_span1"><span @if($pv->rank <= 3) class="blue" @elseif($pv->rank >= 3 && $pv->rank <= 10) class="grey" @endif>{{$pv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <a href="{{ route('pc:myFeed', ['user_id'=>$pv['id']]) }}"><img src="{{ $pv->info['avatar'] }}" class="fans_img" /></a>
-                        <a href="{{ route('pc:myFeed', ['user_id'=>$pv['id']]) }}">{{$pv->name}}</a>
+                        <a href="{{ route('pc:mainpage', ['user_id'=>$pv['id']]) }}"><img src="{{ $pv->info['avatar'] }}" class="fans_img" /></a>
+                        <a href="{{ route('pc:mainpage', ['user_id'=>$pv['id']]) }}">{{$pv->name}}</a>
                     </div>
                     <div class="fans_span3">{{$pv->value}}</div>
                 </li>
@@ -142,8 +142,8 @@
                 <li>
                     <div class="fans_span1"><span @if($tv->rank <= 3) class="blue" @elseif($tv->rank >= 3 && $tv->rank <= 10) class="grey" @endif>{{$tv->rank}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <a href="{{ route('pc:myFeed', ['user_id'=>$tv['id']]) }}"><img src="{{ $tv->info['avatar'] }}" class="fans_img" /></a>
-                        <a href="{{ route('pc:myFeed', ['user_id'=>$tv['id']]) }}">{{$tv->name}}</a>
+                        <a href="{{ route('pc:mainpage', ['user_id'=>$tv['id']]) }}"><img src="{{ $tv->info['avatar'] }}" class="fans_img" /></a>
+                        <a href="{{ route('pc:mainpage', ['user_id'=>$tv['id']]) }}">{{$tv->name}}</a>
                     </div>
                     <div class="fans_span3">{{$tv->value}}</div>
                 </li>

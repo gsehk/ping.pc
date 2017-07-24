@@ -27,13 +27,13 @@
         <div class="fan_c"  @if(($loop->iteration) % 3 == 1) style="border-right:0;" @endif>
             <div class="fanList_top">
                 <div class="fan_header">
-                    <a href="{{route('pc:myFeed',['user_id'=>$data['user']['id']])}}">
+                    <a href="{{route('pc:mainpage',['user_id'=>$data['user']['id']])}}">
                         <img src="{{ $data['user']['avatar']}} " class="head_img" alt="{{ $data['user']['name'] }}"/>
                     </a>
                 </div>
                 <div class="fan_word">
                     <div>
-                        <a href="{{route('pc:myFeed',['user_id'=>$data['user']['id']])}}"><span class="fan_name">{{ $data['user']['name'] or $data['user']['phone'] }}</span></a>
+                        <a href="{{route('pc:mainpage',['user_id'=>$data['user']['id']])}}"><span class="fan_name">{{ $data['user']['name'] or $data['user']['phone'] }}</span></a>
                         @if ($data['my_follow_status'] == 1)
                         <span id="data" class="fan_care c_ccc" uid="{{ $data['user']['id'] }}" status="1">已关注</span>
                         @else
@@ -50,7 +50,7 @@
             <div class="fan_line"></div>
             <div class="fanList_bottom">
                 @foreach ($data['storages'] as $storage)
-                <a href="{{Route('PC:FeedRead', $storage->id)}}"> <img  class="lazy" data-original="{{$routes['storage']}}{{$storage->file_id}}?w=100&h=100" /></a>
+                <a href="{{Route('pc:feedread', $storage->id)}}"> <img  class="lazy" data-original="{{$routes['storage']}}{{$storage->file_id}}?w=100&h=100" /></a>
                 @endforeach
 
                 @for ($i = 0; $i < (3 -count($data['storages'])); $i++)
