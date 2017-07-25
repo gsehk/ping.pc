@@ -4,20 +4,24 @@ var init = function(pid) {
     var option1 = '<option value="0">请选择</option>';
     var option2 = '<option value="0">请选择</option>';
     var option3 = '<option value="0">请选择</option>';
+    var sel_city;
+    var sel_area = 0;
     $.getJSON('/api/v1/areas', { pid: pid }, function(pro) {
         if (pro.status == true) {
             $.each(pro.data, function(i, n) {
-                var selected1 = (n.id == arrSelect[0]) ? 'selected="selected"' : '';
+                if (n.name == arrSelect[0]) { sel_city = n.id;}
+                var selected1 = (n.name == arrSelect[0]) ? 'selected="selected"' : '';
                 option1 += '<option value="' + n.id + '" ' + selected1 + '>' + n.name + '</option>'
             });
             $('#province').html(option1);
 
-            if (arrSelect[0]) {
-                $.getJSON('/api/v1/areas', { pid: arrSelect[0] }, function(city) {
+            if (sel_city) {
+                $.getJSON('/api/v1/areas', { pid: sel_city }, function(city) {
 
                     if (city.status == true) {
                         $.each(city.data, function(i, n) {
-                            var selected2 = (n.id == arrSelect[1]) ? 'selected="selected"' : '';
+                            if (n.name == arrSelect[1]) { sel_area = n.id;}
+                            var selected2 = (n.name == arrSelect[1]) ? 'selected="selected"' : '';
                             option2 += '<option value="' + n.id + '" ' + selected2 + '>' + n.name + '</option>'
                         });
 
@@ -27,12 +31,12 @@ var init = function(pid) {
             } else {
                 $('#city').html(option2);
             }
-            if (arrSelect[1]) {
-                $.getJSON('/api/v1/areas', { pid: arrSelect[1] }, function(area) {
+            if (sel_area) {
+                $.getJSON('/api/v1/areas', { pid: sel_area }, function(area) {
 
                     if (area.status == true) {
                         $.each(area.data, function(i, n) {
-                            var selected3 = (n.id == arrSelect[2]) ? 'selected="selected"' : '';
+                            var selected3 = (n.name == arrSelect[2]) ? 'selected="selected"' : '';
                             option3 += '<option value="' + n.id + '" ' + selected3 + '>' + n.name + '</option>'
                         });
 
@@ -111,11 +115,10 @@ $('#J-submit').on('click', function(e) {
     }
     args['location'] = args['p'] + ' ' + args['c'] + ' ' + args['a'];
     $.ajax({
-        url: '/api/v1/users',
+        url: '/api/v2/user',
         type: 'PATCH',
         data: args,
         dataType: 'json',
-        beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
         error: function(xml) {
             noticebox('资料修改失败', 0, 'refresh');
         },

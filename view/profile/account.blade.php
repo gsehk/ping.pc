@@ -44,7 +44,7 @@
             </div>
             <div class="f_tel bas_div">
                 <label>简介</label>
-                <span class="f_span"><input type="text" name="intro" value="{{$user['intro'] or ''}}" placeholder="输入简介"></span>
+                <span class="f_span"><input type="text" name="bio" value="{{$user['bio'] or ''}}" placeholder="输入简介"></span>
             </div>
             <div class="f_tel bas_div">
                 <label>性别</label>
@@ -255,8 +255,8 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
         return new CropAvatar($('#crop-avatar'));
     });  
 });
-var username = "{{$user['name'] }}";
-var arrSelect = ["{{$user['province'] or 0}}", "{{$user['city'] or 0}}", "{{$user['area'] or 0}}"];
+var username = "{{$user->name }}";
+var arrSelect = ["{{$user->city[0] or ''}}", "{{$user->city[1] or ''}}", "{{$user->city[2] or ''}}"];
 $(function () {
     $.ms_DatePicker({
         YearSelector: ".sel_year",
