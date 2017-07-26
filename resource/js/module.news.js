@@ -68,7 +68,7 @@ news.loadMore = function() {
     postArgs.max_id = news.setting.maxid;
     postArgs.limit = news.setting.loadlimit;
     postArgs.cate_id = news.setting.cid;
-    $.get('/information/getNewsList', postArgs, function(res) {
+    $.get('/news/getNewsList', postArgs, function(res) {
         if (res.data.length > 0) {
             news.setting.canload = true;
             // 修改加载ID
@@ -78,10 +78,10 @@ news.loadMore = function() {
             for (var i in data) {
                 html += '<div class="inf_list">' +
                     '<div class="inf_img">' +
-                    '<a href="/information/read/' + data[i].id + '">' + '<img class="lazy" width="230" height="163" data-original="'+request_url.images + data[i].storage+'?w=230&h=163" />' + '</a>' +
+                    '<a href="/news/read/' + data[i].id + '">' + '<img class="lazy" width="230" height="163" data-original="'+request_url.images + data[i].storage+'?w=230&h=163" />' + '</a>' +
                     '</div>' +
                     '<div class="inf_word">' +
-                    '<a href="/information/read/' + data[i].id + '">' +
+                    '<a href="/news/read/' + data[i].id + '">' +
                     '<div class="infW_title">' + data[i].title + '</div>' +
                     '</a>' +
                     '<p>' + data[i].subject + '</p>' +
