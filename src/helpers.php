@@ -126,7 +126,7 @@ function replaceUrl($content)
 function createRequest($method = 'POST', $url = '', $params = array())
 {
     $request = Request::create($url, $method, $params);
-    $request->headers->add(['Authorization'=> 'Bearer '.Session::get('token')]);
+    $request->headers->add(['Accept' => 'application/json', 'Authorization' => 'Bearer '.Session::get('token')]);
     $response = Route::dispatch($request)->exception ?: Route::dispatch($request)->original;
     
     return $response;

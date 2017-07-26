@@ -12,7 +12,7 @@ weibo.init = function(option) {
     this.setting.loadcount = option.loadcount || 0; // 加载次数
     this.setting.loadmax = option.loadmax || 40; // 加载最大次数
     this.setting.after = option.after || 0; // 最后一条微博id
-    this.setting.type = option.type || 0; //  微博分类
+    this.setting.type = option.type || 'new'; //  微博分类
     this.setting.canload = option.canload || true; // 是否能加载
     this.setting.loading = option.loading || '.dy_cen'; //加载图位置
     this.setting.url = SITE_URL + '/feeds';
@@ -67,7 +67,6 @@ weibo.loadMore = function() {
     var postArgs = {};
     postArgs.after = weibo.setting.after;
     postArgs.type = weibo.setting.type;
-    console.log(weibo.setting.url);
     $.ajax({
         url: weibo.setting.url,
         type: 'GET',

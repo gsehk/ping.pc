@@ -9,6 +9,7 @@ use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Http\Request;
 use Zhiyi\Plus\Models\Role;
 use Zhiyi\Plus\Models\User;
+use Illuminate\Support\Facades\Route;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Plus\Models\CommonConfig;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
@@ -47,4 +48,15 @@ class BaseController extends Controller
     		return $next($request);
     	});
     }
+
+    public function RequestApi($url = '', $method = 'GET', $params = array())
+    {   
+        $request = Request::create($url, $method, $params);
+        $request->headers->add(['Accept' => 'application/json','Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly90c3MuaW8vYXBpL3YyL3Rva2VucyIsImlhdCI6MTUwMTA2MDIzNiwiZXhwIjoxNTAyMjY5ODM2LCJuYmYiOjE1MDEwNjAyMzYsImp0aSI6InBEdnhFSmhSMFF0STJ1TlAifQ.KM_HPX62sBnBqPNZtHcxjNnDOibjXVcr6jVCcreQntU']);
+        
+        $response = Route::dispatch($request)->exception ?: Route::dispatch($request)->original;
+        
+        return $response;
+    }
 }
+

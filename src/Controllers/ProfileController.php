@@ -25,7 +25,7 @@ class ProfileController extends BaseController
      * @param  int|null $user_id 用户id
      * @return [type]            [description]
      */
-    public function index(Request $request, User $model, int $user_id = null)
+    public function index(Request $request, int $user_id = null)
     {
         if(empty($this->PlusData['TS']) && empty($user_id)) {
             Session::put('history', route('pc:myFeed'));
@@ -36,6 +36,7 @@ class ProfileController extends BaseController
         $api = $user_id ? '/api/v2/users/' . $uid  : '/api/v2/user';
         $data['type'] = $type = $request->input('type') ?: 'all';
         $data['user'] = createRequest('GET', $api);
+        // $data['user'] = $this->PlusData['TS'];
 
         return view('pcview::profile.index', $data, $this->PlusData);
     }
@@ -316,57 +317,23 @@ class ProfileController extends BaseController
 
     /**
      * 获取单个用户的动态列表.
-     *
-     * @author bs<414606094@qq.com>
-     * @param  Request $request [description]
-     * @return [type]           [description]
      */
-    public function getUserFeeds(Request $request, int $user_id)
+    public function feeds(Request $request, int $user_id)
     {
-        $auth_id = $this->PlusData['TS']['id'] ?? 0;
-        $limit = $request->input('limit', 15);
-        $max_id = intval($request->input('max_id'));
-        $type = $request->input('type');
-
-        if ($type == 'all') {
-            $feeds = Feed::orderBy('id', 'DESC')
-            ->where('user_id', $user_id)
-            ->where(function ($query) use ($max_id) {
-                if ($max_id > 0) {
-                    $query->where('id', '<', $max_id);
-                }
-            })
-            ->withCount(['likes' => function ($query) use ($user_id) {
-                if ($user_id) {
-                    $query->where('user_id', $user_id);
-                }
-            }])
-            ->byAudit()
-            ->with('images')
-            ->take($limit)
-            ->get();
+        if ($request->feed) {
+            $feeds['feeds'][0] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
         } else {
-            $feeds = Feed::byAudit()
-            ->join('file_withs', 'feeds.id', '=', 'file_withs.raw')
-            ->where('file_withs.channel', 'feed:image')
-            ->where('file_withs.user_id', $user_id)
-            ->where(function ($query) use ($max_id) {
-                if ($max_id > 0) {
-                    $query->where('feeds.id', '<', $max_id);
-                }
-            })
-            ->withCount(['likes' => function ($query) use ($user_id) {
-                if ($user_id) {
-                    $query->where('user_id', $user_id);
-                }
-            }])
-            ->orderBy('id', 'DESC')
-            ->with('images')
-            ->take($limit)
-            ->get();
+            $feeds = createRequest('GET', '/api/v2/feeds');
+            $feed = clone $feeds['feeds'];
+            $feedData['after'] = $feed->pop()->id ?? 0;
         }
+        
+        $feedData['html'] = view('pcview::template.feed', $feeds, $this->PlusData)->render();
 
-        return $this->formatFeedList($feeds, $auth_id);
+        return response()->json([
+                'status'  => true,
+                'data' => $feedData,
+        ]);
     }
 
     /**

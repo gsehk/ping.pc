@@ -44,7 +44,7 @@ var request_url = {
     /* 删除分享*/
     del_collect_feed: '/api/v2/feeds/{feed_id}/uncollect',
     /* 获取用户的分享 */
-    get_user_feed: '/profile/users/{user_id}',
+    get_user_feed: '/profile/feeds/{user_id}',
         
     /* 获取用户的文章 */
     get_user_news: '/profile/news/{user_id}',
@@ -61,7 +61,7 @@ var request_url = {
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly90c3MuaW8vYXBpL3YyL3Rva2VucyIsImlhdCI6MTUwMDYwMTk1NywiZXhwIjoxNTAxODExNTU3LCJuYmYiOjE1MDA2MDE5NTcsImp0aSI6IjdFT3BQNlZMTTg1Yml4WHcifQ.gE2oMtREpb-yfI_dkxoKrcpYD_d83sBaiFYyk-DCF0M',
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly90c3MuaW8vYXBpL3YyL3Rva2VucyIsImlhdCI6MTUwMTA2NTYxNywiZXhwIjoxNTAyMjc1MjE3LCJuYmYiOjE1MDEwNjU2MTcsImp0aSI6InR6YU5lMnlKSFczWmlVb00ifQ.bA_0oiMyN-kRI9te5WrZ9AEKAbYFYwi-edFuAiU4618',
     }
 });
 

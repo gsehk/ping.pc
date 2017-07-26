@@ -41,15 +41,15 @@ Route::prefix('feeds')->group(function () {
     // feed comments list
     Route::get('/{feed}/comments', 'FeedController@comments')->where(['feed' => '[0-9]+'])->name('pc:feedcomments');
     // feed collections
-    Route::get('/feeds/collection', 'FeedController@collection')->name('pc:feedcollections');
+    Route::get('/collection', 'FeedController@collection')->name('pc:feedcollections');
 });
 
 
 // user profile
-Route::prefix('profile')->group(function () {
+Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
 
     // user mainpage
-    Route::get('/index/{user_id?}', 'ProfileController@index')->where(['user_id' => '[0-9]+'])->name('pc:mainpage');
+    Route::get('/{user?}', 'ProfileController@index')->where(['user' => '[0-9]+'])->name('pc:mainpage');
 
     // user followers
     Route::get('/followers/{user_id?}', 'ProfileController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
@@ -57,21 +57,26 @@ Route::prefix('profile')->group(function () {
     // user followings
     Route::get('/followings/{user_id?}', 'ProfileController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
 
-
+    // user article
     Route::get('article/{user_id?}/{type?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:article');
-    Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
+
+    // user setting
+    Route::get('account', 'ProfileController@account')->name('pc:account');
+
+    Route::get('feeds/{user_id}', 'ProfileController@feeds')->where(['user_id' => '[0-9]+']);
+
+    /*Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
     Route::prefix('profile')->get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
-    Route::prefix('profile')->get('/collection/{user_id}', 'ProfileController@getCollectionList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
     Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
         Route::get('related', 'ProfileController@related')->name('pc:related');
         Route::get('following', 'ProfileController@following')->name('pc:following');
         Route::get('collection', 'ProfileController@collection')->name('pc:collection');
-        Route::get('account', 'ProfileController@account')->name('pc:account');
+        
         // 个人设置
         Route::get('cropper', 'ProfileController@cropper'); 
         Route::post('doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
         Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
-    });
+    });*/
 
 
 });
