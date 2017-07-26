@@ -161,7 +161,7 @@ class ProfileController extends BaseController
         $datas['page'] = $page;
         switch ($page) {
             case 'account':
-                $user = $this->mergeData['TS'];
+                $user = $this->PlusData['TS'];
                 $user->city = explode(' ', $user->location);
                 $datas['user'] = $user;
                 break;
