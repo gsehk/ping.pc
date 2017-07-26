@@ -22,7 +22,7 @@ var request_url = {
     /* 分享 */
     feeds: '/api/v2/feeds',
     /* 分享列表 */
-    'feeds_list': '/pc/feeds',
+    'feeds_list': '/feeds',
     /* 获取附件 */
     images: '/api/v2/files/',
     /* 分享评论 */

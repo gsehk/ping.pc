@@ -30,9 +30,14 @@ class FeedController extends BaseController
      */
     public function feeds(Request $request)
     {
-        $feeds = createRequest('GET', '/api/v2/feeds');
-        $feed = clone $feeds['feeds'];
-        $feedData['after'] = $feed->pop()->id ?? 0;
+        if ($request->feed) {
+            $feeds['feeds'][0] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
+        } else {
+            $feeds = createRequest('GET', '/api/v2/feeds');
+            $feed = clone $feeds['feeds'];
+            $feedData['after'] = $feed->pop()->id ?? 0;
+        }
+        
         $feedData['html'] = view('pcview::template.feed', $feeds, $this->PlusData)->render();
 
         return response()->json([

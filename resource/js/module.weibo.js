@@ -162,10 +162,11 @@ weibo.postFeed = function() {
 };
 
 weibo.afterPostFeed = function(feed_id) {
-    var url = '/home/' + feed_id + '/feedinfo';
+    var url = request_url.feeds_list;
     $.ajax({
         url: url,
         type: 'get',
+        data: { feed: feed_id},
         dataType: 'json',
         success: function(res) {
             if ($('#feeds-list').find('.no_data_div').length > 0) {
