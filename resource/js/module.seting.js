@@ -4,8 +4,7 @@ var init = function(pid) {
     var option1 = '<option value="0">请选择</option>';
     var option2 = '<option value="0">请选择</option>';
     var option3 = '<option value="0">请选择</option>';
-    var sel_city;
-    var sel_area = 0;
+    var sel_city, sel_area;
     $.getJSON('/api/v1/areas', { pid: pid }, function(pro) {
         if (pro.status == true) {
             $.each(pro.data, function(i, n) {
@@ -14,37 +13,33 @@ var init = function(pid) {
                 option1 += '<option value="' + n.id + '" ' + selected1 + '>' + n.name + '</option>'
             });
             $('#province').html(option1);
-
             if (sel_city) {
                 $.getJSON('/api/v1/areas', { pid: sel_city }, function(city) {
-
                     if (city.status == true) {
                         $.each(city.data, function(i, n) {
                             if (n.name == arrSelect[1]) { sel_area = n.id;}
                             var selected2 = (n.name == arrSelect[1]) ? 'selected="selected"' : '';
                             option2 += '<option value="' + n.id + '" ' + selected2 + '>' + n.name + '</option>'
                         });
-
                         $('#city').html(option2);
                     }
+                    if (sel_area) {
+                        $.getJSON('/api/v1/areas', { pid: sel_area }, function(area) {
+
+                            if (area.status == true) {
+                                $.each(area.data, function(i, n) {
+                                    var selected3 = (n.name == arrSelect[2]) ? 'selected="selected"' : '';
+                                    option3 += '<option value="' + n.id + '" ' + selected3 + '>' + n.name + '</option>'
+                                });
+                                $('#area').html(option3);
+                            }
+                        });
+                    } else {
+                        $('#area').html(option3);
+                    }                    
                 });
             } else {
                 $('#city').html(option2);
-            }
-            if (sel_area) {
-                $.getJSON('/api/v1/areas', { pid: sel_area }, function(area) {
-
-                    if (area.status == true) {
-                        $.each(area.data, function(i, n) {
-                            var selected3 = (n.name == arrSelect[2]) ? 'selected="selected"' : '';
-                            option3 += '<option value="' + n.id + '" ' + selected3 + '>' + n.name + '</option>'
-                        });
-
-                        $('#area').html(option3);
-                    }
-                });
-            } else {
-                $('#area').html(option3);
             }
         }
     });
@@ -138,7 +133,6 @@ var resetPwd = function() {
         type: 'PATCH',
         data: { password: password, new_password: new_pwd, _token: token },
         dataType: 'json',
-        beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
         error: function(xml) {
             noticebox('密码修改失败', 0);
         },
@@ -165,7 +159,6 @@ var userVerif = function() {
         type: 'POST',
         data: getArgs(),
         dataType: 'json',
-        beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
         error: function(xml) {
             noticebox('操作失败', 0);
         },
