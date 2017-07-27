@@ -10,13 +10,13 @@ var request_url = {
     /* 获取文章列表 */
     get_news: '/information/getNewsList',
     /* 文章点赞 */
-    digg_news: API + 'news/{news_id}/digg',
+    digg_news: '/api/v1/news/{news_id}/digg',
     /* 文章收藏  */
-    collect_news: API + 'news/{news_id}/collection',
+    collect_news: '/api/v1/news/{news_id}/collection',
     /* 评论文章 */
-    comment_news: API + 'news/{news_id}/comment',
+    comment_news: '/api/v2/news/{news_id}/comments',
     /* 删除文章评论 */
-    del_news_comment: API + 'news/{news_id}/comment/{comment_id}',    
+    del_news_comment: '/api/v2/news/{news_id}/comments/{comment_id}',    
     // 新闻评论
     get_comment: '/information/{news_id}/comments',
     /* 分享 */
@@ -44,10 +44,10 @@ var request_url = {
     /* 删除分享*/
     del_collect_feed: '/api/v2/feeds/{feed_id}/uncollect',
     /* 获取用户的分享 */
-    get_user_feed: '/profile/feeds/{user_id}',
+    get_user_feed: '/profile/feeds',
         
     /* 获取用户的文章 */
-    get_user_news: '/profile/news/{user_id}',
+    get_user_news: '/profile/news',
     /* 获取动态收藏 */
     get_feed_collect: '/pc/feeds/collection',
     get_news_collect: '/pc/news/collection',
