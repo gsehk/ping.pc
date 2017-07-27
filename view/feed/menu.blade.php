@@ -27,7 +27,7 @@
             </a>
         </li> --}}
         <li>
-            <a href="{{ route('pc:collection') }}" class="fs-16 @if ($route == 'pc:collection') dy_59 @endif">
+            <a href="{{ route('pc:feedcollections') }}" class="fs-16 @if ($route == 'pc:feedcollections') dy_59 @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collection"></use></svg>收藏的
             </a>
         </li>

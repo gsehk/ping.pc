@@ -17,18 +17,18 @@
     <div class="artic_div artic_list">
         <img data-original="{{$routes['storage']}}{{$post['storage']}}?w=584&h=400" class="lazy img-responsive img1">
         <div class="img_title">
-            <p class="i_title fs-20"><a href="/information/read/{{$post['id']}}">{{$post['title']}}</a></p>
+            <p class="i_title fs-20"><a href="/news/read/{{$post['id']}}">{{$post['title']}}</a></p>
             <p class="i_subTiLe fs-12">{{$post['subject'] or ''}}</p>
         </div>
     </div>                  
     <div class="dy_comment">
         @if($post['audit_status'] == 0)
-        <span class="digg" id="collect{{$post['id']}}" rel="{{$post['collection_count']}}"> 
-            @if($post['is_collection_news'])
-            <a href="javascript:;" onclick="collect.delNewsCollect({{$post['id']}});" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos">{{$post['collection_count']}}</font>
+        <span class="digg" id="collect{{$post['id']}}" rel="{{$post['collect_count']}}"> 
+            @if($post['has_collect'])
+            <a href="javascript:;" onclick="collect.delNewsCollect({{$post['id']}});" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos">{{$post['collect_count']}}</font>
             </a>
             @else
-            <a href="javascript:;" onclick="collect.addNewsCollect({{$post['id']}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cos">{{$post['collection_count']}}</font>
+            <a href="javascript:;" onclick="collect.addNewsCollect({{$post['id']}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cos">{{$post['collect_count']}}</font>
             </a>
             @endif
         </span>

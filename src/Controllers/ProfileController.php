@@ -35,8 +35,28 @@ class ProfileController extends BaseController
         $uid = $user_id ?: $this->PlusData['TS']['id'];
         $api = $user_id ? '/api/v2/users/' . $uid  : '/api/v2/user';
         $data['type'] = $type = $request->input('type') ?: 'all';
-        $data['user'] = createRequest('GET', $api);
-        // $data['user'] = $this->PlusData['TS'];
+        // $data['user'] = createRequest('GET', $api);
+        $user = $this->PlusData['TS'];
+        $user->location = !empty($user->location) ? str_replace(' ', ' · ', $user->location) : '';
+        $data['user'] = $user;
+
+        // 是否关注
+        $data['my_follow_status'] = $this->PlusData['TS'] ? $this->PlusData['TS']->hasFollwing($user->id) ? 1 : 0 : 0;        
+        $data['type'] = $type;
+
+        // 粉丝
+        $followers = $user->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
+        $data['followeds'] = [];
+        $data['followeds'] = $followers->map(function ($follower) {
+                return $follower;
+            });
+
+        // 关注
+        $followings = $user->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();        
+        $data['followings'] = [];
+        $data['followings'] = $followings->map(function ($following) {
+                return $following;
+            });        
 
         return view('pcview::profile.index', $data, $this->PlusData);
     }
@@ -50,32 +70,34 @@ class ProfileController extends BaseController
      */
     public function article(Request $request, User $model, int $user_id = null, int $type = 0)
     {
-        $current_user = $request->user();
-        $user_id = $user_id ?: $this->PlusData['TS']['id'];
-        $data['type'] = $type;        
+        if(empty($this->PlusData['TS']) && empty($user_id)) {
+            Session::put('history', route('pc:myFeed'));
+            return redirect(route('pc:index'));
+        } 
 
-        $user = $model->where('id', $user_id)
-                ->with('datas', 'counts')
-                ->first();
-        $data['user'] = $this->formatUserDatas($user);
-        $data['user']['location'] = !empty($data['user']['location']) ? str_replace(' ', ' · ', $data['user']['location']) : '';
+        $uid = $user_id ?: $this->PlusData['TS']['id'];
+        $api = $user_id ? '/api/v2/users/' . $uid  : '/api/v2/user';
+        // $data['user'] = createRequest('GET', $api);
+        $user = $this->PlusData['TS'];
+        $user->location = !empty($user->location) ? str_replace(' ', ' · ', $user->location) : '';
+        $data['user'] = $user;
 
         // 是否关注
-        $data['my_follow_status'] = $current_user ? $current_user->hasFollwing($user->id) ? 1 : 0 : 0;        
+        $data['my_follow_status'] = $this->PlusData['TS'] ? $this->PlusData['TS']->hasFollwing($user->id) ? 1 : 0 : 0;        
         $data['type'] = $type;
 
         // 粉丝
         $followers = $user->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
         $data['followeds'] = [];
         $data['followeds'] = $followers->map(function ($follower) {
-                return $this->formatUserDatas($follower);
+                return $follower;
             });
 
         // 关注
         $followings = $user->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();        
         $data['followings'] = [];
         $data['followings'] = $followings->map(function ($following) {
-                return $this->formatUserDatas($following);
+                return $following;
             });
 
         return view('pcview::profile.article', $data, $this->PlusData);
@@ -318,63 +340,58 @@ class ProfileController extends BaseController
     /**
      * 获取单个用户的动态列表.
      */
-    public function feeds(Request $request, int $user_id)
+    public function feeds(Request $request)
     {
-        if ($request->feed) {
-            $feeds['feeds'][0] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
-        } else {
+        if ($request->cate == 'all') {
             $feeds = createRequest('GET', '/api/v2/feeds');
             $feed = clone $feeds['feeds'];
-            $feedData['after'] = $feed->pop()->id ?? 0;
         }
-        
-        $feedData['html'] = view('pcview::template.feed', $feeds, $this->PlusData)->render();
+        if ($request->cate == 'img') {
+            # code...
+        }
+        $after = $feed->pop()->id ?? 0;
+        $html = view('pcview::template.feed', $feeds, $this->PlusData)->render();
 
-        return response()->json([
-                'status'  => true,
-                'data' => $feedData,
-        ]);
+        return response()->json(static::createJsonData([
+            'status' => true,
+            'after' => $after,
+            'data' => $html
+        ]));
     }
 
     /**
      * 资讯列表.
-     * 
-     * @param  $state [文章状态]
-     * @return mixed 返回结果
      */
-    public function getNewsList(Request $request, int $user_id)
+    public function news(Request $request)
     {
         $uid = $this->PlusData['TS']['id'] ?? 0;
-        $state = $request->type;
-        $max_id = $request->max_id;
-        $limit = $request->limit ?? 15;
-        $datas = News::where('audit_status', $state)
-                ->where('author', $user_id)
-                ->where(function ($query) use ($max_id) {
-                    if ($max_id > 0) {
-                        $query->where('id', '<', $max_id);
-                    }
+        $limit = $request->query('limit', 20);
+        $after = $request->query('after');
+        $state = $request->query('type');
+        $user = $request->query('user');
+        $news = News::where('audit_status', $state)
+                ->where('author', $user)
+                ->when($after, function ($query) use ($after) {
+                    return $query->where('id', '<', $after);
                 })
                 ->orderBy('id', 'desc')
-                ->select('id','title','updated_at','created_at','storage','comment_count','hits','from','subject','audit_status')
-                ->withCount('collection')
-                ->with('comments')
-                ->take($limit)
+                ->limit($limit)
                 ->get();
-        foreach ($datas as $key => &$value) {
-            $value['is_collection_news'] = $uid ? NewsCollection::where('user_id', $uid)->where('news_id', $value['id'])->count() : 0;
-            // $value['is_digg_news'] = $uid ? NewsDigg::where('user_id', $uid)->where('news_id', $value['id'])->count() : 0;
-        }
-        $newsList['data'] = $datas;
-        $newsData['html'] = view('pcview::template.profile-news', $newsList, $this->PlusData)->render();
-        $newsData['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['id'] : 0;
+        $news->map(function($news) use ($uid) {
+            $news->comments = $news->comments;
+            $news->collect_count = $news->collection->count();
+            $news->has_collect = $uid ? $news->collection->where('user_id', $uid)->where('news_id', $news->id)->count() : 0;
+        });
+        $new = clone $news;
+        $datas['data'] = $news;
+        $after = $new->pop()->id ?? 0;
+        $html = view('pcview::template.profile-news', $datas, $this->PlusData)->render();
 
         return response()->json(static::createJsonData([
-            'status'  => true,
-            'code'    => 0,
-            'message' => '获取成功',
-            'data'    => $newsData
-        ]))->setStatusCode(200);
+            'status' => true,
+            'after' => $after,
+            'data' => $html
+        ]));  
     }
 
     /**

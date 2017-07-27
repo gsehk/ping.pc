@@ -6,28 +6,24 @@
 <div class="dy_cont">
     {{-- top --}}
     <div class="dyn_top">
-        @if (!empty($user['cover']))
-        <img src="{{ $routes['storage'] }}{{ $user['cover'] }}" class="dynTop_bg" />
-        @else
-        <img src="{{ $routes['resource'] }}/images/default_cover.png" class="dynTop_bg" />
-        @endif
-        @if ($user['id'] == $TS['id'])
+        <img src="{{ $user->bg or $routes['resource'].'/images/default_cover.png'}}" class="dynTop_bg" />
+        @if ($user->id == $TS['id'])
         <input type="file" name="cover" style="display:none" id="cover">
         <span class="dyn_huan">更换封面</span>
         @endif
         <div class="dyn_footer">
-            <div class="dynTop_user">{{ $user['name'] }}
+            <div class="dynTop_user">{{ $user->name }}
             </div>
-            <div class="dynTop_cont">{{ $user['intro'] or '这家伙很懒，什么都没留下'}}</div>
+            <div class="dynTop_cont">{{ $user->bio or '这家伙很懒，什么都没留下'}}</div>
             <div class="dyn_lImg">
                 <a href="{{ route('pc:mainpage', ['user_id' => $user['id']]) }}">
-                    <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }} " alt="{{ $user['name'] }}"/>
+                    <img src="{{ $user->avatar or $routes['resource'].'/images/avatar.png' }}" alt="{{ $user->name }}"/>
                 </a> 
             </div>
         </div>
     </div>
     <div class="dynTop_b">
-        @if (!empty($user['company']))
+        {{-- @if (!empty($user['company']))
         <span class="dyn_zy"><i class="icon iconfont icon-gongsi"></i>
             {{ $user['company'] }}
         </span>
@@ -52,17 +48,17 @@
             <label>男</label>
             @endif
         </span>
-        @endif
+        @endif --}}
 
-        @if (!empty($user['location']))
-        <span class="dyn_address"><i class="icon iconfont icon-site"></i>{{$user['location']}}</span>
+        @if ($user->location)
+        <span class="dyn_address"><i class="icon iconfont icon-site"></i>{{$user->location}}</span>
         @endif
-        @if(!empty($TS) && $TS['id'] == $user['id'])
-        <a href="{{ route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
+        @if(!empty($TS) && $TS['id'] == $user->id)
+        <a href="{{ Route('pc:newsrelease') }}" class="dyn_contribute"><i class="icon iconfont icon-feiji tougao"></i>投稿</a>
         @endif
-        @if(!empty($TS) && $TS['id'] != $user['id'])
+        @if(!empty($TS) && $TS['id'] != $user->id)
         <div class="their_right">
-            @if ($user['following'] == 0)
+            @if (!$user->following)
             <div id="follow" status="0">+关注</div>
             @else
             <div id="follow" status="1" class="their_followed">已关注</div>
@@ -83,7 +79,7 @@
                             <a href="javascript:;" data-type="all" class="fs-16 @if($type == 'all') dy_cen_333 @endif">动态</a>
                             <a href="javascript:;" data-type="img" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
                         </div>
-                        <a href="{{ route('pc:article', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16"><div>文章</div></a>
+                        <a href="{{ Route('pc:article', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16"><div>文章</div></a>
                     </div>
                     <div id="feeds-list"></div>
                 </div>
@@ -168,7 +164,7 @@
     setTimeout(function() {
         weibo.init({
             container: '#feeds-list',
-            user_id:"{{ $user['id'] }}",
+            user_id:"{{ $user->id }}",
             type: "{{ $type }}"
         });
     }, 300);
@@ -176,7 +172,7 @@
     $('.artic_left a').on('click', function(){
         var type = $(this).data('type');
         $('#feeds-list').html('');
-        weibo.init({container: '#feeds-list',user_id:"{{ $user['id'] }}",type: type});
+        weibo.init({container: '#feeds-list',user_id:"{{ $user->id }}",type: type});
         $('.artic_left a').removeClass('dy_cen_333');
         $(this).addClass('dy_cen_333');
     });
@@ -185,7 +181,7 @@
     $('#follow').click(function(){
         var _this = $(this);
         var status = $(this).attr('status');
-        var user_id = "{{ $user['id'] }}";
+        var user_id = "{{ $user->id }}";
         follow(status, user_id, _this, afterdata);
     })
 

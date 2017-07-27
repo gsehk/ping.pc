@@ -63,7 +63,7 @@
             @endif
         </div> --}} 
         <div class="inR_bottom">
-        <a href="{{ route('pc:users', ['type'=>2]) }}" title="">
+        <a href="{{ Route('pc:followers') }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-attention"></use>
@@ -71,7 +71,7 @@
                 <span>关注的人</span>
             </div>
         </a>
-        <a href="{{ route('pc:collection') }}" title="">
+        <a href="{{ Route('pc:feedcollections') }}" title="">
             <div class="inR_bottom_list">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-collection"></use>
@@ -79,7 +79,7 @@
                 <span>收藏的</span>
             </div>
         </a>
-        <a href="{{ route('pc:index') }}" title="">
+        <a href="{{ Route('pc:index') }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-dynamic"></use>
@@ -87,15 +87,15 @@
                 <span>全部动态</span>
             </div>
         </a>
-        <a href="{{ route('pc:rank')}}" title="">
+        {{-- <a href="{{ Route('pc:rank')}}" title="">
             <div class="inR_bottom_list">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-rank"></use>
                 </svg>
                 <span>排行榜</span>
             </div>
-        </a>
-        <a href="{{ route('pc:mainpage') }}" title="">
+        </a> --}}
+        <a href="{{ Route('pc:mainpage') }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-mydynamic"></use>
@@ -103,7 +103,7 @@
                 <span>我的动态</span>
             </div>
         </a>
-        <a href="{{ route('pc:account') }}" title="">
+        <a href="{{ Route('pc:account') }}" title="">
             <div class="inR_bottom_list">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-setting"></use>
