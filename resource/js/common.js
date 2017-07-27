@@ -49,8 +49,8 @@ var request_url = {
     /* 获取用户的文章 */
     get_user_news: '/profile/news',
     /* 获取动态收藏 */
-    get_feed_collect: '/pc/feeds/collection',
-    get_news_collect: '/pc/news/collection',
+    get_feed_collect: '/feeds/collection',
+    get_news_collect: '/news/collection',
     
 };
 

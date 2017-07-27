@@ -105,36 +105,10 @@ class ProfileController extends BaseController
 
     /**
      * 我的收藏
-     * 
-     * @date   2017-05-20
-     * @return [type]              [description]
      */
-    public function collection(Request $request)
+    public function collect(Request $request)
     {
         $data['type'] = $request->input('type') ?: 1;
-        $data['ischeck'] = CheckInfo::where('created_at', '>', Carbon::today())
-            ->where(function($query){
-                if ($this->PlusData) {
-                    $query->where('user_id', $this->PlusData['TS']['id']);
-                }
-            })
-            ->orderBy('created_at', 'desc')
-            ->first();
-        $data['checkin'] = CheckInfo::where(function($query){
-                if ($this->PlusData) {
-                    $query->where('user_id', $this->PlusData['TS']['id']);
-                }
-            })->orderBy('created_at', 'desc')->first();
-        // 推荐用户
-        $_rec_users = UserDatas::where('key', 'feeds_count')
-            ->where('user_id', '!=', $this->PlusData['TS']['id'])
-            ->select('id', 'user_id')
-            ->with('user.datas')
-            ->orderBy(DB::raw('-value', 'desc'))->take(9)->get();
-
-        foreach ($_rec_users as $_rec_user) {
-            $data['rec_users'][] = $this->formatUserDatas($_rec_user->user);
-        }
 
         return view('pcview::profile.collection', $data, $this->PlusData);
     }

@@ -20,7 +20,7 @@
             </div>
             <ul>
                 <li>
-                    <a href="{{ route('pc:feedcollections') }}"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
+                    <a href="{{ route('pc:collect') }}"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
                 </li>
                 {{-- <li>
                     <a href="{{ route('pc:credit') }}"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>

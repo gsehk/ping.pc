@@ -62,8 +62,8 @@
         </div>
         @endif
 
-        <!-- 推荐用户 -->
-        @if (!empty($rec_users))
+        {{-- 推荐用户 --}}
+        {{-- @if (!empty($rec_users))
         <div class="dyrBottom">
             <ul>
                 @foreach ($rec_users as $rec_user)
@@ -75,9 +75,9 @@
                 </li>
                 @endforeach
             </ul>
-            {{-- <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a> --}}
+            <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a>
         </div>
-        @endif
+        @endif --}}
     </div>
 </div>
 @endsection

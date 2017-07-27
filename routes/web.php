@@ -69,6 +69,9 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // use news
     Route::get('news', 'ProfileController@news');
 
+    // use collect
+    Route::get('collect', 'ProfileController@collect')->name('pc:collect');    
+
     /*Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
     Route::prefix('profile')->get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
     Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {

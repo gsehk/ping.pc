@@ -71,7 +71,7 @@
                 <span>关注的人</span>
             </div>
         </a>
-        <a href="{{ Route('pc:feedcollections') }}" title="">
+        <a href="{{ Route('pc:collect') }}" title="">
             <div class="inR_bottom_list">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-collection"></use>

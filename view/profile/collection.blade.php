@@ -6,8 +6,8 @@
 <div class="dy_bg">
     <div class="dy_cont">
         <!--左-->
-        @component('pcview::ucmenu')
-        @endcomponent
+        {{-- @component('pcview::ucmenu')
+        @endcomponent --}}
         <!--中-->
         <div class="dy_cCont">
             <div class="dy_center">
@@ -23,8 +23,8 @@
         </div>
         <!--右-->
         <div class="dy_right">
+            {{-- 签到 --}}
             @if (!empty($TS))
-            <!-- 签到 -->
             <div class="dy_signed">
                 <div class="dyrTop">
                     <span class="dyrTop_r fs-14">
@@ -35,7 +35,7 @@
                     <img src="{{ $TS['avatar'] }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                     </a>
                 </div>
-                <div class="index_intro">{{ $TS['intro'] or '' }}</div>
+                <div class="index_intro">{{ $TS['intro'] or '暂无简介' }}</div>
                 {{-- @if(empty($ischeck))
                 <div class="dy_qiandao" onclick="checkin();" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>每日签到<span>+5积分</span></div>
                 @else 
@@ -44,8 +44,8 @@
             </div>
             @endif
 
-            <!-- 推荐用户 -->
-            @if (!empty($rec_users))
+            {{-- 推荐用户 --}}
+            {{-- @if (!empty($rec_users))
             <div class="dyrBottom">
                 <ul>
                     @foreach ($rec_users as $rec_user)
@@ -57,10 +57,10 @@
                     </li>
                     @endforeach
                 </ul>
-                {{-- <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a> --}}
+                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a>
             </div>
-            @endif
-            <!-- 个人中心右侧推荐用户 -->
+            @endif --}}
+            {{-- 个人中心右侧推荐用户 --}}
 
         </div>
     </div>
