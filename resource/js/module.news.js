@@ -36,7 +36,7 @@ news.bindScroll = function() {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();
-            if(scrollTop + windowHeight == scrollHeight){
+            if (scrollTop + windowHeight == scrollHeight) {
                 if ($(news.setting.container).length > 0) {
                     $(news.setting.container).append(loadHtml);
                     news.loadMore();
@@ -78,7 +78,7 @@ news.loadMore = function() {
             for (var i in data) {
                 html += '<div class="inf_list">' +
                     '<div class="inf_img">' +
-                    '<a href="/news/read/' + data[i].id + '">' + '<img class="lazy" width="230" height="163" data-original="'+request_url.images + data[i].storage+'?w=230&h=163" />' + '</a>' +
+                    '<a href="/news/read/' + data[i].id + '">' + '<img class="lazy" width="230" height="163" data-original="' + request_url.images + data[i].storage + '?w=230&h=163" />' + '</a>' +
                     '</div>' +
                     '<div class="inf_word">' +
                     '<a href="/news/read/' + data[i].id + '">' +
@@ -98,7 +98,7 @@ news.loadMore = function() {
                 $(news.setting.container).append(html);
                 $(news.setting.container + ' .loading').remove();
             }
-            $("img.lazy").lazyload({effect: "fadeIn"});
+            $("img.lazy").lazyload({ effect: "fadeIn" });
         } else {
             news.setting.canload = false;
             if (news.setting.loadcount == 1) {
@@ -155,73 +155,17 @@ var recommend = {
     },
 };
 
-/* 加载推荐资讯 */
-var recommend = {
-    opt: {},
-    init: function(option) {
-        this.opt.container = option.container;
-        this.opt.limit = option.loadlimit || 6;
-        this.opt.cate_id = option.cate_id || 0;
-        this.opt.canload = option.canload || true;
-
-        if ($(recommend.opt.container).length > 0 && this.opt.canload) {
-            $(recommend.opt.container).append(loadHtml);
-            recommend.loadMore();
-        }
-    },
-    loadMore: function() {
-        recommend.opt.canload = false;
-        var postArgs = {};
-        postArgs.limit = recommend.opt.limit;
-        postArgs.cate_id = recommend.opt.cate_id;
-        $.ajax({
-            url: request_url.get_news,
-            type: 'GET',
-            data: postArgs,
-            dataType: 'json',
-            error: function(xml) {},
-            success: function(res) {
-                if (res.data.length > 0) {
-                    recommend.opt.canload = true;
-                    var data = res.data,
-                        html = '';
-                    for (var i in data) {
-                        html += '<span>' + data[i].title + '</span>';
-                    }
-                    $(recommend.opt.container).append(html);
-                    $(news.setting.container + ' .loading').remove();
-                } else {
-                    recommend.opt.canload = false;
-                    $(news.setting.container + ' .loading').html('暂无相关内容');
-                }
-            }
-        });
-    },
-};
-
 // 投稿js
 $('.subject-submit').on('click', function() {
-    var $this = $(this);
-    var subject = $('#subject-abstract'),
-        title = $('#subject-title'),
-        task_id = $('#task_id'),
-        storage_id = $('#storage_id'),
-        cate_ids = $('#cate_ids'),
-        news_id = $('#news_id'),
-        abstract = $('#subject-abstract'),
-        froms = $('#subject-from'),
-        url = $this.data('url');
     var args = {
-        'title': title.val(),
-        'subject': subject.val(),
-        'task_id': task_id.val(),
-        'storage_id': storage_id.val(),
-        'cate_ids': cate_ids.val(),
-        'news_id': news_id.val() || 0,
-        'abstract': abstract.val(),
+        'author': '',
+        'title': $('#subject-title').val(),
+        'subject': $('#subject-abstract').val(),
         'content': $(editor).html(),
-        'source': froms.val(),
-        '_token': $('#token').val()
+        'image': $('#storage_id').val(),
+        'from': $('#subject-from').val(),
+        'cate_id': $('#cate_ids').val(),
+        'news_id': $('#news_id').val() || 0,
     };
     if (!args.title || getLength(args.title) > 20) {
         noticebox('文章标题不合法', 0);
@@ -231,17 +175,25 @@ $('.subject-submit').on('click', function() {
         noticebox('文章内容不合法', 0);
         return false;
     }
-    if (!args.task_id && !args.storage_id) {
+    /*if (!args.image) {
         noticebox('请上传封面图片', 0);
         return false;
-    }
-    $.post(url, args, function(data) {
-        if (data.status == true) {
-            noticebox(data.message, 1, data.data.url);
-        } else {
-            noticebox(data.message, 0);
-        };
-    }, 'json');
+    }*/
+    var url = request_url.contribute.replace('{category}', args.cate_id);
+    console.log(args);return false;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        error: function(xml) {},
+        success: function(res, data, xml) {
+            if (xml.status == 201) {
+                noticebox(res.message, 1);
+            } else {
+                noticebox(res.message, 0);
+            }
+        }
+    });
 });
 
 /**
@@ -434,7 +386,7 @@ var comment = {
                 var scrollTop = $(this).scrollTop();
                 var scrollHeight = $(document).height();
                 var windowHeight = $(this).height();
-                if(scrollTop + windowHeight == scrollHeight){
+                if (scrollTop + windowHeight == scrollHeight) {
                     if ($(comment.box).length > 0) {
                         $(comment.box).append(loadHtml);
                         comment.loadMore();
@@ -460,12 +412,12 @@ var comment = {
                     var data = res.data,
                         html = '';
                     for (var i in data) {
-                        html += '<div class="delComment_list comment'+data[i].id+'">';
+                        html += '<div class="delComment_list comment' + data[i].id + '">';
                         html += '<div class="comment_left">';
-                        html += '<a href="/profile/index?user_id='+data[i].user_id+'"><img src="' + data[i].info.avatar + '" class="c_leftImg" /></a>';
+                        html += '<a href="/profile/index?user_id=' + data[i].user_id + '"><img src="' + data[i].info.avatar + '" class="c_leftImg" /></a>';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<a href="/profile/index?user_id='+data[i].user_id+'"><span class="del_ellen">' + data[i].info.name + '</span></a>';
+                        html += '<a href="/profile/index?user_id=' + data[i].user_id + '"><span class="del_ellen">' + data[i].info.name + '</span></a>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
                         /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
                         html += '<p class="comment_con">' + data[i].comment_content + '';
@@ -475,7 +427,7 @@ var comment = {
                             html += 'class="J-reply-comment">回复</a>';
                         }
                         if (data[i].user_id == MID) {
-                            html += '<a href="javascript:void(0)" onclick="comment.delComment('+data[i].id+', '+data[i].news_id+')"';
+                            html += '<a href="javascript:void(0)" onclick="comment.delComment(' + data[i].id + ', ' + data[i].news_id + ')"';
                             html += 'class="del_comment">删除</a>';
                         }
                         html += '</span>';
@@ -542,18 +494,18 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<div class="delComment_list comment'+res.data+'">';
-                        html += '<div class="comment_left">';
-                        html += '<a href="/profile/index?user_id='+MID+'"><img src="'+AVATAR+'" class="c_leftImg" /></a>';
-                        html += '</div>';
-                        html += '<div class="comment_right">';
-                        html += '<a href="/profile/index?user_id='+MID+'"><span class="del_ellen">' + NAME + '</span></a>';
-                        html += '<span class="c_time">刚刚</span>';
-                        /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                        html += '<p class="comment_con">' + content + '';
-                        html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.data+', '+comment.row_id+')"';
-                        html += 'class="del_comment">删除</a>';
-                        html += '</p></div></div>';
+                    var html = '<div class="delComment_list comment' + res.data + '">';
+                    html += '<div class="comment_left">';
+                    html += '<a href="/profile/index?user_id=' + MID + '"><img src="' + AVATAR + '" class="c_leftImg" /></a>';
+                    html += '</div>';
+                    html += '<div class="comment_right">';
+                    html += '<a href="/profile/index?user_id=' + MID + '"><span class="del_ellen">' + NAME + '</span></a>';
+                    html += '<span class="c_time">刚刚</span>';
+                    /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
+                    html += '<p class="comment_con">' + content + '';
+                    html += '<a href="javascript:void(0)" onclick="comment.delComment(' + res.data + ', ' + comment.row_id + ')"';
+                    html += 'class="del_comment">删除</a>';
+                    html += '</p></div></div>';
                     var commentBox = $(comment.box);
                     if ("undefined" != typeof(commentBox)) {
                         if (addToEnd == 1) {
@@ -569,7 +521,7 @@ var comment = {
                         });
                     }
                     var commentNum = $('.comment_count').text();
-                    $('.comment_count').text(parseInt(commentNum)+1);
+                    $('.comment_count').text(parseInt(commentNum) + 1);
                 } else {
                     noticebox(res.message, 0);
                 }
@@ -578,26 +530,26 @@ var comment = {
     },
     delComment: function(comment_id, news_id) {
         var url = request_url.del_news_comment.replace('{news_id}', news_id);
-            url = url.replace('{comment_id}', comment_id);
+        url = url.replace('{comment_id}', comment_id);
         $.ajax({
             url: url,
             type: 'DELETE',
             dataType: 'json',
-            error: function(xml) {noticebox('删除失败请重试', 0);},
+            error: function(xml) { noticebox('删除失败请重试', 0); },
             success: function(res) {
-                $('.comment'+comment_id).fadeOut(1000);
+                $('.comment' + comment_id).fadeOut(1000);
                 var commentNum = $('.comment_count').text();
-                $('.comment_count').text(parseInt(commentNum)-1);
+                $('.comment_count').text(parseInt(commentNum) - 1);
             }
         });
     }
 };
 
-$(document).ready(function(){
+$(document).ready(function() {
     // 近期热点切换
-    $('#j-recent-hot a').hover(function(){
+    $('#j-recent-hot a').hover(function() {
         $('.list').hide();
-        $('.list'+$(this).attr('cid')).show();
+        $('.list' + $(this).attr('cid')).show();
         $('#j-recent-hot a').removeClass('a_border');
         $(this).addClass('a_border');
     });

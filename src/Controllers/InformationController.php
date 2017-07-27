@@ -26,36 +26,28 @@ class InformationController extends BaseController
      */
     public function index(Request $request)
     {
-
-        $datas['author'] = [];
-        $datas['recommend'] = [];
         $datas['cid'] = $request->input('cid') ?: 0;
         $datas['slide'] = NewsRecommend::with('cover')->get();
         $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
-        $datas['hots'] = ['week' => $this->getRecentHot(1), 'month' => $this->getRecentHot(2), 'quarter' => $this->getRecentHot(3)];
+        $datas['hots'] = [
+            'week' => $this->getRecentHot(1),
+            'month' => $this->getRecentHot(2),
+            'quarter' => $this->getRecentHot(3),
+        ];        
         $user_id = $this->PlusData['TS']['id'] ?? 0;
 
-        $recommend = News::byAudit()
+        $datas['recommend'] = News::byAudit()
+                ->select('id','title','updated_at','storage','from','author')
                 ->where('is_recommend', 1)
                 ->orderBy('id', 'desc')->take(6)
-                ->select('id','title','updated_at','storage','from','author')
-                ->with('images', 'user.datas')
                 ->get();
-        if (!$recommend->isEmpty()) {
-            $recommend->first()->info = $this->formatUserDatas($recommend->first()->user);
-            $datas['recommend'] = $recommend;
-        }
-
-        $author = News::byAudit()
-                ->orderBy('hits', 'desc')->select('author')
-                ->groupBy('author')->take(3)->with('user.datas')
+        $datas['author'] = News::byAudit()
+                ->select('author')
+                ->orderBy('hits', 'desc')
+                ->groupBy('author')
+                ->with('user')
+                ->take(3)
                 ->get();
-        if (!$author->isEmpty()) {
-            foreach ($author as $k => $v) {
-                $v->info = $this->formatUserDatas($v->user);
-            }
-            $datas['author'] = $author;
-        }
 
         return view('pcview::information.index', $datas, $this->PlusData);
     }
@@ -81,11 +73,7 @@ class InformationController extends BaseController
                 ->with(['collection' => function ($query) {
                     return $query->count();
                 }])->first();
-        if ($news->user) {
-            $user = $this->formatUserDatas($news->user);
-            unset($news->user);
-            $news->user = $user;
-        }
+
         $news['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         $news['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
         $news['hots'] = ['week' => $this->getRecentHot(1), 'month' => $this->getRecentHot(2), 'quarter' => $this->getRecentHot(3)];
@@ -190,20 +178,22 @@ class InformationController extends BaseController
 
                 // $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                 $stime = $time->subDays(7)->toDateTimeString();
-                $datas = News::where('updated_at', '>', $stime)
-                        ->orderBy('news.hits', 'desc')
+                $datas = News::byAudit()
+                        ->where('updated_at', '>', $stime)
+                        ->select('id','title', 'hits')
+                        ->orderBy('hits', 'desc')
                         ->take($limit)
-                        ->select('id','title')
                         ->get();
                 break;
             case 2:
                 $stime = Carbon::create(null, null, 01);// 本月开始时间
                 $etime = Carbon::create(null, null, $time->daysInMonth); // 本月结束时间
 
-                $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
-                        ->orderBy('news.hits', 'desc')
+                $datas = News::byAudit()
+                        ->whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                        ->select('id','title','hits')
+                        ->orderBy('hits', 'desc')
                         ->take($limit)
-                        ->select('id','title')
                         ->get();
                 break;
             case 3:
@@ -211,10 +201,11 @@ class InformationController extends BaseController
                 $stime = Carbon::create($time->year, $season*3-3+1, 01, 0, 0, 0);// 本季度开始时间
                 $etime = Carbon::create($time->year, $season*3, $time->daysInMonth, 23, 59, 59); // 本季度结束时间
 
-                $datas = News::whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
-                        ->orderBy('news.hits', 'desc')
+                $datas = News::byAudit()
+                        ->whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                        ->select('id','title','hits')
+                        ->orderBy('hits', 'desc')
                         ->take($limit)
-                        ->select('id','title')
                         ->get();
                 break;
         }

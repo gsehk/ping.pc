@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{ $routes['resource'] }}/cropper/cropper.min.css">
 <div class="dy_bg">
     <div class="con_cont">
-        <div class="con_left">
+        <div class="con_left" id="J-input">
             <div class="con_title">
                 <input type="hidden" id="news_id" name="id" value="{{$id or 0}}" />
                 <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}" />
@@ -49,7 +49,7 @@
                     @endif
                     " id="J-image-preview" />
                     <div class="ai_upload">
-                        <input name="storage_id" id="storage_id" type="hidden" value="{{$storage or 0}}" />
+                        <input name="image" id="image" type="hidden" value="{{$storage or 0}}" />
                     </div>
                 </span>
             </div>
@@ -84,14 +84,6 @@
 <script src="{{ $routes['resource'] }}/js/module.news.js"></script>
 <script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
 <script type="text/javascript">
-/*$('#J-file-upload').on('change', function(e){
-    var file = e.target.files[0];
-    fileUpload.init(file, updateImg);
-});
-var updateImg = function(image, f, storage_id){
-    $('#storage_id').val(storage_id);
-    $('#J-image-preview').attr('src', '/api/v2/files/'+storage_id+'?w=230&h=163');
-}*/
 $('#J-image-preview').on('click',function(){
     var html = '<div id="model">'
         + '<div class="avatar-container" id="crop-avatar">'
@@ -225,7 +217,7 @@ $('#J-image-preview').on('click',function(){
 });
 
 var updateImg = function(image, f, storage_id){
-    $('#storage_id').val(storage_id);
+    $('#image').val(storage_id);
     $('#J-image-preview').attr('src', '/api/v2/files/'+storage_id+'?w=230&h=163');
     layer.closeAll();
 } 
@@ -236,7 +228,7 @@ $('.news_cate>span').on('click', function(e){
     }else{
         $(this).addClass('current');
     }
-    if ($('.news_cate').find('.current').length > 3) {
+    if ($('.news_cate').find('.current').length > 1) {
         $(this).removeClass('current');
         return false;
     }
@@ -257,7 +249,8 @@ $('.news_cate>span').on('click', function(e){
             }
         }
     }
-    $('#cate_ids').val('|' + newArr.join('|') + '|');
+    $('#cate_ids').val(newArr.join('|'));
+    // $('#cate_ids').val('|' + newArr.join('|') + '|');
 });
 </script>
 @endsection

@@ -92,7 +92,7 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 // news
 Route::prefix('news')->group(function () {
     // news index
-    Route::get('/index', 'InformationController@index')->name('pc:news');
+    Route::get('index', 'InformationController@index')->name('pc:news');
     
     // news detail
     Route::get('/read/{news_id}', 'InformationController@read')->where(['news_id' => '[0-9]+']);

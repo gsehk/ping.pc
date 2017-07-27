@@ -7,6 +7,8 @@ var request_url = {
     login: '/passport/index',
     /* 注销 */
     logout: '/passport/logout',
+    /* 投稿 */
+    contribute: '/api/v2/news/categories/{category}/news',
     /* 获取文章列表 */
     get_news: '/information/getNewsList',
     /* 文章点赞 */
@@ -17,8 +19,8 @@ var request_url = {
     comment_news: '/api/v2/news/{news_id}/comments',
     /* 删除文章评论 */
     del_news_comment: '/api/v2/news/{news_id}/comments/{comment_id}',    
-    // 新闻评论
-    get_comment: '/information/{news_id}/comments',
+    // 获取文章评论
+    get_comment: '/news/{news_id}/comments',
     /* 分享 */
     feeds: '/api/v2/feeds',
     /* 分享列表 */
@@ -61,7 +63,7 @@ var request_url = {
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly90c3MuaW8vYXBpL3YyL3Rva2VucyIsImlhdCI6MTUwMTA2NTYxNywiZXhwIjoxNTAyMjc1MjE3LCJuYmYiOjE1MDEwNjU2MTcsImp0aSI6InR6YU5lMnlKSFczWmlVb00ifQ.bA_0oiMyN-kRI9te5WrZ9AEKAbYFYwi-edFuAiU4618',
+        'Authorization': 'Bearer '+TOKEN,
     }
 });
 
