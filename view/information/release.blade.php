@@ -17,10 +17,8 @@
                 @if(isset($cate))
                     @foreach($cate as $k=>$cat)
                         <span data-cid="{{$cat['id']}}" 
-                            @if(isset($links))
-                            @foreach($links as $link)
-                                @if($cat['id'] == $link['cate_id']) class="current" @endif
-                            @endforeach
+                            @if(isset($cate_id))
+                                @if($cat['id'] == $cate_id) class="current" @endif
                             @endif
                         >{{$cat['name']}}</span>
                     @endforeach
@@ -49,17 +47,20 @@
                     @endif
                     " id="J-image-preview" />
                     <div class="ai_upload">
-                        <input name="image" id="image" type="hidden" value="{{$storage or 0}}" />
+                        <input name="subject-image" id="subject-image" type="hidden" value="{{$storage or 0}}" />
                     </div>
                 </span>
             </div>
+            <div class="con_word">
+                <input type="text" id="subject-author" name="subject-author" value="{{$author or ''}}" placeholder="文章作者（选填）" />
+            </div>            
             <div class="con_word">
                 <input type="text" id="subject-from" name="subject-from" value="{{$from or ''}}" placeholder="文章转载至何处（非转载可不填）" />
             </div>
             <div class="con_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
             <div class="con_btn">
-                <button type="submit" class="subject-submit button con_a1" data-url="{{ route('pc:doSavePost',['type'=>2]) }}">存草稿</button>
-                <button type="submit" class="subject-submit button con_a2" data-url="{{ route('pc:doSavePost',['type'=>1]) }}">投稿</button>
+                {{-- <button type="submit" class="subject-submit button con_a1" data-url="{{ Route('pc:doSavePost',['type'=>2]) }}">存草稿</button> --}}
+                <button type="submit" class="subject-submit button con_a2">投稿</button>
             </div>
         </div>
         <div class="con_right">
@@ -70,7 +71,7 @@
                 <p>详细补充您的咨询内容, 并提供一些相关的素材以供参与者更多的了解您所要表述的资讯思想。</p>
                 <p>注：如果您的内容不够正式，为了数据更美观，您的投稿将不会通过；投稿内容一经审核通过，所投递的内容将共所有人可以阅读，并在您发布资讯中进行分享、点赞和评论</p>
             </div>
-            <a href="{{route('pc:article',['user_id'=>$user_id,'type'=>2])}}">
+            <a href="{{Route('pc:article',['user_id'=>$user_id,'type'=>2])}}">
             <div class="conR_bottom">
                 我的草稿<span class="conR_num">{{ $count }}<i class="icon iconfont icon-icon07"></i></span>
             </div></a>
@@ -217,7 +218,7 @@ $('#J-image-preview').on('click',function(){
 });
 
 var updateImg = function(image, f, storage_id){
-    $('#image').val(storage_id);
+    $('#subject-image').val(storage_id);
     $('#J-image-preview').attr('src', '/api/v2/files/'+storage_id+'?w=230&h=163');
     layer.closeAll();
 } 

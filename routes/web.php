@@ -51,17 +51,20 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // user mainpage
     Route::get('/{user?}', 'ProfileController@index')->where(['user' => '[0-9]+'])->name('pc:mainpage');
 
+    // use collect page
+    Route::get('collect', 'ProfileController@collect')->name('pc:collect');    
+
+    // user article page
+    Route::get('article/{user_id?}/{type?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:article');
+
+    // user setting page
+    Route::get('account', 'ProfileController@account')->name('pc:account');
+
     // user followers
     Route::get('/followers/{user_id?}', 'ProfileController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
 
     // user followings
     Route::get('/followings/{user_id?}', 'ProfileController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
-
-    // user article
-    Route::get('article/{user_id?}/{type?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:article');
-
-    // user setting
-    Route::get('account', 'ProfileController@account')->name('pc:account');
 
     // user feeds
     Route::get('feeds', 'ProfileController@feeds');
@@ -69,18 +72,10 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // use news
     Route::get('news', 'ProfileController@news');
 
-    // use collect
-    Route::get('collect', 'ProfileController@collect')->name('pc:collect');    
-
-    /*Route::prefix('profile')->get('/users/{user_id}', 'ProfileController@getUserFeeds')->where(['user_id' => '[0-9]+']); //个人中心
-    Route::prefix('profile')->get('/news/{user_id}', 'ProfileController@getNewsList')->where(['user_id' => '[0-9]+']); //个人中心资讯列表
-    Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
+    /*Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
         Route::get('related', 'ProfileController@related')->name('pc:related');
         Route::get('following', 'ProfileController@following')->name('pc:following');
-        Route::get('collection', 'ProfileController@collection')->name('pc:collection');
-        
         // 个人设置
-        Route::get('cropper', 'ProfileController@cropper'); 
         Route::post('doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
         Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
     });*/

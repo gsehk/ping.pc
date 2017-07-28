@@ -155,14 +155,16 @@ var recommend = {
     },
 };
 
-// 投稿js
+/**
+ * 文章投稿。
+ */
 $('.subject-submit').on('click', function() {
     var args = {
-        'author': '',
+        'author': $('#subject-author').val(),
         'title': $('#subject-title').val(),
         'subject': $('#subject-abstract').val(),
         'content': $(editor).html(),
-        'image': $('#storage_id').val(),
+        'image': $('#subject-image').val(),
         'from': $('#subject-from').val(),
         'cate_id': $('#cate_ids').val(),
         'news_id': $('#news_id').val() || 0,
@@ -175,20 +177,20 @@ $('.subject-submit').on('click', function() {
         noticebox('文章内容不合法', 0);
         return false;
     }
-    /*if (!args.image) {
+    if (!args.image) {
         noticebox('请上传封面图片', 0);
         return false;
-    }*/
+    }
     var url = request_url.contribute.replace('{category}', args.cate_id);
-    console.log(args);return false;
     $.ajax({
         url: url,
         type: 'POST',
+        data: args,
         dataType: 'json',
         error: function(xml) {},
         success: function(res, data, xml) {
             if (xml.status == 201) {
-                noticebox(res.message, 1);
+                noticebox(res.message, 1, '/profile/article/'+ MID);
             } else {
                 noticebox(res.message, 0);
             }

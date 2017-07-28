@@ -91,23 +91,18 @@ class InformationController extends BaseController
 
     /**
      * 文章投稿页面
-     * 
-     * @param  Request $request [description]
-     * @return [type]           [description]
      */
     public function release(Request $request, int $news_id = null)
     {
-        $data = [];
         $user_id = $this->PlusData['TS']['id'] ?? 0;
         $draft = News::where('audit_status', 2)->where('author', $user_id)->get();
         if ($news_id) {
             $data = $draft->where('id', $news_id)->first();
-            $data['links'] = $data->links ?: '';
         }
         $data['user_id'] = $user_id;
         $data['count'] = $draft->count();
-        $data['cate'] = NewsCate::where('id', '!=', 1)->orderBy('rank', 'desc')->select('id','name')->get();
-
+        $data['cate'] = NewsCate::get();
+        
         return view('pcview::information.release', $data, $this->PlusData);
     }
 
