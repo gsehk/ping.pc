@@ -52,37 +52,37 @@ class FeedController extends BaseController
      * @param  int     $feed_id 
      * @return page
      */
-    public function read(Request $request, int $feed_id)
+    public function read(Request $request, News $model, int $feed_id)
     {
         $feed = createRequest('GET', '/api/v2/feeds/'.$feed_id);
         $feed->collect_count = $feed->collection->count();
         $data['feed'] = $feed;
         // 分享者发布的文章信息
-        $news = News::byAudit()->where('author', $feed->user_id)->first();
+        $news = $model->byAudit()->where('user_id', $feed->user_id)->first();
         if ($news) {
-            $data['user'] = $news->user;
-            $data['news'] = [
-                'newsNum' => $news->newsCount->where('audit_status', 0)->count(),
-                'list' => $news->where('author', $feed->user_id)->select('id','title')->take(4)->get(),
-                'hotsNum' => $news->join('news_cates_links', 'news.id','=','news_cates_links.news_id')
-                 ->where([['news.author','=',$feed->user_id], ['news_cates_links.cate_id','=',1]])->count(),
+            $news->news_count = $model->byAudit()->where('user_id', $news->user_id)->count();
+            $news->hots_count = $model->byAudit()->where('user_id', $news->user_id)->where('cate_id', 1)->count();
+            $news->user = $news->user;
+            $news->hots = [
+                'week' => $this->getRecentHot(1),
+                'month' => $this->getRecentHot(2),
+                'quarter' => $this->getRecentHot(3),
             ];
-        }else{
-            $data['user'] = UserModel::find($feed->user_id);
+            $news->list = $model->byAudit()
+                    ->where('user_id', $news->user_id)
+                    ->select('id', 'title')
+                    ->take(4)->get();
+            $data['news'] = $news;
+        } else {
             $data['news'] = [
                 'list' => [],
-                'newsNum' => 0,
-                'hotsNum' => 0
+                'news_count' => 0,
+                'hots_count' => 0,
             ];
         }
-        $data['hots'] = [
-            'week' => $this->getRecentHot(1),
-            'month' => $this->getRecentHot(2),
-            'quarter' => $this->getRecentHot(3),
-        ];
-        Feed::byFeedId($feed_id)->increment('feed_view_count');
-
-        return view('pcview::home.read',$data, $this->PlusData);
+        $feed->byFeedId($feed_id)->increment('feed_view_count');
+        dd($news->toArray());
+        return view('pcview::feed.read',$data, $this->PlusData);
     }
 
     /**
