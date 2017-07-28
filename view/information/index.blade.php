@@ -168,7 +168,7 @@
                         @foreach($hots['week'] as $week)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$week->id}}">{{$week->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $week->id) }}">{{$week->title}}</a>
                             </li>
                         @endforeach
                         @else
@@ -180,7 +180,7 @@
                         @foreach($hots['month'] as $month)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$month->id}}">{{$month->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $month->id) }}">{{$month->title}}</a>
                             </li>
                         @endforeach
                         @else
@@ -192,7 +192,7 @@
                         @foreach($hots['quarter'] as $quarter)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$quarter->id}}">{{$quarter->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $quarter->id) }}">{{$quarter->title}}</a>
                             </li>
                         @endforeach
                         @else
@@ -215,7 +215,6 @@ var checkin = function(){
     if( MID == 0 ){
         return;
     }
-    
     $.get('/home/checkin' , {} , function (res){
         if ( res ){
             $('#checkin').html('已签到');

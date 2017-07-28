@@ -90,16 +90,16 @@ Route::prefix('news')->group(function () {
     Route::get('index', 'InformationController@index')->name('pc:news');
     
     // news detail
-    Route::get('/read/{news_id}', 'InformationController@read')->where(['news_id' => '[0-9]+']);
+    Route::get('/read/{news_id}', 'InformationController@read')->name('pc:newsRead');
     
     // news comments list
-    Route::get('/{news_id}/comments', 'InformationController@getCommentList')->where(['news_id' => '[0-9]+']);
+    Route::get('/{news_id}/comments', 'InformationController@commnets')->where(['news_id' => '[0-9]+']);
     
     // news release
     Route::get('/release/{news_id?}', 'InformationController@release')->name('pc:newsrelease');
 
     // get news list
-    Route::get('/getNewsList', 'InformationController@getNewsList');
+    Route::get('lists', 'InformationController@lists');
 
     // get recent and hot news 
     Route::get('/getRecentHot', 'InformationController@getRecentHot');

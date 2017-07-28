@@ -26,9 +26,9 @@ class InformationController extends BaseController
      */
     public function index(Request $request)
     {
-        $datas['cid'] = $request->input('cid') ?: 0;
+        $datas['cid'] = $request->input('cid') ?: 1;
         $datas['slide'] = NewsRecommend::with('cover')->get();
-        $datas['cate'] = NewsCate::orderBy('rank', 'desc')->select('id','name')->get()->toArray();
+        $datas['cate'] = NewsCate::get();
         $datas['hots'] = [
             'week' => $this->getRecentHot(1),
             'month' => $this->getRecentHot(2),
@@ -54,37 +54,31 @@ class InformationController extends BaseController
 
     /**
      * 文章详情页
-     * 
-     * @param  int    $news_id [description]
-     * @return [type]          [description]
      */
-    public function read(int $news_id)
+    public function read(News $model, int $news_id)
     {
-        if (!$news_id) {
+        $news = $model->byAudit()->where('id', $news_id)->first();
+        if (!$news) {
             return redirect( route('pc:news'), 302);
         }
-        News::where('id', $news_id)->increment('hits');
-        $uid = $this->PlusData['TS']['id'] ?? 0;
-        $news = News::byAudit()->where('id', $news_id)
-                ->withCount(['newsCount' => function($query){
-                    $query->where('audit_status', 0);
-                }])
-                ->with('link')
-                ->with(['collection' => function ($query) {
-                    return $query->count();
-                }])->first();
-
-        $news['is_digg_news'] = $uid ? NewsDigg::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
-        $news['is_collect_news'] = $uid ? NewsCollection::where('news_id', $news_id)->where('user_id', $uid)->count() : 0;
-        $news['hots'] = ['week' => $this->getRecentHot(1), 'month' => $this->getRecentHot(2), 'quarter' => $this->getRecentHot(3)];
-        $news['hotNum'] = News::byAudit()
-                    ->join('news_cates_links', 'news.id', '=', 'news_cates_links.news_id')
-                    ->where([['news.author','=',$news->author], ['news_cates_links.cate_id','=',1]])
-                    ->count();
-        $news['news'] = News::byAudit()->where('author', $news->author)
-                    ->orderBy('created_at', 'desc')->take(4)
-                    ->select('id','title')
-                    ->get();
+        $news->increment('hits');
+        $user = $this->PlusData['TS']['id'] ?? 0;
+        $news->news_count = $model->byAudit()->where('user_id', $news->user_id)->count();
+        $news->hots_count = $model->byAudit()->where('user_id', $news->user_id)->where('cate_id', 1)->count();
+        $news->like_count = $news->collection->count();
+        $news->collect_count = $news->collection->count();
+        $news->has_collect = $user ? $news->collection->where('user_id', $user)->count() : 0;
+        $news->has_like = $news->liked($user);
+        $news->user = $news->user;
+        $news->hots = [
+            'week' => $this->getRecentHot(1),
+            'month' => $this->getRecentHot(2),
+            'quarter' => $this->getRecentHot(3),
+        ];
+        $news->list = $model->byAudit()
+                ->where('user_id', $news->user_id)
+                ->select('id', 'title')
+                ->take(4)->get();
 
         return view('pcview::information.read', $news, $this->PlusData);
     }
@@ -102,16 +96,17 @@ class InformationController extends BaseController
         $data['user_id'] = $user_id;
         $data['count'] = $draft->count();
         $data['cate'] = NewsCate::get();
-        
+
         return view('pcview::information.release', $data, $this->PlusData);
     }
 
     /**
      * 资讯列表.
+     * 
      * @param  $cate_id [分类ID]
      * @return mixed 返回结果
      */
-    public function getNewsList(Request $request)
+    public function lists(Request $request)
     {
         $cate_id = $request->cate_id;
         $max_id = $request->max_id;
@@ -305,7 +300,7 @@ class InformationController extends BaseController
      * @param  int     $news_id 文章id
      * @return [type]           [description]
      */
-    public function getCommentList(Request $request, int $news_id)
+    public function commnets(Request $request, int $news_id)
     {
         $limit = $request->get('limit',15);
         $max_id = intval($request->get('max_id'));

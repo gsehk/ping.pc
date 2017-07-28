@@ -6,37 +6,45 @@
         <div class="del_left">
             <div class="del_title">{{ $title }}</div>
             <div class="top_list">
-                @if (!empty($link))
-                @foreach ($link as $li)
-                <a href="javascript:;" class="top_list_span">{{ $li['name'] }}</a>
-                @endforeach
-                @endif
-                <a href="{{ route('pc:mainpage', ['user_id'=>$user['id']]) }}">{{ $user['name'] }}</a>
+                <a href="javascript:;" class="top_list_span">{{ $category['name'] }}</a>
+                <a href="{{ Route('pc:mainpage', $user_id) }}">{{ $author }}</a>
                 <div class="del_top_r">
                     <span class="del_time">{{ $created_at }}</span>
                 </div>
             </div>
             <div class="zx_top">
                 <img src="{{ $routes['resource'] }}/images/zixun-left.png" class="zx_l"/>
-                <div class="zx_word">{{ $subject or '...'}}</div>
+                <div class="zx_word">{{ $subject }}</div>
                 <img src="{{ $routes['resource'] }}/images/zixun-right.png" class="zx_r"/>
             </div>
             <div class="post_content">
                 {!!$content!!}
             </div>
             <div class="del_pro">
-                <span id="collect{{$id}}" rel="{{ count($collection) }}">
-                    @if($is_collect_news <= 0)
-                    <a href="javascript:;" onclick="collect.addCollect('{{$id}}')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">{{ count($collection) }}</font>收藏</a>
+                <span id="collect{{ $id }}" rel="{{ $collect_count }}">
+                    @if(!$has_collect)
+                    <a href="javascript:;" onclick="collect.addCollect('{{ $id }}')">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                        <font class="cs">{{ $collect_count }}</font>收藏
+                    </a>
                     @else 
-                    <a href="javascript:;" onclick="collect.delCollect('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">{{ count($collection) }}</font>收藏</a>
+                    <a href="javascript:;" onclick="collect.delCollect('{{ $id }}');" class="act">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                        <font class="cs">{{ $collect_count }}</font>收藏
+                    </a>
                     @endif
                 </span>
                 <span id="digg{{ $id }}" rel="{{ $digg_count }}">
-                    @if($is_digg_news <= 0)
-                    <a href="javascript:;" onclick="digg.addDigg('{{$id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">{{ $digg_count }}</font>人喜欢</a>
+                    @if(!$has_like)
+                    <a href="javascript:;" onclick="digg.addDigg('{{ $id }}');">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                        <font class="ds">{{ $digg_count }}</font>人喜欢
+                    </a>
                     @else 
-                    <a href="javascript:;" onclick="digg.delDigg('{{$id}}');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">{{ $digg_count }}</font>人喜欢</a>
+                    <a href="javascript:;" onclick="digg.delDigg('{{ $id }}');" class="act">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
+                        <font class="ds">{{ $digg_count }}</font>人喜欢
+                    </a>
                     @endif
                 </span>
                 <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
@@ -55,7 +63,11 @@
                         表情
                     </span> -->
                     <span class="dy_cs" style="margin-left: 500px;">可输入<span class="nums">255</span>字</span>
-                    <button class="dy_share a_link" id="J-comment-news" data-args="editor=#comment&box=#comment_detail&row_id={{$id}}&canload=0" to_comment_id="0" to_uid="0" addtoend="0">评论</button>
+                    <button 
+                        id="J-comment-news" 
+                        class="dy_share a_link" 
+                        data-args="to_comment_id=0&to_uid=0&row_id={{ $id }}&canload=0" 
+                    >评论</button>
                 </div>
             </div>
             <div class="delComment_cont" id="comment_detail"></div>
@@ -69,25 +81,27 @@
                     </div>
                 </div>
                 <div class="delTop_right">
-                    <span><a href="{{ route('pc:mainpage', ['user_id'=>$user['id']]) }}">{{ $user['name'] }}</a></span>
-                    <p class="txt-hide">{{ $user['intro'] or ''}}</p>
+                    <span><a href="{{ Route('pc:mainpage', $user['id']) }}">{{ $user['name'] }}</a></span>
+                    <p class="txt-hide">{{ $user['bio']}}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="{{route('pc:article',['user_id'=>$author])}}">文章<span>{{ $news_count_count }}</span></a>
+                        <a href="{{route('pc:article', $user['id'])}}">文章<span>{{ $news_count }}</span></a>
                     </li>
                     <li>
-                        <a href="javascript:;">热门<span>{{ $hotNum }}</span></a>
+                        <a href="javascript:;">热门<span>{{ $hots_count }}</span></a>
                     </li>
                 </ul>
-                @foreach($news as $post)
-                    <div class="del_rTop">
-                        <span></span>
-                        <a href="/information/read/{{ $post['id'] }}">{{ $post['title'] }}</a>
-                    </div>
-                @endforeach
+                @if (!$list->isEmpty())
+                    @foreach($list as $post)
+                        <div class="del_rTop">
+                            <span></span>
+                            <a href="{{ Route('pc:newsRead', $post->id) }}">{{ $post->title }}</a>
+                        </div>
+                    @endforeach
+                @endif
             </div>
-            @if(count($news) >= 3)<a href="{{route('pc:article',['user_id'=>$user['id']])}}" class="del_more">更多TA的文章</a>@endif
+            @if($list->count() >= 3)<a href="{{ Route('pc:article', $user->id) }}" class="del_more">更多TA的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
@@ -98,11 +112,11 @@
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
                     <div class="list list1">
-                        @if(!empty($hots['week']->toArray()))
+                        @if(!$hots['week']->isEmpty())
                         @foreach($hots['week'] as $week)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$week->id}}">{{$week->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $week->id) }}">{{$week->title}}</a>
                             </li>
                         @endforeach
                         @else
@@ -110,11 +124,11 @@
                         @endif
                     </div>
                     <div class="list list2">
-                        @if(!empty($hots['month']->toArray()))
+                        @if(!$hots['month']->isEmpty())
                         @foreach($hots['month'] as $month)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$month->id}}">{{$month->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $month->id) }}">{{$month->title}}</a>
                             </li>
                         @endforeach
                         @else
@@ -122,11 +136,11 @@
                         @endif
                     </div>
                     <div class="list list3">
-                        @if(!empty($hots['quarter']->toArray()))
+                        @if(!$hots['quarter']->isEmpty())
                         @foreach($hots['quarter'] as $quarter)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$quarter->id}}">{{$quarter->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $quarter->id) }}">{{$quarter->title}}</a>
                             </li>
                         @endforeach
                         @else
@@ -145,26 +159,14 @@
 <script src="{{ $routes['resource'] }}/js/module.bdshare.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-
-    comment.init({row_id:'{{$id}}', canload:true});
-
+    comment.init({row_id:'{{ $id }}', canload:true});
     $('#J-comment-news').on('click', function(){
         if (MID == 0) {
-            window.location.href = '/passport/index';
-            return false;
+            window.location.href = request_url.login;
         }
         var attrs = urlToObject($(this).data('args'));
-        attrs.to_uid = $(this).attr('to_uid');
-        attrs.addToEnd = $(this).attr('addtoend');
-        attrs.to_comment_id = $(this).attr('to_comment_id');
         comment.init(attrs);
-
-        var _this = this;
-        var after = function(){
-            $(_this).attr('to_uid','0');
-            $(_this).attr('to_comment_id','0');
-        }
-        comment.addComment(after, this);
+        comment.addComment('', this);
     });
 
     bdshare.addConfig('share', {

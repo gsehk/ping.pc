@@ -11,8 +11,7 @@ news.init = function(option) {
     this.setting.container = option.container; // 容器ID
     this.setting.loadcount = option.loadcount || 0; // 加载次数
     this.setting.loadmax = option.loadmax || 40; // 加载最大次数
-    this.setting.maxid = option.maxid || 0; // 最大文章ID
-    this.setting.loadlimit = option.loadlimit || 10; // 每次加载的数目，默认为10
+    this.setting.after = option.after || 0; // 最大文章ID
     this.setting.cid = option.cid || 0; //  文章分类ID
     this.setting.canload = option.canload || true; // 是否能加载
 
@@ -65,14 +64,13 @@ news.loadMore = function() {
     news.setting.loadcount++;
     // 异步提交，获取相关频道数据
     var postArgs = {};
-    postArgs.max_id = news.setting.maxid;
-    postArgs.limit = news.setting.loadlimit;
+    postArgs.after = news.setting.after;
     postArgs.cate_id = news.setting.cid;
-    $.get('/news/getNewsList', postArgs, function(res) {
+    $.get('/news/lists', postArgs, function(res) {
         if (res.data.length > 0) {
             news.setting.canload = true;
             // 修改加载ID
-            news.setting.maxid = res.data[res.data.length - 1].id;
+            news.setting.after = res.data[res.data.length - 1].id;
             var html = '';
             var data = res.data;
             for (var i in data) {
