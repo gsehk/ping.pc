@@ -30,7 +30,7 @@ var request_url = {
     /* 分享评论 */
     feed_comment: '/api/v2/feeds/{feed_id}/comments',
     /* 获取分享评论 */
-    feed_commnets: '/pc/feeds/{feed_id}/comments',    
+    feed_commnets: '/feeds/{feed_id}/comments',    
     /* 删除分享评论  */
     del_feed_comment: '/api/v2/feeds/{feed_id}/comments/{comment_id}',
     /* 删除分享 */

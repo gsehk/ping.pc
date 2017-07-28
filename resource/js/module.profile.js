@@ -345,12 +345,10 @@ var comment = {
     // 初始化评论对象
     init: function(attrs) {
         this.row_id = attrs.row_id || 0;
-        this.max_id = attrs.max_id || 0;
-        this.limit = attrs.limit || 5;
+        this.after = attrs.after || 0;
         this.to_uid = attrs.to_uid || 0;
         this.canload = attrs.canload || 1;
         this.reply_to_user_id = attrs.reply_to_user_id || 0;
-        this.addToEnd = attrs.addToEnd || 0;
         this.box = attrs.box || '#comment_detail';
         this.editor = attrs.editor || '#mini_editor';
 
@@ -385,32 +383,35 @@ var comment = {
         $.ajax({
             url: url,
             type: 'GET',
-            data: { max_id: comment.max_id, limit: comment.limit },
+            data: { after: comment.after},
             dataType: 'json',
             error: function(xml) {},
             success: function(res) {
                 if (res.data.length > 0) {
                     comment.canload = true;
-                    comment.max_id = res.data[res.data.length - 1].id;
+                    comment.after = res.after;
                     var data = res.data,
                         html = '';
                     for (var i in data) {
-                        var avatar = data[i].uinfo.avatar ? request_url.images + data[i].uinfo.avatar : AVATAR;
                         html += '<div class="delComment_list">';
                         html += '<div class="comment_left">';
-                        html += '<img src="' + avatar + '" class="c_leftImg" />';
+                        html += '<img src="' + data[i].user.avatar + '" class="c_leftImg" />';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<span class="del_ellen">' + data[i].uinfo.name + '</span>';
+                        html += '<span class="del_ellen">' + data[i].user.name + '</span>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
                         html += '<i class="icon iconfont icon-gengduo-copy"></i>';
-                        html += '<p class="comment_con">' + data[i].comment_content + '';
-                        if (data[i].user_id != MID) {
-                            html += '<span class="del_huifu">';
-                            html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].uinfo.name + '&canload=0&to_uid=' + data[i].user_id + '"';
-                            html += 'class="J-reply-comment">回复';
-                            html += '</a></span>';
-                        }
+                        html += '<p class="comment_con">' + data[i].body + '';
+                        html += '<span class="del_huifu">';
+                            if (data[i].user_id != MID) {
+                                html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].user.name + '&canload=0&to_uid=' + data[i].user_id + '"';
+                                html += 'class="J-reply-comment">回复</a>';
+                            }
+                            if (data[i].user_id == MID) {
+                                html += '<a href="javascript:void(0)" onclick="comment.delComment('+data[i].id+', '+data[i].commentable_id+')"';
+                                html += 'class="del_comment">删除</a>';
+                            }
+                        html += '</span>';
                         html += '</p></div></div>';
                     }
                     $(comment.box).append(html);

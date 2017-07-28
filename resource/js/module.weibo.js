@@ -276,10 +276,10 @@ var comment = {
                     for (var i in data) {
                         html += '<div class="delComment_list comment'+data[i].id+'">';
                         html += '<div class="comment_left">';
-                        html += '<a href="/index/'+data[i].user_id+'"><img src="' + data[i].user.avatar + '" class="c_leftImg" /></a>';
+                        html += '<a href="/profile/'+data[i].user_id+'"><img src="' + data[i].user.avatar + '" class="c_leftImg" /></a>';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<a href="/index/'+data[i].user_id+'"><span class="del_ellen">' + data[i].user.name + '</span></a>';
+                        html += '<a href="/profile/'+data[i].user_id+'"><span class="del_ellen">' + data[i].user.name + '</span></a>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
                         html += '<p class="comment_con">' + data[i].body + '';
                         html += '<span class="del_huifu">';

@@ -362,12 +362,11 @@ var comment = {
     // 初始化评论对象
     init: function(attrs) {
         this.row_id = attrs.row_id || 0;
-        this.max_id = attrs.max_id || 0;
+        this.after = attrs.after || 0;
         this.limit = attrs.limit || 5;
         this.to_uid = attrs.to_uid || 0;
         this.canload = attrs.canload || 1;
         this.reply_to_user_id = attrs.reply_to_user_id || 0;
-        this.addToEnd = attrs.addToEnd || 0;
         this.box = attrs.box || '#comment_detail';
         this.editor = attrs.editor || '#mini_editor';
 
@@ -402,32 +401,31 @@ var comment = {
         $.ajax({
             url: url,
             type: 'GET',
-            data: { max_id: comment.max_id, limit: comment.limit },
+            data: { after: comment.after},
             dataType: 'json',
             error: function(xml) {},
             success: function(res) {
                 if (res.data.length > 0) {
                     comment.canload = true;
-                    comment.max_id = res.data[res.data.length - 1].id;
+                    comment.after = res.after;
                     var data = res.data,
                         html = '';
                     for (var i in data) {
                         html += '<div class="delComment_list comment' + data[i].id + '">';
                         html += '<div class="comment_left">';
-                        html += '<a href="/profile/index?user_id=' + data[i].user_id + '"><img src="' + data[i].info.avatar + '" class="c_leftImg" /></a>';
+                        html += '<a href="/profile/' + data[i].user_id + '"><img src="' + data[i].user.avatar + '" class="c_leftImg" /></a>';
                         html += '</div>';
                         html += '<div class="comment_right">';
-                        html += '<a href="/profile/index?user_id=' + data[i].user_id + '"><span class="del_ellen">' + data[i].info.name + '</span></a>';
+                        html += '<a href="/profile/' + data[i].user_id + '"><span class="del_ellen">' + data[i].user.name + '</span></a>';
                         html += '<span class="c_time">' + data[i].created_at + '</span>';
-                        /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                        html += '<p class="comment_con">' + data[i].comment_content + '';
+                        html += '<p class="comment_con">' + data[i].body + '';
                         html += '<span class="del_huifu">';
                         if (data[i].user_id != MID) {
-                            html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].info.name + '&canload=0&to_uid=' + data[i].user_id + '"';
+                            html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].user.name + '&canload=0&to_uid=' + data[i].user_id + '"';
                             html += 'class="J-reply-comment">回复</a>';
                         }
                         if (data[i].user_id == MID) {
-                            html += '<a href="javascript:void(0)" onclick="comment.delComment(' + data[i].id + ', ' + data[i].news_id + ')"';
+                            html += '<a href="javascript:void(0)" onclick="comment.delComment(' + data[i].id + ', ' + data[i].commentable_id + ')"';
                             html += 'class="del_comment">删除</a>';
                         }
                         html += '</span>';
@@ -472,47 +470,43 @@ var comment = {
             noticebox('评论内容长度为1-' + initNums + '字', 0);
             return false;
         }
-        var content = _textarea.value;
-
         if ("undefined" != typeof(this.addComment) && (this.addComment == true)) {
             return false; //不要重复评论
         }
-        var addToEnd = this.addToEnd;
+        var formData = {
+            body: _textarea.value,
+        };        
+        if (this.to_uid > 0) {
+            formData.reply_user = this.to_uid;
+        }         
         var url = request_url.comment_news.replace('{news_id}', this.row_id);
         var _this = this;
         obj.innerHTML = '评论中..';
-
         $.ajax({
             url: url,
             type: 'POST',
-            data: { comment_content: content, reply_to_user_id: this.to_uid },
+            data: formData,
             dataType: 'json',
-            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN); },
             error: function(xml) {},
-            success: function(res) {
-                if (res.status == true) {
+            success: function(res, data, xml) {
+                if (xml.status == 201) {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<div class="delComment_list comment' + res.data + '">';
+                    var html = '<div class="delComment_list comment' + res.comment.id + '">';
                     html += '<div class="comment_left">';
-                    html += '<a href="/profile/index?user_id=' + MID + '"><img src="' + AVATAR + '" class="c_leftImg" /></a>';
+                    html += '<a href="/profile/' + MID + '"><img src="' + AVATAR + '" class="c_leftImg" /></a>';
                     html += '</div>';
                     html += '<div class="comment_right">';
-                    html += '<a href="/profile/index?user_id=' + MID + '"><span class="del_ellen">' + NAME + '</span></a>';
+                    html += '<a href="/profile/' + MID + '"><span class="del_ellen">' + NAME + '</span></a>';
                     html += '<span class="c_time">刚刚</span>';
-                    /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                    html += '<p class="comment_con">' + content + '';
-                    html += '<a href="javascript:void(0)" onclick="comment.delComment(' + res.data + ', ' + comment.row_id + ')"';
+                    html += '<p class="comment_con">' + formData.body + '';
+                    html += '<a href="javascript:void(0)" onclick="comment.delComment(' + res.comment.id + ', ' + comment.row_id + ')"';
                     html += 'class="del_comment">删除</a>';
                     html += '</p></div></div>';
                     var commentBox = $(comment.box);
                     if ("undefined" != typeof(commentBox)) {
-                        if (addToEnd == 1) {
-                            commentBox.append(html);
-                        } else {
-                            commentBox.prepend(html);
-                        }
+                        commentBox.prepend(html);
                         _textarea.value = '';
                         $('.nums').text(initNums);
                         /*绑定回复操作*/

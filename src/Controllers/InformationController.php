@@ -15,6 +15,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsComment;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class InformationController extends BaseController
 {
@@ -98,6 +99,31 @@ class InformationController extends BaseController
         $data['cate'] = NewsCate::get();
 
         return view('pcview::information.release', $data, $this->PlusData);
+    }
+
+
+    /**
+     * 获取文章评论列表
+     * 
+     * @param  int  $news_id 文章id
+     * @return mixed
+     */
+    public function commnets(Request $request, int $news_id)
+    {
+        $comments = createRequest('GET', '/api/v2/news/'.$news_id.'/comments');
+        $comment = clone $comments['comments'];
+        $comment->map(function($comment){
+            return [
+                'user' => $comment->user,
+            ];
+        });
+        $after = $comment->pop()->id ?? 0;     
+           
+        return response()->json([
+            'status'  => true,
+            'after' => $after,
+            'data' => $comments['comments'],
+        ]);
     }
 
     /**
@@ -291,45 +317,6 @@ class InformationController extends BaseController
                 : route('pc:article', ['user_id'=>$this->PlusData['TS']['id'],'type' => 2])
                 ,'id' => $news->id
             ]
-        ]))->setStatusCode(200);
-    }
-
-    /**
-     * 获取文章评论列表
-     * 
-     * @param  int     $news_id 文章id
-     * @return [type]           [description]
-     */
-    public function commnets(Request $request, int $news_id)
-    {
-        $limit = $request->get('limit',15);
-        $max_id = intval($request->get('max_id'));
-        if(!$news_id) {
-            return response()->json([
-                'status' => false,
-                'code' => 9001,
-                'message' => '资讯ID不能为空'
-            ])->setStatusCode(400);
-        }
-        $comments = NewsComment::byNewsId($news_id)
-                ->take($limit)
-                ->where(function($query) use ($max_id) {
-                    if ($max_id > 0) {
-                        $query->where('id', '<', $max_id);
-                    }
-                })
-                ->select(['id', 'created_at', 'comment_content', 'user_id', 'news_id', 'reply_to_user_id','comment_mark'])
-                ->with('user')
-                ->orderBy('id','desc')
-                ->get();
-        foreach ($comments as $key => &$value) {
-            $value['info'] = $this->formatUserDatas($value['user']);
-            unset($value['user']);
-        }
-
-        return response()->json(static::createJsonData([
-            'status' => true,
-            'data' => $comments,
         ]))->setStatusCode(200);
     }
 
