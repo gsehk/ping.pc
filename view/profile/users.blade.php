@@ -5,62 +5,49 @@
 @section('content')
 
 <div class="fan_cont">
-    @if($type == 3)
-        <div class="visitor_div">近期有<span>{{$count}}</span>位Tser看过我</div>
-    @elseif($type == 4)
     <ul class="fan_ul">
-        <li><a href="{{ route('pc:users', ['type'=>4]) }}" class="a_border">推荐</a></li>
+        @if($user_id && $user_id != $TS['id'])
+        <li><a href="{{ route('pc:followers', ['user_id'=>$user_id]) }}" @if($type == 1) class="a_border" @endif>TA的粉丝</a></li>
+        <li><a href="{{ route('pc:followings', ['user_id'=>$user_id]) }}" @if($type == 2) class="a_border" @endif>TA的关注</a></li>
+        @else
+        <li><a href="{{ route('pc:followers') }}" @if($type == 1) class="a_border" @endif>粉丝</a></li>
+        <li><a href="{{ route('pc:followings') }}" @if($type == 2) class="a_border" @endif>关注</a></li>
+        @endif
     </ul>
-    @else
-    <ul class="fan_ul">
-        <li><a href="{{ route('pc:users', ['type'=>1, 'user_id'=>$user_id]) }}" @if($type == 1) class="a_border" @endif>@if($user_id != $TS['id'])TA的@endif粉丝</a></li>
-        <li><a href="{{ route('pc:users', ['type'=>2, 'user_id'=>$user_id]) }}" @if($type == 2) class="a_border" @endif>@if($user_id != $TS['id'])TA的@endif关注</a></li>
-    </ul>
-    @endif
 
-    @if (!empty($datas)) 
+    @if (!empty($users))
     <!-- 数据展示 -->
-    @foreach ($datas as $data)
+    @foreach ($users as $data)
     @if(($loop->iteration) % 3 == 1)
     <div class="fan_list">
     @endif
-        <div class="fan_c"  @if(($loop->iteration) % 3 == 1) style="border-right:0;" @endif>
+        <div class="fan_c">
             <div class="fanList_top">
                 <div class="fan_header">
-                    <a href="{{route('pc:mainpage',['user_id'=>$data['user']['id']])}}">
-                        <img src="{{ $data['user']['avatar']}} " class="head_img" alt="{{ $data['user']['name'] }}"/>
+                    <a href="{{route('pc:mainpage',['user_id'=>$data['id']])}}">
+                        <img src="{{ $data['avatar'] or $routes['resource'] . '/images/avatar.png' }} " class="head_img" alt="{{ $data['name'] }}"/>
                     </a>
                 </div>
                 <div class="fan_word">
                     <div>
-                        <a href="{{route('pc:mainpage',['user_id'=>$data['user']['id']])}}"><span class="fan_name">{{ $data['user']['name'] or $data['user']['phone'] }}</span></a>
-                        @if ($data['my_follow_status'] == 1)
-                        <span id="data" class="fan_care c_ccc" uid="{{ $data['user']['id'] }}" status="1">已关注</span>
+                        <a href="{{route('pc:mainpage',['user_id'=>$data['id']])}}"><span class="fan_name">{{ $data['name'] or $data['phone'] }}</span></a>
+                        @if ($data['follower'])
+                        <span id="data" class="fan_care c_ccc" uid="{{ $data['id'] }}" status="1">已关注</span>
                         @else
-                        <span id="data" class="fan_care" uid="{{ $data['user']['id'] }}" status="0">+关注</span>
+                        <span id="data" class="fan_care" uid="{{ $data['id'] }}" status="0">+关注</span>
                         @endif
                     </div>
-                    <div class="fan_subtitle">{{ $data['user']['intro'] or '这家伙什么都没有写'}}</div>
+                    <div class="fan_subtitle">{{ $data['intro'] or '这家伙什么都没有写'}}</div>
                     <div class="fan_number">
                         <span class="fan_num">粉丝<span>{{ $data['extra']['followers_count'] or 0}}</span></span>
                         <span class="fan_careNum">关注<span>{{ $data['extra']['followings_count'] or 0}}</span></span>
                     </div>
                 </div>
             </div>
-            <div class="fan_line"></div>
-            <div class="fanList_bottom">
-                @foreach ($data['storages'] as $storage)
-                <a href="{{Route('pc:feedread', $storage->id)}}"> <img  class="lazy" data-original="{{$routes['storage']}}{{$storage->file_id}}?w=100&h=100" /></a>
-                @endforeach
-
-                @for ($i = 0; $i < (3 -count($data['storages'])); $i++)
-                <a href="javascript:;"> <img src="{{ $routes['resource'] }}/images/default_picture.png" /></a>
-                @endfor
-            </div>
         </div>
     @if(($loop->iteration) % 3 == 0)
     </div>
-    @elseif($loop->iteration == count($datas))
+    @elseif($loop->iteration == count($users))
     </div>
     @endif
     @endforeach
@@ -73,9 +60,6 @@
     @endif
 
 </div>
-
-<!-- 分页 -->
-{{ $page }}
 
 @endsection
 

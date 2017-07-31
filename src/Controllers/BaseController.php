@@ -28,7 +28,7 @@ class BaseController extends Controller
 
     		$this->PlusData['TS'] = null;
     		if ($this->PlusData['mid']) {
-    			$this->PlusData['TS'] = createRequest('GET', '/api/v2/users/' . $this->PlusData['mid']);
+    			$this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
     		}
 

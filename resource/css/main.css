@@ -2321,7 +2321,7 @@ img {
     margin: 20px auto 50px;
     cursor: pointer;
     text-align: center;
-    letter-spacing: 5px;
+    letter-spacing: 2px;
     color: #fff;
     border-radius: 3px;
     background: #59b6d7;
@@ -2932,7 +2932,7 @@ img {
     margin-top: 60px;
     cursor: pointer;
     text-align: center;
-    letter-spacing: 6px;
+    letter-spacing: 2px;
     color: #fff;
     border: 0;
     border-radius: 3px;
@@ -3026,6 +3026,7 @@ img {
     margin: 0 auto;
     margin-top: 40px;
     background: #fff;
+    overflow: hidden;
 }
 
 .fan_ul {
@@ -3055,32 +3056,21 @@ img {
 }
 
 .fan_list {
-    width: 100%;
-    height: 315px;
+    height: 190px;
+    margin: 0 10px;
 }
 
 .fan_c {
     float: left;
-    width: 33.33%;
-    height: 315px;
-    padding: 30px;
-    border-top: 1px solid #fff;
-    border-right: 1px solid #ededed;
-    border-bottom: 1px solid #ededed;
-    border-left: 1px solid #fff;
+    width: 333px;
+    height: 190px;
+    margin: 10px;
+    padding: 30px 20px;
+    border: 1px solid #ededed;
 }
 
 .fan_c:hover {
     border: 1px solid #59b6d7 !important;
-}
-
-.fan_list .fan_c:nth-of-type(2):hover {
-    border: 1px solid #59b6d7;
-}
-
-.fan_list .fan_c:nth-of-type(2) {
-    border-right: 1px solid #ededed;
-    border-left: 1px solid #ededed;
 }
 
 .fan_header {
