@@ -57,31 +57,33 @@ class FeedController extends BaseController
         $feed = createRequest('GET', '/api/v2/feeds/'.$feed_id);
         $feed->collect_count = $feed->collection->count();
         $data['feed'] = $feed;
+        $data['user'] = $feed->user;
         // 分享者发布的文章信息
         $news = $model->byAudit()->where('user_id', $feed->user_id)->first();
-        if ($news) {
-            $news->news_count = $model->byAudit()->where('user_id', $news->user_id)->count();
-            $news->hots_count = $model->byAudit()->where('user_id', $news->user_id)->where('cate_id', 1)->count();
-            $news->user = $news->user;
-            $news->hots = [
-                'week' => $this->getRecentHot(1),
-                'month' => $this->getRecentHot(2),
-                'quarter' => $this->getRecentHot(3),
-            ];
-            $news->list = $model->byAudit()
-                    ->where('user_id', $news->user_id)
-                    ->select('id', 'title')
-                    ->take(4)->get();
-            $data['news'] = $news;
-        } else {
-            $data['news'] = [
-                'list' => [],
-                'news_count' => 0,
-                'hots_count' => 0,
-            ];
-        }
+        $news->week = $this->getRecentHot(1);
+        $news->month = $this->getRecentHot(2);
+        $news->quarter = $this->getRecentHot(3);     
+        $news->news_count = $model->byAudit()
+            ->when($news, function ($query) use ($news) {
+                return $query->where('user_id', $news->user_id);
+            })
+            ->count();
+        $news->hots_count = $model->byAudit()
+            ->when($news, function ($query) use ($news) {
+                return $query->where('user_id', $news->user_id);
+            })            
+            ->where('cate_id', 1)
+            ->count();
+        $news->list = $model->byAudit()
+            ->when($news, function ($query) use ($news) {
+                return $query->where('user_id', $news->user_id);
+            })                
+            ->select('id', 'title')
+            ->take(4)->get();
+        $data['news'] = $news;
+
         $feed->byFeedId($feed_id)->increment('feed_view_count');
-        dd($news->toArray());
+        // dd($data);
         return view('pcview::feed.read',$data, $this->PlusData);
     }
 
@@ -90,9 +92,9 @@ class FeedController extends BaseController
      * 
      * @return mixed
      */
-    public function comments(Request $request, int $comment_id)
+    public function comments(Request $request, int $feed_id)
     {
-        $comments = createRequest('GET', '/api/v2/feeds/'.$comment_id.'/comments');
+        $comments = createRequest('GET', '/api/v2/feeds/'.$feed_id.'/comments');
         $comment = clone $comments['comments'];
         $comment->map(function($comment){
             return [

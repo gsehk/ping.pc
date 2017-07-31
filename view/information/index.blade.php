@@ -164,7 +164,7 @@
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
                     <div class="list list1">
-                        @if(!empty($hots['week']->toArray()))
+                        @if(!$hots['week']->isEmpty())
                         @foreach($hots['week'] as $week)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
@@ -176,7 +176,7 @@
                         @endif
                     </div>
                     <div class="list list2">
-                        @if(!empty($hots['month']->toArray()))
+                        @if(!$hots['month']->isEmpty())
                         @foreach($hots['month'] as $month)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
@@ -188,7 +188,7 @@
                         @endif
                     </div>
                     <div class="list list3">
-                        @if(!empty($hots['quarter']->toArray()))
+                        @if(!$hots['quarter']->isEmpty())
                         @foreach($hots['quarter'] as $quarter)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>

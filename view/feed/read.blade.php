@@ -56,28 +56,28 @@
         <div class="del_right">
             <div class="delTop">
                 <div class="delToP_left">
-                    <div> <img src="@if($user->avatar) {{$user->avatar}} @else {{$routes['resource']}}/images/avatar.png @endif" /></div>
+                    <div> <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" /></div>
                 </div>
                 <div class="delTop_right">
-                    <span>{{ $user->name }}</span>
-                    <p class="txt-hide">{{ $user->intro or '这家伙很懒，什么都没留下！' }}</p>
+                    <span>{{ $user['name'] }}</span>
+                    <p class="txt-hide">{{ $user['bio'] or '这家伙很懒，什么都没留下！' }}</p>
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="{{route('pc:article',['user_id'=>$feed->user_id])}}">文章<span>{{ $news['newsNum'] }}</span></a>
+                        <a href="{{ Route('pc:article',['user_id'=>$feed->user_id]) }}">文章<span>{{ $news['news_count'] }}</span></a>
                     </li>
                     <li>
-                        <a href="javascript:;">热门<span>{{ $news['hotsNum'] }}</span></a>
+                        <a href="javascript:;">热门<span>{{ $news['hots_count'] }}</span></a>
                     </li>
                 </ul>
                 @foreach($news['list'] as $post)
                     <div class="del_rTop">
                         <span></span>
-                        <a href="/information/read/{{$post->id}}">{{ $post->title }}</a>
+                        <a href="{{ Route('pc:newsRead', $post->id) }}">{{ $post->title }}</a>
                     </div>
                 @endforeach
             </div>
-            @if(count($news['list']) >= 3)<a href="{{route('pc:mainpage',['user_id'=>$feed->user_id])}}" class="del_more">更多TA的文章</a>@endif
+            @if($news['list']->count() >= 3)<a href="{{ Route('pc:mainpage',['user_id'=>$feed->user_id]) }}" class="del_more">更多TA的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
@@ -88,11 +88,11 @@
                 </ul>
                 <ul class="new_list" id="j-recent-hot-wrapp">
                     <div class="list list1">
-                        @if(!empty($hots['week']->toArray()))
-                        @foreach($hots['week'] as $week)
+                        @if(!$news['week']->isEmpty())
+                        @foreach($news['week'] as $week)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$week->id}}">{{$week->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $week->id) }}">{{$week->title}}</a>
                             </li>
                         @endforeach
                         @else
@@ -100,11 +100,11 @@
                         @endif
                     </div>
                     <div class="list list2">
-                        @if(!empty($hots['month']->toArray()))
-                        @foreach($hots['month'] as $month)
+                        @if(!$news['month']->isEmpty())
+                        @foreach($news['month'] as $month)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$month->id}}">{{$month->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $month->id) }}">{{$month->title}}</a>
                             </li>
                         @endforeach
                         @else
@@ -112,11 +112,11 @@
                         @endif
                     </div>
                     <div class="list list3">
-                        @if(!empty($hots['quarter']->toArray()))
-                        @foreach($hots['quarter'] as $quarter)
+                        @if(!$news['quarter']->isEmpty())
+                        @foreach($news['quarter'] as $quarter)
                             <li>
                                 <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="/information/read/{{$quarter->id}}">{{$quarter->title}}</a>
+                                <a href="{{ Route('pc:newsRead', $quarter->id) }}">{{$quarter->title}}</a>
                             </li>
                         @endforeach
                         @else
