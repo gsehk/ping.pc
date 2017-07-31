@@ -157,7 +157,7 @@
             </div>
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
-                <ul class="infR_time" id="j-recent-hot">
+                <ul class="infR_time infR_time_1" id="j-recent-hot">
                     <li class="infR_time_3"><a href="javascript:;" cid="1" class="week a_border">一周</a></li>
                     <li class="infR_time_3"><a href="javascript:;" cid="2" class="meth">月度</a></li>
                     <li class="infR_time_3"><a href="javascript:;" cid="3" class="moth">季度</a></li>
