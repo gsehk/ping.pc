@@ -86,7 +86,7 @@
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="{{route('pc:article', $user['id'])}}">文章<span>{{ $news_count }}</span></a>
+                        <a href="{{route('pc:minearc', $user['id'])}}">文章<span>{{ $news_count }}</span></a>
                     </li>
                     <li>
                         <a href="javascript:;">热门<span>{{ $hots_count }}</span></a>
@@ -101,7 +101,7 @@
                     @endforeach
                 @endif
             </div>
-            @if($list->count() >= 3)<a href="{{ Route('pc:article', $user->id) }}" class="del_more">更多TA的文章</a>@endif
+            @if($list->count() >= 3)<a href="{{ Route('pc:minearc', $user->id) }}" class="del_more">更多TA的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>

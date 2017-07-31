@@ -17,12 +17,12 @@
     </div>                  
     <div class="dy_comment">
         @if($post['audit_status'] == 0)
-        <span class="digg" id="collect{{$post['id']}}" rel="{{$post['collection_count']}}"> 
+        <span class="digg" id="collect{{$post['id']}}" rel="{{$post['collect_count']}}"> 
             @if($post->has_collect)
-            <a href="javascript:;" onclick="collect.delNewsCollect({{$post['id']}});" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos">{{$post['collection_count']}}</font>
+            <a href="javascript:;" onclick="collect.delNewsCollect({{$post['id']}});" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos">{{$post['collect_count']}}</font>
             </a>
             @else
-            <a href="javascript:;" onclick="collect.addNewsCollect({{$post['id']}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cos">{{$post['collection_count']}}</font>
+            <a href="javascript:;" onclick="collect.addNewsCollect({{$post['id']}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cos">{{$post['collect_count']}}</font>
             </a>
             @endif
         </span>

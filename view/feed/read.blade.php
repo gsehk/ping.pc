@@ -64,7 +64,7 @@
                 </div>
                 <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
-                        <a href="{{ Route('pc:article',['user_id'=>$feed->user_id]) }}">文章<span>{{ $news['news_count'] }}</span></a>
+                        <a href="{{ Route('pc:minearc',['user_id'=>$feed->user_id]) }}">文章<span>{{ $news['news_count'] }}</span></a>
                     </li>
                     <li>
                         <a href="javascript:;">热门<span>{{ $news['hots_count'] }}</span></a>
