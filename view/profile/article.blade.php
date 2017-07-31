@@ -66,18 +66,16 @@
         @endif
     </div>
     <div class="dy_cont">
-        {{-- left --}}
         <div class="dy_left"></div>
-        {{-- 《center》 --}}
+
         <div class="dy_cCont dy_left_border">
             <div class="dy_center" style="width:664px;">
                 <div class="dy_cen">
                     <div class="top-menu-left">
                         <div class="artic_left border_left">
-                            <a href="{{ route('pc:mainpage', ['user_id'=> $user->id,'type'=>'all']) }}" class="fs-16 @if($type == 'all') dy_cen_333 @endif">动态</a>
-                            <a href="{{ route('pc:mainpage', ['user_id'=> $user->id,'type'=>'img']) }}" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
+                            <a href="{{ route('pc:mine', ['user_id'=> $user->id]) }}" class="fs-16">动态</a>
                         </div>
-                        <a href="{{ Route('pc:article', $user->id) }}" class="artic_artic fs-16 border_left_no dy_cen_333"><div>文章</div></a>
+                        <a href="{{ route('pc:minearc', $user->id) }}" class="artic_artic fs-16 border_left_no dy_cen_333"><div>文章</div></a>
                     </div>
                     @if(!empty($TS) && $TS['id'] == $user->id)
                     <div class="article_state">
@@ -92,28 +90,27 @@
                 </div>
             </div>
         </div>
-        {{-- <right> --}}
+
         <div class="dy_right" style="margin-left:27px">
             <div class="dyrBottom">
                 <ul class="infR_time">
                     <li type="followeds"><a class="hover" href="javascript:void(0)">粉丝</a></li>
                     <li type="followings"><a href="javascript:void(0)">关注</a></li>
-                    {{-- <li type="visitors"><a href="javascript:void(0)">访客</a></li> --}}
                 </ul>
 
                 <div id="followeds" class="userdiv" style="display:block">
-                @if (!$followeds->isEmpty())
+                @if (!$followers->isEmpty())
                 <ul class="userlist">
-                    @foreach ($followeds as $followed)
+                    @foreach ($followers as $follower)
                     <li>
-                        <a href="{{ route('pc:mainpage', ['user_id' => $followed->id]) }}">
-                            <img src="{{ $followed->avatar }}" />
+                        <a href="{{ route('pc:mine', ['user_id' => $follower['id']]) }}">
+                            <img src="{{ $follower['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
                         </a>
-                        <span><a href="{{ route('pc:mainpage', ['user_id' => $followed->id]) }}">{{ $followed->name }}</a></span>
+                        <span><a href="{{ route('pc:mine', ['user_id' => $follower['id']]) }}">{{ $follower['name'] }}</a></span>
                     </li>
                     @endforeach
                 </ul>
-                @if($followeds->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>1, 'user_id'=>$followed->id]) }}">更多</a>@endif
+                @if($followers->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:followers', ['user_id'=>$follower['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif
@@ -124,36 +121,19 @@
                 <ul class="userlist">
                     @foreach ($followings as $following)
                     <li>
-                        <a href="{{ route('pc:mainpage', ['user_id' => $following->id]) }}">
-                            <img src="{{ $following->avatar }}" />
+                        <a href="{{ route('pc:mine', ['user_id' => $following['id']]) }}">
+                            <img src="{{ $following['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
                         </a>
-                        <span><a href="{{ route('pc:mainpage', ['user_id' => $following->id]) }}">{{ $following->name }}</a></span>
+                        <span><a href="{{ route('pc:mine', ['user_id' => $following['id']]) }}">{{ $following['name'] }}</a></span>
                     </li>
                     @endforeach
                 </ul>
-                @if($followings->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>2, 'user_id'=>$following->id]) }}">更多</a>@endif
+                @if($followings->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>2, 'user_id'=>$following['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif  
                 </div>
 
-                {{-- <div id="visitors" class="userdiv">
-                @if (!empty($visitors))
-                <ul class="userlist">
-                    @foreach ($visitors as $visitor)
-                    <li>
-                        <a href="{{ route('pc:mainpage', ['user_id' => $visitor['id']]) }}">
-                            <img src="{{ $visitor['avatar'] }}" />
-                        </a>
-                        <span><a href="{{ route('pc:mainpage', ['user_id' => $visitor['id']]) }}">{{ $visitor['name'] }}</a></span>
-                    </li>
-                    @endforeach
-                </ul>
-                <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4, 'user_id'=>$user['id']]) }}">更多</a>
-                @else
-                <p class="nodata">暂无内容</p>
-                @endif  
-                </div> --}}
             </div>
         </div>
     </div>
@@ -168,8 +148,8 @@
 setTimeout(function() {
     collection.init({
         container: '#article-list',
-        user_id:"{{$user['id']}}",
-        type:"{{$type}}"
+        user_id: "{{ $user['id'] }}",
+        type: "0"
     });
 }, 300);
 // 文章分类tab

@@ -7,13 +7,13 @@
 		    <div class="fan_c">
 		        <div class="fanList_top">
 		            <div class="fan_header">
-		                <a href="{{route('pc:mainpage',['user_id'=>$data['id']])}}">
+		                <a href="{{route('pc:mine',['user_id'=>$data['id']])}}">
 		                    <img src="{{ $data['avatar'] or $routes['resource'] . '/images/avatar.png' }} " class="head_img" alt="{{ $data['name'] }}"/>
 		                </a>
 		            </div>
 		            <div class="fan_word">
 		                <div>
-		                    <a href="{{route('pc:mainpage',['user_id'=>$data['id']])}}"><span class="fan_name">{{ $data['name'] or $data['phone'] }}</span></a>
+		                    <a href="{{route('pc:mine',['user_id'=>$data['id']])}}"><span class="fan_name">{{ $data['name'] or $data['phone'] }}</span></a>
 		                    @if ($data['follower'])
 		                    <span id="data" class="fan_care c_ccc" uid="{{ $data['id'] }}" status="1">已关注</span>
 		                    @else

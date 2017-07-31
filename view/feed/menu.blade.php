@@ -7,7 +7,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:mainpage') }}" class="fs-16 @if ($route == 'pc:mainpage') dy_59 @endif">
+            <a href="{{ route('pc:mine') }}" class="fs-16 @if ($route == 'pc:mine') dy_59 @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-mydynamic"></use></svg>我的动态
             </a>
         </li>

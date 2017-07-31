@@ -14,6 +14,7 @@
         <li><a href="javascript:void;" data-type="2" @if($type == 2) class="a_border" @endif>关注</a></li>
         @endif
     </ul>
+    
     <div id="follow-list"></div>
 </div>
 @endsection

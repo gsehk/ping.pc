@@ -31,7 +31,7 @@
                         {{$TS['name']}}
                         {{-- <span class="totalnum">{{ $TS['credit'] or 0 }}</span> --}}
                     </span>
-                    <a href="{{ route('pc:mainpage', ['user_id' => $TS['id']]) }}">
+                    <a href="{{ route('pc:mine', ['user_id' => $TS['id']]) }}">
                     <img src="{{ $TS['avatar'] }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                     </a>
                 </div>
@@ -50,10 +50,10 @@
                 <ul>
                     @foreach ($rec_users as $rec_user)
                     <li>
-                        <a href="{{ route('pc:mainpage', ['user_id' => $rec_user['id']]) }}">
+                        <a href="{{ route('pc:mine', ['user_id' => $rec_user['id']]) }}">
                             <img src="{{ $rec_user['avatar'] }}" />
                         </a>
-                        <span><a href="{{ route('pc:mainpage', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
+                        <span><a href="{{ route('pc:mine', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
                     </li>
                     @endforeach
                 </ul>

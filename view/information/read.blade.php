@@ -7,7 +7,7 @@
             <div class="del_title">{{ $title }}</div>
             <div class="top_list">
                 <a href="javascript:;" class="top_list_span">{{ $category['name'] }}</a>
-                <a href="{{ Route('pc:mainpage', $user_id) }}">{{ $author }}</a>
+                <a href="{{ Route('pc:mine', $user_id) }}">{{ $author }}</a>
                 <div class="del_top_r">
                     <span class="del_time">{{ $created_at }}</span>
                 </div>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="delTop_right">
-                    <span><a href="{{ Route('pc:mainpage', $user['id']) }}">{{ $user['name'] }}</a></span>
+                    <span><a href="{{ Route('pc:mine', $user['id']) }}">{{ $user['name'] }}</a></span>
                     <p class="txt-hide">{{ $user['bio']}}</p>
                 </div>
                 <ul class="del_ul">

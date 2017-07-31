@@ -6,7 +6,7 @@
 <div class="dy_cont">
     {{-- top --}}
     <div class="dyn_top">
-        <img src="{{ $user->bg or $routes['resource'].'/images/default_cover.png'}}" class="dynTop_bg" />
+        <img src="{{ $user->bg or $routes['resource'] . '/images/default_cover.png' }}" class="dynTop_bg" />
         @if ($user->id == $TS['id'])
         <input type="file" name="cover" style="display:none" id="cover">
         <span class="dyn_huan">更换封面</span>
@@ -16,7 +16,7 @@
             </div>
             <div class="dynTop_cont">{{ $user->bio or '这家伙很懒，什么都没留下'}}</div>
             <div class="dyn_lImg">
-                <a href="{{ route('pc:mainpage', ['user_id' => $user['id']]) }}">
+                <a href="{{ route('pc:mine', ['user_id' => $user['id']]) }}">
                     <img src="{{ $user->avatar or $routes['resource'].'/images/avatar.png' }}" alt="{{ $user->name }}"/>
                 </a> 
             </div>
@@ -68,45 +68,40 @@
         @endif
     </div>
     <div class="dy_cont">
-        {{-- left --}}
         <div class="dy_left"></div>
-        {{-- 《center》 --}}
         <div class="dy_cCont dy_left_border">
             <div class="dy_center" style="width:664px;">
                 <div class="dy_cen">
                     <div class="dy_tab">
                         <div class="artic_left">
-                            <a href="javascript:;" data-type="all" class="fs-16 @if($type == 'all') dy_cen_333 @endif">动态</a>
-                            <a href="javascript:;" data-type="img" class="fs-16 @if($type == 'img') dy_cen_333 @endif">图片</a>
+                            <a href="javascript:;" data-type="all" class="fs-16 dy_cen_333">动态</a>
                         </div>
-                        <a href="{{ Route('pc:article', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16"><div>文章</div></a>
+                        <a href="{{ route('pc:minearc', ['user_id'=> $user['id']]) }}" class="artic_artic fs-16">文章</a>
                     </div>
                     <div id="feeds-list"></div>
                 </div>
             </div>
         </div>
-        {{-- <right> --}}
         <div class="dy_right" style="margin-left:27px">
             <div class="dyrBottom">
                 <ul class="infR_time">
                     <li type="followeds"><a class="hover" href="javascript:void(0);">粉丝</a></li>
                     <li type="followings"><a href="javascript:void(0);">关注</a></li>
-                    {{-- <li type="visitors"><a href="javascript:void(0);">访客</a></li> --}}
                 </ul>
 
                 <div id="followeds" class="userdiv" style="display:block">
-                {{-- @if (!$followeds->isEmpty())
+                @if (!$followers->isEmpty())
                 <ul class="userlist">
-                    @foreach ($followeds as $followed)
+                    @foreach ($followers as $follower)
                     <li>
-                        <a href="{{ route('pc:mainpage', ['user_id' => $followed['id']]) }}">
-                            <img src="{{ $followed['avatar'] }}" />
+                        <a href="{{ route('pc:mine', ['user_id' => $follower['id']]) }}">
+                            <img src="{{ $follower['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
                         </a>
-                        <span><a href="{{ route('pc:mainpage', ['user_id' => $followed['id']]) }}">{{ $followed['name'] }}</a></span>
+                        <span><a href="{{ route('pc:mine', ['user_id' => $follower['id']]) }}">{{ $follower['name'] }}</a></span>
                     </li>
                     @endforeach
                 </ul>
-                @if($followeds->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>1, 'user_id'=>$followed['id']]) }}">更多</a>@endif
+                @if($followers->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:followers', ['user_id'=>$follower['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif
@@ -117,10 +112,10 @@
                 <ul class="userlist">
                     @foreach ($followings as $following)
                     <li>
-                        <a href="{{ route('pc:mainpage', ['user_id' => $following['id']]) }}">
-                            <img src="{{ $following['avatar'] }}" />
+                        <a href="{{ route('pc:mine', ['user_id' => $following['id']]) }}">
+                            <img src="{{ $following['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
                         </a>
-                        <span><a href="{{ route('pc:mainpage', ['user_id' => $following['id']]) }}">{{ $following['name'] }}</a></span>
+                        <span><a href="{{ route('pc:mine', ['user_id' => $following['id']]) }}">{{ $following['name'] }}</a></span>
                     </li>
                     @endforeach
                 </ul>
@@ -128,25 +123,8 @@
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif  
-                </div> --}}
+                </div>
 
-                {{-- <div id="visitors" class="userdiv">
-                @if (!empty($visitors))
-                <ul class="userlist">
-                    @foreach ($visitors as $visitor)
-                    <li>
-                        <a href="{{ route('pc:mainpage', ['user_id' => $visitor['id']]) }}">
-                            <img src="{{ $visitor['avatar'] }}" />
-                        </a>
-                        <span><a href="{{ route('pc:mainpage', ['user_id' => $visitor['id']]) }}">{{ $visitor['name'] }}</a></span>
-                    </li>
-                    @endforeach
-                </ul>
-                @if(count($visitors >= 6))<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>3, 'user_id'=>$visitor['id']]) }}">更多</a>@endif
-                @else
-                <p class="nodata">暂无内容</p>
-                @endif  
-                </div> --}}
             </div>
         </div>
     </div>
@@ -165,9 +143,10 @@
         weibo.init({
             container: '#feeds-list',
             user_id:"{{ $user->id }}",
-            type: "{{ $type }}"
+            type: "all"
         });
     }, 300);
+
     // 微博分类tab
     $('.artic_left a').on('click', function(){
         var type = $(this).data('type');
