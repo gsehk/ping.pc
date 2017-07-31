@@ -34,12 +34,11 @@ class ProfileController extends BaseController
 
         $uid = $user_id ?: $this->PlusData['TS']['id'];
         $api = $uid ? '/api/v2/users/' . $uid  : '/api/v2/user';
-        $data['type'] = $type = $request->input('type') ?: 'all';
+        $data['type'] = $request->input('type') ?: 'all';
         $data['user'] = createRequest('GET', $api);
 
         // 是否关注
         $data['my_follow_status'] = $this->PlusData['TS']['id'] == $uid ? 1 : ($this->PlusData['TS']->hasFollwing($uid) ? 1 : 0);        
-        $data['type'] = $type;
 
         // 粉丝
         $followers = $data['user']->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
@@ -73,15 +72,13 @@ class ProfileController extends BaseController
         } 
 
         $uid = $user_id ?: $this->PlusData['TS']['id'];
-        $api = $user_id ? '/api/v2/users/' . $uid  : '/api/v2/user';
-        // $data['user'] = createRequest('GET', $api);
-        $user = $this->PlusData['TS'];
-        $user->location = !empty($user->location) ? str_replace(' ', ' · ', $user->location) : '';
+        $api = $uid ? '/api/v2/users/' . $uid  : '/api/v2/user';
+        $user = createRequest('GET', $api);
         $data['user'] = $user;
+        $data['type'] = $type;
 
         // 是否关注
-        $data['my_follow_status'] = $this->PlusData['TS'] ? $this->PlusData['TS']->hasFollwing($user->id) ? 1 : 0 : 0;        
-        $data['type'] = $type;
+        $data['my_follow_status'] = $this->PlusData['TS']['id'] == $uid ? 1 : ($this->PlusData['TS']->hasFollwing($uid) ? 1 : 0);    
 
         // 粉丝
         $followers = $user->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
@@ -111,6 +108,16 @@ class ProfileController extends BaseController
     }
 
     /**
+     * 关联用户列表
+     */
+    public function follow(Request $request)
+    {
+        $data['type'] = $request->query('type') ?? 1;
+        $data['user_id'] = $request->query('user_id') ?? 0;
+        return view('pcview::profile.users', $data, $this->PlusData);
+    }
+
+    /**
      * 获取关联用户列表
      * 
      * @param  int|integer $type    1:我的粉丝 2:关注的人 3:访客
@@ -124,10 +131,16 @@ class ProfileController extends BaseController
 
         $users = createRequest('GET', $api);
         $data['users'] = $users;
-        
-        $this->PlusData['type'] = 1;
-        $this->PlusData['user_id'] = $user_id;
-        return view('pcview::profile.users', $data, $this->PlusData);
+        $user = clone $users;
+        $after = $user->pop()->id ?? 0;
+
+        $html =  view('pcview::template.follow', $data, $this->PlusData)->render();
+
+        return response()->json([
+            'status'  => true,
+            'after' => $after,
+            'data' => $html,
+        ]);        
     }
 
     /**
@@ -144,10 +157,16 @@ class ProfileController extends BaseController
 
         $users = createRequest('GET', $api);
         $data['users'] = $users;
-        
-        $this->PlusData['type'] = 2;
-        $this->PlusData['user_id'] = $user_id;
-        return view('pcview::profile.users', $data, $this->PlusData);
+        $user = clone $users;
+        $after = $user->pop()->id ?? 0;
+
+        $html =  view('pcview::template.follow', $data, $this->PlusData)->render();
+
+        return response()->json([
+            'status'  => true,
+            'after' => $after,
+            'data' => $html,
+        ]);
     }
 
 

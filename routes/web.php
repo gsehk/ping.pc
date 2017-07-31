@@ -60,6 +60,8 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // user setting page
     Route::get('account', 'ProfileController@account')->name('pc:account');
 
+    Route::get('follow', 'ProfileController@follow')->name('pc:follow');
+
     // user followers
     Route::get('/followers/{user_id?}', 'ProfileController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
 

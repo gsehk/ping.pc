@@ -14,8 +14,16 @@ weibo.init = function(option) {
     this.setting.type = option.type || 'all'; //  微博分类
     this.setting.canload = option.canload || true; // 是否能加载
     this.setting.loading = option.loading || '.dy_cen'; //加载图位置
-    this.setting.url = request_url.get_user_feed;
     this.setting.cate = 'users';
+    if (option.type == 'all' || option.type == 'img') {
+        this.setting.url = request_url.get_user_feed;
+    } else {
+        if (option.type == 1) {
+            this.setting.url = '/profile/followers';
+        } else {
+            this.setting.url = '/profile/followings';
+        }
+    }
     weibo.bindScroll();
     if ($(weibo.setting.container).length > 0 && this.setting.canload) {
         $('.loading').remove();
