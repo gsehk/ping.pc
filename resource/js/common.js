@@ -63,7 +63,8 @@ var request_url = {
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-        'Authorization': 'Bearer '+TOKEN,
+        'Authorization': 'Bearer ' + TOKEN,
+        'Accept': 'application/json'
     }
 });
 
@@ -202,24 +203,20 @@ var fileUpload = {
 
 // 关注
 var follow = function(status, user_id, target, callback) {
+    var url = API + '/user/followings/' + user_id;
     if (status == 0) {
-        var url = API + 'users/follow';
         $.ajax({
             url: url,
-            type: 'POST',
-            data: { user_id: user_id },
-            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN) },
+            type: 'PUT',
             success: function(response) {
                 callback(target);
             }
         })
     } else {
-        var url = API + 'users/unFollow';
         $.ajax({
             url: url,
             type: 'DELETE',
             data: { user_id: user_id },
-            beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', TOKEN) },
             success: function(response) {
                 callback(target);
             }
@@ -302,6 +299,19 @@ var logout = function() {
       content: html
     });
 }
+
+
+/**
+ * 错误解析
+ */
+var showError = function(obj) {
+    for (var key in obj) 
+    {
+       noticebox(obj[key], 0);
+       break;
+    }
+}
+
 
 //是否正在加载
 var load = 0;

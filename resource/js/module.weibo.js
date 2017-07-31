@@ -146,10 +146,6 @@ weibo.postFeed = function() {
         url: request_url.feeds,
         type: 'post',
         data: data,
-        dataType: 'json',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer'+' '+TOKEN);　　
-        },
         success: function(res) {
             noticebox('发布成功', 1);
             $('.dy_picture').html('').hide();
@@ -451,7 +447,6 @@ var comment = {
             type: 'POST',
             data: formData,
             dataType: 'json',
-            beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
             error: function(xml) {},
             success: function(res, data, xml) {
                 if (xml.status == 201) {

@@ -14,7 +14,7 @@ $(function() {
                 type: 'post',
                 url: url,
                 beforeSend: function() {
-                    _this.text('登录中...');
+                    _this.text('登录中');
                     _this.css('cursor', 'no-drop');
                 },
                 success: function(res) {
@@ -92,22 +92,17 @@ $(function() {
             passlod = true;
             $('#reg_form').ajaxSubmit({
                 type: 'post',
-                async: false,
                 url: url,
                 beforeSend: function() {
-                    _this.text('注册中...');
+                    _this.text('注册中');
                     _this.css('cursor', 'no-drop');
                 },
                 success: function(res) {
                     noticebox('注册成功，跳转中...', 1, '/passport/index');
                     window.location.href = '/passport/token/' + res.token;
                 },
-                error: function(xhr, textStatus, errorThrown) {
-                    for (var key in xhr.responseJSON) 
-                    {
-                       noticebox(xhr.responseJSON[key], 0);
-                       break;
-                    }
+                error: function(xhr) {
+                    showError(xhr.responseJSON);
                 },
                 complete: function() {
                     _this.text('注册');
@@ -176,15 +171,8 @@ $(function() {
                         noticebox('修改成功，跳转中...', 1, '/passport/index');
                     }
                 },
-                error: function(xhr, textStatus, errorThrown) {
-                    if (xhr.responseJSON.code == 1000) {
-                        noticebox('请输入正确的手机号', 0);
-                    } else if (xhr.responseJSON.code == 1005) {
-                        noticebox('该用户不存在', 0);
-                    } else if (xhr.responseJSON.code == 1001) {
-                        noticebox('手机验证码错误或失效', 0);
-                        re_captcha();
-                    }
+                error: function(xhr) {
+                    showError(xhr.responseJSON);
                 },
                 complete: function() {
                     _this.text('找回');
@@ -225,7 +213,6 @@ $(function() {
             type: 'post',
             url: url,
             data: { captcha: captcha },
-            async: false,
             success: function(res) {
                 // 发送验证码
                 var url = '/api/v2/verifycodes/register'
@@ -240,17 +227,14 @@ $(function() {
                         $('input[name="code"]').val('');
                         noticebox('验证码发送成功', 1);
                     },
-                    error: function(xhr, textStatus, errorThrown) {
-                        for (var key in xhr.responseJSON) 
-                        {
-                           noticebox(xhr.responseJSON[key], 0);
-                           break;
-                        }
+                    error: function(xhr) {
+                        showError(xhr.responseJSON);
                     }
                 }, 'json');
             },
             error: function(xhr) {
                 noticebox('图形验证码错误', 0);
+                re_captcha();
             }
         }, 'json');
         return false;

@@ -33,26 +33,23 @@ class ProfileController extends BaseController
         }
 
         $uid = $user_id ?: $this->PlusData['TS']['id'];
-        $api = $user_id ? '/api/v2/users/' . $uid  : '/api/v2/user';
+        $api = $uid ? '/api/v2/users/' . $uid  : '/api/v2/user';
         $data['type'] = $type = $request->input('type') ?: 'all';
-        // $data['user'] = createRequest('GET', $api);
-        $user = $this->PlusData['TS'];
-        $user->location = !empty($user->location) ? str_replace(' ', ' · ', $user->location) : '';
-        $data['user'] = $user;
+        $data['user'] = createRequest('GET', $api);
 
         // 是否关注
-        $data['my_follow_status'] = $this->PlusData['TS'] ? $this->PlusData['TS']->hasFollwing($user->id) ? 1 : 0 : 0;        
+        $data['my_follow_status'] = $this->PlusData['TS']['id'] == $uid ? 1 : ($this->PlusData['TS']->hasFollwing($uid) ? 1 : 0);        
         $data['type'] = $type;
 
         // 粉丝
-        $followers = $user->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
+        $followers = $data['user']->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
         $data['followeds'] = [];
         $data['followeds'] = $followers->map(function ($follower) {
                 return $follower;
             });
 
         // 关注
-        $followings = $user->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();        
+        $followings = $data['user']->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();        
         $data['followings'] = [];
         $data['followings'] = $followings->map(function ($following) {
                 return $following;
@@ -120,11 +117,16 @@ class ProfileController extends BaseController
      * @param  int|integer $user_id   用户id
      * @return [type]               [description]
      */
-    public function followers(Request $request, User $model, int $type = 1, int $user_id = 0)
+    public function followers(Request $request, User $model)
     {
-        exit;
-        $data['page'] = $recusers->appends(['type'=>$type])->links('pcview::template.page');
+        $user_id = $request->query('user_id') ?: 0;
+        $api = $user_id && $user_id != $this->PlusData['TS']['id'] ? '/api/v2' . '/users/' . $user_id .'/followers' : '/api/v2/user/followers';
+
+        $users = createRequest('GET', $api);
+        $data['users'] = $users;
         
+        $this->PlusData['type'] = 1;
+        $this->PlusData['user_id'] = $user_id;
         return view('pcview::profile.users', $data, $this->PlusData);
     }
 
@@ -135,11 +137,16 @@ class ProfileController extends BaseController
      * @param  int|integer $user_id   用户id
      * @return [type]               [description]
      */
-    public function followings(Request $request, User $model, int $type = 1, int $user_id = 0)
+    public function followings(Request $request, User $model)
     {
-        exit;
-        $data['page'] = $recusers->appends(['type'=>$type])->links('pcview::template.page');
+        $user_id = $request->query('user_id') ?: 0;
+        $api = $user_id && $user_id != $this->PlusData['TS']['id'] ? '/api/v2' . '/users/' . $user_id .'/followings' : '/api/v2/user/followings';
+
+        $users = createRequest('GET', $api);
+        $data['users'] = $users;
         
+        $this->PlusData['type'] = 2;
+        $this->PlusData['user_id'] = $user_id;
         return view('pcview::profile.users', $data, $this->PlusData);
     }
 
