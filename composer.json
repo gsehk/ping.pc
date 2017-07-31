@@ -25,6 +25,6 @@
   },
   "require": {
     "zhiyicx/plus-installer": "^1.0",
-    "gregwar/captcha": "1.*",
+    "gregwar/captcha": "1.*"
   }
 }
