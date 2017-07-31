@@ -24,7 +24,7 @@
 <script type="text/javascript">
     $(function(){
         // 关注
-        $('.fan_care').on('click', function(){
+        $('#follow-list').on('click', '.fan_care', function(){
             var _this = $(this);
             var status = $(this).attr('status');
             var user_id = $(this).attr('uid');
