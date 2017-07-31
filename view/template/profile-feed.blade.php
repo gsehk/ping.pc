@@ -2,7 +2,7 @@
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 @endphp
 <!-- 个人中心分享栏列表 -->
-@if(isset($feeds))
+@if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
 <div class="cen_img cen_befor" id="feed{{ $post->id }}">
     <a href="{{ Route('pc:feedread', $post->id) }}">

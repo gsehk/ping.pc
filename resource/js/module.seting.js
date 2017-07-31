@@ -125,13 +125,13 @@ $('#J-submit').on('click', function(e) {
 
 var resetPwd = function() {
 
+    var old_password = $('#old_password').val();
     var password = $('#password').val();
-    var new_pwd = $('#new_password').val();
-    var token = $('#token').val();
+    var password_confirmation = $('#password_confirmation').val();
     $.ajax({
-        url: '/api/v1/users/password',
-        type: 'PATCH',
-        data: { password: password, new_password: new_pwd, _token: token },
+        url: '/api/v2/user/password',
+        type: 'PUT',
+        data: { old_password: old_password, password: password, password_confirmation: password_confirmation },
         dataType: 'json',
         error: function(xml) {
             noticebox('密码修改失败', 0);

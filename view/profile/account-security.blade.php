@@ -30,23 +30,22 @@
         <div class="">
         <form id="resetpwd_form">
             <div class="f_tel bas_div">
-                <label style=" margin-left: 15px;"><span class="cer_x">*</span>原密码</label>
-                <span class="f_span"><input name="password" type="password" id="password" placeholder="输入原密码" data-easytip="class:easy-red;"></span>
+                <label style=" margin-left: 18px;"><span class="cer_x">*</span>原密码</label>
+                <span class="f_span"><input name="old_password" type="password" id="old_password" placeholder="输入原密码"></span>
             </div>
             <div class="f_tel bas_div" style="margin-left: -10px;">
                 <label><span class="cer_x">*</span>设置新密码</label>
                 <span class="f_span">
-                    <input name="new_password" type="password" id="new_password" data-easyform="length:6 16;" data-message="密码必须为6—16位" data-easytip="class:easy-red;">
+                    <input name="password" type="password" id="password" placeholder="输入新密码">
                 </span>
             </div>
 
             <div class="f_tel bas_div" style="margin-left: -10px;">
                 <label><span class="cer_x">*</span>确认新密码</label>
                 <span class="f_span">
-                    <input name="new_password1" type="password" data-easyform="length:6 16;equal:#new_password;" data-message="两次密码输入要一致" data-easytip="class:easy-red;">
+                    <input name="password_confirmation"  type="password" id="password_confirmation" placeholder="确认原密码">
                 </span>
             </div>
-            <input type="hidden" value="{{ csrf_token()  }}" name="_token" id="token" />
             <button type="submit" id="J-reset-pwd" class="f_sure">保存</button>
         </form>
         </div>

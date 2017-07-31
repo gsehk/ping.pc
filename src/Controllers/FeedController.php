@@ -32,14 +32,14 @@ class FeedController extends BaseController
     {
         // 获取一条分享
         if ($request->feed) {
-            $feeds['feeds'][0] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
+            $feeds['feed'] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
+            $feedData['html'] = view('pcview::template.feed', $feeds, $this->PlusData)->render();
         } else {
             $feeds = createRequest('GET', '/api/v2/feeds');
             $feed = clone $feeds['feeds'];
             $feedData['after'] = $feed->pop()->id ?? 0;
+            $feedData['html'] = view('pcview::template.feeds', $feeds, $this->PlusData)->render();
         }
-        
-        $feedData['html'] = view('pcview::template.feed', $feeds, $this->PlusData)->render();
 
         return response()->json([
                 'status'  => true,
@@ -128,7 +128,7 @@ class FeedController extends BaseController
         $collect = clone $collects;
         $datas['feeds'] = $collects;
         $after = $collect->pop()->id ?? 0;
-        $html = view('pcview::template.feed', $datas, $this->PlusData)->render();
+        $html = view('pcview::template.feeds', $datas, $this->PlusData)->render();
         
         return response()->json([
             'status' => true,

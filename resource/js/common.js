@@ -4,7 +4,7 @@ var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-sh
 var mark_time = MID + new Date().getTime();
 var request_url = {
     /* 登录 */
-    login: '/passport/index',
+    login: '/passport/login',
     /* 注销 */
     logout: '/passport/logout',
     /* 投稿 */

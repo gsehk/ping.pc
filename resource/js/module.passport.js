@@ -18,8 +18,7 @@ $(function() {
                     _this.css('cursor', 'no-drop');
                 },
                 success: function(res) {
-                    noticebox('登录成功，跳转中...', 1);
-                    window.location.href = '/passport/mid/' + res.user.id + '/token/' + res.token;
+                    noticebox('登录成功，跳转中...', 1, '/passport/mid/' + res.user.id + '/token/' + res.token);
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     for (var key in xhr.responseJSON) 
@@ -98,8 +97,7 @@ $(function() {
                     _this.css('cursor', 'no-drop');
                 },
                 success: function(res) {
-                    noticebox('注册成功，跳转中...', 1, '/passport/index');
-                    window.location.href = '/passport/token/' + res.token;
+                    noticebox('注册成功，跳转中...', 1, '/passport/mid/' + res.user.id + '/token/' + res.token);
                 },
                 error: function(xhr) {
                     showError(xhr.responseJSON);
@@ -119,10 +117,9 @@ $(function() {
         var _this = $(this);
         var phone = $('input[name="phone"]').val();
         var captcha = $('input[name="captchacode"]').val();
-        var smscode = $('input[name="code"]').val();
+        var smscode = $('input[name="verifiable_code"]').val();
         var password = $('input[name="password"]').val();
         var repassword = $('input[name="repassword"]').val();
-        $('label.error').hide();
         if (phone == '') {
             $('input[name="phone"]').focus();
             return false;
@@ -134,7 +131,7 @@ $(function() {
         }
 
         if (smscode == '') {
-            $('input[name="code"]').focus();
+            $('input[name="verifiable_code"]').focus();
             return false;
         }
 
@@ -157,19 +154,17 @@ $(function() {
 
 
         if (!passlod) {
-            var url = '/passport/dofindpwd';
+            var url = '/api/v2/user/retrieve-password';
             passlod = true;
             $('#findpwd_form').ajaxSubmit({
-                type: 'patch',
+                type: 'PUT',
                 url: url,
                 beforeSend: function() {
                     _this.text('找回中...');
                     _this.css('cursor', 'no-drop');
                 },
-                success: function(res) {
-                    if (res.status) {
-                        noticebox('修改成功，跳转中...', 1, '/passport/index');
-                    }
+                success: function() {
+                    noticebox('找回成功', 1, '/passport/login');
                 },
                 error: function(xhr) {
                     showError(xhr.responseJSON);
@@ -214,10 +209,10 @@ $(function() {
             url: url,
             data: { captcha: captcha },
             success: function(res) {
-                // 发送验证码
-                var url = '/api/v2/verifycodes/register'
+                // 发送验证码 
+                var url = type == 'reg' ? '/api/v2/verifycodes/register' : '/api/v2/verifycodes';
                 $.ajax({
-                    type: 'post',
+                    type: 'POST',
                     url: url,
                     data: { phone: phone },
                     success: function() {

@@ -416,7 +416,7 @@ class ProfileController extends BaseController
                     ->take($limit)
                     ->get();
 
-            return $this->formatFeedList($feeds, $user_id, 'pcview::template.feed');      
+            return $this->formatFeedList($feeds, $user_id, 'pcview::template.feeds');      
         }
     }
 }

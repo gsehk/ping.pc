@@ -211,7 +211,7 @@ var digg = {
     addDigg: function(news_id) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            window.location.href = '/passport/index';
+            window.location.href = '/passport/login';
             return;
         }
 
@@ -286,7 +286,7 @@ var collect = {
     addCollect: function(news_id) {
         // 未登录弹出弹出层
         if (MID == 0) {
-            window.location.href = '/passport/index';
+            window.location.href = '/passport/login';
             return;
         }
 
