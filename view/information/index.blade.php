@@ -63,7 +63,7 @@
             @endif
         </div> --}} 
         <div class="inR_bottom">
-        <a href="{{ Route('pc:followers') }}" title="">
+        <a href="{{ Route('pc:follow', ['type' => 2]) }}" title="">
             <div class="inR_bottom_list border_r">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-attention"></use>

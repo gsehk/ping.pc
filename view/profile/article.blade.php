@@ -110,7 +110,7 @@
                     </li>
                     @endforeach
                 </ul>
-                @if($followers->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:followers', ['user_id'=>$follower['id']]) }}">更多</a>@endif
+                @if($followers->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:follow', ['user_id'=>$follower['id'], 'type' => 2]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif
@@ -128,7 +128,7 @@
                     </li>
                     @endforeach
                 </ul>
-                @if($followings->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>2, 'user_id'=>$following['id']]) }}">更多</a>@endif
+                @if($followings->count() >= 6)<a class="dy_more fs-12" href="{{ route('pc:follow', ['user_id'=>$following['id']]) }}">更多</a>@endif
                 @else
                 <p class="nodata">暂无内容</p>
                 @endif  

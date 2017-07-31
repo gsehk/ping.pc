@@ -12,12 +12,12 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:followers') }}" class="fs-16 @if ($route == 'pc:followers') dy_59 @endif">
+            <a href="{{ route('pc:follow') }}" class="fs-16 @if ($route == 'pc:follow') dy_59 @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-myfans"></use></svg>我的粉丝
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:followings') }}" class="fs-16 @if ($route == 'pc:followings') dy_59 @endif">
+            <a href="{{ route('pc:follow', ['type' => 2]) }}" class="fs-16 @if ($route == 'pc:follow') dy_59 @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-attention"></use></svg>关注的人
             </a>
         </li>
