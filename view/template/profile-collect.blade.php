@@ -3,7 +3,7 @@
 <!-- 个人收藏文章栏列表 -->
 
 
-@if(isset($data))
+@if(!$data->isEmpty())
 @foreach($data as $key => $post)
 <div @if($loop->first) style="margin-top:20px;" @endif>
     <!-- <span class="cen_beforColor_two"><span class="beforColor_span">{{date('m', strtotime($post['created_at']))}}</span>{{date('d', strtotime($post['created_at']))}}</span> -->
@@ -32,21 +32,6 @@
         <span class="vie">
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>{{$post['hits']}}
         </span>
-        <!-- <span class="cen_right show_admin">
-            <i class="icon iconfont icon-gengduo-copy"></i>
-        </span>
-        <div class="cen_more">
-            <ul>
-                <li><a href="#"><i class="icon iconfont icon-shoucang-copy"></i>收藏</a></li>
-                <li><a href="#"><i class="icon iconfont icon-jubao-copy1"></i>举报</a></li>
-                @if($post['author'] == $TS['id'])
-                <li><a href="#"><i class="icon iconfont icon-shanchu-copy1"></i>删除</a></li>
-                @endif
-                @if($TS['role']->role_id == 1)
-                <li><a href="#"><i class="icon iconfont icon-zhiding-copy-copy1"></i>置顶</a></li>
-                @endif
-            </ul>
-        </div> -->
         @elseif($post['audit_status'] == 2) 
             <a href="{{route('pc:newsrelease', ['id'=>$post['id']])}}" class="p_continue">继续编辑</a>
         @endif

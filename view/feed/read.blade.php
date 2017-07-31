@@ -77,7 +77,7 @@
                     </div>
                 @endforeach
             </div>
-            @if($news['list']->count() >= 3)<a href="{{ Route('pc:mainpage',['user_id'=>$feed->user_id]) }}" class="del_more">更多TA的文章</a>@endif
+            @if($news['list']->count() >= 3)<a href="{{ Route('pc:mine',['user_id'=>$feed->user_id]) }}" class="del_more">更多TA的文章</a>@endif
             
             <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>

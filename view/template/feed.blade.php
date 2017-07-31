@@ -3,18 +3,18 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 @endphp
 {{-- 首页分享列表/个人收藏分享栏列表 --}}
 
-@if(isset($feeds))
+@if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
 <div class="feed-item" id="feed{{$post->id}}">
     <div class="dy_c">
-        <a class="avatar_box" href="{{ Route('pc:mainpage', $post->user->id) }}">
+        <a class="avatar_box" href="{{ Route('pc:mine', $post->user->id) }}">
         <img class="avatar" src="{{ $post->user->avatar or $routes['resource'] . '/images/avatar.png' }}" />
         {{-- @if($post->user->user_verified)
             <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
         @endif --}}
         </a>
         <span class="dy_name fs-14">
-        <a href="{{Route('pc:mainpage', $post->user_id)}}">{{$post->user->name}}</a></span>
+        <a href="{{Route('pc:mine', $post->user_id)}}">{{$post->user->name}}</a></span>
         <a href="{{Route('pc:feedread', $post->id)}}"><span class="dy_time fs-12">{{$post->created_at}}</span></a>
     </div>
     <div class="cen_img">

@@ -49,13 +49,13 @@ Route::prefix('feeds')->group(function () {
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
 
     // user mainpage
-    Route::get('/{user?}', 'ProfileController@index')->where(['user' => '[0-9]+'])->name('pc:mainpage');
+    Route::get('/{user_id?}', 'ProfileController@index')->where(['user_id' => '[0-9]+'])->name('pc:mine');
 
-    // use collect page
+    // user collect page
     Route::get('collect', 'ProfileController@collect')->name('pc:collect');    
 
     // user article page
-    Route::get('article/{user_id?}/{type?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:article');
+    Route::get('article/{user_id?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:minearc');
 
     // user setting page
     Route::get('account', 'ProfileController@account')->name('pc:account');
