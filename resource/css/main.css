@@ -1,11 +1,19 @@
-﻿body.gray {
+﻿body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body.gray {
     background: #f3f6f7;
 }
+
 html,
 body,
 .wrap {
     height: 100%;
-    font-size: 100%;
 }
 
 .wrap {
@@ -27,8 +35,20 @@ a {
     outline: none;
 }
 
+a:focus,
+a:link,
+a:visited,
+a:hover {
+    text-decoration: none !important;
+}
+
+::-ms-clear,
+::-ms-reveal {
+    display: none;
+}
+
 .icon {
-    font-size: 20px;
+    font-size: 2rem;
     overflow: hidden;
     width: 1em;
     height: 1em;
@@ -36,7 +56,27 @@ a {
     fill: currentColor;
 }
 
+
 /* svg path{fill: inherit;} */
+
+textarea {
+    resize: none;
+    outline: none;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #f3f6f7 inset !important;
+    -webkit-text-fill-color: #ccc !important;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+img {
+    object-fit: cover;
+}
 
 .txt-hide {
     overflow: hidden;
@@ -52,6 +92,11 @@ a {
     content: '.';
 }
 
+
+/* .clearfix {
+    *+height: 1%;
+} */
+
 .hide {
     display: none;
 }
@@ -63,6 +108,39 @@ a {
 .left {
     float: left;
 }
+
+.ml27 {
+    margin-left: 27px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.fs-22 {
+    font-size: 22px;
+}
+
+.fs-24 {
+    font-size: 24px;
+}
+
 
 /*导航*/
 
@@ -2243,7 +2321,7 @@ a {
     margin: 20px auto 50px;
     cursor: pointer;
     text-align: center;
-    letter-spacing: 2px;
+    letter-spacing: 5px;
     color: #fff;
     border-radius: 3px;
     background: #59b6d7;
@@ -2367,71 +2445,94 @@ a {
 .dyn_title a:hover {
     color: #fff;
 }
-.person-info-face {
-    float: left;
-    margin: 0 30px;
+
+.dynTop_cont {
+    font-size: 16px;
+    margin-top: 14px;
+    padding-left: 220px;
+    color: #fff;
 }
-.person-info-face img {
+
+.dyn_lImg {
+    position: absolute;
+    bottom: -20px;
+    left: 18px;
+}
+
+.dyn_lImg img {
     width: 160px;
     height: 160px;
     border: 4px solid #fff;
     border-radius: 50%;
 }
-.person-info{
-    margin-left: 210px;
-    color: white;
+
+.dynTop_b {
+    height: 54px;
+    padding-left: 210px;
+    background: #fff;
 }
-.profile-info-t .name{
-    font-size: 32px;
-    height: 60px;
-    line-height: 72px;
-    margin-bottom: 10px;
-    font-weight: normal;
+
+.dynTop_b span {
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 16px;
+    margin-right: 15px;
+    padding-right: 15px;
+    color: #666;
+    border-right: 1px solid #ededed;
 }
-.profile-info-t .bio{
-    font-size: 18px;
-    margin-bottom: 14px;
+
+.dynTop_b i {
+    margin-right: 10px;
 }
-.info-intro span{
-    margin: 0 8px;
+
+.dyn_address {
+    border-right: 0 !important;
 }
-.info-intro svg{
-    margin-right: 4px;
+
+.dyn_time label {
+    display: inline-block;
+    margin-left: 5px;
 }
-.top-tab {
-    padding: 0 30px 0 80px;
-    background: white;
+
+.tougao {
+    color: #fff;
 }
-.top-tab .left li{
-    float: left;
-    width: 35px;
-    margin-right: 70px;
-    line-height: 80px;
-    text-align: center;
-}
-.top-tab .left li>a{
-    display: block;
-}
-.top-tab .left li>a.current{
-    color: #59b6d7;
-    border-bottom: 2px solid #59b6d7;
-}
-.contribute>a {
+
+.dyn_contribute {
     line-height: 36px;
     display: inline-block;
+    float: right;
     width: 100px;
     height: 36px;
+    margin-top: 9px;
+    margin-right: 30px;
     cursor: pointer;
     text-align: center;
     color: #fff;
     border-radius: 20px;
     background: #59b6d7;
 }
-.person-profile {
-    position: absolute;
-    bottom: 30px;
-    width: 100%;
+
+.dyn_contribute:hover,
+.dyn_contribute:visited {
+    color: #fff;
 }
+
+.dyn_footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 108px;
+    background: rgba(0, 0, 0, .1);
+}
+
+.dyn_footer .dynTop_user {
+    font-size: 32px;
+    padding-left: 220px;
+    color: white;
+}
+
 .artic_artic {
     line-height: 60px;
     position: absolute;
@@ -2831,7 +2932,7 @@ a {
     margin-top: 60px;
     cursor: pointer;
     text-align: center;
-    letter-spacing: 2px;
+    letter-spacing: 6px;
     color: #fff;
     border: 0;
     border-radius: 3px;
@@ -2925,7 +3026,6 @@ a {
     margin: 0 auto;
     margin-top: 40px;
     background: #fff;
-    overflow: hidden;
 }
 
 .fan_ul {
@@ -2955,21 +3055,32 @@ a {
 }
 
 .fan_list {
-    height: 190px;
-    margin: 0 10px;
+    width: 100%;
+    height: 315px;
 }
 
 .fan_c {
     float: left;
-    width: 333px;
-    height: 190px;
-    margin: 10px;
-    padding: 30px 20px;
-    border: 1px solid #ededed;
+    width: 33.33%;
+    height: 315px;
+    padding: 30px;
+    border-top: 1px solid #fff;
+    border-right: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
+    border-left: 1px solid #fff;
 }
 
 .fan_c:hover {
     border: 1px solid #59b6d7 !important;
+}
+
+.fan_list .fan_c:nth-of-type(2):hover {
+    border: 1px solid #59b6d7;
+}
+
+.fan_list .fan_c:nth-of-type(2) {
+    border-right: 1px solid #ededed;
+    border-left: 1px solid #ededed;
 }
 
 .fan_header {
@@ -4220,29 +4331,30 @@ img.load {
 }
 
 .their_right {
-    line-height: 80px;
+    line-height: 54px;
     float: right;
+    margin-right: 30px;
 }
 
-.their_right .follow {
+.their_right div {
     line-height: 36px;
     display: inline-block;
     width: 100px;
     height: 36px;
+    margin-left: 10px;
+    cursor: pointer;
     text-align: center;
+    vertical-align: middle;
     border: 1px solid #ccc;
     border-radius: 18px;
-    cursor: pointer;
-    margin-right: 30px;
+    background: #fff;
 }
 
-.their_right .follow:hover {
+.their_right div:hover {
     color: #59b6d7;
     border-color: #59b6d7;
 }
-.their_right .contribute{
-    display: inline-block;
-}
+
 .their_right .their_followed {
     color: #ccc;
     border: 1px solid #ededed;
