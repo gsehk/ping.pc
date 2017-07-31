@@ -148,7 +148,7 @@ class ProfileController extends BaseController
         switch ($page) {
             case 'account':
                 $user = $this->PlusData['TS'];
-                $user->city = explode(' ', $user->location);
+                $user['city'] = explode(' ', $user['location']);
                 $datas['user'] = $user;
                 break;
             case 'account-auth':

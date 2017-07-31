@@ -255,8 +255,8 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
         return new CropAvatar($('#crop-avatar'));
     });  
 });
-var username = "{{$user->name }}";
-var arrSelect = ["{{$user->city[0] or ''}}", "{{$user->city[1] or ''}}", "{{$user->city[2] or ''}}"];
+var username = "{{$user['name'] }}";
+var arrSelect = ["{{$user['city'][0] or ''}}", "{{$user['city'][1] or ''}}", "{{$user['city'][2] or ''}}"];
 $(function () {
     $.ms_DatePicker({
         YearSelector: ".sel_year",
