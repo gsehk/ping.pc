@@ -6,8 +6,8 @@
 <div class="dy_bg">
     <div class="dy_cont">
         <!--左-->
-        {{-- @component('pcview::ucmenu')
-        @endcomponent --}}
+        @component('pcview::feed/menu')
+        @endcomponent
         <!--中-->
         <div class="dy_cCont">
             <div class="dy_center">

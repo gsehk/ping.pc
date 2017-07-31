@@ -324,7 +324,7 @@ class ProfileController extends BaseController
             # code...
         }
         $after = $feed->pop()->id ?? 0;
-        $html = view('pcview::template.feed', $feeds, $this->PlusData)->render();
+        $html = view('pcview::template.profile-feed', $feeds, $this->PlusData)->render();
 
         return response()->json(static::createJsonData([
             'status' => true,

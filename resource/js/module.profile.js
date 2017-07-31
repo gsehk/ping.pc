@@ -518,9 +518,9 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<p class="comment' + res.id + ' comment_con">';
+                    var html = '<p class="comment' + res.comment.id + ' comment_con">';
                     html += '<span>' + NAME + '：</span>' + formData.body + '';
-                    html += '<a class="fs-14 del_comment" onclick="comment.delComment(' + res.id + ', ' + feedid + ');">删除</a>';
+                    html += '<a class="fs-14 del_comment" onclick="comment.delComment(' + res.comment.id + ', ' + feedid + ');">删除</a>';
                     html += '</p>';
                     var commentBox = $('.comment_box' + feedid);
                     var commentNum = $('.cs' + feedid);

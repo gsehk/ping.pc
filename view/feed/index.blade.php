@@ -49,11 +49,11 @@
                     {{$TS['name']}}
                     {{-- <span class="totalnum">{{ $TS['credit'] or 0 }}</span> --}}
                 </span>
-                <a href="{{ route('pc:mainpage', ['user_id' => $TS['id']]) }}">
+                <a href="{{ route('pc:mainpage', $TS['id']) }}">
                 <img src="{{ $TS['avatar'] or $routes['resource'] . '/images/avatar.png' }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
                 </a>
             </div>
-            <div class="index_intro">{{ $TS['intro'] or '' }}</div>
+            <div class="index_intro">{{ $TS['bio'] or '' }}</div>
             {{-- @if(empty($ischeck))
                 <div class="dy_qiandao" onclick="checkin();" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>每日签到<span>+5积分</span></div>
             @else 

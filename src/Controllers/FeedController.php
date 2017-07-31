@@ -30,6 +30,7 @@ class FeedController extends BaseController
      */
     public function feeds(Request $request)
     {
+        // 获取一条分享
         if ($request->feed) {
             $feeds['feeds'][0] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
         } else {

@@ -7,7 +7,7 @@
             @if($feed->images)
             <div style="background: rgb(247, 248, 250);" id="layer-photos-demo">
             @foreach($feed->images as $store)
-            <img data-original="{{ $routes['storage']}}{{$store['id'] }}?w=675&h=380" 
+            <img data-original="{{ $routes['storage']}}{{$store['file'] }}?w=675&h=380" 
                 class="lazy img-responsive" 
                 style="margin: 0 auto;width: 100%;" />
             @endforeach
@@ -18,17 +18,17 @@
             </div>
             <div class="del_pro">
                 <span id="collect{{$feed->id}}" rel="{{ $feed->collect_count }}">
-                    @if(!$feed->has_collect)
-                    <a href="javascript:;" onclick="collect.addCollect({{$feed->id}}, 'read')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">{{$feed->collect_count}}</font>人收藏</a>
-                    @else 
+                    @if($feed->has_collect)
                     <a href="javascript:;" onclick="collect.delCollect({{$feed->id}}, 'read');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">{{$feed->collect_count}}</font>人收藏</a>
+                    @else 
+                    <a href="javascript:;" onclick="collect.addCollect({{$feed->id}}, 'read')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">{{$feed->collect_count}}</font>人收藏</a>
                     @endif
                 </span>
                 <span id="digg{{ $feed->id }}" rel="{{ $feed->like_count }}">
-                    @if(!$feed->has_like)
-                    <a href="javascript:;" onclick="digg.addDigg('{{ $feed->id }}','read');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">{{$feed->like_count}}</font>人喜欢</a>
-                    @else 
+                    @if($feed->has_like)
                     <a href="javascript:;" onclick="digg.delDigg('{{ $feed->id }}','read');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">{{$feed->like_count}}</font>人喜欢</a>
+                    @else 
+                    <a href="javascript:;" onclick="digg.addDigg('{{ $feed->id }}','read');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">{{$feed->like_count}}</font>人喜欢</a>
                     @endif
                 </span>
                 <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">

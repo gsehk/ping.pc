@@ -7,7 +7,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 @foreach($feeds as $key => $post)
 <div class="feed-item" id="feed{{$post->id}}">
     <div class="dy_c">
-        <a class="avatar_box" href="{{Route('pc:mainpage', $post->user->id)}}">
+        <a class="avatar_box" href="{{ Route('pc:mainpage', $post->user->id) }}">
         <img class="avatar" src="{{ $post->user->avatar or $routes['resource'] . '/images/avatar.png' }}" />
         {{-- @if($post->user->user_verified)
             <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
@@ -198,14 +198,14 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
         @endif
         <div class="dy_comment">
             <span class="digg" id="digg{{$post->id}}" rel="{{$post->like_count}}">
-                @if(!$post->has_like)
-                <a href="javascript:;" onclick="digg.addDigg({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post->like_count}}</font>
-                </a>
-                @else 
+                @if($post->has_like)
                 <a href="javascript:;" onclick="digg.delDigg({{$post->id}})">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post->like_count}}</font>
-                </a>
+                </a>                
+                @else 
+                <a href="javascript:;" onclick="digg.addDigg({{$post->id}})">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post->like_count}}</font>
+                </a>                
                 @endif
             </span>
             <span class="com J-comment-show" data-args="box=#warp_box{{$post->id}}&row_id={{$post->id}}&canload=0">
@@ -221,7 +221,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
             <div class="cen_more">
                 <ul>
                     <li class="collect" id="collect{{$post->id}}" rel="0"> 
-                        @if($post->collection->count())
+                        @if($post->has_collect)
                         <a href="javascript:;" onclick="collect.delCollect({{$post->id}});" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
                         </a>
                         @else
@@ -274,6 +274,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
         <div class="f3"></div>
     </div>
 </div>
+@endforeach
 <script type="text/javascript">
 layer.photos({
   photos: '#layer-photos-demo{{$post->id}}'
@@ -281,5 +282,4 @@ layer.photos({
   ,move: false
 });
 </script>
-@endforeach
 @endif

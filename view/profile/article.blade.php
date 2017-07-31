@@ -161,7 +161,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/md5-min.js"></script>
+<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
 <script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
 <script type="text/javascript">
 // 加载文章

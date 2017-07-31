@@ -398,9 +398,9 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<p class="comment'+res.id+' comment_con">';
+                    var html = '<p class="comment'+res.comment.id+' comment_con">';
                         html += '<span>' + NAME + '：</span>' + formData.body + '';
-                        html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.id+', '+feedid+');">删除</a>';
+                        html += '<a class="fs-14 del_comment" onclick="comment.delComment('+res.comment.id+', '+feedid+');">删除</a>';
                         html += '</p>';
                     var commentBox = $('.comment_box' + feedid);
                     var commentNum = $('.cs' + feedid);
@@ -458,7 +458,7 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                     }
-                    var html = '<div class="delComment_list comment'+res.id+'">';
+                    var html = '<div class="delComment_list comment'+res.comment.id+'">';
                         html += '<div class="comment_left">';
                         html += '<a href="/profile/index?user_id='+MID+'"><img src="'+AVATAR+'" class="c_leftImg" /></a>';
                         html += '</div>';
@@ -467,7 +467,7 @@ var comment = {
                         html += '<span class="c_time">刚刚</span>';
                         /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
                         html += '<p class="comment_con">' + formData.body + '';
-                        html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.id+', '+comment.row_id+')"';
+                        html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.comment.id+', '+comment.row_id+')"';
                         html += 'class="del_comment">删除</a>';
                         html += '</p></div></div>';
                     var commentBox = $(comment.box);
