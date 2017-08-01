@@ -135,7 +135,7 @@ class InformationController extends BaseController
     public function lists(Request $request)
     {
         $cate_id = $request->cate_id;
-        $max_id = $request->max_id;
+        $max_id = $request->after;
         $limit = $request->limit ?? 15;
 
         if ($cate_id) {
