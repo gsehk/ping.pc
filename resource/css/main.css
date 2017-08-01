@@ -1664,8 +1664,6 @@ img {
     color: #333;
 }
 
-.infR
-
 .R_list {
     height: 110px;
     padding: 20px 0;
@@ -1744,7 +1742,6 @@ img {
 .infR_time {
     display: inline-block;
     width: 195px;
-    margin: 0;
     padding-top: 16px;
     margin: 0px 20px;
     border-bottom: 1px solid #ededed;
@@ -1753,8 +1750,9 @@ img {
 
 .infR_time_1 {
     width: 203px;
-    margin: 0px;
+    margin: 0;
 }
+
 
 .infR_time li {
     float: left;
