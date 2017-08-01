@@ -401,9 +401,10 @@ var comment = {
                     var data = res.data,
                         html = '';
                     for (var i in data) {
+                        var avatar = data[i].user.avatar ? data[i].user.avatar : defaultAvatar;
                         html += '<div class="delComment_list">';
                         html += '<div class="comment_left">';
-                        html += '<img src="' + data[i].user.avatar + '" class="c_leftImg" />';
+                        html += '<img src="' + avatar + '" class="c_leftImg" />';
                         html += '</div>';
                         html += '<div class="comment_right">';
                         html += '<span class="del_ellen">' + data[i].user.name + '</span>';
