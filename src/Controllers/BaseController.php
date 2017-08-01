@@ -48,15 +48,5 @@ class BaseController extends Controller
     		return $next($request);
     	});
     }
-
-    public function RequestApi($url = '', $method = 'GET', $params = array())
-    {   
-        $request = Request::create($url, $method, $params);
-        $request->headers->add(['Accept' => 'application/json','Authorization' => 'Bearer ' . session('token')]);
-        
-        $response = Route::dispatch($request)->exception ?: Route::dispatch($request)->original;
-        
-        return $response;
-    }
 }
 

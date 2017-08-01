@@ -166,9 +166,6 @@ class InformationController extends BaseController
                 ->take($limit)
                 ->get();
         }
-        foreach ($datas as $value) {
-            $value['_created_at'] = $this->getTime($value->created_at);
-        }
         return response()->json(static::createJsonData([
             'status'  => true,
             'code'    => 0,
