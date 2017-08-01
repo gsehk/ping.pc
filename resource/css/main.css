@@ -20,6 +20,7 @@ img {
     max-width: 100%;
     border-style: none;
     vertical-align: middle;
+    object-fit: cover;
 }
 
 ul {
