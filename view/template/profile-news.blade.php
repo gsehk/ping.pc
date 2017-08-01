@@ -1,9 +1,7 @@
 
-
 <!-- 个人中心文章栏列表 -->
 
-
-@if(isset($data))
+@if(isset($data) && !empty($data))
 @foreach($data as $key => $post)
 <div class="cen_img cen_befor" @if($loop->first) style="margin-top:20px;" @endif>
     <span class="cen_beforColor">
