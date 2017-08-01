@@ -260,11 +260,10 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
                 @if(!$post->comments->isEmpty())
                 @foreach($post->comments as $cv)
                 @if($loop->index < 3)          
-                @php $user = createRequest('GET', '/api/v2/users/'.$cv->user_id); @endphp     
                 <p class="comment{{ $cv->id }} comment_con">
-                    <span>{{ $user->name }}：</span> {{$cv->body}}
+                    <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
                     @if($cv['user_id'] != $TS['id'])
-                        <a class="fs-14 J-reply-comment" data-args="to_uname={{ $user->name }}&to_uid={{ $cv->user_id }}&row_id={{ $post->id }}">回复</a>
+                        <a class="fs-14 J-reply-comment" data-args="to_uname={{ $cv->user['name'] }}&to_uid={{ $cv->user_id }}&row_id={{ $post->id }}">回复</a>
                     @endif
                     @if($cv['user_id'] == $TS['id'])
                         <a class="fs-14 del_comment" onclick="comment.delComment({{ $cv->id }}, {{ $post->id }})">删除</a>
