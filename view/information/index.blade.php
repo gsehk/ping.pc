@@ -120,7 +120,7 @@
         <div class="inf_left">
             <span class="more"></span>
             <ul class="news_cate_tab">
-            <a href="javascript:;" data-cid="0" @if($cid == 0) class="dy_59" @endif><li>全部</li></a>
+            <a href="javascript:;" data-cid="0" class="dy_59"><li>全部</li></a>
             @if (isset($cate))
             @foreach ($cate as $post)
                 @if ($loop->iteration < 10)
