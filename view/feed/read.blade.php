@@ -62,7 +62,7 @@
                     <span>{{ $user['name'] }}</span>
                     <p class="txt-hide">{{ $user['bio'] or '这家伙很懒，什么都没留下！' }}</p>
                 </div>
-                <ul class="del_ul">
+                {{-- <ul class="del_ul">
                     <li style="border-right:1px solid #ededed;">
                         <a href="{{ Route('pc:minearc',['user_id'=>$feed->user_id]) }}">文章<span>{{ $news['news_count'] }}</span></a>
                     </li>
@@ -75,11 +75,11 @@
                         <span></span>
                         <a href="{{ Route('pc:newsRead', $post->id) }}">{{ $post->title }}</a>
                     </div>
-                @endforeach
+                @endforeach --}}
             </div>
-            @if($news['list']->count() >= 3)<a href="{{ Route('pc:mine',['user_id'=>$feed->user_id]) }}" class="del_more">更多TA的文章</a>@endif
+            {{-- @if($news['list']->count() >= 3)<a href="{{ Route('pc:mine',['user_id'=>$feed->user_id]) }}" class="del_more">更多TA的文章</a>@endif --}}
             
-            <div class="infR_top">
+            {{-- <div class="infR_top">
                 <div class="itop_autor autor_border">近期热点</div>
                 <ul class="infR_time" id="j-recent-hot">
                     <li class="infR_time_3"><a href="javascript:;" cid="1" class="week a_border">一周</a></li>
@@ -124,7 +124,7 @@
                         @endif
                     </div>
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

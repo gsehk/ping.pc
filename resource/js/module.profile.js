@@ -10,7 +10,7 @@ weibo.init = function(option) {
     this.setting.loadcount = option.loadcount || 0; // 加载次数
     this.setting.loadmax = option.loadmax || 40; // 加载最大次数
     this.setting.after = option.after || 0; // 最大微博ID
-    this.setting.user_id = option.user_id || 0; //  用户user_id
+    this.setting.user = option.user_id || 0; //  用户user_id
     this.setting.type = option.type || 'all'; //  微博分类
     this.setting.canload = option.canload || true; // 是否能加载
     this.setting.loading = option.loading || '.dy_cen'; //加载图位置
@@ -74,6 +74,7 @@ weibo.loadMore = function() {
     postArgs.after = weibo.setting.after;
     postArgs.cate = weibo.setting.type;
     postArgs.type = weibo.setting.cate;
+    postArgs.user = weibo.setting.user;
     $.ajax({
         url: weibo.setting.url,
         type: 'GET',
@@ -401,9 +402,10 @@ var comment = {
                     var data = res.data,
                         html = '';
                     for (var i in data) {
+                        var avatar = data[i].user.avatar ? data[i].user.avatar : defaultAvatar;
                         html += '<div class="delComment_list">';
                         html += '<div class="comment_left">';
-                        html += '<img src="' + data[i].user.avatar + '" class="c_leftImg" />';
+                        html += '<img src="' + avatar + '" class="c_leftImg" />';
                         html += '</div>';
                         html += '<div class="comment_right">';
                         html += '<span class="del_ellen">' + data[i].user.name + '</span>';

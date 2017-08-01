@@ -77,7 +77,7 @@
             <div class="delTop">
                 <div class="delToP_left">
                     <div>
-                        <img src="{{ $user['avatar'] }}" />
+                        <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png'}}" />
                     </div>
                 </div>
                 <div class="delTop_right">

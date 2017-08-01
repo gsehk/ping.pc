@@ -1,7 +1,6 @@
 @php
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 @endphp
-{{-- 首页分享列表/个人收藏分享栏列表 --}}
 
 <div class="feed-item" id="feed{{$feed->id}}">
     <div class="dy_c">

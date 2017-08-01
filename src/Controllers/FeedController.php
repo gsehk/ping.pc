@@ -60,7 +60,7 @@ class FeedController extends BaseController
         $data['feed'] = $feed;
         $data['user'] = $feed->user;
         // 分享者发布的文章信息
-        $news = $model->byAudit()->where('user_id', $feed->user_id)->first();
+        /*$news = $model->byAudit()->where('user_id', $feed->user_id)->first();
         $news->week = $this->getRecentHot(1);
         $news->month = $this->getRecentHot(2);
         $news->quarter = $this->getRecentHot(3);     
@@ -81,7 +81,7 @@ class FeedController extends BaseController
             })                
             ->select('id', 'title')
             ->take(4)->get();
-        $data['news'] = $news;
+        $data['news'] = $news;*/
 
         $feed->byFeedId($feed_id)->increment('feed_view_count');
         // dd($data);

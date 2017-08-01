@@ -8,7 +8,7 @@
                 @if($loop->first)
                 <div class="inT_title">
                 <a href="{{ route('pc:mine',['user_id'=>$frv['author']]) }}">
-                    <img src="{{ $frv['info']['avatar'] }}" />
+                    <img src="{{ $frv['info']['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
                     <span>{{ $frv['info']['name'] }}</span>
                 </a>
                 </div>
@@ -140,7 +140,7 @@
                 @foreach ($author as $u)
                     <div class="R_list">
                         <div class="i_left">
-                            <a href="{{ route('pc:mine',['user_id'=>$u->info['id']]) }}"><img src="{{ $u->info['avatar'] }}" /></a>
+                            <a href="{{ route('pc:mine',['user_id'=>$u->info['id']]) }}"><img src="{{ $u->info['avatar'] or $routes['resource'] . '/images/avatar.png' }}" /></a>
                         </div>
                         <div class="i_right">
                             <span><a href="{{ route('pc:mine',['user_id'=>$u->info['id']]) }}">{{$u->user['name']}}</a></span>
