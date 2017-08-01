@@ -274,7 +274,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
         <div class="f3"></div>
     </div>
 </div>
-@endforeach
 <script type="text/javascript">
 layer.photos({
   photos: '#layer-photos-demo{{$post->id}}'
@@ -282,4 +281,5 @@ layer.photos({
   ,move: false
 });
 </script>
+@endforeach
 @endif
