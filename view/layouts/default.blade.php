@@ -19,10 +19,10 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
+    {{-- <link href="{{ $routes['resource'] }}/css/bootstrap.min.css" rel="stylesheet"> --}}
+    {{-- <link href="{{ $routes['resource'] }}/css/font/iconfont.css" rel="stylesheet"> --}}
     <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">
     <link href="{{ $routes['resource'] }}/css/message.css" rel="stylesheet">
-    <link href="{{ $routes['resource'] }}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ $routes['resource'] }}/css/font/iconfont.css" rel="stylesheet">
     <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
     <script src="{{ $routes['resource'] }}/layer/layer.js"></script>
     <script src="{{ $routes['resource'] }}/js/jquery.lazyload.min.js"></script>

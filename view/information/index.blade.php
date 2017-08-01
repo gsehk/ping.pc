@@ -2,117 +2,26 @@
 
 @section('content')
 <div class="in_cont">
-    <div class="inT_l" id="first_recommend_news">
-        @if(isset($recommend))
-            @foreach($recommend as $frv)
-                @if($loop->first)
-                <div class="inT_title">
-                <a href="{{ route('pc:mine',['user_id'=>$frv['author']]) }}">
-                    <img src="{{ $frv['info']['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
-                    <span>{{ $frv['info']['name'] }}</span>
-                </a>
-                </div>
-                <a href="/information/read/{{$frv['id']}}">
-                    <div class="inT_word">{{ $frv['title'] }}</div>
-                </a>
-                @endif
-            @endforeach
-        @endif
-        <div class="inT_line"></div>
-        <div class="inT_list" id="recommend_news">
-            @if(isset($recommend))
-                @foreach($recommend as $rv)
-                    @if(!$loop->first)
-                    <a href="/information/read/{{$rv['id']}}"><span class="inT_list">{{$rv['title']}}</span></a>
-                    @endif
-                @endforeach
-            @endif
-        </div>
-    </div>
-    <div class="inT_c">
-        @if(isset($slide))
+    @if(!$slide->isEmpty())
         <div class="unslider">
-        <ul class="bannerList">
-            @foreach($slide as $sv)
-              <li>
-              @if($sv->type == 'news')
-              <a href="/information/read/{{$sv->data}}">
-              @elseif($sv->type == 'url') 
-              <a href="{{$sv->data}}" target="_blank">
-              @endif
-                <img src="{{$routes['storage']}}{{$sv->cover}}?w=580&h=414"></a>
-              </li>
-            @endforeach
-        </ul>
+            <ul class="bannerList">
+                @foreach($slide as $sv)
+                  <li>
+                    @if($sv->type == 'news')
+                        <a href="/news/read/{{$sv->data}}">
+                    @elseif($sv->type == 'url') 
+                        <a href="{{$sv->data}}" target="_blank">
+                    @endif
+                    <img src="{{$routes['storage']}}{{$sv->cover}}?h=414" width="100%" height="414"></a>
+                  </li>
+                @endforeach
+            </ul>
         </div>
-        @else 
-            <a href="http://www.thinksns.com/zx/reader.php?id=94" target="_blank">
-                <img src="{{ $routes['resource'] }}/images/ad_news.png" />
-            </a>
-        @endif
-    </div>
-    <div class="inT_r">
-        {{-- <div class="inR_top">
-            <img src="{{ $routes['resource'] }}/images/sign_bg.png" />
-            <div class="inR_time">{{date('Y-m-d')}}</div>
-            @if(empty($ischeck))
-            <span class="inR_qd" onclick="checkin();" id="checkin">每日签到</span>
-            <div class="inR_lk">立即签到，赚取<span> 5 </span>积分</div>
-            @else 
-            <span class="inR_qd">已签到</span>
-            @endif
-        </div> --}} 
-        <div class="inR_bottom">
-        <a href="{{ Route('pc:follow', ['type' => 2]) }}" title="">
-            <div class="inR_bottom_list border_r">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-attention"></use>
-                </svg>
-                <span>关注的人</span>
-            </div>
+    @else 
+        <a href="http://www.thinksns.com/zx/reader.php?id=94" target="_blank">
+            <img src="{{ $routes['resource'] }}/images/ad_news.png" />
         </a>
-        <a href="{{ Route('pc:collect') }}" title="">
-            <div class="inR_bottom_list">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-collection"></use>
-                </svg>
-                <span>收藏的</span>
-            </div>
-        </a>
-        <a href="{{ Route('pc:index') }}" title="">
-            <div class="inR_bottom_list border_r">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-dynamic"></use>
-                </svg>
-                <span>全部动态</span>
-            </div>
-        </a>
-        {{-- <a href="{{ Route('pc:rank')}}" title="">
-            <div class="inR_bottom_list">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-rank"></use>
-                </svg>
-                <span>排行榜</span>
-            </div>
-        </a> --}}
-        <a href="{{ Route('pc:mine') }}" title="">
-            <div class="inR_bottom_list border_r">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-mydynamic"></use>
-                </svg>
-                <span>我的动态</span>
-            </div>
-        </a>
-        <a href="{{ Route('pc:account') }}" title="">
-            <div class="inR_bottom_list">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-setting"></use>
-                </svg>
-                <span>设置</span>
-            </div>
-        </a>
-        </div>
-    </div>
+    @endif
 </div>
 
 <div class="inf_cont clearfix">
@@ -137,21 +46,23 @@
                 <div class="itop_autor">热门作者</div>
                 <div id="j-author-hot-wrapp">
                 @if (isset($author))
-                @foreach ($author as $u)
-                    <div class="R_list">
-                        <div class="i_left">
-                            <a href="{{ route('pc:mine',['user_id'=>$u->info['id']]) }}"><img src="{{ $u->info['avatar'] or $routes['resource'] . '/images/avatar.png' }}" /></a>
+                @foreach ($author as $user)
+                    <div class="R_list hots_author">
+                        <div class="fl">
+                            <a href="{{ Route('pc:mine',['user_id'=>$user->user['id']]) }}">
+                                <img src="{{ $user->user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
+                            </a>
                         </div>
                         <div class="i_right">
-                            <span><a href="{{ route('pc:mine',['user_id'=>$u->info['id']]) }}">{{$u->user['name']}}</a></span>
-                            <p>@if(!empty($u->info['intro'])) {{ $u->info['intro'] }} @else 这家伙很懒，什么都没留下 @endif</p>
+                            <span><a href="{{ route('pc:mine',['user_id'=>$user->user['id']]) }}">{{$user->user['name']}}</a></span>
+                            <p class="bio">{{ $user->user['bio'] or '暂无简介信息' }}</p>
                         </div>
                     </div>
                 @endforeach
                 @endif
                 </div>
             </div>
-            <div class="i_right_img">
+            <div class="news_ad">
             <a href="http://www.thinksns.com/zx/reader.php?id=94" target="_blank">
             <img src="{{ $routes['resource'] }}/images/ad_news.png" /></a>
             </div>

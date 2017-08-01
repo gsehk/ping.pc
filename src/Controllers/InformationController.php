@@ -27,7 +27,7 @@ class InformationController extends BaseController
      */
     public function index(Request $request)
     {
-        $datas['cid'] = $request->input('cid') ?: 1;
+        $datas['cid'] = $request->input('cid') ?: 0;
         $datas['slide'] = NewsRecommend::with('cover')->get();
         $datas['cate'] = NewsCate::get();
         $datas['hots'] = [
@@ -43,10 +43,9 @@ class InformationController extends BaseController
                 ->orderBy('id', 'desc')->take(6)
                 ->get();
         $datas['author'] = News::byAudit()
-                ->select('author')
+                ->select('user_id')
                 ->orderBy('hits', 'desc')
-                ->groupBy('author')
-                ->with('user')
+                ->groupBy('user_id')
                 ->take(3)
                 ->get();
 
