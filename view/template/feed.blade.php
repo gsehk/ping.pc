@@ -1,7 +1,5 @@
-@php
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
-@endphp
 
+{{-- 发布分享追加模板 --}}
 <div class="feed-item" id="feed{{$feed->id}}">
     <div class="dy_c">
         <a class="avatar_box" href="{{ Route('pc:mine', $feed->user->id) }}">
@@ -249,11 +247,10 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
             <div class="comment_box{{$feed->id}}">
             @if($feed->comments->count())
             @foreach($feed->comments as $cv)
-            @php $user = createRequest('GET', '/api/v2/users/'.$cv->user_id); @endphp
             <p class="comment{{$cv->id}} comment_con">
-                <span>{{$user->name}}：</span> {{$cv->body}}
+                <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
                 @if($cv->user_id != $TS['id'])
-                    <a class="fs-14 J-reply-comment" data-args="to_uname={{$user->name}}&to_uid={{$cv->user_id}}&row_id={{$feed->id}}">回复</a>
+                    <a class="fs-14 J-reply-comment" data-args="to_uname={{ $cv->user['name'] }}&to_uid={{$cv->user_id}}&row_id={{$feed->id}}">回复</a>
                 @endif
                 @if($cv->user_id == $TS['id'])
                     <a class="fs-14 del_comment" onclick="comment.delComment({{$cv->id}}, {{$feed->id}})">删除</a>

@@ -1,6 +1,4 @@
-@php
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
-@endphp
+
 {{-- 首页分享列表/个人收藏分享栏列表 --}}
 
 @if(!$feeds->isEmpty())
