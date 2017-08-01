@@ -227,7 +227,7 @@ var checkin = function(){
 setTimeout(function() {
     news.init({
         container: '#news-list',
-        cid: "{{$cid}}"
+        cid: 0
     });
 }, 300);
 
