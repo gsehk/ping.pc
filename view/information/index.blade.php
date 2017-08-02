@@ -46,7 +46,7 @@
                 <div class="itop_autor">热门作者</div>
                 <div id="j-author-hot-wrapp">
                     <div class="R_list hots_author">
-                    @if (!$author->isEmpty())
+                    @if ($author->isEmpty())
                         @foreach ($author as $user)
                             <div class="fl">
                                 <a href="{{ Route('pc:mine',['user_id'=>$user->user['id']]) }}">
