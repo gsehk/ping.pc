@@ -45,21 +45,23 @@
             <div class="infR_top">
                 <div class="itop_autor">热门作者</div>
                 <div id="j-author-hot-wrapp">
-                @if (isset($author))
-                @foreach ($author as $user)
                     <div class="R_list hots_author">
-                        <div class="fl">
-                            <a href="{{ Route('pc:mine',['user_id'=>$user->user['id']]) }}">
-                                <img src="{{ $user->user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
-                            </a>
-                        </div>
-                        <div class="i_right">
-                            <span><a href="{{ route('pc:mine',['user_id'=>$user->user['id']]) }}">{{$user->user['name']}}</a></span>
-                            <p class="bio">{{ $user->user['bio'] or '暂无简介信息' }}</p>
-                        </div>
+                    @if (!$author->isEmpty())
+                        @foreach ($author as $user)
+                            <div class="fl">
+                                <a href="{{ Route('pc:mine',['user_id'=>$user->user['id']]) }}">
+                                    <img src="{{ $user->user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
+                                </a>
+                            </div>
+                            <div class="i_right">
+                                <span><a href="{{ route('pc:mine',['user_id'=>$user->user['id']]) }}">{{$user->user['name']}}</a></span>
+                                <p class="bio">{{ $user->user['bio'] or '暂无简介信息' }}</p>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="loading">暂无相关信息</div>
+                    @endif
                     </div>
-                @endforeach
-                @endif
                 </div>
             </div>
             <div class="news_ad">
