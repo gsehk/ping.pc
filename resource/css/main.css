@@ -1,7 +1,7 @@
 ﻿* {
     -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 body {
@@ -176,13 +176,6 @@ a {
     cursor: pointer;
     border-radius: 50%;
 }
-
-
-/*.nav_right a, a:visited, .nav_right a:hover{
-        padding: 0px 10px;
-        color: #59b6d7;
-        font-size: 14px;
-    }*/
 
 .nav_name {
     display: inline-block;
