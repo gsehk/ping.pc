@@ -151,6 +151,9 @@ weibo.postFeed = function() {
             $('.dy_picture').html('').hide();
             $('#feed_content').val('');
             weibo.afterPostFeed(res.id);
+        },
+        error: function(xhr) {
+            showError(xhr.respone);
         }
 
     })

@@ -20,12 +20,8 @@ $(function() {
                 success: function(res) {
                     noticebox('登录成功，跳转中...', 1, '/passport/mid/' + res.user.id + '/token/' + res.token);
                 },
-                error: function(xhr, textStatus, errorThrown) {
-                    for (var key in xhr.responseJSON) 
-                    {
-                       noticebox(xhr.responseJSON[key], 0);
-                       break;
-                    }
+                error: function(xhr) {
+                    showError(xhr.responseJSON);
                 },
                 complete: function() {
                     _this.text('登录');

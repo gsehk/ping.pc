@@ -11,7 +11,7 @@
     <div class="artic_div artic_list" style="width: 100%;">
         <img data-original="{{$routes['storage']}}{{$post['storage']}}" class="lazy img-responsive img1">
         <div class="img_title">
-            <p class="i_title fs-20"><a href="/information/read/{{$post['id']}}">{{$post['title']}}</a></p>
+            <p class="i_title fs-20"><a href="/news/read/{{$post['id']}}">{{$post['title']}}</a></p>
             <p class="i_subTiLe fs-12">{{$post['subject'] or ''}}</p>
         </div>
     </div>                  
@@ -60,7 +60,7 @@
             @endif
             </div>
             @if(count($post['comments']) >= 3)
-            <div class="comit_all fs-12"><a href="/information/read/{{$post['id']}}">查看全部评论</a></div>
+            <div class="comit_all fs-12"><a href="/news/read/{{$post['id']}}">查看全部评论</a></div>
             @endif
             
         </div>

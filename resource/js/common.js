@@ -165,14 +165,12 @@ var fileUpload = {
                 url: '/api/v2/files/uploaded/' + hash,
                 type: 'GET',
                 async: false,
-                beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', 'Bearer'+' '+TOKEN);},
                 success: function(response) {
                     if(response.id > 0) callback(image, f, response.id);
-                    console.log(response)
                 },
                 error: function(error){
                     error.status === 404 && _this.uploadFile(image, f, callback);
-                    console.log(error.statusText)
+                    showError(xhr.responseJSON);
                 }
             });
         }
@@ -190,13 +188,11 @@ var fileUpload = {
             cache: false,
             contentType: false,
             processData: false,
-            beforeSend: function(xhr) {xhr.setRequestHeader('Authorization', 'Bearer'+' '+TOKEN);},
             success: function(response) {
                 if(response.id > 0) callback(image, f, response.id);
-                console.log(response)
             },
-            error: function(error){
-                console.log(error.statusText)
+            error: function(xhr){
+                showError(xhr.responseJSON);
             }
         });
     }
