@@ -108,7 +108,7 @@ weibo.loadMore = function() {
 };
 weibo.delFeed = function(feed_id) {
     layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
-        var url = request_url.delete_feed.replace('{feed_id}', feed_id);
+        var url = request_url.del_feed.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -286,7 +286,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = request_url.feed_like.replace('{feed_id}', feed_id);
+        var url = request_url.like_feed.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
             type: 'POST',
@@ -319,7 +319,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = request_url.feed_unlike.replace('{feed_id}', feed_id);
+        var url = request_url.unlike_feed.replace('{feed_id}', feed_id);
         $.ajax({
             url: url,
             type: 'DELETE',

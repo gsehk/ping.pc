@@ -20,13 +20,13 @@ class CreditController extends BaseController
                 $data = CreditUser::where('user_id', $user_id)->first();
                 $setting = CreditSetting::orderBy('id', 'DESC')->paginate(10);
                 $data['setting'] = $setting;
-                $data['page'] = $setting->appends(['type'=>$type])->links('pcview::template.page');
+                $data['page'] = $setting->appends(['type'=>$type])->links('pcview::templates.page');
                 break;
             default:
                 $data = CreditUser::where('user_id', $user_id)->first();
                 $record = CreditRecord::byUserId($user_id)->orderBy('id', 'DESC')->paginate(10);
                 $data['record'] = $record;
-                $data['page'] = $record->appends(['type'=>$type])->links('pcview::template.page');
+                $data['page'] = $record->appends(['type'=>$type])->links('pcview::templates.page');
                 break;
         }
         

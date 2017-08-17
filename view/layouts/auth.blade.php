@@ -16,12 +16,10 @@
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
-    <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">
-    <link href="{{ $routes['resource'] }}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ $routes['resource'] }}/css/font/iconfont.css" rel="stylesheet">
-    <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
-    <script src="{{ $routes['resource'] }}/layer/layer.js"></script>
+    <link href="{{ $routes['resource'] }}/css/common.css" rel="stylesheet">
+    <link href="{{ $routes['resource'] }}/css/passport.css" rel="stylesheet">
     <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
+    <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
     <script src="{{ $routes['resource'] }}/js/common.js"></script>
 </head>
 
@@ -36,7 +34,7 @@
         </div>
 
         <!-- content -->
-        <div class="dy_bg">
+        <div class="main">
         @yield('content')
         </div>
     </div>

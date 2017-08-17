@@ -1,0 +1,190 @@
+
+/*设置*/
+
+.bas_cont {
+    width: 700px;
+    margin: 40px auto auto;
+}
+
+.bas_left {
+    float: left;
+    width: 100px;
+    height: 670px;
+    padding-top: 60px;
+    border-right: 1px solid #ededed;
+}
+
+.bas_list {
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid #ededed;
+}
+
+.bas_list span {
+    font-size: 18px;
+    line-height: 19px;
+    display: inline-block;
+    width: 20px;
+    margin: auto;
+    cursor: pointer;
+    color: #999;
+}
+
+.bas_left .bas_list:last-child {
+    border-bottom: none;
+}
+
+.c_333 {
+    color: #333 !important;
+}
+
+.bas_right {
+    float: left;
+    width: 600px;
+    padding-top: 80px;
+    padding-left: 40px;
+}
+
+.bas_header img {
+    width: 100px;
+    height: 100px;
+    margin-right: 40px;
+    border-radius: 50%;
+}
+
+.bas_header .ai_upload input {
+    position: absolute;
+    width: 100px;
+    height: 35px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.bas_header .ai_btn {
+    font-size: 16px;
+    line-height: 34px;
+    display: inline-block;
+    width: 100px;
+    height: 34px;
+    cursor: pointer;
+    text-align: center;
+    color: #333;
+    border: 1px solid #dedede;
+    border-radius: 3px;
+}
+
+.bas_div label {
+    width: auto !important;
+    margin-right: 0 !important;
+    padding: 0 30px 0 0;
+}
+
+.bas_div .sex_item {
+    padding-right: 10px;
+}
+
+.bas_div .s-ck {
+    margin: 0 5px 0 0;
+    vertical-align: -2px;
+}
+
+.bas_div input:focus {
+    color: #333 !important;
+}
+
+.cer_div {
+    margin-top: 0 !important;
+}
+
+.cer_x {
+    color: #ee3d3d;
+}
+
+.cer_attachment {
+    font-size: 14px;
+    padding-left: 96px;
+    color: #ccc;
+}
+
+.cer_format {
+    font-size: 14px;
+    margin-top: 30px;
+    color: #ccc;
+}
+
+.bin_div {
+    margin-bottom: 40px;
+}
+
+.bin_name {
+    font-size: 16px;
+    display: inline-block;
+    width: 75px;
+    color: #666;
+}
+
+.bin_line {
+    display: inline-block;
+    width: 356px;
+    margin: 5px 10px;
+    border-bottom: 1px dashed #ededed;
+}
+
+.bai_go {
+    font-size: 16px;
+    line-height: 36px;
+    display: inline-block;
+    width: 100px;
+    height: 36px;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+    background: #59b6d7;
+}
+
+.bai_go:hover,
+.bai_go:visited {
+    color: #fff;
+}
+
+.cer_div {
+    padding-top: 76px;
+}
+
+.bg_ccc {
+    background: #ccc !important;
+}
+
+.nav_border {
+    border-bottom: 1px solid #ededed;
+}
+
+.noticebox {
+    position: fixed;
+    z-index: 555;
+    top: 62px;
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
+.authnoticebox {
+    top: 82px;
+}
+
+.noticebox .notice {
+    font-size: 14px;
+    line-height: 50px;
+    z-index: 9999;
+    height: 50px;
+    margin: auto;
+    text-align: center;
+    color: #666;
+    background: #fff;
+    box-shadow: 0 0 22px #ededed;
+}
+
+.noticebox .notice img {
+    margin-right: 10px;
+}

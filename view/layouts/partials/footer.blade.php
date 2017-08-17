@@ -1,5 +1,5 @@
-<div class="dy_bottom">
-    <div class="dybCont">
+<div class="footer">
+    <div class="footer_cont">
         <ul>
             <li><a href="javascript:;">关于TS+</a></li>
             <li><a href="javascript:;">广告合作</a></li>
@@ -10,12 +10,7 @@
             <li><a href="http://www.thinksns.com">TS+官网</a></li>
             <li><a href="http://www.zhiyicx.com">官网</a></li>
         </ul>
-        <div class="dyb_py fs-12">Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.</div>
-        <div class="dy_chat">
-            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-weibo"></use></svg>
-            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq"></use></svg>
-            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg>
-        </div>
-        <div class="dy_bz">本站/APP由 <span>ThinkSNS+</span> 提供技术和产品支持</div>
+        <div class="rights fs-12">Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.</div>
+        <div class="developer">本站/APP由 <span>ThinkSNS+</span> 提供技术和产品支持</div>
     </div>
 </div>

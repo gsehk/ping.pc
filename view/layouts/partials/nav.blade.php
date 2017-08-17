@@ -15,7 +15,7 @@
         <img src="{{ $TS['avatar'] or $routes['resource'] . '/images/avatar.png' }}" id="menu_toggle" alt="{{ $TS['name'] }}"/>
         <span class="fs-16 nav_name">{{$TS['name']}}</span>
 
-        <div class="p_cont">
+        <div class="nav_menu">
             <div class="hover_cover clearfix">
             </div>
             <ul>

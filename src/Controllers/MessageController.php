@@ -17,7 +17,7 @@ class MessageController extends BaseController
 	{
 		$data['type'] = $type;
 
-		return view('pcview::template.message', $data, $this->PlusData);
+		return view('pcview::templates.message', $data, $this->PlusData);
 	}
 
 	public function pl(Request $request, Comment $model)
@@ -44,8 +44,8 @@ class MessageController extends BaseController
         });        
 
         $data['type'] = 'pl';
-        $data['page'] = $comments->appends(['type'=>'pl'])->links('pcview::template.page');
-        $html = view('pcview::template.message-body', $data, $this->PlusData)->render();        
+        $data['page'] = $comments->appends(['type'=>'pl'])->links('pcview::templates.page');
+        $html = view('pcview::templates.message-body', $data, $this->PlusData)->render();        
 
         echo json_encode($html);
 	}
@@ -69,8 +69,8 @@ class MessageController extends BaseController
         });
 
         $data['type'] = 'zan';
-        $data['page'] = $likes->appends(['type'=>'zan'])->links('pcview::template.page');
-        $html = view('pcview::template.message-body', $data, $this->PlusData)->render();
+        $data['page'] = $likes->appends(['type'=>'zan'])->links('pcview::templates.page');
+        $html = view('pcview::templates.message-body', $data, $this->PlusData)->render();
 
         echo json_encode($html);
 	}

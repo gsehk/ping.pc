@@ -3,8 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
 use Blade;
-use Zhiyi\Plus\Models\User;
-use Zhiyi\Plus\Http\Controllers\APIs\V2\UserController;
+use Illuminate\Support\Facades\View;
 use Zhiyi\Plus\Support\PackageHandler;
 use Illuminate\Support\ServiceProvider;
 use Zhiyi\Plus\Support\ManageRepository;
@@ -22,17 +21,24 @@ class PcServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Load views.
+        // load views.
         $this->loadViewsFrom(dirname(__DIR__).'/view', 'pcview');
 
+        // publish resource
         $this->publishes([
             dirname(__DIR__).'/resource' => $this->app->PublicPath().'/zhiyicx/plus-component-pc',
         ], 'public');
 
+        // load routes
         $this->loadRoutesFrom(
             dirname(__DIR__).'/router.php'
         );
+
+        // load handle
         PackageHandler::loadHandleFrom('pc', PcPackageHandler::class);
+
+        // load view composers
+        View::composer('pcview::widgets.categories', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\CategoriesComposer');
     }
 
     /**

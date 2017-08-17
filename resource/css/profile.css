@@ -1,0 +1,73 @@
+
+/*个人中心文章*/
+
+.artic_left {
+    line-height: 60px;
+    position: absolute;
+    top: -22px;
+    left: -40px;
+    display: inline-block;
+    width: 332px;
+    height: 60px;
+    padding: 0 20px;
+    text-indent: 20px;
+}
+
+.artic_left > a {
+    margin-right: 15px;
+}
+
+.dy_tab {
+    position: relative;
+    height: 38px;
+}
+
+.dy_tab_title {
+    width: 50%;
+    text-align: center;
+}
+
+.dy_tab_title_feed {
+    border-bottom: 1px solid #ededed;
+    border-left: 1px solid #ededed;
+}
+
+.dy_tab_title_article {
+    border-bottom: 1px solid #ededed;
+    border-right: 1px solid #ededed;
+}
+
+
+.border_left {
+    border-right: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
+}
+
+.border_left_no {
+    border: none !important;
+}
+
+.artic_list {
+    position: relative;
+    width: 584px;
+    height: 400px;
+}
+
+.artic_list img {
+    width: 100% !important;
+    height: 100%;
+    max-height: 400px;
+}
+
+.nav_menuinue {
+    font-size: 16px;
+    line-height: 40px;
+    display: block;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+    text-align: center;
+    color: #999;
+    border: 1px solid #ededed;
+    border-radius: 40px;
+}

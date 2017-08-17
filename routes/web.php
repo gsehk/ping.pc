@@ -89,31 +89,31 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 // news
 Route::prefix('news')->group(function () {
     // news index
-    Route::get('index', 'InformationController@index')->name('pc:news');
+    Route::get('index', 'NewsController@index')->name('pc:news');
     
     // news detail
-    Route::get('/read/{news_id}', 'InformationController@read')->name('pc:newsRead');
+    Route::get('/read/{news_id}', 'NewsController@read')->name('pc:newsRead');
     
     // news comments list
-    Route::get('/{news_id}/comments', 'InformationController@commnets')->where(['news_id' => '[0-9]+']);
+    Route::get('/{news_id}/comments', 'NewsController@commnets')->where(['news_id' => '[0-9]+']);
     
     // news release
-    Route::get('/release/{news_id?}', 'InformationController@release')->name('pc:newsrelease');
+    Route::get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
 
     // get news list
-    Route::get('lists', 'InformationController@lists');
+    Route::get('lists', 'NewsController@lists');
 
     // get recent and hot news 
-    Route::get('/getRecentHot', 'InformationController@getRecentHot');
+    Route::get('/getRecentHot', 'NewsController@getRecentHot');
 
     // get author's hot news
-    Route::get('/getAuthorHot', 'InformationController@getAuthorHot');
+    Route::get('/getAuthorHot', 'NewsController@getAuthorHot');
 
     // do save and post
-    Route::post('/doSavePost', 'InformationController@doSavePost')->name('pc:doSavePost');
+    Route::post('/doSavePost', 'NewsController@doSavePost')->name('pc:doSavePost');
 
     // upload img
-    Route::post('/uploadImg', 'InformationController@uploadImg')->name('pc:uploadImg');
+    Route::post('/uploadImg', 'NewsController@uploadImg')->name('pc:uploadImg');
 
     // news collections
     Route::get('/collection', 'FeedController@newsCollect')->name('pc:newscollections');

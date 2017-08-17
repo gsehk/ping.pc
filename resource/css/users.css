@@ -1,0 +1,168 @@
+
+/*粉丝关注*/
+
+.fan_cont {
+    width: 1080px;
+    margin: 0 auto;
+    margin-top: 40px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.fan_ul {
+    width: 100%;
+    height: 80px;
+    margin: 0;
+    border-bottom: 1px solid #ededed;
+}
+
+.fan_ul li {
+    float: left;
+    margin-left: 40px;
+    padding-top: 26px;
+}
+
+.fan_ul li a {
+    font-size: 16px;
+    display: inline-block;
+    margin-top: -1px;
+    padding-bottom: 30px;
+    color: #333;
+}
+
+.fan_ul li a:hover {
+    color: #333 !important;
+    border-bottom: 2px solid #59b6d7;
+}
+
+.fan_list {
+    height: 190px;
+    margin: 0 10px;
+}
+
+.fan_c {
+    float: left;
+    width: 333px;
+    height: 190px;
+    margin: 10px;
+    padding: 30px 20px;
+    border: 1px solid #ededed;
+}
+
+.fan_c:hover {
+    border: 1px solid #59b6d7 !important;
+}
+
+.fan_header {
+    float: left;
+}
+
+.head_img {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.fan_word {
+    float: left;
+    width: 200px;
+}
+
+.fan_name {
+    font-size: 16px;
+    color: #333;
+}
+
+.fan_care {
+    font-size: 12px;
+    line-height: 24px;
+    display: inline-block;
+    float: right;
+    width: 60px;
+    height: 24px;
+    cursor: pointer;
+    text-align: center;
+    color: #59b6d7;
+    border: 1px solid #59b6d7;
+    border-radius: 20px;
+}
+
+.fan_subtitle {
+    font-size: 12px;
+    line-height: 22px;
+    display: -webkit-box;
+    overflow: hidden;
+    height: 44px;
+    margin-top: 15px;
+    color: #999;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.fan_number {
+    font-size: 14px;
+    margin-top: 18px;
+    color: #333;
+}
+
+.fan_num {
+    display: inline-block;
+    padding-right: 15px;
+    border-right: 1px solid #ededed;
+}
+
+.fan_num span,
+.fan_careNum span {
+    display: inline-block;
+    margin-left: 5px;
+    color: #59b6d7;
+}
+
+.fan_careNum {
+    display: inline-block;
+    margin-left: 15px;
+    color: #333;
+}
+
+.fanList_bottom a {
+    display: inline-block;
+    float: left;
+    margin-right: 3px;
+}
+
+.fanList_bottom a:last-child {
+    margin-right: 0;
+}
+
+.fan_line {
+    height: 1px;
+    margin: 140px auto 20px;
+    /* margin-top: 200px; */
+    background: #ededed;
+}
+
+.fanList_bottom img {
+    width: 97px;
+    height: 97px;
+}
+
+.c_ccc {
+    color: #ccc !important;
+    border: 1px solid #ededed !important;
+}
+
+.visitor_div {
+    font-size: 16px;
+    line-height: 80px;
+    width: 100%;
+    height: 80px;
+    margin: 0;
+    padding-left: 40px;
+    color: #333;
+}
+
+.visitor_div span {
+    font-weight: bold;
+    color: #59b6d7;
+}

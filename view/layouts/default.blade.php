@@ -19,17 +19,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
-    {{-- <link href="{{ $routes['resource'] }}/css/bootstrap.min.css" rel="stylesheet"> --}}
-    {{-- <link href="{{ $routes['resource'] }}/css/font/iconfont.css" rel="stylesheet"> --}}
-    <link href="{{ $routes['resource'] }}/css/main.css" rel="stylesheet">
-    <link href="{{ $routes['resource'] }}/css/message.css" rel="stylesheet">
-    <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
-    <script src="{{ $routes['resource'] }}/layer/layer.js"></script>
-    <script src="{{ $routes['resource'] }}/js/jquery.lazyload.min.js"></script>
+    <link href="{{ $routes['resource'] }}/css/common.css" rel="stylesheet">
     <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
+    <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
+    <script src="{{ $routes['resource'] }}/js/jquery.lazyload.min.js"></script>
+    <script src="{{ $routes['resource'] }}/layer/layer.js"></script>
     <script src="{{ $routes['resource'] }}/js/common.js"></script>
-    <script src="{{ $routes['resource'] }}/js/module.socket.js"></script>
-    <script src="{{ $routes['resource'] }}/js/module.message.js"></script>
 </head>
 
 <body @yield('body_class')>
@@ -42,20 +37,15 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
         </div>
 
         <!-- content -->
-        <div class="dy_bg" @yield('bgcolor')>
-        @yield('content')
+        <div class="main" @yield('bgcolor')>
+            <div class="container clearfix">
+            @yield('content')
+            </div>
         </div>
 
         <div class="dy_calltop">
-            <a href="https://fir.im/ThinkSNSPlus" class="dy_1">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a>
+            <a href="#" class="dy_1">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a>
             <a href="javascript:;" class="dy_2" id="gotop"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-uptop"></use></svg></a>
-        </div>
-        <div class="qq_mes" style="z-index:9999;position:fixed;width:140px;height:220px;background:#fff;text-align:center;top:300px;left:10px;">
-          <a href="tencent://message/?uin=3298713109&amp;Site=121ask.com&amp;Menu=yes"><img style="margin-top:18px" src="http://demo.thinksns.com/ts4/resources/theme/stv1/_static/image/qq.png"></a>
-          <span style="display:block"><a href="tencent://message/?uin=3298713109&amp;Site=121ask.com&amp;Menu=yes">QQ在线咨询</a></span>
-          <div style="border-top:1px solid #e3e4e5;margin:0 auto;width:120px;padding:20px 0px;margin-top:18px;">
-            <a href="http://www.thinksns.com" target="_blank"><span style="font-size:18px;color:#0096e6">ThinkSNS官网</span></a>
-          </div>
         </div>
     </div>
 
@@ -64,9 +54,5 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
     <!-- js -->
     @yield('scripts')
-
-    <script type="text/javascript">
-        message.init();
-    </script>
 </body>
 </html>

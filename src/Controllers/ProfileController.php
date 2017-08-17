@@ -97,7 +97,7 @@ class ProfileController extends BaseController
         $user = clone $users;
         $after = $user->pop()->id ?? 0;
 
-        $html =  view('pcview::template.follow', $data, $this->PlusData)->render();
+        $html =  view('pcview::templates.follow', $data, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,
@@ -123,7 +123,7 @@ class ProfileController extends BaseController
         $user = clone $users;
         $after = $user->pop()->id ?? 0;
 
-        $html =  view('pcview::template.follow', $data, $this->PlusData)->render();
+        $html =  view('pcview::templates.follow', $data, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,
@@ -250,7 +250,7 @@ class ProfileController extends BaseController
      */
     public function formatFeedList($feeds, $uid, $template = '')
     {
-        $template = $template ?: 'pcview::template.profile-feed';
+        $template = $template ?: 'pcview::templates.profile-feed';
         $datas = [];
         foreach ($feeds as $feed) {
             $data = [];
@@ -313,7 +313,7 @@ class ProfileController extends BaseController
             # code...
         }
         $after = $feed->pop()->id ?? 0;
-        $html = view('pcview::template.profile-feed', $feeds, $this->PlusData)->render();
+        $html = view('pcview::templates.profile-feed', $feeds, $this->PlusData)->render();
 
         return response()->json(static::createJsonData([
             'status' => true,
@@ -348,7 +348,7 @@ class ProfileController extends BaseController
         $new = clone $news;
         $datas['data'] = $news;
         $after = $new->pop()->id ?? 0;
-        $html = view('pcview::template.profile-news', $datas, $this->PlusData)->render();
+        $html = view('pcview::templates.profile-news', $datas, $this->PlusData)->render();
 
         return response()->json(static::createJsonData([
             'status' => true,
@@ -390,7 +390,7 @@ class ProfileController extends BaseController
                 // $value['is_digg_news'] = $uid ? NewsDigg::where('user_id', $uid)->where('news_id', $value['id'])->count() : 0;
             }
             $newsList['data'] = $datas;
-            $dataList['html'] = view('pcview::template.profile-collect', $newsList, $this->PlusData)->render();
+            $dataList['html'] = view('pcview::templates.profile-collect', $newsList, $this->PlusData)->render();
             $dataList['maxid'] = count($datas)>0 ? $datas[count($datas)-1]['id'] : 0;
 
             return response()->json(static::createJsonData([
@@ -416,7 +416,7 @@ class ProfileController extends BaseController
                     ->take($limit)
                     ->get();
 
-            return $this->formatFeedList($feeds, $user_id, 'pcview::template.feeds');      
+            return $this->formatFeedList($feeds, $user_id, 'pcview::templates.feeds');      
         }
     }
 }

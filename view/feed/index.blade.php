@@ -3,86 +3,48 @@
 @section('body_class')class="gray"@endsection
 
 @section('content')
-<div class="dy_cont clearfix">
-    <!--左-->
-    @component('pcview::feed.menu')
+    <!-- left -->
+    @component('pcview::layouts.partials.leftmenu')
     @endcomponent
-    <!-- 中 -->
-    <div class="dy_cCont">
-        <div class="dy_center">
-            @if(!empty($TS))
-            <div class="dy_cTop">
-                <textarea class="dy_ta" placeholder="说说新鲜事" id="feed_content" onPropertyChange="alert('test')"></textarea>
-                <div class="dy_company">
-                    <!-- <span class="fs-14" id="feed_expression">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-biaoqing"></use></svg>
-                        表情
-                    </span> -->
-                    <span class="fs-14" id="feed_pic">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
-                        图片
-                    </span>
-                    <a href="javascript:;" class="dy_share" onclick="weibo.postFeed()">分享</a>
-                </div>
-            </div>
-            @endif
-            <div class="dy_cen">
-                <div class="show_tab">
-                    @if (!empty($TS))
-                    <a href="javascript:;" data-type="follow" class="fs-16 @if ($type == 'follow') dy_cen_333 @endif">关注的</a>
-                    @endif
-                    <a href="javascript:;" data-type="hot" class="fs-16 @if ($type == 'hot') dy_cen_333 @endif">热门</a>
-                    <a href="javascript:;" data-type="new" class="fs-16 @if ($type == 'new') dy_cen_333 @endif">最新</a>
-                </div>
-                <div id="feeds-list"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 右边 -->
-    <div class="dy_right">
-        @if (!empty($TS))
-        <!-- 签到 -->
-        <div class="dy_signed">
-            <div class="dyrTop">
-                <span class="dyrTop_r fs-14">
-                    {{$TS['name']}}
-                    {{-- <span class="totalnum">{{ $TS['credit'] or 0 }}</span> --}}
+    <!-- middle -->
+    <div class="feed_cont">
+        @if(!empty($TS))
+        <div class="feed_post">
+            <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
+            <div class="post_extra">
+                <span class="fs-14" id="feed_pic">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
+                    图片
                 </span>
-                <a href="{{ route('pc:mine', $TS['id']) }}">
-                <img src="{{ $TS['avatar'] or $routes['resource'] . '/images/avatar.png' }}" class="dyrTop_img" alt="{{ $TS['name'] }}"/>
-                </a>
+                <a href="javascript:;" class="post_button" onclick="weibo.postFeed()">分享</a>
             </div>
-            <div class="index_intro">{{ $TS['bio'] or '' }}</div>
-            {{-- @if(empty($ischeck))
-                <div class="dy_qiandao" onclick="checkin();" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>每日签到<span>+5积分</span></div>
-            @else 
-                <div class="dy_qiandao" id="checkin"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>已签到<span>连续签到<font class="colnum">{{$checkin['con_num']}}</font>天</span></div>
-            @endif --}}
         </div>
         @endif
-
-        {{-- 推荐用户 --}}
-        {{-- @if (!empty($rec_users))
-        <div class="dyrBottom">
-            <ul>
-                @foreach ($rec_users as $rec_user)
-                <li>
-                    <a href="{{ route('pc:mine', ['user_id' => $rec_user['id']]) }}">
-                    <img src="{{ $rec_user['avatar'] }}" alt="{{ $rec_user['name'] }}"/>
-                    </a>
-                    <span><a href="{{ route('pc:mine', ['user_id' => $rec_user['id']]) }}">{{ $rec_user['name'] }}</a></span>
-                </li>
-                @endforeach
-            </ul>
-            <a class="dy_more fs-12" href="{{ route('pc:users', ['type'=>4]) }}">更多推荐用户</a>
+        <div class="feed_content">
+            <div class="feed_menu">
+                @if (!empty($TS))
+                <a href="javascript:;" data-type="follow" class="fs-16 @if ($type == 'follow') dy_cen_333 @endif">关注的</a>
+                @endif
+                <a href="javascript:;" data-type="hot" class="fs-16 @if ($type == 'hot') dy_cen_333 @endif">热门</a>
+                <a href="javascript:;" data-type="new" class="fs-16 @if ($type == 'new') dy_cen_333 @endif">最新</a>
+            </div>
+            <div id="feeds-list"></div>
         </div>
-        @endif --}}
     </div>
-</div>
+
+    <!-- right -->
+    <div class="feed_right">
+        <!-- checkin -->
+        @include('pcview::widgets.check')
+
+        <!-- recommend users -->
+        @include('pcview::widgets.recusers')
+    </div>
 @endsection
 
 @section('scripts')
+
+<link href="{{ $routes['resource'] }}/css/feed.css" rel="stylesheet">
 <script src="{{ $routes['resource'] }}/js/module.weibo.js"></script>
 <script src="{{ $routes['resource'] }}/js/jquery.uploadify.js"></script>
 <script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
@@ -106,7 +68,7 @@ var checkin = function(){
 setTimeout(function() {
     weibo.init({
         container: '#feeds-list',
-        loading: '.dy_cen',
+        loading: '.feed_content',
         type: "{{$type}}"
     });
 }, 300);

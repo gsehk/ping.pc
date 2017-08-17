@@ -3,9 +3,10 @@
 @section('body_class')class="gray"@endsection
 
 @section('content')
-<div class="forget_cont" style="height:640px;">
-    <ul class="forget_ul">
-        <li><a href="{{ route('pc:register', ['type'=>1]) }}" class="forget_333">手机注册</a></li>
+<div class="reg_cont" style="height:640px;">
+    <ul class="reg_menu">
+        <li><a href="{{ route('pc:register', ['type'=>0]) }}">手机注册</a></li>
+        <li><a href="{{ route('pc:register', ['type'=>1]) }}">邮箱注册</a></li>
     </ul>
     
     <div class="f_div">
