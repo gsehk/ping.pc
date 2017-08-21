@@ -46,6 +46,11 @@ class PassportController extends BaseController
         return view('pcview::passport.findpwd', ['type' => $type], $this->PlusData);
     }
 
+    public function perfect()
+    {
+        return view('pcview::passport.perfect', [], $this->PlusData);
+    }
+
     public function captcha($tmp)
     {
         // 生成验证码图片的Builder对象，配置相应属性
