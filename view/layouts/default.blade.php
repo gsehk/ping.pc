@@ -1,5 +1,6 @@
 @php
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 @endphp
 <!DOCTYPE html>
 <html lang="en">

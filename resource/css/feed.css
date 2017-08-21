@@ -86,9 +86,125 @@
     width: 235px;
 }
 
+/*动态列表*/
+.feed_item {
+
+}
+
+.feed_item .feed_title {
+    margin-top: 30px;
+}
+
+.feed_item .feed_title .avatar_box {
+    position: relative;
+    display: inline-block;
+}
+
+.feed_item .feed_title .avatar_box .avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.feed_item .feed_title .avatar_box .vip{
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.feed_item .feed_title .feed_uname {
+    display: inline-block;
+    margin-left: 20px;
+    color: #333;
+}
+
+.feed_item .feed_title .feed_time {
+    float: right;
+    margin-top: 17px;
+    color: #ccc;
+}
+
+.feed_item .feed_body {
+
+}
+
+.feed_item .feed_body .feed_text {
+    font-size: 14px;
+    line-height: 24px;
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 15px 0;
+    word-break: break-word;
+    color: #666;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.feed_item .feed_body .feed_images {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+/* 多图片样式 */
+.image_box {
+    position: relative;
+    left: -1px;
+    overflow: hidden;
+    margin-bottom: 2px;
+    padding: 0 2px;
+}
+
+.image_box .per_image {
+    position: absolute;
+    top: 0;
+    left: 2px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image_box:before {
+    display: block;
+    padding-top: 100%;
+    content: '';
+}
 
 
-.cen_more {
+.feed_item .feed_bottom {
+    margin-top: 20px;
+}
+
+.feed_item .feed_bottom .feed_comments {
+    position: relative;
+    clear: both;
+}
+
+.feed_comments .digg,
+.feed_comments .comment,
+.feed_comments .view {
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 50px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.feed_comments svg {
+    font-size: 24px;
+    vertical-align: -7px;
+}
+
+.feed_comments .options {
+    float: right;
+    width: 30px;
+    cursor: pointer;
+    text-align: right;
+}
+
+.feed_comments .options_div {
     position: absolute;
     z-index: 99;
     top: 30px;
@@ -100,22 +216,24 @@
     box-shadow: 0 1px 22px #e2e0e0;
 }
 
-.cen_more .triangle {
+
+
+.feed_comments .options_div .triangle {
     position: absolute;
     top: -14px;
     left: 47px;
 }
 
-.cen_more > ul {
+.feed_comments .options_div ul {
     padding: 20px 0;
 }
 
-.cen_more ul li {
+.feed_comments .options_div ul li {
     margin-top: 18px;
     padding-left: 20px;
 }
 
-.cen_more ul li a {
+.feed_comments .options_div ul li a {
     font-size: 14px;
     line-height: 24px;
     display: block;
@@ -124,17 +242,53 @@
     color: #666;
 }
 
-.cen_more ul li a:hover {
+.feed_comments .options_div ul li a:hover {
     color: #59b6d7;
 }
 
-.cen_more .icon {
+.feed_comments .options_div .icon {
     margin-right: 12px;
 }
 
-.cen_more .act {
+.feed_comments .options_div .act {
     color: #59b6d7;
 }
+
+.feed_comments .comments_box {
+
+}
+
+.comments_box .line {
+    margin-top: 5px;
+}
+
+.comments_box .comment_body {
+    font-size: 12px;
+    color: #999;
+}
+
+.dy_comit p {
+    margin-bottom: 16px;
+    word-break: break-all;
+}
+
+.dy_comit span {
+    color: #333;
+}
+
+.comit_all {
+    color: #333;
+}
+
+.f3 {
+    width: 100%;
+    height: 6px;
+    margin: 30px auto;
+    background: #f3f6f7;
+}
+
+
+
 
 .dy_num {
     font-size: 12px;
@@ -217,14 +371,6 @@
 }
 
 .cen_word {
-    line-height: 24px;
-    display: -webkit-box;
-    overflow: hidden;
-    margin: 15px 0;
-    word-break: break-word;
-    color: #666;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
 }
 
 .collection_memu > a {
@@ -236,65 +382,10 @@
     margin: 0 0 20px;
 }
 
-.dy_comment {
-    position: relative;
-    clear: both;
-    margin-top: 20px;
-}
-
-.dy_comment .digg,
-.dy_comment .com,
-.dy_comment .vie {
-    font-size: 14px;
-    display: inline-block;
-    margin-right: 50px;
-    cursor: pointer;
-    color: #ccc;
-}
-
-.dy_comment svg {
-    font-size: 24px;
-    vertical-align: -8px;
-}
-
-.show_admin {
-    width: 30px;
-    cursor: pointer;
-    text-align: right;
-}
-
 .cen_right {
     float: right;
 }
 
-.dy_line {
-    margin-top: 5px;
-}
-
-.dy_comit {
-    font-size: 12px;
-    color: #999;
-}
-
-.dy_comit p {
-    margin-bottom: 16px;
-    word-break: break-all;
-}
-
-.dy_comit span {
-    color: #333;
-}
-
-.comit_all {
-    color: #333;
-}
-
-.f3 {
-    width: 100%;
-    height: 6px;
-    margin: 30px auto;
-    background: #f3f6f7;
-}
 
 .feed-line {
     margin-top: 20px;
@@ -757,28 +848,3 @@
     color: #fff;
 }
 
-
-
-/* 多图片样式 */
-.showImgBox {
-    position: relative;
-    left: -1px;
-    overflow: hidden;
-    margin-bottom: 2px;
-    padding: 0 2px;
-}
-
-.showImgBox .perFeedImg {
-    position: absolute;
-    top: 0;
-    left: 2px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.showImgBox:before {
-    display: block;
-    padding-top: 100%;
-    content: '';
-}

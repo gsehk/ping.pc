@@ -17,7 +17,7 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsComment;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
-class InformationController extends BaseController
+class NewsController extends BaseController
 {
     /**
      * 文章首页

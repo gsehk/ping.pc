@@ -702,12 +702,12 @@ $(function() {
     });
     
     // 微博操作菜单
-    $('#feeds-list').on('click', '.show_admin', function() {
-        if ($(this).next('.cen_more').css('display') == 'none') {
-            $('.cen_more').hide();
-            $(this).next('.cen_more').show();
+    $('#feeds-list').on('click', '.options', function() {
+        if ($(this).next('.options_div').css('display') == 'none') {
+            $('.options_div').hide();
+            $(this).next('.options_div').show();
         } else {
-            $(this).next('.cen_more').hide();
+            $(this).next('.options_div').hide();
         }
     });
 

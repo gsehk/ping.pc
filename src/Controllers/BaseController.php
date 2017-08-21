@@ -31,11 +31,9 @@ class BaseController extends Controller
     			$this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
     		}
-
+            
 			// site config
-	        $config = [
-	            'nav' => ['feed'=>route('pc:index'), 'news'=>route('pc:news')]
-	        ];
+	        $config = [];
 	        $this->PlusData['site'] = $config;
 
 	        // common config

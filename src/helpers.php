@@ -3,6 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
 use Session;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use function asset as plus_asset;
@@ -131,4 +132,17 @@ function createRequest($method = 'POST', $url = '', $params = array())
     $response = Route::dispatch($request)->original;
     
     return $response;
+}
+
+function getTime($time)
+{
+    // 本地化
+    Carbon::setLocale('zh');
+
+    $timezone = $_COOKIE['customer_timezone'] ?: 0;
+    // 一小时内显示文字
+    if (Carbon::now()->subHours(1) < $time) {
+        return $time->diffForHumans();
+    }
+    return $time->addHours($timezone);
 }

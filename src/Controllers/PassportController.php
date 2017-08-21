@@ -14,14 +14,14 @@ use function Zhiyi\Plus\username;
 class PassportController extends BaseController
 {
 
-    public function token(Request $request, int $mid, string $token)
+    public function token(int $mid, string $token)
     {
         Session::put('mid', $mid);
         Session::put('token', $token);
         return redirect(route('pc:index'));
     }
 
-    public function index(Request $request)
+    public function index()
     {
         if ($this->PlusData['TS'] != null) {
             return redirect(route('pc:index'));
@@ -30,42 +30,20 @@ class PassportController extends BaseController
     	return view('pcview::passport.login', [], $this->PlusData);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         Session::flush();
         return redirect(route('pc:index'));
     }
 
-    public function perfect()
+    public function register(int $type = 0)
     {
-        return view('pcview::passport.perfect');
+        return view('pcview::passport.register', ['type' => $type], $this->PlusData);
     }
 
-    public function register()
+    public function findPassword(int $type = 0)
     {
-        return view('pcview::passport.register', [], $this->PlusData);
-    }
-
-    public function findPassword(Request $request)
-    {
-        $type = $request->input('type') ?: 1;
-
         return view('pcview::passport.findpwd', ['type' => $type], $this->PlusData);
-    }
-
-    public function doFindpwd(Request $request)
-    {
-        $password = $request->input('password', '');
-        $user = $request->attributes->get('user');
-        $user->createPassword($password);
-        $user->save();
-
-        return response()->json([
-            'status'  => true,
-            'code'    => 0,
-            'message' => '重置密码成功',
-            'data'    => null,
-        ]);
     }
 
     public function captcha($tmp)
@@ -89,16 +67,11 @@ class PassportController extends BaseController
         $builder->output();
     }
 
-    /**
-     * [checkCaptcha 验证验证码]
-     * @Author Foreach<hhhcode@outlook.com>
-     * @return [type] [description]
-     */
     public function checkCaptcha(Request $request)
     {
-        $userInput = $request->input('captcha');
+        $input = $request->input('captcha');
 
-        if (Session::get('milkcaptcha') == $userInput) {
+        if (Session::get('milkcaptcha') == $input) {
             return response()->json([], 200);
         } else {
             return response()->json([], 501);

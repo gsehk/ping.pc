@@ -176,25 +176,38 @@ $(function() {
 
     // 发送短信验证码
     $('#smscode').click(function() {
-        var _this = $(this);
-        var type = _this.attr('type');
         if ($(this).hasClass('get_code_disable')) return false;
+        
+        var _this = $(this);
+        // 发送类型
+        var type = _this.attr('type');
+        // 注册类型
+        var regtype = $('input[name="verifiable_type"]').val();
 
-        var phone = $('input[name="phone"]').val();
+
+        var login = regtype == 'sms' ? $('input[name="phone"]').val() : $('input[name="email"]').val();
         var captcha = $('input[name="captchacode"]').val();
-        if (phone == '') {
-            $('input[name="phone"]').focus();
-            return false;
+
+        if (regtype == 'sms') {
+            if (login == '') $('input[name="phone"]').focus();
+            if(!checkPhone(login)) {
+                noticebox('请输入正确的手机号', 0);
+                $('input[name="phone"]').focus();
+                return false;
+            }
+            var data = { phone: login };
+        } else {
+            if (login == '') $('input[name="email"]').focus();
+            if (!checkEmail(login)) {
+                noticebox('请输入正确的邮箱', 0);
+                $('input[name="email"]').focus();
+                return false;
+            }
+            var data = { email: login };
         }
 
         if (!captcha) {
             $('input[name="captchacode"]').focus();
-            return false;
-        }
-
-        if (!checkPhone(phone)) {
-            noticebox('请输入正确的手机号', 0);
-            $('input[name="phone"]').focus();
             return false;
         }
 
@@ -210,7 +223,7 @@ $(function() {
                 $.ajax({
                     type: 'POST',
                     url: url,
-                    data: { phone: phone },
+                    data: data,
                     success: function() {
                         var str = '等待<span id="passsec">60</span>秒';
                         _this.html(str);
@@ -233,14 +246,6 @@ $(function() {
 
 })
 
-// 验证手机号
-var checkPhone = function(string) {
-    var pattern = /^1[34578]\d{9}$/;
-    if (pattern.test(string)) {
-        return true;
-    }
-    return false;
-};
 
 // 验证码倒计时
 var downTimeHandler = null;

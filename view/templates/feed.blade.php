@@ -1,191 +1,196 @@
+@php
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+@endphp
 
-{{-- 发布分享追加模板 --}}
-<div class="feed-item" id="feed{{$feed->id}}">
-    <div class="dy_c">
+<div class="feed_item" id="feed{{$feed->id}}">
+    <div class="feed_title">
         <a class="avatar_box" href="{{ Route('pc:mine', $feed->user->id) }}">
-        <img class="avatar" src="{{ $feed->user->avatar or $routes['resource'] . '/images/avatar.png' }}" />
-        {{-- @if($feed->user->user_verified)
-            <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
-        @endif --}}
+            <img class="avatar" src="{{ $feed->user->avatar or $routes['resource'] . '/images/avatar.png' }}" />
+            @if($feed->user->user_verified)
+            <img class="vip" src="{{ $routes['resource'] }}/images/vip_icon.svg">
+            @endif
         </a>
-        <span class="dy_name fs-14">
-        <a href="{{Route('pc:mine', $feed->user_id)}}">{{$feed->user->name}}</a></span>
-        <a href="{{Route('pc:feedread', $feed->id)}}"><span class="dy_time fs-12">{{$feed->created_at}}</span></a>
+        <a href="{{Route('pc:mine', $feed->user_id)}}">
+            <span class="uname">{{$feed->user->name}}</span>
+        </a>
+        <a href="{{Route('pc:feedread', $feed->id)}}">
+            <span class="time">{{ getTime($feed->created_at) }}</span>
+        </a>
     </div>
     <div class="cen_img">
         <p class="fs-14 cen_word">{!!$feed->feed_content!!}</p>
         @if($feed->images)
         <div style="position: relative; margin-bottom: 8px;" id="layer-photos-demo{{$feed->id}}">
         @if($feed->images->count() == 1)
-          <img class="lazy img-responsive" style="min-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}"/>
+          <img class="lazy" style="min-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}"/>
         @elseif($feed->images->count() == 2)
             <div style="width: 100%; display: flex;">
-              <div style="width: 35vw;" class="showImgBox">
-                    <img class="lazy perFeedImg"  data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=277&h=273" />
+              <div style="width: 35vw;" class="image_box">
+                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=277&h=273" />
               </div>
-              <div style="width: 35vw;" class="showImgBox">
-                    <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=277&h=273" />
+              <div style="width: 35vw;" class="image_box">
+                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=277&h=273" />
               </div>
             </div>
         @elseif($feed->images->count() == 3)
             <div style="width: 100%; display: flex;">
-              <div style="width: 33.3333%;" class="showImgBox">
-                <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=184&h=180" />
+              <div style="width: 33.3333%;" class="image_box">
+                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=184&h=180" />
               </div>
-              <div style="width: 33.3333%;" class="showImgBox">
-                <img class="lazy perFeedImg"  data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=184&h=180" />
+              <div style="width: 33.3333%;" class="image_box">
+                <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=184&h=180" />
               </div>
-              <div style="width: 33.3333%;" class="showImgBox">
-                <img class="lazy perFeedImg"  data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=184&h=180" />
+              <div style="width: 33.3333%;" class="image_box">
+                <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=184&h=180" />
               </div>
             </div>
         @elseif($feed->images->count() == 4)
             <div style="width: 100%; display: flex;">
             <div style="width: 50%">
-              <div style="width: 100%;" class="showImgBox">
-                    <img class="lazy perFeedImg"  data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=277&h=273" />
+              <div style="width: 100%;" class="image_box">
+                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=277&h=273" />
               </div>
-              <div style="width: 100%;" class="showImgBox">
-                    <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=277&h=273" />
+              <div style="width: 100%;" class="image_box">
+                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=277&h=273" />
               </div>
             </div>
               <div style="width: 50%">
-              <div style="width: 100%;" class="showImgBox">
-                    <img class="lazy perFeedImg"  data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=277&h=273" />
+              <div style="width: 100%;" class="image_box">
+                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=277&h=273" />
               </div>
-              <div style="width: 100%;" class="showImgBox">
-                    <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=277&h=273" />
+              <div style="width: 100%;" class="image_box">
+                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=277&h=273" />
               </div>
             </div>
             </div>
         @elseif($feed->images->count() == 5)
             <div style="width: 100%; display: flex; flex-wrap: wrap;">
-              <div style="width: 66.6666%" class="showImgBox">
-                <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=370&h=366" />
+              <div style="width: 66.6666%" class="image_box">
+                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=370&h=366" />
               </div>
               <div style="width: 33.3333%">
-                <div style="width: 100%; padding-bottom: 2px;" class="showImgBox">
-                  <img class="lazy perFeedImg"  data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=185&h=183" />
+                <div style="width: 100%; padding-bottom: 2px;" class="image_box">
+                  <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=185&h=183" />
                 </div>
-                <div style="width: 100% padding-bottom: 2px;" class="showImgBox">
-                  <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=185&h=183" />
+                <div style="width: 100% padding-bottom: 2px;" class="image_box">
+                  <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=185&h=183" />
                 </div>
               </div>
               <div style="width: 100%; display: flex;">
-              <div style="width: 35vw;" class="showImgBox">
-                <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=277&h=273" />
+              <div style="width: 35vw;" class="image_box">
+                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=277&h=273" />
               </div>
-              <div style="width: 35vw;" class="showImgBox">
-                <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=277&h=273" />
+              <div style="width: 35vw;" class="image_box">
+                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=277&h=273" />
               </div>
               </div>
             </div>
         @elseif($feed->images->count() == 6)
             <div style="width: 100%; display: flex; flex-wrap: wrap;">
-              <div style="width: 66.6666%" class="showImgBox">
-                <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=370&h=366" />
+              <div style="width: 66.6666%" class="image_box">
+                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=370&h=366" />
               </div>
               <div style="width: 33.3333%">
-                <div style="width: 100%; padding-bottom: 2px;" class="showImgBox">
-                  <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=185&h=183" />
+                <div style="width: 100%; padding-bottom: 2px;" class="image_box">
+                  <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=185&h=183" />
                 </div>
-                <div style="width: 100% padding-bottom: 2px;" class="showImgBox">
-                  <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=185&h=183" />
+                <div style="width: 100% padding-bottom: 2px;" class="image_box">
+                  <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=185&h=183" />
                 </div>
               </div>
-              <div style="width: 33.3333%;" class="showImgBox">
-                <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=185&h=183" />
+              <div style="width: 33.3333%;" class="image_box">
+                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=185&h=183" />
               </div>
-              <div style="width: 33.3333%;" class="showImgBox">
-                <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=185&h=183" />
+              <div style="width: 33.3333%;" class="image_box">
+                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=185&h=183" />
               </div>
-              <div style="width: 33.3333%;" class="showImgBox">
-                <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[5]['file']}}?w=185&h=183" />
+              <div style="width: 33.3333%;" class="image_box">
+                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[5]['file']}}?w=185&h=183" />
               </div>
             </div>
         @elseif($feed->images->count() == 7)
         <div style="width: 100%; display: flex; flex-wrap: wrap;">
           <div style="width: 50%">
-            <div style="width: 100%" class="showImgBox">
-              <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=277&h=273" />
+            <div style="width: 100%" class="image_box">
+              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=277&h=273" />
             </div>
-            <div style="width: 100%" class="showImgBox">
-              <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=277&h=273" />
+            <div style="width: 100%" class="image_box">
+              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=277&h=273" />
             </div>
           </div>
           <div style="width: 50%; display: flex; flex-wrap: wrap;">
-            <div style="width: 50%; padding-bottom: 2px;" class="showImgBox">
-              <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=138&h=135" />
+            <div style="width: 50%; padding-bottom: 2px;" class="image_box">
+              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=138&h=135" />
             </div>
-            <div style="width: 50%; padding-bottom: 2px;" class="showImgBox">
-              <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=138&h=135" />
+            <div style="width: 50%; padding-bottom: 2px;" class="image_box">
+              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=138&h=135" />
             </div>
-            <div style="width: 100%;" class="showImgBox">
-              <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=277&h=273" />
+            <div style="width: 100%;" class="image_box">
+              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=277&h=273" />
             </div>
-            <div style="width: 50%;" class="showImgBox">
-              <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[5]['file']}}?w=138&h=135" />
+            <div style="width: 50%;" class="image_box">
+              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[5]['file']}}?w=138&h=135" />
             </div>
-            <div style="width: 50%;" class="showImgBox">
-              <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[6]['file']}}?w=138&h=135" />
+            <div style="width: 50%;" class="image_box">
+              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[6]['file']}}?w=138&h=135" />
             </div>
           </div>
         </div>
         @elseif($feed->images->count() == 8)
         <div style="width: 100%; display: flex; flex-wrap: wrap;">
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=185&h=183" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=185&h=183" />
           </div>
-          <div style="width: 33.3333%; padding-bottom: 2px;" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=185&h=183" />
+          <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=185&h=183" />
           </div>
-          <div style="width: 33.3333%; padding-bottom: 2px;" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=185&h=183" />
+          <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=185&h=183" />
           </div>
-          <div style="width: 50%;" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=277&h=273" />
+          <div style="width: 50%;" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=277&h=273" />
           </div>
-          <div style="width: 50%;" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=277&h=273" />
+          <div style="width: 50%;" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=277&h=273" />
           </div>
-          <div style="width: 33.3333%;" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[5]['file']}}?w=185&h=183" />
+          <div style="width: 33.3333%;" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[5]['file']}}?w=185&h=183" />
           </div>
-          <div style="width: 33.3333%;" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[6]['file']}}?w=185&h=183" />
+          <div style="width: 33.3333%;" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[6]['file']}}?w=185&h=183" />
           </div>
-          <div style="width: 33.3333%;" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[7]['file']}}?w=185&h=183" />
+          <div style="width: 33.3333%;" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[7]['file']}}?w=185&h=183" />
           </div>
         </div>
         @elseif($feed->images->count() == 9)
         <div style="width: 100%; display: flex; flex-wrap: wrap;">
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[0]['file']}}?w=185&h=181" />
           </div>
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[1]['file']}}?w=185&h=181" />
           </div>
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[2]['file']}}?w=185&h=181" />
           </div>
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[3]['file']}}?w=185&h=181" />
           </div>
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[4]['file']}}?w=185&h=181" />
           </div>
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[5]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[5]['file']}}?w=185&h=181" />
           </div>
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[6]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[6]['file']}}?w=185&h=181" />
           </div>
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[7]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[7]['file']}}?w=185&h=181" />
           </div>
-          <div style="width: 33.3333%" class="showImgBox">
-            <img class="lazy perFeedImg" data-original="{{$routes['storage']}}{{$feed->images[8]['file']}}?w=185&h=181" />
+          <div style="width: 33.3333%" class="image_box">
+            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$feed->images[8]['file']}}?w=185&h=181" />
           </div>
         </div>
         @endif

@@ -15,7 +15,7 @@ Route::prefix('passport')->group(function () {
     Route::any('/logout', 'PassportController@logout')->name('pc:logout');
 
     // register 
-    Route::get('/register', 'PassportController@register')->name('pc:register');
+    Route::get('/register/{type?}', 'PassportController@register')->where(['type' => '[0-9]+'])->name('pc:register');
 
     // captcha
     Route::get('/captcha/{tmp}', 'PassportController@captcha')->name('pc:captcha');
@@ -24,7 +24,7 @@ Route::prefix('passport')->group(function () {
     Route::post('/checkcaptcha', 'PassportController@checkCaptcha')->name('pc:checkcaptcha');
 
     // findpwd 
-    Route::get('/findpwd', 'PassportController@findPassword')->name('pc:findpassword');
+    Route::get('/findpwd/{type?}', 'PassportController@findPassword')->where(['type' => '[0-9]+'])->name('pc:findpassword');
 
     // perfect
     Route::get('/perfect', 'PassportController@perfect')->name('pc:perfect');
@@ -124,4 +124,9 @@ Route::prefix('webmessage')->group(function () {
     Route::get('/webMessage/index/{type?}', 'MessageController@index');
     Route::get('/webMessage/getBody/{type?}', 'MessageController@getMessageBody');
 });
+
+// group
+Route::prefix('group')->group(function () {
+});
+
 

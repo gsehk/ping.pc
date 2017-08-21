@@ -159,32 +159,3 @@
 .nav_border {
     border-bottom: 1px solid #ededed;
 }
-
-.noticebox {
-    position: fixed;
-    z-index: 555;
-    top: 62px;
-    display: none;
-    width: 100%;
-    text-align: center;
-}
-
-.authnoticebox {
-    top: 82px;
-}
-
-.noticebox .notice {
-    font-size: 14px;
-    line-height: 50px;
-    z-index: 9999;
-    height: 50px;
-    margin: auto;
-    text-align: center;
-    color: #666;
-    background: #fff;
-    box-shadow: 0 0 22px #ededed;
-}
-
-.noticebox .notice img {
-    margin-right: 10px;
-}

@@ -18,6 +18,23 @@ textarea {
     line-height: inherit;
 }
 
+input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #f3f6f7 inset;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */ 
+color: #CCC; 
+} 
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+color: #CCC; 
+} 
+::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+color: #ccc; 
+} 
+:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+color: #CCC; 
+} 
+
 /* 底部置地*/
 html,
 body,
@@ -44,6 +61,7 @@ a {
     vertical-align:baseline;
     background:transparent;
     text-decoration: none;
+    color: #CCC;
 }
 
 .fl {
@@ -139,15 +157,18 @@ a {
 
 .nav_list ul {
     display: flex;
+    width: 800px;
     height: 60px;
     margin-bottom: 0;
     justify-content: flex-start;
     align-items: center;
+    float: left;
 }
 
 .nav_list ul li {
     float: left;
     text-align: center;
+    margin-right: 15px;
 }
 
 .nav_list ul li a {
@@ -155,6 +176,12 @@ a {
     margin: 0 10px;
     padding: 20px 10px;
     color: #343434;
+    font-size: 18px;
+}
+
+.nav_list ul li a.selected{
+    color: #59b6d7 !important;
+    border-bottom: 2px solid #59b6d7;
 }
 
 .nav_list ul li a:link,
@@ -163,9 +190,33 @@ a {
     text-decoration: none;
 }
 
-.c_59b6d7 {
-    color: #59b6d7 !important;
-    border-bottom: 2px solid #59b6d7;
+.nav_list .nav_search {
+    position: relative;
+    width: 235px;
+    height: 36px;
+    border-radius: 50px;
+    margin-top: 14px;
+    background-color: #f3f6f7;
+    float: right;
+}
+
+.nav_list .nav_input {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    color: #CCC;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-left: 15px; 
+    vertical-align: middle;
+}
+
+.nav_list .nav_search_icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
 }
 
 .nav_right {
@@ -175,7 +226,14 @@ a {
 }
 
 .nav_right a.nava {
+    font-size: 14px;
+    color: #666;
     margin-right: 20px;
+}
+
+
+.nav_right a.nava:hover {
+    color: #59b6d7;
 }
 
 .nav_right img {
@@ -322,11 +380,10 @@ a {
 } 
 
 /*左侧导航*/
-
 .left_menu {
     float: left;
     width: 150px;
-    padding-top: 28px;
+    padding-top: 20px;
 }
 
 .left_menu ul li {
@@ -340,6 +397,43 @@ a {
 
 .left_menu ul li a:link {
     text-decoration: none;
+}
+
+.left_menu .icon {
+    font-size: 30px;
+    vertical-align: -8px;
+    margin-right: 10px;
+}
+
+
+/*弹出提示*/
+.noticebox {
+    position: fixed;
+    z-index: 555;
+    top: 62px;
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
+.authnoticebox {
+    top: 82px;
+}
+
+.noticebox .notice {
+    font-size: 14px;
+    line-height: 50px;
+    z-index: 9999;
+    height: 50px;
+    margin: auto;
+    text-align: center;
+    color: #666;
+    background: #fff;
+    box-shadow: 0 0 22px #ededed;
+}
+
+.noticebox .notice img {
+    margin-right: 10px;
 }
 
 
@@ -493,6 +587,7 @@ a {
 }
 
 .loading {
+    font-size: 14px;
     padding: 20px 0 10px 0;
     text-align: center;
     color: #999;

@@ -1,3 +1,7 @@
+@section('title')
+动态
+@endsection
+
 @extends('pcview::layouts.default')
 
 @section('body_class')class="gray"@endsection

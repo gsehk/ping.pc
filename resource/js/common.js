@@ -3,11 +3,16 @@ var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/loadi
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var mark_time = MID + new Date().getTime();
 
+// ajax 设置 headers
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
+        'Authorization': 'Bearer ' + TOKEN,
+        'Accept': 'application/json'
+    }
+})
 
-/**
- * layer
- * @type {Object}
- */
+// layer 弹窗
 var load = 0;
 var ly = {
     success: function(message, reload, url, close) {
@@ -97,12 +102,8 @@ var ly = {
     }
 };
 
-/**
- * file upload v2
- * @type {Object}
- */
+// 文件上传
 var fileUpload = {
-
     init: function(f, callback){
         var _this = this;
         var reader = new FileReader();
@@ -156,11 +157,8 @@ var fileUpload = {
     }
 };
 
-/**
- * 微博初始化
- * $param object option 微博配置相关数据
- * @return void
- */
+
+// 加载更多公共
 var scroll = {};
 scroll.setting = {};
 scroll.extra = {};
@@ -179,11 +177,6 @@ scroll.init = function(option) {
     }
 };
 
-
-/**
- * 页面底部触发事件
- * @return void
- */
 scroll.bindScroll = function() {
     $(window).bind('scroll resize', function() {
         var scrollTop = $(this).scrollTop();
@@ -199,10 +192,6 @@ scroll.bindScroll = function() {
     });
 };
 
-/**
- * 获取加载的数据信息
- * @return void
- */
 scroll.loadMore = function() {
     // 将能加载参数关闭
     scroll.setting.canload = false;
@@ -243,10 +232,7 @@ scroll.loadMore = function() {
     });
 };
 
-/**
- * 创建一个存储对象
- * @type {Object}
- */
+// 存储对象创建
 var args = {
     data: {},
     set: function(name, value) {
@@ -258,11 +244,7 @@ var args = {
     }
 };
 
-/**
- * url参数转换为对象
- * @param  string url a=1&b=2&c=3
- * @return {Object}
- */
+// url参数转换为对象
 var urlToObject = function(url) {
     var urlObject = {};
     var urlString = url.substring(url.indexOf("?") + 1);
@@ -276,12 +258,7 @@ var urlToObject = function(url) {
     return urlObject;
 };
 
-/**
- * 字符串长度计算 - 中文和全角符号为1；英文、数字和半角为0.5
- * @param  string str      字符串
- * @param  bool shortUrl 
- * @return int
- */
+// 字符串长度计算
 var getLength = function(str, shortUrl) {
     str = str || '';
     if (true == shortUrl) {
@@ -293,12 +270,7 @@ var getLength = function(str, shortUrl) {
     }
 };
 
-/**
- * 统计输入字符串长度(用于评论回复最大字数计算)
- * @param  object obj  使用对象
- * @param  int len  最大长度
- * @param  bool show 提示class
- */
+// 统计输入字符串长度(用于评论回复最大字数计算)
 var checkNums = function(obj, len, show) {
     var str = $(obj).val();
     var _length = getLength(str);
@@ -314,11 +286,7 @@ var checkNums = function(obj, len, show) {
     }
 }
 
-/**
- * 关注
- * @param  int   status    提示文字
- * @param  int   user_id   用户id
- */
+// 关注
 var follow = function(status, user_id, target, callback) {
     var url = API + '/user/followings/' + user_id;
     if (status == 0) {
@@ -341,12 +309,7 @@ var follow = function(status, user_id, target, callback) {
     }
 }
 
-/**
- * 消息弹出框
- * @param  string   msg    提示文字
- * @param  int      status 0:失败 1:成功
- * @param  string   tourl  跳转链接
- */
+// 消息提示
 var noticebox = function(msg, status, tourl) {
     tourl = tourl || '';
     var _this = $('.noticebox');
@@ -377,28 +340,19 @@ var noticebox = function(msg, status, tourl) {
     }
 }
 
-/**
- * 消息弹出框回调
- * @param  string   tourl 跳转地址
- */
+// 消息提示回调
 var noticebox_cb = function(tourl) {
     window.location.href = tourl == 'refresh' ? window.location.href : tourl;
 }
 
-/**
- * 无数据提示dom
- * @param  string   selector 显示容器
- * @param  string   txt      提示文字
- */
+// 无数据提示dom
 var no_data = function(selector, type, txt) {
     var image = type == 0 ? RESOURCE_URL + '/images/pic_default_content.png' : RESOURCE_URL + '/images/pic_default_people.png';
     var html = '<div class="no_data_div"><div class="no_data"><img src="' + image + '" /><p>' + txt + '</p></div></div>';
     $(selector).html(html);
 }
 
-/**
- * 退出登录提示框
- */
+// 退出登录提示
 var logout = function() {
     $('.nav_menu').hide();
     var html = '<div class="modal-content exit_content">'
@@ -419,10 +373,7 @@ var logout = function() {
     });
 }
 
-
-/**
- * 错误解析
- */
+// 接口返回错误解析
 var showError = function(obj) {
     for (var key in obj) 
     {
@@ -431,7 +382,57 @@ var showError = function(obj) {
     }
 }
 
+// 验证手机号
+var checkPhone = function(string) {
+    var pattern = /^1[34578]\d{9}$/;
+    if (pattern.test(string)) {
+        return true;
+    }
+    return false;
+};
+
+// 验证邮箱
+var checkEmail = function(string) { 
+    var pattern=/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/; 
+    if (pattern.test(string)) {
+        return true;
+    }
+    return false;
+} 
+
+
+// 设置Cookie
+var setCookie = function(c_name,value,expiredays) {
+    var exdate=new Date()
+    exdate.setDate(exdate.getDate()+expiredays)
+    document.cookie=c_name+ "=" +escape(value)+
+    ((expiredays==null) ? "" : "; expires="+exdate.toGMTString())
+}
+
+// 获取cookie
+var getCookie = function(c_name) {
+    if (document.cookie.length>0)
+    {
+        var c_start=document.cookie.indexOf(c_name + "=");
+        if (c_start!=-1)
+        { 
+            c_start=c_start + c_name.length+1 ;
+            var c_end=document.cookie.indexOf(";",c_start);
+            if (c_end==-1) c_end=document.cookie.length;
+            return unescape(document.cookie.substring(c_start,c_end));
+        } 
+   }
+   return "";
+}
+
 $(function() {
+    //获得用户时区与GMT时区的差值
+    if (getCookie('customer_timezone') == '') {
+        var exp = new Date();
+        var gmtHours = -(exp.getTimezoneOffset()/60);
+        setCookie('customer_timezone', gmtHours, 1);
+    }
+
     // 个人中心展开
     $('.nav_right').hover(function() {
         $('.nav_menu').toggle();
@@ -449,8 +450,8 @@ $(function() {
            $('.nav_menu').hide();
         }
 
-        if(!target.is('.icon-gengduo-copy') && target.parents('.cen_more').length == 0) {
-           $('.cen_more').hide();
+        if(!target.is('.icon-gengduo-copy') && target.parents('.options').length == 0) {
+           $('.options_div').hide();
         }
     });
 
@@ -462,4 +463,4 @@ $(function() {
             $(this).find("a").hide();
         }
     });
-})
+});
