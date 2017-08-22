@@ -387,3 +387,128 @@
 .f_select span img {
     padding-left: 6px;
 }
+
+.perfect_container{
+    width: 100%;
+}
+
+.perfect_wrap{
+    margin: 40px auto 0;
+    padding: 60px 70px;
+    width: 1080px;
+    background-color: #fff;
+}
+
+.perfect_row{
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.perfext_title{
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ededed;
+}
+.perfext_title p{
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.perfext_title span{
+    font-size: 14px;
+    color: #b2b2b2;
+}
+.perfect_row > label{
+    display: block;
+    margin: 20px 0;
+    padding-left: 6px;
+    height: 14px;
+    font-size: 14px;
+    line-height: 14px;
+    color: #333;
+    border-left: 2px solid #4bb893;
+}
+
+
+.perfect_selected{
+    margin-top: 30px;
+}
+
+.perfect_selected > label{
+    display: block;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #999;
+}
+
+.perfect_label_list{
+    font-size: 0;
+    margin-bottom: -20px;
+    margin-left: -20px;
+}
+
+.perfect_selected_list{
+    padding: 10px;
+    height: 56px;
+    font-size: 0;
+    border: 1px solid #dedede;
+}
+
+.perfect_selected_list li,
+.perfect_label_list li{
+    display: inline-block;
+    padding: 0 20px;
+    height: 36px;
+    font-size: 14px;
+    color: #666;
+    line-height: 36px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    background-color: #f4f5f5;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.perfect_label_list li.active,
+.perfect_label_list li:hover,
+.perfect_selected_list li {
+    color: #59b6d7;
+    background-color: #eef8fb;
+}
+
+.perfect_selected_list li:first-child{
+    margin-left: 0;
+}
+
+.icon.close{
+    text-align: center;
+    display: inline-block;
+    margin-left: 5px;
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    line-height: 12px;
+    font-style: normal;
+    vertical-align: baseline;
+}
+
+.perfect_btns{
+    margin-top: 40px;
+}
+
+.perfect_btn{
+    display: inline-block;
+    width: 100px;
+    height: 36px; 
+    font-size: 16px;
+    color: #fff;
+    line-height: 36px;
+    text-align: center;
+    background-color: #ccc;
+    border-radius: 3px;
+}
+
+.perfect_btns .save{
+    background-color: #59b6d7;
+    margin-right: 20px;
+}
