@@ -2,16 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
-use DB;
-use Session;
-use Carbon\Carbon;
-use Tymon\JWTAuth\JWTAuth;
-use Illuminate\Http\Request;
-use Zhiyi\Plus\Models\Role;
-use Zhiyi\Plus\Models\User;
-use Illuminate\Support\Facades\Route;
 use Zhiyi\Plus\Http\Controllers\Controller;
-use Zhiyi\Plus\Models\CommonConfig;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 

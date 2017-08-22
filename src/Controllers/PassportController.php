@@ -4,12 +4,8 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Session;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Gregwar\Captcha\CaptchaBuilder;
 use Zhiyi\Plus\Http\Controllers\Controller;
-use Zhiyi\Plus\Models\User;
-
-use function Zhiyi\Plus\username;
 
 class PassportController extends BaseController
 {

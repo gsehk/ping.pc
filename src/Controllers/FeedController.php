@@ -5,7 +5,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Zhiyi\Plus\Models\User as UserModel;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
