@@ -142,28 +142,31 @@ class ProfileController extends BaseController
      */
     public function account(Request $request, User $model)
     {
-        $user_id = $this->PlusData['TS']->id ?? 0;
-        $page = $request->page ?? 'account';
-        $datas['page'] = $page;
-        switch ($page) {
-            case 'account':
-                $user = $this->PlusData['TS'];
-                $user['city'] = explode(' ', $user['location']);
-                $datas['user'] = $user;
-                break;
-            case 'account-auth':
-                $datas['auth'] = UserVerified::where('user_id', $user_id)
-                                ->first();
-                break;
-            case 'account-security':
-                # code...
-                break;
-            case 'account-bind':
-                # code...
-                break;
-        }
+        return view('pcview::profile.account_new', [], $this->PlusData);
+
+
+        // $user_id = $this->PlusData['TS']->id ?? 0;
+        // $page = $request->page ?? 'account';
+        // $datas['page'] = $page;
+        // switch ($page) {
+        //     case 'account':
+        //         $user = $this->PlusData['TS'];
+        //         $user['city'] = explode(' ', $user['location']);
+        //         $datas['user'] = $user;
+        //         break;
+        //     case 'account-auth':
+        //         $datas['auth'] = UserVerified::where('user_id', $user_id)
+        //                         ->first();
+        //         break;
+        //     case 'account-security':
+        //         # code...
+        //         break;
+        //     case 'account-bind':
+        //         # code...
+        //         break;
+        // }
         
-        return view('pcview::profile.'.$page, $datas, $this->PlusData);
+        // return view('pcview::profile.'.$page, $datas, $this->PlusData);
     }
 
     /**
