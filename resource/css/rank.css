@@ -212,3 +212,6 @@
 .rank-tit .arrow-rank-r {
     background-image: url('../images/ic_nextpage.png');
 }
+.right {
+    float: right;
+}
