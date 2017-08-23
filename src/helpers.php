@@ -128,6 +128,7 @@ function createRequest($method = 'POST', $url = '', $params = array())
 {
     $request = Request::create($url, $method, $params);
     $request->headers->add(['Accept' => 'application/json', 'Authorization' => 'Bearer '. Session::get('token')]);
+    app()->instance(Request::class, $request);
     app(\Tymon\JWTAuth\JWTAuth::class)->setRequest($request);
     $response = Route::dispatch($request)->original;
     
