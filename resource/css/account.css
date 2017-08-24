@@ -159,3 +159,330 @@
 .nav_border {
     border-bottom: 1px solid #ededed;
 }
+
+
+.account_container{
+    width: 100%;
+}
+
+.account_container .mb30{
+    margin-bottom: 30px;
+}
+
+.account_wrap{
+    overflow: hidden;
+    margin: 40px auto 0;
+    width: 1080px;
+    background-color: #fff;
+}
+
+.account_l{
+    float: left;
+    width: 240px;
+    background-color: #ededed;
+    padding-bottom: 2000px;
+    margin-bottom: -2000px;
+}
+
+.account_r{
+    float: left;
+    width: 840px;
+    background-color: #fff;
+    padding-bottom: 2000px;
+    margin-bottom: -2000px;
+}
+.account_menu{
+    margin-bottom: 0;
+    padding: 25px 0;
+}
+.account_menu li{
+    margin-bottom: 15px;
+    padding-left: 68px;
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 44px;
+    color: #000;
+    cursor: pointer;
+}
+.account_menu li .iconfont{
+    /*display: inline-block;*/
+    /*width: 20px;*/
+    /*height: 20px;*/
+    font-size: 22px;
+    margin-right: 20px;
+    vertical-align: middle;
+    /*background-color: #aeadfa*/
+}
+.account_menu li:hover,
+.account_menu li.active{
+    color: #fff;
+    background-color: #59b6d7;
+}
+
+.account_c_c{
+    overflow: hidden;
+    width: 100%;
+    padding: 40px;
+}
+
+/* #todo 待修改 */
+.account_tab:not(:last-child){
+    display: none;
+}
+
+.perfect_container{
+    width: 100%;
+}
+
+.perfect_wrap{
+    margin: 40px auto 0;
+    padding: 60px 70px;
+    width: 1080px;
+    background-color: #fff;
+}
+
+.perfect_row{
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.perfext_title{
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ededed;
+    margin-bottom: 40px;
+}
+.perfext_title p{
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.perfect_row > label{
+    display: block;
+    margin: 20px 0;
+    padding-left: 6px;
+    height: 14px;
+    font-size: 14px;
+    line-height: 14px;
+    color: #333;
+    border-left: 2px solid #4bb893;
+}
+
+
+.perfect_selected{
+    margin-top: 30px;
+}
+
+.perfect_selected > label{
+    display: block;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #999;
+}
+
+.perfect_label_list{
+    font-size: 0;
+    margin-bottom: -20px;
+    margin-left: -20px;
+}
+
+.perfect_selected_list{
+    padding: 10px;
+    height: 56px;
+    font-size: 0;
+    border: 1px solid #dedede;
+}
+
+.perfect_selected_list li,
+.perfect_label_list li{
+    display: inline-block;
+    padding: 0 20px;
+    height: 36px;
+    font-size: 14px;
+    color: #666;
+    line-height: 36px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    background-color: #f4f5f5;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.perfect_label_list li.active,
+.perfect_label_list li:hover,
+.perfect_selected_list li {
+    color: #59b6d7;
+    background-color: #eef8fb;
+}
+
+.perfect_selected_list li:first-child{
+    margin-left: 0;
+}
+
+.icon.close{
+    text-align: center;
+    display: inline-block;
+    margin-left: 5px;
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    line-height: 12px;
+    font-style: normal;
+    vertical-align: baseline;
+}
+
+.perfect_btns{
+    margin-top: 40px;
+}
+
+.perfect_btn{
+    display: inline-block;
+    width: 100px;
+    height: 36px; 
+    font-size: 16px;
+    color: #fff;
+    line-height: 36px;
+    text-align: center;
+    background-color: #ccc;
+    border-radius: 3px;
+}
+
+.perfect_btns .save{
+    background-color: #59b6d7;
+    margin-right: 20px;
+}
+
+.account_heder {
+    overflow: hidden;
+    height: 100px;
+    line-height: 100px;
+}
+.account_heder .header{
+    float: left;
+    overflow: hidden;
+    margin-right: 40px;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 50%;
+    background-color: rgb(246,246,246);
+}
+
+.account_heder .perfect_btn{
+    margin-top: 32px;
+    float: left;
+    color: #333;
+    background-color: #ededed;
+    border: 1px solid #dedede;
+}
+
+
+.account_form_row{
+    height: 21px;
+    line-height: 21px;
+    margin-bottom: 25px;
+}
+
+.account_form_row:after{
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: '.';
+}
+
+.account_form_row>label{
+    float: left;
+    font-size: 14px;
+    color: #ccc;
+    margin-right: 30px;
+}
+.account_form_row>label.w80{
+    width: 80px;
+    text-align: right;
+}
+.account_form_row>label.required::before{
+    content: "*";
+    color:#ee3d3d;
+}
+
+
+.account_form_row input[type="text"]{
+    padding: 0 40px 7px 11px;
+    width: 500px;
+    height: 20px;
+    font-size: 14px;
+    border: 0;
+    border-bottom: 1px solid #ededed;
+    outline: 0;
+}
+
+.account_form_row #area{
+    position: relative;
+}
+.account_form_row #area + .dinwei{
+    display: inline-block;
+    position: relative;
+    padding: 0;
+    left: -36px;
+    width: 16px;
+    height: 16px;
+    background-color: red;
+}
+.account_form_row #area + .dinwei.loading{
+    background-color: #123;
+}
+.account_form_row .input{
+    float: left;
+    width: 500px;
+    height: 21px;
+}
+
+.account_form_row .input label{
+    position: relative;
+    margin-right: 30px;
+    padding-left: 25px;
+    color: #ccc;
+}
+
+.account_form_row .input input[type="radio"]{
+    visibility: hidden;
+}
+
+.account_form_row .input input[type="radio"] + label::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+    padding: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    font-size: 12px;
+    background: url('https://www.gstatic.cn/translate/buttons11.png') 0 0 no-repeat;
+    visibility: visible;
+    transform: translateY(-50%);
+}
+
+.account_form_row .input input[type="radio"]:hover +label::before,
+.account_form_row .input input[type="radio"]:checked +label::before{
+    background-image: url("http://blog.jsonleex.com/icon/LX.png")
+}
+
+.account_form_row .input input[type="radio"]:hover + label,
+.account_form_row .input input[type="radio"]:checked + label{
+    color: #333;
+}
+
+.account_form_row .input select{
+    margin-top: -4px;
+    margin-right: 15px;
+    border-color: #ccc;
+    color: #333;
+    outline: 0;
+}
