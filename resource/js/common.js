@@ -161,14 +161,16 @@ var fileUpload = {
 // 加载更多公共
 var scroll = {};
 scroll.setting = {};
-scroll.extra = {};
+scroll.params = {};
 scroll.init = function(option) {
-    this.extra = option.params || {};
-
+    this.params = option.params || {};
     this.setting.container = option.container; // 容器ID
-    this.setting.after = option.after || 0; // 最大ID
-    this.setting.loading = option.loading || '.dy_cen'; //加载图位置
+    this.setting.loadtype = option.loadtype || 0; // 加载方式，0为after，1为offset
+    this.setting.loading = option.loading; //加载图位置
+    this.setting.loadcount = option.loadcount || 0; // 加载次数
+    this.setting.canload = option.canload || true; // 是否能加载
     this.setting.url = option.url;
+
     scroll.bindScroll();
     if ($(scroll.setting.container).length > 0 && this.setting.canload) {
         $('.loading').remove();
@@ -179,14 +181,16 @@ scroll.init = function(option) {
 
 scroll.bindScroll = function() {
     $(window).bind('scroll resize', function() {
-        var scrollTop = $(this).scrollTop();
-        var scrollHeight = $(document).height();
-        var windowHeight = $(this).height();
-        if (scrollTop + windowHeight == scrollHeight) {
-            if ($(scroll.setting.container).length > 0) {
-                $('.loading').remove();
-                $(scroll.setting.loading).after(loadHtml);
-                scroll.loadMore();
+        if (scroll.setting.canload){
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            if (scrollTop + windowHeight == scrollHeight) {
+                if ($(scroll.setting.container).length > 0) {
+                    $('.loading').remove();
+                    $(scroll.setting.loading).after(loadHtml);
+                    scroll.loadMore();
+                }
             }
         }
     });
@@ -197,20 +201,23 @@ scroll.loadMore = function() {
     scroll.setting.canload = false;
     scroll.setting.loadcount++;
 
-    var postArgs = {};
-    postArgs = $.extend(scroll.setting, scroll.extra);
-
     $.ajax({
         url: scroll.setting.url,
         type: 'GET',
-        data: postArgs,
+        data: scroll.params,
         dataType: 'json',
         error: function(xml) {},
         success: function(res) {
-            if (res.after > 0) {
+            if (res.count > 0) {
                 scroll.setting.canload = true;
-                // 修改加载ID
-                scroll.setting.after = res.after;
+
+                // 两种不同的加载方式
+                if (scroll.setting.loadtype == 0) {
+                    scroll.params.after = res.after;
+                } else {
+                    scroll.params.offset = scroll.setting.loadcount * scroll.params.limit;
+                }
+
                 var html = res.data;
                 if (scroll.setting.loadcount == 1) {
                     $(scroll.setting.container).html(html);
@@ -225,7 +232,7 @@ scroll.loadMore = function() {
                     no_data(scroll.setting.container, 1, ' 暂无相关内容');
                     $('.loading').html('');
                 } else {
-                    $('.loading').html('暂无相关内容');
+                    $('.loading').html('没有更多了');
                 }
             }
         }

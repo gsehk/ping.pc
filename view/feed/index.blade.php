@@ -37,7 +37,7 @@
     </div>
 
     <!-- right -->
-    <div class="feed_right">
+    <div class="right_container">
         <!-- checkin -->
         @include('pcview::widgets.check')
 

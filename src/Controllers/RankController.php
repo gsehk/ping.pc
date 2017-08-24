@@ -15,11 +15,11 @@ class RankController extends BaseController
         $data['mold'] = $mold;
         if ($mold == 1) {
             $data['follower'] = createRequest('GET', '/api/v2/ranks/followers');
-            $data['balance'] = createRequest('GET', '/api/v2/ranks/balance');
-            $data['income'] = createRequest('GET', '/api/v2/ranks/income');
-            $data['check'] = createRequest('GET', 'api/v2/checkin-ranks');
-            $data['experts'] = createRequest('GET', 'api/v2/question-ranks/experts');
-            $data['likes'] = createRequest('GET', 'api/v2/question-ranks/likes');
+            // $data['balance'] = createRequest('GET', '/api/v2/ranks/balance');
+            // $data['income'] = createRequest('GET', '/api/v2/ranks/income');
+            // $data['check'] = createRequest('GET', 'api/v2/checkin-ranks');
+            // $data['experts'] = createRequest('GET', 'api/v2/question-ranks/experts');
+            // $data['likes'] = createRequest('GET', 'api/v2/question-ranks/likes');
 
         } elseif ($mold == 2) {
             $data['answers_day'] = createRequest('GET', 'api/v2/question-ranks/answers');

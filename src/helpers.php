@@ -2,6 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
+use Auth;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -128,8 +129,18 @@ function createRequest($method = 'POST', $url = '', $params = array())
 {
     $request = Request::create($url, $method, $params);
     $request->headers->add(['Accept' => 'application/json', 'Authorization' => 'Bearer '. Session::get('token')]);
-    app()->instance(Request::class, $request);
+
+    // 注入JWT请求单例
     app(\Tymon\JWTAuth\JWTAuth::class)->setRequest($request);
+
+    // 解决获取认证用户
+    $request->setUserResolver(function($guard) {
+        return Auth::user($guard);
+    });
+    // 解决请求传参问题
+    if ($url != '/api/v2/user/') { // 获取登录用户不需要传参
+        app()->instance(Request::class, $request);
+    }
     $response = Route::dispatch($request)->original;
     
     return $response;

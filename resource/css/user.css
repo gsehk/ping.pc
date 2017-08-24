@@ -1,28 +1,27 @@
-
-/*粉丝关注*/
-
-.fan_cont {
-    width: 1080px;
-    margin: 0 auto;
-    margin-top: 40px;
+.user_container {
     background: #fff;
-    overflow: hidden;
 }
 
-.fan_ul {
+
+/*粉丝关注*/
+#user_list {
+    padding: 10px 0px;
+}
+
+.user_menu {
     width: 100%;
     height: 80px;
     margin: 0;
     border-bottom: 1px solid #ededed;
 }
 
-.fan_ul li {
+.user_menu li {
     float: left;
     margin-left: 40px;
     padding-top: 26px;
 }
 
-.fan_ul li a {
+.user_menu li a {
     font-size: 16px;
     display: inline-block;
     margin-top: -1px;
@@ -30,51 +29,56 @@
     color: #333;
 }
 
-.fan_ul li a:hover {
+.user_menu li a:hover {
     color: #333 !important;
     border-bottom: 2px solid #59b6d7;
 }
 
-.fan_list {
-    height: 190px;
-    margin: 0 10px;
+.user_menu .selected {
+    color: #333 !important;
+    border-bottom: 2px solid #59b6d7;
 }
 
-.fan_c {
-    float: left;
-    width: 333px;
+.user_list {
     height: 190px;
-    margin: 10px;
+    margin: 0 20px;
+}
+
+.user_list .user {
+    float: left;
+    width: 357px;
+    height: 190px;
+    margin: 15px;
     padding: 30px 20px;
     border: 1px solid #ededed;
 }
 
-.fan_c:hover {
+.user_list .user:hover {
     border: 1px solid #59b6d7 !important;
 }
 
-.fan_header {
+.user_list .user .user_header {
     float: left;
 }
 
-.head_img {
+.user_list .user .user_header .user_avatar {
     width: 60px;
     height: 60px;
     margin-right: 20px;
     border-radius: 50%;
 }
 
-.fan_word {
+.user_list .user .user_body {
     float: left;
     width: 200px;
 }
 
-.fan_name {
+.user_list .user .user_body .user_name {
     font-size: 16px;
     color: #333;
 }
 
-.fan_care {
+.user_list .user .user_body .follow_btn {
     font-size: 12px;
     line-height: 24px;
     display: inline-block;
@@ -88,7 +92,13 @@
     border-radius: 20px;
 }
 
-.fan_subtitle {
+.user_list .user .user_body .followed {
+    color: #ccc;
+    border: 1px solid #ededed;
+}
+
+
+.user_list .user .user_body .user_subtitle {
     font-size: 12px;
     line-height: 22px;
     display: -webkit-box;
@@ -100,26 +110,31 @@
     -webkit-box-orient: vertical;
 }
 
-.fan_number {
+.user_list .user .user_body .user_number {
     font-size: 14px;
     margin-top: 18px;
     color: #333;
 }
 
-.fan_num {
+.user_list .user .user_body .user_number .user_num {
     display: inline-block;
     padding-right: 15px;
     border-right: 1px solid #ededed;
 }
 
-.fan_num span,
-.fan_careNum span {
+.user_list .user .user_body .user_number .user_num span {
     display: inline-block;
     margin-left: 5px;
     color: #59b6d7;
 }
 
-.fan_careNum {
+.user_list .user .user_body .user_number .right {
+    border-right: none;
+    padding-left: 12px;
+    padding-right: 0px;
+}
+
+.userareNum {
     display: inline-block;
     margin-left: 15px;
     color: #333;

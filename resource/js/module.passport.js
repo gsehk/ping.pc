@@ -18,6 +18,7 @@ $(function() {
                     _this.css('cursor', 'no-drop');
                 },
                 success: function(res) {
+                    console.log(res.token);return false;
                     noticebox('登录成功，跳转中...', 1, '/passport/mid/' + res.user.id + '/token/' + res.token);
                 },
                 error: function(xhr) {

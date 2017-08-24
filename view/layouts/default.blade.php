@@ -38,15 +38,15 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
         </div>
 
         <!-- content -->
-        <div class="main" @yield('bgcolor')>
-            <div class="container clearfix">
+        <div class="main">
+            <div class="container @yield('extra_class') clearfix">
             @yield('content')
             </div>
         </div>
 
-        <div class="dy_calltop">
-            <a href="#" class="dy_1">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a>
-            <a href="javascript:;" class="dy_2" id="gotop"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-uptop"></use></svg></a>
+        <div class="right_extras">
+            <a href="#" class="app">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a>
+            <a href="javascript:;" class="gotop" id="gotop"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-uptop"></use></svg></a>
         </div>
     </div>
 

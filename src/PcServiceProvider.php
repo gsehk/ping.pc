@@ -38,7 +38,9 @@ class PcServiceProvider extends ServiceProvider
         PackageHandler::loadHandleFrom('pc', PcPackageHandler::class);
 
         // load view composers
-        View::composer('pcview::widgets.categories', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\CategoriesComposer');
+        View::composer('pcview::widgets.hotusers', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\HotUsers');
+        View::composer('pcview::widgets.recusers', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\RecommendUsers');
+        View::composer('pcview::widgets.checkin', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\Checkin');
     }
 
     /**

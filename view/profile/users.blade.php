@@ -31,10 +31,19 @@
             follow(status, user_id, _this, afterdata);
         })
         $("img.lazy").lazyload({effect: "fadeIn"});
+
+
+        $('.fan_ul a').on('click', function(){
+            var type = $(this).data('type');
+            $('#follow-list').html('');
+            weibo.init({container: '#follow-list',loading: '.fan_cont', user_id:"{{ $user_id }}",type: type});
+            $('.fan_ul a').removeClass('a_border');
+            $(this).addClass('a_border');
+        });    
     })
     // 加载关联用户列表
     setTimeout(function() {
-        weibo.init({
+        scroll.init({
             container: '#follow-list',
             user_id:"{{ $user_id }}",
             loading: '.fan_cont',
@@ -42,13 +51,6 @@
         });
     }, 300);    
 
-    $('.fan_ul a').on('click', function(){
-        var type = $(this).data('type');
-        $('#follow-list').html('');
-        weibo.init({container: '#follow-list',loading: '.fan_cont', user_id:"{{ $user_id }}",type: type});
-        $('.fan_ul a').removeClass('a_border');
-        $(this).addClass('a_border');
-    });    
 
     // 关注回调
     var afterdata = function(target){

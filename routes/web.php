@@ -79,15 +79,24 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     // use news
     Route::get('news', 'ProfileController@news');
+});
 
-    /*Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
-        Route::get('related', 'ProfileController@related')->name('pc:related');
-        Route::get('following', 'ProfileController@following')->name('pc:following');
-        // 个人设置
-        Route::post('doSaveAuth', 'ProfileController@doSaveAuth')->name('pc:doSaveAuth'); //保存用户认证信息
-        Route::delete('delUserAuth', 'ProfileController@delUserAuth')->name('pc:delUserAuth'); //删除用户认证信息 重新认证
-    });*/
+// users
+Route::prefix('users')->group(function () {
+    // find users
+    Route::get('/{type?}', 'UserController@index')->where(['type' => '[1-3]'])->name('pc:users');
 
+    // get users
+    Route::get('/getusers', 'UserController@getUsers');
+
+    // user followers
+    Route::get('/{user_id}/followers', 'UserController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
+
+    // user followings
+    Route::get('/{user_id}/followings', 'UserController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
+
+    // get follow users
+    Route::get('/getfollows', 'UserController@getFollows');
 
 });
 
