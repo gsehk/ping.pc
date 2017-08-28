@@ -25,6 +25,8 @@ class AccountController extends BaseController
 
     public function tags()
     {
-        return view('pcview::account.tags', $this->PlusData);
+        $data['tags'] = createRequest('GET', '/api/v2/tags');
+        // dd($data['tags']->toArray());
+        return view('pcview::account.tags', $data, $this->PlusData);
     }
 }

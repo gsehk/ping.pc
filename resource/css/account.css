@@ -82,6 +82,10 @@
     width: 100%;
 }
 
+.perfect_row .active{
+    color: #59b6d7;
+    background-color: #eef8fb;
+}
 .perfext_title{
     padding-bottom: 20px;
     border-bottom: 1px solid #ededed;
