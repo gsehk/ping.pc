@@ -1,114 +1,124 @@
 @extends('pcview::layouts.default')
 
-@section('bgcolor')style="background-color:#fff"@endsection
-@section('content')
-<link rel="stylesheet" type="text/css" href="{{ $routes['resource'] }}/cropper/cropper.min.css">
-<div class="bas_cont">
-    <div class="bas_left">
-        <a href="{{ route('pc:account') }}">
-            <div class="bas_list">
-                <span @if($page == 'account') class="c_333" @endif>资料设置</span>
-            </div>
-        </a>
-        {{-- <a href="{{ route('pc:account', ['page'=>'account-auth']) }}">
-            <div class="bas_list">
-                <span @if($page == 'account-auth') class="c_333" @endif>认证</span>
-            </div>
-        </a> --}}
-        <a href="{{ route('pc:account', ['page'=>'account-security']) }}">
-            <div class="bas_list">
-                <span @if($page == 'account-security') class="c_333" @endif>修改密码</span>
-            </div>
-        </a>
-        {{-- <a href="{{ route('pc:account', ['page'=>'account-bind']) }}">
-            <div class="bas_list">
-                <span @if($page == 'account-bind') class="c_333" @endif>绑定</span>
-            </div>
-        </a> --}}
-    </div>
-    <div class="bas_right" id="J-input">
-        <div class="bas_header">
-            <img id="J-image-preview" src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
-            <span class="con_cover ai_face_box">
-                <div class="ai_upload">
+@section('bgcolor')style="background-color:#f3f6f7"@endsection
 
-                    <input name="storage_task_id" id="task_id" type="hidden" value="" />
+@section('styles')
+<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
+<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.css')}}">
+@endsection
+
+@section('content')
+
+<div class="account_container">
+    <div class="account_wrap">
+
+        {{-- 左侧导航 --}}
+        @include('pcview::account.sidebar')
+
+        <div class="account_r">
+            <div class="account_c_c">
+                <!-- 基本资料 -->
+                <div class="account_tab" id="J-input">
+                    <!-- label -->
+                    <div class="perfext_title">
+                        <p>基本资料</p>
+                    </div>
+                    <!-- /label -->
+                    <!-- 更改头像 -->
+                    <div class="perfect_row mb30">
+                        <div class="account_heder">
+                            <div class="header">
+                                <img id="J-image-preview" src="{{ $user['avatar'] or URL::asset('zhiyicx/plus-component-pc/images/avatar.png')}}">
+                                <input id="task_id" name="storage_task_id" type="hidden"/>
+                            </div>
+                            <a class="perfect_btn" id="J-file-upload-btn" href="javascript:;">更改头像</a>
+                        </div>
+                    </div>
+                    <!-- /更改头像 -->
+                    <!-- txt -->
+                    <div class="perfect_row mb30">
+                        <form action="#">
+                            <div class="account_form_row">
+                                <label for="name">昵称</label>
+                                <input id="name" name="name" type="text" value="{{$user['name'] }}" />
+                            </div>
+                            <div class="account_form_row">
+                                <label for="bio">简介</label>
+                                <input id="bio" name="bio" type="text" value="{{$user['bio'] or ''}}" />
+                            </div>
+                            <div class="account_form_row">
+                                <label>性别</label>
+                                <div class="input">
+                                <span>
+                                    <input @if($user['sex'] == 1) checked="checked" @endif id="male" name="sex" type="radio" value="1" />
+                                    <label for="male">男</label>
+                                </span>
+                                <span>
+                                    <input @if($user['sex'] == 2) checked="checked" @endif id="female" name="sex" type="radio" value="2" />
+                                    <label for="female">女</label>
+                                </span>
+                                <span>
+                                    <input @if($user['sex'] == 0) checked="checked" @endif id="secret" name="sex" type="radio" value="0" />
+                                    <label for="secret">不方便透露</label>
+                                </span>
+                                </div>
+                            </div>
+                            {{-- <div class="account_form_row">
+                                <label>生日</label>
+                                <div class="input">
+                                    <select name="year" id="year">
+                                        <option value="2017">2017</option>
+                                    </select>
+                                    <select name="month" id="month">
+                                        <option value="02">2月</option>
+                                    </select>
+                                    <select name="day" id="day">
+                                        <option value="26">26日</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="account_form_row">
+                                <label for="company">公司</label>
+                                <input name="company" id="company" type="text">
+                            </div> --}}
+                            <div class="account_form_row">
+                                <label for="area">地区</label>
+                                <select id="province" name="province" onchange="getArea(this);"></select>
+                                <select id="city" name="city" onchange="getArea(this);"></select>
+                                <select id="area" name="area"></select>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /txt -->
+                    <div class="perfect_btns">
+                        <a href="javascript:;" class="perfect_btn save" id="J-user-info">保存</a>
+                    </div>
                 </div>
-                <span class="ai_btn" id="J-file-upload-btn">更换头像</span>
-            </span>
-        </div>
-        <div class="f_div">
-            <div class="f_tel bas_div">
-                <label>昵称</label>
-                <span class="f_span"><input type="text" name="name" value="{{$user['name'] }}" placeholder="输入昵称"></span>
+                <!-- /基本资料 -->
             </div>
-            <div class="f_tel bas_div">
-                <label>简介</label>
-                <span class="f_span"><input type="text" name="bio" value="{{$user['bio'] or ''}}" placeholder="输入简介"></span>
-            </div>
-            <div class="f_tel bas_div">
-                <label>性别</label>
-                  <span class="sex_item"><input name="sex" type="radio" value="1" class="s-ck" @if($user['sex'] == 1) checked="checked" @endif>男</span>
-                  <span class="sex_item"><input name="sex" type="radio" value="2" class="s-ck" @if($user['sex'] == 2) checked="checked" @endif>女</span>
-                  <span class="sex_item"><input name="sex" type="radio" value="3" class="s-ck" @if($user['sex'] == 3) checked="checked" @endif>不方便透露</span>
-            </div>
-            {{-- <div class="f_tel bas_div">
-                <label>生日</label>
-                <div class="f_select">
-                    <span></span>
-                    <select name="year" class="sel_year" rel="{{$user['year'] or 0}}"></select>
-                </div>
-                <div class="f_select">
-                    <span></span>
-                    <select name="moth" class="sel_month" rel="{{$user['moth'] or 0}}"></select>
-                </div>
-                <div class="f_select">
-                    <span></span>
-                    <select name="day" class="sel_day" rel="{{$user['day'] or 0}}"></select>
-                </div>
-            </div>
-            <div class="f_tel bas_div">
-                <label>公司</label>
-                <span class="f_span"><input type="text" name="company" placeholder="输入公司名称" value="{{$user['company'] or ''}}"></span>
-            </div> --}}
-            <div class="f_tel bas_div" id="sel_area">
-                <label>地区</label>
-                <div class="f_select">
-                    <span></span>
-                    <select name="province" id="province" onchange="getArea(this);"></select>
-                </div>
-                <div class="f_select">
-                    <span></span>
-                    <select name="city" id="city" onchange="getArea(this);"></select>
-                </div>
-                <div class="f_select">
-                    <span></span>
-                    <select name="area" id="area"></select>
-                </div>
-            </div>
-            <a href="javascript:;" class="f_sure" id="J-submit">保存</a>
         </div>
     </div>
 </div>
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/cropper/cropper.min.js"></script>
-<script src="{{ $routes['resource'] }}/js/birthday.js"></script>
-<script src="{{ $routes['resource'] }}/js/module.seting.js"></script>
-<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script>
+var username = "{{$user['name'] }}";
+var arrSelect = ["{{$user['city'][0] or ''}}", "{{$user['city'][1] or ''}}", "{{$user['city'][2] or ''}}"];
 $('#J-image-preview, #J-file-upload-btn').on('click',function(){
     var html = '<div id="model">'
-                    + '<div class="avatar-container" id="crop-avatar">'
-                    + '<div class="avatar-upload">'
-                    + '<input type="hidden" class="avatar-src" name="avatar_src">'
-                    + '<label for="avatarInput">选择上传图片</label>'
-                    + '<input type="file" class="avatar-input" id="avatarInput" name="avatar_file">'
-                    + '</div>'
-                    + '<div class="avatar-wrapper upload-box"></div>'
-                    + '<div class="save-btn"><span></span><button type="button" class="btn btn-primary avatar-save">保存</button></div>'
-                    + '</div></div>';
+        + '<div class="avatar-container" id="crop-avatar">'
+        + '<div class="avatar-upload">'
+        + '<input type="hidden" class="avatar-src" name="avatar_src">'
+        + '<label for="avatarInput">选择上传图片</label>'
+        + '<input type="file" class="avatar-input" id="avatarInput" name="avatar_file">'
+        + '</div>'
+        + '<div class="avatar-wrapper upload-box"></div>'
+        + '<div class="save-btn"><span></span><button type="button" class="btn btn-primary avatar-save">保存</button></div>'
+        + '</div></div>';
     ly.loadHtml(html, '上传头像', '600px', '500px;');
     $(function () {
         'use strict';
@@ -255,18 +265,7 @@ $('#J-image-preview, #J-file-upload-btn').on('click',function(){
         return new CropAvatar($('#crop-avatar'));
     });
 });
-var username = "{{$user['name'] }}";
-var arrSelect = ["{{$user['city'][0] or ''}}", "{{$user['city'][1] or ''}}", "{{$user['city'][2] or ''}}"];
-$(function () {
-    $.ms_DatePicker({
-        YearSelector: ".sel_year",
-        MonthSelector: ".sel_month",
-        DaySelector: ".sel_day",
-        FirstText:'请选择'
-    });
-    $.ms_DatePicker();
-    //地区选择初始化
-    init(1);
-});
+//地区选择初始化
+init(1);
 </script>
 @endsection

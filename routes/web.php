@@ -14,7 +14,7 @@ Route::prefix('passport')->group(function () {
     // logout
     Route::any('/logout', 'PassportController@logout')->name('pc:logout');
 
-    // register 
+    // register
     Route::get('/register/{type?}', 'PassportController@register')->where(['type' => '[0-9]+'])->name('pc:register');
 
     // captcha
@@ -23,7 +23,7 @@ Route::prefix('passport')->group(function () {
     // checkcaptcha
     Route::post('/checkcaptcha', 'PassportController@checkCaptcha')->name('pc:checkcaptcha');
 
-    // findpwd 
+    // findpwd
     Route::get('/findpwd/{type?}', 'PassportController@findPassword')->where(['type' => '[0-9]+'])->name('pc:findpassword');
 
     // perfect
@@ -51,6 +51,12 @@ Route::prefix('rank')->group(function () {
     Route::get('/rankList', 'RankController@_getRankList')->name('pc:ranklist');
 });
 
+Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
+
+    Route::get('/index', 'AccountController@index');
+    Route::get('/authenticate', 'AccountController@authenticate');
+});
+
 // user profile
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
 
@@ -58,7 +64,7 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('/{user_id?}', 'ProfileController@index')->where(['user_id' => '[0-9]+'])->name('pc:mine');
 
     // user collect page
-    Route::get('collect', 'ProfileController@collect')->name('pc:collect');    
+    Route::get('collect', 'ProfileController@collect')->name('pc:collect');
 
     // user article page
     Route::get('article/{user_id?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:minearc');
@@ -105,20 +111,20 @@ Route::prefix('users')->group(function () {
 Route::prefix('news')->group(function () {
     // news index
     Route::get('/', 'NewsController@index')->name('pc:news');
-    
+
     // news detail
     Route::get('/read/{news_id}', 'NewsController@read')->name('pc:newsRead');
-    
+
     // news comments list
     Route::get('/{news_id}/comments', 'NewsController@commnets')->where(['news_id' => '[0-9]+']);
-    
+
     // news release
     Route::get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
 
     // get news list
     Route::get('lists', 'NewsController@lists');
 
-    // get recent and hot news 
+    // get recent and hot news
     Route::get('/getRecentHot', 'NewsController@getRecentHot');
 
     // get author's hot news

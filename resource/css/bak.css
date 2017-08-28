@@ -4122,10 +4122,3 @@ img.load {
     width: 100px;
 }
 
-
-/* Override Cropper's styles */
-
-.upload-box .cropper-face,
-.upload-box .cropper-view-box {
-    border-radius: 50%;
-}

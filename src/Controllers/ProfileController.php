@@ -21,12 +21,12 @@ class ProfileController extends BaseController
 
     /**
      * 个人中心首页
-     * 
+     *
      * @param  int|null $user_id 用户id
      * @return [type]            [description]
      */
     public function index(Request $request, int $user_id = 0)
-    {      
+    {
         $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
 
         // 粉丝
@@ -40,7 +40,7 @@ class ProfileController extends BaseController
 
     /**
      * 用户中心文章
-     * 
+     *
      * @param  int|null    $user_id 用户id
      * @param  int|integer $type    文章类型
      * @return [type]               [description]
@@ -52,7 +52,7 @@ class ProfileController extends BaseController
         // 粉丝
         $data['followers'] = $data['user']->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
 
-        // 关注 
+        // 关注
         $data['followings'] = $data['user']->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
 
         $data['type'] = 0;
@@ -82,7 +82,7 @@ class ProfileController extends BaseController
 
     /**
      * 获取关联用户列表
-     * 
+     *
      * @param  int|integer $type    1:我的粉丝 2:关注的人 3:访客
      * @param  int|integer $user_id   用户id
      * @return [type]               [description]
@@ -103,12 +103,12 @@ class ProfileController extends BaseController
             'status'  => true,
             'after' => $after,
             'data' => $html,
-        ]);        
+        ]);
     }
 
     /**
      * 获取关联用户列表
-     * 
+     *
      * @param  int|integer $type    1:我的粉丝 2:关注的人 3:访客
      * @param  int|integer $user_id   用户id
      * @return [type]               [description]
@@ -136,7 +136,7 @@ class ProfileController extends BaseController
 
     /**
      * 个人中心设置
-     * 
+     *
      * @param  Request $request [description]
      * @return [type]           [description]
      */
@@ -165,13 +165,13 @@ class ProfileController extends BaseController
         //         # code...
         //         break;
         // }
-        
+
         // return view('pcview::profile.'.$page, $datas, $this->PlusData);
     }
 
     /**
      * 用户认证操作
-     * 
+     *
      * @param  Request $request [description]
      * @return [type]           [description]
      */
@@ -221,12 +221,12 @@ class ProfileController extends BaseController
         }
         return response()->json([
             'status' => true
-        ])->setStatusCode(200);        
+        ])->setStatusCode(200);
     }
 
     /**
      * 删除用户认证
-     * 
+     *
      * @param  Request $request [description]
      * @return [type]           [description]
      */
@@ -240,12 +240,12 @@ class ProfileController extends BaseController
             'uri' => '/profile/account?page=account-auth',
             'code' => $response,
             'status' => true
-        ])->setStatusCode(200);  
+        ])->setStatusCode(200);
     }
 
     /**
      * 格式化分享数据
-     * 
+     *
      * @param  [type] $feeds    [description]
      * @param  [type] $uid      [description]
      * @param  string $template [description]
@@ -276,7 +276,7 @@ class ProfileController extends BaseController
             $data['tool']['feed_comment_count'] = $feed->feed_comment_count;
             // 暂时剔除当前登录用户判定
             $data['tool']['is_digg_feed'] = $feed->liked($uid);
-            $data['tool']['is_collection_feed'] = $feed->collected($uid);            
+            $data['tool']['is_collection_feed'] = $feed->collected($uid);
             // 最新3条评论
             $data['comments'] = [];
 
@@ -357,12 +357,12 @@ class ProfileController extends BaseController
             'status' => true,
             'after' => $after,
             'data' => $html
-        ]));  
+        ]));
     }
 
     /**
      * 获取用户收藏列表
-     *  
+     *
      * @author zw
      * @param  Request $request [description]
      * @return [type]           [description]
@@ -419,7 +419,7 @@ class ProfileController extends BaseController
                     ->take($limit)
                     ->get();
 
-            return $this->formatFeedList($feeds, $user_id, 'pcview::templates.feeds');      
+            return $this->formatFeedList($feeds, $user_id, 'pcview::templates.feeds');
         }
     }
 }

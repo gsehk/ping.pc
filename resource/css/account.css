@@ -1,166 +1,4 @@
 
-/*设置*/
-
-.bas_cont {
-    width: 700px;
-    margin: 40px auto auto;
-}
-
-.bas_left {
-    float: left;
-    width: 100px;
-    height: 670px;
-    padding-top: 60px;
-    border-right: 1px solid #ededed;
-}
-
-.bas_list {
-    padding: 20px 0;
-    text-align: center;
-    border-bottom: 1px solid #ededed;
-}
-
-.bas_list span {
-    font-size: 18px;
-    line-height: 19px;
-    display: inline-block;
-    width: 20px;
-    margin: auto;
-    cursor: pointer;
-    color: #999;
-}
-
-.bas_left .bas_list:last-child {
-    border-bottom: none;
-}
-
-.c_333 {
-    color: #333 !important;
-}
-
-.bas_right {
-    float: left;
-    width: 600px;
-    padding-top: 80px;
-    padding-left: 40px;
-}
-
-.bas_header img {
-    width: 100px;
-    height: 100px;
-    margin-right: 40px;
-    border-radius: 50%;
-}
-
-.bas_header .ai_upload input {
-    position: absolute;
-    width: 100px;
-    height: 35px;
-    cursor: pointer;
-    opacity: 0;
-}
-
-.bas_header .ai_btn {
-    font-size: 16px;
-    line-height: 34px;
-    display: inline-block;
-    width: 100px;
-    height: 34px;
-    cursor: pointer;
-    text-align: center;
-    color: #333;
-    border: 1px solid #dedede;
-    border-radius: 3px;
-}
-
-.bas_div label {
-    width: auto !important;
-    margin-right: 0 !important;
-    padding: 0 30px 0 0;
-}
-
-.bas_div .sex_item {
-    padding-right: 10px;
-}
-
-.bas_div .s-ck {
-    margin: 0 5px 0 0;
-    vertical-align: -2px;
-}
-
-.bas_div input:focus {
-    color: #333 !important;
-}
-
-.cer_div {
-    margin-top: 0 !important;
-}
-
-.cer_x {
-    color: #ee3d3d;
-}
-
-.cer_attachment {
-    font-size: 14px;
-    padding-left: 96px;
-    color: #ccc;
-}
-
-.cer_format {
-    font-size: 14px;
-    margin-top: 30px;
-    color: #ccc;
-}
-
-.bin_div {
-    margin-bottom: 40px;
-}
-
-.bin_name {
-    font-size: 16px;
-    display: inline-block;
-    width: 75px;
-    color: #666;
-}
-
-.bin_line {
-    display: inline-block;
-    width: 356px;
-    margin: 5px 10px;
-    border-bottom: 1px dashed #ededed;
-}
-
-.bai_go {
-    font-size: 16px;
-    line-height: 36px;
-    display: inline-block;
-    width: 100px;
-    height: 36px;
-    cursor: pointer;
-    text-align: center;
-    color: #fff;
-    border-radius: 3px;
-    background: #59b6d7;
-}
-
-.bai_go:hover,
-.bai_go:visited {
-    color: #fff;
-}
-
-.cer_div {
-    padding-top: 76px;
-}
-
-.bg_ccc {
-    background: #ccc !important;
-}
-
-.nav_border {
-    border-bottom: 1px solid #ededed;
-}
-
-
 .account_container{
     width: 100%;
 }
@@ -402,7 +240,7 @@
 .perfect_btn{
     display: inline-block;
     width: 100px;
-    height: 36px; 
+    height: 36px;
     font-size: 16px;
     color: #fff;
     line-height: 36px;
@@ -476,18 +314,13 @@
 .account_form_row>label{
     float: left;
     font-size: 14px;
-    color: #ccc;
+    color: #777;
     margin-right: 30px;
 }
 .account_form_row>label.w80{
     width: 80px;
     text-align: right;
 }
-.account_form_row>label.required::before{
-    content: "*";
-    color:#ee3d3d;
-}
-
 
 .account_form_row input[type="text"]{
     padding: 0 40px 7px 11px;
@@ -497,22 +330,6 @@
     border: 0;
     border-bottom: 1px solid #ededed;
     outline: 0;
-}
-
-.account_form_row #area{
-    position: relative;
-}
-.account_form_row #area + .dinwei{
-    display: inline-block;
-    position: relative;
-    padding: 0;
-    left: -36px;
-    width: 16px;
-    height: 16px;
-    background-color: red;
-}
-.account_form_row #area + .dinwei.loading{
-    background-color: #123;
 }
 .account_form_row .input{
     float: left;
@@ -676,7 +493,7 @@
     overflow: hidden;
     max-width: 415px;
     text-overflow: ellipsis;
-    word-break:break-all; 
+    word-break:break-all;
     margin: 0;
     max-height: 33px;
     font-size: 12px;
@@ -690,4 +507,12 @@
 .account_tab .blacklist .b_action a{
     font-size: 16px;
     color: #4bb893;
+}
+
+
+/* Override Cropper's styles */
+
+.upload-box .cropper-face,
+.upload-box .cropper-view-box {
+    border-radius: 50%;
 }

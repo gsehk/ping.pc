@@ -310,7 +310,7 @@
                             <span><input id="noaccept" name="pinglun" type="radio"><label for="noaccept">don't accept</label></span>
                         </div>
                     </div>
-                    
+
                     <!-- checkbox -->
                     <div class="account_form_row bb">
                         <div class="row_title">评论</div>
