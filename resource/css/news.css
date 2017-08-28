@@ -131,6 +131,19 @@
     color: #b3b3b3;
 }
 
+.news_bm .cates_span {
+    font-size: 12px;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 2px 5px;
+    text-align: center;
+    border: 1px solid #59b6d7;
+    border-radius: 5px;
+    color: #59b6d7 !important;
+    background: #fff;
+}
+
+
 .news_comment {
     float: right;
 }

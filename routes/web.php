@@ -122,7 +122,7 @@ Route::prefix('news')->group(function () {
     Route::get('/list', 'NewsController@list');
 
     // news detail
-    Route::get('/{news_id}', 'NewsController@read')->name('pc:newsread');
+    Route::get('/{news_id}', 'NewsController@read')->where(['news_id' => '[0-9]+'])->name('pc:newsread');
 
     // news comments list
     Route::get('/{news_id}/comments', 'NewsController@commnets')->where(['news_id' => '[0-9]+']);

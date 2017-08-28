@@ -14,8 +14,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
           </a>
           <p>{{ $item['subject'] }}</p>
           <div class="news_bm">
-               <span class="news_time">{{ getTime($item['created_at']) }}</span>
-               <span class="news_comment"> {{ $item['comment_count'] }} 评论<span>|</span> {{ $item['collection_count'] }} 收藏</span>
+               <a href="javascript:;" class="cates_span">{{ $item['category']['name'] }}</a>
+               <span>{{ $item['from'] }}  ·  {{ $item['hits'] }}浏览  ·  {{ getTime($item['created_at']) }}</span>
           </div>
      </div>
 </div>

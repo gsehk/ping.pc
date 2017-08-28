@@ -1,3 +1,10 @@
+@section('title')
+    @if($type == 1) 
+    粉丝
+    @else
+    关注
+    @endif
+@endsection
 @extends('pcview::layouts.default')
 
 @section('content')
