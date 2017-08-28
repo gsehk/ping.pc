@@ -81,9 +81,9 @@
                             <span class="total">5</span>个标签，已选择
                             <span class="cur_count">0</span>个</label>
                         <ul class="perfect_selected_list">
-                            <li>建筑师<i class="icon close">x</i></li>
-                            <li>旅行家<i class="icon close">x</i></li>
-                            <li>运动达人<i class="icon close">x</i></li>
+                            <li>建筑师<i class="icon close"></i></li>
+                            <li>旅行家<i class="icon close"></i></li>
+                            <li>运动达人<i class="icon close"></i></li>
                         </ul>
                     </div>
                     <!-- /select -->
@@ -191,6 +191,183 @@
                     <!-- /btn -->
                 </div>
                 <!-- /修改密码 -->
+
+                <!-- 个人认证 -->
+                <div class="account_tab">
+                    <!-- label -->
+                    <div class="perfext_title">
+                        <p>个人认证</p>
+                    </div>
+                    <!-- /label -->
+                    <!-- form  -->
+                    <div class="account_form_row">
+                        <label class="w80 required" for="realName">真实姓名</label>
+                        <input name="realName" id="realName" type="text">
+                    </div>
+                    <div class="account_form_row">
+                        <label class="w80 required" for="IDNumber">身份证号码</label>
+                        <input name="IDNumber" id="IDNumber" type="text">
+                    </div>
+                    <div class="account_form_row">
+                        <label class="w80 required" for="contact">联系方式</label>
+                        <input name="contact" id="contact" type="text">
+                    </div>
+                    <div class="account_form_row">
+                        <label class="w80 required" for="desc">认证描述</label>
+                        <input name="desc" id="desc" type="text">
+                    </div>
+                    <!-- /form  -->
+                    <!-- btn -->
+                    <div class="perfect_btns">
+                        <a href="javascript:;" class="perfect_btn save" id="save">保存</a>
+                    </div>
+                    <!-- /btn -->
+                </div>
+                <!-- /个人认证 -->
+
+                <!-- 隐私设置 -->
+                    <div class="account_tab">
+                        <!-- label -->
+                        <div class="perfext_title">
+                            <p>隐私设置</p>
+                        </div>
+                        <!-- /label -->
+
+                        <div class="account_form_row bb">
+                            <div class="row_title">私信：谁可以评论我的动态，帖子，问答，资讯，活动</div>
+                            <div class="input myInput">
+                                <span><input id="all-1" name="pinglun" type="radio"><label for="all-1">所有人（不包括黑名单用户）</label></span>
+                                <span><input id="part-1" name="pinglun" type="radio"><label for="part-1">我关注的人</label></span>
+                                <span><input checked id="none-1" name="pinglun" type="radio"><label for="none-1">都不可以</label></span>
+                            </div>
+                        </div>
+
+                        <div class="account_form_row bb">
+                            <div class="row_title">私信：谁可以评论我的动态，帖子，问答，资讯，活动</div>
+                            <div class="input myInput">
+                                <span><input id="all-2" name="pinglun1" type="radio"><label for="all-2">所有人（不包括黑名单用户）</label></span>
+                                <span><input id="part-2" name="pinglun1" type="radio"><label for="part-2">我关注的人</label></span>
+                                <span><input checked id="none-2" name="pinglun1" type="radio"><label for="none-2">都不可以</label></span>
+                            </div>
+                        </div>
+
+                        <div class="account_form_row bb">
+                            <div class="row_title">私信：谁可以评论我的动态，帖子，问答，资讯，活动</div>
+                            <div class="input myInput">
+                                <span><input id="all-3" name="pinglun2" type="radio"><label for="all-3">所有人（不包括黑名单用户）</label></span>
+                                <span><input id="part-3" name="pinglun2" type="radio"><label for="part-3">我关注的人</label></span>
+                                <span><input checked id="none-3" name="pinglun2" type="radio"><label for="none-3">都不可以</label></span>
+                            </div>
+                        </div>
+
+                        <div class="account_form_row bb">
+                            <div class="row_title">私信：谁可以评论我的动态，帖子，问答，资讯，活动</div>
+                            <div class="input myInput">
+                                <span><input id="all-4" name="pinglun3" type="radio"><label for="all-4">所有人（不包括黑名单用户）</label></span>
+                                <span><input id="part-4" name="pinglun3" type="radio"><label for="part-4">我关注的人</label></span>
+                                <span><input checked id="none-4" name="pinglun3" type="radio"><label for="none-4">都不可以</label></span>
+                            </div>
+                        </div>
+
+                        <div class="account_form_row bb">
+                            <div class="row_title">私信：谁可以评论我的动态，帖子，问答，资讯，活动</div>
+                            <div class="input myInput">
+                                <span><input id="all-5" name="pinglun4" type="radio"><label for="all-5">所有人（不包括黑名单用户）</label></span>
+                                <span><input id="part-5" name="pinglun4" type="radio"><label for="part-5">我关注的人</label></span>
+                                <span><input checked id="none-5" name="pinglun4" type="radio"><label for="none-5">都不可以</label></span>
+                            </div>
+                        </div>
+
+                        <div class="account_form_row bb">
+                            <div class="row_title">私信：谁可以评论我的动态，帖子，问答，资讯，活动</div>
+                            <div class="input myInput">
+                                <span><input id="all-6" name="pinglun5" type="radio"><label for="all-6">所有人（不包括黑名单用户）</label></span>
+                                <span><input id="part-6" name="pinglun5" type="radio"><label for="part-6">我关注的人</label></span>
+                                <span><input checked id="none-6" name="pinglun5" type="radio"><label for="none-6">都不可以</label></span>
+                            </div>
+                        </div>
+                    </div>
+                <!-- /隐私设置 -->
+
+                <!-- 通知设置 -->
+                <div class="account_tab">
+                    <!-- label -->
+                    <div class="perfext_title notice active">
+                        <p>通知设置</p>
+                        <div class="switch active"  onclick="$(this).removeClass('active'), $('.notice').removeClass('active')"></div>
+                    </div>
+                    <!-- /label -->
+
+                    <!-- closed -->
+                    <p class="switch_closed">开启右侧总开关可以进行通知设置。</p>
+                    <!-- /closed -->
+
+                    <!-- opend -->
+                    <div class="account_form_row bb">
+                        <div class="row_title">评论</div>
+                        <div class="input myInput">
+                            <span><input checked id="accept" name="pinglun" type="radio"><label for="accept">accept</label></span>
+                            <span><input id="noaccept" name="pinglun" type="radio"><label for="noaccept">don't accept</label></span>
+                        </div>
+                    </div>
+                    
+                    <!-- checkbox -->
+                    <div class="account_form_row bb">
+                        <div class="row_title">评论</div>
+                        <div class="input myInput">
+                            <span><input checked id="accept1" name="pinglunqq" type="checkbox"><label for="accept1">accept</label></span>
+                            <span><input id="noaccept1" name="pinglunqq" type="checkbox"><label for="noaccept1">don't accept</label></span>
+                        </div>
+                    </div>
+                    <!-- /checkbox -->
+
+                    <!-- /opend -->
+
+                </div>
+                <!-- /通知设置 -->
+
+                <!-- 黑名单 -->
+                <div class="account_tab">
+                    <!-- label -->
+                    <div class="perfext_title">
+                        <p>黑名单</p>
+                    </div>
+                    <!-- /label -->
+
+                    <!-- blacklist -->
+                    <div class="blacklist">
+                        <div class="b_header">
+                            <img src="http://blog.jsonleex.com/icon/LX.png" alt="">
+                            <i class="ID_tag"></i>
+                        </div>
+                        <div class="b_info">
+                            <p class="b_name">JsonLeex</p>
+                            <p class="b_bio">JsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeex</p>
+                        </div>
+                        <div class="b_action">
+                            <a href="javascript:;">移除</a>
+                        </div>
+                    </div>
+                    <!-- /blacklist -->
+
+                    <!-- blacklist -->
+                    <div class="blacklist">
+                        <div class="b_header">
+                            <img src="http://blog.jsonleex.com/icon/LX.png" alt="">
+                            <i class="ID_tag"></i>
+                        </div>
+                        <div class="b_info">
+                            <p class="b_name">JsonLeex</p>
+                            <p class="b_bio">JsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeexJsonLeex</p>
+                        </div>
+                        <div class="b_action">
+                            <a href="javascript:;">移除</a>
+                        </div>
+                    </div>
+                    <!-- /blacklist -->
+
+                </div>
+                <!-- /黑名单 -->
             </div>
         </div>
     </div>
