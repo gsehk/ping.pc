@@ -3,17 +3,6 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
-use Session;
-use Carbon\Carbon;
-use Zhiyi\Plus\Models\User;
-use Zhiyi\Plus\Models\FileWith;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\Feed;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedDigg;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentFeed\Models\FeedCollection;
-use function zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class AccountController extends BaseController
@@ -31,6 +20,11 @@ class AccountController extends BaseController
 
     public function authenticate()
     {
-    	return view('pcview::account.authenticate', $this->PlusData);
+        return view('pcview::account.authenticate', $this->PlusData);
+    }
+
+    public function tags()
+    {
+        return view('pcview::account.tags', $this->PlusData);
     }
 }

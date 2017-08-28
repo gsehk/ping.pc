@@ -57,8 +57,10 @@ Route::prefix('rank')->group(function () {
 
 Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
 
-    Route::get('/index', 'AccountController@index');
-    Route::get('/authenticate', 'AccountController@authenticate');
+    Route::get('index', 'AccountController@index')->name('pc.account');
+    Route::get('authenticate', 'AccountController@authenticate')->name('pc.authenticate');
+    Route::get('tags', 'AccountController@tags')->name('pc.tags');
+    Route::post('authenticate', 'AccountController@doAuthenticate');
 });
 
 // user profile

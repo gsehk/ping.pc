@@ -37,7 +37,7 @@ var ly = {
     error: function(message, reload, url, close) {
         reload = typeof(reload) == 'undefined' ? true : reload;
         close = typeof(close) == 'undefined' ? false : close;
-        
+
         layer.msg(message, {
           icon: 2,
           time: 2000
@@ -51,7 +51,7 @@ var ly = {
                 }
                 location.href = url;
             }
-        });     
+        });
     },
     load: function(requestUrl,title,width,height,type,requestData){
         if(load == 1) return false;
@@ -129,7 +129,7 @@ var fileUpload = {
                 },
                 error: function(error){
                     error.status === 404 && _this.uploadFile(image, f, callback);
-                    showError(xhr.responseJSON);
+                    showError(error.responseJSON);
                 }
             });
         }
@@ -370,7 +370,7 @@ var logout = function() {
         + '<a href="javascript:layer.closeAll()">取消</a>'
         + '</div>'
         + '<a href="' + request_url.logout + '"><span data-dismiss="modal" class="exit_btn exit_btn_bg">退出</span></a>'
-        + '</div></div>' 
+        + '</div></div>'
     layer.open({
       type: 1,
       title: false,
@@ -382,7 +382,7 @@ var logout = function() {
 
 // 接口返回错误解析
 var showError = function(obj) {
-    for (var key in obj) 
+    for (var key in obj)
     {
        noticebox(obj[key], 0);
        break;
@@ -399,13 +399,13 @@ var checkPhone = function(string) {
 };
 
 // 验证邮箱
-var checkEmail = function(string) { 
-    var pattern=/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/; 
+var checkEmail = function(string) {
+    var pattern=/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/;
     if (pattern.test(string)) {
         return true;
     }
     return false;
-} 
+}
 
 
 // 设置Cookie
@@ -422,12 +422,12 @@ var getCookie = function(c_name) {
     {
         var c_start=document.cookie.indexOf(c_name + "=");
         if (c_start!=-1)
-        { 
+        {
             c_start=c_start + c_name.length+1 ;
             var c_end=document.cookie.indexOf(";",c_start);
             if (c_end==-1) c_end=document.cookie.length;
             return unescape(document.cookie.substring(c_start,c_end));
-        } 
+        }
    }
    return "";
 }
