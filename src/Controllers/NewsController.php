@@ -50,6 +50,7 @@ class NewsController extends BaseController
             'after' => $request->query('after') ?: 0
         ];
 
+        // 获取资讯列表
         $news['news'] = createRequest('GET', '/api/v2/news', $params);
         $new = clone $news['news'];
         $after = $new->pop()->id ?? 0;
@@ -89,6 +90,12 @@ class NewsController extends BaseController
      */
     public function release(Request $request, int $news_id = 0)
     {
-        return view('pcview::news.release', [], $this->PlusData);
+        // 资讯分类
+        $cates = createRequest('GET', '/api/v2/news/cates');
+        $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
+
+        $data['news_id'] = $news_id;
+
+        return view('pcview::news.release', $data, $this->PlusData);
     }
 }

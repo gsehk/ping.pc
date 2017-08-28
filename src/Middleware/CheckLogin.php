@@ -20,7 +20,7 @@ class CheckLogin
         // if ( !Session::get('token') ) {
         //     $history = '/' . Route::getCurrentRoute()->uri;
         //     Session::put('history', $history);
-        //     return redirect(route('pc:index'));
+        //     return redirect(route('pc:feeds'));
         // }
         
         return $next($request);

@@ -167,7 +167,6 @@ a {
 
 .nav_list ul {
     display: flex;
-    width: 800px;
     height: 60px;
     margin-bottom: 0;
     justify-content: flex-start;

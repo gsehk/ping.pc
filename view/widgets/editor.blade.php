@@ -2,10 +2,11 @@
 <style type="text/css">
     #editor {
         width: 100%;
-        height: {{$height}};
+        height: {{ $height }};
     }
 </style>
 <div id="editor">{!!$content or ''!!}</div>
+
 <script src="{{ $url }}/wangEditor/wangEditor.min.js"></script>
 <script type="text/javascript">
     $(function () {

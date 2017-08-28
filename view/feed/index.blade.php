@@ -4,7 +4,9 @@
 
 @extends('pcview::layouts.default')
 
-@section('body_class')class="gray"@endsection
+@section('styles')
+<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
+@endsection
 
 @section('content')
     <!-- left -->
@@ -47,7 +49,6 @@
 
 @section('scripts')
 
-<link href="{{ $routes['resource'] }}/css/feed.css" rel="stylesheet">
 <script src="{{ $routes['resource'] }}/js/module.weibo.js"></script>
 <script src="{{ $routes['resource'] }}/js/jquery.uploadify.js"></script>
 <script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
@@ -67,7 +68,6 @@ setTimeout(function() {
 }, 300);
 
 $(function(){
-
     // 切换分类
     $('.feed_menu a').on('click', function() {
         var type = $(this).data('type');
@@ -90,11 +90,8 @@ $(function(){
         $(this).addClass('selected');
     });
 
-
-
     // 发布微博
-    var loadgif = RESOURCE_URL + '/images/loading.png';
-    var up = $('.dy_company').Huploadify({
+    var up = $('.post_button').Huploadify({
         auto:true,
         multi:true,
         newUpload:true,

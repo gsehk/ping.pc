@@ -6,7 +6,7 @@
         <li type="quarter"><a href="javascript:;">季度</a></li>
     </ul>
     <ul class="hot_news_list"">
-        <div id="week">
+        <div class="hot_news_item" id="week">
             @if(!$week->isEmpty())
             @foreach($week as $item)
                 <li>
@@ -15,10 +15,10 @@
                 </li>
             @endforeach
             @else
-                <div class="loading">暂无相关信息</div>
+                <div class="no_news">暂无相关信息</div>
             @endif
         </div>
-        <div class="hide" id="month">
+        <div class="hot_news_item hide" id="month">
             @if(!$month->isEmpty())
             @foreach($month as $item)
                 <li>
@@ -27,10 +27,10 @@
                 </li>
             @endforeach
             @else
-                <div class="loading">暂无相关信息</div>
+                <div class="no_news">暂无相关信息</div>
             @endif
         </div>
-        <div class="hide" id="quarter">
+        <div class="hot_news_item hide" id="quarter">
             @if(!$quarter->isEmpty())
             @foreach($quarter as $item)
                 <li>
@@ -39,7 +39,7 @@
                 </li>
             @endforeach
             @else
-                <div class="loading">暂无相关信息</div>
+                <div class="no_news">暂无相关信息</div>
             @endif
         </div>
     </ul>

@@ -14,13 +14,13 @@ class PassportController extends BaseController
     {
         Session::put('mid', $mid);
         Session::put('token', $token);
-        return redirect(route('pc:index'));
+        return redirect(route('pc:feeds'));
     }
 
     public function index()
     {
         if ($this->PlusData['TS'] != null) {
-            return redirect(route('pc:index'));
+            return redirect(route('pc:feeds'));
         }
 
     	return view('pcview::passport.login', [], $this->PlusData);
@@ -29,7 +29,7 @@ class PassportController extends BaseController
     public function logout()
     {
         Session::flush();
-        return redirect(route('pc:index'));
+        return redirect(route('pc:feeds'));
     }
 
     public function register(int $type = 0)

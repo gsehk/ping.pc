@@ -1,7 +1,7 @@
 (function($){
     var loadgif = RESOURCE_URL + '/images/loading.png';
 	$.fn.Huploadify = function(opts){
-		var itemTemp = '<a class="dy_picture_span uploadify-queue-item" id="${fileID}"><img class="load imgload" src=" '+loadgif+' "/></a>';
+		var itemTemp = '<a class="feed_picture_span uploadify-queue-item" id="${fileID}"><img class="load imgload" src=" '+loadgif+' "/></a>';
 		var defaults = {
 			fileTypeExts:'*.jpg;*.JPG;*.png;*.PNG',//允许上传的文件类型，格式'*.jpg;*.doc'
 			auto:true,//是否开启自动上传
@@ -77,7 +77,7 @@
 					inputStr += '<a id="file_upload_'+instanceNumber+'-button" href="javascript:void(0)" class="uploadify-button">';
 					inputStr += option.buttonText;
 					inputStr += '</a>';
-					var uploadFileListStr = '<div id="file_upload_'+instanceNumber+'-queue" class="uploadify-queue dy_picture"></div>';
+					var uploadFileListStr = '<div id="file_upload_'+instanceNumber+'-queue" class="uploadify-queue feed_picture"></div>';
 					_this.append(inputStr);
 					_this.after(uploadFileListStr);
 
@@ -195,7 +195,7 @@
 
 					if ($('.uploadify-queue-add').length == 0) {
 						// 图片添加那妞
-						var add = '<a class="dy_picture_span uploadify-queue-add">'
+						var add = '<a class="feed_picture_span uploadify-queue-add">'
 								
 								+ '</a>'
 						$('.uploadify-queue').append(add);

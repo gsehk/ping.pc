@@ -1,104 +1,5 @@
 var weibo = {};
 
-weibo.setting = {};
-
-/**
- * 微博初始化
- * $param object option 微博配置相关数据
- * @return void
- */
-weibo.init = function(option) {
-    this.setting.container = option.container; // 容器ID
-    this.setting.loadcount = option.loadcount || 0; // 加载次数
-    this.setting.loadmax = option.loadmax || 40; // 加载最大次数
-    this.setting.after = option.after || 0; // 最后一条微博id
-    this.setting.type = option.type || 'new'; //  微博分类
-    this.setting.canload = option.canload || true; // 是否能加载
-    this.setting.loading = option.loading || '.dy_cen'; //加载图位置
-    this.setting.url = SITE_URL + '/feeds';
-    weibo.bindScroll();
-    if ($(weibo.setting.container).length > 0 && this.setting.canload) {
-        $('.loading').remove();
-        $(weibo.setting.loading).after(loadHtml);
-        weibo.loadMore();
-    }
-};
-/**
- * 页面底部触发事件
- * @return void
- */
-weibo.bindScroll = function() {
-    // 底部触发事件绑定
-    $(window).bind('scroll resize', function() {
-        // 加载指定次数后，将不能自动加载
-        if (weibo.isLoading()) {
-            var scrollTop = $(this).scrollTop();
-            var scrollHeight = $(document).height();
-            var windowHeight = $(this).height();
-            if(scrollTop + windowHeight == scrollHeight){
-                if ($(weibo.setting.container).length > 0) {
-                    $('.loading').remove();
-                    $(weibo.setting.loading).after(loadHtml);
-                    weibo.loadMore();
-                }
-            }
-        }
-    });
-};
-
-/**
- * 判断是否微博时候能自动加载
- * @return boolean 微博是否能自动加载
- */
-weibo.isLoading = function() {
-    var status = (this.setting.loadcount >= this.setting.loadmax || this.setting.canload == false) ? false : true;
-    return status;
-};
-
-/**
- * 获取加载的数据信息
- * @return void
- */
-weibo.loadMore = function() {
-    // 将能加载参数关闭
-    weibo.setting.canload = false;
-    weibo.setting.loadcount++;
-
-    var postArgs = {};
-    postArgs.after = weibo.setting.after;
-    postArgs.type = weibo.setting.type;
-    $.ajax({
-        url: weibo.setting.url,
-        type: 'GET',
-        data: postArgs,
-        dataType: 'json',
-        error: function(xml) {},
-        success: function(res) {
-            if (res.data.after > 0) {
-                weibo.setting.canload = true;
-                // 修改加载ID
-                weibo.setting.after = res.data.after;
-                var html = res.data.html;
-                if (weibo.setting.loadcount == 1) {
-                    $(weibo.setting.container).html(html);
-                    $('.loading').remove();
-                } else {
-                    $(weibo.setting.container).append(html);
-                }
-                $("img.lazy").lazyload({effect: "fadeIn"});
-            } else {
-                weibo.setting.canload = false;
-                if (weibo.setting.loadcount == 1) {
-                    no_data(weibo.setting.container, 1, ' 暂无相关内容');
-                    $('.loading').html('');
-                } else {
-                    $('.loading').html('暂无相关内容');
-                }
-            }
-        }
-    });
-};
-
 /**
  * 上传后操作
  * @return void
@@ -126,7 +27,7 @@ weibo.postFeed = function() {
     }
 
     var images = [];
-    $('.dy_picture').find('img').each(function() {
+    $('.feed_picture').find('img').each(function() {
         images.push({'id':$(this).attr('tid')});
     });
 
@@ -143,12 +44,12 @@ weibo.postFeed = function() {
             return false;
         }
     $.ajax({
-        url: request_url.feeds,
+        url: '/api/v2/feeds',
         type: 'post',
         data: data,
         success: function(res) {
             noticebox('发布成功', 1);
-            $('.dy_picture').html('').hide();
+            $('.feed_picture').html('').hide();
             $('#feed_content').val('');
             weibo.afterPostFeed(res.id);
         },
@@ -685,7 +586,7 @@ $(function() {
             $('#file_upload_1-queue').hide();
         }
         if ($('#file_upload_1-queue').find('.uploadify-queue-item').length != 0  && $('.uploadify-queue-add').length == 0 ){
-            var add = '<a class="dy_picture_span uploadify-queue-add">'
+            var add = '<a class="feed_picture_span uploadify-queue-add">'
                     
                     + '</a>'
             $('.uploadify-queue').append(add);

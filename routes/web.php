@@ -56,10 +56,12 @@ Route::prefix('rank')->group(function () {
 });
 
 Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
+    Route::get('index', 'AccountController@index')->name('pc:account');
 
-    Route::get('index', 'AccountController@index')->name('pc.account');
-    Route::get('authenticate', 'AccountController@authenticate')->name('pc.authenticate');
-    Route::get('tags', 'AccountController@tags')->name('pc.tags');
+    Route::get('authenticate', 'AccountController@authenticate')->name('pc:authenticate');
+
+    Route::get('tags', 'AccountController@tags')->name('pc:tags');
+    
     Route::post('authenticate', 'AccountController@doAuthenticate');
 });
 
@@ -74,12 +76,7 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     // user article page
     Route::get('article/{user_id?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:minearc');
-
-    // user setting page
-    Route::get('account', 'ProfileController@account')->name('pc:account');
-
-    Route::get('follow', 'ProfileController@follow')->name('pc:follow');
-
+    
     // user followers
     Route::get('/followers/{user_id?}', 'ProfileController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
 

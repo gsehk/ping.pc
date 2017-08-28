@@ -2,6 +2,7 @@ var defaultAvatar = RESOURCE_URL+'/images/avatar.png';
 var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/loading.png' class='load'>加载中</div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var mark_time = MID + new Date().getTime();
+var initNums = 255;
 
 // ajax 设置 headers
 $.ajaxSetup({

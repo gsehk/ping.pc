@@ -150,8 +150,8 @@ $(function(){
             $(this).siblings().find('a').removeClass('hover');
             $(this).find('a').addClass('hover');
 
-            $('.hot_news_list div').hide();
-            $('#' + type).show();
+            $('.hot_news_list .hot_news_item').addClass('hide');
+            $('#' + type).removeClass('hide');
         })
     }
 });

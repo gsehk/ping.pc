@@ -15,6 +15,7 @@
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
     <link rel="stylesheet" href="{{ $routes['resource'] }}/css/common.css">
+    <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
     @yield('styles')
 </head>
 
@@ -44,7 +45,6 @@
 @include('pcview::layouts.partials.footer')
 
 <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
-<script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
 <script src="{{ $routes['resource'] }}/js/jquery.lazyload.min.js"></script>
 <script src="{{ $routes['resource'] }}/layer/layer.js"></script>
 <script src="{{ $routes['resource'] }}/js/common.js"></script>
