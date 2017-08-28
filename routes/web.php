@@ -33,13 +33,17 @@ Route::prefix('passport')->group(function () {
 // feeds
 Route::prefix('feeds')->group(function () {
     // feeds index
-    Route::get('/index', 'FeedController@index')->name('pc:index');
+    Route::get('/', 'FeedController@index')->name('pc:feeds');
+
     // feeds list
-    Route::get('/', 'FeedController@feeds')->name('pc:feeds');
+    Route::get('/list', 'FeedController@list');
+
     // feed detail
     Route::get('/{feed}', 'FeedController@read')->where(['feed' => '[0-9]+'])->name('pc:feedread');
+
     // feed comments list
     Route::get('/{feed}/comments', 'FeedController@comments')->where(['feed' => '[0-9]+'])->name('pc:feedcomments');
+
     // feed collections
     Route::get('/collection', 'FeedController@collection')->name('pc:feedcollections');
 });
@@ -112,17 +116,17 @@ Route::prefix('news')->group(function () {
     // news index
     Route::get('/', 'NewsController@index')->name('pc:news');
 
+    // get news list
+    Route::get('/list', 'NewsController@list');
+
     // news detail
-    Route::get('/read/{news_id}', 'NewsController@read')->name('pc:newsRead');
+    Route::get('/{news_id}', 'NewsController@read')->name('pc:newsread');
 
     // news comments list
     Route::get('/{news_id}/comments', 'NewsController@commnets')->where(['news_id' => '[0-9]+']);
 
     // news release
     Route::get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
-
-    // get news list
-    Route::get('lists', 'NewsController@lists');
 
     // get recent and hot news
     Route::get('/getRecentHot', 'NewsController@getRecentHot');

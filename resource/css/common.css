@@ -130,6 +130,10 @@ a {
     content: '.';
 }
 
+.hide {
+    display: none;
+}
+
 /*导航*/
 
 .nav {

@@ -1,12 +1,12 @@
 @php $route = route::currentRouteName(); @endphp
 <div class="nav nav_border">
     <div class="nav_left">
-        <a href="{{ route('pc:index') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
+        <a href="{{ route('pc:feeds') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
         <!-- <span class="nav_beta fs-16">beta</span> -->
     </div>
     <div class="nav_list clearfix">
         <ul>
-            <li><a href="{{ route('pc:index') }}" class="selected">动态</a></li>
+            <li><a href="{{ route('pc:feeds') }}" class="selected">动态</a></li>
             <!-- <li><a href="" class="fs-18">圈子</a></li> -->
             <!-- <li><a href="" class="fs-18">问答</a></li> -->
             <li><a href="{{ route('pc:news') }}">资讯</a></li>

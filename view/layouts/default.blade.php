@@ -1,26 +1,21 @@
-@php
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
-@endphp
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="utf-8">
-<meta name="_token" content="{{ csrf_token() }}"/>
-<title>@yield('title')</title>
-<script>
-    var API = '{{ $routes["api"] }}';
-    var MID = "{{ $TS['id'] or 0 }}";
-    var NAME = "{{ $TS['name'] or '' }}";
-    var AVATAR = "{{ $TS['avatar'] }}";
-    var TOKEN = "{{ $token or '' }}";
-    var SITE_URL = "{{ $routes['siteurl'] }}";
-    var RESOURCE_URL = '{{ $routes["resource"] }}';
-    var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
-</script>
-<link rel="stylesheet" href="{{ $routes['resource'] }}/css/common.css">
-@yield('styles')
+    <meta charset="utf-8">
+    <meta name="_token" content="{{ csrf_token() }}"/>
+    <title>@yield('title')</title>
+    <script>
+        var API = '{{ $routes["api"] }}';
+        var MID = "{{ $TS['id'] or 0 }}";
+        var NAME = "{{ $TS['name'] or '' }}";
+        var AVATAR = "{{ $TS['avatar'] }}";
+        var TOKEN = "{{ $token or '' }}";
+        var SITE_URL = "{{ $routes['siteurl'] }}";
+        var RESOURCE_URL = '{{ $routes["resource"] }}';
+        var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
+    </script>
+    <link rel="stylesheet" href="{{ $routes['resource'] }}/css/common.css">
+    @yield('styles')
 </head>
 
 <body @yield('body_class')>

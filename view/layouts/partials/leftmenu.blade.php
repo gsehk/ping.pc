@@ -2,7 +2,7 @@
 <div class="left_menu">
     <ul>
         <li>
-            <a href="{{ route('pc:index') }}" class="@if ($route == 'pc:index')selected @endif">
+            <a href="{{ route('pc:feeds') }}" class="@if ($route == 'pc:feeds')selected @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-dynamic"></use></svg>全部动态
             </a>
         </li>

@@ -17,7 +17,7 @@ class FeedController extends BaseController
         return view('pcview::feed.index', $data, $this->PlusData);
     }
 
-    public function feeds(Request $request)
+    public function list(Request $request)
     {
         $params = [
             'type' => $request->query('type'),

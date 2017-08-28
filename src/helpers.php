@@ -138,7 +138,7 @@ function createRequest($method = 'POST', $url = '', $params = array())
         return Auth::user($guard);
     });
     // 解决请求传参问题
-    if ($url != '/api/v2/user/') { // 获取登录用户不需要传参
+    if ($url != '/api/v2/user/' && $url != '/api/v2/advertisingspace') { // 获取登录用户不需要传参
         app()->instance(Request::class, $request);
     }
     $response = Route::dispatch($request)->original;

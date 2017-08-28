@@ -5,6 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -16,53 +17,61 @@ class NewsController extends BaseController
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function index(Request $request, int $cid = 0)
+    public function index(Request $request, int $cate_id = 0)
     {   
         // 获取资讯首页广告位ID
-        $space = $this->PlusData['site']['ads']['pc:news:top']['id'];
+        $space = $this->PlusData['site']['ads'];
 
         // 顶部广告
-        $data['ads'] = createRequest('GET', '/api/v2/advertisingspace/' . $space . '/advertising')->pluck('data');
-        // dd($data['ads']);
+        $data['ads']['top'] = createRequest('GET', '/api/v2/advertisingspace/' . $space['pc:news:top']['id'] . '/advertising')->pluck('data');
+        
+        // 右侧广告
+        $data['ads']['right'] = createRequest('GET', '/api/v2/advertisingspace/' . $space['pc:news:right']['id'] . '/advertising')->pluck('data');
         
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
 
-        $data['cid'] = $cid;
+        $data['cate_id'] = $cate_id;
 
         return view('pcview::news.index', $data, $this->PlusData);
     }
 
     /**
+     * 资讯列表.
+     * 
+     * @param  $cate_id [分类ID]
+     * @return mixed 返回结果
+     */
+    public function list(Request $request)
+    {
+        $params = [
+            'cate_id' => $request->query('cate_id'),
+            'after' => $request->query('after') ?: 0
+        ];
+
+        $news['news'] = createRequest('GET', '/api/v2/news', $params);
+        $new = clone $news['news'];
+        $after = $new->pop()->id ?? 0;
+        $newsData = view('pcview::templates.news', $news, $this->PlusData)->render();
+
+        return response()->json([
+                'status'  => true,
+                'data' => $newsData,
+                'after' => $after
+        ]);
+    }
+
+    /**
      * 文章详情页
      */
-    public function read(News $model, int $news_id)
+    public function read(int $news_id)
     {
-        $news = $model->byAudit()->where('id', $news_id)->first();
-        if (!$news) {
-            return redirect( route('pc:news'), 302);
-        }
-        $news->increment('hits');
-        $user = $this->PlusData['TS']['id'] ?? 0;
-        $news->news_count = $model->byAudit()->where('user_id', $news->user_id)->count();
-        $news->hots_count = $model->byAudit()->where('user_id', $news->user_id)->where('cate_id', 1)->count();
-        $news->like_count = $news->collection->count();
-        $news->collect_count = $news->collection->count();
-        $news->has_collect = $user ? $news->collection->where('user_id', $user)->count() : 0;
-        $news->has_like = $news->liked($user);
-        $news->user = $news->user;
-        $news->hots = [
-            'week' => $this->getRecentHot(1),
-            'month' => $this->getRecentHot(2),
-            'quarter' => $this->getRecentHot(3),
-        ];
-        $news->list = $model->byAudit()
-                ->where('user_id', $news->user_id)
-                ->select('id', 'title')
-                ->take(4)->get();
+        $news = createRequest('GET', '/api/v2/news/' . $news_id);
+        $news['collect_count'] = $news->with('collections')->count();
 
-        return view('pcview::information.read', $news, $this->PlusData);
+        $data['news'] = $news;
+        return view('pcview::news.read', $data, $this->PlusData);
     }
 
     /**
@@ -107,53 +116,6 @@ class NewsController extends BaseController
         ]);
     }
 
-    /**
-     * 资讯列表.
-     * 
-     * @param  $cate_id [分类ID]
-     * @return mixed 返回结果
-     */
-    public function lists(Request $request)
-    {
-        $cate_id = $request->cate_id;
-        $max_id = $request->after;
-        $limit = $request->limit ?? 15;
-
-        if ($cate_id) {
-            $datas = News::byAudit()
-                ->Join('news_cates_links', function ($query) use ($cate_id) {
-                    $query->on('news.id', '=', 'news_cates_links.news_id')->where('news_cates_links.cate_id', $cate_id);
-                })
-                ->where(function ($query) use ($max_id) {
-                    if ($max_id > 0) {
-                        $query->where('news.id', '<', $max_id);
-                    }
-                })
-                ->orderBy('news.id', 'desc')
-                ->select('news.id','news.title','news.subject','news.created_at','news.storage','news.comment_count','news.from')
-                ->withCount('collection')
-                ->take($limit)
-                ->get();
-        } else {
-            $datas = News::byAudit()
-                ->where(function ($query) use ($max_id) {
-                    if ($max_id > 0) {
-                        $query->where('id', '<', $max_id);
-                    }
-                })
-                ->orderBy('id', 'desc')
-                ->select('id','title','subject','created_at','storage','comment_count','from')
-                ->withCount('collection')
-                ->take($limit)
-                ->get();
-        }
-        return response()->json(static::createJsonData([
-            'status'  => true,
-            'code'    => 0,
-            'message' => '获取成功',
-            'data'    => $datas
-        ]))->setStatusCode(200);
-    }
 
     /**
      * 获取近期资讯列表
