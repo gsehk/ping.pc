@@ -46,7 +46,7 @@ Route::prefix('feeds')->group(function () {
 
 // rank
 Route::prefix('rank')->group(function () {
-    // 排行榜
+    // rank list
     Route::get('/{mold?}', 'RankController@index')->where(['mold' => '[0-9]+'])->name('pc:rank');
     Route::get('/rankList', 'RankController@_getRankList')->name('pc:ranklist');
 });
@@ -90,10 +90,10 @@ Route::prefix('users')->group(function () {
     Route::get('/getusers', 'UserController@getUsers');
 
     // user followers
-    Route::get('/{user_id}/followers', 'UserController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
+    Route::get('/followers/{user_id?}', 'UserController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
 
     // user followings
-    Route::get('/{user_id}/followings', 'UserController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
+    Route::get('/followings/{user_id?}', 'UserController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
 
     // get follow users
     Route::get('/getfollows', 'UserController@getFollows');
@@ -104,7 +104,7 @@ Route::prefix('users')->group(function () {
 // news
 Route::prefix('news')->group(function () {
     // news index
-    Route::get('index', 'NewsController@index')->name('pc:news');
+    Route::get('/', 'NewsController@index')->name('pc:news');
     
     // news detail
     Route::get('/read/{news_id}', 'NewsController@read')->name('pc:newsRead');

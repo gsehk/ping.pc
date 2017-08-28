@@ -6,6 +6,7 @@ use Closure;
 use Carbon\Carbon;
 use Zhiyi\Plus\Models\Comment;
 use Zhiyi\Plus\Models\Permission;
+use Zhiyi\Plus\Models\AdvertisingSpace;
 use Zhiyi\Component\Installer\PlusInstallPlugin\AbstractInstaller;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
     route_path,
@@ -28,6 +29,20 @@ class PcPackageHandler extends PackageHandler
 
     public function installHandle($command)
     {
+        AdvertisingSpace::create([
+            'channel' => 'pc',
+            'space' => 'pc:news:top',
+            'alias' => '资讯首页banner',
+            'allow_type' => 'image',
+            'format' => [
+                'image' => [
+                    'image' => '图片|string',
+                    'link' => '链接|string',
+                ],
+            ],
+        ]);
+
+
         $command->info('Install Successfully');
     }
 

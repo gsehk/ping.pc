@@ -7,8 +7,8 @@
     <div class="nav_list clearfix">
         <ul>
             <li><a href="{{ route('pc:index') }}" class="selected">动态</a></li>
-            <li><a href="" class="fs-18">圈子</a></li>
-            <li><a href="" class="fs-18">问答</a></li>
+            <!-- <li><a href="" class="fs-18">圈子</a></li> -->
+            <!-- <li><a href="" class="fs-18">问答</a></li> -->
             <li><a href="{{ route('pc:news') }}">资讯</a></li>
             <li><a href="{{ route('pc:users') }}" class="fs-18">找伙伴</a></li>
         </ul>

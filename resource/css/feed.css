@@ -80,6 +80,10 @@
     color: #333;
 }
 
+.feed_content .feed_menu .selected {
+    color: #333 !important;
+}
+
 /*动态右侧*/
 .feed_right {
     float: left;
@@ -328,10 +332,6 @@
 .dy_share:link {
     text-decoration: none;
     color: #fff;
-}
-
-.dy_cen_333 {
-    color: #333 !important;
 }
 
 .dy_c {

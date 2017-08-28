@@ -50,17 +50,22 @@ class UserController extends BaseController
 
     
     // 粉丝
-    public function followers(Request $request, int $user_id)
+    public function followers(Request $request, int $user_id = 0)
     {
+        if ($user_id == 0 && empty($this->PlusData['TS'])) {
+            return redirect(route('pc:login'));
+        }
         $data['type'] = 1;
         $data['user_id'] = $user_id;
         return view('pcview::user.follow', $data, $this->PlusData);
     }
 
-
     // 关注
-    public function followings(Request $request, int $user_id)
+    public function followings(Request $request, int $user_id = 0)
     {
+        if ($user_id == 0 && empty($this->PlusData['TS'])) {
+            return redirect(route('pc:login'));
+        }
         $data['type'] = 2;
         $data['user_id'] = $user_id;
         return view('pcview::user.follow', $data, $this->PlusData);

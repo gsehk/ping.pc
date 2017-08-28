@@ -398,6 +398,7 @@ a {
 }
 
 .left_menu ul li a {
+    font-size: 16px;
     color: #333;
 }
 
@@ -409,6 +410,10 @@ a {
     font-size: 30px;
     vertical-align: -8px;
     margin-right: 10px;
+}
+
+.left_menu .selected {
+    color: #59b6d7 !important;
 }
 
 /*右侧内容*/

@@ -25,7 +25,11 @@ class BaseController extends Controller
             
 			// site config
 	        $config = [];
-	        $this->PlusData['site'] = $config;
+	        $this->PlusData['site']['conifg'] = $config;
+
+            // site ads
+            $ads = createRequest('GET', '/api/v2/advertisingspace')->keyBy('space');
+            $this->PlusData['site']['ads'] = $ads;
 
 	        // common config
             $app_url = getenv('APP_URL');

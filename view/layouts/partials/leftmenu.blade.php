@@ -2,37 +2,37 @@
 <div class="left_menu">
     <ul>
         <li>
-            <a href="{{ route('pc:index') }}" class="fs-16 @if ($route == 'pc:index') dy_59 @endif">
+            <a href="{{ route('pc:index') }}" class="@if ($route == 'pc:index')selected @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-dynamic"></use></svg>全部动态
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:mine') }}" class="fs-16 @if ($route == 'pc:mine') dy_59 @endif">
+            <a href="{{ route('pc:mine') }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-mydynamic"></use></svg>我的动态
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:follow') }}" class="fs-16 @if ($route == 'pc:follow') dy_59 @endif">
+            <a href="{{ route('pc:followers', ['user_id' => $TS['id']]) }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-myfans"></use></svg>我的粉丝
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:follow', ['type' => 2]) }}" class="fs-16 @if ($route == 'pc:follow') dy_59 @endif">
+            <a href="{{ route('pc:followings', ['user_id' => $TS['id']]) }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-attention"></use></svg>关注的人
             </a>
         </li>
-        {{-- <li>
-            <a href="{{ route('pc:rank')}}" class="fs-16 @if ($route == 'pc:rank') dy_59 @endif">
+        <li>
+            <a href="{{ route('pc:rank')}}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-rank"></use></svg>排行榜
             </a>
-        </li> --}}
+        </li>
         <li>
-            <a href="{{ route('pc:collect') }}" class="fs-16 @if ($route == 'pc:collect') dy_59 @endif">
+            <a href="{{ route('pc:collect') }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collection"></use></svg>收藏的
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:account') }}" class="fs-16 @if ($route == 'pc:account') dy_59 @endif">
+            <a href="{{ route('pc:account') }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-setting"></use></svg>设置
             </a>
         </li>

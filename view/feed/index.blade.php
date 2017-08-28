@@ -8,8 +8,7 @@
 
 @section('content')
     <!-- left -->
-    @component('pcview::layouts.partials.leftmenu')
-    @endcomponent
+    @include('pcview::layouts.partials.leftmenu')
     <!-- middle -->
     <div class="feed_cont">
         @if(!empty($TS))
@@ -27,10 +26,10 @@
         <div class="feed_content">
             <div class="feed_menu">
                 @if (!empty($TS))
-                <a href="javascript:;" data-type="follow" class="fs-16 @if ($type == 'follow') dy_cen_333 @endif">关注的</a>
+                <a href="javascript:;" data-type="follow" class="fs-16 @if ($type == 'follow')selected @endif">关注的</a>
                 @endif
-                <a href="javascript:;" data-type="hot" class="fs-16 @if ($type == 'hot') dy_cen_333 @endif">热门</a>
-                <a href="javascript:;" data-type="new" class="fs-16 @if ($type == 'new') dy_cen_333 @endif">最新</a>
+                <a href="javascript:;" data-type="hot" class="fs-16 @if ($type == 'hot')selected @endif">热门</a>
+                <a href="javascript:;" data-type="new" class="fs-16 @if ($type == 'new')selected @endif">最新</a>
             </div>
             <div id="feeds_list"></div>
         </div>
@@ -53,21 +52,6 @@
 <script src="{{ $routes['resource'] }}/js/jquery.uploadify.js"></script>
 <script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
 <script type="text/javascript">
-
-var checkin = function(){
-  if( MID == 0 ){
-    return;
-  }
-  var totalnum = {{$checkin['total_num'] or 0}} + 1;
-  $.get('/home/checkin' , {} , function (res){
-    if ( res ){
-      var totalnum = res.data.score;
-      $('#checkin').html('<svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>已签到<span>连续签到<font class="colnum">'+res.data.con_num+'</font>天</span>');
-      $('.totalnum').text(totalnum);
-    }
-  });
-};
-
 // 加载微博
 var params = {
     type: '{{ $type }}'
@@ -83,6 +67,31 @@ setTimeout(function() {
 }, 300);
 
 $(function(){
+
+    // 切换分类
+    $('.feed_menu a').on('click', function() {
+        var type = $(this).data('type');
+        // 清空数据
+        $('#feeds_list').html('');
+
+        // 加载相关微博
+        var params = {
+            type: type
+        };
+        scroll.init({
+            container: '#feeds_list',
+            loading: '.feed_content',
+            url: '/feeds',
+            params: params
+        });
+
+        // 修改样式
+        $('.feed_menu a').removeClass('selected');
+        $(this).addClass('selected');
+    });
+
+
+
     // 发布微博
     var loadgif = RESOURCE_URL + '/images/loading.png';
     var up = $('.dy_company').Huploadify({

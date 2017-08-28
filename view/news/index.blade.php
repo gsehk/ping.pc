@@ -2,25 +2,18 @@
 
 @section('content')
 <div class="in_cont">
-    @if(!$slide->isEmpty())
+    @if(!$ads->isEmpty())
         <div class="unslider">
             <ul class="bannerList">
-                @foreach($slide as $sv)
+                @foreach($ads as $ad)
                   <li>
-                    @if($sv->type == 'news')
-                        <a href="/news/read/{{$sv->data}}">
-                    @elseif($sv->type == 'url') 
-                        <a href="{{$sv->data}}" target="_blank">
-                    @endif
-                    <img src="{{$routes['storage']}}{{$sv->cover}}?h=414" width="100%" height="414"></a>
+                    <a href="{{ $ad['link'] }}">
+                        <img src="{{ $ad['image'] }}" width="100%" height="414">
+                    </a>
                   </li>
                 @endforeach
             </ul>
         </div>
-    @else 
-        <a href="http://www.thinksns.com/zx/reader.php?id=94" target="_blank">
-            <img src="{{ $routes['resource'] }}/images/ad_news.png" />
-        </a>
     @endif
 </div>
 
@@ -30,89 +23,20 @@
             <span class="more"></span>
             <ul class="news_cate_tab">
             <a href="javascript:;" data-cid="0" class="dy_59"><li>全部</li></a>
-            @if (isset($cate))
-            @foreach ($cate as $post)
+            @foreach ($cates as $cate)
                 @if ($loop->iteration < 10)
-                <a href="javascript:;" data-cid="{{$post['id']}}" @if($cid == $post['id']) class="dy_59" @endif><li>{{ $post['name'] }}</li></a>
+                <a href="javascript:;" data-cid="{{ $cate['id'] }}" @if($cid == $cate['id']) class="dy_59" @endif><li>{{ $cate['name'] }}</li></a>
                 @endif
             @endforeach
-            @endif
             </ul>
             <div id="news-list">
             </div>
         </div>
         <div class="inf_right">
-            <div class="infR_top">
-                <div class="itop_autor">热门作者</div>
-                <div id="j-author-hot-wrapp">
-                    <div class="R_list hots_author">
-                    @if ($author->isEmpty())
-                        @foreach ($author as $user)
-                            <div class="fl">
-                                <a href="{{ Route('pc:mine',['user_id'=>$user->user['id']]) }}">
-                                    <img src="{{ $user->user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
-                                </a>
-                            </div>
-                            <div class="i_right">
-                                <span><a href="{{ route('pc:mine',['user_id'=>$user->user['id']]) }}">{{$user->user['name']}}</a></span>
-                                <p class="bio">{{ $user->user['bio'] or '暂无简介信息' }}</p>
-                            </div>
-                        @endforeach
-                    @else
-                        <div class="loading">暂无相关信息</div>
-                    @endif
-                    </div>
-                </div>
-            </div>
             <div class="news_ad">
-            <a href="http://www.thinksns.com/zx/reader.php?id=94" target="_blank">
-            <img src="{{ $routes['resource'] }}/images/ad_news.png" /></a>
-            </div>
-            <div class="infR_top">
-                <div class="itop_autor autor_border">近期热点</div>
-                <ul class="infR_time infR_time_1" id="j-recent-hot">
-                    <li class="infR_time_3"><a href="javascript:;" cid="1" class="week a_border">一周</a></li>
-                    <li class="infR_time_3"><a href="javascript:;" cid="2" class="meth">月度</a></li>
-                    <li class="infR_time_3"><a href="javascript:;" cid="3" class="moth">季度</a></li>
-                </ul>
-                <ul class="new_list" id="j-recent-hot-wrapp">
-                    <div class="list list1">
-                        @if(!$hots['week']->isEmpty())
-                        @foreach($hots['week'] as $week)
-                            <li>
-                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="{{ Route('pc:newsRead', $week->id) }}">{{$week->title}}</a>
-                            </li>
-                        @endforeach
-                        @else
-                            <div class="loading">暂无相关信息</div>
-                        @endif
-                    </div>
-                    <div class="list list2">
-                        @if(!$hots['month']->isEmpty())
-                        @foreach($hots['month'] as $month)
-                            <li>
-                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="{{ Route('pc:newsRead', $month->id) }}">{{$month->title}}</a>
-                            </li>
-                        @endforeach
-                        @else
-                            <div class="loading">暂无相关信息</div>
-                        @endif
-                    </div>
-                    <div class="list list3">
-                        @if(!$hots['quarter']->isEmpty())
-                        @foreach($hots['quarter'] as $quarter)
-                            <li>
-                                <span @if($loop->index > 2) class="grey" @endif>{{$loop->iteration}}</span>
-                                <a href="{{ Route('pc:newsRead', $quarter->id) }}">{{$quarter->title}}</a>
-                            </li>
-                        @endforeach
-                        @else
-                            <div class="loading">暂无相关信息</div>
-                        @endif
-                    </div>
-                </ul>
+                <a href="http://www.thinksns.com/zx/reader.php?id=94" target="_blank">
+                    <img src="{{ $routes['resource'] }}/images/ad_news.png" />
+                </a>
             </div>
         </div>
     </div>

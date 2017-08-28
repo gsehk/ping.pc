@@ -5,15 +5,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Zhiyi\Plus\Models\FileWith;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\CheckInfo;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCate;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsDigg;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCateLink;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsRecommend;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsComment;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -25,31 +16,22 @@ class NewsController extends BaseController
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function index(Request $request)
-    {
-        $datas['cid'] = $request->input('cid') ?: 0;
-        $datas['slide'] = NewsRecommend::with('cover')->get();
-        $datas['cate'] = NewsCate::get();
-        $datas['hots'] = [
-            'week' => $this->getRecentHot(1),
-            'month' => $this->getRecentHot(2),
-            'quarter' => $this->getRecentHot(3),
-        ];        
-        $user_id = $this->PlusData['TS']['id'] ?? 0;
+    public function index(Request $request, int $cid = 0)
+    {   
+        // 获取资讯首页广告位ID
+        $space = $this->PlusData['site']['ads']['pc:news:top']['id'];
 
-        $datas['recommend'] = News::byAudit()
-                ->select('id','title','updated_at','storage','from','author')
-                ->where('is_recommend', 1)
-                ->orderBy('id', 'desc')->take(6)
-                ->get();
-        $datas['author'] = News::byAudit()
-                ->select('user_id')
-                ->orderBy('hits', 'desc')
-                ->groupBy('user_id')
-                ->take(3)
-                ->get();
+        // 顶部广告
+        $data['ads'] = createRequest('GET', '/api/v2/advertisingspace/' . $space . '/advertising')->pluck('data');
+        // dd($data['ads']);
+        
+        // 资讯分类
+        $cates = createRequest('GET', '/api/v2/news/cates');
+        $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
 
-        return view('pcview::information.index', $datas, $this->PlusData);
+        $data['cid'] = $cid;
+
+        return view('pcview::news.index', $data, $this->PlusData);
     }
 
     /**
