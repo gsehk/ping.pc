@@ -73,32 +73,31 @@ var getArea = function(obj) {
 /* 基本资料更新 */
 $('#J-user-info').on('click', function(e) {
     var getArgs = function() {
-        var inp = $('#J-input input,#J-input select').toArray();
-        var sel;
-        for (var i in inp) {
-            sel = $(inp[i]);
-            if (sel.val()) {
-                args.set(sel.attr('name'), sel.val());
-                if (sel.attr('name') == 'name') {
-                    if (sel.val() == username) {
-                        delete args.data.name;
-                    }
-                }
-                if ($(inp[i]).attr('name') == 'sex') {
-                    args.set('sex', $('[name="sex"]:checked').val());
-                }
-                if ($(inp[i]).attr('name') == 'province') {
-                    args.set('p', sel.find("option:selected").text());
-                }
-                if ($(inp[i]).attr('name') == 'city') {
-                    args.set('c', sel.find("option:selected").text());
-                }
-                if ($(inp[i]).attr('name') == 'area') {
-                    args.set('a', sel.find("option:selected").text());
+    var inp = $('#J-input input,#J-input select').toArray();
+    var sel;
+    for (var i in inp) {
+        sel = $(inp[i]);
+        if (sel.val()) {
+            args.set(sel.attr('name'), sel.val());
+            if (sel.attr('name') == 'name') {
+                if (sel.val() == username) {
+                    delete args.data.name;
                 }
             }
-        };
-
+            if ($(inp[i]).attr('name') == 'sex') {
+                args.set('sex', $('[name="sex"]:checked').val());
+            }
+            if ($(inp[i]).attr('name') == 'province') {
+                args.set('p', sel.find("option:selected").text());
+            }
+            if ($(inp[i]).attr('name') == 'city') {
+                args.set('c', sel.find("option:selected").text());
+            }
+            if ($(inp[i]).attr('name') == 'area') {
+                args.set('a', sel.find("option:selected").text());
+            }
+        }
+    };
         return args.get();
     };
     var args = getArgs();
@@ -120,29 +119,3 @@ $('#J-user-info').on('click', function(e) {
         }
     });
 });
-
-/*  提交用户认证信息*/
-$('#J-user-authenticate').on('click', function(e) {
-    var getArgs = function() {
-        var inp = $('#J-input input').toArray();
-        var sel;
-        for (var i in inp) {
-            sel = $(inp[i]);
-            args.set(sel.attr('name'), sel.val());
-        };
-        return args.get();
-    };
-    var url = $('#J-user-verif').data('url');
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: getArgs(),
-        dataType: 'json',
-        error: function(xml) {
-            noticebox('操作失败', 0);
-        },
-        success: function(res) {
-            noticebox('操作成功', 1, 'refresh');
-        }
-    });
-};
