@@ -81,7 +81,7 @@ $(function(){
         scroll.init({
             container: '#feeds_list',
             loading: '.feed_content',
-            url: '/feeds',
+            url: '/feeds/list',
             params: params
         });
 

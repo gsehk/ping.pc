@@ -80,6 +80,26 @@
     </div>
 
     <div class="right_container">
+        <div class="news_release_btn">
+            <a href="{{ route('pc:newsrelease') }}">
+                <span>
+                    <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>投稿
+                </span>
+            </a>
+        </div>
+
+        @include('pcview::widgets.hotnews')
+
+        <!-- 资讯右侧广告 -->
+        @if(!$ads['right']->isEmpty())
+        @foreach($ads['right'] as $ad)
+        <div class="news_ad">
+            <a href="{{ $ad['link'] }}" target="_blank">
+                <img src="{{ $ad['image'] }}" />
+            </a>
+        </div>
+        @endforeach
+        @endif
     </div>
 @endsection
 
@@ -87,7 +107,20 @@
 <script src="{{ $routes['resource'] }}/js/module.news.js"></script>
 <script src="{{ $routes['resource'] }}/js/module.bdshare.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
+$(function(){
+    
+    // 近期热点
+    if($('.time_menu li a').length > 0) {
+        $('.time_menu li').hover(function() {
+            var type = $(this).attr('type');
+
+            $(this).siblings().find('a').removeClass('hover');
+            $(this).find('a').addClass('hover');
+
+            $('.hot_news_list div').hide();
+            $('#' + type).show();
+        })
+    }
 
     bdshare.addConfig('share', {
         "tag" : "share_feedlist",

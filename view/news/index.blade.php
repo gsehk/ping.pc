@@ -44,6 +44,15 @@
         </div>
 
         <div class="right_container">
+            <div class="news_release_btn">
+                <a href="{{ route('pc:newsrelease') }}">
+                    <span>
+                        <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>投稿
+                    </span>
+                </a>
+            </div>
+
+            @include('pcview::widgets.hotnews')
 
             <!-- 资讯右侧广告 -->
             @if(!$ads['right']->isEmpty())
@@ -55,7 +64,6 @@
             </div>
             @endforeach
             @endif
-
         </div>
 
     </div>
@@ -89,7 +97,7 @@ setTimeout(function() {
 }, 300);
 
 
-$(document).ready(function(){
+$(function(){
     // 分类展开
     var cateH = $('.news_cates_tab').innerHeight();
                 $('.news_cates_tab').css('height', '86px');
@@ -109,7 +117,7 @@ $(document).ready(function(){
         }
     })
 
-    // banner
+    // 轮播
     $('.unslider').unslider({delay:3000,dots: true});
 
     // 资讯分类操作菜单
@@ -134,6 +142,18 @@ $(document).ready(function(){
     // 图片懒加载
     $("img.lazy").lazyload({effect: "fadeIn"});
 
+    // 近期热点
+    if($('.time_menu li a').length > 0) {
+        $('.time_menu li').hover(function() {
+            var type = $(this).attr('type');
+
+            $(this).siblings().find('a').removeClass('hover');
+            $(this).find('a').addClass('hover');
+
+            $('.hot_news_list div').hide();
+            $('#' + type).show();
+        })
+    }
 });
 </script>
 @endsection

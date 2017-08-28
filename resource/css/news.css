@@ -37,9 +37,10 @@
 .news_left {
     position: relative;
     float: left;
-    width: 845px;
+    width: 815px;
     padding-bottom: 30px;
     background: #fff;
+    margin-right: 30px;
 }
 
 .news_left ul {
@@ -328,11 +329,32 @@
     background: #fff;
 }
 
+/*投稿按钮*/
+.news_release_btn {
+}
+
+.news_release_btn svg {
+    color: #fff;
+    margin-right: 5px;
+}
+
+.news_release_btn span{
+    font-size: 20px;
+    width: 100%;
+    background: #59b6d7;
+    border-radius: 30px;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    margin: 30px 0px;
+    padding: 10px 0px;
+}
+
 
 /*近期热点*/
 .hot_news {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 0 15px 0;
     border: 1px solid #ededed;
     background-color: #fff;
@@ -355,8 +377,24 @@
     background-color: #fff;
 }
 
-.hot_news .time_menu .time {
+.hot_news .time_menu li {
     width: 33.3%;
+    float: left;
+    width: 33.3%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.hot_news .time_menu li a {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    color: #999;
+}
+
+.hot_news .time_menu li a.hover {
+    color: #333;
+    border-bottom: 2px solid #59b6d7;
 }
 
 .hot_news_list li {

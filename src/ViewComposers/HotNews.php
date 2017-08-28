@@ -10,10 +10,11 @@ class HotNews
     public function compose(View $view)
     {
         $time = Carbon::now();
+        $limit = 10;
 
         // 每周
         $stime = $time->subDays(7)->toDateTimeString();
-        $datas['week'] = News::byAudit()
+        $week = News::byAudit()
                 ->where('updated_at', '>', $stime)
                 ->select('id','title', 'hits')
                 ->orderBy('hits', 'desc')
@@ -24,7 +25,7 @@ class HotNews
         $stime = Carbon::create(null, null, 01);// 本月开始时间
         $etime = Carbon::create(null, null, $time->daysInMonth); // 本月结束时间
 
-        $datas['month'] = News::byAudit()
+        $month = News::byAudit()
                 ->whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                 ->select('id','title','hits')
                 ->orderBy('hits', 'desc')
@@ -36,13 +37,15 @@ class HotNews
         $stime = Carbon::create($time->year, $season*3-3+1, 01, 0, 0, 0);// 本季度开始时间
         $etime = Carbon::create($time->year, $season*3, $time->daysInMonth, 23, 59, 59); // 本季度结束时间
 
-        $datas['quarter'] = News::byAudit()
+        $quarter = News::byAudit()
                 ->whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                 ->select('id','title','hits')
                 ->orderBy('hits', 'desc')
                 ->take($limit)
                 ->get();
 
-        $view->with('datas', $datas);
+        $view->with('week', $week);
+        $view->with('month', $month);
+        $view->with('quarter', $quarter);
     }
 }
