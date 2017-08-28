@@ -208,7 +208,7 @@ scroll.loadMore = function() {
         dataType: 'json',
         error: function(xml) {},
         success: function(res) {
-            if (res.count > 0) {
+            if (res.data != '') {
                 scroll.setting.canload = true;
 
                 // 两种不同的加载方式

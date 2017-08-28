@@ -32,14 +32,14 @@
                 <a href="javascript:;" data-type="hot" class="fs-16 @if ($type == 'hot') dy_cen_333 @endif">热门</a>
                 <a href="javascript:;" data-type="new" class="fs-16 @if ($type == 'new') dy_cen_333 @endif">最新</a>
             </div>
-            <div id="feeds-list"></div>
+            <div id="feeds_list"></div>
         </div>
     </div>
 
     <!-- right -->
     <div class="right_container">
         <!-- checkin -->
-        @include('pcview::widgets.check')
+        @include('pcview::widgets.checkin')
 
         <!-- recommend users -->
         @include('pcview::widgets.recusers')
@@ -69,11 +69,16 @@ var checkin = function(){
 };
 
 // 加载微博
+var params = {
+    type: '{{ $type }}'
+};
+
 setTimeout(function() {
-    weibo.init({
-        container: '#feeds-list',
+    scroll.init({
+        container: '#feeds_list',
         loading: '.feed_content',
-        type: "{{$type}}"
+        url: '/feeds',
+        params: params
     });
 }, 300);
 

@@ -3,7 +3,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers;
 
 use Illuminate\View\View;
 
-class RecommendUser
+class RecommendUsers
 {
     public function compose(View $view)
     {

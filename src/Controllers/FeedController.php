@@ -11,76 +11,47 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class FeedController extends BaseController
 {
-    /**
-     * 微博首页
-     * 
-     * @return page
-     */
     public function index(Request $request)
     {
         $data['type'] = $request->input('type') ?: ($this->PlusData['TS'] ? 'follow' : 'hot');
         return view('pcview::feed.index', $data, $this->PlusData);
     }
 
-    /**
-     * 分享列表
-     * 
-     * @return feed
-     */
     public function feeds(Request $request)
     {
-        // 获取一条分享
-        if ($request->feed) {
-            $feeds['feed'] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
-            $feedData['html'] = view('pcview::templates.feed', $feeds, $this->PlusData)->render();
-        } else {
-            $feeds = createRequest('GET', '/api/v2/feeds');
-            $feed = clone $feeds['feeds'];
-            $feedData['after'] = $feed->pop()->id ?? 0;
-            $feedData['html'] = view('pcview::templates.feeds', $feeds, $this->PlusData)->render();
-        }
+        $params = [
+            'type' => $request->query('type'),
+            'after' => $request->query('after') ?: 0
+        ];
+        $feeds = createRequest('GET', '/api/v2/feeds', $params);
+        $feed = clone $feeds['feeds'];
+        $after = $feed->pop()->id ?? 0;
+        $feedData = view('pcview::templates.feeds', $feeds, $this->PlusData)->render();
 
         return response()->json([
                 'status'  => true,
                 'data' => $feedData,
+                'after' => $after
         ]);
     }
 
-    /**
-     * 分享详情
-     * 
-     * @param  int     $feed_id 
-     * @return page
-     */
+    public function feed(Request $request)
+    {
+        $feeds['feed'] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
+        $feedData = view('pcview::templates.feed', $feeds, $this->PlusData)->render();
+
+        return response()->json([
+                'status'  => true,
+                'data' => $feedData
+        ]);
+    }
+
     public function read(Request $request, News $model, int $feed_id)
     {
         $feed = createRequest('GET', '/api/v2/feeds/'.$feed_id);
         $feed->collect_count = $feed->collection->count();
         $data['feed'] = $feed;
         $data['user'] = $feed->user;
-        // 分享者发布的文章信息
-        /*$news = $model->byAudit()->where('user_id', $feed->user_id)->first();
-        $news->week = $this->getRecentHot(1);
-        $news->month = $this->getRecentHot(2);
-        $news->quarter = $this->getRecentHot(3);     
-        $news->news_count = $model->byAudit()
-            ->when($news, function ($query) use ($news) {
-                return $query->where('user_id', $news->user_id);
-            })
-            ->count();
-        $news->hots_count = $model->byAudit()
-            ->when($news, function ($query) use ($news) {
-                return $query->where('user_id', $news->user_id);
-            })            
-            ->where('cate_id', 1)
-            ->count();
-        $news->list = $model->byAudit()
-            ->when($news, function ($query) use ($news) {
-                return $query->where('user_id', $news->user_id);
-            })                
-            ->select('id', 'title')
-            ->take(4)->get();
-        $data['news'] = $news;*/
 
         $feed->byFeedId($feed_id)->increment('feed_view_count');
         // dd($data);
