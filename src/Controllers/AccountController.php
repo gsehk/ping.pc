@@ -8,6 +8,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 class AccountController extends BaseController
 {
 
+    /**
+     * 基本资料.
+     *
+     * @param  Illuminate\Http\Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $user_id = $this->PlusData['TS']->id ?? 0;
@@ -18,16 +24,36 @@ class AccountController extends BaseController
         return view('pcview::account.index', $data, $this->PlusData);
     }
 
+    /**
+     * 认证管理.
+     *
+     * @return mixed
+     */
     public function authenticate()
     {
         return view('pcview::account.authenticate', $this->PlusData);
     }
 
+    /**
+     * 标签管理.
+     *
+     * @return mixed
+     */
     public function tags()
     {
         $user_id = $this->PlusData['TS']->id ?? 0;
         $data['tags'] = createRequest('GET', '/api/v2/tags');
         $data['user_tag'] = createRequest('GET', '/api/v2/user/tags');
         return view('pcview::account.tags', $data, $this->PlusData);
+    }
+
+    /**
+     * 安全设置.
+     *
+     * @return mixed
+     */
+    public function security()
+    {
+        return view('pcview::account.security', $this->PlusData);
     }
 }

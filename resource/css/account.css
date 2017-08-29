@@ -369,7 +369,9 @@
     text-align: right;
 }
 
-.account_form_row input[type="text"]{
+.account_form_row input[type="text"],
+.account_form_row input[type="password"]
+{
     width: 500px;
     font-size: 14px;
     border: 0;

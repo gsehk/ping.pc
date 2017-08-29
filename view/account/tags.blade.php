@@ -18,11 +18,10 @@
     <div class="account_c_c">
         {{-- 标签管理 --}}
         <div class="account_tab">
-            {{-- label --}}
             <div class="perfext_title">
                 <p>选择标签</p>
             </div>
-            {{-- /label --}}
+
             {{-- list --}}
             @foreach ($tags as $tag)
                 <div class="perfect_row">
@@ -38,7 +37,7 @@
                 </div>
             @endforeach
             {{-- /list --}}
-            {{-- select --}}
+
             {{-- <div class="perfect_selected">
                 <label>最多可选
                     <span class="total">5</span>个标签，已选择
@@ -49,12 +48,11 @@
                     <li>运动达人<i class="icon close"></i></li>
                 </ul>
             </div> --}}
-            {{-- /select --}}
-            {{-- btn --}}
+
             {{-- <div class="perfect_btns">
                 <a href="javascript:;" class="perfect_btn save" id="save">保存</a>
             </div> --}}
-            {{-- /btn --}}
+
         </div>
         {{-- /标签管理 --}}
     </div>
@@ -64,7 +62,6 @@
 @endsection
 
 @section('scripts')
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
 <script>
 $('#J-tags li').on('click', function(e){
     var _this = $(this);

@@ -61,7 +61,9 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('authenticate', 'AccountController@authenticate')->name('pc:authenticate');
 
     Route::get('tags', 'AccountController@tags')->name('pc:tags');
-    
+
+    Route::get('security', 'AccountController@security')->name('pc:security');
+
     Route::post('authenticate', 'AccountController@doAuthenticate');
 });
 
@@ -76,7 +78,7 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     // user article page
     Route::get('article/{user_id?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:minearc');
-    
+
     // user followers
     Route::get('/followers/{user_id?}', 'ProfileController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
 
