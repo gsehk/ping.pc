@@ -18,7 +18,7 @@
         <form method="POST" id="findpwd_form">
             <div class="reg_input">
                 <label>手机号</label>
-                <span id="phone"><input type="text" placeholder="输入11位手机号码" name="phone" maxlength="11"/></span>
+                <span class="input_span" id="phone"><input type="text" placeholder="输入11位手机号码" name="phone" maxlength="11"/></span>
             </div>
             <div class="reg_input">
                 <label>图形验证码</label>
@@ -32,11 +32,11 @@
             </div>
             <div class="reg_input">
                 <label>新密码</label>
-                <span id="password"><input type="password" placeholder="限6-15个字符，区分大小写" name="password" autocomplete="off"/></span>
+                <span class="input_span" id="password"><input type="password" placeholder="限6-15个字符，区分大小写" name="password" autocomplete="off"/></span>
             </div>
             <div class="reg_input">
                 <label>确认密码</label>
-                <span id="repassword"><input type="password" placeholder="再次输入密码" name="repassword" autocomplete="off"/></span>
+                <span class="input_span" id="repassword"><input type="password" placeholder="再次输入密码" name="repassword" autocomplete="off"/></span>
             </div>
             <input type="hidden" name="verifiable_type" value="sms">
 
