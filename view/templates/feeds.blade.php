@@ -217,7 +217,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 </a>                
                 @endif
             </span>
-            <span class="comment J-comment-show" data-args="box=#warp_box{{$post->id}}&row_id={{$post->id}}&canload=0">
+            <span class="comment J-comment-show">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}">{{$post->feed_comment_count}}</font>
             </span>
             <span class="view">
@@ -256,6 +256,44 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
             </div>
         </div>
+
+        <div class="comment_box" style="display: none;">
+            <div class="comment_line">
+                <img src="{{ $routes['resource'] }}/images/line.png" />
+            </div>
+            <div class="comment_body" id="comment_box{{$post->id}}">
+                <div class="comment_textarea" id="editor_box{{ $post->id }}">
+                    <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
+                    <div class="comment_post">
+                        <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
+                        <a href="javascript:;" class="post_button a_link J-comment-feed" to_uid="0" row_id="{{ $post->id }}">评论</a>
+                    </div>
+                </div>
+
+                <div class="comment_ps" id="comment_ps{{ $post->id }}">
+                @if($post->comments->count())
+                @foreach($post->comments as $cv)
+                <p class="comment{{$cv->id}} comment_con">
+                    <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                    @if($cv->user_id != $TS['id'])
+                        <a class="J-reply-comment" data-args="to_uname={{ $cv->user['name'] }}&to_uid={{$cv->user_id}}&row_id={{$post->id}}">回复</a>
+                    @endif
+                    @if($cv->user_id == $TS['id'])
+                        <a class="comment_del" onclick="comment.delComment({{$cv->id}}, {{$post->id}})">删除</a>
+                    @endif
+                </p>
+                @endforeach
+                @endif
+                </div>
+                @if($post->comments->count() >= 5)
+                <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
+                @endif
+            
+            </div>
+        </div>
+
+
+
         <div class="feed_line"></div>
     </div>
 </div>
