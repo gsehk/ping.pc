@@ -1,5 +1,5 @@
 @section('title')
-{{ $user['name'] }}的个人主页
+{{ $user->name }}的个人主页
 @endsection
 
 @extends('pcview::layouts.default')
@@ -12,7 +12,7 @@
 <div class="profile_top">
 
     <div class="profile_top_cover">
-        <img src="{{ $user->bg or $routes['resource'] . '/images/default_cover.png' }}"/>
+        <img src="{{ $user->bg or URL::asset('zhiyicx/plus-component-pc/images/default_cover.png') }}"/>
     </div>
 
     @if ($user->id == $TS['id'])
@@ -22,39 +22,39 @@
 
     <div class="profile_top_info">
         <div class="profile_top_img">
-            <a href="{{ route('pc:mine', ['user_id' => $user['id']]) }}">
-                <img src="{{ $user->avatar or $routes['resource'].'/images/avatar.png' }}" alt="{{ $user->name }}"/>
+            <a href="{{ route('pc:mine', $user->id) }}">
+                <img src="{{ $user->avatar or URL::asset('zhiyicx/plus-component-pc/images/avatar.png') }}"/>
             </a>
         </div>
         <div class="profile_top_info_d">
-            <div class="profile_top_user"><a href="#">{{ $user->name }}</a><span>成都 · 高新</span></div>
+            <div class="profile_top_user"><a href="#">{{ $user->name }}</a><span>{{$user->location or '暂无'}}</span></div>
             <div class="profile_top_bio">{{ $user->bio or '这家伙很懒，什么都没留下'}}</div>
             <div class="profile_top_tags">
-                <span>前端工程师</span>
-                <span>前端</span>
-                <span>前端架构师</span>
+                @foreach ($user->tags as $tag)
+                    <span>{{$tag->name}}</span>
+                @endforeach
             </div>
-            <div class="profile_logo_icon">
-                <span><i class="tag_icon"></i>已认证：TS团队成员</span>
-                <span><i class="tag_icon"></i>已认证：TS团队成员</span>
-            </div>
+            @if ($user->verified)
+                <div class="profile_logo_icon">
+                    <span><i class="tag_icon"></i>已认证：TS团队成员</span>
+                </div>
+            @endif
+
         </div>
     </div>
 
-    <!-- nav -->
+    {{-- nav --}}
     <div class="profile_nav clearfix">
         <ul class="profile_nav_list clearfix">
             <li class="active"><a href="#">主页</a></li>
-            <li><a href="#">资讯</a></li>
-            <li><a href="#">收藏</a></li>
+            <li><a href="#">圈子</a></li>
+            <li><a href="#">问答</a></li>
+            <li><a href="#">草稿箱</a></li>
         </ul>
-
-        <!-- btn -->
         <a href="#" class="profile_nav_btn">投稿</a>
-        <!-- /btn -->
-
     </div>
-    <!-- /nav -->
+    {{-- /nav --}}
+
 </div>
 
 <div class="profile_body">
@@ -68,9 +68,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
-<script src="{{ $routes['resource'] }}/js/jquery.uploadify.js"></script>
-<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/jquery.uploadify.js') }}"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
 <script type="text/javascript">
     // 加载微博
     setTimeout(function() {
