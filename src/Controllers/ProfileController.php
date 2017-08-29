@@ -18,13 +18,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class ProfileController extends BaseController
 {
-
-    /**
-     * 个人中心首页
-     *
-     * @param  int|null $user_id 用户id
-     * @return [type]            [description]
-     */
     public function index(Request $request, int $user_id = 0)
     {
         $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
@@ -38,13 +31,7 @@ class ProfileController extends BaseController
         return view('pcview::profile.index', $data, $this->PlusData);
     }
 
-    /**
-     * 用户中心文章
-     *
-     * @param  int|null    $user_id 用户id
-     * @param  int|integer $type    文章类型
-     * @return [type]               [description]
-     */
+
     public function article(Request $request, User $model, int $user_id = 0)
     {
         $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
@@ -60,9 +47,6 @@ class ProfileController extends BaseController
         return view('pcview::profile.article', $data, $this->PlusData);
     }
 
-    /**
-     * 我的收藏
-     */
     public function collect(Request $request)
     {
         $data['type'] = $request->input('type') ?: 1;
@@ -70,9 +54,6 @@ class ProfileController extends BaseController
         return view('pcview::profile.collection', $data, $this->PlusData);
     }
 
-    /**
-     * 关联用户列表
-     */
     public function follow(Request $request)
     {
         $data['type'] = $request->query('type') ?? 1;
@@ -80,13 +61,6 @@ class ProfileController extends BaseController
         return view('pcview::profile.users', $data, $this->PlusData);
     }
 
-    /**
-     * 获取关联用户列表
-     *
-     * @param  int|integer $type    1:我的粉丝 2:关注的人 3:访客
-     * @param  int|integer $user_id   用户id
-     * @return [type]               [description]
-     */
     public function followers(Request $request, User $model)
     {
         $user_id = $request->query('user_id') ?: 0;
@@ -106,13 +80,6 @@ class ProfileController extends BaseController
         ]);
     }
 
-    /**
-     * 获取关联用户列表
-     *
-     * @param  int|integer $type    1:我的粉丝 2:关注的人 3:访客
-     * @param  int|integer $user_id   用户id
-     * @return [type]               [description]
-     */
     public function followings(Request $request, User $model)
     {
         $user_id = $request->query('user_id') ?: 0;
@@ -132,14 +99,6 @@ class ProfileController extends BaseController
         ]);
     }
 
-    /**
-     * 格式化分享数据
-     *
-     * @param  [type] $feeds    [description]
-     * @param  [type] $uid      [description]
-     * @param  string $template [description]
-     * @return [type]           [description]
-     */
     public function formatFeedList($feeds, $uid, $template = '')
     {
         $template = $template ?: 'pcview::templates.profile-feed';
@@ -192,9 +151,6 @@ class ProfileController extends BaseController
             ])->setStatusCode(200);
     }
 
-    /**
-     * 获取单个用户的动态列表.
-     */
     public function feeds(Request $request)
     {
         if ($request->cate == 'all') {
@@ -214,9 +170,6 @@ class ProfileController extends BaseController
         ]));
     }
 
-    /**
-     * 资讯列表.
-     */
     public function news(Request $request)
     {
         $uid = $this->PlusData['TS']['id'] ?? 0;
@@ -249,13 +202,6 @@ class ProfileController extends BaseController
         ]));
     }
 
-    /**
-     * 获取用户收藏列表
-     *
-     * @author zw
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
     public function getCollectionList(Request $request, int $user_id)
     {
         $uid = $this->PlusData['TS']['id'] ?? 0;

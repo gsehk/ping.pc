@@ -38,7 +38,6 @@
     position: relative;
     float: left;
     width: 815px;
-    padding-bottom: 30px;
     background: #fff;
     margin-right: 30px;
 }
@@ -61,6 +60,7 @@
     cursor: pointer;
     background-image: url(../images/arrow_news_down.png);
 }
+
 .news_left .more_up {
     background-image: url(../images/arrow_news_up.png);
 }
@@ -414,6 +414,7 @@
     overflow: hidden;
     padding: 15px 0;
     border-bottom: 1px solid #ededed;
+    font-size: 14px;
 }
 .hot_news_list li:last-child{
     border-bottom: 0;

@@ -9,10 +9,12 @@
 @endsection
 
 @section('content')
-    <!-- left -->
+    <!-- 左侧菜单 -->
     @include('pcview::layouts.partials.leftmenu')
-    <!-- middle -->
+
     <div class="feed_cont">
+
+        <!-- 动态发布 -->
         @if(!empty($TS))
         <div class="feed_post">
             <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
@@ -25,6 +27,8 @@
             </div>
         </div>
         @endif
+
+        <!-- 动态列表 -->
         <div class="feed_content">
             <div class="feed_menu">
                 @if (!empty($TS))
@@ -37,12 +41,12 @@
         </div>
     </div>
 
-    <!-- right -->
+
     <div class="right_container">
-        <!-- checkin -->
+        <!-- 签到 -->
         @include('pcview::widgets.checkin')
 
-        <!-- recommend users -->
+        <!-- 推荐用户 -->
         @include('pcview::widgets.recusers')
     </div>
 @endsection

@@ -205,7 +205,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     </div>
 
     <div class="feed_bottom">
-        <div class="feed_comments">
+        <div class="feed_datas">
             <span class="digg" id="digg{{$post->id}}" rel="{{$post->like_count}}">
                 @if($post->has_like)
                 <a href="javascript:;" onclick="digg.delDigg({{$post->id}})">
@@ -256,15 +256,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
             </div>
         </div>
-        <div class="comment_box" id="warp_box{{$post->id}}" style="display: none;">
-            <div class="dy_line">
-                <img src="{{ $routes['resource'] }}/images/line.png" />
-            </div>
-
-            <div class="dy_comit" id="comment_box{{$post->id}}">
-            </div>
-        </div>
-        <div class="f3"></div>
+        <div class="feed_line"></div>
     </div>
 </div>
 <script type="text/javascript">

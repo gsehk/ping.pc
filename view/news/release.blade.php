@@ -1,13 +1,15 @@
+@section('title')
+投稿
+@endsection
+
 @extends('pcview::layouts.default')
 
 @section('content')
-
 
 @section('styles')
 <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.css') }}"/>
 <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
 @endsection
-
 
 <div class="news_left">
     <div class="release_cont">

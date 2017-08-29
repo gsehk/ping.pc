@@ -60,12 +60,12 @@
                     </a>
                     @endif
                 </span>
-                <!-- <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
+                <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
                     分享至：
                     <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
                     <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
                     <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
-                </div> -->
+                </div>
             </div>
 
             <!-- 打赏 -->

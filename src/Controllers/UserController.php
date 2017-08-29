@@ -7,8 +7,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class UserController extends BaseController
 {
-
-    // 找伙伴
     public function index(Request $request, int $type = 1)
     {
         $data['type'] = $type;
@@ -48,8 +46,6 @@ class UserController extends BaseController
         ]);        
     }
 
-    
-    // 粉丝
     public function followers(Request $request, int $user_id = 0)
     {
         if ($user_id == 0 && empty($this->PlusData['TS'])) {
@@ -60,7 +56,6 @@ class UserController extends BaseController
         return view('pcview::user.follow', $data, $this->PlusData);
     }
 
-    // 关注
     public function followings(Request $request, int $user_id = 0)
     {
         if ($user_id == 0 && empty($this->PlusData['TS'])) {
@@ -104,7 +99,4 @@ class UserController extends BaseController
             'count' => count($users)
         ]);        
     }
-
-    
-
 }
