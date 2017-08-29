@@ -22,6 +22,10 @@
             <div class="clearfix" id="user_list"></div>
         </div>
     </div>
+    
+    <div class="right_container">
+        @include('pcview::widgets.hotusers')
+    </div>
 @endsection
 
 @section('scripts')

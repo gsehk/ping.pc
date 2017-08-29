@@ -42,11 +42,23 @@ class PcPackageHandler extends PackageHandler
             ],
         ]);
 
-
         AdvertisingSpace::create([
             'channel' => 'pc',
             'space' => 'pc:news:right',
             'alias' => '资讯右侧广告',
+            'allow_type' => 'image',
+            'format' => [
+                'image' => [
+                    'image' => '图片|string',
+                    'link' => '链接|string',
+                ],
+            ],
+        ]);
+
+        AdvertisingSpace::create([
+            'channel' => 'pc',
+            'space' => 'pc:feeds:right',
+            'alias' => '动态右侧广告',
             'allow_type' => 'image',
             'format' => [
                 'image' => [

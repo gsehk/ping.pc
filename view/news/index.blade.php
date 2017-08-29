@@ -12,19 +12,7 @@
 
 @section('content')
 <div class="news_slide">
-    @if(!$ads['top']->isEmpty())
-        <div class="unslider">
-            <ul class="bannerList">
-                @foreach($ads['top'] as $ad)
-                  <li>
-                    <a href="{{ $ad['link'] }}">
-                        <img src="{{ $ad['image'] }}" width="100%" height="414">
-                    </a>
-                  </li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @include('pcview::widgets.ads', ['space' => 'pc:news:top', 'type' => 2])
 </div>
 
 <div class="news_main clearfix">
@@ -52,18 +40,11 @@
                 </a>
             </div>
 
+            <!-- 近期热点 -->
             @include('pcview::widgets.hotnews')
 
-            <!-- 资讯右侧广告 -->
-            @if(!$ads['right']->isEmpty())
-            @foreach($ads['right'] as $ad)
-            <div class="news_ad">
-                <a href="{{ $ad['link'] }}" target="_blank">
-                    <img src="{{ $ad['image'] }}" />
-                </a>
-            </div>
-            @endforeach
-            @endif
+            <!-- 广告位 -->
+            @include('pcview::widgets.ads', ['space' => 'pc:news:right', 'type' => 1])
         </div>
 
     </div>

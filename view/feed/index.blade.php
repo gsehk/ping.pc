@@ -50,6 +50,9 @@
 
         <!-- 推荐用户 -->
         @include('pcview::widgets.recusers')
+
+        <!-- 动态首页右侧广告位 -->
+        @include('pcview::widgets.ads', ['space' => 'pc:feeds:right', 'type' => 1])
     </div>
 @endsection
 

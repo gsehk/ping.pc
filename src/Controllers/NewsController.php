@@ -19,15 +19,6 @@ class NewsController extends BaseController
      */
     public function index(Request $request, int $cate_id = 0)
     {   
-        // 获取资讯首页广告位ID
-        $space = $this->PlusData['site']['ads'];
-
-        // 顶部广告
-        $data['ads']['top'] = createRequest('GET', '/api/v2/advertisingspace/' . $space['pc:news:top']['id'] . '/advertising')->pluck('data');
-        
-        // 右侧广告
-        $data['ads']['right'] = createRequest('GET', '/api/v2/advertisingspace/' . $space['pc:news:right']['id'] . '/advertising')->pluck('data');
-        
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
