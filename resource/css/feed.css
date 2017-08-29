@@ -370,6 +370,51 @@
     padding: 50px;
 }
 
+.detail_user {
+    display: flex;
+    margin-bottom: 30px;
+    padding: 10px;
+    width: 100%;
+    height: 70px;
+
+    align-items: center;
+}
+
+.detail_user .detail_user_header{
+    float: left;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    background-color: #f6f6f6;
+}
+
+
+.detail_user .detail_user_info{
+    float: left;
+    margin-left: 18px;
+}
+
+.detail_user .detail_user_info a,
+.detail_user .detail_user_header img,
+.detail_user .detail_user_header a{
+    display: block;
+    color: inherit;
+    cursor: pointer;
+}
+
+.detail_user .detail_user_info .detail_user_name{
+    margin-bottom: 11px;
+    font-size: 16px;
+    color: #333;
+}
+.detail_user .detail_user_info .detail_time{   
+    font-size: 14px;
+    color: #b2b2b2;
+}
+
 .detail_images {
     background: #ccc;
 }
@@ -378,6 +423,7 @@
     width: 100%;
     margin: 0 auto;
 }
+
 
 .detail_body {
     margin: 20px 0;
@@ -905,3 +951,87 @@
     color: #fff;
 }
 
+
+
+
+/* 右边 */
+
+.r_about_auth{
+    width: 100%;
+    background-color: #fff;
+}
+
+
+.r_about_auth .info{
+    display: flex;
+    padding: 30px 30px 30px 15px;
+}
+
+.r_about_auth .info .auth_header{
+    float: left;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+
+    line-height: 60px;
+    text-align: center;
+
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.r_about_auth .info .auth_header a,
+.r_about_auth .info .auth_header img{
+    display: block;
+}
+
+.r_about_auth .info .auth_info{
+    float: left;
+    margin-left: 15px;
+}
+
+.r_about_auth .info .auth_info .info_name a{
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.r_about_auth .info .auth_info .info_bio {
+    overflow: hidden;
+    margin: 0;
+    max-height: 34px;
+    word-break: break-all;
+    font-size: 14px;
+    color: #999;
+}
+
+.r_about_auth .auth_fans{
+    margin: 0;
+    font-size: 0;
+}
+.r_about_auth .auth_fans li{
+    display: inline-block;
+    border: 1px solid #ededed;
+    width: 50%;
+    height: 49px;
+    line-height: 47px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.r_about_auth .auth_fans li:nth-child(even){
+    border-left: 0;
+}
+
+.r_about_auth .auth_fans li:nth-child(3),
+.r_about_auth .auth_fans li:nth-child(4){
+    border-top: 0;
+}
+
+.r_about_auth .auth_fans li a{
+    color: #000;
+    margin-left: 3px;
+    font-size: 18px;
+}

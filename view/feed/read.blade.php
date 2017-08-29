@@ -14,6 +14,20 @@
 
 @section('content')
     <div class="feed_left">
+        
+        <div class="detail_user">
+            <div class="detail_user_header">
+                <a href="#">
+                    <img src="https://avatars3.githubusercontent.com/u/25883665?v=4&s=460" alt="">
+                </a>
+            </div>
+            <div class="detail_user_info">
+                <div class="detail_user_name"><a href="#">云上月</a></div>
+                <div class="detail_time">2017-3-25 16:14</div>
+            </div>
+
+            <!--  -->
+        </div>
 
         @if($feed->images)
         <div class="detail_images" id="layer-photos-demo">
@@ -65,7 +79,29 @@
     </div>
 
     <div class="right_container">
+        <div class="r_about_auth">
+            <div class="info clearfix">
+                <div class="auth_header">
+                    <a href="#">
+                        <img src="https://avatars3.githubusercontent.com/u/25883665?v=4&s=460" alt="">
+                    </a>
+                </div>
+                <div class="auth_info">
+                    <div class="info_name">
+                        <a href="#">jsonleex</a>
+                    </div>
+                    <p class="info_bio">sadasdasdnasixlnccvst67a8gisbgcgufd76t98gyuwafcstdu76t8ygdvsfgyxci8oy7iuhjgh678yugfjtur6</p>
+                </div>
+            </div>
+            <ul class="auth_fans">
+                <li>粉丝<a href="#">25</a></li>
+                <li>粉丝<a href="#">25</a></li>
+                <li>粉丝<a href="#">25</a></li>
+                <li>粉丝<a href="#">25</a></li>
+            </ul>
+        </div>
         <!-- 推荐用户 -->
+
         @include('pcview::widgets.recusers')
     </div>
 @endsection
