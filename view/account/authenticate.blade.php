@@ -101,9 +101,9 @@
             </div>
             <input name="license_id" id="license_id" type="hidden" />
         </div>
-        <div class="account_form_row">
+        <!-- <div class="account_form_row">
             <div class="cer_format">附件格式：gif, jpg, jpeg, png;附件大小：不超过10M</div>
-        </div>
+        </div> -->
         <div class="perfect_btns">
             <a class="perfect_btn save J-authenticate-btn" href="javascript:;">保存</a>
         </div>
@@ -149,16 +149,10 @@ $('.J-authenticate-btn').on('click', function(e) {
     };
 
     if (authType == 'user') {
-        if (!getArgs().front_id || !getArgs().behind_id) {
-            noticebox('请上传认证资料', 0); return;
-        }
         getArgs().files = [getArgs().front_id, getArgs().behind_id];
     }
 
     if (authType == 'org') {
-        if (!getArgs().license_id) {
-            noticebox('请上传认证资料', 0); return;
-        }
         getArgs().files = [getArgs().license_id];
     }
     $.ajax({
@@ -166,13 +160,13 @@ $('.J-authenticate-btn').on('click', function(e) {
         type: 'POST',
         data: getArgs(),
         dataType: 'json',
-        error: function(xml) {
-            noticebox('操作失败', 0);
-        },
         success: function(res, data, xml) {
             if (xml.status ===  201) {
                 noticebox(res.message, 1, 'refresh');
             }
+        },
+        error: function(xhr){
+            showError(xhr.responseJSON);
         }
     });
 });

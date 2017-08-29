@@ -337,14 +337,20 @@
     overflow-y: auto;
 }
 
+.account_form_row .upload_file{
+    padding-top: 10px;
+}
+
 .account_form_row .file_box{
     display: inline-block;
     position: relative;
 }
+
 .account_form_row .cer_format{
     padding-left: 110px;
     color: #ccc;
 }
+
 .account_form_row .file_box .org,
 .account_form_row .file_box .front,
 .account_form_row .file_box .behind{
@@ -357,7 +363,8 @@
 }
 
 .account_form_row .file_box>img{
-    max-width: 230px;
+    width: 230px;
+    height: 163px;
     overflow: hidden;
 }
 .account_form_row>label{
