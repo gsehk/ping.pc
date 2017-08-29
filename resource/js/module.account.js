@@ -100,16 +100,16 @@ $('#J-user-info').on('click', function(e) {
     };
         return args.get();
     };
-    var args = getArgs();
-    if (args.intro && getLength(args.intro) > 50) {
+    var arg = getArgs();
+    if (arg.intro && getLength(args.intro) > 50) {
         noticebox('个人简介不能超过50个字符', 0);
         return false;
     }
-    args['location'] = args['p'] + ' ' + args['c'] + ' ' + args['a'];
+    arg['location'] = arg['p'] + ' ' + arg['c'] + ' ' + arg['a'];
     $.ajax({
         url: '/api/v2/user',
         type: 'PATCH',
-        data: args,
+        data: arg,
         dataType: 'json',
         error: function(xml) {
             noticebox('资料修改失败', 0, 'refresh');
