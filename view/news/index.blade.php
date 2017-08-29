@@ -39,7 +39,6 @@
                     </span>
                 </a>
             </div>
-
             <!-- 近期热点 -->
             @include('pcview::widgets.hotnews')
 

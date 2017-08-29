@@ -37,8 +37,10 @@ class FeedController extends BaseController
 
     public function feed(Request $request)
     {
-        $feeds['feed'] = createRequest('GET', '/api/v2/feeds/'.$request->feed);
-        $feedData = view('pcview::templates.feed', $feeds, $this->PlusData)->render();
+        $feeds['feeds'] = collect();
+        $feed = createRequest('GET', '/api/v2/feeds/'.$request->feed_id);
+        $feeds['feeds']->push($feed);
+        $feedData = view('pcview::templates.feeds', $feeds, $this->PlusData)->render();
 
         return response()->json([
                 'status'  => true,
@@ -53,7 +55,6 @@ class FeedController extends BaseController
         $data['feed'] = $feed;
         $data['user'] = $feed->user;
 
-        // dd($data);
         return view('pcview::feed.read', $data, $this->PlusData);
     }
 }

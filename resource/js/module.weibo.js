@@ -12,7 +12,7 @@ weibo.afterUpload = function(image, f, task_id) {
 weibo.showImg = function(){
     layer.photos({
       photos: '#file_upload_1-queue'
-      ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+      ,anim: 0 
       ,move: false
     });
 };
@@ -61,17 +61,17 @@ weibo.postFeed = function() {
 };
 
 weibo.afterPostFeed = function(feed_id) {
-    var url = request_url.feeds_list;
+    var url = '/feeds/getfeed/';
     $.ajax({
         url: url,
         type: 'get',
-        data: { feed: feed_id},
+        data: { feed_id: feed_id},
         dataType: 'json',
         success: function(res) {
-            if ($('#feeds-list').find('.no_data_div').length > 0) {
-                $('#feeds-list').find('.no_data_div').remove();
+            if ($('#feeds_list').find('.no_data_div').length > 0) {
+                $('#feeds_list').find('.no_data_div').remove();
             }
-            $(res.data.html).hide().prependTo('#feeds-list').fadeIn('slow');
+            $(res.data).hide().prependTo('#feeds_list').fadeIn('slow');
             $("img.lazy").lazyload({effect: "fadeIn"});
         }
 
@@ -79,17 +79,17 @@ weibo.afterPostFeed = function(feed_id) {
 };
 weibo.delFeed = function(feed_id) {
     layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
-        var url = request_url.del_feed.replace('{feed_id}', feed_id);
+        var url = '/api/v2/feeds/' + feed_id;
         $.ajax({
             url: url,
             type: 'DELETE',
             dataType: 'json',
-            error: function() {
-                layer.msg(' 删除失败请稍后再试', { icon: 0 });
-            },
             success: function(res) {
                 $('#feed' + feed_id).fadeOut(1000);
                 layer.closeAll();
+            },
+            error: function() {
+                layer.msg(' 删除失败请稍后再试', { icon: 0 });
             }
         });
     });
@@ -221,8 +221,6 @@ var comment = {
         var boxhtml = '<div class="dyBox_comment" id="editor_box' + feedid + '">' +
             '<textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, \'nums\');"></textarea>' +
             '<div class="dy_company">' +
-            /*'<span class="fs-14">'+
-            '<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>表情</span>'+*/
             '<span class="dy_cs">可输入<span class="nums">255</span>字</span>' +
             '<a href="javascript:;" class="dy_share a_link J-comment-feed' + feedid + '" to_uid="0" row_id=' + feedid + '>评论</a>' +
             '</div>' +
@@ -435,7 +433,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = request_url.like_feed.replace('{feed_id}', feed_id);
+        var url = 'api/v2/feeds/' + feed_id + '/like';
         $.ajax({
             url: url,
             type: 'POST',
@@ -467,7 +465,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = request_url.unlike_feed.replace('{feed_id}', feed_id);
+        var url = 'api/v2/feeds/' + feed_id + '/unlike';
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -518,26 +516,21 @@ var collect = {
         }
         collect.collectlock = 1;
 
-        var url = request_url.collect_feed.replace('{feed_id}', feed_id);
+        var url = '/api/v2/feeds/' + feed_id + '/collections';
 
         $.ajax({
             url: url,
             type: 'POST',
             dataType: 'json',
-            error: function(xml) {},
             success: function(res, data, xml) {
-                if (xml.status == 201) {
-                    $collect = $('#collect' + feed_id);
-                    var num = $collect.attr('rel');
-                    num++;
-                    $collect.attr('rel', num);
-                    if (page == 'read') {
-                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">' + num + '</font>人收藏</a>');
-                    } else {
-                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
-                    }
+                $collect = $('#collect' + feed_id);
+                var num = $collect.attr('rel');
+                num++;
+                $collect.attr('rel', num);
+                if (page == 'read') {
+                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">' + num + '</font>人收藏</a>');
                 } else {
-                    alert(res.message);
+                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
                 }
 
                 collect.collectlock = 0;
@@ -550,45 +543,38 @@ var collect = {
             return false;
         }
         collect.collectlock = 1;
-        var url = request_url.del_collect_feed.replace('{feed_id}', feed_id);
+        var url = '/api/v2/feeds/' + feed_id + '/uncollect'
         $.ajax({
             url: url,
             type: 'DELETE',
             dataType: 'json',
-            error: function(xml) {},
             success: function(res, data, xml) {
-                if (xml.status == 204) {
-                    $collect = $('#collect' + feed_id);
-                    var num = $collect.attr('rel');
-                    num--;
-                    $collect.attr('rel', num);
-                    if (page == 'read') {
-                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">' + num + '</font>人收藏</a>');
-                    } else {
-                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
-                    }
+                $collect = $('#collect' + feed_id);
+                var num = $collect.attr('rel');
+                num--;
+                $collect.attr('rel', num);
+                if (page == 'read') {
+                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">' + num + '</font>人收藏</a>');
                 } else {
-                    alert(res.message);
+                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
                 }
-
                 collect.collectlock = 0;
             }
         });
     }
 };
 
-// 图片删除时间绑定
 $(function() {
-    $(".dy_cTop").on("click", ".imgdel", function() {
+
+    // 图片删除事件
+    $(".feed_post").on("click", ".imgdel", function() {
         $(this).parent().remove();
         if ($('#file_upload_1-queue').find('.uploadify-queue-item').length == 0) {
             $('.uploadify-queue-add').remove();
             $('#file_upload_1-queue').hide();
         }
         if ($('#file_upload_1-queue').find('.uploadify-queue-item').length != 0  && $('.uploadify-queue-add').length == 0 ){
-            var add = '<a class="feed_picture_span uploadify-queue-add">'
-                    
-                    + '</a>'
+            var add = '<a class="feed_picture_span uploadify-queue-add"></a>'
             $('.uploadify-queue').append(add);
         }
     });
@@ -596,14 +582,14 @@ $(function() {
     // 微博分类tab
     $('.show_tab a').on('click', function() {
         var type = $(this).data('type');
-        $('#feeds-list').html('');
-        weibo.init({ container: '#feeds-list', type: type });
+        $('#feeds_list').html('');
+        weibo.init({ container: '#feeds_list', type: type });
         $('.show_tab a').removeClass('dy_cen_333');
         $(this).addClass('dy_cen_333');
     });
     
     // 微博操作菜单
-    $('#feeds-list').on('click', '.options', function() {
+    $('#feeds_list').on('click', '.options', function() {
         if ($(this).next('.options_div').css('display') == 'none') {
             $('.options_div').hide();
             $(this).next('.options_div').show();
@@ -613,7 +599,7 @@ $(function() {
     });
 
     // 显示回复框
-    $('#feeds-list').on('click', '.J-comment-show', function() {
+    $('#feeds_list').on('click', '.J-comment-show', function() {
         if (MID == 0) {
             window.location.href = '/passport/login';
             return;
@@ -628,7 +614,7 @@ $(function() {
     });
 
     // 回复初始化
-    $('#feeds-list').on('click', '.J-reply-comment', function() {
+    $('#feeds_list').on('click', '.J-reply-comment', function() {
         var attrs = urlToObject($(this).data('args'));
 
         comment.initReply(attrs);

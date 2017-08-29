@@ -1,4 +1,3 @@
-
 /*资讯*/
 
 .news_container {
@@ -38,16 +37,16 @@
     position: relative;
     float: left;
     width: 815px;
-    background: #fff;
     margin-right: 30px;
+    background: #fff;
 }
 
 .news_left ul {
+    overflow: hidden;
     width: 100%;
     margin: 0 auto;
     padding: 30px 30px 0;
     background: white;
-    overflow: hidden;
 }
 
 .news_left .more {
@@ -68,7 +67,7 @@
 .news_left ul li {
     font-size: 18px;
     display: inline-block;
-    margin: 0 15px;
+    /*margin: 0 15px;*/
     /*color: #999;*/
 }
 
@@ -137,12 +136,11 @@
     margin-right: 10px;
     padding: 2px 5px;
     text-align: center;
+    color: #59b6d7 !important;
     border: 1px solid #59b6d7;
     border-radius: 5px;
-    color: #59b6d7 !important;
     background: #fff;
 }
-
 
 .news_comment {
     float: right;
@@ -153,7 +151,9 @@
     margin: 0 10px;
 }
 
+
 /*资讯详情*/
+
 .detail_body {
     padding: 50px;
 }
@@ -179,9 +179,9 @@
 }
 
 .detail_info .cates_span {
+    color: #59b6d7 !important;
     border: 1px solid #59b6d7;
     border-radius: 5px;
-    color: #59b6d7 !important;
     background: #fff;
 }
 
@@ -201,14 +201,14 @@
     color: #b2b2b2;
 }
 
-.detail_subject .right{
+.detail_subject .right {
     float: right;
 }
 
 .detail_body {
     margin: 20px 0;
-    word-break: break-all;
     text-align: justify;
+    word-break: break-all;
     color: #666 !important;
 }
 
@@ -249,6 +249,7 @@
 
 
 /*右侧广告*/
+
 .news_ad {
     width: 235px;
     height: 135px;
@@ -260,7 +261,9 @@
     height: 135px;
 }
 
+
 /*轮播图*/
+
 .unslider {
     position: relative;
     overflow: auto;
@@ -342,29 +345,29 @@
     background: #fff;
 }
 
+
 /*投稿按钮*/
-.news_release_btn {
-}
 
 .news_release_btn svg {
-    color: #fff;
     margin-right: 5px;
+    color: #fff;
 }
 
-.news_release_btn span{
+.news_release_btn span {
     font-size: 20px;
-    width: 100%;
-    background: #59b6d7;
-    border-radius: 30px;
     display: inline-block;
+    width: 100%;
+    margin: 30px 0;
+    padding: 10px 0;
     text-align: center;
     color: #fff;
-    margin: 30px 0px;
-    padding: 10px 0px;
+    border-radius: 30px;
+    background: #59b6d7;
 }
 
 
 /*近期热点*/
+
 .hot_news {
     width: 100%;
     margin-bottom: 30px;
@@ -384,18 +387,18 @@
 .hot_news .time_menu {
     display: inline-block;
     width: 203px;
-    margin: 0px;
+    margin: 0;
     padding-top: 16px;
     border-bottom: 1px solid #ededed;
     background-color: #fff;
 }
 
 .hot_news .time_menu li {
-    width: 33.3%;
     float: left;
     width: 33.3%;
-    text-align: center;
+    width: 33.3%;
     cursor: pointer;
+    text-align: center;
 }
 
 .hot_news .time_menu li a {
@@ -411,14 +414,16 @@
 }
 
 .hot_news_list li {
+    font-size: 14px;
     overflow: hidden;
     padding: 15px 0;
     border-bottom: 1px solid #ededed;
-    font-size: 14px;
 }
-.hot_news_list li:last-child{
+
+.hot_news_list li:last-child {
     border-bottom: 0;
 }
+
 .hot_news_list li span {
     font-size: 12px;
     display: inline-block;
@@ -445,17 +450,18 @@
 }
 
 .hot_news_list .no_news {
-    text-align: center;
-    padding: 15px 0px 5px 0px;
     font-size: 14px;
+    padding: 15px 0 5px 0;
+    text-align: center;
     color: #999;
 }
 
-/*投稿*/
-.release_cont {
-    padding: 60px ;
-}
 
+/*投稿*/
+
+.release_cont {
+    padding: 60px;
+}
 
 .release_title {
     font-size: 20px;
@@ -506,118 +512,91 @@
 }
 
 .release_tags .release_tags_selected {
+    font-size: 14px;
     display: flex;
-
-    border: 1px solid #ededed;
-    padding: 0 20px;
     width: 100%;
     height: 50px;
-
-    font-size: 14px;
+    padding: 0 20px;
     text-align: center;
-
+    border: 1px solid #ededed;
     align-items: center;
 }
 
 .release_tags .release_tags_selected::before {
     display: block;
-
     width: 20px;
     height: 20px;
-
+    content: '';
     background-image: url(./img/tags_icon.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20px;
-
-    content: "";
 }
 
-
 .release_tags .release_tags_selected li {
-    display: inline-block;
-
-    margin-left: 10px;
-    border-radius: 3px;
-    padding: 0 20px;
-    height: 36px;
-
     font-size: 14px;
     line-height: 36px;
-
-    color: #59b6b7 !important;
-    background-color: rgba(89,182,183,.1);
-
+    display: inline-block;
+    height: 36px;
+    margin-left: 10px;
+    padding: 0 10px;
     cursor: pointer;
+    color: #59b6b7 !important;
+    border-radius: 3px;
+    background-color: rgba(89, 182, 183, .1);
 }
 
 .release_tags .release_tags_selected li::after {
+    font-size: 0;
     display: inline-block;
-
-    margin-left: 5px;
     width: 16px;
     height: 16px;
-
-    font-size: 0;
-    vertical-align: sub;
-
+    margin-left: 5px;
+    content: 'X';
+    vertical-align: middle;
     background-image: url(./img/close_icon.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 16px;
-
-    content: "X";
 }
 
 .release_tags .release_tags_list {
-    display: none;
-
     position: absolute;
+    z-index: 10;
     top: 100%;
-    z-index: 1;
-
-    padding: 0 40px 40px;
-    width: 450px;
+    display: none;
     min-height: 326px;
-
-    background-color: #fff;
-
-    box-shadow: 0 0 10px 0 rgba(23, 23, 23, .1);
-
+    padding: 0 40px 40px;
     transition: all .3s;
+    background-color: #fff;
+    box-shadow: 0 0 10px 0 rgba(23, 23, 23, .1);
 }
 
 .release_tags .release_tags_list dl {
-    margin: 30px 0 -25px -40px;
-
     font-size: 0;
+    margin: 30px 0 -25px -40px;
 }
 
 .release_tags .release_tags_list dl dt {
+    font-size: 14px;
     margin-bottom: 25px;
     margin-left: 40px;
-
-    font-size: 14px;
-
     color: #ccc;
 }
 
 .release_tags .release_tags_list dl dd {
+    font-size: 14px;
     display: inline-block;
-
     margin-bottom: 25px;
     margin-left: 40px;
-
-    font-size: 14px;
-
-    color: #666;
-
     cursor: pointer;
+    color: #666;
 }
 
-.release_tags .release_tags_list dl dd:hover{
-    color: rgb(89,182,183);
+.release_tags .release_tags_list dl dd:hover {
+    color: rgb(89, 182, 183);
 }
+
 .release_tags:hover .release_tags_list,
 .release_tags.active .release_tags_list {
     display: block;

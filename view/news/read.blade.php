@@ -87,19 +87,11 @@
                 </span>
             </a>
         </div>
-
+        <!-- 近期热点 -->
         @include('pcview::widgets.hotnews')
 
-        <!-- 资讯右侧广告 -->
-        @if(!$ads['right']->isEmpty())
-        @foreach($ads['right'] as $ad)
-        <div class="news_ad">
-            <a href="{{ $ad['link'] }}" target="_blank">
-                <img src="{{ $ad['image'] }}" />
-            </a>
-        </div>
-        @endforeach
-        @endif
+        <!-- 广告位 -->
+        @include('pcview::widgets.ads', ['space' => 'pc:news:right', 'type' => 1])
     </div>
 @endsection
 

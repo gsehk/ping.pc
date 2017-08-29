@@ -36,6 +36,9 @@ Route::prefix('feeds')->group(function () {
     // 获取动态列表
     Route::get('/list', 'FeedController@list');
 
+    // 获取单条微博
+    Route::get('/getfeed', 'FeedController@feed');
+
     // 动态详情
     Route::get('/{feed}', 'FeedController@read')->where(['feed' => '[0-9]+'])->name('pc:feedread');
 

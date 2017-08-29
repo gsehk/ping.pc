@@ -195,9 +195,7 @@
 
 					if ($('.uploadify-queue-add').length == 0) {
 						// 图片添加那妞
-						var add = '<a class="feed_picture_span uploadify-queue-add">'
-								
-								+ '</a>'
+						var add = '<a class="feed_picture_span uploadify-queue-add"></a>'
 						$('.uploadify-queue').append(add);
 					}
 

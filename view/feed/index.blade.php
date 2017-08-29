@@ -100,7 +100,7 @@ $(function(){
     });
 
     // 发布微博
-    var up = $('.post_button').Huploadify({
+    var up = $('.post_extra').Huploadify({
         auto:true,
         multi:true,
         newUpload:true,

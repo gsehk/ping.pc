@@ -2,74 +2,233 @@
 .profile_top {
     position: relative;
     width: 100%;
-    height: 402px;
     background: #fff;
 }
 
 .profile_top_cover {
-    position: absolute;
-    z-index: 0;
+    overflow: hidden;
     width: 1080px;
-    height: 402px;
+    height: 456px;
+}
+
+.profile_top_cover img{
+    width: 100%
 }
 
 .change_cover {
-    line-height: 36px;
-    position: relative;
-    z-index: 1;
+    display: block;
+
+    position: absolute;
     top: 20px;
     right: 30px;
-    display: block;
-    float: right;
+    z-index: 1;
+
+    border: 1px solid rgba(255, 255, 255, .4);
+    border-radius: 20px;
     width: 100px;
     height: 36px;
-    cursor: pointer;
-    transition: all .3s;
+
+    line-height: 36px;
     text-align: center;
+
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, .3);
-    border-radius: 20px;
     background-color: rgba(0, 0, 0, .4);
+
+    transition: all .3s;
+
+    cursor: pointer;
 }
+
 
 .change_cover:hover {
     border-color: #59b6d7;
-    background: #59b6d7;
+    background: rgba(89,182,215, .8);
 }
 
+
+.profile_nav {
+    padding: 0 20px;
+    width: 100%;
+    height: 80px;
+}
+
+
+.profile_nav .profile_nav_list{
+    float: left;
+
+    font-size: 0;
+}
+
+.profile_nav .profile_nav_list li {
+    display: inline-block;
+
+    margin-left: 60px;
+    border-bottom: 2px solid transparent;
+    height: 80px;
+
+    font-size: 18px;
+    line-height: 78px;
+
+    color: #666; 
+
+    transition: all .3s;
+}
+
+
+.profile_nav .profile_nav_list li:hover,
+.profile_nav .profile_nav_list li.active{
+    border-bottom-color: #6eb5d3;
+    color: #6eb5d3; 
+}
+
+.profile_nav .profile_nav_list li a{
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    color: inherit;
+}
+
+.profile_nav .profile_nav_btn {
+    display: block;
+    float: right;
+
+    margin-top: 22px;
+    border-radius: 18px;
+    width: 100px;
+    height: 36px;
+    
+    font-size: 14px;
+    color:#fff;
+    line-height: 36px;
+    text-align: center;
+
+    background-color: #6eb5d3;
+}
+
+
+.profile_nav .profile_nav_btn:before {
+    display: inline-block;
+    overflow: hidden;
+
+    margin-right: 9px;
+    width: 16px;
+    height: 16px;
+
+    vertical-align: middle;
+
+    background-image: url(./img/to_post_icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
+
+    content: "";
+}
 
 .profile_top_info {
     position: absolute;
-    bottom: 0;
+    bottom: 80px;
+
+    padding: 30px;
     width: 100%;
-    height: 108px;
-    background: rgba(0, 0, 0, .1);
-}
-
-.profile_top_user {
-    font-size: 32px;
-    padding-left: 220px;
-    color: white;
-}
-
-.profile_top_bio {
-    font-size: 16px;
-    margin-top: 14px;
-    padding-left: 220px;
-    color: #fff;
+    height: 220px;
 }
 
 .profile_top_img {
-    position: absolute;
-    bottom: -20px;
-    left: 18px;
+    float: left;
+    overflow: hidden;
+
+    border: 4px solid #fff;
+    border-radius: 50%;
+    width: 160px;
+    height: 160px;
+
+    line-height: 160px;
+    text-align: center;
+
+    background-color: #f6f6f6;
 }
 
 .profile_top_img img {
-    width: 160px;
-    height: 160px;
-    border: 4px solid #fff;
+    display: block;
+}
+
+.profile_top_info_d {
+    float: left;
+
+    margin-left: 30px;
+
+    color: #fff;
+}
+
+.profile_top_user a {
+    font-size: 36px;
+
+    color: #fff;
+}
+
+.profile_top_user span{
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.profile_top_user span::before {
+    display: inline-block;
+
+    margin-right: 5px;
+    width: 17px;
+    height: 17px;
+    
+    vertical-align: baseline;
+
+    background-image: url(./img/location_icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 17px;
+
+    content: "";
+}
+
+.profile_top_bio,
+.profile_top_tags,
+.profile_top_user,
+.profile_logo_icon{
+    margin: 0 0 15px;
+
+    font-size: 16px;
+}
+
+.profile_top_tags span {
+    display: inline-block;
+    padding: 5px 7px;
+    line-height: 1;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.profile_top_tags span + span{
+    margin-left: 10px;
+}
+
+.profile_logo_icon span{
+    display: inline-block;
+
+    margin-left: 10px;
+    border-bottom: 1px solid #fff;
+    font-size: 12px;
+}
+
+.profile_logo_icon span .tag_icon{
+    overflow: hidden;
+    display: inline-block;
+    margin-right: -6px;
+    margin-bottom: -4px;
     border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    transform: translateX(-50%);
 }
 
 

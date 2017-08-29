@@ -225,7 +225,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 {{$post->feed_view_count}}
             </span>
             <span class="options">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
             </span>
             <div class="options_div">
                 <ul>

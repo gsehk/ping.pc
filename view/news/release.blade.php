@@ -23,7 +23,7 @@
         <div class="release_title p_30 release_cates">
             @if(isset($cates))
                 @foreach($cates as $k=>$cate)
-                    <span data-cid="{{$cate['id']}}" 
+                    <span data-cid="{{$cate['id']}}"
                         @if(isset($cate_id))
                             @if($cate['id'] == $cate_id) class="current" @endif
                         @endif
@@ -36,32 +36,18 @@
             @include('pcview::widgets.editor' ,['url'=>$routes['resource'], 'height'=>'530px', 'content'=>$content ?? ''])
         </div>
         <div class="release_tags active">
-            <ul class="release_tags_selected">
-                <li>啦啦啦</li>
-            </ul>
-
-            <div class="release_tags_list">
-                <dl>
-                    <dt>个性</dt>
-                    <dd>前端工程师</dd>
-                    <dd>前端</dd>
-                    <dd>前端工程师</dd>
-                    <dd>前端工程师</dd>
-                    <dd>前端工程师</dd>
-                    <dd>前端工程师</dd>
-                    <dd>前端工程师</dd>
-                </dl>
-                <dl>
-                    <dt>个性</dt>
-                    <dd>前端工程师</dd>
-                    <dd>前端</dd>
-                    <dd>前端工程师</dd>
-                    <dd>前端工程师</dd>
-                    <dd>前端工程师</dd>
-                    <dd>前端工程师</dd>
-                    <dd>前端工程师</dd>
-                </dl>
+            <ul class="release_tags_selected" id="J-select-tags"></ul>
+            <div class="release_tags_list" id="J-tag-box" style="display: none;">
+                @foreach ($tags as $tag)
+                    <dl>
+                        <dt>{{$tag->name}}</dt>
+                        @foreach ($tag->tags as $item)
+                            <dd data-id="{{$item->id}}">{{$item->name}}</dd>
+                        @endforeach
+                    </dl>
+                @endforeach
             </div>
+            <input type="hidden" name="tags" id="tags" />
         </div>
         <div class="release_produce">
             <span class="release_bq" style="display: none;">
@@ -76,7 +62,7 @@
         </div>
         <div class="release_word">
             <input type="text" id="subject-author" name="subject-author" value="{{$author or ''}}" placeholder="文章作者（选填）" />
-        </div>            
+        </div>
         <div class="release_word">
             <input type="text" id="subject-from" name="subject-from" value="{{$from or ''}}" placeholder="文章转载至何处（非转载可不填）" />
         </div>
@@ -108,10 +94,27 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/cropper/cropper.min.js"></script>
-<script src="{{ $routes['resource'] }}/js/module.news.js"></script>
-<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.news.js')}}"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script type="text/javascript">
+$('#J-select-tags').on('click', function(){
+    $('#J-tag-box').show();
+});
+$('#J-tag-box dd').on('click', function(){
+    var selBox = $('#J-select-tags');
+    var tag_id = $(this).data('id');
+    var tag_name = $(this).text();
+    if (selBox.find('li').hasClass('tag_'+tag_id)) {
+        noticebox('标签已存在', 0); return;
+    }
+    if (selBox.find('li').length >= 5) {
+        noticebox('标签最多五个', 0); return;
+    }
+
+    selBox.append('<li class="tag_'+tag_id+'" data-id="'+tag_id+'">'+tag_name+'</li>');
+    selBox.on('click', 'li', function(){ $(this).remove() });
+});
 $('#J-image-preview').on('click',function(){
     var html = '<div id="model">'
         + '<div class="avatar-container" id="crop-avatar">'
@@ -135,7 +138,7 @@ $('#J-image-preview').on('click',function(){
             this.$avatarSave = this.$container.find('.avatar-save');
             this.init();
         }
-        // base64 
+        // base64
         function dataURLtoBlob(dataurl) {
             var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
                 bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
@@ -143,24 +146,6 @@ $('#J-image-preview').on('click',function(){
                 u8arr[n] = bstr.charCodeAt(n);
             }
             return new Blob([u8arr], {type:mime});
-        }
-        // get round avater
-        function getRoundedCanvas(sourceCanvas) {
-            var canvas = document.createElement('canvas');
-            var context = canvas.getContext('2d');
-            var width = sourceCanvas.width;
-            var height = sourceCanvas.height;
-
-            canvas.width = width;
-            canvas.height = height;
-            context.beginPath();
-            context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI);
-            context.strokeStyle = 'rgba(0,0,0,0)';
-            context.stroke();
-            context.clip();
-            context.drawImage(sourceCanvas, 0, 0, width, height);
-
-            return canvas;
         }
         CropAvatar.prototype = {
             constructor: CropAvatar,
@@ -180,11 +165,14 @@ $('#J-image-preview').on('click',function(){
             },
             click: function () {
                 var croppedCanvas = this.$img.cropper('getCroppedCanvas');
-                // var roundedCanvas = getRoundedCanvas(croppedCanvas); // 获取圆形头像
                 var blob = dataURLtoBlob(croppedCanvas.toDataURL());
                       blob.name = this.fileUpload.origin_filename;
                 this.$avatarSave.text('上传中...');
-                fileUpload.init(blob, updateImg);
+                fileUpload.init(blob, function(img, f, file_id){
+                    $('#subject-image').val(file_id);
+                    $('#J-image-preview').attr('src', '/api/v2/files/'+file_id+'?w=230&h=163');
+                    layer.closeAll();
+                });
             },
             change: function () {
                 var files,file;
@@ -241,14 +229,8 @@ $('#J-image-preview').on('click',function(){
             }
         };
         return new CropAvatar($('#crop-avatar'));
-    });  
+    });
 });
-
-var updateImg = function(image, f, storage_id){
-    $('#subject-image').val(storage_id);
-    $('#J-image-preview').attr('src', '/api/v2/files/'+storage_id+'?w=230&h=163');
-    layer.closeAll();
-} 
 
 // 资讯分类点击
 $('.release_cates span').on('click', function(e){
