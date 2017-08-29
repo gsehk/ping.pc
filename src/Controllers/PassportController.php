@@ -6,6 +6,7 @@ use Session;
 use Illuminate\Http\Request;
 use Gregwar\Captcha\CaptchaBuilder;
 use Zhiyi\Plus\Http\Controllers\Controller;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class PassportController extends BaseController
 {
@@ -14,7 +15,7 @@ class PassportController extends BaseController
     {
         Session::put('mid', $mid);
         Session::put('token', $token);
-        return redirect(route('pc:feeds'));
+        return redirect(route('pc:perfect'));
     }
 
     public function index()
@@ -44,7 +45,9 @@ class PassportController extends BaseController
 
     public function perfect()
     {
-        return view('pcview::passport.perfect', [], $this->PlusData);
+        $data['tags'] = createRequest('GET', '/api/v2/tags');
+        $data['user_tag'] = createRequest('GET', '/api/v2/user/tags');
+        return view('pcview::passport.perfect', $data, $this->PlusData);
     }
 
     public function captcha($tmp)
