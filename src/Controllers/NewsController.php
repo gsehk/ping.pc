@@ -64,15 +64,6 @@ class NewsController extends BaseController
         $news['collect_count'] = $news->with('collections')->count();
 
         $data['news'] = $news;
-
-
-        // 获取资讯首页广告位ID
-        $space = $this->PlusData['site']['ads'];
-
-        // 右侧广告
-        $data['ads']['right'] = createRequest('GET', '/api/v2/advertisingspace/' . $space['pc:news:right']['id'] . '/advertising')->pluck('data');
-        
-
         return view('pcview::news.read', $data, $this->PlusData);
     }
 
