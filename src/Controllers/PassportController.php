@@ -11,9 +11,9 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 class PassportController extends BaseController
 {
 
-    public function token(int $mid, string $token)
+    public function token(string $token)
     {
-        Session::put('mid', $mid);
+        Session::put('token', $token);
         return redirect(route('pc:perfect'));
     }
 
