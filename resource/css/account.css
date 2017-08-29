@@ -1,4 +1,8 @@
-
+.a-link{
+    color: #6363fb;
+    margin:0 10px;
+    border-bottom: 1px solid #6363fb;
+}
 .account_container{
     width: 100%;
 }
@@ -320,11 +324,10 @@
     line-height: 1;
 }
 
-.account_form_row .test_box{
+.account_form_row .text_box{
     width: 500px;
     padding-left: 10px;
     border-bottom: 1px solid #ededed;
-    display: inline-block;
     max-height: 400px;
     _height: 120px;
     outline: 0;

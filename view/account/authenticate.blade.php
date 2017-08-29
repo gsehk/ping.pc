@@ -39,7 +39,7 @@
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="desc"><font color="red">*</font>认证描述</label>
-            <div class="test_box desc" contenteditable="true"></div>
+            <div class="text_box desc" contenteditable="true"></div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="desc"><font color="red">*</font>认证资料</label>
@@ -89,7 +89,7 @@
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="desc"><font color="red">*</font>认证描述</label>
-            <div class="test_box desc" contenteditable="true"></div>
+            <div class="text_box desc" contenteditable="true"></div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="desc"><font color="red">*</font>认证资料</label>
@@ -142,7 +142,7 @@ $('.J-authenticate-btn').on('click', function(e) {
             sel = $(inp[i]);
             args.set(sel.attr('name'), sel.val());
         };
-        args.set('desc', $('.test_box').text());
+        args.set('desc', $('.text_box').text());
         args.set('type', $('.J-authenticate-type').val());
 
         return args.get();

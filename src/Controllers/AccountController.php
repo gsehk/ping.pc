@@ -31,7 +31,12 @@ class AccountController extends BaseController
      */
     public function authenticate()
     {
-        return view('pcview::account.authenticate', $this->PlusData);
+        $templet = 'authenticate';
+        $data['info'] = createRequest('GET', '/api/v2/user/certification');
+        if (isset($data['info']['status'])) {
+            $templet = 'authinfo';
+        }
+        return view('pcview::account.'.$templet, $data, $this->PlusData);
     }
 
     /**
