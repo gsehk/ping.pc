@@ -1,3 +1,4 @@
+@if (!empty($data))
 <div class="checkin_cont">
     <div class="checkin_user">
         <span>
@@ -18,3 +19,4 @@
     </div>
     @endif
 </div>
+@endif
