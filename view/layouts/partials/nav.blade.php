@@ -1,4 +1,3 @@
-@php $route = route::currentRouteName(); @endphp
 <div class="nav nav_border">
     <div class="nav_left">
         <a href="{{ route('pc:feeds') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
@@ -6,19 +5,19 @@
     </div>
     <div class="nav_list clearfix">
         <ul>
-            <li><a href="{{ route('pc:feeds') }}" class="selected">动态</a></li>
+            <li><a href="{{ route('pc:feeds') }}" @if(!empty($current) && $current == 'feeds') class="selected" @endif>动态</a></li>
             <!-- <li><a href="" class="fs-18">圈子</a></li> -->
             <!-- <li><a href="" class="fs-18">问答</a></li> -->
-            <li><a href="{{ route('pc:news') }}">资讯</a></li>
-            <li><a href="{{ route('pc:users') }}" class="fs-18">找伙伴</a></li>
+            <li><a href="{{ route('pc:news') }}" @if(!empty($current) && $current == 'news') class="selected" @endif>资讯</a></li>
+            <li><a href="{{ route('pc:users') }}" @if(!empty($current) && $current == 'users') class="selected" @endif>找伙伴</a></li>
         </ul>
 
-        <div class="nav_search">
+        <!-- <div class="nav_search">
             <input class="nav_input" type="text" placeholder="输入关键词搜索"/>
             <a class="nav_search_icon">
                 <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xihuan-white"></use></svg>
             </a>
-        </div>
+        </div> -->
     </div>
     @if (!empty($TS))
     <div class="nav_right">

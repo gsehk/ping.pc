@@ -11,10 +11,14 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 class PassportController extends BaseController
 {
 
-    public function token(string $token)
+    public function token(string $token, int $type)
     {
         Session::put('token', $token);
-        return redirect(route('pc:perfect'));
+        if ($type) {
+            return redirect(route('pc:perfect'));
+        } else {
+            return redirect(route('pc:feeds'));
+        }
     }
 
     public function index()

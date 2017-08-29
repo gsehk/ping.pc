@@ -25,6 +25,7 @@ class NewsController extends BaseController
 
         $data['cate_id'] = $cate_id;
 
+        $this->PlusData['current'] = 'news';
         return view('pcview::news.index', $data, $this->PlusData);
     }
 

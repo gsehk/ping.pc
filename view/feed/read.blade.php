@@ -18,15 +18,13 @@
         <div class="detail_user">
             <div class="detail_user_header">
                 <a href="#">
-                    <img src="https://avatars3.githubusercontent.com/u/25883665?v=4&s=460" alt="">
+                    <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" alt="">
                 </a>
             </div>
             <div class="detail_user_info">
-                <div class="detail_user_name"><a href="#">云上月</a></div>
-                <div class="detail_time">2017-3-25 16:14</div>
+                <div class="detail_user_name"><a href="#">{{ $user['name'] }}</a></div>
+                <div class="detail_time">{{ getTime($feed['created_at']) }}</div>
             </div>
-
-            <!--  -->
         </div>
 
         @if($feed->images)
@@ -79,25 +77,23 @@
     </div>
 
     <div class="right_container">
-        <div class="r_about_auth">
+        <div class="right_about">
             <div class="info clearfix">
                 <div class="auth_header">
                     <a href="#">
-                        <img src="https://avatars3.githubusercontent.com/u/25883665?v=4&s=460" alt="">
+                        <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png'}}" alt="">
                     </a>
                 </div>
                 <div class="auth_info">
                     <div class="info_name">
-                        <a href="#">jsonleex</a>
+                        <a href="#">{{ $user['name'] }}</a>
                     </div>
-                    <p class="info_bio">sadasdasdnasixlnccvst67a8gisbgcgufd76t98gyuwafcstdu76t8ygdvsfgyxci8oy7iuhjgh678yugfjtur6</p>
+                    <p class="info_bio">{{ $user['bio'] }}</p>
                 </div>
             </div>
             <ul class="auth_fans">
-                <li>粉丝<a href="#">25</a></li>
-                <li>粉丝<a href="#">25</a></li>
-                <li>粉丝<a href="#">25</a></li>
-                <li>粉丝<a href="#">25</a></li>
+                <li>粉丝<a href="javascript:;">{{ $user['followers'] }}</a></li>
+                <li>关注<a href="javascript:;">{{ $user['followers'] }}</a></li>
             </ul>
         </div>
         <!-- 推荐用户 -->

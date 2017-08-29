@@ -43,17 +43,14 @@
         </div>
     </div>
 
-    {{-- nav --}}
     <div class="profile_nav clearfix">
         <ul class="profile_nav_list clearfix">
             <li class="active"><a href="#">主页</a></li>
-            <li><a href="#">圈子</a></li>
-            <li><a href="#">问答</a></li>
-            <li><a href="#">草稿箱</a></li>
+            <li><a href="#">资讯</a></li>
+            <li><a href="#">收藏</a></li>
         </ul>
-        <a href="#" class="profile_nav_btn">投稿</a>
+        <a href="{{ route('pc:newsrelease') }}" class="profile_nav_btn">投稿</a>
     </div>
-    {{-- /nav --}}
 
 </div>
 

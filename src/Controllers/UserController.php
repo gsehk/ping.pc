@@ -10,6 +10,8 @@ class UserController extends BaseController
     public function index(Request $request, int $type = 1)
     {
         $data['type'] = $type;
+
+        $this->PlusData['current'] = 'users';
         return view('pcview::user.index', $data, $this->PlusData);
     }
 

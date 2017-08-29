@@ -480,7 +480,7 @@ $(function() {
            $('.nav_menu').hide();
         }
 
-        if(!target.is('.icon-gengduo-copy') && target.parents('.options').length == 0) {
+        if(!target.is('.icon-gengduo-copy') && target.parents('.options_div').length == 0) {
            $('.options_div').hide();
         }
 

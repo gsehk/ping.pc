@@ -5,8 +5,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\News;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentNews\Models\NewsCollection;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class FeedController extends BaseController
@@ -14,6 +12,8 @@ class FeedController extends BaseController
     public function index(Request $request)
     {
         $data['type'] = $request->input('type') ?: ($this->PlusData['TS'] ? 'follow' : 'hot');
+
+        $this->PlusData['current'] = 'feeds';
         return view('pcview::feed.index', $data, $this->PlusData);
     }
 
@@ -54,6 +54,8 @@ class FeedController extends BaseController
         $feed->collect_count = $feed->collection->count();
         $data['feed'] = $feed;
         $data['user'] = $feed->user;
+        $data['user']['followers'] = $feed->user->followers()->count();
+        $data['user']['followings'] = $feed->user->followings()->count();
 
         return view('pcview::feed.read', $data, $this->PlusData);
     }

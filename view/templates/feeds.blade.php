@@ -270,7 +270,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                     </div>
                 </div>
 
-                <div class="comment_ps" id="comment_ps{{ $post->id }}">
+                {{-- <div class="comment_ps" id="comment_ps{{ $post->id }}">
                 @if($post->comments->count())
                 @foreach($post->comments as $cv)
                 <p class="comment{{$cv->id}} comment_con">
@@ -287,7 +287,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 </div>
                 @if($post->comments->count() >= 5)
                 <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
-                @endif
+                @endif --}}
             
             </div>
         </div>

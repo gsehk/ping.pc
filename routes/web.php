@@ -8,7 +8,7 @@ Route::prefix('passport')->group(function () {
     Route::get('/login', 'PassportController@index')->name('pc:login');
 
     // 登录成功记录token
-    Route::get('/token/{token}', 'PassportController@token')->name('pc:token');
+    Route::get('/token/{token}/{type}', 'PassportController@token')->name('pc:token');
 
     // 登出
     Route::any('/logout', 'PassportController@logout')->name('pc:logout');
