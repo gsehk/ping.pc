@@ -130,7 +130,7 @@ var fileUpload = {
                 },
                 error: function(error){
                     error.status === 404 && _this.uploadFile(image, f, callback);
-                    showError(error.responseJSON);
+                    // showError(error.responseJSON);
                 }
             });
         }
@@ -482,6 +482,10 @@ $(function() {
 
         if(!target.is('.icon-gengduo-copy') && target.parents('.options').length == 0) {
            $('.options_div').hide();
+        }
+
+        if (!target.is('.release_tags_selected') && !target.is('dl,dt,dd,li')) {
+            $('.release_tags_list').hide();
         }
     });
 

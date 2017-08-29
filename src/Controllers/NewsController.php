@@ -13,21 +13,21 @@ class NewsController extends BaseController
 {
     /**
      * 文章首页
-     * 
+     *
      * @param  Request $request [description]
      * @return [type]           [description]
      */
     public function index(Request $request, int $cate_id = 0)
-    {   
+    {
         // 获取资讯首页广告位ID
         $space = $this->PlusData['site']['ads'];
 
         // 顶部广告
         $data['ads']['top'] = createRequest('GET', '/api/v2/advertisingspace/' . $space['pc:news:top']['id'] . '/advertising')->pluck('data');
-        
+
         // 右侧广告
         $data['ads']['right'] = createRequest('GET', '/api/v2/advertisingspace/' . $space['pc:news:right']['id'] . '/advertising')->pluck('data');
-        
+
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
@@ -39,7 +39,7 @@ class NewsController extends BaseController
 
     /**
      * 资讯列表.
-     * 
+     *
      * @param  $cate_id [分类ID]
      * @return mixed 返回结果
      */
@@ -80,7 +80,7 @@ class NewsController extends BaseController
 
         // 右侧广告
         $data['ads']['right'] = createRequest('GET', '/api/v2/advertisingspace/' . $space['pc:news:right']['id'] . '/advertising')->pluck('data');
-        
+
 
         return view('pcview::news.read', $data, $this->PlusData);
     }
@@ -92,6 +92,7 @@ class NewsController extends BaseController
     {
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
+        $data['tags'] = createRequest('GET', '/api/v2/tags');
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
 
         $data['news_id'] = $news_id;

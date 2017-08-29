@@ -164,9 +164,15 @@ $('.subject-submit').on('click', function() {
         'content': $(editor).html(),
         'image': $('#subject-image').val(),
         'from': $('#subject-from').val(),
-        'cate_id': $('#cate_ids').val(),
+        'cate_id': $('#cate_id').val(),
         'news_id': $('#news_id').val() || 0,
     };
+    var tags = [];
+    $('#J-select-tags li').each(function(index){
+        tags.push($(this).data('id'));
+    });
+    args.tags = tags;
+
     if (!args.title || getLength(args.title) > 20) {
         noticebox('文章标题不合法', 0);
         return false;
@@ -179,7 +185,7 @@ $('.subject-submit').on('click', function() {
         noticebox('请上传封面图片', 0);
         return false;
     }
-    var url = request_url.contribute.replace('{category}', args.cate_id);
+    var url = '/api/v2/news/categories/'+args.cate_id+'/news';
     $.ajax({
         url: url,
         type: 'POST',
@@ -473,10 +479,10 @@ var comment = {
         }
         var formData = {
             body: _textarea.value,
-        };        
+        };
         if (this.to_uid > 0) {
             formData.reply_user = this.to_uid;
-        }         
+        }
         var url = request_url.comment_news.replace('{news_id}', this.row_id);
         var _this = this;
         obj.innerHTML = '评论中..';
