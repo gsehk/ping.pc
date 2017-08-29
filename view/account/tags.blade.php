@@ -16,27 +16,30 @@
 
 <div class="account_r">
     <div class="account_c_c">
-		<!-- 标签管理 -->
+        {{-- 标签管理 --}}
         <div class="account_tab">
-            <!-- label -->
+            {{-- label --}}
             <div class="perfext_title">
                 <p>选择标签</p>
             </div>
-            <!-- /label -->
-            <!-- list -->
+            {{-- /label --}}
+            {{-- list --}}
             @foreach ($tags as $tag)
-				<div class="perfect_row">
-	                <label>{{$tag->name}}</label>
-	                <ul class="perfect_label_list" id="J-tags">
-	                @foreach ($tag->tags as $item)
-	                	<li data-id="{{$item->id}}">{{$item->name}}</li>
-	                @endforeach
-	                </ul>
-	            </div>
+                <div class="perfect_row">
+                    <label>{{$tag->name}}</label>
+                    <ul class="perfect_label_list" id="J-tags">
+                    @foreach ($tag->tags as $item)
+                        <li class="
+                        @foreach ($user_tag as $t)
+                            @if ($t->name == $item->name) active @endif
+                        @endforeach" data-id="{{$item->id}}">{{$item->name}}</li>
+                    @endforeach
+                    </ul>
+                </div>
             @endforeach
-            <!-- /list -->
-            <!-- select -->
-            <div class="perfect_selected">
+            {{-- /list --}}
+            {{-- select --}}
+            {{-- <div class="perfect_selected">
                 <label>最多可选
                     <span class="total">5</span>个标签，已选择
                     <span class="cur_count">0</span>个</label>
@@ -45,15 +48,15 @@
                     <li>旅行家<i class="icon close"></i></li>
                     <li>运动达人<i class="icon close"></i></li>
                 </ul>
-            </div>
-            <!-- /select -->
-            <!-- btn -->
-            <div class="perfect_btns">
+            </div> --}}
+            {{-- /select --}}
+            {{-- btn --}}
+            {{-- <div class="perfect_btns">
                 <a href="javascript:;" class="perfect_btn save" id="save">保存</a>
-            </div>
-            <!-- /btn -->
+            </div> --}}
+            {{-- /btn --}}
         </div>
-        <!-- /标签管理 -->
+        {{-- /标签管理 --}}
     </div>
 </div>
 </div>
@@ -64,33 +67,38 @@
 <script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
 <script>
 $('#J-tags li').on('click', function(e){
-	var _this = $(this);
-	var tag_id = $(this).data('id');
-	if (_this.hasClass('active')) {
-		$.ajax({
-	        url: '/api/v2/user/tags/'+tag_id,
-	        type: 'DELETE',
-	        dataType: 'json',
-	        error: function(xml) {
-	            noticebox('操作失败', 0, 'refresh');
-	        },
-	        success: function(res) {
-	        	_this.addClass('active');
-	        }
-	    });
-	} else {
-		$.ajax({
-	        url: '/api/v2/user/tags/'+tag_id,
-	        type: 'PUT',
-	        dataType: 'json',
-	        error: function(xml) {
-	            noticebox('操作失败', 0, 'refresh');
-	        },
-	        success: function(res) {
-	        	_this.removeClass('active');
-	        }
-	    });
-	}
+    var _this = $(this);
+    var tag_id = $(this).data('id');
+    var lenth = $('#J-tags li.active').length;
+    if (_this.hasClass('active')) {
+        $.ajax({
+            url: '/api/v2/user/tags/'+tag_id,
+            type: 'DELETE',
+            dataType: 'json',
+            error: function(xml) {
+                noticebox('操作失败', 0, 'refresh');
+            },
+            success: function(res) {
+                _this.removeClass('active');
+            }
+        });
+    } else {
+        if (lenth >= 5) {
+            noticebox('个人标签最多选择５个', 0);
+            return false;
+        }
+        $.ajax({
+            url: '/api/v2/user/tags/'+tag_id,
+            type: 'PUT',
+            dataType: 'json',
+            error: function(xml) {
+                noticebox('操作失败', 0, 'refresh');
+            },
+            success: function(res) {
+                _this.addClass('active');
+            }
+        });
+    }
 });
 </script>
 @endsection
