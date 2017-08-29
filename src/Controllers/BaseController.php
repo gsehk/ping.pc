@@ -15,10 +15,9 @@ class BaseController extends Controller
     	$this->middleware(function($request, $next){
             // user info
     		$this->PlusData['token'] = session('token') ?: '';
-    		$this->PlusData['mid'] = session('mid') ?: '';
 
     		$this->PlusData['TS'] = null;
-    		if ($this->PlusData['mid']) {
+    		if ($this->PlusData['token']) {
     			$this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
     		}

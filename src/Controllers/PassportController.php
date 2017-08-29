@@ -14,7 +14,6 @@ class PassportController extends BaseController
     public function token(int $mid, string $token)
     {
         Session::put('mid', $mid);
-        Session::put('token', $token);
         return redirect(route('pc:perfect'));
     }
 
