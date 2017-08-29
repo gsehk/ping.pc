@@ -422,6 +422,9 @@
 }
 
 
+/*分割线*/
+
+
 .dy_num {
     font-size: 12px;
     line-height: 18px;
@@ -565,80 +568,6 @@
 
 .dy_img6_bottom .img6_bottom:last-child {
     margin-right: 0 !important;
-}
-
-
-.dy_signed {
-    margin-bottom: 30px;
-}
-
-.dyrTop {
-    position: relative;
-    width: 100%;
-    height: 80px;
-    border-radius: 3px;
-    background: #fff;
-}
-
-.dyrTop_r {
-    display: inline-block;
-    margin: 40px 0 0 20px;
-    color: #f87d72;
-    width: 94px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.index_intro {
-    overflow: hidden;
-    max-height: 90px;
-    padding: 15px 20px;
-    word-break: break-all;
-    color: #999;
-    background: white;
-}
-
-.dyrTop_r span {
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
-}
-
-.dyrTop_img {
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
-
-.dy_qiandao {
-    font-size: 20px;
-    line-height: 50px;
-    height: 50px;
-    cursor: pointer;
-    text-align: center;
-    color: #fff;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    background: #f87d72;
-}
-
-.dy_qiandao_sign {
-    background: grey;
-}
-
-.dy_qiandao span {
-    font-size: 12px;
-    display: inline-block;
-    margin-left: 5px;
-}
-
-.dy_qiandao > svg {
-    font-size: 23px;
-    margin-right: 5px;
-    vertical-align: text-bottom;
 }
 
 .dyrBottom {

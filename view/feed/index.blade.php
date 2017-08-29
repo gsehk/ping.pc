@@ -43,8 +43,10 @@
 
 
     <div class="right_container">
+        @if (!empty($TS))
         <!-- 签到 -->
         @include('pcview::widgets.checkin')
+        @endif
 
         <!-- 推荐用户 -->
         @include('pcview::widgets.recusers')

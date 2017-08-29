@@ -433,6 +433,28 @@ var getCookie = function(c_name) {
    return "";
 }
 
+// 签到
+var checkIn = function(is_check, nums) {
+    var url = '/api/v2/user/checkin';
+    if (!is_check) {
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            success: function(response) {
+                noticebox('签到成功', 1);
+                $('#checkin').addClass('checked_div');
+                var html = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>'
+                html += '已签到<span>连续签到<font class="colnum">' + (nums + 1) + '</font>天</span>';
+                $('#checkin').html(html);
+                $('#checkin').removeAttr('onclick');
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        })
+    }
+}
+
 $(function() {
     //获得用户时区与GMT时区的差值
     if (getCookie('customer_timezone') == '') {
