@@ -489,6 +489,7 @@
 }
 
 .release_place {
+    overflow: hidden;
     width: 695px;
     height: 530px;
     margin-top: 30px;
@@ -498,6 +499,128 @@
     width: 100%;
     height: 100%;
     border: none;
+}
+
+.release_tags {
+    position: relative;
+}
+
+.release_tags .release_tags_selected {
+    display: flex;
+
+    border: 1px solid #ededed;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+
+    font-size: 14px;
+    text-align: center;
+
+    align-items: center;
+}
+
+.release_tags .release_tags_selected::before {
+    display: block;
+
+    width: 20px;
+    height: 20px;
+
+    background-image: url(./img/tags_icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+
+    content: "";
+}
+
+
+.release_tags .release_tags_selected li {
+    display: inline-block;
+
+    margin-left: 10px;
+    border-radius: 3px;
+    padding: 0 20px;
+    height: 36px;
+
+    font-size: 14px;
+    line-height: 36px;
+
+    color: #59b6b7 !important;
+    background-color: rgba(89,182,183,.1);
+
+    cursor: pointer;
+}
+
+.release_tags .release_tags_selected li::after {
+    display: inline-block;
+
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+
+    font-size: 0;
+    vertical-align: sub;
+
+    background-image: url(./img/close_icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
+
+    content: "X";
+}
+
+.release_tags .release_tags_list {
+    display: none;
+
+    position: absolute;
+    top: 100%;
+    z-index: 1;
+
+    padding: 0 40px 40px;
+    width: 450px;
+    min-height: 326px;
+
+    background-color: #fff;
+
+    box-shadow: 0 0 10px 0 rgba(23, 23, 23, .1);
+
+    transition: all .3s;
+}
+
+.release_tags .release_tags_list dl {
+    margin: 30px 0 -25px -40px;
+
+    font-size: 0;
+}
+
+.release_tags .release_tags_list dl dt {
+    margin-bottom: 25px;
+    margin-left: 40px;
+
+    font-size: 14px;
+
+    color: #ccc;
+}
+
+.release_tags .release_tags_list dl dd {
+    display: inline-block;
+
+    margin-bottom: 25px;
+    margin-left: 40px;
+
+    font-size: 14px;
+
+    color: #666;
+
+    cursor: pointer;
+}
+
+.release_tags .release_tags_list dl dd:hover{
+    color: rgb(89,182,183);
+}
+.release_tags:hover .release_tags_list,
+.release_tags.active .release_tags_list {
+    display: block;
 }
 
 .release_bq {

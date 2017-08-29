@@ -35,6 +35,34 @@
         <div class="release_place">
             @include('pcview::widgets.editor' ,['url'=>$routes['resource'], 'height'=>'530px', 'content'=>$content ?? ''])
         </div>
+        <div class="release_tags active">
+            <ul class="release_tags_selected">
+                <li>啦啦啦</li>
+            </ul>
+
+            <div class="release_tags_list">
+                <dl>
+                    <dt>个性</dt>
+                    <dd>前端工程师</dd>
+                    <dd>前端</dd>
+                    <dd>前端工程师</dd>
+                    <dd>前端工程师</dd>
+                    <dd>前端工程师</dd>
+                    <dd>前端工程师</dd>
+                    <dd>前端工程师</dd>
+                </dl>
+                <dl>
+                    <dt>个性</dt>
+                    <dd>前端工程师</dd>
+                    <dd>前端</dd>
+                    <dd>前端工程师</dd>
+                    <dd>前端工程师</dd>
+                    <dd>前端工程师</dd>
+                    <dd>前端工程师</dd>
+                    <dd>前端工程师</dd>
+                </dl>
+            </div>
+        </div>
         <div class="release_produce">
             <span class="release_bq" style="display: none;">
                 <img src="{{ $routes['resource'] }}/images/pro.png" /><input placeholder="添加标签，多个标签用逗号分开" />
