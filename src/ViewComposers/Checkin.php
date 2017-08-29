@@ -5,7 +5,7 @@ use Illuminate\View\View;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
-class Checkin
+class CheckIn
 {
     public function compose(View $view)
     {
