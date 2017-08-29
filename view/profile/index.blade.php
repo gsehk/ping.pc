@@ -11,11 +11,9 @@
 @section('content')
 <div class="profile_top">
 
-    <!-- cover -->
     <div class="profile_top_cover">
         <img src="{{ $user->bg or $routes['resource'] . '/images/default_cover.png' }}"/>
     </div>
-    <!-- /cover -->
 
     @if ($user->id == $TS['id'])
         <input type="file" name="cover" style="display:none" id="cover">
@@ -47,9 +45,8 @@
     <div class="profile_nav clearfix">
         <ul class="profile_nav_list clearfix">
             <li class="active"><a href="#">主页</a></li>
-            <li><a href="#">圈子</a></li>
-            <li><a href="#">问答</a></li>
-            <li><a href="#">草稿箱</a></li>
+            <li><a href="#">资讯</a></li>
+            <li><a href="#">收藏</a></li>
         </ul>
 
         <!-- btn -->

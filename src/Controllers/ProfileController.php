@@ -22,12 +22,6 @@ class ProfileController extends BaseController
     {
         $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
 
-        // 粉丝
-        $data['followers'] = $data['user']->followers()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
-
-        // 关注
-        $data['followings'] = $data['user']->followings()->with('datas')->orderBy('id', 'DESC')->take(9)->get();
-
         return view('pcview::profile.index', $data, $this->PlusData);
     }
 
