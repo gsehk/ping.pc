@@ -252,7 +252,7 @@
     margin-right: 15px;
 }
 
-.reg_cont .reg_input span {
+.reg_cont .reg_input .input_span {
     display: inline-block;
     width: 385px;
     margin-top: -5px;
@@ -260,7 +260,7 @@
     border-bottom: 1px solid #ededed;
 }
 
-.reg_cont .reg_input span input {
+.reg_cont .reg_input .input_span input {
     width: 100%;
     border: none;
     outline: none;
@@ -268,7 +268,7 @@
     font-size: 14px;
 }
 
-.reg_cont .reg_input span input:-webkit-autofill {
+.reg_cont .reg_input .input_span input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 

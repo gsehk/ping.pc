@@ -24,14 +24,14 @@
             </div>
             <div class="reg_input">
                 <label>图形验证码</label>
-                <span class="w_280">
+                <span class="input_span w_280">
                     <input type="text" placeholder="输入图形验证码" name="captchacode" maxlength="6" />
                 </span>
                 <img onclick="re_captcha()" src="{{ route('pc:captcha', ['tmp'=>1]) }}"  alt="验证码" title="刷新图片" id="captchacode" class="captcha">
             </div>
             <div class="reg_input">
                 <label>手机验证码</label>
-                <span class="w_280"><input type="text" placeholder="输入手机验证码" name="verifiable_code" /></span>
+                <span class="input_span w_280"><input type="text" placeholder="输入手机验证码" name="verifiable_code" /></span>
                 <span class="get_code" id="smscode" type="reg">获取短信验证码</span>
             </div>
             <div class="reg_input">
@@ -63,19 +63,19 @@
             <div class="reg_input">
                 <label>邮箱</label>
                 <span>
-                    <input type="text" placeholder="输入邮箱" name="email" maxlength="11" id="inputphone"/>
+                    <input type="text" placeholder="输入邮箱" name="email" id="inputphone"/>
                 </span>
             </div>
             <div class="reg_input">
                 <label>图形验证码</label>
-                <span class="w_280">
+                <span class="input_span w_280">
                     <input type="text" placeholder="输入图形验证码" name="captchacode" maxlength="6" />
                 </span>
                 <img onclick="re_captcha()" src="{{ route('pc:captcha', ['tmp'=>1]) }}"  alt="验证码" title="刷新图片" id="captchacode" class="captcha">
             </div>
             <div class="reg_input">
                 <label>邮箱验证码</label>
-                <span class="w_280">
+                <span class="input_span w_280">
                     <input type="text" placeholder="输入邮箱验证码" name="verifiable_code" />
                 </span>
                 <span class="get_code" id="smscode" type="reg">获取邮箱验证码</span>
