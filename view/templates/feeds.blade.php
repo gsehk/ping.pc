@@ -28,7 +28,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
         @if($post->images)
         <div style="" id="layer-photos-demo{{$post->id}}">
         @if($post->images->count() == 1)
-          <img class="lazy" style="min-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}"/>
+          <img class="lazy" style="max-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}"/>
         @elseif($post->images->count() == 2)
             <div style="width: 100%; display: flex;">
               <div style="width: 35vw;" class="image_box">

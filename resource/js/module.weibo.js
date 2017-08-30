@@ -470,6 +470,7 @@ $(function() {
 
     // 显示回复框
     $('#feeds_list').on('click', '.J-comment-show', function() {
+        return false;
         if (MID == 0) {
             window.location.href = '/passport/login';
             return;
