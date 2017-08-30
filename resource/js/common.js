@@ -308,6 +308,9 @@ var follow = function(status, user_id, target, callback) {
             type: 'PUT',
             success: function(response) {
                 callback(target);
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
             }
         })
     } else {
@@ -317,6 +320,9 @@ var follow = function(status, user_id, target, callback) {
             data: { user_id: user_id },
             success: function(response) {
                 callback(target);
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
             }
         })
     }
