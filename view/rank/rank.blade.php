@@ -49,7 +49,7 @@
                 success: function (res) {
                     if (res.status) {
                         if (res.data.count == 0) {
-                            noticebox('已无更多啦', 0);
+                            return false;
                         } else {
                             $('#'+genre+'-rank-list').html(res.data.html);
                             $('#'+genre+'num').text(curnum);
