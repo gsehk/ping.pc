@@ -15,11 +15,6 @@ class ProfileController extends BaseController
         return view('pcview::profile.index', $data, $this->PlusData);
     }
 
-    public function news()
-    {
-
-    }
-    
     public function feeds(Request $request)
     {
         if ($request->cate == 'all') {
@@ -30,7 +25,7 @@ class ProfileController extends BaseController
             # code...
         }
         $after = $feed->pop()->id ?? 0;
-        $html = view('pcview::templates.profile-feed', $feeds, $this->PlusData)->render();
+        $html = view('pcview::templates.profile_feed', $feeds, $this->PlusData)->render();
 
         return response()->json(static::createJsonData([
             'status' => true,

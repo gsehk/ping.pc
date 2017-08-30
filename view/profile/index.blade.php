@@ -55,10 +55,19 @@
 </div>
 
 <div class="profile_body">
-    <div class="profile_left">
+    <div class="left_box"></div>
+    <div class="center_box">
+        {{-- 动态列表 --}}
+        <div class="feed_content">
+        <div class="feed_menu">
+            <a href="javascript:;" class="active">全部</a>
+        </div>
+            <div id="feeds_list"></div>
+        </div>
     </div>
 
-    <div class="right_container">
+    <div class="right_box">
+        @include('pcview::widgets.recusers')
     </div>
 </div>
 
@@ -68,44 +77,41 @@
 <script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script src="{{ URL::asset('zhiyicx/plus-component-pc/js/jquery.uploadify.js') }}"></script>
 <script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
-<script type="text/javascript">
-    // 加载微博
-    setTimeout(function() {
-        weibo.init({
-            container: '#feeds-list',
-            user_id:"{{ $user->id }}",
-            type: "all"
-        });
-    }, 300);
+<script>
+// 加载微博
+var params = {
+    type: 'users',
+    cate: 'all'
+};
 
-    // 微博分类tab
-    $('.artic_left a').on('click', function(){
-        var type = $(this).data('type');
-        $('#feeds-list').html('');
-        weibo.init({container: '#feeds-list',user_id:"{{ $user->id }}",type: type});
-        $('.artic_left a').removeClass('dy_cen_333');
-        $(this).addClass('dy_cen_333');
+setTimeout(function() {
+    scroll.init({
+        container: '#feeds_list',
+        loading: '.feed_content',
+        url: '/profile/feeds',
+        params: params
     });
+}, 300);
 
-    // 关注
-    $('#follow').click(function(){
-        var _this = $(this);
-        var status = $(this).attr('status');
-        var user_id = "{{ $user->id }}";
-        follow(status, user_id, _this, afterdata);
-    })
+// 关注
+$('#follow').click(function(){
+    var _this = $(this);
+    var status = $(this).attr('status');
+    var user_id = "{{ $user->id }}";
+    follow(status, user_id, _this, afterdata);
+})
 
-    // 关注回调
-    var afterdata = function(target){
-        if (target.attr('status') == 1) {
-            target.text('+关注');
-            target.attr('status', 0);
-            target.removeClass('their_followed');
-        } else {
-            target.text('已关注');
-            target.attr('status', 1);
-            target.addClass('their_followed');
-        }
+// 关注回调
+var afterdata = function(target){
+    if (target.attr('status') == 1) {
+        target.text('+关注');
+        target.attr('status', 0);
+        target.removeClass('their_followed');
+    } else {
+        target.text('已关注');
+        target.attr('status', 1);
+        target.addClass('their_followed');
     }
+}
 </script>
 @endsection
