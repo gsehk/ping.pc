@@ -370,7 +370,7 @@ var logout = function() {
         + '<div data-dismiss="modal" class="exit_btn">'
         + '<a href="javascript:layer.closeAll()">取消</a>'
         + '</div>'
-        + '<a href="' + request_url.logout + '"><span data-dismiss="modal" class="exit_btn exit_btn_bg">退出</span></a>'
+        + '<a href="/passport/logout"><span data-dismiss="modal" class="exit_btn exit_btn_bg">退出</span></a>'
         + '</div></div>'
     layer.open({
       type: 1,

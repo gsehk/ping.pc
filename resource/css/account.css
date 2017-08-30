@@ -303,6 +303,7 @@
 .account_form_row .image {
     width: 230px;
     height: 163px;
+    margin-top: 10px;
     overflow: hidden;
 }
 
