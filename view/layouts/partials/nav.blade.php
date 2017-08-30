@@ -3,22 +3,7 @@
         <a href="{{ route('pc:feeds') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
         <!-- <span class="nav_beta fs-16">beta</span> -->
     </div>
-    <div class="nav_list clearfix">
-        <ul>
-            <li><a href="{{ route('pc:feeds') }}" @if(!empty($current) && $current == 'feeds') class="selected" @endif>动态</a></li>
-            <!-- <li><a href="" class="fs-18">圈子</a></li> -->
-            <!-- <li><a href="" class="fs-18">问答</a></li> -->
-            {{-- <li><a href="{{ route('pc:news') }}" @if(!empty($current) && $current == 'news') class="selected" @endif>资讯</a></li> --}}
-            <li><a href="{{ route('pc:users') }}" @if(!empty($current) && $current == 'users') class="selected" @endif>找伙伴</a></li>
-        </ul>
 
-        <!-- <div class="nav_search">
-            <input class="nav_input" type="text" placeholder="输入关键词搜索"/>
-            <a class="nav_search_icon">
-                <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xihuan-white"></use></svg>
-            </a>
-        </div> -->
-    </div>
     @if (!empty($TS))
     <div class="nav_right">
         <img src="{{ $TS['avatar'] or $routes['resource'] . '/images/avatar.png' }}" id="menu_toggle" alt="{{ $TS['name'] }}"/>
@@ -56,5 +41,22 @@
         <a class="nava" href="{{ route('pc:login') }}">登录</a>
     </div>
     @endif
+    
+    <div class="nav_list clearfix">
+        <ul>
+            <li><a href="{{ route('pc:feeds') }}" @if(!empty($current) && $current == 'feeds') class="selected" @endif>动态</a></li>
+            <!-- <li><a href="" class="fs-18">圈子</a></li> -->
+            <!-- <li><a href="" class="fs-18">问答</a></li> -->
+            {{-- <li><a href="{{ route('pc:news') }}" @if(!empty($current) && $current == 'news') class="selected" @endif>资讯</a></li> --}}
+            <li><a href="{{ route('pc:users') }}" @if(!empty($current) && $current == 'users') class="selected" @endif>找伙伴</a></li>
+        </ul>
+
+        <!-- <div class="nav_search">
+            <input class="nav_input" type="text" placeholder="输入关键词搜索"/>
+            <a class="nav_search_icon">
+                <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xihuan-white"></use></svg>
+            </a>
+        </div> -->
+    </div>
 </div>
 

@@ -141,6 +141,7 @@ a {
     width: 100%;
     height: 64px;
     background: #fff;
+    min-width: 1200px;
 }
 
 .nav_left {
@@ -230,9 +231,8 @@ a {
 }
 
 .nav_right {
-    position: absolute;
-    top: 20px;
-    right: 50px;
+    float: right;
+    margin: 16px 50px;
 }
 
 .nav_right a.nava {
@@ -537,6 +537,7 @@ a {
 .hot_user_avatar img{
     width: 60px;
     height: 60px;
+    border-radius: 50%;
 }
 
 .hot_user_info {
