@@ -98,7 +98,7 @@
                     <input type="password" placeholder="再次输入密码" name="repassword" />
                 </span>
             </div>
-            <input type="hidden" name="verifiable_type" value="email">
+            <input type="hidden" name="verifiable_type" value="mail">
 
             <a id="reg_btn" class="reg_btn">注册</a>
         </form>
