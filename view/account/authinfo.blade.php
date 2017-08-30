@@ -36,15 +36,15 @@
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="realName">真实姓名</label>
-            <div>{{$info['data']['name']}}</div>
+            <div class="account_form_text">{{$info['data']['name']}}</div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="IDNumber">身份证号码</label>
-            <div>{{$info['data']['number']}}</div>
+            <div class="account_fomr_text">{{$info['data']['number']}}</div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="contact">联系方式</label>
-            <div>{{$info['data']['phone']}}</div>
+            <div class="account_fomr_text">{{$info['data']['phone']}}</div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="desc">认证描述</label>
@@ -52,8 +52,8 @@
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="desc">认证资料</label>
-            <a class="a-link" target="_blank" href="{{ $routes['storage'].$info['data']['files'][0] }}"> 点击查看 </a>
-            <a class="a-link" target="_blank" href="{{ $routes['storage'].$info['data']['files'][1] }}"> 点击查看 </a>
+            <img class="image" src="{{ $routes['storage'].$info['data']['files'][0] }}">
+            <img class="image" src="{{ $routes['storage'].$info['data']['files'][0] }}">
         </div>
     </div>
     @endif
