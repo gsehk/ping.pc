@@ -4,7 +4,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
