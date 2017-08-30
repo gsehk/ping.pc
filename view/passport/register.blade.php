@@ -62,7 +62,7 @@
         <form method="POST" id="reg_form">
             <div class="reg_input">
                 <label>邮箱</label>
-                <span>
+                <span class="input_span">
                     <input type="text" placeholder="输入邮箱" name="email" id="inputphone"/>
                 </span>
             </div>
@@ -82,17 +82,19 @@
             </div>
             <div class="reg_input">
                 <label>设置昵称</label>
-                <span><input type="text" placeholder="2-10个字符" name="name" /></span>
+                <span class="input_span">
+                    <input type="text" placeholder="2-10个字符" name="name" />
+                </span>
             </div>
             <div class="reg_input">
                 <label>设置密码</label>
-                <span>
+                <span class="input_span">
                     <input type="password" placeholder="限6-15个字符，区分大小写" name="password" />
                 </span>
             </div>
             <div class="reg_input">
                 <label>确认密码</label>
-                <span>
+                <span class="input_span">
                     <input type="password" placeholder="再次输入密码" name="repassword" />
                 </span>
             </div>

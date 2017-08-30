@@ -401,8 +401,7 @@ var checkPhone = function(string) {
 
 // 验证邮箱
 var checkEmail = function(string) {
-    var pattern=/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/;
-    if (pattern.test(string)) {
+    if (string.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) != -1){
         return true;
     }
     return false;
