@@ -869,6 +869,59 @@ a {
     vertical-align: text-bottom;
 }
 
+
+/*退出弹框*/
+
+.exit_dialog {
+    width: 400px !important;
+    height: 300px !important;
+    margin-top: 150px !important;
+}
+
+.exit_body {
+    padding: 70px !important;
+}
+
+.exit_content {
+    text-align: center;
+}
+
+.exit_ts {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.exit_thinks {
+    font-size: 14px;
+    line-height: 24px;
+    color: #999;
+}
+
+.exit_btn {
+    line-height: 30px;
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+    margin: 50px 10px 0;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 3px;
+    background: #59b6d7;
+}
+
+.exit_btn a {
+    color: #fff;
+}
+
+.exit_btn_bg {
+    background: #ccc !important;
+}
+
+.modal.fade.in {
+    margin: auto !important;
+}
+
 /*分割线*/
 
 
