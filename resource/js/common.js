@@ -296,6 +296,11 @@ var checkNums = function(obj, len, show) {
 
 // 关注
 var follow = function(status, user_id, target, callback) {
+    if (MID == 0) {
+        window.location.href = '/passport/login';
+        return false;
+    }
+
     var url = API + '/user/followings/' + user_id;
     if (status == 0) {
         $.ajax({
