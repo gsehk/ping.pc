@@ -240,14 +240,15 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                         </a>
                         @endif
                     </li>
-                    @if(!empty($TS['id']) && $post->user_id != $TS['id'])
+                    
+                    {{-- @if(!empty($TS['id']) && $post->user_id != $TS['id'])
                     <li><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>置顶</a></li>
                     @endif
 
                     @if(!empty($TS['id']) && $post->user_id != $TS['id'])
                     <li><a href="javascript:;" onclick="weibo.denounce(this);" feed_id="{{$post->id}}" to_uid="{{$post->user_id}}">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jubao-copy1"></use></svg>举报</a></li>
-                    @endif
+                    @endif --}}
 
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
                     <li><a href="javascript:;" onclick="weibo.delFeed({{$post->id}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
