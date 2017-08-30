@@ -9,7 +9,7 @@
 				<img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}">
 			</div>
 			<div class="hot_user_info">
-				<a href=""><span class="hot_user_name">{{ $user['name'] }}</span></a>
+				<a href="javascript:;"><span class="hot_user_name">{{ $user['name'] }}</span></a>
 				<div class="hot_user_intro">{{ $user['bio'] or '这家伙很懒，什么都没留下'}}</div>
 			</div>
 		</li>

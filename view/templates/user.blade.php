@@ -4,12 +4,16 @@
 	@endif
 	    <div class="user">
             <div class="user_header">
-                <a href="{{route('pc:mine',['user_id'=>$data['id']])}}">
+                <!-- <a href="{{route('pc:mine',['user_id'=>$data['id']])}}"> -->
+                <a href="javascript:;">
                     <img src="{{ $data['avatar'] or $routes['resource'] . '/images/avatar.png' }} " class="user_avatar" alt="{{ $data['name'] }}"/>
                 </a>
             </div>
             <div class="user_body">
-                    <a href="{{route('pc:mine',['user_id'=>$data['id']])}}"><span class="user_name">{{ $data['name'] or $data['phone'] }}</span></a>
+                    <!-- <a href="{{route('pc:mine',['user_id'=>$data['id']])}}"> -->
+                    <a href="javascript:;">
+                        <span class="user_name">{{ $data['name'] or $data['phone'] }}</span>
+                    </a>
                     @if ($data['follower'])
                     <span id="data" class="follow_btn followed" uid="{{ $data['id'] }}" status="1">已关注</span>
                     @else

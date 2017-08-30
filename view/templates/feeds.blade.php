@@ -7,17 +7,17 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 <div class="feed_item" id="feed{{$post->id}}">
 
     <div class="feed_title">
-        <a class="avatar_box" href="{{ Route('pc:mine', $post->user->id) }}">
+        <a class="avatar_box" href="javascript:;">
             <img class="avatar" src="{{ $post->user->avatar or $routes['resource'] . '/images/avatar.png' }}" />
             @if($post->user->user_verified)
             <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
             @endif
         </a>
         
-        <a href="{{Route('pc:mine', $post->user_id)}}">
+        <a href="javascript:;">
             <span class="feed_uname fs-14">{{ $post->user->name }}</span>
         </a>
-        <a href="{{Route('pc:feedread', $post->id)}}">
+        <a href="javascript:;">
             <span class="feed_time fs-12">{{ getTime($post->created_at) }}</span>
         </a>
     </div>
