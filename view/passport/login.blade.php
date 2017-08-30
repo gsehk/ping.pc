@@ -19,7 +19,7 @@
     <div class="login_right">
         <form method="POST" id="login_form">
             <div class="login_input">
-                <input type="text" placeholder="输入手机号" name="login"/>
+                <input type="text" placeholder="输入手机号/邮箱/昵称" name="login"/>
             </div>
             <div class="login_input">
                 <input type="password" placeholder="输入密码" name="password"/>
