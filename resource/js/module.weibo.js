@@ -263,7 +263,7 @@ var comment = {
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
-                $('.comment'+comment_id).fadeOut();
+                $('#comment_item_'+comment_id).fadeOut();
                 var commentNum = $('.comment_count').text();
                 $('.comment_count').text(parseInt(commentNum)-1);
                 var nums = $('.cs' + feed_id);
@@ -456,7 +456,7 @@ $(function() {
     });
 
     // 微博操作菜单
-    $('#feeds_list').on('click', '.options', function() {
+    $('#feeds_list, #comment_box').on('click', '.options', function() {
         if ($(this).next('.options_div').css('display') == 'none') {
             $('.options_div').hide();
             $(this).next('.options_div').show();

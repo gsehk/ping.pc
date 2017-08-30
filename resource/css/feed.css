@@ -536,11 +536,12 @@
 .comment_item .reply_tool{
     margin: 8px 0;
     width: 645px;
+    position: relative;
 }
 
 .reply_tool .reply_action{
     float: right;
-    font-size: 20px;
+    cursor: pointer;
 }
 
 /*分享评论*/
