@@ -12,7 +12,7 @@
 <div class="profile_top">
 
     <div class="profile_top_cover">
-        <img src="{{ $user->bg or URL::asset('zhiyicx/plus-component-pc/images/default_cover.png') }}"/>
+        <img class="user_bg" src="{{ $user->bg or URL::asset('zhiyicx/plus-component-pc/images/default_cover.png') }}"/>
     </div>
 
     @if ($user->id == $TS['id'])

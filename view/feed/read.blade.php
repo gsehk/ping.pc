@@ -14,7 +14,7 @@
 
 @section('content')
     <div class="feed_left">
-        
+
         <div class="detail_user">
             <div class="detail_user_header">
                 <a href="#">
@@ -46,23 +46,23 @@
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
                     <font class="cs">{{ $feed['collect_count'] }}</font>收藏
                 </a>
-                @else 
+                @else
                 <a href="javascript:;" onclick="collect.delCollect('{{ $feed['id'] }}');" class="act">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
                     <font class="cs">{{ $feed['collect_count'] }}</font>收藏
                 </a>
                 @endif
             </span>
-            <span id="digg{{ $feed['id'] }}" rel="{{ $feed['digg_count'] }}">
-                @if(!$feed['collect_count'])
-                <a href="javascript:;" onclick="digg.addDigg('{{ $feed['id'] }}');">
+            <span id="digg{{ $feed['id'] }}" rel="{{ $feed['like_count'] }}">
+                @if(!$feed['has_like'])
+                <a href="javascript:;" onclick="digg.addDigg('{{ $feed['id'] }}', 'read');">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                    <font class="ds">{{ $feed['digg_count'] }}</font>人喜欢
+                    <font class="ds">{{ $feed['like_count'] }}</font>人喜欢
                 </a>
-                @else 
-                <a href="javascript:;" onclick="digg.delDigg('{{ $feed['id'] }}');" class="act">
+                @else
+                <a href="javascript:;" onclick="digg.delDigg('{{ $feed['id'] }}', 'read');" class="act">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
-                    <font class="ds">{{ $feed['digg_count'] }}</font>人喜欢
+                    <font class="ds">{{ $feed['like_count'] }}</font>人喜欢
                 </a>
                 @endif
             </span>
@@ -73,7 +73,30 @@
                 <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
             </div>
         </div>
+        <div class="detail_comment">
+            <div class="comment_title"><span class="comment_count">{{$feed['feed_comment_count']}}</span>人评论</div>
+            <div class="comment_box">
+                <textarea
+                    class="comment_editor"
+                    id="mini_editor"
+                    placeholder="说点什么吧"
+                    onkeyup="checkNums(this, 255, 'nums');"
+                ></textarea>
+                <div class="comment_tool">
+                    <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
+                    <button
+                        class="commnet_btn"
+                        id="J-comment-feed"
+                        data-args="to_uid=0&row_id={{$feed->id}}"
+                        to_comment_id="0"
+                        to_uid="0"
+                    >评论</button>
+                </div>
+            </div>
+            <div class="comment_list" id="comment_box">
 
+            </div>
+        </div>
     </div>
 
     <div class="right_container">
@@ -88,7 +111,7 @@
                     <div class="info_name">
                         <a href="#">{{ $user['name'] }}</a>
                     </div>
-                    <p class="info_bio">{{ $user['bio'] }}</p>
+                    <p class="info_bio">{{ $user['bio'] or '暂无简介' }}</p>
                 </div>
             </div>
             <ul class="auth_fans">
@@ -103,19 +126,27 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/module.weibo.js"></script>
-<script src="{{ $routes['resource'] }}/js/module.bdshare.js"></script>
-<script src="{{ $routes['resource'] }}/layer/layer.js"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
+<script src="{{ URL::asset('zhiyicx/plus-component-pc/layer/layer.js') }}"></script>
 <script type="text/javascript">
 layer.photos({
   photos: '#layer-photos-demo'
-  ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+  ,anim: 5
   ,move: false
-}); 
+});
+
+setTimeout(function() {
+    scroll.init({
+        container: '#comment_box',
+        loading: '.detail_comment',
+        url: '/feeds/'+{{$feed->id}}+'/comments' ,
+        canload: true
+    });
+}, 300);
 
 $(document).ready(function(){
     $("img.lazy").lazyload({effect: "fadeIn"});
-    comment.init({row_id:'{{$feed->id}}', canload:true});
 
     $('#j-recent-hot a').hover(function(){
         $('.list').hide();
@@ -130,17 +161,7 @@ $(document).ready(function(){
             return false;
         }
         var attrs = urlToObject($(this).data('args'));
-        attrs.to_uid = $(this).attr('to_uid');
-        attrs.addToEnd = $(this).attr('addtoend');
-        attrs.to_comment_id = $(this).attr('to_comment_id');
-        comment.init(attrs);
-
-        var _this = this;
-        var after = function(){
-            $(_this).attr('to_uid','0');
-            $(_this).attr('to_comment_id','0');
-        }
-        comment.addReadComment(after, this);
+        comment.addReadComment(attrs, this);
     });
 
     bdshare.addConfig('share', {

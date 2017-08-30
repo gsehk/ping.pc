@@ -530,13 +530,25 @@ $(function() {
         $('#' + type).show();
     })
 
-    $('.dyn_huan').on('click', function() {
+    $('.change_cover').on('click', function() {
         $('#cover').click();
     })
 
     $('#cover').on('change', function(e) {
         var file = e.target.files[0];
-        fileUpload.init(file, uploadPccover);
+        var formDatas = new FormData();
+            formDatas.append("image", file);
+            $.ajax({
+                url: '/api/v2/user/bg',
+                type: 'POST',
+                data: formDatas,
+                contentType: false,
+                processData: false,
+                success: function(res) {
+                    noticebox('更换背景图成功', 1);
+                    $('.user_bg').attr('src', window.URL.createObjectURL(file));
+                }
+            });
     });
 
     // 微博操作菜单
@@ -579,17 +591,3 @@ $(function() {
     });
 
 })
-
-var uploadPccover = function(image, f, task_id) {
-    $.ajax({
-        url: '/api/v1/users',
-        type: 'PATCH',
-        data: { cover_storage_task_id: task_id },
-        dataType: 'json',
-        beforeSend: function(xhr) {　　　 xhr.setRequestHeader('Authorization', TOKEN);　　 },
-        success: function(res) {
-            noticebox('更换背景图成功', 1);
-            $('.dynTop_bg').attr('src', image.src);
-        }
-    });
-}

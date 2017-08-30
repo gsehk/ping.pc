@@ -410,7 +410,7 @@
     font-size: 16px;
     color: #333;
 }
-.detail_user .detail_user_info .detail_time{   
+.detail_user .detail_user_info .detail_time{
     font-size: 14px;
     color: #b2b2b2;
 }
@@ -429,7 +429,9 @@
     margin: 20px 0;
     word-break: break-all;
     text-align: justify;
-    color: #666 !important;
+    line-height: 28px;
+    letter-spacing: 1px;
+    color: #666;
 }
 
 .detail_share {
@@ -467,6 +469,79 @@
     margin-right: 10px;
 }
 
+/* 分享详情评论列表 */
+.comment_title{
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.comment_count{
+    font-size: 22px;
+    color: #59b6d7;
+}
+
+.comment_box .comment_editor{
+    font-size: 14px;
+    width: 100%;
+    height: 77px;
+    margin-bottom: 10px;
+    padding: 10px;
+    resize: none;
+    color: #666;
+    border: 1px solid #ededed;
+    outline: none;
+    background: #f3f6f7;
+}
+
+.comment_box .comment_tool {
+    text-align: right;
+}
+
+.comment_tool .text_stats{
+    margin-right: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+.comment_tool .commnet_btn {
+    width: 85px;
+    height: 32px;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    background: #59b6d7;
+}
+
+.comment_item{
+    border-bottom: 1px solid #ededed;
+    margin-top: 40px;
+    padding-bottom: 10px;
+}
+.clearfix:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: '.';
+}
+.comment_item dt{
+    float: left;
+}
+.comment_item dd{
+    font-size: 14px;
+    margin-left:20px;
+    float: left;
+    color: #333;
+}
+.comment_item .reply_tool{
+    margin: 8px 0;
+    width: 645px;
+}
+
+.reply_tool .reply_action{
+    float: right;
+    font-size: 20px;
+}
 
 /*分享评论*/
 
@@ -526,7 +601,7 @@
     margin-bottom: 16px;
 }
 
-.comment_ps p span {    
+.comment_ps p span {
     color: #333;
 }
 
@@ -854,17 +929,6 @@
     color: #fff !important;
 }
 
-.dy_cs {
-    font-size: 12px;
-    margin-left: 385px;
-    color: #b3b3b3;
-}
-
-.dy_cs span {
-    margin-right: 0 !important;
-    color: #59b6d7;
-}
-
 .dy_page {
     float: left;
     clear: both;
@@ -1056,19 +1120,20 @@
     display: block;
 }
 
-.right_about .info .auth_info{
+.auth_info{
     float: left;
     margin-left: 15px;
 }
 
-.right_about .info .auth_info .info_name a{
+.auth_info .info_name a{
     display: block;
     margin-bottom: 10px;
+    margin-top: 5px;
     font-size: 16px;
     color: #333;
 }
 
-.right_about .info .auth_info .info_bio {
+.auth_info .info_bio {
     overflow: hidden;
     margin: 0;
     max-height: 34px;

@@ -1,21 +1,21 @@
 
-              <div class="comment_box{{$post->id}}">
-              @if($post->comments->count())
-              @foreach($post->comments as $cv)
-              <p class="comment{{$cv->id}} comment_con">
-                  <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
-                  @if($cv->user_id != $TS['id'])
-                      <a class="fs-14 J-reply-comment" data-args="to_uname={{ $cv->user['name'] }}&to_uid={{$cv->user_id}}&row_id={{$post->id}}">回复</a>
-                  @endif
-                  @if($cv->user_id == $TS['id'])
-                      <a class="fs-14 del_comment" onclick="comment.delComment({{$cv->id}}, {{$post->id}})">删除</a>
-                  @endif
-              </p>
-              @endforeach
-              @endif
-              </div>
+@if (!$comments->isEmpty())
+@foreach ($comments as $comment)
+<div class="comment_item" id="comment_item_{{$comment['id']}}">
+    <dl class="clearfix">
+        <dt>
+            <img src="{{$comment['user']['avatar']}}" width="50">
+        </dt>
+        <dd>
+            <span class="reply_name">{{$comment['user']['name']}}</span>
+            <div class="reply_tool">
+                <span class="reply_time">{{$comment['created_at']}}</span>
+                <span class="reply_action"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg></span>
+            </div>
+            <div class="replay_body">{{$comment['body']}}</div>
+        </dd>
+    </dl>
+</div>
+@endforeach
+@endif
 
-              @if($post->comments->count() >= 3)
-              <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
-              @endif
-            

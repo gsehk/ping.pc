@@ -22,18 +22,18 @@ input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px #f3f6f7 inset;
 }
 
-::-webkit-input-placeholder { /* WebKit browsers */ 
-color: #CCC; 
-} 
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
-color: #CCC; 
-} 
-::-moz-placeholder { /* Mozilla Firefox 19+ */ 
-color: #ccc; 
-} 
-:-ms-input-placeholder { /* Internet Explorer 10+ */ 
-color: #CCC; 
-} 
+::-webkit-input-placeholder { /* WebKit browsers */
+color: #CCC;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+color: #CCC;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+color: #ccc;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+color: #CCC;
+}
 
 /* 底部置地*/
 html,
@@ -66,6 +66,12 @@ a {
     color: #CCC;
 }
 
+/* main color */
+.mcolor { color: #59b6d7; }
+
+/* text main color */
+.tcolor { color: #444; }
+
 .fl {
     float: left;
 }
@@ -76,7 +82,7 @@ a {
     font-size: 12px;
 }
 
-.fs-14 {
+.font14 {
     font-size: 14px;
 }
 
@@ -219,7 +225,7 @@ a {
     border: none;
     outline: none;
     background: transparent;
-    padding-left: 15px; 
+    padding-left: 15px;
     vertical-align: middle;
 }
 
@@ -388,7 +394,7 @@ a {
 .container {
     width: 1080px;
     margin: 36px auto 0 auto;
-} 
+}
 
 /*左侧导航*/
 .left_menu {
@@ -674,6 +680,12 @@ a {
     float: right;
     margin-top: 14px;
     color: #666;
+}
+.share_feedlist a{
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    vertical-align: text-bottom;
 }
 
 .share_feedlist .bds_tsina {

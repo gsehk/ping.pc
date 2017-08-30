@@ -59,4 +59,28 @@ class FeedController extends BaseController
 
         return view('pcview::feed.read', $data, $this->PlusData);
     }
+
+    public function comments(Request $request, int $feed_id)
+    {
+        $params = [
+            'after' => $request->query('after') ?: 0
+        ];
+
+        $comments = createRequest('GET', '/api/v2/feeds/'.$feed_id.'/comments', $params);
+        $comment = clone $comments['comments'];
+        $after = $comment->pop()->id ?? 0;
+
+        $comments['comments']->map(function($item){
+            $item->user = $item->user;
+
+            return $item;
+        });
+        $commentData = view('pcview::templates.comment', $comments, $this->PlusData)->render();
+
+        return response()->json([
+            'status'  => true,
+            'data' => $commentData,
+            'after' => $after
+        ]);
+    }
 }

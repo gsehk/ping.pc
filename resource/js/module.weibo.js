@@ -12,7 +12,7 @@ weibo.afterUpload = function(image, f, task_id) {
 weibo.showImg = function(){
     layer.photos({
       photos: '#file_upload_1-queue'
-      ,anim: 0 
+      ,anim: 0
       ,move: false
     });
 };
@@ -193,8 +193,7 @@ var comment = {
         });
     },
     // 详情发表评论
-    addReadComment: function(afterComment, obj) {
-        var box = this.box;
+    addReadComment: function(attrs, obj) {
         var _textarea = $('#mini_editor');
         if (_textarea.size() == 0) {
             return;
@@ -203,15 +202,14 @@ var comment = {
         var formData = {
             body: _textarea.value,
         };
-        if (this.to_uid > 0) {
+        if (attrs.to_uid > 0) {
             formData.reply_user = this.to_uid;
-        }        
+        }
 
         if ("undefined" != typeof(this.addReadComment) && (this.addReadComment == true)) {
             return false; //不要重复评论
         }
-        var addToEnd = this.addToEnd;
-        var url = request_url.feed_comment.replace('{feed_id}', this.row_id);
+        var url = '/api/v2/feeds/'+attrs.row_id+'/comments';
         var _this = this;
         obj.innerHTML = '评论中..';
 
@@ -224,25 +222,24 @@ var comment = {
                 if (obj != undefined) {
                     obj.innerHTML = '评论';
                 }
-                var html = '<div class="delComment_list comment'+res.comment.id+'">';
-                    html += '<div class="comment_left">';
-                    html += '<a href="/profile/index?user_id='+MID+'"><img src="'+AVATAR+'" class="c_leftImg" /></a>';
+                var html  = '<div class="comment_item" id="comment_item_'+res.comment.id+'">';
+                    html += '    <dl class="clearfix">';
+                    html += '        <dt>';
+                    html += '            <img src="'+AVATAR+'" width="50">';
+                    html += '        </dt>';
+                    html += '        <dd>';
+                    html += '            <span class="reply_name">'+NAME+'</span>';
+                    html += '            <div class="reply_tool">';
+                    html += '                <span class="reply_time">刚刚</span>';
+                    html += '                <span class="reply_action"><i class="icon iconfont icon-gengduo-copy"></i></span>';
+                    html += '            </div>';
+                    html += '            <div class="replay_body">'+formData.body+'</div>';
+                    html += '        </dd>';
+                    html += '    </dl>';
                     html += '</div>';
-                    html += '<div class="comment_right">';
-                    html += '<a href="/profile/index?user_id='+MID+'"><span class="del_ellen">' + NAME + '</span></a>';
-                    html += '<span class="c_time">刚刚</span>';
-                    /*html += '<i class="icon iconfont icon-gengduo-copy"></i>';*/
-                    html += '<p class="comment_con">' + formData.body + '';
-                    html += '<a href="javascript:void(0)" onclick="comment.delComment('+res.comment.id+', '+comment.row_id+')"';
-                    html += 'class="del_comment">删除</a>';
-                    html += '</p></div></div>';
-                var commentBox = $(comment.box);
+                var commentBox = $('#comment_box');
                 if ("undefined" != typeof(commentBox)) {
-                    if (addToEnd == 1) {
-                        commentBox.append(html);
-                    } else {
-                        commentBox.prepend(html);
-                    }
+                    commentBox.prepend(html);
                     _textarea.value = '';
                     $('.nums').text(initNums);
                     /*绑定回复操作*/
@@ -303,7 +300,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = 'api/v2/feeds/' + feed_id + '/like';
+        var url = '/api/v2/feeds/' + feed_id + '/like';
         $.ajax({
             url: url,
             type: 'POST',
@@ -335,7 +332,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = 'api/v2/feeds/' + feed_id + '/unlike';
+        var url = '/api/v2/feeds/' + feed_id + '/unlike';
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -457,7 +454,7 @@ $(function() {
         $('.show_tab a').removeClass('dy_cen_333');
         $(this).addClass('dy_cen_333');
     });
-    
+
     // 微博操作菜单
     $('#feeds_list').on('click', '.options', function() {
         if ($(this).next('.options_div').css('display') == 'none') {
