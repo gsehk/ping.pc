@@ -38,11 +38,14 @@ $(function() {
     $('#reg_btn').click(function() {
         var _this = $(this);
         var phone = $('input[name="phone"]').val();
+        var email = $('input[name="email"]').val();
         var captcha = $('input[name="captchacode"]').val();
         var smscode = $('input[name="verifiable_code"]').val();
         var name = $('input[name="name"]').val();
         var password = $('input[name="password"]').val();
         var repassword = $('input[name="repassword"]').val();
+        // 注册类型
+        var regtype = $('input[name="verifiable_type"]').val();
 
         if (phone == '') {
             $('input[name="phone"]').focus();
@@ -69,11 +72,18 @@ $(function() {
             return false;
         }
 
-
-        if (!checkPhone(phone)) {
-            noticebox('请输入正确的手机号', 0);
-            $('input[name="phone"]').focus();
-            return false;
+        if (regtype == 'sms') {
+            if(!checkPhone(phone)) {
+                noticebox('请输入正确的手机号', 0);
+                $('input[name="phone"]').focus();
+                return false;
+            }
+        } else {
+            if (!checkEmail(email)) {
+                noticebox('请输入正确的邮箱', 0);
+                $('input[name="email"]').focus();
+                return false;
+            }
         }
 
         if (password != repassword) {
