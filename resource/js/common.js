@@ -328,6 +328,39 @@ var follow = function(status, user_id, target, callback) {
     }
 }
 
+// 圈子
+var group = function(status, group_id, callback) {
+    if (MID == 0) {
+        window.location.href = '/passport/login';
+        return false;
+    }
+
+    var url = API + '/groups/' + group_id + '/join';
+    if (status == 0) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function(response) {
+                callback();
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        })
+    } else {
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(response) {
+                callback();
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        })
+    }
+}
+
 // 消息提示
 var noticebox = function(msg, status, tourl) {
     tourl = tourl || '';

@@ -1,0 +1,73 @@
+.group_container {
+    padding: 20px 40px;
+    background: white;
+}
+
+.group_navbar {
+    border-bottom: 1px solid #ededed;
+}
+
+.group_navbar > a {
+    display: inline-block;
+    margin-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #777;
+}
+
+.group_navbar > a.active {
+    color: #444;
+}
+
+.group_item {
+    float: left;
+    width: 49%;
+    height: 140px;
+    margin-top: 15px;
+    background: #f7f8f8;
+}
+
+.item_bar {
+    float: left;
+    width: 2%;
+    height: 140px;
+    margin-top: 15px;
+}
+.group_item > dl {
+	margin: 10px;
+}
+
+.group_item dt {
+	float: left;
+}
+
+.group_item dd {
+	padding: 10px 0 10px 95px;
+}
+
+.group_item .tool span{
+	font-size: 14px;
+	color: #777;
+	margin-right: 8px;
+	line-height: 33px;
+}
+
+.group_item .join {
+	margin-top: 20px;
+}
+
+.group_item .join > button {
+    border: 1px solid #59b6d7;
+    border-radius: 12px;
+    padding: 0px 10px;
+    font-size: 14px;
+    color: #59b6d7;
+    background-color: white;
+    line-height: 22px;
+    cursor: pointer;
+}
+
+.group_item .join .joined {
+	border: 1px solid #ccc;
+	color: #ccc;
+}

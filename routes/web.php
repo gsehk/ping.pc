@@ -135,6 +135,10 @@ Route::prefix('webmessage')->group(function () {
 });
 
 Route::prefix('group')->group(function () {
+
+    Route::get('/{type?}', 'GroupController@index')->where(['type' => '[1-3]'])->name('pc:group');
+
+    Route::get('list', 'GroupController@list');
 });
 
 

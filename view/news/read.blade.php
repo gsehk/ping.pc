@@ -20,7 +20,7 @@
             </div>
 
             <div class="detail_info">
-                <a href="javascript:;" class="cates_span">{{ $news['category']['name'] }}</a>
+                <a href="javascript:;" class="cates_span">{{ $news['category']['name'] or '默认' }}</a>
                 <span>{{ $news['from'] }}  ·  {{ $news['hits'] }}浏览  ·  {{ getTime($news['created_at']) }}</span>
             </div>
 
