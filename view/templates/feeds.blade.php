@@ -13,11 +13,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
             <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
             @endif
         </a>
-        
+
         <a href="javascript:;">
             <span class="feed_uname fs-14">{{ $post->user->name }}</span>
         </a>
-        <a href="javascript:;">
+        <a href="{{ route('pc:feedread', $post->id) }}">
             <span class="feed_time fs-12">{{ getTime($post->created_at) }}</span>
         </a>
     </div>
@@ -210,11 +210,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 @if($post->has_like)
                 <a href="javascript:;" onclick="digg.delDigg({{$post->id}})">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post->like_count}}</font>
-                </a>                
-                @else 
+                </a>
+                @else
                 <a href="javascript:;" onclick="digg.addDigg({{$post->id}})">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post->like_count}}</font>
-                </a>                
+                </a>
                 @endif
             </span>
             <span class="comment J-comment-show">
@@ -229,7 +229,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
             </span>
             <div class="options_div">
                 <ul>
-                    <li class="collect" id="collect{{$post->id}}" rel="0"> 
+                    <li class="collect" id="collect{{$post->id}}" rel="0">
                         @if($post->has_collect)
                         <a href="javascript:;" onclick="collect.delCollect({{$post->id}});" class="act">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
@@ -240,7 +240,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                         </a>
                         @endif
                     </li>
-                    
+
                     {{-- @if(!empty($TS['id']) && $post->user_id != $TS['id'])
                     <li><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>置顶</a></li>
                     @endif
@@ -289,7 +289,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 @if($post->comments->count() >= 5)
                 <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
                 @endif --}}
-            
+
             </div>
         </div>
 
