@@ -203,7 +203,7 @@ var comment = {
             body: _textarea.value,
         };
         if (attrs.to_uid > 0) {
-            formData.reply_user = this.to_uid;
+            formData.reply_user = attrs.to_uid;
         }
 
         if ("undefined" != typeof(this.addReadComment) && (this.addReadComment == true)) {
@@ -453,16 +453,6 @@ $(function() {
         weibo.init({ container: '#feeds_list', type: type });
         $('.show_tab a').removeClass('dy_cen_333');
         $(this).addClass('dy_cen_333');
-    });
-
-    // 微博操作菜单
-    $('#feeds_list, #comment_box').on('click', '.options', function() {
-        if ($(this).next('.options_div').css('display') == 'none') {
-            $('.options_div').hide();
-            $(this).next('.options_div').show();
-        } else {
-            $(this).next('.options_div').hide();
-        }
     });
 
     // 显示回复框

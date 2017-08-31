@@ -42,7 +42,7 @@ Route::prefix('feeds')->group(function () {
     // 动态详情
     Route::get('/{feed}', 'FeedController@read')->where(['feed' => '[0-9]+'])->name('pc:feedread');
 
-    Route::get('/{feed}/comments', 'FeedController@comments')->where(['feed' => '[0-9]+'])->name('pc:feedcomments');
+    Route::get('/{feed}/comments', 'FeedController@comments')->where(['feed' => '[0-9]+']);
 
     Route::get('/collection', 'FeedController@collection')->name('pc:feedcollections');
 });
@@ -117,12 +117,12 @@ Route::prefix('news')->group(function () {
 
     // 资讯详情
     Route::get('/{news_id}', 'NewsController@read')->where(['news_id' => '[0-9]+'])->name('pc:newsread');
-    
+
     // 投稿
     Route::get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
 
     // news comments list
-    Route::get('/{news_id}/comments', 'NewsController@commnets')->where(['news_id' => '[0-9]+']);
+    Route::get('/{news_id}/comments', 'NewsController@comments')->where(['news_id' => '[0-9]+']);
 
     // upload img
     Route::post('/uploadImg', 'NewsController@uploadImg')->name('pc:uploadImg');

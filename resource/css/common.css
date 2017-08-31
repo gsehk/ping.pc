@@ -737,6 +737,7 @@ a {
 
 #bdshare_weixin_qrcode_dialog {
     height: 300px !important;
+    box-sizing: initial;
 }
 
 .bdshare-button-style0-16 a {

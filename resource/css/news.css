@@ -230,6 +230,7 @@
     color: #666;
     border: 1px solid #ededed;
     border-radius: 3px;
+    letter-spacing: 1px;
 }
 
 .detail_share span a.act {
@@ -716,4 +717,136 @@
     float: right;
     margin-top: -2px;
     cursor: pointer;
+}
+
+/*  文章详情评论列表  */
+.comment_title{
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.comment_count{
+    font-size: 22px;
+    color: #59b6d7;
+}
+
+.comment_box .comment_editor{
+    font-size: 14px;
+    width: 100%;
+    height: 77px;
+    margin-bottom: 10px;
+    padding: 10px;
+    resize: none;
+    color: #666;
+    border: 1px solid #ededed;
+    outline: none;
+    background: #f3f6f7;
+}
+
+.comment_box .comment_tool {
+    text-align: right;
+}
+
+.comment_tool .text_stats{
+    margin-right: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+.comment_tool .commnet_btn {
+    width: 85px;
+    height: 32px;
+    color: #fff;
+    cursor: pointer;
+    border: 0;
+    border-radius: 3px;
+    background: #59b6d7;
+}
+
+.comment_item{
+    border-bottom: 1px solid #ededed;
+    margin-top: 40px;
+    padding-bottom: 10px;
+}
+.clearfix:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: '.';
+}
+.comment_item dt{
+    float: left;
+}
+.comment_item dd{
+    font-size: 14px;
+    margin-left:20px;
+    float: left;
+    color: #333;
+}
+.comment_item .reply_tool{
+    margin: 8px 0;
+    width: 645px;
+    position: relative;
+}
+
+/* 评论操作菜单 */
+.feed_datas {
+    position: relative;
+    clear: both;
+}
+
+.feed_datas .options {
+    float: right;
+    width: 30px;
+    cursor: pointer;
+    text-align: right;
+}
+
+.feed_datas .options_div {
+    position: absolute;
+    z-index: 99;
+    top: 30px;
+    right: -50px;
+    display: none;
+    width: 125px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 1px 22px #e2e0e0;
+}
+
+.feed_datas .triangle {
+    position: absolute;
+    top: -14px;
+    left: 47px;
+}
+
+.feed_datas .options_div > ul {
+    padding: 20px 0;
+}
+
+.feed_datas .options_div li {
+    margin-top: 18px;
+    padding-left: 20px;
+}
+
+.feed_datas .options_div > ul a {
+    font-size: 14px;
+    line-height: 24px;
+    display: block;
+    width: 100%;
+    height: 24px;
+    color: #666;
+}
+
+.feed_datas .options_div > ul a:hover {
+    color: #59b6d7;
+}
+
+.feed_datas .options_div .icon {
+    margin-right: 12px;
+}
+
+.feed_datas .options_div .act {
+    color: #59b6d7;
 }

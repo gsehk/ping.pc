@@ -483,6 +483,16 @@ $(function() {
         $(window).scrollTop(0);
     })
 
+    // 评论操作菜单
+    $('#feeds_list, #comment_box').on('click', '.options', function() {
+        if ($(this).next('.options_div').css('display') == 'none') {
+            $('.options_div').hide();
+            $(this).next('.options_div').show();
+        } else {
+            $(this).next('.options_div').hide();
+        }
+    });
+
     // 弹出层点击其他地方关闭
     $('body').click(function(e) {
         var target = $(e.target);

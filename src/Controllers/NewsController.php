@@ -13,12 +13,12 @@ class NewsController extends BaseController
 {
     /**
      * 文章首页
-     * 
+     *
      * @param  Request $request [description]
      * @return [type]           [description]
      */
     public function index(Request $request, int $cate_id = 0)
-    {   
+    {
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
@@ -31,7 +31,7 @@ class NewsController extends BaseController
 
     /**
      * 资讯列表.
-     * 
+     *
      * @param  $cate_id [分类ID]
      * @return mixed 返回结果
      */
@@ -62,7 +62,7 @@ class NewsController extends BaseController
     {
         // 获取资讯详情
         $news = createRequest('GET', '/api/v2/news/' . $news_id);
-        $news['collect_count'] = $news->with('collections')->count();
+        $news->collect_count = $news->collections->count();
 
         $data['news'] = $news;
         return view('pcview::news.read', $data, $this->PlusData);
@@ -80,5 +80,36 @@ class NewsController extends BaseController
         $data['news_id'] = $news_id;
 
         return view('pcview::news.release', $data, $this->PlusData);
+    }
+
+    /**
+     * 文章详情评论列表.
+     *
+     * @param  Illuminate\Http\Request $request
+     * @param  int     $news_id
+     * @return mixed
+     */
+    public function comments(Request $request, int $news_id)
+    {
+        $params = [
+            'after' => $request->query('after') ?: 0
+        ];
+
+        $comments = createRequest('GET', '/api/v2/news/'.$news_id.'/comments', $params);
+        $comment = clone $comments['comments'];
+        $after = $comment->pop()->id ?? 0;
+
+        $comments['comments']->map(function($item){
+            $item->user = $item->user;
+
+            return $item;
+        });
+        $commentData = view('pcview::templates.comment', $comments, $this->PlusData)->render();
+
+        return response()->json([
+            'status'  => true,
+            'data' => $commentData,
+            'after' => $after
+        ]);
     }
 }
