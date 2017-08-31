@@ -19,47 +19,105 @@
             </ul>
             @if($mold == 1)
                 <div class="fans_div">
-                    @component('pcview::rank.rank', ['title' => '粉丝排行榜', 'genre' => 'follower', 'post' => $follower, 'tabName' => '粉丝数'])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '财富达人排行榜', 'genre' => 'balance', 'post' => $balance])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '收入达人排行榜', 'genre' => 'income', 'post' => $income])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '社区签到排行榜', 'genre' => 'check', 'post' => $check])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '社区专家排行榜', 'genre' => 'experts', 'post' => $experts])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '问答达人排行榜', 'genre' => 'likes', 'post' => $likes, 'tabName' => '问答点赞量'])
-                    @endcomponent
+                    @if(!isset($follower['message']) && !empty($follower->toArray()))
+                        @include('pcview::templates.rank', ['title' => '粉丝排行榜', 'genre' => 'follower', 'post' => $follower, 'tabName' => '粉丝数'])
+                    @endif
+                    @if(!isset($balance['message']) && !empty($balance->toArray()))
+                        @include('pcview::templates.rank', ['title' => '财富达人排行榜', 'genre' => 'balance', 'post' => $balance])
+                    @endif
+                    @if(!isset($income['message']) && !empty($income->toArray()))
+                        @include('pcview::templates.rank', ['title' => '收入达人排行榜', 'genre' => 'income', 'post' => $income])
+                    @endif
+                    @if(!isset($check['message']) && !empty($check->toArray()))
+                        @include('pcview::templates.rank', ['title' => '社区签到排行榜', 'genre' => 'check', 'post' => $check])
+                    @endif
+                    @if(!isset($experts['message']) && !empty($experts->toArray()))
+                        @include('pcview::templates.rank', ['title' => '社区专家排行榜', 'genre' => 'experts', 'post' => $experts])
+                    @endif
+                    @if(!isset($likes['message']) && !empty($likes->toArray()))
+                        @include('pcview::templates.rank', ['title' => '问答达人排行榜', 'genre' => 'likes', 'post' => $likes, 'tabName' => '问答点赞量'])
+                    @endif
                 </div>
             @elseif($mold == 2)     {{--解答排行榜--}}
                 <div class="fans_div">
-                    @component('pcview::rank.rank', ['title' => '今日解答排行榜', 'genre' => 'answers_day', 'post' => $answers_day, 'tabName' => '问答量'])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '一周解答排行榜', 'genre' => 'answers_week', 'post' => $answers_week, 'tabName' => '问答量'])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '本月解答排行榜', 'genre' => 'answers_month', 'post' => $answers_month, 'tabName' => '问答量'])
-                    @endcomponent
+                    @if(!isset($answers_day['message']) && !empty($answers_day->toArray()))
+                        @include('pcview::templates.rank', ['title' => '今日解答排行榜', 'genre' => 'answers_day', 'post' => $answers_day, 'tabName' => '问答量'])
+                    @endif
+                    @if(!isset($answers_week['message']) && !empty($answers_week->toArray()))
+                        @include('pcview::templates.rank', ['title' => '一周解答排行榜', 'genre' => 'answers_week', 'post' => $answers_week, 'tabName' => '问答量'])
+                    @endif
+                    @if(!isset($answers_month['message']) && !empty($answers_month->toArray()))
+                        @include('pcview::templates.rank', ['title' => '本月解答排行榜', 'genre' => 'answers_month', 'post' => $answers_month, 'tabName' => '问答量'])
+                    @endif
                 </div>
             @elseif($mold == 3)     {{--动态排行榜--}}
                 <div class="fans_div">
-                    @component('pcview::rank.rank', ['title' => '今日动态排行榜', 'genre' => 'feeds_day', 'post' => $feeds_day, 'tabName' => '点赞量'])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '一周动态排行榜', 'genre' => 'feeds_week', 'post' => $feeds_week, 'tabName' => '点赞量'])
-                    @endcomponent
-                    @component('pcview::rank.rank', ['title' => '本月动态排行榜', 'genre' => 'feeds_month', 'post' => $feeds_month, 'tabName' => '点赞量'])
-                    @endcomponent
+                    @if(!isset($feeds_day['message']) && !empty($feeds_day->toArray()))
+                        @include('pcview::templates.rank', ['title' => '今日动态排行榜', 'genre' => 'feeds_day', 'post' => $feeds_day, 'tabName' => '点赞量'])
+                    @endif
+                    @if(!isset($feeds_week['message']) && !empty($feeds_week->toArray()))
+                        @include('pcview::templates.rank', ['title' => '一周动态排行榜', 'genre' => 'feeds_week', 'post' => $feeds_week, 'tabName' => '点赞量'])
+                    @endif
+                    @if(!isset($feeds_month['message']) && !empty($feeds_month->toArray()))
+                        @include('pcview::templates.rank', ['title' => '本月动态排行榜', 'genre' => 'feeds_month', 'post' => $feeds_month, 'tabName' => '点赞量'])
+                    @endif
                 </div>
             @elseif($mold == 4)     {{--资讯排行榜--}}
             <div class="fans_div">
-                @component('pcview::rank.rank', ['title' => '今日资讯排行榜', 'genre' => 'news_day', 'post' => $news_day, 'tabName' => '浏览量'])
-                @endcomponent
-                @component('pcview::rank.rank', ['title' => '一周资讯排行榜', 'genre' => 'news_week', 'post' => $news_week, 'tabName' => '浏览量'])
-                @endcomponent
-                @component('pcview::rank.rank', ['title' => '本月资讯排行榜', 'genre' => 'news_month', 'post' => $news_month, 'tabName' => '浏览量'])
-                @endcomponent
+                @if(!isset($news_day['message']) && !empty($news_day->toArray()))
+                    @include('pcview::templates.rank', ['title' => '今日资讯排行榜', 'genre' => 'news_day', 'post' => $news_day, 'tabName' => '浏览量'])
+                @endif
+                @if(!isset($news_week['message']) && !empty($news_week->toArray()))
+                    @include('pcview::templates.rank', ['title' => '一周资讯排行榜', 'genre' => 'news_week', 'post' => $news_week, 'tabName' => '浏览量'])
+                @endif
+                @if(!isset($news_month['message']) && !empty($news_month->toArray()))
+                    @include('pcview::templates.rank', ['title' => '本月资讯排行榜', 'genre' => 'news_month', 'post' => $news_month, 'tabName' => '浏览量'])
+                @endif
             </div>
             @endif
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        function gorank(action,genre,num) {
+            var current = $('div[rel="'+genre+'div"][current="1"]');
+            //当前页数
+            var curnum = $('#'+genre+'num').text();
+
+            //向前
+            if ( action == 1 ){
+                curnum = parseInt(curnum) - 1;
+            } else {
+                //向后翻页
+                curnum = parseInt(curnum) + 1;
+            }
+            var last = $('div[rel="'+genre+'div"][current="1"]').prev();
+            var postArgs = {};
+            postArgs.offset = (curnum - 1) * num;
+            postArgs.limit = num;
+            postArgs.genre = genre;
+            if ( last != undefined ) {
+                $.ajax({
+                    url: SITE_URL + '/rank/rankList',
+                    type: 'GET',
+                    data: postArgs,
+                    dataType: 'json',
+                    error: function (xml) {
+                    },
+                    success: function (res) {
+                        if (res.status) {
+                            if (res.data.count == 0) {
+                                //noticebox('已无更多啦', 0);
+                            } else {
+                                $('#'+genre+'-rank-list').html(res.data.html);
+                                $('#'+genre+'num').text(curnum);
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
+        }
+    </script>
 @endsection
