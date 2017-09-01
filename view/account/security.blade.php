@@ -1,6 +1,8 @@
-@extends('pcview::layouts.default')
+@section('title')
+安全设置
+@endsection
 
-@section('bgcolor')style="background-color:#f3f6f7"@endsection
+@extends('pcview::layouts.default')
 
 @section('styles')
 <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
@@ -9,38 +11,34 @@
 @section('content')
 
 <div class="account_container">
-<div class="account_wrap">
 
-{{-- 左侧导航 --}}
-@include('pcview::account.sidebar')
+    @include('pcview::account.sidebar')
 
-<div class="account_r">
-    <div class="account_c_c">
-        {{-- 修改密码 --}}
-        <div class="account_tab" id="J-input">
-            <div class="perfect_title">
-                <p>修改密码</p>
-            </div>
-            <div class="account_form_row">
-                <label class="w80 required" for="old_password"><font color="red">*</font>原密码</label>
-                <input id="old_password" name="old_password" type="password">
-            </div>
-            <div class="account_form_row">
-                <label class="w80 required" for="password"><font color="red">*</font>设置新密码</label>
-                <input id="password" name="password" type="password">
-            </div>
-            <div class="account_form_row">
-                <label class="w80 required" for="password_confirmation"><font color="red">*</font>确认新密码</label>
-                <input id="password_confirmation" name="password_confirmation" type="password">
-            </div>
-            <div class="perfect_btns">
-                <a class="perfect_btn save" id="J-user-security" href="javascript:;">保存</a>
+    <div class="account_r">
+        <div class="account_c_c">
+            <div class="account_tab" id="J-input">
+                <div class="perfect_title">
+                    <p>修改密码</p>
+                </div>
+                <div class="account_form_row">
+                    <label class="w80 required" for="old_password"><font color="red">*</font>原密码</label>
+                    <input id="old_password" name="old_password" type="password">
+                </div>
+                <div class="account_form_row">
+                    <label class="w80 required" for="password"><font color="red">*</font>设置新密码</label>
+                    <input id="password" name="password" type="password">
+                </div>
+                <div class="account_form_row">
+                    <label class="w80 required" for="password_confirmation"><font color="red">*</font>确认新密码</label>
+                    <input id="password_confirmation" name="password_confirmation" type="password">
+                </div>
+                <div class="perfect_btns">
+                    <a class="perfect_btn save" id="J-user-security" href="javascript:;">保存</a>
+                </div>
             </div>
         </div>
-        {{-- /修改密码 --}}
     </div>
-</div>
-</div>
+
 </div>
 @endsection
 

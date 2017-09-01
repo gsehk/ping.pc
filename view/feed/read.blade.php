@@ -13,9 +13,8 @@
 @endsection
 
 @section('content')
-    <div class="left_container">
+    <div class="left_container clearfix">
         <div class="feed_left">
-
             <div class="detail_user">
                 <div class="detail_user_header">
                     <a href="#">
@@ -45,12 +44,12 @@
                     @if(!$feed['has_collect'])
                     <a href="javascript:;" onclick="collect.addCollect('{{ $feed['id'] }}', 'read')">
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
-                        <font class="cs">{{ $feed['collect_count'] }}</font>收藏
+                        <font class="cs">{{ $feed['collect_count'] }}</font>人收藏
                     </a>
                     @else
                     <a href="javascript:;" onclick="collect.delCollect('{{ $feed['id'] }}', 'read');" class="act">
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
-                        <font class="cs">{{ $feed['collect_count'] }}</font>收藏
+                        <font class="cs">{{ $feed['collect_count'] }}</font>人收藏
                     </a>
                     @endif
                 </span>

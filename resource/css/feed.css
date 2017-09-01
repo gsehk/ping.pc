@@ -362,7 +362,6 @@
 /*动态详情*/
 .feed_left {
     position: relative;
-    float: left;
     width: 815px;
     background: #fff;
     margin-right: 30px;

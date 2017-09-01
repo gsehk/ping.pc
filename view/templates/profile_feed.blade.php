@@ -10,10 +10,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
         @if(date('Y-m-d') == date('Y-m-d', strtotime($post->created_at)))
             今天
         @else
-            <span style="font-size: 18px; writing-mode: horizontal-tb; ">
+            <a href="{{ route('pc:feedread', ['feed' => $post->id]) }}">
+            <span class="profile_time">
                 <sup style="font-size:90%">{{date('m', strtotime($post->created_at))}}</sup>
                 <sub style="font-size:60%">{{date('d', strtotime($post->created_at))}} </sub>
             </span>
+            </a>
         @endif
     </span>
 

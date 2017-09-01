@@ -540,6 +540,10 @@ $(function() {
         if (!target.is('.release_tags_selected') && !target.is('dl,dt,dd,li')) {
             $('.release_tags_list').hide();
         }
+
+        if (!target.is('.searching a') && target.parents('.searching').length == 0) {
+            $('.searching').hide();
+        }
     });
 
     //  显示隐藏评论操作

@@ -267,6 +267,12 @@
     color: #fff;
 }
 
+.feed_time .profile_time {
+    font-size: 18px;
+    color: #fff;
+    writing-mode: horizontal-tb;
+}
+
 .feed_text {
     font-size: 14px;
     line-height: 24px;

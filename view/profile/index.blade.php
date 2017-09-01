@@ -27,7 +27,10 @@
             </a>
         </div>
         <div class="profile_top_info_d">
-            <div class="profile_top_user"><a href="#">{{ $user->name }}</a><span>{{$user->location or '暂无'}}</span></div>
+            <div class="profile_top_user">
+                <a href="{{ route('pc:mine', ['user_id' => $user->id]) }}">{{ $user->name }}</a>
+                <span>{{$user->location or '未知'}}</span>
+            </div>
             <div class="profile_top_bio">{{ $user->bio or '这家伙很懒，什么都没留下'}}</div>
             <div class="profile_top_tags">
                 @foreach ($user->tags as $tag)
@@ -46,8 +49,8 @@
     <div class="profile_nav clearfix">
         <ul class="profile_nav_list clearfix">
             <li class="active"><a href="#">主页</a></li>
-            <li><a href="#">资讯</a></li>
-            <li><a href="#">收藏</a></li>
+            <!-- <li><a href="#">资讯</a></li>
+            <li><a href="#">收藏</a></li> -->
         </ul>
         <a href="{{ route('pc:newsrelease') }}" class="profile_nav_btn">投稿</a>
     </div>

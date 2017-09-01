@@ -37,6 +37,7 @@ class UserController extends BaseController
         }
 
         $users = createRequest('GET', $api, $params);
+        dd($users);
         $data['users'] = $users;
 
         $html =  view('pcview::templates.user', $data, $this->PlusData)->render();

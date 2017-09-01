@@ -10,8 +10,7 @@ class ProfileController extends BaseController
 {
     public function index(Request $request, int $user_id = 0)
     {
-        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
-
+        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $this->PlusData['TS'];
         return view('pcview::profile.index', $data, $this->PlusData);
     }
 
