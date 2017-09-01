@@ -8,11 +8,9 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 class GroupController extends BaseController
 {
 
-    public function index(Request $request, int $type = 1)
+    public function index(Request $request)
     {
-        $data['type'] = $type;
-
-        return view('pcview::group.index', $data, $this->PlusData);
+        return view('pcview::group.index', [], $this->PlusData);
     }
 
     public function list(Request $request)
@@ -47,5 +45,10 @@ class GroupController extends BaseController
                 'after' => $after
         ]);
 
+    }
+
+    public function read(Request $request)
+    {
+        return view('pcview::group.read', [], $this->PlusData);
     }
 }

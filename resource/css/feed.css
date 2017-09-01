@@ -94,8 +94,8 @@
 .feed_picture_span span {
     line-height: 8px;
     position: absolute;
-    right: 8px;
-    bottom: 8px;
+    right: 5px;
+    bottom: 5px;
     display: inline-block;
     width: 14px;
     height: 14px;
@@ -104,10 +104,9 @@
     background: #000;
 }
 
-.feed_picture_span i {
-    font-size: 10px;
-    font-weight: bold;
-    color: #fff;
+.feed_picture_span svg {
+    font-size: 14px !important;
+    cursor: pointer;
 }
 
 .feed_picture_span span {

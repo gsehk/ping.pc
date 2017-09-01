@@ -2,24 +2,16 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/group.css') }}">
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/feed.css') }}">
 @endsection
 
 @section('content')
 <div class="left_container">
-    <div class="group_container">
-        <div class="group_navbar">
-            <a class="active" href="javascript:;" data-type="1">全部圈子</a>
-            @if(!empty($TS))
-            <a href="javascript:;" data-type="2">我关注的</a>
-            @endif
-        </div>
-        <div class="group_list clearfix" id="group_box">
-        </div>
-    </div>
+
 </div>
 
 <div class="right_container">
-    @include('pcview::widgets.hotusers')
+    <!-- 热门圈子 -->
 </div>
 @endsection
 

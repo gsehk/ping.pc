@@ -136,7 +136,9 @@ Route::prefix('webmessage')->group(function () {
 
 Route::prefix('group')->group(function () {
 
-    Route::get('/{type?}', 'GroupController@index')->where(['type' => '[1-3]'])->name('pc:group');
+    Route::get('/', 'GroupController@index')->name('pc:group');
+
+    Route::get('/{group_id?}', 'GroupController@read')->where(['group_id' => '[1-9]+'])->name('pc:groupread');
 
     Route::get('list', 'GroupController@list');
 });

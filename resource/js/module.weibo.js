@@ -6,7 +6,7 @@ var weibo = {};
  */
 weibo.afterUpload = function(image, f, task_id) {
     var img = '<img class="imgloaded" onclick="weibo.showImg();" src="' + image.src + '" tid="' + task_id + '"/>';
-    var del = '<span class="imgdel"><i class="icon iconfont icon-close"></i></span>'
+    var del = '<span class="imgdel"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></span>'
     $('#' + 'fileupload_1_' + f.index).css('border', 'none').html(img + del);
 };
 weibo.showImg = function(){
