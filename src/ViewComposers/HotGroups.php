@@ -8,9 +8,10 @@ class HotGroups
 {
     public function compose(View $view)
     {
-    	$api =  '/api/v2/user/populars';
+    	$api =  '/api/v2/groups';
 
-        $users = createRequest('GET', $api, ['limit' => 5]);
-        $view->with('users', $users);
+        $groups = createRequest('GET', $api, ['limit' => 10]);
+
+        $view->with('groups', $groups);
     }
 }
