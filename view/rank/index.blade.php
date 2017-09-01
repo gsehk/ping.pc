@@ -28,7 +28,7 @@
                     @if(!$income->isEmpty())
                         @include('pcview::templates.rank', ['title' => '收入达人排行榜', 'genre' => 'income', 'post' => $income])
                     @endif
-                    @if(!$check->isEmpty())
+                    @if(!$check['message'] && !$check->isEmpty())
                         @include('pcview::templates.rank', ['title' => '社区签到排行榜', 'genre' => 'check', 'post' => $check])
                     @endif
                     @if(!$experts->isEmpty())
