@@ -43,12 +43,12 @@
             <div class="detail_share">
                 <span id="collect{{ $feed['id'] }}" rel="{{ $feed['collect_count'] }}">
                     @if(!$feed['has_collect'])
-                    <a href="javascript:;" onclick="collect.addCollect('{{ $feed['id'] }}')">
+                    <a href="javascript:;" onclick="collect.addCollect('{{ $feed['id'] }}', 'read')">
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
                         <font class="cs">{{ $feed['collect_count'] }}</font>收藏
                     </a>
                     @else
-                    <a href="javascript:;" onclick="collect.delCollect('{{ $feed['id'] }}');" class="act">
+                    <a href="javascript:;" onclick="collect.delCollect('{{ $feed['id'] }}', 'read');" class="act">
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
                         <font class="cs">{{ $feed['collect_count'] }}</font>收藏
                     </a>
