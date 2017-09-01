@@ -18,7 +18,7 @@
     <div class="account_c_c">
         {{-- 标签管理 --}}
         <div class="account_tab">
-            <div class="perfext_title">
+            <div class="perfect_title">
                 <p>选择标签</p>
             </div>
 

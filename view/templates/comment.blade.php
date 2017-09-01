@@ -1,3 +1,6 @@
+@php
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+@endphp
 
 @if (!$comments->isEmpty())
 @foreach ($comments as $comment)
@@ -9,7 +12,7 @@
         <dd>
             <span class="reply_name">{{$comment['user']['name']}}</span>
             <div class="reply_tool feed_datas">
-                <span class="reply_time">{{$comment['created_at']}}</span>
+                <span class="reply_time">{{ getTime($comment['created_at']) }}</span>
                 <span class="reply_action options">
                     <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                 </span>

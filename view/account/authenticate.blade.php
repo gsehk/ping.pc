@@ -17,7 +17,7 @@
 <div class="account_r">
 <div class="account_c_c">
 <div class="account_tab">
-    <div class="perfext_title">
+    <div class="perfect_title">
         <select class="J-authenticate-type type" name="type" >
             <option value="user">个人认证</option>
             <option value="org">机构认证</option>

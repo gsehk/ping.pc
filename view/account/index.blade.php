@@ -20,7 +20,7 @@
                 <!-- 基本资料 -->
                 <div class="account_tab" id="J-input">
                     <!-- label -->
-                    <div class="perfext_title">
+                    <div class="perfect_title">
                         <p>基本资料</p>
                     </div>
                     <!-- /label -->

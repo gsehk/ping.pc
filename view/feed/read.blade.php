@@ -13,88 +13,90 @@
 @endsection
 
 @section('content')
-    <div class="feed_left">
+    <div class="left_container">
+        <div class="feed_left">
 
-        <div class="detail_user">
-            <div class="detail_user_header">
-                <a href="#">
-                    <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" alt="">
-                </a>
-            </div>
-            <div class="detail_user_info">
-                <div class="detail_user_name"><a href="#">{{ $user['name'] }}</a></div>
-                <div class="detail_time">{{ getTime($feed['created_at']) }}</div>
-            </div>
-        </div>
-
-        @if($feed->images)
-        <div class="detail_images" id="layer-photos-demo">
-        @foreach($feed->images as $store)
-        <img data-original="{{ $routes['storage']}}{{$store['file'] }}?w=675&h=380" class="lazy img-responsive"/>
-        @endforeach
-        </div>
-        @endif
-
-        <div class="detail_body">
-            {!!$feed->feed_content!!}
-        </div>
-
-        <div class="detail_share">
-            <span id="collect{{ $feed['id'] }}" rel="{{ $feed['collect_count'] }}">
-                @if(!$feed['has_collect'])
-                <a href="javascript:;" onclick="collect.addCollect('{{ $feed['id'] }}')">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
-                    <font class="cs">{{ $feed['collect_count'] }}</font>收藏
-                </a>
-                @else
-                <a href="javascript:;" onclick="collect.delCollect('{{ $feed['id'] }}');" class="act">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
-                    <font class="cs">{{ $feed['collect_count'] }}</font>收藏
-                </a>
-                @endif
-            </span>
-            <span id="digg{{ $feed['id'] }}" rel="{{ $feed['like_count'] }}">
-                @if(!$feed['has_like'])
-                <a href="javascript:;" onclick="digg.addDigg('{{ $feed['id'] }}', 'read');">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                    <font class="ds">{{ $feed['like_count'] }}</font>人喜欢
-                </a>
-                @else
-                <a href="javascript:;" onclick="digg.delDigg('{{ $feed['id'] }}', 'read');" class="act">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
-                    <font class="ds">{{ $feed['like_count'] }}</font>人喜欢
-                </a>
-                @endif
-            </span>
-            <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
-                分享至：
-                <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
-                <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
-            </div>
-        </div>
-        <div class="detail_comment">
-            <div class="comment_title"><span class="comment_count">{{$feed['feed_comment_count']}}</span>人评论</div>
-            <div class="comment_box">
-                <textarea
-                    class="comment_editor"
-                    id="mini_editor"
-                    placeholder="说点什么吧"
-                    onkeyup="checkNums(this, 255, 'nums');"
-                ></textarea>
-                <div class="comment_tool">
-                    <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
-                    <button
-                        class="commnet_btn"
-                        id="J-comment-feed"
-                        data-args="to_uid=0&row_id={{$feed->id}}"
-                        to_comment_id="0"
-                        to_uid="0"
-                    >评论</button>
+            <div class="detail_user">
+                <div class="detail_user_header">
+                    <a href="#">
+                        <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" alt="">
+                    </a>
+                </div>
+                <div class="detail_user_info">
+                    <div class="detail_user_name"><a href="#">{{ $user['name'] }}</a></div>
+                    <div class="detail_time">{{ getTime($feed['created_at']) }}</div>
                 </div>
             </div>
-            <div class="comment_list" id="comment_box">
 
+            @if($feed->images)
+            <div class="detail_images" id="layer-photos-demo">
+            @foreach($feed->images as $store)
+            <img data-original="{{ $routes['storage']}}{{$store['file'] }}?w=675&h=380" class="lazy img-responsive"/>
+            @endforeach
+            </div>
+            @endif
+
+            <div class="detail_body">
+                {!!$feed->feed_content!!}
+            </div>
+
+            <div class="detail_share">
+                <span id="collect{{ $feed['id'] }}" rel="{{ $feed['collect_count'] }}">
+                    @if(!$feed['has_collect'])
+                    <a href="javascript:;" onclick="collect.addCollect('{{ $feed['id'] }}')">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                        <font class="cs">{{ $feed['collect_count'] }}</font>收藏
+                    </a>
+                    @else
+                    <a href="javascript:;" onclick="collect.delCollect('{{ $feed['id'] }}');" class="act">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                        <font class="cs">{{ $feed['collect_count'] }}</font>收藏
+                    </a>
+                    @endif
+                </span>
+                <span id="digg{{ $feed['id'] }}" rel="{{ $feed['like_count'] }}">
+                    @if(!$feed['has_like'])
+                    <a href="javascript:;" onclick="digg.addDigg('{{ $feed['id'] }}', 'read');">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                        <font class="ds">{{ $feed['like_count'] }}</font>人喜欢
+                    </a>
+                    @else
+                    <a href="javascript:;" onclick="digg.delDigg('{{ $feed['id'] }}', 'read');" class="act">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
+                        <font class="ds">{{ $feed['like_count'] }}</font>人喜欢
+                    </a>
+                    @endif
+                </span>
+                <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
+                    分享至：
+                    <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
+                    <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
+                </div>
+            </div>
+            <div class="detail_comment">
+                <div class="comment_title"><span class="comment_count">{{$feed['feed_comment_count']}}</span>人评论</div>
+                <div class="comment_box">
+                    <textarea
+                        class="comment_editor"
+                        id="mini_editor"
+                        placeholder="说点什么吧"
+                        onkeyup="checkNums(this, 255, 'nums');"
+                    ></textarea>
+                    <div class="comment_tool">
+                        <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
+                        <button
+                            class="commnet_btn"
+                            id="J-comment-feed"
+                            data-args="to_uid=0&row_id={{$feed->id}}"
+                            to_comment_id="0"
+                            to_uid="0"
+                        >评论</button>
+                    </div>
+                </div>
+                <div class="comment_list" id="comment_box">
+
+                </div>
             </div>
         </div>
     </div>
@@ -139,7 +141,7 @@ layer.photos({
 setTimeout(function() {
     scroll.init({
         container: '#comment_box',
-        loading: '.detail_comment',
+        loading: '.feed_left',
         url: '/feeds/'+{{$feed->id}}+'/comments' ,
         canload: true
     });

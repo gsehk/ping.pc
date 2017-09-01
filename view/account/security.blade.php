@@ -18,7 +18,7 @@
     <div class="account_c_c">
         {{-- 修改密码 --}}
         <div class="account_tab" id="J-input">
-            <div class="perfext_title">
+            <div class="perfect_title">
                 <p>修改密码</p>
             </div>
             <div class="account_form_row">

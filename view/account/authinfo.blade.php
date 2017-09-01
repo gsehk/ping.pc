@@ -17,18 +17,19 @@
 <div class="account_r">
 <div class="account_c_c">
 <div class="account_tab">
-    <div class="perfext_title">
-        <select class="J-authenticate-type type" name="type" >
-            <option value="user" @if ($info->certification_name == 'user')selected @endif>个人认证</option>
-            <option value="org" @if ($info->certification_name == 'org')selected @endif>机构认证</option>
-        </select>
+    <div class="perfect_title">
+        @if ($info->certification_name == 'user')
+        <p>个人认证</p>
+        @else
+        <p>企业认证</p>
+        @endif
     </div>
     {{-- 个人认证 --}}
     @if ($info->certification_name == 'user')
     <div class="user_authenticate" id="J-input-user">
         <div class="account_form_row">
             <label class="w80 required" for="realName">认证状态</label>
-            <div>
+            <div class="text">
                 @if ($info->status == 0)待审核 @endif
                 @if ($info->status == 1)通过 @endif
                 @if ($info->status == 2)拒绝 @endif
@@ -36,19 +37,19 @@
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="realName">真实姓名</label>
-            <div class="account_form_text">{{$info['data']['name']}}</div>
+            <div class="text">{{$info['data']['name']}}</div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="IDNumber">身份证号码</label>
-            <div class="account_fomr_text">{{$info['data']['number']}}</div>
+            <div class="text">{{$info['data']['number']}}</div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="contact">联系方式</label>
-            <div class="account_fomr_text">{{$info['data']['phone']}}</div>
+            <div class="text">{{$info['data']['phone']}}</div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="desc">认证描述</label>
-            <p class="text_box" style="border:0;">{{$info['data']['desc']}}</div>
+            <div class="text">{{$info['data']['desc']}}</div>
         </div>
         <div class="account_form_row">
             <label class="w80 required" for="desc">认证资料</label>
