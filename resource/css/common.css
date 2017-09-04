@@ -282,6 +282,7 @@ a {
 }
 
 .head_search .history ul li span{
+    cursor: pointer;
     width: 170px;
     font-size: 16px;
     color: #999;

@@ -632,7 +632,7 @@ $(function() {
                 var lis = '';
 
                 for (var i = 0, len = hisArr.length; i < len; i++) {
-                    lis += '<li><span class="keywords">' + hisArr[i] + '</span><i></i></li>';
+                    lis += '<li type="1"><span class="keywords">' + hisArr[i] + '</span><i></i></li>';
                 }
 
                 ul.html('').append(lis);
@@ -657,11 +657,11 @@ $(function() {
     // 选项点击
     $('.head_search').on('click', 'span', function() {
         var val = $(this).parents('li').find('.keywords').text();
-        if ($(this).parents('search_types')) {
+        if ($(this).parents('.search_types')) {
             setHistory(val);
         }
 
-        var type = $(this).parents('li').attr('type') == '' ? 1 : $(this).parents('li').attr('type');
+        var type = $(this).parents('li').attr('type');
         window.location.href = '/search/' + type + '/' + val;
     });
 
@@ -674,7 +674,7 @@ $(function() {
             $('.history').hide();
             $('head_search').hide();
         }
-        $(this).parent().remove();
+        $(this).parent().hide();
     });
 
 });
