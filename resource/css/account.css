@@ -633,6 +633,10 @@
     font-size: 40px;
 }
 
+.wallet-body .sum {
+    font-size: 40px;
+}
+
 .wallet-body .operate{
     text-align: right;
     padding:6px  0;
@@ -674,4 +678,8 @@
 .wallet-table .table tbody{
     height: 35px;
     line-height: 35px;
+}
+
+.wallet-table .row-tab{
+    line-height: 25px;
 }

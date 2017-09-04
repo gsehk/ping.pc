@@ -58,6 +58,10 @@ ul {
     padding-left: 0;
 }
 
+th {
+    font-weight: normal;
+}
+
 a {
     font-size:100%;
     vertical-align:baseline;
@@ -72,8 +76,8 @@ a {
 /* text main color */
 .tcolor { color: #444; }
 
-/* text main color */
-.tcolor { color: #777; }
+/* undertint */
+.ucolor { color: #777; }
 
 .fl {
     float: left;

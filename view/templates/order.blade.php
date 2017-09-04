@@ -5,6 +5,6 @@
         <td width="30%">
             <font color="#FF9400">{{ $item->action==1 ? '+'.$item->amount/100 : '-'.$item->amount/100 }}</font>
         </td>
-        <td width="15%"><a class="mcolor J-order-detail" oid="{{ $item->id }}" href="javascript:;">详情</a></td>
+        <td width="15%"><a class="mcolor" href="{{ route('pc:order', $item->id) }}">详情</a></td>
     </tr>
 @endforeach

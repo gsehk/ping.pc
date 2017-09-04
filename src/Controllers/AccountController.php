@@ -76,13 +76,23 @@ class AccountController extends BaseController
 
 
     /**
-     * 交易记录列表.
+     * 交易记录.
      *
      * @param  Illuminate\Http\Request $request
      * @return mixed
      */
-    public function list(Request $request)
+    public function order(Request $request, int $order_id = 0)
     {
+        if ($order_id) {
+            $order = createRequest('GET', '/api/v2/wallet/charges/'.$order_id);
+            if ($order->channel == 'user') {
+                $order->user = $order->user;
+            }
+            $data['order'] = $order;
+
+            return view('pcview::account.detail', $data, $this->PlusData);
+        }
+
         $params = [
             'after' => $request->query('after') ?: 0
         ];
@@ -100,4 +110,5 @@ class AccountController extends BaseController
             'after' => $after
         ]);
     }
+
 }

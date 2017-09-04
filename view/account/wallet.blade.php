@@ -15,9 +15,9 @@
 @include('pcview::account.sidebar')
 
 <div class="account_r">
-    <div class="account_c_c">
+    <div class="account_c_c" id="J-warp">
         {{-- 我的钱包 --}}
-        <div class="account_tab" id="J-input">
+        <div class="account_tab">
             <div class="perfect_title">
                 <div class="active">我的钱包</div>
                 <div data-value="" class="zy_select t_c gap12">
@@ -76,10 +76,9 @@ setTimeout(function() {
     scroll.init({
         container: '#ordere-list',
         loading: '.table',
-        url: '/account/list',
+        url: '/account/order',
         params: {limit: 10}
     });
 }, 300);
-
 </script>
 @endsection
