@@ -59,7 +59,7 @@
                         <div class="account_form_row" style="position:relative">
                             <label for="area">地区</label>
                             <input id="location" name="location" type="text" value="{{$user['location'] or ''}}" />
-                            <div class="searching">
+                            <div class="area_searching">
                             </div>
                         </div>
                     </form>
@@ -99,16 +99,16 @@
         }
     });
 
-    $('.searching').on('click', 'a', function() {
+    $('.area_searching').on('click', 'a', function() {
         $('#location').val($(this).text());
-        $('.searching').hide();
+        $('.area_searching').hide();
     });
 
     function location_search(event)
     {
         var val = $.trim($("#location").val());
-        var searching = $(".searching");
-        searching.html('').hide();
+        var area_searching = $(".area_searching");
+        area_searching.html('').hide();
 
         if (val != "") {
             $.ajax({
@@ -123,10 +123,10 @@
                             if (key < 3) {
                                 var text = tree(value.tree);
                                 var html = '<div><a>' + text + '</a></div>';
-                                searching.append(html);
+                                area_searching.append(html);
                             }
                         });
-                        searching.show();
+                        area_searching.show();
                     }
                 }
             });
