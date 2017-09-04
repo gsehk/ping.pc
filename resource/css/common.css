@@ -72,6 +72,9 @@ a {
 /* text main color */
 .tcolor { color: #444; }
 
+/* text main color */
+.tcolor { color: #777; }
+
 .fl {
     float: left;
 }
