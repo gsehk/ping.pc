@@ -47,8 +47,17 @@ class GroupController extends BaseController
 
     }
 
-    public function read(Request $request)
+    public function read(Request $request, $group_id)
     {
-        return view('pcview::group.read', [], $this->PlusData);
+        $user = $this->PlusData['TS']['id'] ?? 0;
+        $group = createRequest('GET', '/api/v2/groups/'.$group_id);
+        $has_join = array_where($group->members->toArray(), function ($value) use ($user) {
+            return $value['user_id'] === $user;
+        });
+        $group->has_join = (bool)$has_join;
+
+        $data['group'] = $group;
+
+        return view('pcview::group.read', $data, $this->PlusData);
     }
 }

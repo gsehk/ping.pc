@@ -790,6 +790,11 @@
     position: relative;
 }
 
+.comment_item .reply_tool .reply_time{
+    font-size: 12px;
+    color: #ccc;
+}
+
 /* 评论操作菜单 */
 .feed_datas {
     position: relative;

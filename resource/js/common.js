@@ -555,3 +555,27 @@ $(function() {
         }
     });
 });
+
+// 下拉框 zy_select
+
+$(function() {
+    var select = $(".zy_select");
+
+    select.on("click", function(e){
+        e.stopPropagation();
+        return !($(this).hasClass("open")) ? $(this).addClass("open") : $(this).removeClass("open");
+    });
+
+    select.on("click", "li", function(e){
+        e.stopPropagation();
+        var $this = $(this).parent("ul");
+        $(this).addClass("active").siblings(".active").removeClass("active");
+        $this.prev('span').html($(this).html());
+        $this.parent(".zy_select").removeClass("open");
+        $this.parent(".zy_select").data("value", $(this).data("value"));
+    });
+
+    $(document).click(function() {
+        select.removeClass("open");
+    });
+});

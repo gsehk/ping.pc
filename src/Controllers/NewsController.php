@@ -65,6 +65,7 @@ class NewsController extends BaseController
         $news->collect_count = $news->collections->count();
 
         $data['news'] = $news;
+        $this->PlusData['current'] = 'news';
         return view('pcview::news.read', $data, $this->PlusData);
     }
 

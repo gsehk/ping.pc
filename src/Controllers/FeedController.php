@@ -57,6 +57,7 @@ class FeedController extends BaseController
         $data['user']['followers'] = $feed->user->followers()->count();
         $data['user']['followings'] = $feed->user->followings()->count();
 
+        $this->PlusData['current'] = 'feeds';
         return view('pcview::feed.read', $data, $this->PlusData);
     }
 

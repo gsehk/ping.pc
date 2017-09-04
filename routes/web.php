@@ -70,6 +70,9 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     // 安全设置
     Route::get('security', 'AccountController@security')->name('pc:security');
+
+    // 我的钱包
+    Route::get('wallet', 'AccountController@wallet')->name('pc:wallet');
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
