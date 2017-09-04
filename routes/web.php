@@ -73,6 +73,9 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     // 我的钱包
     Route::get('wallet', 'AccountController@wallet')->name('pc:wallet');
+
+    // 订单记录列表 or 详情
+    Route::get('order/{order?}', 'AccountController@order')->name('pc:order');
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {

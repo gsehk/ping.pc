@@ -538,7 +538,7 @@
     text-indent: 10px;
 }
 
-.account_form_row .searching div a{    
+.account_form_row .searching div a{
     display: block;
     height: 35px;
     width: 100%;
@@ -621,4 +621,64 @@
 .upload-box .cropper-face,
 .upload-box .cropper-view-box {
     border-radius: 50%;
+}
+
+/*  wallet */
+.wallet-body .remaining-sum {
+    float: left;
+    width: 50%;
+    text-align: left;
+    color: #FF9400;
+    font-size: 40px;
+}
+
+.wallet-body .sum {
+    font-size: 40px;
+}
+
+.wallet-body .operate{
+    text-align: right;
+    padding:6px  0;
+}
+
+.wallet-body .wallet-info {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 5px solid #F3F6F7;
+}
+.wallet-body .operate > button{
+    border: 0;
+    border-radius: 5px;
+    padding: 8px 25px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+.wallet-body .operate > button:first-child{
+    color: white;
+    background-color: #59b6d7;
+}
+
+.wallet-body .wallet-info .ucolor{
+    margin:5px 0;
+}
+
+.wallet-table .table{
+    width: 100%;
+    text-align: center;
+}
+
+.wallet-table .table thead{
+    height: 45px;
+    line-height: 45px;
+    color: #777;
+    background-color: #F2F2F2;
+}
+
+.wallet-table .table tbody{
+    height: 35px;
+    line-height: 35px;
+}
+
+.wallet-table .row-tab{
+    line-height: 25px;
 }

@@ -69,6 +69,46 @@ class AccountController extends BaseController
      */
     public function wallet()
     {
-        return view('pcview::account.wallet', $this->PlusData);
+        $data['order'] = createRequest('GET', '/api/v2/wallet/charges');
+
+        return view('pcview::account.wallet', $data, $this->PlusData);
     }
+
+
+    /**
+     * 交易记录.
+     *
+     * @param  Illuminate\Http\Request $request
+     * @return mixed
+     */
+    public function order(Request $request, int $order_id = 0)
+    {
+        if ($order_id) {
+            $order = createRequest('GET', '/api/v2/wallet/charges/'.$order_id);
+            if ($order->channel == 'user') {
+                $order->user = $order->user;
+            }
+            $data['order'] = $order;
+
+            return view('pcview::account.detail', $data, $this->PlusData);
+        }
+
+        $params = [
+            'after' => $request->query('after') ?: 0
+        ];
+        $orders = createRequest('GET', '/api/v2/wallet/charges', $params);
+
+        $order = clone $orders;
+        $after = $order->pop()->id ?? 0;
+        $data['order'] = $orders;
+
+        $html = view('pcview::templates.order', $data)->render();
+
+        return response()->json([
+            'status'  => true,
+            'data' => $html,
+            'after' => $after
+        ]);
+    }
+
 }
