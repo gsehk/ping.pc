@@ -647,6 +647,7 @@ $(function() {
             $('.head_search').hide();
             $('.search_types').hide();
         } else {
+            $('.history').hide();
             $('.head_search').show();
             $('.search_types .keywords').text(val);
             $('.search_types').show();
@@ -660,8 +661,8 @@ $(function() {
             setHistory(val);
         }
 
-        var type = $(this).attr('type') == '' ? 1 : $(this).attr('type');
-        window.location.href = '/search/' + val + '/' + type;
+        var type = $(this).parents('li').attr('type') == '' ? 1 : $(this).parents('li').attr('type');
+        window.location.href = '/search/' + type + '/' + val;
     });
 
     // 删除历史记录

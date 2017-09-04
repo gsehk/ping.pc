@@ -52,7 +52,7 @@
         </ul>
 
         <div class="nav_search">
-            <input class="nav_input" type="text" placeholder="输入关键词搜索" id="head_search"/>
+            <input class="nav_input" type="text" placeholder="输入关键词搜索" value="{{ $keywords or ''}}" id="head_search"/>
             <a class="nav_search_icon">
                 <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xihuan-white"></use></svg>
             </a>

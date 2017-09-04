@@ -150,7 +150,8 @@ Route::prefix('group')->group(function () {
 });
 
 Route::prefix('search')->group(function () {
-    Route::get('/{keywords?}/{type?}', 'SearchController@index')->where(['type' => '[1-6]+'])->name('pc:group');
+    Route::get('/{type?}/{keywords?}', 'SearchController@index')->where(['type' => '[1-6]+'])->name('pc:search');
+    Route::get('/data', 'SearchController@getData');
 });
 
 

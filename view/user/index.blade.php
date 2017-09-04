@@ -1,4 +1,12 @@
+@section('title')
+    找伙伴
+@endsection
+
 @extends('pcview::layouts.default')
+
+@section('styles')
+    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/user.css') }}"/>
+@endsection
 
 @section('content')
     <div class="left_container">
@@ -18,7 +26,6 @@
 @endsection
 
 @section('scripts')
-<link href="{{ $routes['resource'] }}/css/user.css" rel="stylesheet">
 <script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
 <script type="text/javascript">
     $(function(){
