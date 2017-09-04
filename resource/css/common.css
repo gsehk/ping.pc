@@ -1125,3 +1125,126 @@ img.load {
         transform: rotate(360deg);
     }
 }
+
+.zy_select {
+    position: relative;
+    min-width: 96px;
+    vertical-align: middle;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.zy_select a{
+    color: inherit;
+    cursor: pointer;
+}
+
+.zy_select >i {
+    overflow: hidden;
+    float: right;
+    position: relative;
+    display: block;
+    margin-top: 4px;
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    transform-origin: center;
+    transition: all .2s;
+}
+
+.zy_select > i::after{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: #000;
+    transform: translate(-50%,-25%);
+    content: "";
+}
+
+.zy_select span{
+    text-align: left;
+}
+
+.zy_select>ul {
+    display: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: calc(100% + 2px);
+    max-height: 170px;
+    background: #fff;
+}
+
+.zy_select>ul >li{
+    overflow: hidden;
+    display: block;
+    margin-bottom: 1px;
+    padding: 5px;
+    width: 100%;
+    min-height: 20px;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.zy_select>ul >li.active,
+.zy_select>ul >li:hover{
+    background-color: #dfdfdf;
+    color: #fff;
+}
+
+.zy_select.t_c{
+    text-align: center;
+}
+
+.zy_select.gap12>ul{
+    left: 50%;
+    margin-top: 12px;
+    padding: 25px 0 5px;
+    width: 122px;
+    border-radius: 5px;
+    box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+    transform: translateX(-50%);
+}
+
+.zy_select.gap12>ul li{
+    background: none !important;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.zy_select.gap12>ul li.active,
+.zy_select.gap12>ul li:hover{
+    color: #59b6d7;
+}
+
+.zy_select.border{
+    padding: 5px;
+    border: 1px solid #dfdfdf;
+}
+
+.zy_select.border > ul{
+    left: -1px;
+    border: 1px solid #dfdfdf;
+    transform: none;
+}
+
+.zy_select.open >span{
+    color: #59b6d7;
+}
+
+.zy_select.open >i{
+    transform: rotate(180deg);
+}
+
+.zy_select.open >ul{
+    display: block;
+}

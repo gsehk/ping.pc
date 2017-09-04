@@ -8,26 +8,23 @@
     margin-bottom: 30px;
 }
 
-
 .account_l{
-    float: left;
+    display: table-cell;
+    padding: 25px 0;
     width: 240px;
     background-color: #ededed;
-    padding-bottom: 2000px;
-    margin-bottom: -2000px;
 }
 
 .account_r{
-    float: left;
+    display: table-cell;
     width: 840px;
     background-color: #fff;
-    padding-bottom: 2000px;
-    margin-bottom: -2000px;
 }
+
 .account_menu{
     margin-bottom: 0;
-    padding: 25px 0;
 }
+
 .account_menu li{
     margin-bottom: 15px;
     padding-left: 68px;
@@ -39,11 +36,13 @@
     color: #000;
     cursor: pointer;
 }
+
 .account_menu li .iconfont{
     font-size: 22px;
     margin-right: 20px;
     vertical-align: middle;
 }
+
 .account_menu li:hover,
 .account_menu li.active{
     color: #fff;
@@ -51,14 +50,8 @@
 }
 
 .account_c_c{
-    overflow: hidden;
     width: 100%;
     padding: 40px;
-}
-
-/* #todo 待修改 */
-.account_tab:not(:last-child){
-    display: none;
 }
 
 .perfect_container{
@@ -83,14 +76,28 @@
 }
 
 .perfect_title{
+    display: flex;
     padding-bottom: 20px;
     border-bottom: 1px solid #ededed;
     margin-bottom: 40px;
+    align-items: center;
 }
 
-.perfect_title p{
+.perfect_title > div,
+.perfect_title > p{
     margin: 0;
     font-size: 16px;
+    color: #999;
+    cursor: pointer;
+}
+
+.perfect_title >p + p ,
+.perfect_title >div + div {
+    margin-left: 20px;
+}
+
+.perfect_title>p.active,
+.perfect_title>div.active{
     color: #333;
 }
 
@@ -99,8 +106,6 @@
     border:0;
     outline: none;
 }
-
-.perfe
 
 .perfect_title.notice:after{
     display: block;
@@ -278,6 +283,10 @@
     border-radius: 50%;
     background-color: rgb(246,246,246);
 }
+.account_heder .header img{
+    display: block;
+}
+
 
 .account_heder .perfect_btn{
     margin-top: 32px;
