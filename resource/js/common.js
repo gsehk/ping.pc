@@ -498,6 +498,47 @@ var checkIn = function(is_check, nums) {
     }
 }
 
+// 存入搜索记录
+var setHistory = function(str) {
+    if (localStorage.history) {
+        hisArr = JSON.parse(localStorage.history);
+        if ($.inArray(str, hisArr)) {
+            hisArr.push(str);
+        }
+    } else {
+        hisArr = new Array();
+        hisArr.push(str);
+    }
+
+    var hisStr = JSON.stringify(hisArr);
+    localStorage.history = hisStr;
+}
+
+// 获取历史记录
+var getHistory = function() {
+    var hisArr = new Array();
+    if (localStorage.history) {
+        str = localStorage.history;
+        //重新转换为对象 
+        hisArr = JSON.parse(str);
+    }
+    return hisArr;
+}
+
+// 删除记录
+var delHistory = function(str) {
+    if (str == 'all') {
+        localStorage.history = '';
+        $('.history').hide();
+    } else {
+        hisArr = JSON.parse(localStorage.history);
+        hisArr.splice($.inArray('str', hisArr), 1);
+
+        var hisStr = JSON.stringify(hisArr);
+        localStorage.history = hisStr;
+    }
+}
+
 $(function() {
     //获得用户时区与GMT时区的差值
     if (getCookie('customer_timezone') == '') {
@@ -529,24 +570,28 @@ $(function() {
     // 弹出层点击其他地方关闭
     $('body').click(function(e) {
         var target = $(e.target);
+        // 个人中心
         if(!target.is('#menu_toggle') && target.parents('.nav_menu').length == 0) {
            $('.nav_menu').hide();
         }
 
+        // 更多按钮
         if(!target.is('.icon-gengduo-copy') && target.parents('.options_div').length == 0) {
            $('.options_div').hide();
         }
 
+        // 投稿
         if (!target.is('.release_tags_selected') && !target.is('dl,dt,dd,li')) {
             $('.release_tags_list').hide();
         }
 
-        if (!target.is('.searching a') && target.parents('.searching').length == 0) {
-            $('.searching').hide();
+        // 顶部搜索
+        if (!target.is('.head_search') && target.parents('.head_search').length == 0 && target.parents('.nav_search').length == 0) {
+            $('.head_search').hide();
         }
     });
 
-    //  显示隐藏评论操作
+    // 显示隐藏评论操作
     $(document).on("mouseover mouseout",".comment_con",function(event){
         if(event.type == "mouseover"){
             $(this).find("a").show();
@@ -554,6 +599,83 @@ $(function() {
             $(this).find("a").hide();
         }
     });
+
+    // 顶部搜索
+    var head_last;
+
+    // 搜索输入
+    $("#head_search").keyup(function(event){
+        //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值
+        head_last = event.timeStamp;
+        setTimeout(function(){
+            if(head_last - event.timeStamp == 0){
+                head_search();
+            }
+        }, 500);
+    });
+
+    // 搜索聚焦
+    $("#head_search").focus(function() {
+        var val = $.trim($("#head_search").val());
+        $('.head_search').show();
+
+        if (val.length >= 1) {
+            $('.history').hide();
+            head_search();
+        } else {
+            $('.search_types').hide();
+            // 显示历史记录
+            var hisArr = getHistory();
+            if (hisArr.length > 0) {
+                $('.history').show();
+                var ul = $('.history ul');
+                var lis = '';
+
+                for (var i = 0, len = hisArr.length; i < len; i++) {
+                    lis += '<li><span class="keywords">' + hisArr[i] + '</span><i></i></li>';
+                }
+
+                ul.html('').append(lis);
+            }
+        }
+    });
+
+    // 显示搜索选项
+    function head_search() {
+        var val = $.trim($("#head_search").val());
+        if (val == '') {
+            $('.head_search').hide();
+            $('.search_types').hide();
+        } else {
+            $('.head_search').show();
+            $('.search_types .keywords').text(val);
+            $('.search_types').show();
+        }
+    }
+
+    // 选项点击
+    $('.head_search').on('click', 'span', function() {
+        var val = $(this).parents('li').find('.keywords').text();
+        if ($(this).parents('search_types')) {
+            setHistory(val);
+        }
+
+        var type = $(this).attr('type') == '' ? 1 : $(this).attr('type');
+        window.location.href = '/search/' + val + '/' + type;
+    });
+
+    // 删除历史记录
+    $('.head_search').on('click', 'i', function() {
+        var val = $(this).siblings('span').text();
+        delHistory(val);
+
+        if ($(this).parent().siblings().length == 0) {
+            $('.history').hide();
+            $('head_search').hide();
+        }
+        $(this).parent().remove();
+    });
+
 });
 
 // 下拉框 zy_select

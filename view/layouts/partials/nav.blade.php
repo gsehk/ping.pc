@@ -43,7 +43,7 @@
     @endif
     
     <div class="nav_list clearfix">
-        <ul>
+        <ul class="navs">
             <li><a href="{{ route('pc:feeds') }}" @if(!empty($current) && $current == 'feeds') class="selected" @endif>动态</a></li>
             <!-- <li><a href="" class="fs-18">圈子</a></li> -->
             <!-- <li><a href="" class="fs-18">问答</a></li> -->
@@ -51,12 +51,35 @@
             <li><a href="{{ route('pc:users') }}" @if(!empty($current) && $current == 'users') class="selected" @endif>找伙伴</a></li>
         </ul>
 
-        <!-- <div class="nav_search">
-            <input class="nav_input" type="text" placeholder="输入关键词搜索"/>
+        <div class="nav_search">
+            <input class="nav_input" type="text" placeholder="输入关键词搜索" id="head_search"/>
             <a class="nav_search_icon">
                 <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xihuan-white"></use></svg>
             </a>
-        </div> -->
+
+            <div class="head_search">
+                <!-- 搜索历史记录 -->
+                <div class="history">
+                    <p>历史记录</p>
+                    <ul></ul>
+                    <div class="clear">
+                        <a href="javascript:;" onclick="delHistory('all')">清空历史记录</a>
+                    </div>
+                </div>
+
+                <!-- 搜索类型 -->
+                <div class="search_types">
+                    <ul>
+                        <li type="1"><span>与<span class="keywords"></span>相关的动态</span></li>
+                        <li type="2"><span>与<span class="keywords"></span>相关的问答</span></li>
+                        <li type="3"><span>与<span class="keywords"></span>相关的文章</span></li>
+                        <li type="4"><span>与<span class="keywords"></span>相关的用户</span></li>
+                        <li type="5"><span>与<span class="keywords"></span>相关的圈子</span></li>
+                        <li type="6"><span>与<span class="keywords"></span>相关的活动</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

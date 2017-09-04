@@ -146,4 +146,8 @@ Route::prefix('group')->group(function () {
     Route::get('list', 'GroupController@list');
 });
 
+Route::prefix('search')->group(function () {
+    Route::get('/{keywords?}/{type?}', 'SearchController@index')->where(['type' => '[1-6]+'])->name('pc:group');
+});
+
 
