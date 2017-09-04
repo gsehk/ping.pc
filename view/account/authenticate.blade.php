@@ -16,12 +16,23 @@
     <div class="account_r">
         <div class="account_c_c">
                 <div class="account_tab">
-                    <div class="perfect_title">
+                    <!-- <div class="perfect_title">
                         <select class="J-authenticate-type type" name="type" >
                             <option value="user">个人认证</option>
                             <option value="org">机构认证</option>
                         </select>
+                    </div> -->
+                    <div class="perfect_title">
+                        <div data-value="" class="zy_select t_c gap12">
+                            <span>个人认证</span>
+                            <ul>
+                                <li data-value="user" class="active">个人认证</li>
+                                <li data-value="org">机构认证</a></li>
+                            </ul>
+                            <i></i>
+                        </div>
                     </div>
+
                     <!-- 个人认证 -->
                     <div class="user_authenticate" id="J-input-user">
                         <div class="account_form_row">
@@ -115,19 +126,37 @@
 <script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
 <script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script>
-var authType = 'user';
-$('.J-authenticate-type').on('change', function(e){
-    if ($(this).val() == 'user') {
-        $('.org_authenticate').hide();
-        $('.user_authenticate').show();
-        authType = 'user';
-    }
-    if ($(this).val() == 'org') {
-        $('.user_authenticate').hide();
-        $('.org_authenticate').show();
-        authType = 'org';
-    }
+$(function() {
+    var select = $(".zy_select");
+
+    select.on("click", function(e){
+        e.stopPropagation();
+        return !($(this).hasClass("open")) ? $(this).addClass("open") : $(this).removeClass("open");
+    });
+
+    select.on("click", "li", function(e){
+        e.stopPropagation();
+        var $this = $(this).parent("ul");
+        $(this).addClass("active").siblings(".active").removeClass("active");
+        $this.prev('span').html($(this).html());
+        $this.parent(".zy_select").removeClass("open");
+        $this.parent(".zy_select").data("value", $(this).data("value"));
+        if ($(this).data("value") ==  'user') {
+            $('.org_authenticate').hide();
+            $('.user_authenticate').show();
+            authType = 'user';
+        } else {
+            $('.user_authenticate').hide();
+            $('.org_authenticate').show();
+            authType = 'org';
+        }
+    });
+
+    $(document).click(function() {
+        select.removeClass("open");
+    });
 });
+
 /*  提交用户认证信息*/
 $('.J-authenticate-btn').on('click', function(e) {
     var getArgs = function() {
