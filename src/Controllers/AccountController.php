@@ -61,4 +61,14 @@ class AccountController extends BaseController
     {
         return view('pcview::account.security', $this->PlusData);
     }
+
+    /**
+     * 我的钱包.
+     *
+     * @return mixed
+     */
+    public function wallet()
+    {
+        return view('pcview::account.wallet', $this->PlusData);
+    }
 }

@@ -21,7 +21,7 @@
                 <div class="account_tab" id="J-input">
                     <!-- label -->
                     <div class="perfect_title">
-                        <p>基本资料</p>
+                        <p class="active">基本资料</p>
                     </div>
                     <!-- /label -->
                     <!-- 更改头像 -->

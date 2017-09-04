@@ -22,6 +22,19 @@
             <option value="user">个人认证</option>
             <option value="org">机构认证</option>
         </select>
+
+        <div class="zy_select border active">
+            <span>个人认证</span>
+            <ul>
+                <li data-value="0" class="active">个人认证</li>
+                <li data-value="1">机构认证机构认证机构认证机构认证</li>
+                <li data-value="2">机构认证</li>
+                <li data-value="3">机构认证</li>
+                <li data-value="4">机构认证</li>
+            </ul>
+            <i></i>
+        </div>
+        
     </div>
     {{-- 个人认证 --}}
     <div class="user_authenticate" id="J-input-user">

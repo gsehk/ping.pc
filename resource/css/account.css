@@ -8,31 +8,27 @@
 }
 
 .account_wrap{
-    overflow: hidden;
-    margin: 40px auto 0;
     width: 1080px;
     background-color: #fff;
 }
 
 .account_l{
-    float: left;
+    display: table-cell;
+    padding: 25px 0;
     width: 240px;
     background-color: #ededed;
-    padding-bottom: 2000px;
-    margin-bottom: -2000px;
 }
 
 .account_r{
-    float: left;
+    display: table-cell;
     width: 840px;
     background-color: #fff;
-    padding-bottom: 2000px;
-    margin-bottom: -2000px;
 }
+
 .account_menu{
     margin-bottom: 0;
-    padding: 25px 0;
 }
+
 .account_menu li{
     margin-bottom: 15px;
     padding-left: 68px;
@@ -56,14 +52,8 @@
 }
 
 .account_c_c{
-    overflow: hidden;
     width: 100%;
     padding: 40px;
-}
-
-/* #todo 待修改 */
-.account_tab:not(:last-child){
-    display: none;
 }
 
 .perfect_container{
@@ -88,24 +78,38 @@
 }
 
 .perfect_title{
+    display: flex;
     padding-bottom: 20px;
     border-bottom: 1px solid #ededed;
     margin-bottom: 40px;
+
+    align-items: center;
 }
 
-.perfect_title p{
+.perfect_title > div,
+.perfect_title > p{
     margin: 0;
     font-size: 16px;
+    color: #999;
+    cursor: pointer;
+}
+
+.perfect_title >p + p ,
+.perfect_title >div + div {
+    margin-left: 20px;
+}
+
+.perfect_title>p.active,
+.perfect_title>div.active{
     color: #333;
 }
 
-.perfect_title .type
-{
+.perfect_title .type{
     border:0;
     outline: none;
 }
 
-.perfe
+/*.perfe*/
 
 .perfect_title.notice:after{
     display: block;
@@ -284,6 +288,10 @@
     background-color: rgb(246,246,246);
 }
 
+.account_heder .header img{
+    display: block;
+}
+
 .account_heder .perfect_btn{
     margin-top: 32px;
     float: left;
@@ -291,7 +299,6 @@
     background-color: #ededed;
     border: 1px solid #dedede;
 }
-
 
 .account_form_row {
     margin-bottom:20px;
@@ -526,7 +533,6 @@
     flex: 0;
 }
 
-
 .account_tab .blacklist .b_header {
     position: relative;
     width: 60px;
@@ -535,12 +541,12 @@
     border-radius: 50%;
     flex-shrink: 0;
 }
+
 .account_tab .blacklist .b_header img {
     overflow: hidden;
     width: 100%;
     border-radius: inherit;
 }
-
 
 .account_tab .blacklist .b_header .ID_tag{
     display: block;
@@ -577,6 +583,7 @@
     color: #999;
     line-height: 1.3;
 }
+
 .account_tab .blacklist .b_action {
     flex-shrink: 0;
 }
@@ -585,11 +592,138 @@
     font-size: 16px;
     color: #4bb893;
 }
-
+.account_table {
+    
+}
 
 /* Override Cropper's styles */
 
 .upload-box .cropper-face,
 .upload-box .cropper-view-box {
     border-radius: 50%;
+}
+
+/* Select beautify */
+
+.zy_select {
+    position: relative;
+    min-width: 96px;
+    vertical-align: middle;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.zy_select a{
+    color: inherit;
+    cursor: pointer;
+}
+
+.zy_select >i {
+    overflow: hidden;
+    float: right;
+    position: relative;
+    display: block;
+    margin-top: 4px;
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    transform-origin: center;
+    transition: all .2s;
+}
+
+.zy_select > i::after{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: #000;
+    transform: translate(-50%,-25%);
+    content: "";
+}
+
+.zy_select span{
+    text-align: left;
+}
+
+.zy_select>ul {
+    display: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: calc(100% + 2px);
+    max-height: 170px;
+    background: #fff;
+}
+
+.zy_select>ul >li{
+    overflow: hidden;
+    display: block;
+    margin-bottom: 1px;
+    padding: 5px;
+    width: 100%;
+    min-height: 20px;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.zy_select>ul >li.active,
+.zy_select>ul >li:hover{
+    background-color: #dfdfdf;
+    color: #fff;
+}
+
+.zy_select.t_c{
+    text-align: center;
+}
+
+.zy_select.gap12>ul{
+    left: 50%;
+    margin-top: 12px;
+    padding: 25px 0 5px;
+    width: 122px;
+    border-radius: 5px;
+    box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+    transform: translateX(-50%);
+}
+
+.zy_select.gap12>ul li{
+    background: none !important;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.zy_select.gap12>ul li.active,
+.zy_select.gap12>ul li:hover{
+    color: #59b6d7;
+}
+
+.zy_select.border{
+    padding: 5px;
+    border: 1px solid #dfdfdf;
+}
+
+.zy_select.border > ul{
+    left: -1px;
+    border: 1px solid #dfdfdf;
+    transform: none;
+}
+
+.zy_select.open >span{
+    color: #59b6d7;
+}
+
+.zy_select.open >i{
+    transform: rotate(180deg);
+}
+
+.zy_select.open >ul{
+    display: block;
 }
