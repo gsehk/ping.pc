@@ -15,18 +15,21 @@ post.createPost = function (group_id) {
     });
 
     var data = {
-        title: '发一个圈子动态呢',
+        title: $('#post_title').val(),
         content: $('#feed_content').val(),
-        // images: images,
+        images: images,
         group_post_mark: MID + new Date().getTime(),
     };
+    if (getLength(data.title) < 1) {
+        noticebox('标题不能为空', 0);
+        return false;
+    }
     var strlen = getLength(data.content);
     var leftnums = initNums - strlen;
     if (leftnums < 0 || leftnums == initNums) {
         noticebox('分享内容长度为1-' + initNums + '字', 0);
         return false;
     }
-    console.log(data)
     $.ajax({
         url: '/api/v2/groups/' + group_id + '/posts',
         type: 'post',
@@ -34,6 +37,7 @@ post.createPost = function (group_id) {
         success: function(res) {
             noticebox('发布成功', 1);
             $('.feed_picture').html('').hide();
+            $('#post_title').val('');
             $('#feed_content').val('');
             post.afterCreatePost(group_id, res.id);
         },

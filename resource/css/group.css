@@ -89,11 +89,6 @@
     width: 100% !important;
 }
 
-/* 圈子信息 */
-.group-info {
-    width: 100%;
-}
-
 .group-info .info {
     width: 100%;
     margin-bottom: 20px;
@@ -139,6 +134,20 @@
     line-height: 20px;
 }
 
+/* 创建圈子动态 */
+.feed_post .post_textarea {
+    width: 100% !important;
+}
+.feed_post .post_text {
+    font-size: 16px;
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    border: 1px solid #ededed;
+    outline: none;
+    background: #f3f6f7;
+    margin-bottom: 10px;
+}
 
 /*--------------------------*/
 .tool span{
@@ -292,7 +301,7 @@
 }
 
 .income-rank .title {
-    font-size: 18px;
+    font-size: 16px;
     padding: 20px 0 15px;
     text-align: center;
     color: #333;

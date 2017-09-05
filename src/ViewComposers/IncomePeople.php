@@ -14,8 +14,6 @@ class IncomePeople
         $api = '/api/v2/ranks/income';
 
         $incomes = createRequest('GET', $api, $params);
-//        dd($incomes->toArray());
-
         $view->with('incomes', $incomes);
     }
 }

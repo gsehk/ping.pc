@@ -220,7 +220,7 @@
                     <span class="comment J-comment-show">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}">{{$post->comments_count}}</font>
             </span>
-                    <span class="view">
+                    <span class="view"  data-id="{{$post->id}}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
                         {{$post->views}}
             </span>

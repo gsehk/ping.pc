@@ -40,6 +40,7 @@
         <!-- 圈子动态发布 -->
         @if(!empty($TS))
             <div class="feed_post">
+                <input class="post_text" type="text" placeholder="有标题更吸引人" id="post_title">
                 <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
                 <div class="post_extra">
                 <span class="fs-14" id="feed_pic">
@@ -77,7 +78,7 @@
     <script src="{{ $routes['resource'] }}/js/module.group.js"></script>
     <script>
         $(function () {
-            // 切换分类
+            // 切换加入状态
             $('.group-foot').on('click', '.group-join', function(){
 
                 if (MID == 0) {
@@ -137,6 +138,15 @@
                     params: params
                 });
             }, 300);
+
+            // 点击进入动态详情
+            $('.feed_content').on('click', '.view', function () {
+                var _this = this;
+                var post_id = $(_this).data('id');
+                var group_id = '{{$group->id}}';
+
+                window.location.href = '{{$routes['siteurl']}}' + '/group/' + group_id + '/post/' + post_id;
+            })
         });
     </script>
 @endsection
