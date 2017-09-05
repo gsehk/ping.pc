@@ -1,7 +1,7 @@
 <?php
-
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\AdminControllers;
 
+use Zhiyi\Plus\Models\JWTCache;
 use Zhiyi\Plus\Models\User;
 use Zhiyi\Plus\Models\AuthToken;
 use Illuminate\Http\Request;
@@ -21,9 +21,10 @@ class HomeController extends Controller
         }
 
         // token
-        $token = AuthToken::where('user_id', $request->user()->id)
-            ->where('state', 1)
-            ->value('token');
+        $token = JWTCache::where('user_id', $request->user()->id)
+            ->where('status', 0)
+            ->value('value');
+        $token = 'Bearer '.trim($token);
 
         return view('pcview::admin', [
             'token' => $token,
