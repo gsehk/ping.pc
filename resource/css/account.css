@@ -75,14 +75,13 @@
 }
 
 .perfect_title{
-    display: flex;
     padding-bottom: 20px;
     border-bottom: 1px solid #ededed;
     margin-bottom: 40px;
     align-items: center;
 }
 
-.perfect_title > div,
+.perfect_title > span,
 .perfect_title > p{
     margin: 0;
     font-size: 16px;
@@ -91,12 +90,12 @@
 }
 
 .perfect_title >p + p ,
-.perfect_title >div + div {
+.perfect_title >span + span {
     margin-left: 20px;
 }
 
-.perfect_title>p.active,
-.perfect_title>div.active{
+.perfect_title .active,
+.perfect_title .active{
     color: #333;
 }
 
@@ -139,6 +138,25 @@
     content: "."
 }
 
+.perfect_title .wallet_role{
+    position: relative;
+}
+
+.perfect_title .wallet_role::after{
+    content: "?";
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    font-size: 10px;
+    padding: 2px;
+    border:1px solid #777;
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    left:-22px;
+    top: 3px;
+
+}
 
 /* 待修改 此效果改用js完成 */
 .perfect_title.notice ~ .switch_closed{
@@ -665,6 +683,11 @@
 .wallet-table .table{
     width: 100%;
     text-align: center;
+    font-size: 14px;
+}
+
+.wallet-table .table.tborder{
+    border-top: 1px solid #ccc;
 }
 
 .wallet-table .table thead{
@@ -677,6 +700,14 @@
 .wallet-table .table tbody{
     height: 35px;
     line-height: 35px;
+}
+
+.wallet-table tbody tr:hover {
+    background: #F7F7F7;
+}
+
+.wallet-table tbody a.act{
+    color: #4BB893;
 }
 
 .wallet-table .row-tab{

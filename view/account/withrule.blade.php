@@ -16,50 +16,27 @@
 
 <div class="account_r">
     <div class="account_c_c" id="J-warp">
-        {{-- 我的钱包 --}}
+        {{-- 钱包使用规则 --}}
         <div class="account_tab">
             <div class="perfect_title">
-                <span><a class="active" href="{{ route('pc:wallet') }}">我的钱包</a></span>
+                <span><a href="{{ route('pc:wallet') }}">我的钱包</a></span>
                 <span data-value="" class="zy_select t_c gap12">
                     <span><a href="{{ route('pc:trades') }}">交易明细</a></span>
                     <ul>
-                        <li data-value="0" class="active"><a href="{{ route('pc:trades', 2) }}">全部</a></li>
+                        <li data-value="0"><a href="{{ route('pc:trades', 2) }}">全部</a></li>
                         <li data-value="1"><a href="{{ route('pc:trades', 1) }}">收入</a></li>
                         <li data-value="2"><a href="{{ route('pc:trades', 0) }}">支出</a></li>
                     </ul>
                     <i></i>
                 </span>
                 <span><a href="{{ route('pc:withdraw') }}">提现记录</a></span>
-                <span class="wallet_role fr"><a href="{{ route('pc:withrule') }}">使用规则</a></span>
+                <span class="wallet_role fr"><a class="active" href="{{ route('pc:withrule') }}">使用规则</a></span>
             </div>
             <div class="wallet-body">
-                <div class="wallet-info clearfix">
-                    <div class="remaining-sum">67800.00</div>
-                    <div class="operate">
-                        <button>充值</button>
-                        <button>提现</button>
-                    </div>
-                    <p class="gcolor">账户余额（元）</p>
-                </div>
-                <div class="wallet-table">
-                    <p>近期交易记录</p>
-                    <table class="table tborder" border="0" cellspacing="0" cellpadding="0">
-                        <thead>
-                            <tr>
-                                <th width="25%">交易时间</th>
-                                <th width="30%">交易名称</th>
-                                <th width="30%">交易金额</th>
-                                <th width="15%">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordere-list">
-
-                        </tbody>
-                    </table>
-                </div>
+                {{ $wallet['rule'] }}
             </div>
         </div>
-        {{-- /我的钱包 --}}
+        {{-- /钱包使用规则 --}}
     </div>
 </div>
 </div>
@@ -68,15 +45,6 @@
 
 @section('scripts')
 <script>
-setTimeout(function() {
-    scroll.init({
-        container: '#ordere-list',
-        loading: '.table',
-        url: '/account/order',
-        params: {limit: 10}
-    });
-}, 300);
-
 $(function() {
     var select = $(".zy_select");
 

@@ -16,10 +16,10 @@
 
 <div class="account_r">
     <div class="account_c_c" id="J-warp">
-        {{-- 我的钱包 --}}
+        {{-- 提现记录 --}}
         <div class="account_tab">
             <div class="perfect_title">
-                <span><a class="active" href="{{ route('pc:wallet') }}">我的钱包</a></span>
+                <span><a href="{{ route('pc:wallet') }}">我的钱包</a></span>
                 <span data-value="" class="zy_select t_c gap12">
                     <span><a href="{{ route('pc:trades') }}">交易明细</a></span>
                     <ul>
@@ -29,26 +29,18 @@
                     </ul>
                     <i></i>
                 </span>
-                <span><a href="{{ route('pc:withdraw') }}">提现记录</a></span>
+                <span><a class="active" href="{{ route('pc:withdraw') }}">提现记录</a></span>
                 <span class="wallet_role fr"><a href="{{ route('pc:withrule') }}">使用规则</a></span>
             </div>
             <div class="wallet-body">
-                <div class="wallet-info clearfix">
-                    <div class="remaining-sum">67800.00</div>
-                    <div class="operate">
-                        <button>充值</button>
-                        <button>提现</button>
-                    </div>
-                    <p class="gcolor">账户余额（元）</p>
-                </div>
                 <div class="wallet-table">
-                    <p>近期交易记录</p>
                     <table class="table tborder" border="0" cellspacing="0" cellpadding="0">
                         <thead>
                             <tr>
-                                <th width="25%">交易时间</th>
-                                <th width="30%">交易名称</th>
-                                <th width="30%">交易金额</th>
+                                <th width="20%">申请时间</th>
+                                <th width="30%">备注</th>
+                                <th width="10%">提现金额</th>
+                                <th width="10%">状态</th>
                                 <th width="15%">操作</th>
                             </tr>
                         </thead>
@@ -59,7 +51,7 @@
                 </div>
             </div>
         </div>
-        {{-- /我的钱包 --}}
+        {{-- /提现记录 --}}
     </div>
 </div>
 </div>
@@ -73,7 +65,7 @@ setTimeout(function() {
         container: '#ordere-list',
         loading: '.table',
         url: '/account/order',
-        params: {limit: 10}
+        params: {limit: 10, cate: {{$type}} }
     });
 }, 300);
 

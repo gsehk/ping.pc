@@ -76,6 +76,16 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     // 订单记录列表 or 详情
     Route::get('order/{order?}', 'AccountController@order')->name('pc:order');
+
+    // 交易明细
+    Route::get('trades/{type?}', 'AccountController@trades')->name('pc:trades');
+
+    // 提现记录
+    Route::get('withdraw', 'AccountController@withdraw')->name('pc:withdraw');
+
+    // 提现规则
+    Route::get('withrule', 'AccountController@withrule')->name('pc:withrule');
+
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {

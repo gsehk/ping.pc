@@ -74,15 +74,54 @@ class AccountController extends BaseController
         return view('pcview::account.wallet', $data, $this->PlusData);
     }
 
+    /**
+     * 提现记录.
+     *
+     * @return mixed
+     */
+    public function withdraw(Request $request)
+    {
+        $data['type'] = 2;
+
+        return view('pcview::account.withdraw', $data, $this->PlusData);
+    }
 
     /**
-     * 交易记录.
+     * 交易明细.
+     *
+     * @return mixed
+     */
+    public function trades(Request $request, int $type = 2)
+    {
+        $data['type'] = $type;
+
+        return view('pcview::account.trades', $data, $this->PlusData);
+    }
+
+    /**
+     * 钱包规则.
+     *
+     * @return mixed
+     */
+    public function withrule()
+    {
+        $data['wallet'] = createRequest('GET', '/api/v2/wallet');
+
+        return view('pcview::account.withrule', $data, $this->PlusData);
+    }
+
+    /**
+     * 订单记录.
      *
      * @param  Illuminate\Http\Request $request
      * @return mixed
      */
     public function order(Request $request, int $order_id = 0)
     {
+        $type = $request->query('type') ?? '';
+        $cate = $request->query('cate') ?? 1;
+
+        // 交易记录详情
         if ($order_id) {
             $order = createRequest('GET', '/api/v2/wallet/charges/'.$order_id);
             if ($order->channel == 'user') {
@@ -93,14 +132,23 @@ class AccountController extends BaseController
             return view('pcview::account.detail', $data, $this->PlusData);
         }
 
+        // 交易记录列表
         $params = [
             'after' => $request->query('after') ?: 0
         ];
+        if ($type == 0 || $type == 1) {
+            $params['action'] = $type;
+        }
         $orders = createRequest('GET', '/api/v2/wallet/charges', $params);
 
+        // 提现记录列表
+        if ($cate == 2) {
+            $orders = createRequest('GET', '/api/v2/wallet/cashes', $params);
+        }
         $order = clone $orders;
         $after = $order->pop()->id ?? 0;
         $data['order'] = $orders;
+        $data['type'] = $cate;
 
         $html = view('pcview::templates.order', $data)->render();
 
@@ -110,5 +158,4 @@ class AccountController extends BaseController
             'after' => $after
         ]);
     }
-
 }

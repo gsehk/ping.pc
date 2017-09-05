@@ -67,7 +67,7 @@ a {
     vertical-align:baseline;
     background:transparent;
     text-decoration: none;
-    color: #CCC;
+    color: inherit;
 }
 
 /* main color */
@@ -78,6 +78,9 @@ a {
 
 /* undertint */
 .ucolor { color: #777; }
+
+/* grey */
+.gcolor { color: #ccc; }
 
 .fl {
     float: left;
@@ -1206,9 +1209,8 @@ img.load {
 }
 
 .zy_select {
+    display: inline-block;
     position: relative;
-    min-width: 96px;
-    vertical-align: middle;
     white-space: nowrap;
     cursor: pointer;
 }
