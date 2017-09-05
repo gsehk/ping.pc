@@ -44,6 +44,7 @@ class PcServiceProvider extends ServiceProvider
         View::composer('pcview::widgets.hotnews', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\HotNews');
         View::composer('pcview::widgets.ads', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\Ads');
         View::composer('pcview::widgets.hotgroups', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\HotGroups');
+        View::composer('pcview::widgets.incomepeople', 'Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers\IncomePeople');
     }
 
     /**

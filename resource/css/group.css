@@ -276,3 +276,84 @@
     text-align: center;
     color: #999;
 }
+
+/**************收入排行榜************/
+.income-rank {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0 15px 0;
+    border: 1px solid #ededed;
+    background-color: #fff;
+}
+
+.income-rank .title {
+    font-size: 18px;
+    padding: 20px 0 15px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #ededed;
+}
+
+.income-rank .income-list {
+    overflow: hidden;
+    padding: 15px 0;
+    font-size: 14px;
+}
+
+.income-rank .income-list li {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.income-rank .fans-span {
+    display: block;
+    margin-right: 15px;
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+    background: #ccc;
+}
+
+.income-rank li:nth-child(1) .fans-span,
+.income-rank li:nth-child(2) .fans-span,
+.income-rank li:nth-child(3) .fans-span{
+    background: #59b6d7;
+}
+
+.income-rank .income-avatar {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    background-color: #f4f5f5;
+    flex: 0 0 auto;
+}
+
+.income-rank .income-avatar>img {
+    display: block;
+}
+
+.income-rank .income-name {
+    display: flex;
+    margin-left: 15px;
+    height: 60px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex: 1 1 auto;
+}
+
+.income-rank .income-name .name {
+    color: #333;
+}
+
+.income-rank .answers-count {
+    color: #999;
+}

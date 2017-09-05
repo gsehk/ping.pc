@@ -10,6 +10,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/group.css') }}"/>
 @endsection
 
 @section('content')
@@ -122,8 +123,10 @@
             </ul>
         </div>
         <!-- 推荐用户 -->
-
         @include('pcview::widgets.recusers')
+        <!-- 收入达人 -->
+        @include('pcview::widgets.incomepeople')
+
     </div>
 @endsection
 
