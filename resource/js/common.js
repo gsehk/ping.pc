@@ -1,5 +1,5 @@
 var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/loading.png' class='load'>加载中</div>";
-var clickHtml = "<div class='click_loading'><a href='javascript:;' onclick='scroll.clickMore();'>点击加载更多</a></div>";
+var clickHtml = "<div class='click_loading'><a href='javascript:;' onclick='scroll.clickMore();'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var initNums = 255;
 
@@ -174,6 +174,7 @@ scroll.init = function(option) {
     scroll.bindScroll();
     if ($(scroll.setting.container).length > 0 && this.setting.canload) {
         $('.loading').remove();
+        $('.click_loading').remove();
         $(scroll.setting.loading).after(loadHtml);
         scroll.loadMore();
     }

@@ -1144,162 +1144,35 @@ a {
     margin: auto !important;
 }
 
-/*分割线*/
-
-
-
-/*积分规则*/
-
-.w_815 {
-    width: 815px;
-    margin: auto;
-}
-
-.int_top {
-    width: 100%;
-    height: 160px;
-    margin: 40px auto 30px;
-    background: #fff;
-}
-
-.intTop_left {
-    float: left;
-    width: 4px;
-    height: 160px;
-    border-radius: 3px;
-    background: #fbbeb9;
-}
-
-.intTop_num {
-    font-size: 42px;
-    float: left;
-    margin: 48px auto 18px 68px;
-    color: #333;
-}
-
-.int_this {
-    font-size: 14px;
-    display: block;
-    color: #999;
-}
-
-.int_sign {
-    font-size: 18px;
-    line-height: 40px;
-    float: right;
-    width: 153px;
-    height: 40px;
-    margin-top: 60px;
-    margin-right: 70px;
-    cursor: pointer;
-    text-align: center;
-    color: #fff;
-    border-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    background: #f87d72;
-}
-
-.int_cont {
-    width: 815px;
-    padding: 0 70px 50px;
-    background: #fff;
-}
-
-.int_rule {
-    margin-top: 18px;
-    border-bottom: 1px solid #ededed;
-}
-
-.int_li {
-    margin-right: 40px;
-    margin-left: 30px !important;
-}
-
-.int_li2 {
-    margin: 0 !important;
-}
-
-.int_pm {
-    line-height: 60px !important;
-    height: 60px !important;
-    padding-right: 30px;
-    padding-left: 30px;
-}
-
-.int_operation {
-    width: 290px !important;
-}
-
-.int_pm span {
-    color: #666 !important;
-}
-
-.operation_ul {
-    font-size: 14px;
-    padding-top: 10px;
-    padding-left: 30px;
-}
-
-.list_div {
-    font-size: 14px;
-}
-
-.c_f8 {
-    color: #f87e73 !important;
-}
-
-.list_div1 {
-    width: 290px;
-}
-
-.list_div2 {
-    color: #59b6d7;
-}
-
-.list_div3 {
-    float: right;
-    padding-right: 30px;
-}
-
-.operation_ul li {
-    margin-bottom: 36px;
-}
-
-.operation_ul li:last-child {
-    margin-bottom: 10px;
-}
-
-.int_page {
-    margin: 30px auto 0;
-    text-align: center;
-}
-
-.div_right {
-    float: right;
-    margin-right: 30px;
-}
-
-.int_b {
-    margin-bottom: 50px;
-}
-
-.sign_img {
-    width: 16px;
-    margin-right: 10px;
-    vertical-align: -2px;
-}
-
-.dy_center .top-menu-left {
-    position: relative;
-    height: 60px;
-}
 
 .loading {
     font-size: 14px;
     padding: 20px 0 10px 0;
     text-align: center;
     color: #999;
+}
+
+.click_loading {
+    font-size: 12px;
+    line-height: 40px;
+    height: 40px;
+    background: #fff;
+    margin-top: 10px;
+    text-align: center;
+    color: #999;
+}
+
+.click_loading a {
+    color: #59b6d7 !important;
+    position: relative;
+}
+
+.click_loading svg {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #59b6d7;
 }
 
 img.load {
@@ -1454,3 +1327,155 @@ img.load {
 .zy_select.open >ul{
     display: block;
 }
+
+
+/*分割线*/
+
+
+/*积分规则*/
+
+.w_815 {
+    width: 815px;
+    margin: auto;
+}
+
+.int_top {
+    width: 100%;
+    height: 160px;
+    margin: 40px auto 30px;
+    background: #fff;
+}
+
+.intTop_left {
+    float: left;
+    width: 4px;
+    height: 160px;
+    border-radius: 3px;
+    background: #fbbeb9;
+}
+
+.intTop_num {
+    font-size: 42px;
+    float: left;
+    margin: 48px auto 18px 68px;
+    color: #333;
+}
+
+.int_this {
+    font-size: 14px;
+    display: block;
+    color: #999;
+}
+
+.int_sign {
+    font-size: 18px;
+    line-height: 40px;
+    float: right;
+    width: 153px;
+    height: 40px;
+    margin-top: 60px;
+    margin-right: 70px;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    background: #f87d72;
+}
+
+.int_cont {
+    width: 815px;
+    padding: 0 70px 50px;
+    background: #fff;
+}
+
+.int_rule {
+    margin-top: 18px;
+    border-bottom: 1px solid #ededed;
+}
+
+.int_li {
+    margin-right: 40px;
+    margin-left: 30px !important;
+}
+
+.int_li2 {
+    margin: 0 !important;
+}
+
+.int_pm {
+    line-height: 60px !important;
+    height: 60px !important;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.int_operation {
+    width: 290px !important;
+}
+
+.int_pm span {
+    color: #666 !important;
+}
+
+.operation_ul {
+    font-size: 14px;
+    padding-top: 10px;
+    padding-left: 30px;
+}
+
+.list_div {
+    font-size: 14px;
+}
+
+.c_f8 {
+    color: #f87e73 !important;
+}
+
+.list_div1 {
+    width: 290px;
+}
+
+.list_div2 {
+    color: #59b6d7;
+}
+
+.list_div3 {
+    float: right;
+    padding-right: 30px;
+}
+
+.operation_ul li {
+    margin-bottom: 36px;
+}
+
+.operation_ul li:last-child {
+    margin-bottom: 10px;
+}
+
+.int_page {
+    margin: 30px auto 0;
+    text-align: center;
+}
+
+.div_right {
+    float: right;
+    margin-right: 30px;
+}
+
+.int_b {
+    margin-bottom: 50px;
+}
+
+.sign_img {
+    width: 16px;
+    margin-right: 10px;
+    vertical-align: -2px;
+}
+
+.dy_center .top-menu-left {
+    position: relative;
+    height: 60px;
+}
+

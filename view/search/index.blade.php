@@ -59,16 +59,6 @@
 @endsection
 
 @section('scripts')
-@if ($type == 1)
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
-@elseif ($type == 3)
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
-@elseif ($type == 4)
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/user.css') }}"/>
-@elseif ($type == 5)
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/group.css') }}"/>
-@endif
-
 
 <script type="text/javascript">
 $(function() {
