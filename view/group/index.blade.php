@@ -19,7 +19,8 @@
 </div>
 
 <div class="right_container">
-    @include('pcview::widgets.hotusers')
+    <!-- 热门圈子 -->
+    @include('pcview::widgets.hotgroups')
 </div>
 @endsection
 

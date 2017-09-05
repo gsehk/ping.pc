@@ -80,73 +80,8 @@
 }
 
 /*动态发布*/
-.group_post {
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 30px 40px;
-    border-radius: 3px;
-    background: white;
-}
-
-.group_post .post_textarea {
-    font-size: 16px;
-    width: 100%;
-    height: 158px;
-    padding: 10px;
-    resize: none;
-    border: 1px solid #ededed;
-    outline: none;
-    background: #f3f6f7;
-}
-
-
-.group_post .post_extra {
-    line-height: 31px;
-    margin-top: 10px;
-}
-
-.group_post .post_extra span {
-    cursor: pointer;
-    line-height: 37px;
-    display: inline-block;
-    color: #666;
-}
-
-.group_post .post_extra svg {
-    display: inline-block;
-    margin-right: 2px;
-    font-size: 20px;
-}
-
-.group_post .post_button {
-    line-height: 32px;
-    float: right;
-    width: 85px;
-    height: 32px;
-    text-align: center;
-    color: #fff;
-    border: 0;
-    border-radius: 3px;
-    background: #59b6d7;
-    /* margin-right: 40px;.del_huifu */
-}
-
-
-.group_post .group_picture {
-    display: none;
-    overflow: hidden;
-    height: 60px;
-    margin-top: 20px;
-}
-
-.group_post .group_picture_span {
-    position: relative;
-    display: inline-block;
-    float: left;
-    width: 59px;
-    height: 59px;
-    margin-right: 3px;
-    border: 1px solid #ededed;
+.feed_post .post_textarea {
+    width: 100% !important;
 }
 
 /* 圈子信息 */
@@ -256,6 +191,10 @@
 .group-info .add-join {
     color: #59b6d7;
     border-color: #59b6d7;
+}
+
+.group_item .title {
+    color: #000;
 }
 
 /* 热门圈子 */
