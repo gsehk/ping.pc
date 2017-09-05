@@ -30,175 +30,175 @@
                 @if($post->images)
                     <div style="" id="layer-photos-demo{{$post->id}}">
                         @if($post->images->count() == 1)
-                            <img class="lazy" style="max-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}"/>
+                            <img class="lazy" style="max-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$post->images[0]['id']}}"/>
                         @elseif($post->images->count() == 2)
                             <div style="width: 100%; display: flex;">
                                 <div style="width: 35vw;" class="image_box">
-                                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=277&h=273" />
+                                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[0]['id']}}?w=277&h=273" />
                                 </div>
                                 <div style="width: 35vw;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=277&h=273" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['id']}}?w=277&h=273" />
                                 </div>
                             </div>
                         @elseif($post->images->count() == 3)
                             <div style="width: 100%; display: flex;">
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=184&h=180" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['id']}}?w=184&h=180" />
                                 </div>
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=184&h=180" />
+                                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[1]['id']}}?w=184&h=180" />
                                 </div>
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=184&h=180" />
+                                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[2]['id']}}?w=184&h=180" />
                                 </div>
                             </div>
                         @elseif($post->images->count() == 4)
                             <div style="width: 100%; display: flex;">
                                 <div style="width: 50%">
                                     <div style="width: 100%;" class="image_box">
-                                        <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[0]['id']}}?w=277&h=273" />
                                     </div>
                                     <div style="width: 100%;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['id']}}?w=277&h=273" />
                                     </div>
                                 </div>
                                 <div style="width: 50%">
                                     <div style="width: 100%;" class="image_box">
-                                        <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[2]['id']}}?w=277&h=273" />
                                     </div>
                                     <div style="width: 100%;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['id']}}?w=277&h=273" />
                                     </div>
                                 </div>
                             </div>
                         @elseif($post->images->count() == 5)
                             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                                 <div style="width: 66.6666%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=370&h=366" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['id']}}?w=370&h=366" />
                                 </div>
                                 <div style="width: 33.3333%">
                                     <div style="width: 100%; padding-bottom: 2px;" class="image_box">
-                                        <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=185&h=183" />
+                                        <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[1]['id']}}?w=185&h=183" />
                                     </div>
                                     <div style="width: 100% padding-bottom: 2px;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=185&h=183" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['id']}}?w=185&h=183" />
                                     </div>
                                 </div>
                                 <div style="width: 100%; display: flex;">
                                     <div style="width: 35vw;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['id']}}?w=277&h=273" />
                                     </div>
                                     <div style="width: 35vw;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['id']}}?w=277&h=273" />
                                     </div>
                                 </div>
                             </div>
                         @elseif($post->images->count() == 6)
                             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                                 <div style="width: 66.6666%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=370&h=366" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['id']}}?w=370&h=366" />
                                 </div>
                                 <div style="width: 33.3333%">
                                     <div style="width: 100%; padding-bottom: 2px;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=185&h=183" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['id']}}?w=185&h=183" />
                                     </div>
                                     <div style="width: 100% padding-bottom: 2px;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=185&h=183" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['id']}}?w=185&h=183" />
                                     </div>
                                 </div>
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['id']}}?w=185&h=183" />
                                 </div>
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['id']}}?w=185&h=183" />
                                 </div>
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['id']}}?w=185&h=183" />
                                 </div>
                             </div>
                         @elseif($post->images->count() == 7)
                             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                                 <div style="width: 50%">
                                     <div style="width: 100%" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['id']}}?w=277&h=273" />
                                     </div>
                                     <div style="width: 100%" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['id']}}?w=277&h=273" />
                                     </div>
                                 </div>
                                 <div style="width: 50%; display: flex; flex-wrap: wrap;">
                                     <div style="width: 50%; padding-bottom: 2px;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=138&h=135" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['id']}}?w=138&h=135" />
                                     </div>
                                     <div style="width: 50%; padding-bottom: 2px;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=138&h=135" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['id']}}?w=138&h=135" />
                                     </div>
                                     <div style="width: 100%;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=277&h=273" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['id']}}?w=277&h=273" />
                                     </div>
                                     <div style="width: 50%;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['file']}}?w=138&h=135" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['id']}}?w=138&h=135" />
                                     </div>
                                     <div style="width: 50%;" class="image_box">
-                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['file']}}?w=138&h=135" />
+                                        <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['id']}}?w=138&h=135" />
                                     </div>
                                 </div>
                             </div>
                         @elseif($post->images->count() == 8)
                             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['id']}}?w=185&h=183" />
                                 </div>
                                 <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['id']}}?w=185&h=183" />
                                 </div>
                                 <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['id']}}?w=185&h=183" />
                                 </div>
                                 <div style="width: 50%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=277&h=273" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['id']}}?w=277&h=273" />
                                 </div>
                                 <div style="width: 50%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=277&h=273" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['id']}}?w=277&h=273" />
                                 </div>
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['id']}}?w=185&h=183" />
                                 </div>
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['id']}}?w=185&h=183" />
                                 </div>
                                 <div style="width: 33.3333%;" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[7]['file']}}?w=185&h=183" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[7]['id']}}?w=185&h=183" />
                                 </div>
                             </div>
                         @elseif($post->images->count() == 9)
                             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['id']}}?w=185&h=181" />
                                 </div>
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['id']}}?w=185&h=181" />
                                 </div>
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['id']}}?w=185&h=181" />
                                 </div>
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['id']}}?w=185&h=181" />
                                 </div>
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['id']}}?w=185&h=181" />
                                 </div>
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['id']}}?w=185&h=181" />
                                 </div>
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['id']}}?w=185&h=181" />
                                 </div>
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[7]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[7]['id']}}?w=185&h=181" />
                                 </div>
                                 <div style="width: 33.3333%" class="image_box">
-                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[8]['file']}}?w=185&h=181" />
+                                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[8]['id']}}?w=185&h=181" />
                                 </div>
                             </div>
                         @endif

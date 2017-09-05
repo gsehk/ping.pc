@@ -36,13 +36,15 @@ post.createPost = function (group_id) {
         images: images,
         group_post_mark: MID + new Date().getTime(),
     };
+
     if (getLength(data.title) < 1) {
         noticebox('标题不能为空', 0);
         return false;
     }
+
     var strlen = getLength(data.content);
     var leftnums = initNums - strlen;
-    if (leftnums < 0 || leftnums == initNums) {
+    if ((leftnums < 0 || leftnums == initNums) && data.images.length < 1) {
         noticebox('分享内容长度为1-' + initNums + '字', 0);
         return false;
     }
