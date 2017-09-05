@@ -5,7 +5,7 @@
                 @if(isset($postv['extra']))
                     <div class="fans_span1"><span @if($postv['extra']['rank'] <= 3) class="blue" @elseif($postv['extra']['rank'] >= 3 && $postv['extra']['rank'] <= 10) class="grey" @endif>{{$postv['extra']['rank']}}</span></div>
                     <div class="fans_span2 txt-hide">
-                        <a href="{{ route('pc:mine', ['user_id'=>$postv['id']]) }}"><img src="{{ $postv['avatar'] }}" class="fans_img" /></a>
+                        <a href="{{ route('pc:mine', ['user_id'=>$postv['id']]) }}"><img src="{{ $postv['avatar'] or $routes['resource'].'/images/avatar.png' }}" class="fans_img" /></a>
                         <a href="{{ route('pc:mine', ['user_id'=>$postv['id']]) }}">{{$postv['name']}}</a>
                     </div>
                     @if($tabName !== '')

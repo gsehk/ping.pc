@@ -112,7 +112,8 @@ class RankController extends BaseController
         $return['html'] = view('pcview::templates.rank_lists', [
             'post' => $data,
             'genre' => $genre,
-            'tabName' => $tabName
+            'tabName' => $tabName,
+            'routes' => $this->PlusData['routes']
         ])
             ->render();
 

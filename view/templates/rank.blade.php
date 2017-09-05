@@ -16,7 +16,7 @@
         @endif
     </div>
     <ul class="fans_ul" id="{{$genre}}-rank-list">
-        @component('pcview::templates.rank_lists', ['genre' => $genre, 'post' => $post, 'tabName' => (isset($tabName) ? $tabName : '')])
+        @component('pcview::templates.rank_lists', ['genre' => $genre, 'post' => $post, 'tabName' => (isset($tabName) ? $tabName : ''), 'routes' => $routes])
         @endcomponent
     </ul>
 </div>
