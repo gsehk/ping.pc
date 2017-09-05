@@ -94,7 +94,7 @@
                         >评论</button>
                     </div>
                 </div>
-                <div class="comment_list" id="comment_box">
+                <div class="comment_list" id="comment_box" data-args="group_id={{$post->group_id}}">
 
                 </div>
             </div>
@@ -139,12 +139,12 @@
         });
 
         setTimeout(function() {
-            {{--scroll.init({--}}
-                {{--container: '#comment_box',--}}
-                {{--loading: '.feed_left',--}}
-                {{--url: '/group/' + {{$post['group_id']}} + '/post/' + {{$post['id']}} + '/comments' ,--}}
-                {{--canload: true--}}
-            {{--});--}}
+            scroll.init({
+                container: '#comment_box',
+                loading: '.feed_left',
+                url: '/group/' + {{$post['group_id']}} + '/post/' + {{$post['id']}} + '/comments' ,
+                canload: true
+            });
         }, 300);
 
         $(document).ready(function(){

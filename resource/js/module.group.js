@@ -307,8 +307,13 @@ var comment = {
             }
         });
     },
-    delComment: function(comment_id, feed_id) {
-        var url = '/api/v2/groups/' + attrs.group_id + '/posts/' + attrs.row_id + '/comments/' + comment_id;
+    delComment: function(comment_id, post_id) {
+        // 获取group_id
+        var urlString = window.location.pathname;
+        var urlArray = urlString.split("/");
+        var group_id = urlArray[2];
+
+        var url = '/api/v2/groups/' + group_id + '/posts/' + post_id + '/comments/' + comment_id;
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -317,7 +322,7 @@ var comment = {
                 $('#comment_item_'+comment_id).fadeOut();
                 var commentNum = $('.comment_count').text();
                 $('.comment_count').text(parseInt(commentNum)-1);
-                var nums = $('.cs' + feed_id);
+                var nums = $('.cs' + post_id);
                 nums.text(parseInt(nums.text())-1);
             },
             error: function(xhr){

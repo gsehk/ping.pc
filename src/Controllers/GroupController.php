@@ -136,9 +136,7 @@ class GroupController extends BaseController
             'after' => $request->query('after') ?: 0
         ];
 
-        // 现在还没有获取评论列表的接口
         $comments['comments'] = createRequest('GET', '/api/v2/groups/'.$group_id.'/posts/'.$post_id.'/comments', $params);
-
         $comment = clone $comments['comments'];
         $after = $comment->pop()->id ?? 0;
 
@@ -146,7 +144,7 @@ class GroupController extends BaseController
             $item->user = $item->user;
 
             return $item;
-        });dd($comments);
+        });
         $commentData = view('pcview::templates.comment', $comments, $this->PlusData)->render();
 
         return response()->json([

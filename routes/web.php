@@ -156,9 +156,9 @@ Route::prefix('group')->group(function () {
 
     Route::get('getPost', 'GroupController@getPost');
 
-    Route::get('/{group_id}/post/{post_id?}', 'GroupController@postDetail')->where(['group_id' => '[0-9]+', 'post_id' => '[0-9]+'])->name('pc:grouppost');
+    Route::get('/{group_id}/post/{post_id}', 'GroupController@postDetail')->where(['group_id' => '[0-9]+', 'post_id' => '[0-9]+'])->name('pc:grouppost');
 
-    Route::get('/{group_id}/post/{post_id?}/comments', 'GroupController@comments')->where(['group_id' => '[0-9]+', 'post_id' => '[0-9]+']);
+    Route::get('/{group_id}/post/{post_id}/comments', 'GroupController@comments')->where(['group_id' => '[0-9]+', 'post_id' => '[0-9]+']);
 
 });
 
