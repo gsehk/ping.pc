@@ -10,7 +10,7 @@
                         <img src="{{$income['avatar'] or $routes['resource'].'/images/avatar.png'}}" alt="{{$income['name']}}">
                     </div>
                     <div class="income-name">
-                        <a class="name" href="">{{$income['name']}}</a>
+                        <a class="name" href="javascript:;">{{$income['name']}}</a>
                         <div class="answers-count">回答数：{{$income['extra']['answers_count']}}</div>
                     </div>
                 </li>

@@ -104,7 +104,8 @@ $(function(){
         auto:true,
         multi:true,
         newUpload:true,
-        buttonText:''
+        buttonText:'',
+        onUploadSuccess: weibo.afterUpload
     });
 });
 </script>

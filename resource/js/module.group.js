@@ -2,6 +2,22 @@
 
 var post = {};
 
+/**
+ * 上传后操作
+ * @return void
+ */
+post.afterUpload = function(image, f, task_id) {
+    var img = '<img class="imgloaded" onclick="post.showImg();" src="' + image.src + '" tid="' + task_id + '"/>';
+    var del = '<span class="imgdel"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></span>'
+    $('#' + 'fileupload_1_' + f.index).css('border', 'none').html(img + del);
+};
+post.showImg = function(){
+    layer.photos({
+        photos: '#file_upload_1-queue'
+        ,anim: 0
+        ,move: false
+    });
+};
 
 post.createPost = function (group_id) {
     if (MID == 0) {

@@ -17,6 +17,7 @@
     <div class="left_container">
         <div class="feed_left">
 
+            <div class="post-title">{{$post->title}}</div>
             <div class="detail_user">
                 <div class="detail_user_header">
                     <a href="#">

@@ -230,8 +230,7 @@
 				//上传文件
 				_uploadFile : function(file){
 					// new 上传方式
-					var rs = fileUpload.init(file, weibo.afterUpload);
-
+					var rs = fileUpload.init(file, option.onUploadSuccess);
 					//清除文件选择框中的已有值
 					uploadManager._getInputBtn().val('');
 				}

@@ -76,6 +76,8 @@
 
 @section('scripts')
     <script src="{{ $routes['resource'] }}/js/module.group.js"></script>
+    <script src="{{ $routes['resource'] }}/js/jquery.uploadify.js"></script>
+    <script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
     <script>
         $(function () {
             // 切换加入状态
@@ -139,14 +141,27 @@
                 });
             }, 300);
 
-            // 点击进入动态详情
-            $('.feed_content').on('click', '.view', function () {
-                var _this = this;
-                var post_id = $(_this).data('id');
-                var group_id = '{{$group->id}}';
+            // 图片删除事件
+            $(".feed_post").on("click", ".imgdel", function() {
+                $(this).parent().remove();
+                if ($('#file_upload_1-queue').find('.uploadify-queue-item').length == 0) {
+                    $('.uploadify-queue-add').remove();
+                    $('#file_upload_1-queue').hide();
+                }
+                if ($('#file_upload_1-queue').find('.uploadify-queue-item').length != 0  && $('.uploadify-queue-add').length == 0 ){
+                    var add = '<a class="feed_picture_span uploadify-queue-add"></a>'
+                    $('.uploadify-queue').append(add);
+                }
+            });
 
-                window.location.href = '{{$routes['siteurl']}}' + '/group/' + group_id + '/post/' + post_id;
-            })
+            // 发布微博
+            var up = $('.post_extra').Huploadify({
+                auto:true,
+                multi:true,
+                newUpload:true,
+                buttonText:'',
+                onUploadSuccess: post.afterUpload
+            });
         });
     </script>
 @endsection

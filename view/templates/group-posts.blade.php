@@ -22,6 +22,8 @@
                 </a>
             </div>
 
+            <div class="post-title"><a href="{{ route('pc:grouppost', ['group_id' => $post->group_id, 'post_id' => $post->id]) }}">{{$post->title}}</a></div>
+
             <div class="feed_body">
                 <p class="feed_text">{!! $post->content !!}</p>
 
@@ -220,7 +222,7 @@
                     <span class="comment J-comment-show">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}">{{$post->comments_count}}</font>
             </span>
-                    <span class="view"  data-id="{{$post->id}}">
+                    <span class="view">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
                         {{$post->views}}
             </span>

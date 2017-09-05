@@ -211,6 +211,25 @@
     color: #000;
 }
 
+.feed_content .post-title {
+    height: 30px;
+    line-height: 54px;
+    font-size: 16px;
+}
+
+.feed_content .post-title a {
+    color: #59b6d7;
+}
+
+/* 圈子动态详情 */
+.feed_left .post-title {
+    font-size: 30px;
+    color: #333;
+    line-height: 30px;
+    height: 60px;
+    cursor: pointer;
+}
+
 /* 热门圈子 */
 
 .hot-groups {
@@ -348,6 +367,7 @@
     text-align: center;
     background-color: #f4f5f5;
     flex: 0 0 auto;
+    cursor: pointer;
 }
 
 .income-rank .income-avatar>img {
