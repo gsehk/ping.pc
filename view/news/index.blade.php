@@ -121,19 +121,6 @@ $(function(){
 
     // 图片懒加载
     $("img.lazy").lazyload({effect: "fadeIn"});
-
-    // 近期热点
-    if($('.time_menu li a').length > 0) {
-        $('.time_menu li').hover(function() {
-            var type = $(this).attr('type');
-
-            $(this).siblings().find('a').removeClass('hover');
-            $(this).find('a').addClass('hover');
-
-            $('.hot_news_list .hot_news_item').addClass('hide');
-            $('#' + type).removeClass('hide');
-        })
-    }
 });
 </script>
 @endsection

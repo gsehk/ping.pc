@@ -1,7 +1,6 @@
-var defaultAvatar = RESOURCE_URL+'/images/avatar.png';
 var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/loading.png' class='load'>加载中</div>";
+var clickHtml = "<div class='click_loading'><a href='javascript:;' onclick='scroll.clickMore();'>点击加载更多</a></div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
-var mark_time = MID + new Date().getTime();
 var initNums = 255;
 
 // ajax 设置 headers
@@ -188,9 +187,16 @@ scroll.bindScroll = function() {
             var windowHeight = $(this).height();
             if (scrollTop + windowHeight == scrollHeight) {
                 if ($(scroll.setting.container).length > 0) {
-                    $('.loading').remove();
-                    $(scroll.setting.loading).after(loadHtml);
-                    scroll.loadMore();
+                    if ((scroll.setting.loadcount % 3) != 0) {
+                        $('.loading').remove();
+                        $(scroll.setting.loading).after(loadHtml);
+                        scroll.loadMore();
+                    } else {
+                        if ($(scroll.setting.loading).siblings('.click_loading').length == 0) {
+                            $(scroll.setting.loading).after(clickHtml);
+                        }
+                        return false;
+                    }
                 }
             }
         }
@@ -222,10 +228,11 @@ scroll.loadMore = function() {
                 var html = res.data;
                 if (scroll.setting.loadcount == 1) {
                     $(scroll.setting.container).html(html);
-                    $('.loading').remove();
                 } else {
                     $(scroll.setting.container).append(html);
                 }
+                $('.loading').remove();
+
                 $("img.lazy").lazyload({ effect: "fadeIn" });
             } else {
                 scroll.setting.canload = false;
@@ -239,6 +246,42 @@ scroll.loadMore = function() {
         }
     });
 };
+
+scroll.clickMore = function() {
+    // 将能加载参数关闭
+    scroll.setting.canload = false;
+    scroll.setting.loadcount++;
+
+    $.ajax({
+        url: scroll.setting.url,
+        type: 'GET',
+        data: scroll.params,
+        dataType: 'json',
+        error: function(xml) {},
+        success: function(res) {
+            if (res.data != '') {
+                scroll.setting.canload = true;
+
+                // 两种不同的加载方式
+                if (scroll.setting.loadtype == 0) {
+                    scroll.params.after = res.after;
+                } else {
+                    scroll.params.offset = scroll.setting.loadcount * scroll.params.limit;
+                }
+
+                var html = res.data;
+                $(scroll.setting.container).append(html);
+                $('.click_loading').remove();
+
+                $("img.lazy").lazyload({ effect: "fadeIn" });
+            } else {
+                scroll.setting.canload = false;
+                $('.click_loading').html('没有更多了');
+            }
+        }
+    });
+}
+
 
 // 存储对象创建
 var args = {
@@ -676,5 +719,24 @@ $(function() {
         }
         $(this).parent().hide();
     });
+
+    // 近期热点
+    if($('.time_menu li a').length > 0) {
+        $('.time_menu li').hover(function() {
+            var type = $(this).attr('type');
+
+            $(this).siblings().find('a').removeClass('hover');
+            $(this).find('a').addClass('hover');
+
+            $('.hot_news_list .hot_news_item').addClass('hide');
+            $('#' + type).removeClass('hide');
+        })
+    }
+
+    // 搜索图标点击
+    $('.nav_search_icon').click(function(){
+        var val = $('#head_search').val();
+        window.location.href = '/search/1/' + val;
+    })
 
 });

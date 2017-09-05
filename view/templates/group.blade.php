@@ -1,6 +1,5 @@
 @foreach ($group as $item)
-    <div id="group_item_{{ $item->id }}">
-    <div class="group_item">
+    <div class="group_item @if(($loop->iteration) % 2 == 0) group_item_right @endif">
         <dl class="clearfix">
             <dt><img src="{{ $routes['storage'].$item->avatar->id }}" width="120" height="120"></dt>
             <dd>
@@ -18,9 +17,5 @@
                 </div>
             </dd>
         </dl>
-    </div>
-    @if (($loop->iteration) % 2 == 1)
-        <div class="item_bar"></div>
-    @endif
     </div>
 @endforeach

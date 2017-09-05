@@ -237,6 +237,7 @@ a {
 }
 
 .nav_list .nav_search_icon {
+    cursor: pointer;
     position: absolute;
     top: 50%;
     right: 10px;

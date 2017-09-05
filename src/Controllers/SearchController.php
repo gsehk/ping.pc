@@ -24,6 +24,20 @@ class SearchController extends BaseController
         $keywords = $request->query('keywords') ?: '';
 
         switch ($type) {
+            case '1':
+                $params = [
+                    'limit' => $limit,
+                    'type' => 'new',
+                    'search' => $keywords,
+                    'after' => $after
+                ];
+
+                $datas = createRequest('GET', '/api/v2/feeds', $params);
+                $data = $datas;
+                $feed = clone $data['feeds'];
+                $after = $feed->pop()->id ?? 0;
+                $html = view('pcview::templates.feeds', $data, $this->PlusData)->render();
+                break;
             case '3':
                 $params = [
                     'limit' => $limit,
@@ -31,8 +45,7 @@ class SearchController extends BaseController
                     'key' => $keywords
                 ];
 
-                $api =  '/api/v2/news';
-                $datas = createRequest('GET', $api, $params);
+                $datas = createRequest('GET', '/api/v2/news', $params);
                 $data['news'] = $datas;
                 $new = clone $data['news'];
                 $after = $new->pop()->id ?? 0;
@@ -45,15 +58,33 @@ class SearchController extends BaseController
                     'offset' => $offset,
                     'keyword' => $keywords
                 ];
-                $api =  '/api/v2/user/search';
-                $datas = createRequest('GET', $api, $params);
+
+                $datas = createRequest('GET', '/api/v2/user/search', $params);
                 $data['users'] = $datas;
                 $html =  view('pcview::templates.user', $data, $this->PlusData)->render();
+                break;
+            case '5':
+                $user = $this->PlusData['TS']['id'] ?? 0;
+                $params = [
+                    'after' => $after,
+                    'search' => $keywords
+                ];
 
+                $datas = createRequest('GET', '/api/v2/groups', $params);
+
+                $datas->map(function($group) use($user) {
+                    $has_join = array_where($group->members->toArray(), function ($value, $key) use ($user) {
+                            return $value['user_id'] === $user;
+                    });
+                    $group->has_join = (bool) $has_join;
+                });
+
+                $data['group'] = $datas;
+                $group = clone $data['group'];
+                $after = $group->pop()->id ?? 0;
+                $html = view('pcview::templates.group', $data, $this->PlusData)->render();
                 break;
             
-            default:
-                break;
         }
 
         return response()->json([

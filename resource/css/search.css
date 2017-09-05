@@ -1,4 +1,5 @@
 .search_container {
+    padding:20px 40px 40px 40px;
     background: #fff;
 }
 
@@ -18,7 +19,7 @@
 
 .search_menu li {
     float: left;
-    margin-left: 40px;
+    margin-right: 40px;
     padding-top: 26px;
 }
 
@@ -43,12 +44,11 @@
 .search_box {
     position: absolute;
     float: right;
-    right: 20px;
+    right: 0px;
     width: 235px;
     height: 36px;
     border-radius: 50px;
     margin-top: 22px;
-    margin-right: 20px;
     background-color: #f3f6f7;
 }
 
@@ -64,7 +64,8 @@
     vertical-align: middle;
 }
 
-.search_box .search_ico {
+.search_box .search_icon {
+    cursor: pointer;
     position: absolute;
     top: 50%;
     right: 10px;
@@ -81,9 +82,9 @@
 }
 
 .news_item {
-	padding: 30px 30px;
+	padding: 30px 0px;
 }
 
 .news_word {
-	width: 475px;
+	width: 455px;
 }

@@ -1,11 +1,6 @@
 .user_container {
+    padding: 20px 40px;
     background: #fff;
-}
-
-
-/*粉丝关注*/
-#user_list {
-    padding: 15px 0px;
 }
 
 .user_menu {
@@ -17,7 +12,7 @@
 
 .user_menu li {
     float: left;
-    margin-left: 40px;
+    margin-right: 40px;
     padding-top: 26px;
 }
 
@@ -39,46 +34,46 @@
     border-bottom: 2px solid #59b6d7;
 }
 
-.user_list {
-    height: 190px;
-    margin: 0 20px;
-}
-
-.user_list .user {
+.user_item {
     float: left;
-    width: 357px;
+    width: 352px;
     height: 190px;
-    margin: 15px;
+    margin-top: 30px;
     padding: 30px 20px;
     border: 1px solid #ededed;
+    margin-right: 30px;
 }
 
-.user_list .user:hover {
+.user_item_right {
+    margin-right: 0px;
+}
+
+.user_item:hover {
     border: 1px solid #59b6d7 !important;
 }
 
-.user_list .user .user_header {
+.user_item .user_header {
     float: left;
 }
 
-.user_list .user .user_header .user_avatar {
+.user_item .user_header .user_avatar {
     width: 60px;
     height: 60px;
     margin-right: 20px;
     border-radius: 50%;
 }
 
-.user_list .user .user_body {
+.user_item .user_body {
     float: left;
     width: 200px;
 }
 
-.user_list .user .user_body .user_name {
+.user_item .user_body .user_name {
     font-size: 16px;
     color: #333;
 }
 
-.user_list .user .user_body .follow_btn {
+.user_item .user_body .follow_btn {
     font-size: 12px;
     line-height: 24px;
     display: inline-block;
@@ -92,13 +87,13 @@
     border-radius: 20px;
 }
 
-.user_list .user .user_body .followed {
+.user_item .user_body .followed {
     color: #ccc;
     border: 1px solid #ededed;
 }
 
 
-.user_list .user .user_body .user_subtitle {
+.user_item .user_body .user_subtitle {
     font-size: 12px;
     line-height: 22px;
     display: -webkit-box;
@@ -110,25 +105,25 @@
     -webkit-box-orient: vertical;
 }
 
-.user_list .user .user_body .user_number {
+.user_item .user_body .user_number {
     font-size: 14px;
     margin-top: 18px;
     color: #333;
 }
 
-.user_list .user .user_body .user_number .user_num {
+.user_item .user_body .user_number .user_num {
     display: inline-block;
     padding-right: 15px;
     border-right: 1px solid #ededed;
 }
 
-.user_list .user .user_body .user_number .user_num span {
+.user_item .user_body .user_number .user_num span {
     display: inline-block;
     margin-left: 5px;
     color: #59b6d7;
 }
 
-.user_list .user .user_body .user_number .right {
+.user_item .user_body .user_number .right {
     border-right: none;
     padding-left: 12px;
     padding-right: 0px;
