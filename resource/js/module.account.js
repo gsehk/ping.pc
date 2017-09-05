@@ -5,12 +5,10 @@ $('#J-user-info').on('click', function(e) {
         var sel;
         for (var i in inp) {
             sel = $(inp[i]);
-            if (sel.val()) {
-                args.set(sel.attr('name'), sel.val());
+            args.set(sel.attr('name'), sel.val());
 
-                if ($(inp[i]).attr('name') == 'sex') {
-                    args.set('sex', $('[name="sex"]:checked').val());
-                }
+            if ($(inp[i]).attr('name') == 'sex') {
+                args.set('sex', $('[name="sex"]:checked').val());
             }
         };
         return args.get();
