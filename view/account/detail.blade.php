@@ -28,13 +28,13 @@
                 </div>
                 <div class="wallet-table">
                     <table class="table">
-                        <tr class="row-tab">
+                        {{-- <tr class="row-tab">
                             <th class="ucolor" width="15%" align="left">收款人</th>
                             <td align="left">
                                 <img src="" />
                                 <span>艾萨拉</span>
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr class="row-tab">
                             <th class="ucolor" width="15%" align="left">交易说明</th>
                             <td align="left"><p class="p">{{ $order->body }}</p></td>

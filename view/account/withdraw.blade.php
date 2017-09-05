@@ -41,7 +41,7 @@
                                 <th width="30%">备注</th>
                                 <th width="10%">提现金额</th>
                                 <th width="10%">状态</th>
-                                <th width="15%">操作</th>
+                                {{-- <th width="15%">操作</th> --}}
                             </tr>
                         </thead>
                         <tbody id="ordere-list">

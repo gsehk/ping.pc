@@ -25,7 +25,7 @@
             @if ($item->status == 1) 已审批 @endif
             @if ($item->status == 2) 拒绝 @endif
         </td>
-        <td width="15%"><a class="act" href="#">详情</a></td>
+        {{-- <td width="15%"><a class="act" href="#">详情</a></td> --}}
     </tr>
 @endforeach
 
