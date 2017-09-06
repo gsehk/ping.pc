@@ -1,5 +1,5 @@
 @section('title')
-    圈子动态详情
+    {{ $post->title }}
 @endsection
 
 @php

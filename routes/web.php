@@ -151,23 +151,25 @@ Route::prefix('webmessage')->group(function () {
 });
 
 Route::prefix('group')->group(function () {
-
+    // 圈子列表
     Route::get('/', 'GroupController@index')->name('pc:group');
 
+    // 圈子详情
     Route::get('/{group_id?}', 'GroupController@read')->where(['group_id' => '[1-9]+'])->name('pc:groupread');
 
-    // 圈子列表
+    // 获取圈子列表
     Route::get('list', 'GroupController@list');
 
-    /********圈子动态*******/
-
-    // 圈子动态列表
+    // 获取圈子动态列表
     Route::get('postLists', 'GroupController@postLists');
 
+    // 获取单条圈子动态信息
     Route::get('getPost', 'GroupController@getPost');
 
+    // 圈子动态详情
     Route::get('/{group_id}/post/{post_id}', 'GroupController@postDetail')->where(['group_id' => '[0-9]+', 'post_id' => '[0-9]+'])->name('pc:grouppost');
 
+    // 圈子动态获取评论列表
     Route::get('/{group_id}/post/{post_id}/comments', 'GroupController@comments')->where(['group_id' => '[0-9]+', 'post_id' => '[0-9]+']);
 
 });

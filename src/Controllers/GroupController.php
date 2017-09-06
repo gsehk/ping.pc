@@ -10,6 +10,8 @@ class GroupController extends BaseController
 
     public function index(Request $request)
     {
+        $this->PlusData['current'] = 'group';
+
         return view('pcview::group.index', [], $this->PlusData);
     }
 
@@ -61,6 +63,8 @@ class GroupController extends BaseController
      */
     public function read(Request $request, $group_id)
     {
+        $this->PlusData['current'] = 'group';
+
         $data['type'] = $request->input('type') ?: ($this->PlusData['TS'] ? 'new' : 'hot');
         $user = $this->PlusData['TS']['id'] ?? 0;
         $group = createRequest('GET', '/api/v2/groups/'.$group_id);
@@ -121,6 +125,8 @@ class GroupController extends BaseController
 
     public function postDetail(Request $request, $group_id, $post_id)
     {
+        $this->PlusData['current'] = 'group';
+
         $post = createRequest('GET', '/api/v2/groups/'.$group_id.'/posts/'.$post_id);
         $data['post'] = $post;
         $data['user'] = $post->user;

@@ -19,13 +19,14 @@ class NewsController extends BaseController
      */
     public function index(Request $request, int $cate_id = 0)
     {
+        $this->PlusData['current'] = 'news';
+
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
 
         $data['cate_id'] = $cate_id;
 
-        $this->PlusData['current'] = 'news';
         return view('pcview::news.index', $data, $this->PlusData);
     }
 
@@ -60,12 +61,13 @@ class NewsController extends BaseController
      */
     public function read(int $news_id)
     {
+        $this->PlusData['current'] = 'news';
+
         // 获取资讯详情
         $news = createRequest('GET', '/api/v2/news/' . $news_id);
         $news->collect_count = $news->collections->count();
 
         $data['news'] = $news;
-        $this->PlusData['current'] = 'news';
         return view('pcview::news.read', $data, $this->PlusData);
     }
 
@@ -74,11 +76,14 @@ class NewsController extends BaseController
      */
     public function release(Request $request, int $news_id = 0)
     {
+        $this->PlusData['current'] = 'news';
+        
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
-        $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
-
         $data['news_id'] = $news_id;
+        $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
+        // 标签
+        $data['tags'] = createRequest('GET', '/api/v2/tags');
 
         return view('pcview::news.release', $data, $this->PlusData);
     }

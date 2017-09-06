@@ -1,3 +1,7 @@
+@section('title')
+    {{ $group->title }}
+@endsection
+
 @extends('pcview::layouts.default')
 
 @section('styles')

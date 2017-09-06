@@ -15,9 +15,6 @@
             <ul>
                 {{-- <li>
                     <a href="{{ route('pc:collect') }}"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
-                </li>
-                <li>
-                    <a href="{{ route('pc:credit') }}"><i class="icon iconfont icon-4-copy1"></i>我的积分/金额</a>
                 </li> --}}
                 <li>
                     <a href="{{ route('pc:authenticate') }}"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
@@ -25,9 +22,9 @@
                 <li>
                     <a href="{{ route('pc:account') }}"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
                 </li>
-                {{-- <li style="border-top: 1px solid #ededed; padding-top: 20px;">
+                <li style="border-top: 1px solid #ededed; padding-top: 20px;">
                     <a href="{{ route('pc:mine')}}">个人主页</a>
-                </li> --}}
+                </li>
                 <li style="border-top: 1px solid #ededed; padding-top: 20px;">
                     <a href="javascript:void(0)" onclick="logout()">退出</a>
                 </li>
@@ -45,8 +42,7 @@
     <div class="nav_list clearfix">
         <ul class="navs">
             <li><a href="{{ route('pc:feeds') }}" @if(!empty($current) && $current == 'feeds') class="selected" @endif>动态</a></li>
-            <!-- <li><a href="" class="fs-18">圈子</a></li> -->
-            <!-- <li><a href="" class="fs-18">问答</a></li> -->
+            <li><a href="{{ route('pc:group') }}" @if(!empty($current) && $current == 'group') class="selected" @endif>圈子</a></li>
             <li><a href="{{ route('pc:news') }}" @if(!empty($current) && $current == 'news') class="selected" @endif>资讯</a></li>
             <li><a href="{{ route('pc:users') }}" @if(!empty($current) && $current == 'users') class="selected" @endif>找伙伴</a></li>
         </ul>

@@ -1,3 +1,7 @@
+@section('title')
+圈子
+@endsection
+
 @extends('pcview::layouts.default')
 
 @section('styles')
