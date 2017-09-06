@@ -17,7 +17,7 @@
                 <a href="javascript:;">
                     <span class="feed_uname fs-14">{{ $post->user->name }}</span>
                 </a>
-                <a href="{{ route('pc:feedread', $post->id) }}">
+                <a href="{{ route('pc:grouppost', ['group_id' => $post->group_id, 'post_id' => $post->id]) }}">
                     <span class="feed_time fs-12">{{ getTime($post->created_at) }}</span>
                 </a>
             </div>
