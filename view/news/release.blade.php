@@ -33,22 +33,23 @@
             <input type="hidden" name="cate_id" id="cate_id">
         </div>
         <div class="release_place">
-            @include('pcview::widgets.editor' ,['url'=>$routes['resource'], 'height'=>'530px', 'content'=>$content ?? ''])
+            {{--@include('pcview::widgets.editor' ,['url'=>$routes['resource'], 'height'=>'530px', 'content'=>$content ?? ''])--}}
+            @include('pcview::widgets.markdown' ,['url'=>$routes['resource'], 'height'=>'530px', 'width' => '100%', 'content'=>$content ?? ''])
         </div>
-        <div class="release_tags active">
-            <ul class="release_tags_selected" id="J-select-tags"></ul>
-            <div class="release_tags_list" id="J-tag-box" style="display: none;">
-                @foreach ($tags as $tag)
-                    <dl>
-                        <dt>{{$tag->name}}</dt>
-                        @foreach ($tag->tags as $item)
-                            <dd data-id="{{$item->id}}">{{$item->name}}</dd>
-                        @endforeach
-                    </dl>
-                @endforeach
-            </div>
-            <input type="hidden" name="tags" id="tags" />
-        </div>
+        {{--<div class="release_tags active">--}}
+            {{--<ul class="release_tags_selected" id="J-select-tags"></ul>--}}
+            {{--<div class="release_tags_list" id="J-tag-box" style="display: none;">--}}
+                {{--@foreach ($tags as $tag)--}}
+                    {{--<dl>--}}
+                        {{--<dt>{{$tag->name}}</dt>--}}
+                        {{--@foreach ($tag->tags as $item)--}}
+                            {{--<dd data-id="{{$item->id}}">{{$item->name}}</dd>--}}
+                        {{--@endforeach--}}
+                    {{--</dl>--}}
+                {{--@endforeach--}}
+            {{--</div>--}}
+            {{--<input type="hidden" name="tags" id="tags" />--}}
+        {{--</div>--}}
         <div class="release_produce">
             <span class="release_bq" style="display: none;">
                 <img src="{{ $routes['resource'] }}/images/pro.png" /><input placeholder="添加标签，多个标签用逗号分开" />
