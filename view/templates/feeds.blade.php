@@ -229,7 +229,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
             </span>
             <div class="options_div">
                 <ul>
-                    <li class="collect" id="collect{{$post->id}}" rel="0">
+                    <li id="collect{{$post->id}}" rel="0">
                         @if($post->has_collect)
                         <a href="javascript:;" onclick="collect.delCollect({{$post->id}});" class="act">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏

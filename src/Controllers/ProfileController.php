@@ -10,14 +10,28 @@ class ProfileController extends BaseController
 {
     public function index(Request $request, int $user_id = 0)
     {
-        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $this->PlusData['TS'];
+        $data['user'] = $user_id
+                        ? createRequest('GET', '/api/v2/users/' . $user_id)
+                        : createRequest('GET', '/api/v2/user');
+
         return view('pcview::profile.index', $data, $this->PlusData);
     }
 
+    /**
+     * 分享列表.
+     *
+     * @param  Request $request [description]
+     * @return mixed
+     */
     public function feeds(Request $request)
     {
+        $params = [
+            'type' => $request->query('type'),
+            'after' => $request->query('after', 0)
+        ];
+
         if ($request->cate == 'all') {
-            $feeds = createRequest('GET', '/api/v2/feeds');
+            $feeds = createRequest('GET', '/api/v2/feeds', $params);
             $feed = clone $feeds['feeds'];
         }
         if ($request->cate == 'img') {
@@ -33,36 +47,79 @@ class ProfileController extends BaseController
         ]));
     }
 
+    /**
+     * 投稿文章.
+     *
+     * @param  Request $request [description]
+     * @return mixed
+     */
     public function news(Request $request)
     {
-        $uid = $this->PlusData['TS']['id'] ?? 0;
-        $limit = $request->query('limit', 20);
-        $after = $request->query('after');
-        $state = $request->query('type');
-        $user = $request->query('user');
-        $news = News::where('audit_status', $state)
-                ->where('author', $user)
-                ->when($after, function ($query) use ($after) {
-                    return $query->where('id', '<', $after);
-                })
-                ->orderBy('id', 'desc')
-                ->limit($limit)
-                ->get();
-        $news->map(function($news) use ($uid) {
-            $news->comments = $news->comments;
-            $news->collect_count = $news->collection->count();
-            $news->has_collect = $uid ? $news->collection->where('user_id', $uid)->where('news_id', $news->id)->count() : 0;
-        });
-        $new = clone $news;
-        $datas['data'] = $news;
-        $after = $new->pop()->id ?? 0;
-        $html = view('pcview::templates.profile-news', $datas, $this->PlusData)->render();
+        if ($request->ajax()) {
+            $params = [
+                'type' => $request->query('type'),
+                'after' => $request->query('after', 0)
+            ];
+            $news = createRequest('GET', '/api/v2/user/news/contributes', $params);
+            $new = clone $news;
+            $after = $new->pop()->id ?? 0;
+            $data['data'] = $news;
 
-        return response()->json(static::createJsonData([
-            'status' => true,
-            'after' => $after,
-            'data' => $html
-        ]));
+            $html = view('pcview::templates.profile_news', $data, $this->PlusData)->render();
+
+            return response()->json([
+                'status' => true,
+                'after' => $after,
+                'data' => $html
+            ]);
+        }
+
+        $data['user'] = $this->PlusData['TS'];
+        $data['type'] = 0;
+
+        return view('pcview::profile.news', $data, $this->PlusData);
+    }
+
+    public function collect(Request $request)
+    {
+        if ($request->ajax()) {
+            $params = [
+                'after' => $request->query('after', 0)
+            ];
+            $cate = $request->query('cate', 1);
+            switch ($cate) {
+                case 1:
+                    $feeds = createRequest('GET', '/api/v2/feeds/collections', $params);
+                    $feed = clone $feeds;
+                    $after = $feed->pop()->id ?? 0;
+                    $data['feeds'] = $feeds;
+                    $html = view('pcview::templates.profile_feed', $data, $this->PlusData)->render();
+                    break;
+                case 2:
+                    $params['after'] = 82;
+                    $news = createRequest('GET', '/api/v2/news/collections', $params);
+                    dd($news);
+                    $new = clone $news;
+                    $after = $new->pop()->id ?? 0;
+                    $data['data'] = $news;
+                    $html = view('pcview::templates.profile_news', $data, $this->PlusData)->render();
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+            return response()->json([
+                'status' => true,
+                'after' => $after,
+                'data' => $html
+            ]);
+        }
+
+        $data['user'] = $this->PlusData['TS'];
+        $data['type'] = 0;
+
+        return view('pcview::profile.collect', $data, $this->PlusData);
     }
 
 }

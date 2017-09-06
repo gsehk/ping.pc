@@ -23,7 +23,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = 'api/v2/feeds/' + feed_id + '/like';
+        var url = '/api/v2/feeds/' + feed_id + '/like';
         $.ajax({
             url: url,
             type: 'POST',
@@ -55,7 +55,7 @@ var digg = {
         }
         digg.digglock = 1;
 
-        var url = 'api/v2/feeds/' + feed_id + '/unlike';
+        var url = '/api/v2/feeds/' + feed_id + '/unlike';
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -464,15 +464,15 @@ var collect = {
         }
         collect.collectlock = 1;
 
-        var url = request_url.collect_news.replace('{news_id}', news_id);
+        var url = '/api/v2/news/'+news_id+'/collections';
 
         $.ajax({
             url: url,
             type: 'POST',
             dataType: 'json',
             error: function(xml) {},
-            success: function(res) {
-                if (res.status == true) {
+            success: function(res, data, xml) {
+                if (xml.status == 201) {
                     $collect = $('#collect' + news_id);
                     var num = $collect.attr('rel');
                     num++;
@@ -493,7 +493,7 @@ var collect = {
             return false;
         }
         collect.collectlock = 1;
-        var url = request_url.collect_news.replace('{news_id}', news_id);
+        var url = '/api/v2/news/'+news_id+'/collections';
         $.ajax({
             url: url,
             type: 'DELETE',

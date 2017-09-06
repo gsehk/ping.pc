@@ -91,19 +91,19 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
 
     // 个人主页
-    Route::get('/{user_id?}', 'ProfileController@index')->where(['user_id' => '[0-9]+'])->name('pc:mine');
+    Route::get('/{user?}', 'ProfileController@index')->where(['user' => '[0-9]+'])->name('pc:mine');
+
+    // use news
+    Route::get('news', 'ProfileController@news')->name('pc:profilenews');
 
     // user collect page
-    Route::get('collect', 'ProfileController@collect')->name('pc:collect');
+    Route::get('collect', 'ProfileController@collect')->name('pc:profilecollect');
 
     // user article page
-    Route::get('article/{user_id?}', 'ProfileController@article')->where(['user_id' => '[0-9]+'])->name('pc:minearc');
+    Route::get('article/{user?}', 'ProfileController@article')->where(['user' => '[0-9]+'])->name('pc:minearc');
 
     // user feeds
     Route::get('feeds', 'ProfileController@feeds');
-
-    // use news
-    Route::get('news', 'ProfileController@news');
 });
 
 Route::prefix('users')->group(function () {

@@ -210,12 +210,16 @@
     width: 725px;
     margin-left: -56px;
     padding-left: 85px;
-    border-left: 1px solid #dcdcdc;
 }
 
 .profile_body .right_box {
     float: right;
     width: 235px;
+}
+
+.profile_body .collect_box {
+    float: left;
+    width: 818px;
 }
 
 /*  分享列表  */
@@ -238,16 +242,20 @@
     color: #333;
 }
 
-.feed_item {
-    position: relative;
-    margin-left: -155px;
+.center_box .feed_box {
+    margin-left: -136px;
     padding-bottom: 10px;
-    padding-left: 155px;
+    padding-left: 136px;
+    border-left: 1px solid #ccc;
 }
 
-.feed_item:before {
+.center_box .feed_item {
+    position: relative;
+}
+
+.center_box .feed_item:before {
     position: absolute;
-    left: 0;
+    left: -163px;
     display: inline-block;
     width: 50px;
     height: 50px;
@@ -257,12 +265,16 @@
     background: #6eb5d3;
 }
 
+.collect_box .feed_time{
+    display: none;
+}
+
 .feed_time {
     line-height: 38px;
     position: absolute;
     top: 0;
-    left: 0;
-    width: 52px;
+    left: -163px;
+    width: 50px;
     text-align: center;
     color: #fff;
 }
@@ -284,12 +296,6 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
-
-.feed_images {
-    position: relative;
-    margin-bottom: 8px;
-}
-
 
 /* 多图片样式 */
 
@@ -327,6 +333,7 @@
 
 .feed_datas .digg,
 .feed_datas .comment,
+.feed_datas .collect,
 .feed_datas .view {
     font-size: 14px;
     display: inline-block;
@@ -450,27 +457,38 @@
     border: none !important;
 }
 
-.artic_list {
+.article_box{
     position: relative;
-    width: 584px;
-    height: 400px;
 }
 
-.artic_list img {
+.article_box img {
     width: 100% !important;
     height: 100%;
     max-height: 400px;
 }
 
-.nav_menuinue {
-    font-size: 16px;
-    line-height: 40px;
-    display: block;
-    width: 140px;
-    height: 40px;
-    cursor: pointer;
-    text-align: center;
-    color: #999;
-    border: 1px solid #ededed;
-    border-radius: 40px;
+.article_box .article_desc {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0 20px;
+    padding-top: 20px;
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .4) 100%);
 }
+
+.article_desc .title{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.article_desc .subject{
+    line-height: 24px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #fff;
+}
+

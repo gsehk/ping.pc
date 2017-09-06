@@ -1,0 +1,110 @@
+
+{{-- 个人中心文章栏列表 --}}
+
+@if(!$data->isEmpty())
+@foreach($data as $key => $post)
+<div class="feed_item" @if($loop->first) style="margin-top:20px;" @endif>
+
+    <span class="feed_time">
+        @if(date('Y-m-d') == date('Y-m-d', strtotime($post->created_at)))
+            今天
+        @else
+            <a href="{{ route('pc:newsread', $post->id) }}">
+            <span class="profile_time">
+                <sup style="font-size:90%">{{ date('m', strtotime($post->created_at)) }}</sup>
+                <sub style="font-size:60%">{{ date('d', strtotime($post->created_at)) }}</sub>
+            </span>
+            </a>
+        @endif
+    </span>
+
+    <div class="feed_body">
+        <div class="article_box">
+            <img data-original="{{$routes['storage']}}{{$post['storage']}}?w=584&h=400" class="lazy">
+            <div class="article_desc">
+                <p class="title"><a href="{{ route('pc:newsread', $post->id) }}">{{ $post['title'] }}</a></p>
+                <p class="subject">{{ $post['subject'] or '' }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="feed_bottom">
+        <div class="feed_datas">
+            <span class="collect" id="collect{{$post->id}}" rel="{{$post->digg_count}}">
+                @if($post->has_collect)
+                <a href="javascript:;" onclick="collect.delNewsCollect({{$post->id}})">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{$post->digg_count}}</font>
+                </a>
+                @else
+                <a href="javascript:;" onclick="collect.addNewsCollect({{$post->id}})">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$post->digg_count}}</font>
+                </a>
+                @endif
+            </span>
+            <span class="comment J-comment-show">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}">{{$post->comment_count}}</font>
+            </span>
+            <span class="view">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>{{$post->hits}}
+            </span>
+            <span class="options">
+                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+            </span>
+            <div class="options_div">
+                <ul>
+                    <li id="collect{{$post->id}}" rel="0">
+                        @if($post->has_collect)
+                        <a href="javascript:;" onclick="collect.delNewsCollect({{$post->id}});" class="act">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
+                        </a>
+                        @else
+                        <a href="javascript:;" onclick="collect.addNewsCollect({{$post->id}});">
+                          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
+                        </a>
+                        @endif
+                    </li>
+                    @if(!empty($TS['id']) && $post->user_id == $TS['id'])
+                    <li><a href="javascript:;" onclick="weibo.delFeed({{$post->id}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
+                    @endif
+                </ul>
+                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
+            </div>
+        </div>
+        <div class="comment_box" style="display: none;">
+            <div class="comment_line">
+                <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" />
+            </div>
+            <div class="comment_body" id="comment_box{{$post->id}}">
+                <div class="comment_textarea" id="editor_box{{ $post->id }}">
+                    <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
+                    <div class="comment_post">
+                        <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
+                        <a href="javascript:;" class="post_button a_link J-comment-feed" to_uid="0" row_id="{{ $post->id }}">评论</a>
+                    </div>
+                </div>
+
+                {{-- <div class="comment_ps" id="comment_ps{{ $post->id }}">
+                @if($post->comments->count())
+                @foreach($post->comments as $cv)
+                <p class="comment{{$cv->id}} comment_con">
+                    <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                    @if($cv->user_id != $TS['id'])
+                        <a class="J-reply-comment" data-args="to_uname={{ $cv->user['name'] }}&to_uid={{$cv->user_id}}&row_id={{$post->id}}">回复</a>
+                    @endif
+                    @if($cv->user_id == $TS['id'])
+                        <a class="comment_del" onclick="comment.delComment({{$cv->id}}, {{$post->id}})">删除</a>
+                    @endif
+                </p>
+                @endforeach
+                @endif
+                </div>
+                @if($post->comments->count() >= 5)
+                <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
+                @endif --}}
+
+            </div>
+        </div>
+        <div class="feed_line"></div>
+    </div>
+</div>
+@endforeach
+@endif
