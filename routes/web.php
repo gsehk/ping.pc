@@ -75,7 +75,7 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('/wallet/{type?}', 'AccountController@wallet')->where(['type' => '[1-5]'])->name('pc:wallet');
 
     // 交易明细
-    Route::get('/wallet/records/{type?}', 'AccountController@records')->name('pc:walletrecords');
+    Route::get('/wallet/records', 'AccountController@records')->name('pc:walletrecords');
 
     // 交易明细
     Route::get('/wallet/record/{record_id}', 'AccountController@record')->name('pc:walletrecord');
