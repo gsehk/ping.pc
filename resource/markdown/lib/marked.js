@@ -6,7 +6,6 @@
 
 ;(function() {
 
-console.log("in...");
 /**
  * Block-Level Grammar
  */
@@ -703,8 +702,6 @@ InlineLexer.prototype.output = function(src) {
 InlineLexer.prototype.outputLink = function(cap, link) {
   var href = escape(link.href)
     , title = link.title ? escape(link.title) : null;
-    
-    console.log(cap);
 
   return cap[0].charAt(0) !== '!'
     ? (cap[0].charAt(0) !== '@' ? this.renderer.link(href, title, this.output(cap[1])) : this.renderer.ts_img(href, title, escape(cap[1])))
