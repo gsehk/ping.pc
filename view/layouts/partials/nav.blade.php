@@ -29,7 +29,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('pc:account') }}">
+                    <a href="{{ route('pc:wallet') }}">
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qianbao"></use></svg>我的钱包
                     </a>
                 </li>

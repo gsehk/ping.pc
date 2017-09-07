@@ -26,6 +26,5 @@
   "require": {
     "zhiyicx/plus-installer": "^1.0",
     "gregwar/captcha": "1.*"
-  },
-  "version": "3.0.6"
+  }
 }

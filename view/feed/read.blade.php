@@ -112,7 +112,7 @@
                     <div class="info_name">
                         <a href="#">{{ $user['name'] }}</a>
                     </div>
-                    <p class="info_bio">{{ $user['bio'] or '暂无简介' }}</p>
+                    <div class="info_bio">{{ $user['bio'] or '暂无简介' }}</div>
                 </div>
             </div>
             <ul class="auth_fans">

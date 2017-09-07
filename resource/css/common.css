@@ -199,6 +199,7 @@ a {
     float: left;
     text-align: center;
     margin-right: 15px;
+    transition: all .3s;
 }
 
 .nav_list .navs li a {
@@ -207,6 +208,13 @@ a {
     padding: 20px 10px;
     color: #343434;
     font-size: 18px;
+    transition: all .1s;
+    border-bottom: 2px solid transparent;
+}
+
+.nav_list .navs li a:hover {
+    color: #59b6d7 !important;
+    border-bottom: 2px solid #59b6d7;
 }
 
 .nav_list .navs li a.selected{
@@ -1387,6 +1395,93 @@ img.load {
 
 .zy_select.open >ul{
     display: block;
+}
+
+/*收入达人排行榜*/
+.income-rank {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0 15px 0;
+    border: 1px solid #ededed;
+    background-color: #fff;
+}
+
+.income-rank .title {
+    font-size: 16px;
+    padding: 20px 0 15px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #ededed;
+}
+
+.income-rank .income-list {
+    overflow: hidden;
+    padding: 15px 0;
+    font-size: 14px;
+}
+
+.income-rank .income-list li {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.income-rank .fans-span {
+    display: block;
+    margin-right: 15px;
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+    background: #ccc;
+}
+
+.income-rank li:nth-child(1) .fans-span,
+.income-rank li:nth-child(2) .fans-span,
+.income-rank li:nth-child(3) .fans-span{
+    background: #59b6d7;
+}
+
+.income-rank .income-avatar {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    background-color: #f4f5f5;
+    flex: 0 0 auto;
+    cursor: pointer;
+}
+
+.income-rank .income-avatar>img {
+    display: block;
+}
+
+.income-rank .income-name {
+    display: flex;
+    margin-left: 15px;
+    height: 60px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex: 1 1 auto;
+}
+
+.income-rank .income-name .name {
+    color: #333;
+}
+
+.income-rank .answers-count {
+    color: #999;
+}
+
+/*广告位*/
+.news_ad img {
+    margin-bottom: 30px;
 }
 
 

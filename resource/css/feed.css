@@ -1125,6 +1125,7 @@
 }
 
 .auth_info{
+    width: 125px;
     float: left;
     margin-left: 15px;
 }

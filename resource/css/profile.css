@@ -56,7 +56,7 @@
     display: inline-block;
     height: 80px;
     margin-left: 60px;
-    transition: all .3s;
+    transition: all .1s;
     color: #666;
     border-bottom: 2px solid transparent;
 }
@@ -224,13 +224,11 @@
 
 /*  分享列表  */
 .feed_content {
-    padding: 20px 40px;
+    padding: 22px 40px;
     background: white;
 }
 
 .feed_menu {
-    height: 50px;
-    line-height: 50px;
 }
 
 .feed_menu > a {
