@@ -899,8 +899,9 @@ Renderer.prototype.image = function(href, title, text) {
   return out;
 };
 
+// ts_img node
 Renderer.prototype.ts_img = function(href, title, text) {
-  var out = '<img src="http://thinksns_plus.com/api/v2/files/' + href + '" alt="' + text + '"';
+  var out = '<img src="' + window.API + '/files/' + href + '" alt="' + text + '"';
   if (title) {
     out += ' title="' + title + '"';
   }

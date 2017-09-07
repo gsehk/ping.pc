@@ -47,21 +47,22 @@
                 }
 
                 var dialogContent = ( (settings.imageUpload) ? "<form action=\"" + action +"\" target=\"" + iframeName + "\" method=\"post\" enctype=\"multipart/form-data\" class=\"" + classPrefix + "form\">" : "<div class=\"" + classPrefix + "form\">" ) +
-                    "<label>" + imageLang.url + "</label>" +
-                    "<input type=\"text\" data-url />" + (function(){
-                        return (settings.imageUpload) ? "<div class=\"" + classPrefix + "file-input\">" +
-                            "<input type=\"file\" name=\"" + classPrefix + "image-file\" class=\"" + classPrefix + "image-file\" accept=\"image/*\" />" +
-                            "<input type=\"submit\" value=\"" + imageLang.uploadButton + "\" />" +
-                            "</div>" : "";
-                    })() +
-                    "<br/>" +
-                    "<label>" + imageLang.alt + "</label>" +
-                    "<input type=\"text\" value=\"" + selection + "\" data-alt />" +
-                    "<br/>" +
-                    "<label>" + imageLang.link + "</label>" +
-                    "<input type=\"text\" value=\"http://\" data-link />" +
-                    "<br/>" +
-                    ( (settings.imageUpload) ? "</form>" : "</div>");
+                                        ( (settings.imageUpload) ? "<iframe name=\"" + iframeName + "\" id=\"" + iframeName + "\" guid=\"" + guid + "\"></iframe>" : "" ) +
+                                        "<label>" + imageLang.url + "</label>" +
+                                        "<input type=\"text\" data-url />" + (function(){
+                                            return (settings.imageUpload) ? "<div class=\"" + classPrefix + "file-input\">" +
+                                                                                "<input type=\"file\" name=\"" + classPrefix + "image-file\" accept=\"image/*\" />" +
+                                                                                "<input type=\"submit\" value=\"" + imageLang.uploadButton + "\" />" +
+                                                                            "</div>" : "";
+                                        })() +
+                                        "<br/>" +
+                                        "<label>" + imageLang.alt + "</label>" +
+                                        "<input type=\"text\" value=\"" + selection + "\" data-alt />" +
+                                        "<br/>" +
+                                        "<label>" + imageLang.link + "</label>" +
+                                        "<input type=\"text\" value=\"http://\" data-link />" +
+                                        "<br/>" +
+                                    ( (settings.imageUpload) ? "</form>" : "</div>");
 
                 //var imageFooterHTML = "<button class=\"" + classPrefix + "btn " + classPrefix + "image-manager-btn\" style=\"float:left;\">" + imageLang.managerButton + "</button>";
 
@@ -88,23 +89,16 @@
                             {
                                 alert(imageLang.imageURLEmpty);
                                 return false;
-                            }else if(url.indexOf(window.API + "/files/") !== -1){
-                                url = +(url.replace(window.API + "/files/", ''));
                             }
 
 							var altAttr = (alt !== "") ? " \"" + alt + "\"" : "";
 
                             if (link === "" || link === "http://")
-                            {   
-                                typeof url === "number" ?
-                                cm.replaceSelection("@![" + alt + "](" + url + altAttr + ")"):
+                            {
                                 cm.replaceSelection("![" + alt + "](" + url + altAttr + ")");
                             }
-
                             else
                             {
-                                typeof url === "number" ?
-                                cm.replaceSelection("[@![" + alt + "](" + url + altAttr + ")](" + link + altAttr + ")"):
                                 cm.replaceSelection("[![" + alt + "](" + url + altAttr + ")](" + link + altAttr + ")");
                             }
 
@@ -153,25 +147,36 @@
 
                     loading(true);
 
-                    // 提交表单 上传文件 获取地址
-                    dialog.find("[type=\"submit\"]").bind("click", (function(){
+                    var submitHandler = function() {
 
-                        // 获取 文件
-                        var file = $("." + classPrefix + "image-file")[0].files[0];
+                        var uploadIframe = document.getElementById(iframeName);
 
-                        // 公共 上传方法 common.js -> fileUpload
-                        
-                        typeof window.fileUpload.init === 'function' && window.fileUpload.init(file, function(image, f, storage_id){
+                        uploadIframe.onload = function() {
 
-                            dialog.find("[data-url]").val( window.API + '/files/'+ storage_id );
-                            settings.uploadSuccess(storage_id);
-                        });
+                            loading(false);
 
-                        loading(false);
-                        
-                        return false;
-                    }).bind(this)).trigger("click");
+                            var body = (uploadIframe.contentWindow ? uploadIframe.contentWindow : uploadIframe.contentDocument).document.body;
+                            var json = (body.innerText) ? body.innerText : ( (body.textContent) ? body.textContent : null);
 
+                            json = (typeof JSON.parse !== "undefined") ? JSON.parse(json) : eval("(" + json + ")");
+
+                            if(!settings.crossDomainUpload)
+                            {
+                              if (json.success === 1)
+                              {
+                                  dialog.find("[data-url]").val(json.url);
+                              }
+                              else
+                              {
+                                  alert(json.message);
+                              }
+                            }
+
+                            return false;
+                        };
+                    };
+
+                    dialog.find("[type=\"submit\"]").bind("click", submitHandler).trigger("click");
 				});
             }
 

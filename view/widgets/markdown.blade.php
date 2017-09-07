@@ -1,14 +1,13 @@
 <link rel="stylesheet" type="text/css" href="{{ $url }}/markdown/css/editormd.css">
 <div id="layout" class="div">
-    <div class="editormd" id="test-editormd">
+    <div class="editormd" id="TS_edit">
         <textarea></textarea>
     </div>
 </div>
-<!--<script type="text/javascript" charset="utf-8" src="__THEME__/js/markdown/js/zepto.min.js"></script>-->
 <script type="text/javascript" charset="utf-8" src="{{ $url }}/markdown/js/editormd.js"></script>
 
 <script type="text/javascript">
-    var editor = editormd("test-editormd",{
+    var editor = editormd("TS_edit",{
         id   : "editormd",
         width: "{{$width}}",
         height: "{{$height}}",
@@ -18,26 +17,7 @@
         imageUpload : true,
         imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
         imageUploadURL : "/api/v2/files",
-        uploadFuc: function (callback) {
-            var file  =  document.getElementById("editormd-image-file").files[0];
-            fileUpload.init(file, insertHtml);
-
-            return false;
-        }
+        uploadSuccess: function (image, f, storage_id) {}
     });
-
-    function insertHtml (image, f, storage_id) {
-
-        "{{ $routes['storage']}}" + storage_id;
-
-        if (storage_id > 0)
-        {
-
-        }
-        else
-        {
-            alert('是啊比');
-        }
-    }
     editor.setToolbarAutoFixed(false);
 </script>

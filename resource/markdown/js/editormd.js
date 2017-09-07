@@ -149,7 +149,7 @@
         uploadCallbackURL    : "",
         
         toc                  : true,           // Table of contents
-        tocm                 : false,           // Using [TOCM], auto create ToC dropdown menu
+        tocm                 : false,          // Using [TOCM], auto create ToC dropdown menu
         tocTitle             : "",             // for ToC dropdown menu btn
         tocDropdown          : false,
         tocContainer         : "",
@@ -1043,14 +1043,14 @@
         /**
          * 页面滚动时工具栏的固定定位
          * Set toolbar in window scroll auto fixed position
-         * 
+* 
          * @returns {editormd}  返回editormd的实例对象
          */
         
         setToolbarAutoFixed : function(fixed) {
             
             var state    = this.state;
-            var editor   = this.editor;
+            var editor   = this.editor;         
             var toolbar  = this.toolbar;
             var settings = this.settings;
             
