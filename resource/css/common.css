@@ -853,14 +853,16 @@ a {
 }
 
 /* 热门问题 */
-.hot-issues {
+.hot-issues,
+.answer-rank {
     width: 100%;
     margin-bottom: 30px;
     padding: 0 15px 0;
     background-color: #fff;
 }
 
-.hot-issues .title {
+.hot-issues .title,
+.answer-rank .title {
     font-size: 18px;
     padding: 20px 0 15px;
     text-align: center;
@@ -868,28 +870,36 @@ a {
     border-bottom: 1px solid #ededed;
 }
 
-.hot-issues-list {
+.hot-issues-list,
+.answer-rank-list
+ {
     font-size: 14px;
     overflow: hidden;
-    padding: 15px 0;
+    padding: 20px 0;
 }
 
-.hot-issues-list > li {
+.hot-issues-list > li,
+.answer-rank-list > li {
     display: table;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.hot-issues-list .rank-num {
+.hot-issues-list .rank-num,
+.answer-rank-list .rank-num {
     display: table-cell;
     width: 30px;
-    padding: 10px 0;
 }
 
-.hot-issues-list .hot-subject {
+.hot-issues-list .hot-subject,
+.answer-rank-list .rank-avatar,
+.answer-rank-list .rank-info {
     display: table-cell;
+    vertical-align: middle;
 }
 
-.hot-issues-list .rank-num > span {
+.hot-issues-list .rank-num > span,
+.answer-rank-list .rank-num > span
+ {
     font-size: 12px;
     line-height: 16px;
     display: block;
@@ -900,20 +910,55 @@ a {
     border-radius: 3px;
 }
 
-.hot-issues-list .rank-num .blue {
+.hot-issues-list .rank-num .blue,
+.answer-rank-list .rank-num .blue {
     background: #59b6d7;
 }
 
-.hot-issues-list .rank-num .grey {
+.hot-issues-list .rank-num .grey,
+.answer-rank-list .rank-num .grey {
     background: #ccc;
 }
 
-.no-issues {
+.no-data {
     text-align: center;
     padding: 15px 0;
     color: #777;
 }
 /* end 热门问题 */
+
+/* 问答达人排行榜 */
+.answer-rank .rank-tab{
+    height: 42px;
+    line-height: 42px;
+    display: table;
+    width: 100%;
+}
+.answer-rank .rank-tab span {
+    display: table-cell;
+    text-align: center;
+    border-bottom: 1px solid #EDEDED;
+    cursor: pointer;
+    color: #777;
+}
+
+.answer-rank .rank-tab span.active {
+    color: #333;
+    border-bottom: 2px solid #59B6D7;
+}
+
+.answer-rank-list .rank-num {
+    vertical-align: middle;
+}
+.answer-rank-list .rank-avatar {
+    width: 75px;
+}
+
+.answer-rank-list .rank-info > span {
+    display: inline-block;
+    padding-bottom: 7px;
+}
+/* end 问答达人排行榜 */
 
 /*缺省图*/
 .no_data_div {

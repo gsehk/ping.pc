@@ -18,7 +18,7 @@
 
 <div class="right_container">
     @include('pcview::widgets.hotissues')
-    @include('pcview::widgets.answerank');
+    @include('pcview::widgets.answerank')
 </div>
 
 @endsection
