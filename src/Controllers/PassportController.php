@@ -38,11 +38,19 @@ class PassportController extends BaseController
 
     public function register(int $type = 0)
     {
+        if ($this->PlusData['TS'] != null) {
+            return redirect(route('pc:feeds'));
+        }
+
         return view('pcview::passport.register', ['type' => $type], $this->PlusData);
     }
 
     public function findPassword(int $type = 0)
     {
+        if ($this->PlusData['TS'] != null) {
+            return redirect(route('pc:feeds'));
+        }
+        
         return view('pcview::passport.findpwd', ['type' => $type], $this->PlusData);
     }
 

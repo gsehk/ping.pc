@@ -1,4 +1,4 @@
-<div class="list_fans fans1">
+<div class="list_fans">
     <div class="rank-tit">
         <span>{{$title}}</span>
         <span class="right">

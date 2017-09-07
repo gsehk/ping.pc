@@ -40,13 +40,13 @@
 
 .list_fans {
     float: left;
-    width: 540px;
     padding: 40px 54px 40px 40px;
+    width: 540px;
+    border-right: 1px solid #ededed;
 }
 
-.fans1 {
-    width: 539px !important;
-    border-right: 1px solid #ededed;
+.list_fans:nth-child(odd) {
+    border-right: none;
 }
 
 .fans_list {

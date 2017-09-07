@@ -113,10 +113,10 @@ Route::prefix('users')->group(function () {
     Route::get('/getusers', 'UserController@getUsers');
 
     // 粉丝
-    Route::get('/followers/{user_id?}', 'UserController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
+    Route::middleware(PcMiddleware\CheckLogin::class)->get('/followers/{user_id?}', 'UserController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
 
     // 关注
-    Route::get('/followings/{user_id?}', 'UserController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
+    Route::middleware(PcMiddleware\CheckLogin::class)->get('/followings/{user_id?}', 'UserController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
 
     // 获取粉丝关注用户
     Route::get('/getfollows', 'UserController@getFollows');
@@ -134,7 +134,7 @@ Route::prefix('news')->group(function () {
     Route::get('/{news_id}', 'NewsController@read')->where(['news_id' => '[0-9]+'])->name('pc:newsread');
 
     // 投稿
-    Route::get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
+    Route::middleware(PcMiddleware\CheckLogin::class)->get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
 
     // news comments list
     Route::get('/{news_id}/comments', 'NewsController@comments')->where(['news_id' => '[0-9]+']);
