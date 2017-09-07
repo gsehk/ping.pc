@@ -64,8 +64,8 @@
             <div class="feed_menu J-menu">
                 <a class="active" href="javascript:;" cid="1">动态</a>
                 <a href="javascript:;" cid="2">文章</a>
-                <a href="javascript:;" cid="3">回答</a>
-                <a href="javascript:;" cid="3">活动</a>
+                {{-- <a href="javascript:;" cid="3">回答</a>
+                <a href="javascript:;" cid="3">活动</a> --}}
             </div>
             <div id="feeds_list" class="feed_box"></div>
         </div>

@@ -71,16 +71,19 @@ a {
 }
 
 /* main color */
-.mcolor { color: #59b6d7; }
+.mcolor { color: #59B6D7; }
 
 /* text main color */
-.tcolor { color: #444; }
+.tcolor { color: #444444; }
 
 /* undertint */
-.ucolor { color: #777; }
+.ucolor { color: #777777; }
 
 /* grey */
-.gcolor { color: #ccc; }
+.gcolor { color: #CCCCCC; }
+
+/* line color */
+.lcolor { color: #EDEDED; }
 
 .fl {
     float: left;
@@ -849,8 +852,68 @@ a {
     color: #999;
 }
 
+/* 热门问题 */
+.hot-issues {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 0 15px 0;
+    background-color: #fff;
+}
 
+.hot-issues .title {
+    font-size: 18px;
+    padding: 20px 0 15px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #ededed;
+}
 
+.hot-issues-list {
+    font-size: 14px;
+    overflow: hidden;
+    padding: 15px 0;
+}
+
+.hot-issues-list > li {
+    display: table;
+    margin-bottom: 10px;
+}
+
+.hot-issues-list .rank-num {
+    display: table-cell;
+    width: 30px;
+    padding: 10px 0;
+}
+
+.hot-issues-list .hot-subject {
+    display: table-cell;
+}
+
+.hot-issues-list .rank-num > span {
+    font-size: 12px;
+    line-height: 16px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+}
+
+.hot-issues-list .rank-num .blue {
+    background: #59b6d7;
+}
+
+.hot-issues-list .rank-num .grey {
+    background: #ccc;
+}
+
+.no-issues {
+    text-align: center;
+    padding: 15px 0;
+    color: #777;
+}
+/* end 热门问题 */
 
 /*缺省图*/
 .no_data_div {

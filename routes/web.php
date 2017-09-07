@@ -47,6 +47,12 @@ Route::prefix('feeds')->group(function () {
     Route::get('/collection', 'FeedController@collection')->name('pc:feedcollections');
 });
 
+Route::prefix('question')->group(function () {
+
+    // 问答
+    Route::get('/', 'QuestionController@index')->name('pc:question');
+});
+
 Route::prefix('rank')->group(function () {
     // 排行榜
     Route::get('/{mold?}', 'RankController@index')->where(['mold' => '[0-9]+'])->name('pc:rank');
