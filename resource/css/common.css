@@ -435,8 +435,8 @@ a {
     color: #59b6d7 !important;
 }
 
-.nav_menu ul li a i {
-    font-size: 18px;
+.nav_menu ul li a svg {
+    margin-top: -4px;
     margin-right: 15px;
 }
 
