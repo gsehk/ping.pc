@@ -12,16 +12,19 @@
     @endif
 
 <!-- 资讯顶部广告 -->
-@elseif ($type == 2) 
+@elseif ($type == 2)
 
     @if(!$ads->isEmpty())
         <div class="unslider">
-            <ul class="bannerList">
+            <ul>
                 @foreach($ads as $ad)
                   <li>
                     <a href="{{ $ad['link'] }}">
                         <img src="{{ $ad['image'] }}" width="100%" height="414">
                     </a>
+                    @if ($ad['title'])
+                        <p class="title">{{ $ad['title'] }}</p>
+                    @endif
                   </li>
                 @endforeach
             </ul>

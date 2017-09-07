@@ -313,6 +313,7 @@
     list-style: none;
     text-align: center;
     border: none;
+    position: relative;
 }
 
 .unslider ul {
@@ -321,9 +322,9 @@
 
 .unslider .dots {
     position: absolute;
-    right: 0;
-    bottom: 20px;
-    left: 0;
+    right: 20px;
+    bottom: 4px;
+    z-index: 6;
 }
 
 .unslider .dots li {
@@ -331,14 +332,14 @@
     width: 10px;
     height: 10px;
     margin: 0 4px;
+    text-indent: -999em;
+    border: 2px solid #fff;
+    border-radius: 6px;
     cursor: pointer;
+    opacity: .4;
     -webkit-transition: background .5s, opacity .5s;
     -moz-transition: background .5s, opacity .5s;
     transition: background .5s, opacity .5s;
-    text-indent: -999em;
-    opacity: .4;
-    border: 2px solid #fff;
-    border-radius: 6px;
 }
 
 .unslider .dots li.active {
@@ -346,7 +347,18 @@
     background: #fff;
 }
 
-
+.unslider .title {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 0 20px;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    text-align: left;
+}
 /*投稿按钮*/
 
 .news_release_btn svg {

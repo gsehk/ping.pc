@@ -38,6 +38,7 @@ class PcPackageHandler extends PackageHandler
                 'image' => [
                     'image' => '图片|string',
                     'link' => '链接|string',
+                    'title' => '标题|string'
                 ],
             ],
         ]);
@@ -85,7 +86,7 @@ class PcPackageHandler extends PackageHandler
         }
         $this->unlink();
         $files = app('files');
-        
+
         foreach ($this->getPaths() as $target => $link) {
             $parentDir = dirname($link);
             if (! $files->isDirectory($parentDir)) {
@@ -112,7 +113,7 @@ class PcPackageHandler extends PackageHandler
             }
         }
     }
-    
+
     /**
      * Get the Publish path,
      *
