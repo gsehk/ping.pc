@@ -14,18 +14,29 @@
             </div>
             <ul>
                 {{-- <li>
-                    <a href="{{ route('pc:collect') }}"><i class="icon iconfont icon-shoucang-copy1"></i>我的收藏</a>
+                    <a href="{{ route('pc:collect') }}">
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-shoucang-copy"></use></svg>我的收藏
+                    </a>
                 </li> --}}
                 <li>
-                    <a href="{{ route('pc:authenticate') }}"><i class="icon iconfont icon-renzheng3-copy1"></i>去认证</a>
+                    <a href="{{ route('pc:authenticate') }}">
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-renzheng3-copy"></use></svg>去认证
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ route('pc:account') }}"><i class="icon iconfont icon-shezhi-copy"></i>设置</a>
+                    <a href="{{ route('pc:account') }}">
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-shezhi-copy1"></use></svg>设置
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('pc:account') }}">
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qianbao"></use></svg>我的钱包
+                    </a>
                 </li>
                 <li style="border-top: 1px solid #ededed; padding-top: 20px;">
                     <a href="{{ route('pc:mine')}}">个人主页</a>
                 </li>
-                <li style="border-top: 1px solid #ededed; padding-top: 20px;">
+                <li>
                     <a href="javascript:void(0)" onclick="logout()">退出</a>
                 </li>
             </ul>

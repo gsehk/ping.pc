@@ -23,7 +23,7 @@
                     <p>企业认证</p>
                     @endif
                 </div>
-                <!-- 个人认证 -->
+                {{-- 个人认证 --}}
                 @if ($info->certification_name == 'user')
                 <div class="user_authenticate" id="J-input-user">
                     <div class="account_form_row">
@@ -58,7 +58,7 @@
                 </div>
                 @endif
 
-                <!-- 机构认证 -->
+                {{-- 机构认证 --}}
                 @if ($info->certification_name == 'org')
                 <div class="org_authenticate">
             		<div class="account_form_row">

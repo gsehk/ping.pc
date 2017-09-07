@@ -1,3 +1,7 @@
+@section('title')
+    我的钱包
+@endsection
+
 @extends('pcview::layouts.default')
 
 @section('bgcolor')style="background-color:#f3f6f7"@endsection
@@ -9,94 +13,95 @@
 @section('content')
 
 <div class="account_container">
-<div class="account_wrap">
+    <div class="account_wrap">
 
-{{-- 左侧导航 --}}
-@include('pcview::account.sidebar')
+        {{-- 左侧导航 --}}
+        @include('pcview::account.sidebar')
 
-<div class="account_r">
-    <div class="account_c_c" id="J-warp">
-        {{-- 我的钱包 --}}
-        <div class="account_tab">
-            <div class="perfect_title">
-                <span><a class="active" href="{{ route('pc:wallet') }}">我的钱包</a></span>
-                <span data-value="" class="zy_select t_c gap12">
-                    <span><a href="{{ route('pc:trades') }}">交易明细</a></span>
-                    <ul>
-                        <li data-value="0" class="active"><a href="{{ route('pc:trades', 2) }}">全部</a></li>
-                        <li data-value="1"><a href="{{ route('pc:trades', 1) }}">收入</a></li>
-                        <li data-value="2"><a href="{{ route('pc:trades', 0) }}">支出</a></li>
-                    </ul>
-                    <i></i>
-                </span>
-                <span><a href="{{ route('pc:withdraw') }}">提现记录</a></span>
-                <span class="wallet_role fr"><a href="{{ route('pc:withrule') }}">使用规则</a></span>
-            </div>
-            <div class="wallet-body">
-                <div class="wallet-info clearfix">
-                    <div class="remaining-sum">67800.00</div>
-                    <div class="operate">
-                        <button>充值</button>
-                        <button>提现</button>
+        <div class="account_r">
+            <div class="account_c_c" id="J-warp">
+                {{-- 我的钱包 --}}
+                <div class="account_tab">
+                    <div class="perfect_title">
+                        <span class="switch active" type="1">我的钱包</span>
+                        <span class="zy_select t_c gap12">
+                            <span>交易明细</span>
+                            <ul>
+                                <li data-value="1">全部</li>
+                                <li data-value="2">收入</li>
+                                <li data-value="3">支出</li>
+                            </ul>
+                            <i></i>
+                        </span>
+                        <span class="switch" type="3">提现记录</span>
                     </div>
-                    <p class="gcolor">账户余额（元）</p>
-                </div>
-                <div class="wallet-table">
-                    <p>近期交易记录</p>
-                    <table class="table tborder" border="0" cellspacing="0" cellpadding="0">
-                        <thead>
-                            <tr>
-                                <th width="25%">交易时间</th>
-                                <th width="30%">交易名称</th>
-                                <th width="30%">交易金额</th>
-                                <th width="15%">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordere-list">
+                    <div class="wallet-body" id="wallet-info">
+                        <div class="wallet-info clearfix">
+                            <div class="remaining-sum">67800.00</div>
+                            <div class="operate">
+                                <button>充值</button>
+                                <button>提现</button>
+                            </div>
+                            <p class="gcolor">账户余额（元）</p>
+                        </div>
+                        <p>使用规则</p>
+                        {{ $wallet['rule'] }}
+                    </div>
 
-                        </tbody>
-                    </table>
+                    <div class="wallet-body" id="wallet-records">
+                    </div>
                 </div>
+                {{-- /我的钱包 --}}
             </div>
         </div>
-        {{-- /我的钱包 --}}
     </div>
-</div>
-</div>
 </div>
 @endsection
 
 @section('scripts')
 <script>
-setTimeout(function() {
-    scroll.init({
-        container: '#ordere-list',
-        loading: '.table',
-        url: '/account/order',
-        params: {limit: 10}
-    });
-}, 300);
+    $(function(){
+        var type = {{ $type }};
 
-$(function() {
-    var select = $(".zy_select");
+        // 点击切换分类
+        $('.perfect_title .switch').click(function(){
+            switchType($(this).attr('type'));
+            $(this).parent().find('.switch').removeClass('active');
+            $(this).addClass('active');
+        })
 
-    select.on("click", function(e){
-        e.stopPropagation();
-        return !($(this).hasClass("open")) ? $(this).addClass("open") : $(this).removeClass("open");
-    });
+        $('.zy_select li').click(function(){
+            var cate = $(this).data('value');
+            switchType(2, cate);
+        })
 
-    select.on("click", "li", function(e){
-        e.stopPropagation();
-        var $this = $(this).parent("ul");
-        $(this).addClass("active").siblings(".active").removeClass("active");
-        $this.prev('span').html($(this).html());
-        $this.parent(".zy_select").removeClass("open");
-        $this.parent(".zy_select").data("value", $(this).data("value"));
-    });
+        switchType(type);
+    })
 
-    $(document).click(function() {
-        select.removeClass("open");
-    });
-});
+    // 切换类型加载数据
+    var switchType = function(type, cate){
+        cate = cate || 0;
+        $('.loading').hide();
+        if (type == 1) { // 我的钱包
+            $('#wallet-records').html('').hide();
+            $('#wallet-info').show();
+        } else { 
+            $('#wallet-info').hide();
+            $('#wallet-records').html('').show();
+
+            var params = {
+                type: type
+            }
+            if (cate != 0) params.cate = cate;
+            setTimeout(function() {
+                scroll.init({
+                    container: '#wallet-records',
+                    loading: '#wallet-records',
+                    url: '/account/wallet/records',
+                    params: params
+                });
+            }, 300);
+        }
+    } 
 </script>
 @endsection

@@ -1,4 +1,4 @@
-var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/loading.png' class='load'>加载中</div>";
+var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/three-dots.svg' class='load'></div>";
 var clickHtml = "<div class='click_loading'><a href='javascript:;' onclick='scroll.clickMore();'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var initNums = 255;
@@ -170,6 +170,7 @@ scroll.init = function(option) {
     this.setting.loadcount = option.loadcount || 0; // 加载次数
     this.setting.canload = option.canload || true; // 是否能加载
     this.setting.url = option.url;
+    this.setting.nodata = option.nodata || 0; // 0显示，1不显示
 
     scroll.bindScroll();
     if ($(scroll.setting.container).length > 0 && this.setting.canload) {
@@ -237,7 +238,7 @@ scroll.loadMore = function() {
                 $("img.lazy").lazyload({ effect: "fadeIn" });
             } else {
                 scroll.setting.canload = false;
-                if (scroll.setting.loadcount == 1) {
+                if (scroll.setting.loadcount == 1 && scroll.setting.nodata == 0) {
                     no_data(scroll.setting.container, 1, ' 暂无相关内容');
                     $('.loading').html('');
                 } else {
@@ -740,4 +741,25 @@ $(function() {
         window.location.href = '/search/1/' + val;
     })
 
+    // 下拉框
+    var select = $(".zy_select");
+    if (select.length > 0) {
+        select.on("click", function(e){
+            e.stopPropagation();
+            return !($(this).hasClass("open")) ? $(this).addClass("open") : $(this).removeClass("open");
+        });
+
+        select.on("click", "li", function(e){
+            e.stopPropagation();
+            var $this = $(this).parent("ul");
+            $(this).addClass("active").siblings(".active").removeClass("active");
+            $this.prev('span').html($(this).html());
+            $this.parent(".zy_select").removeClass("open");
+            $this.parent(".zy_select").data("value", $(this).data("value"));
+        });
+
+        $(document).click(function() {
+            select.removeClass("open");
+        });
+    }
 });

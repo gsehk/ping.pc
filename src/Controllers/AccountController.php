@@ -67,47 +67,13 @@ class AccountController extends BaseController
      *
      * @return mixed
      */
-    public function wallet()
+    public function wallet(Request $request, int $type = 1)
     {
         $data['order'] = createRequest('GET', '/api/v2/wallet/charges');
-
-        return view('pcview::account.wallet', $data, $this->PlusData);
-    }
-
-    /**
-     * 提现记录.
-     *
-     * @return mixed
-     */
-    public function withdraw(Request $request)
-    {
-        $data['type'] = 2;
-
-        return view('pcview::account.withdraw', $data, $this->PlusData);
-    }
-
-    /**
-     * 交易明细.
-     *
-     * @return mixed
-     */
-    public function trades(Request $request, int $type = 2)
-    {
+        $data['wallet'] = createRequest('GET', '/api/v2/wallet');
         $data['type'] = $type;
 
-        return view('pcview::account.trades', $data, $this->PlusData);
-    }
-
-    /**
-     * 钱包规则.
-     *
-     * @return mixed
-     */
-    public function withrule()
-    {
-        $data['wallet'] = createRequest('GET', '/api/v2/wallet');
-
-        return view('pcview::account.withrule', $data, $this->PlusData);
+        return view('pcview::account.wallet', $data, $this->PlusData);
     }
 
     /**
@@ -116,46 +82,47 @@ class AccountController extends BaseController
      * @param  Illuminate\Http\Request $request
      * @return mixed
      */
-    public function order(Request $request, int $order_id = 0)
+    public function records(Request $request)
     {
-        $type = $request->query('type') ?? '';
-        $cate = $request->query('cate') ?? 1;
+        $type = $request->query('type');
 
-        // 交易记录详情
-        if ($order_id) {
-            $order = createRequest('GET', '/api/v2/wallet/charges/'.$order_id);
-            if ($order->channel == 'user') {
-                $order->user = $order->user;
-            }
-            $data['order'] = $order;
-
-            return view('pcview::account.detail', $data, $this->PlusData);
-        }
-
-        // 交易记录列表
         $params = [
             'after' => $request->query('after') ?: 0
         ];
-        if ($type == 0 || $type == 1) {
-            $params['action'] = $type;
+        // 交易记录列表
+        if ($type == 2) {
+            $cate = $request->query('cate');
+            if ($cate == 2) $params['action'] = 1;
+            if ($cate == 3) $params['action'] = 0;
+            $records = createRequest('GET', '/api/v2/wallet/charges', $params);
         }
-        $orders = createRequest('GET', '/api/v2/wallet/charges', $params);
 
         // 提现记录列表
-        if ($cate == 2) {
-            $orders = createRequest('GET', '/api/v2/wallet/cashes', $params);
+        if ($type == 3) {
+            $records = createRequest('GET', '/api/v2/wallet/cashes', $params);
         }
-        $order = clone $orders;
-        $after = $order->pop()->id ?? 0;
-        $data['order'] = $orders;
-        $data['type'] = $cate;
+        $record = clone $records;
+        $after = $record->pop()->id ?? 0;
+        $data['records'] = $records;
+        $data['type'] = $type;
 
-        $html = view('pcview::templates.order', $data)->render();
+        $html = view('pcview::account.walletrecords', $data)->render();
 
         return response()->json([
             'status'  => true,
             'data' => $html,
             'after' => $after
         ]);
+    }
+
+    public function record(Request $request, int $record_id)
+    {
+        $order = createRequest('GET', '/api/v2/wallet/charges/'.$record_id);
+        if ($order->channel == 'user') {
+            $order->user = $order->user;
+        }
+        $data['order'] = $order;
+
+        return view('pcview::account.detail', $data, $this->PlusData);
     }
 }

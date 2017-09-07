@@ -393,7 +393,7 @@ a {
 .nav_menu {
     position: absolute;
     z-index: 99;
-    top: 60px;
+    top: 70px;
     right: 65px;
     display: none;
     width: 180px;
@@ -1179,11 +1179,7 @@ a {
 }
 
 img.load {
-    width: 16px;
-    height: 16px;
-    margin-left: 2px;
-    -webkit-animation: icon-load 1.5s infinite linear;
-    animation: icon-load 1.5s infinite linear;
+    width: 50px;
 }
 
 @-webkit-keyframes icon-load {

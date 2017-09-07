@@ -57,35 +57,28 @@ Route::prefix('rank')->group(function () {
 
 Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
     // 基本设置
-    Route::get('index', 'AccountController@index')->name('pc:account');
+    Route::get('/index', 'AccountController@index')->name('pc:account');
 
     // 认证
-    Route::get('authenticate', 'AccountController@authenticate')->name('pc:authenticate');
+    Route::get('/authenticate', 'AccountController@authenticate')->name('pc:authenticate');
 
     // 提交认证
-    Route::post('authenticate', 'AccountController@doAuthenticate');
+    Route::post('/authenticate', 'AccountController@doAuthenticate');
 
     // 标签管理
-    Route::get('tags', 'AccountController@tags')->name('pc:tags');
+    Route::get('/tags', 'AccountController@tags')->name('pc:tags');
 
     // 安全设置
-    Route::get('security', 'AccountController@security')->name('pc:security');
+    Route::get('/security', 'AccountController@security')->name('pc:security');
 
     // 我的钱包
-    Route::get('wallet', 'AccountController@wallet')->name('pc:wallet');
-
-    // 订单记录列表 or 详情
-    Route::get('order/{order?}', 'AccountController@order')->name('pc:order');
+    Route::get('/wallet/{type?}', 'AccountController@wallet')->where(['type' => '[1-5]'])->name('pc:wallet');
 
     // 交易明细
-    Route::get('trades/{type?}', 'AccountController@trades')->name('pc:trades');
+    Route::get('/wallet/records/{type?}', 'AccountController@records')->name('pc:walletrecords');
 
-    // 提现记录
-    Route::get('withdraw', 'AccountController@withdraw')->name('pc:withdraw');
-
-    // 提现规则
-    Route::get('withrule', 'AccountController@withrule')->name('pc:withrule');
-
+    // 交易明细
+    Route::get('/wallet/record/{record_id}', 'AccountController@record')->name('pc:walletrecord');
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
