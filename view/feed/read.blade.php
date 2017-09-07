@@ -124,7 +124,7 @@
         @include('pcview::widgets.recusers')
 
         <!-- 收入达人排行榜 -->
-        @include('pcview::widgets.ads')
+        @include('pcview::widgets.incomepeople')
     </div>
 @endsection
 
