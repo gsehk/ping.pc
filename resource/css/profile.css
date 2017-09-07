@@ -267,6 +267,19 @@
     display: none;
 }
 
+.collect_box .collect_time {
+    float: right;
+    font-size: 14px;
+    margin-top: 17px;
+    color: #ccc;
+}
+
+
+.feed_item .uname {
+    font-size: 14px;
+    margin-left: 15px;
+}
+
 .feed_time {
     line-height: 38px;
     position: absolute;

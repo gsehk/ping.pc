@@ -4,26 +4,21 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 
 @if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
-<div class="feed_item" id="feed{{$post->id}}">
+<div class="feed_item" @if($loop->first) style="margin-top:20px;" @endif>
 
     <div class="feed_title">
-        <a class="avatar_box" href="javascript:;">
-            <img class="avatar" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50" />
+        <a href="javascript:;">
+            <img class="round" src="{{ $post->user->avatar or $routes['resource'] . '/images/avatar.png' }}" width="50" />
             @if($post->user->user_verified)
             <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
             @endif
         </a>
-
-        <a href="javascript:;">
-            <span class="feed_uname fs-14">{{ $post->user->name }}</span>
-        </a>
-        <a href="{{ route('pc:feedread', $post->id) }}">
-            <span class="feed_time fs-12">{{ getTime($post->created_at) }}</span>
-        </a>
+        <span class="uname tcolor">{{ $post->user->name }}</span>
+        <span class="collect_time">{{ getTime($post->created_at) }}</span>
     </div>
 
     <div class="feed_body">
-        <p class="feed_text">{!! $post->feed_content !!}</p>
+        <a href="{{ route('pc:feedread', $post->id) }}"><p class="feed_text tcolor">{!! $post->feed_content !!}</p></a>
 
         @if($post->images)
         <div style="" id="layer-photos-demo{{$post->id}}">

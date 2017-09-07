@@ -4,7 +4,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 
 @if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
-<div class="feed_item" id="feed{{$post->id}}">
+<div class="feed_item">
 
     <span class="feed_time">
         @if(date('Y-m-d') == date('Y-m-d', strtotime($post->created_at)))

@@ -96,7 +96,7 @@ class ProfileController extends BaseController
                     $feed = clone $feeds;
                     $after = $feed->pop()->id ?? 0;
                     $data['feeds'] = $feeds;
-                    $html = view('pcview::templates.profile_feed', $data, $this->PlusData)->render();
+                    $html = view('pcview::templates.collect_feeds', $data, $this->PlusData)->render();
                     break;
                 case 2:
                     $news = createRequest('GET', '/api/v2/news/collections', $params);
