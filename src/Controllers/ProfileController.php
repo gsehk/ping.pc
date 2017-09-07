@@ -61,6 +61,9 @@ class ProfileController extends BaseController
                 'after' => $request->query('after', 0)
             ];
             $news = createRequest('GET', '/api/v2/user/news/contributes', $params);
+            $news->map(function($item){
+                $item->collection_count = $item->collections->count();
+            });
             $new = clone $news;
             $after = $new->pop()->id ?? 0;
             $data['data'] = $news;
@@ -96,9 +99,11 @@ class ProfileController extends BaseController
                     $html = view('pcview::templates.profile_feed', $data, $this->PlusData)->render();
                     break;
                 case 2:
-                    $params['after'] = 82;
                     $news = createRequest('GET', '/api/v2/news/collections', $params);
-                    dd($news);
+                    $news->map(function($item){
+                        $item->collection_count = $item->collections->count();
+                        $item->comment_count = $item->comments->count();
+                    });
                     $new = clone $news;
                     $after = $new->pop()->id ?? 0;
                     $data['data'] = $news;

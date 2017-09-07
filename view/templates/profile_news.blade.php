@@ -29,14 +29,14 @@
     </div>
     <div class="feed_bottom">
         <div class="feed_datas">
-            <span class="collect" id="collect{{$post->id}}" rel="{{$post->digg_count}}">
+            <span class="collect" id="collect{{$post->id}}" rel="{{$post->collection_count}}">
                 @if($post->has_collect)
                 <a href="javascript:;" onclick="collect.delNewsCollect({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{$post->digg_count}}</font>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font>{{$post->collection_count}}</font>
                 </a>
                 @else
                 <a href="javascript:;" onclick="collect.addNewsCollect({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$post->digg_count}}</font>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font>{{$post->collection_count}}</font>
                 </a>
                 @endif
             </span>
