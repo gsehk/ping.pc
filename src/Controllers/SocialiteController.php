@@ -3,6 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Overtrue\Socialite\SocialiteManager;
 use Illuminate\Http\Request;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class SocialiteController extends BaseController
 {
@@ -54,11 +55,15 @@ class SocialiteController extends BaseController
 
         $user = $socialite->driver($service)->user();
 
-        $user->getId();        // 1472352
-        $user->getNickname();  // "overtrue"
-        $user->getName();      // "安正超"
-        $user->getEmail();     // "anzhengchao@gmail.com"
-        $user->getProviderName(); // GitHub
+        $res = createRequest('post', '/api/v2/socialite/'.$service, ['access_token' => $user->getToken()]);
+
+        dd([
+            'res' => $res,
+            'avatar' => $user->getAvatar(),
+            'nick_name' => $user->getNickname(),
+            'name' => $user->getName(),
+            'token' => $user->getToken(),
+        ]);
         dd($user);
     }
 
