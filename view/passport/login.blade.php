@@ -34,15 +34,21 @@
             <span class="no_account">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
             <div class="login_share" >
                 三方登录：
-                <svg class="icon icon_weibo" aria-hidden="true">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weibo"></use>
-                </svg>
-                <svg class="icon icon_qq" aria-hidden="true">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qq"></use>
-                </svg>
-                <svg class="icon icon_weixin" aria-hidden="true">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weixin"></use>
-                </svg>
+                <a href="{{route('pc:socialite', 'weibo')}}">
+                    <svg class="icon icon_weibo" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weibo"></use>
+                    </svg>
+                </a>
+                <a href="{{route('pc:socialite', 'qq')}}">
+                    <svg class="icon icon_qq" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qq"></use>
+                    </svg>
+                </a>
+                <a href="{{route('pc:socialite', 'weixin')}}">
+                    <svg class="icon icon_weixin" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weixin"></use>
+                    </svg>
+                </a>
             </div>
         </div>
 

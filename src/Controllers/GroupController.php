@@ -87,12 +87,23 @@ class GroupController extends BaseController
     public function postLists(Request $request)
     {
         $group_id = $request->input('group_id');
-        $type = $request->input('type');
+        $type = $request->input('type') ?: 'new';
         $params = [
             'after' => $request->query('after') ?: 0
         ];
 
-        $posts['posts'] = createRequest('GET', '/api/v2/groups/'.$group_id.'/posts', $params);
+        switch ($type) {
+           case 'hot':
+                $posts['posts'] = createRequest('GET', '/api/v2/groups/'.$group_id.'/posts', $params);
+                break;
+            case 'follow':
+                $posts['posts'] = createRequest('GET', '/api/v2/groups/'.$group_id.'/posts', $params);
+                break;
+            default:
+                $posts['posts'] = createRequest('GET', '/api/v2/groups/'.$group_id.'/posts', $params);
+                break;
+        }
+
         $post = clone $posts['posts'];
         $after = $post->pop()->id ?? 0;
         $feedData = view('pcview::templates.group-posts', $posts, $this->PlusData)->render();

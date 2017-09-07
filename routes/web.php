@@ -178,4 +178,16 @@ Route::prefix('search')->group(function () {
     Route::get('/data', 'SearchController@getData');
 });
 
+// 三方用户信息授权
+Route::prefix('socialite')->group(function () {
+
+    // 三方获取信息跳转
+    Route::get('/{service}', 'SocialiteController@redirectToProvider')->where(['service' => '[a-z]+'])->name('pc:socialite');
+
+    // 三方回调
+    Route::get('/{service}/callback', 'SocialiteController@handleProviderCallback')->where(['service' => '[a-z]+']);
+
+    Route::get('/{type?}', 'SocialiteController@bind')->where(['type' => '[0-9]+'])->name('pc:socialitebind');
+});
+
 
