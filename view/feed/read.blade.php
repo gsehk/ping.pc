@@ -121,8 +121,10 @@
             </ul>
         </div>
         <!-- 推荐用户 -->
-
         @include('pcview::widgets.recusers')
+
+        <!-- 收入达人排行榜 -->
+        @include('pcview::widgets.ads')
     </div>
 @endsection
 

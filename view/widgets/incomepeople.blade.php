@@ -1,8 +1,8 @@
+@if(!$incomes->isEmpty())
 <div class="income-rank">
     <div class="title">收入达人排行榜</div>
     <ul class="income-list">
 
-        @if(!$incomes->isEmpty())
             @foreach($incomes as $income)
                 <li>
                     <div class="fans-span">{{$loop->iteration}}</div>
@@ -15,8 +15,6 @@
                     </div>
                 </li>
             @endforeach
-        @else
-            <div class="no-groups">暂无相关信息</div>
-        @endif
     </ul>
 </div>
+@endif
