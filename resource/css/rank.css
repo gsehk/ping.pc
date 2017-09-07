@@ -45,7 +45,7 @@
     border-right: 1px solid #ededed;
 }
 
-.list_fans:nth-child(odd) {
+.list_fans:nth-child(even) {
     border-right: none;
 }
 
