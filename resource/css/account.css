@@ -713,3 +713,74 @@
 .wallet-table .row-tab{
     line-height: 25px;
 }
+
+/* 充值 */
+
+.pay-box {
+    width: 720px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: white;
+}
+
+.pay-box .title {
+    margin-top: 0;
+    padding-bottom: 20px;
+    font-weight: normal;
+    border-bottom: 1px solid #EDEDED;
+}
+
+.pay-box .pay-sum .opt,
+.pay-box .pay-way .opt {
+    width: 190px;
+    height: 80px;
+    font-size: 20px;
+    line-height: 80px;
+    margin-right: 30px;
+    border-radius: 2px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    background-color: #EDEDED;
+}
+
+.pay-box .pay-sum .opt:last-child {
+    margin-right: 0;
+}
+
+.pay-box .pay-sum .active,
+.pay-box .pay-way .active {
+    background-color: #CDE9F3;
+    border:1px solid #59B6D7;
+}
+
+.pay-box .custom-sum {
+    width: 50%;
+    border-radius: 2px;
+    border: 1px solid #EDEDED;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+.pay-box .pay-way {
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #EDEDED;
+}
+
+.pay-box .pay-way .opt {
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.pay-box .pay-btn {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    border: 0;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #59B6D7;
+}

@@ -125,4 +125,10 @@ class AccountController extends BaseController
 
         return view('pcview::account.detail', $data, $this->PlusData);
     }
+
+    public function pay()
+    {
+        return view('pcview::account.pay', $this->PlusData);
+    }
+
 }
