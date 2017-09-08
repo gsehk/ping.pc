@@ -81,7 +81,7 @@ class SocialiteController extends Controller
 
         $user = $socialite->driver($service)->user();
 
-        $res = $this->provider($service)->authUser($accessToken);
+        $res = $this->provider($service)->authUser($user->getToken()->access_token);
 
         dd($res);
     }
