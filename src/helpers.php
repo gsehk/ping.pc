@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use SlimKit\PlusSocialite\API\Requests\AccessTokenRequest;
 use Illuminate\Support\Facades\Route;
 use function asset as plus_asset;
 use function view as plus_view;
@@ -140,9 +141,12 @@ function createRequest($method = 'POST', $url = '', $params = array())
     // 解决请求传参问题
     if ($url != '/api/v2/user/') { // 获取登录用户不需要传参
         app()->instance(Request::class, $request);
+
+        // 第三方登录
+        app()->instance(AccessTokenRequest::class, $request);
     }
     $response = Route::dispatch($request)->original;
-    
+
     return $response;
 }
 
@@ -157,4 +161,20 @@ function getTime($time)
         return $time->diffForHumans();
     }
     return $time->addHours($timezone);
+}
+
+function getImageUrl($image = array(), $width, $height)
+{
+    if (!$image) {
+        return false;
+    }
+    $file = $image['file'] ?? $image['id'];
+    $size = explode('x', $image['size']);
+    if ($size[0] > $size[1]) {
+        $width = number_format($height / $size[1] * $size[0], 2);
+    } else {
+        $height = number_format($width / $size[0] * $size[1], 2);
+    }
+
+    return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height;
 }

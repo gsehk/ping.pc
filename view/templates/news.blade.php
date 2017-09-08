@@ -1,11 +1,12 @@
 @php
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @endphp
 @foreach($news as $item)
 <div class="news_item">
      <div class="news_img">
           <a href="{{ route('pc:newsread', ['news_id' => $item['id']]) }}">
-               <img class="lazy" width="230" height="163" data-original=""/>
+               <img class="lazy" width="230" height="163" data-original="{{ getImageUrl($item['image'], 230, 163)}}"/>
           </a>
      </div>
      <div class="news_word">
