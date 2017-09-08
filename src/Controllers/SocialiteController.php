@@ -1,12 +1,33 @@
 <?php
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
+use SlimKit\PlusSocialite\SocialiteManager;
 use Overtrue\Socialite\SocialiteManager;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class SocialiteController extends BaseController
 {
+
+    protected $socialite;
+
+    /**
+     * Provider maps.
+     *
+     * @var array
+     */
+    protected $providerMap = [
+        'qq' => 'QQ',
+        'weibo' => 'Weibo',
+        'wechat' => 'WeChat',
+    ];
+
+    public function __construct(SocialiteManager $socialite)
+    {
+        $this->socialite = $socialite;
+    }
+
+
     public function redirectToProvider(Request $request, $service)
     {
         switch ($service) {
@@ -55,16 +76,9 @@ class SocialiteController extends BaseController
 
         $user = $socialite->driver($service)->user();
 
-        $res = createRequest('post', '/api/v2/socialite/'.$service, ['access_token' => $user->getToken()]);
+        $res = $this->provider($service)->authUser($accessToken);
 
-        dd([
-            'res' => $res,
-            'avatar' => $user->getAvatar(),
-            'nick_name' => $user->getNickname(),
-            'name' => $user->getName(),
-            'token' => $user->getToken(),
-        ]);
-        dd($user);
+        dd($res);
     }
 
     public function oauthUser(int $type = 0)
@@ -75,5 +89,13 @@ class SocialiteController extends BaseController
         $data['name'] = '你好';
 
         return view('pcview::socialite.bind', $data, $this->PlusData);
+    }
+
+
+    protected function provider(string $provider): Sociable
+    {
+        return $this->socialite->driver(
+            $this->getProviderName($provider)
+        );
     }
 }
