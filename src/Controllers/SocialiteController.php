@@ -1,8 +1,9 @@
 <?php
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
+
 use SlimKit\PlusSocialite\SocialiteManager;
-use Overtrue\Socialite\SocialiteManager;
+use Overtrue\Socialite\SocialiteManager as Socialite;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -22,7 +23,7 @@ class SocialiteController extends BaseController
         'wechat' => 'WeChat',
     ];
 
-    public function __construct(SocialiteManager $socialite)
+    public function __construct(Socialite $socialite)
     {
         $this->socialite = $socialite;
     }
