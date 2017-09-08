@@ -29,7 +29,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
         @if($post->images)
         <div style="" id="layer-photos-demo{{$post->id}}">
         @if($post->images->count() == 1)
-          <img class="lazy" style="max-width:100%;min-height:auto;" data-original="{{ getImageUrl($post->images[0], 555, 720) }}"/>
+          @php
+              $size = explode('x', $post->images[0]['size']);
+              $style = $size[0] > $size[1] ? 'max-width:555px;height:auto' : 'max-height:400px;height:auto';
+          @endphp
+          <img class="lazy" style="{{ $style }}" data-original="{{ getImageUrl($post->images[0], 555, 720) }}"/>
         @elseif($post->images->count() == 2)
             <div style="width: 100%; display: flex;">
               <div style="width: 35vw;" class="image_box">
