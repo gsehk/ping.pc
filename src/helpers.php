@@ -142,7 +142,7 @@ function createRequest($method = 'POST', $url = '', $params = array())
         app()->instance(Request::class, $request);
     }
     $response = Route::dispatch($request)->original;
-    
+
     return $response;
 }
 
@@ -161,6 +161,10 @@ function getTime($time)
 
 function getImageUrl($image = array(), $width, $height)
 {
+    if (!$image) {
+        return false;
+    }
+    $file = $image['file'] ?? $image['id'];
     $size = explode('x', $image['size']);
     if ($size[0] > $size[1]) {
         $width = number_format($height / $size[1] * $size[0], 2);
@@ -168,5 +172,5 @@ function getImageUrl($image = array(), $width, $height)
         $height = number_format($width / $size[0] * $size[1], 2);
     }
 
-    return getenv('APP_URL') . '/api/v2/files/' . $image['file'] . '?&w=' . $width . '&h=' . $height;
+    return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height;
 }
