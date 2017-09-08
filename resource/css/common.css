@@ -18,23 +18,6 @@ textarea {
     line-height: inherit;
 }
 
-input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #f3f6f7 inset;
-}
-
-::-webkit-input-placeholder { /* WebKit browsers */
-color: #CCC;
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-color: #CCC;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-color: #ccc;
-}
-:-ms-input-placeholder { /* Internet Explorer 10+ */
-color: #CCC;
-}
-
 /* 底部置地*/
 html,
 body,

@@ -85,6 +85,8 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     // 交易明细
     Route::get('/wallet/record/{record_id}', 'AccountController@record')->name('pc:walletrecord');
+
+    Route::get('/wallet/pay', 'AccountController@pay')->name('pc:walletpay');
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {

@@ -39,7 +39,7 @@
                         <div class="wallet-info clearfix">
                             <div class="remaining-sum">67800.00</div>
                             <div class="operate">
-                                <button>充值</button>
+                                <button><a href="{{ route('pc:walletpay') }}">充值</a></button>
                                 <button>提现</button>
                             </div>
                             <p class="gcolor">账户余额（元）</p>
@@ -85,7 +85,7 @@
         if (type == 1) { // 我的钱包
             $('#wallet-records').html('').hide();
             $('#wallet-info').show();
-        } else { 
+        } else {
             $('#wallet-info').hide();
             $('#wallet-records').html('').show();
 
@@ -102,6 +102,6 @@
                 });
             }, 300);
         }
-    } 
+    }
 </script>
 @endsection
