@@ -2,9 +2,10 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
-use SlimKit\PlusSocialite\SocialiteManager;
-use Overtrue\Socialite\SocialiteManager as Socialite;
 use Illuminate\Http\Request;
+use SlimKit\PlusSocialite\SocialiteManager;
+use SlimKit\PlusSocialite\Contracts\Sociable;
+use Overtrue\Socialite\SocialiteManager as Socialite;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class SocialiteController extends BaseController
