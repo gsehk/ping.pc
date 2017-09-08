@@ -3,12 +3,14 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
+use Zhiyi\Plus\Http\Controllers\Controller;
 use SlimKit\PlusSocialite\SocialiteManager;
 use SlimKit\PlusSocialite\Contracts\Sociable;
-use Overtrue\Socialite\SocialiteManager as Socialite;
+use Overtrue\Socialite\SocialiteManager as SocialiteMg;
+
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
-class SocialiteController extends BaseController
+class SocialiteController extends Controller
 {
 
     protected $socialite;
@@ -24,7 +26,7 @@ class SocialiteController extends BaseController
         'wechat' => 'WeChat',
     ];
 
-    public function __construct(Socialite $socialite)
+    public function __construct(SocialiteManager $socialite)
     {
         $this->socialite = $socialite;
     }
@@ -38,7 +40,7 @@ class SocialiteController extends BaseController
                     'weibo' => [
                         'client_id'     => '2145185973',
                         'client_secret' => '3e7a5ccd8cc36cadcd06e2eb6239230d',
-                        'redirect'      => $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback',
+                        'redirect'      => getenv('APP_URL').'/socialite/'.$service.'/callback',
                     ],
                 ];
 
@@ -49,12 +51,13 @@ class SocialiteController extends BaseController
         }
 
 
-        $socialite = new SocialiteManager($config);
+        $socialite = new SocialiteMg($config);
 
         $response = $socialite->driver($service)->redirect();
 
         $response->send();
     }
+
 
     public function handleProviderCallback(Request $request, $service)
     {
@@ -74,7 +77,7 @@ class SocialiteController extends BaseController
                 break;
         }
 
-        $socialite = new SocialiteManager($config);
+        $socialite = new SocialiteMg($config);
 
         $user = $socialite->driver($service)->user();
 
@@ -91,6 +94,14 @@ class SocialiteController extends BaseController
         $data['name'] = '你好';
 
         return view('pcview::socialite.bind', $data, $this->PlusData);
+    }
+
+    
+
+
+    protected function getProviderName(string $provider): string
+    {
+        return $this->providerMap[strtolower($provider)] ?? $provider;
     }
 
 
