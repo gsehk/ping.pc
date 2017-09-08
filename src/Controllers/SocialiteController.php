@@ -1,37 +1,12 @@
 <?php
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
-
+use Overtrue\Socialite\SocialiteManager;
 use Illuminate\Http\Request;
-use Zhiyi\Plus\Http\Controllers\Controller;
-use SlimKit\PlusSocialite\SocialiteManager;
-use SlimKit\PlusSocialite\Contracts\Sociable;
-use Overtrue\Socialite\SocialiteManager as SocialiteMg;
-
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
-class SocialiteController extends Controller
+class SocialiteController extends BaseController
 {
-
-    protected $socialite;
-
-    /**
-     * Provider maps.
-     *
-     * @var array
-     */
-    protected $providerMap = [
-        'qq' => 'QQ',
-        'weibo' => 'Weibo',
-        'wechat' => 'WeChat',
-    ];
-
-    public function __construct(SocialiteManager $socialite)
-    {
-        $this->socialite = $socialite;
-    }
-
-
     public function redirectToProvider(Request $request, $service)
     {
         switch ($service) {
@@ -40,7 +15,7 @@ class SocialiteController extends Controller
                     'weibo' => [
                         'client_id'     => '2145185973',
                         'client_secret' => '3e7a5ccd8cc36cadcd06e2eb6239230d',
-                        'redirect'      => getenv('APP_URL').'/socialite/'.$service.'/callback',
+                        'redirect'      => $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback',
                     ],
                 ];
 
@@ -51,13 +26,12 @@ class SocialiteController extends Controller
         }
 
 
-        $socialite = new SocialiteMg($config);
+        $socialite = new SocialiteManager($config);
 
         $response = $socialite->driver($service)->redirect();
 
         $response->send();
     }
-
 
     public function handleProviderCallback(Request $request, $service)
     {
@@ -67,7 +41,7 @@ class SocialiteController extends Controller
                     'weibo' => [
                         'client_id'     => '2145185973',
                         'client_secret' => '3e7a5ccd8cc36cadcd06e2eb6239230d',
-                        'redirect'      => getenv('APP_URL').'/socialite/'.$service.'/callback',
+                        'redirect'      => $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback',
                     ],
                 ];
 
@@ -77,13 +51,22 @@ class SocialiteController extends Controller
                 break;
         }
 
-        $socialite = new SocialiteMg($config);
+        $socialite = new SocialiteManager($config);
 
         $user = $socialite->driver($service)->user();
 
-        $res = $this->provider($service)->authUser($user->getToken()->access_token);
+        $res = createRequest('post', '/api/v2/socialite/'.$service, ['access_token' => $user->getToken()->access_token]);
 
-        dd($res);
+        dd([
+            'res' => $res,
+            'avatar' => $user->getAvatar(),
+            'nick_name' => $user->getNickname(),
+            'name' => $user->getName(),
+            'access_token' => $user->getToken()->access_token,
+            'token' => $user->getAccessToken(),
+            'provider' => $user->getProviderName()
+        ]);
+        dd($user);
     }
 
     public function oauthUser(int $type = 0)
@@ -94,21 +77,5 @@ class SocialiteController extends Controller
         $data['name'] = '你好';
 
         return view('pcview::socialite.bind', $data, $this->PlusData);
-    }
-
-
-
-
-    protected function getProviderName(string $provider): string
-    {
-        return $this->providerMap[strtolower($provider)] ?? $provider;
-    }
-
-
-    protected function provider(string $provider): Sociable
-    {
-        return $this->socialite->driver(
-            $this->getProviderName($provider)
-        );
     }
 }
