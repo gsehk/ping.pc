@@ -67,7 +67,7 @@ class SocialiteController extends Controller
                     'weibo' => [
                         'client_id'     => '2145185973',
                         'client_secret' => '3e7a5ccd8cc36cadcd06e2eb6239230d',
-                        'redirect'      => $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback',
+                        'redirect'      => getenv('APP_URL').'/socialite/'.$service.'/callback',
                     ],
                 ];
 
@@ -96,7 +96,7 @@ class SocialiteController extends Controller
         return view('pcview::socialite.bind', $data, $this->PlusData);
     }
 
-    
+
 
 
     protected function getProviderName(string $provider): string
