@@ -31,7 +31,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
         @if($post->images->count() == 1)
           @php
               $size = explode('x', $post->images[0]['size']);
-              $style = $size[0] > $size[1] ? 'max-width:555px;height:auto' : 'max-height:400px;height:auto';
+              $style = $size[0] < $size[1] ? 'max-height:400px;height:auto' : 'max-width:555px;height:auto';
           @endphp
           <img class="lazy" style="{{ $style }}" data-original="{{ getImageUrl($post->images[0], 555, 720) }}"/>
         @elseif($post->images->count() == 2)
