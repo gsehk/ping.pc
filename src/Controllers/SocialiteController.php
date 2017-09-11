@@ -55,27 +55,26 @@ class SocialiteController extends BaseController
 
         $user = $socialite->driver($service)->user();
 
-        $res = createRequest('post', '/api/v2/socialite/'.$service, ['access_token' => $user->getToken()->access_token]);
+        $access_token = $user->getToken()->access_token;
+        $res = createRequest('post', '/api/v2/socialite/'.$service, ['access_token' => $access_token]);
+        dd($res);
 
-        dd([
-            'res' => $res,
-            'avatar' => $user->getAvatar(),
-            'nick_name' => $user->getNickname(),
-            'name' => $user->getName(),
-            'access_token' => $user->getToken()->access_token,
-            'token' => $user->getAccessToken(),
-            'provider' => $user->getProviderName()
-        ]);
-        dd($user);
+        //$res['message'] = '请绑定账号';
+        if ($res['message'] == '请绑定账号') {
+            $data['other_type'] = $service;
+            $data['access_token'] = $access_token;
+            $data['name'] = '你';
+
+           return $this->bind($data);
+        } else {    // 登录
+            createRequest('GET', '/passport/token/'.$res['token'].'/0');
+        }
+
+        return;
     }
 
-    public function oauthUser(int $type = 0)
+    public function bind(array $data = [])
     {
-        $data['type'] = $type;
-        $data['other_type'] = 'qq';
-        $data['access_token'] = '1d4c8241f072a0e8a690948fc6342ef7';
-        $data['name'] = '你好';
-
         return view('pcview::socialite.bind', $data, $this->PlusData);
     }
 }

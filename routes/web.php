@@ -189,7 +189,7 @@ Route::prefix('socialite')->group(function () {
     // 三方回调
     Route::get('/{service}/callback', 'SocialiteController@handleProviderCallback')->where(['service' => '[a-z]+']);
 
-    Route::get('/{type?}', 'SocialiteController@bind')->where(['type' => '[0-9]+'])->name('pc:socialitebind');
+    Route::get('/', 'SocialiteController@bind')->name('pc:socialitebind');
 });
 
 
