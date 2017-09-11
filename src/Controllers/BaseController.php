@@ -19,6 +19,9 @@ class BaseController extends Controller
     		$this->PlusData['TS'] = null;
     		if ($this->PlusData['token']) {
     			$this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
+                if (isset($this->PlusData['TS']['statusCode'])) { // 失败刷新token
+                    $this->PlusData['TS'] = createRequest('GET', '/api/v2//tokens/', ['token' => $this->PlusData['token']]);
+                }
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
     		}
             

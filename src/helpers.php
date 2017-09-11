@@ -145,9 +145,13 @@ function createRequest($method = 'POST', $url = '', $params = array())
         // 第三方登录
         app()->instance(AccessTokenRequest::class, $request);
     }
-    $response = Route::dispatch($request)->original;
 
-    return $response;
+    $response = Route::dispatch($request);
+    if ($response->isSuccessful()){
+        return $response->original;
+    } else {
+        return $response;
+    }
 }
 
 function getTime($time)
