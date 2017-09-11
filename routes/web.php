@@ -87,6 +87,9 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('/wallet/record/{record_id}', 'AccountController@record')->name('pc:walletrecord');
 
     Route::get('/wallet/pay', 'AccountController@pay')->name('pc:walletpay');
+
+    // 获取我绑定信息
+    Route::get('/bands', 'AccountController@getMyBands')->name('pc:bands');
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
@@ -184,10 +187,10 @@ Route::prefix('search')->group(function () {
 Route::prefix('socialite')->group(function () {
 
     // 三方获取信息跳转
-    Route::get('/{service}', 'SocialiteController@redirectToProvider')->where(['service' => '[a-z]+'])->name('pc:socialite');
+    Route::get('/{service}', 'SocialiteController@redirectToProvider')->where(['service' => 'weibo|qq|wechat'])->name('pc:socialite');
 
     // 三方回调
-    Route::get('/{service}/callback', 'SocialiteController@handleProviderCallback')->where(['service' => '[a-z]+']);
+    Route::get('/{service}/callback', 'SocialiteController@handleProviderCallback')->where(['service' => 'weibo|qq|wechat']);
 
     Route::get('/', 'SocialiteController@bind')->name('pc:socialitebind');
 });

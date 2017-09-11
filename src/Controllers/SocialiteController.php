@@ -40,14 +40,15 @@ class SocialiteController extends BaseController
         $response->send();
     }
 
+    /**
+     * 第三方回调页.
+     * @param Request $request
+     * @param $service
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View|void
+     */
     public function handleProviderCallback(Request $request, $service)
     {
         $config = $this->config[$service] ?: [];
-
-        if (!$config) {
-
-            dd('暂未开通'.$service.'登录');
-        }
 
         $socialite = new SocialiteManager($config);
         $user = $socialite->driver($service)->user();
@@ -72,6 +73,11 @@ class SocialiteController extends BaseController
         return;
     }
 
+    /**
+     * 三方用户注册/绑定账号.
+     * @param array $data
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function bind(array $data = [])
     {
 

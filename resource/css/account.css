@@ -429,10 +429,15 @@
     height: 30px;
     line-height: 30px;
 }
+
 .account_form_row .input{
     float: left;
     width: 500px;
     height: 21px;
+}
+
+.account_form_row .input.w322{
+    width: 322px;
 }
 
 .account_form_row .input label{
@@ -783,4 +788,64 @@
     cursor: pointer;
     border-radius: 2px;
     background-color: #59B6D7;
+}
+
+/* 绑定 */
+
+.band-box {
+    width: 80%;
+}
+
+.band-box .band-line {
+    /*height: 30px;*/
+    line-height: 30px;
+}
+
+.band-box .band-left {
+    width: 80%;
+    display: inline;
+    font-size: 15px;
+}
+
+.band-box .band-right {
+    width: 15%;
+    float: right;
+    cursor: pointer;
+    background-color: #CCCCCC;
+    border-radius: 4px;
+    text-align: center;
+    color: #F6F6F6;
+}
+
+.band-box .blue {
+    background-color: #59b6d7;
+}
+
+.band-content {
+    background-color: #eee;
+}
+
+.band_form_row {
+
+}
+
+.band_form_row label{
+    float: left;
+    font-size: 14px;
+    color: #bbb;
+    line-height: 30px;
+    margin-right: 30px;
+    text-align: right;
+    width: 110px;
+}
+
+.band_form_row input{
+    width: 500px;
+    font-size: 14px;
+    border: 0;
+    border-bottom: 1px solid #ededed;
+    outline: 0;
+    padding-left: 10px;
+    height: 30px;
+    line-height: 30px;
 }

@@ -16,5 +16,8 @@
         <a href="{{ Route('pc:wallet')}}">
             <li class="@if (Request::path() == 'account/wallet')active @endif"><i class="iconfont icon-ziliao"></i>我的钱包</li>
         </a>
+        {{--<a href="{{ Route('pc:bands')}}">--}}
+            {{--<li class="@if (Request::path() == 'account/bands')active @endif"><i class="iconfont icon-ziliao"></i>账号管理</li>--}}
+        {{--</a>--}}
     </ul>
 </div>

@@ -131,4 +131,27 @@ class AccountController extends BaseController
         return view('pcview::account.pay', $this->PlusData);
     }
 
+    public function getMyBands()
+    {
+        $data = [
+            'phone' => false,
+            'email' => false,
+            'qq' => false,
+            'wechat' => false,
+            'weibo' => false
+        ];
+        // 手机邮箱绑定状态
+        $user = createRequest('GET', '/api/v2/user');
+        $data['phone'] = (boolean)$user->phone;
+        $data['email'] = (boolean)$user->email;
+
+        // 三方绑定状态
+        $bands = createRequest('GET', '/api/v2/user/socialite');
+        foreach ($bands as $v) {
+            $data[$v] = true;
+        }
+
+        return view('pcview::account.bands', $data, $this->PlusData);
+    }
+
 }

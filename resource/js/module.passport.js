@@ -281,4 +281,4 @@ var re_captcha = function() {
     url = url + "/" + Math.random();
     $('#captchacode').attr('src', url);
     $('input[name="captchacode"]').val('');
-}
+};
