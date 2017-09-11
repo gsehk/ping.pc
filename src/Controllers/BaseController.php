@@ -2,6 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
+use Session;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
@@ -14,7 +15,7 @@ class BaseController extends Controller
     {
     	$this->middleware(function($request, $next){
             // 用户信息
-    		$this->PlusData['token'] = session('token') ?: '';
+    		$this->PlusData['token'] = Session::get('token');
 
     		$this->PlusData['TS'] = null;
     		if ($this->PlusData['token']) {
@@ -23,6 +24,7 @@ class BaseController extends Controller
                     // 刷新授权
                     $token = createRequest('PATCH', '/api/v2/tokens/' . $this->PlusData['token']);
                     if (!$this->PlusData['TS']->isSuccessful()) { // 刷新授权失败跳至登录页
+                        Session::flush();
                         return redirect(route('pc:login'));
                     } else { // 重新获取用户信息
                         session('token', $token['token']);
