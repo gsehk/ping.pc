@@ -172,8 +172,10 @@ bdshare.addConfig('share', {
 });
 
 $(function(){
-    var content = marked("{{ $news['content'] }}");
-    $('.detail_content').html(content);
+    // 解析内容为markdown
+    var content = "{{ $news['content'] }}";
+    var marked_content = marked(content);
+    $('.detail_content').html(marked_content);
 })
 
 </script>
