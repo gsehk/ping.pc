@@ -20,14 +20,14 @@ class BaseController extends Controller
     		$this->PlusData['TS'] = null;
     		if ($this->PlusData['token']) {
     			$this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
-                if (!isset($this->PlusData['id'])) { // 不成功跳至登录重新获取授权
+                if (!isset($this->PlusData['TS']['id'])) { // 不成功跳至登录重新获取授权
                     // 刷新授权
                     $token = createRequest('PATCH', '/api/v2/tokens/' . $this->PlusData['token']);
                     if (!isset($token['token'])) { // 刷新授权失败跳至登录页
                         Session::flush();
                         return redirect(route('pc:login'));
                     } else { // 重新获取用户信息
-                        session('token', $token['token']);
+                        Session::put('token', $token['token']);
                         $this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
                     }
                 }

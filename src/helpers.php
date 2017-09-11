@@ -146,7 +146,8 @@ function createRequest($method = 'POST', $url = '', $params = array())
         app()->instance(AccessTokenRequest::class, $request);
     }
 
-    return Route::dispatch($request)->original;
+    $response = Route::dispatch($request)->original;
+    return $response;
     // if ($response->isSuccessful()){
     //     return $response->original;
     // } else {
