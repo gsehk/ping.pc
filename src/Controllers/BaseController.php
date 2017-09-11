@@ -20,7 +20,7 @@ class BaseController extends Controller
     		$this->PlusData['TS'] = null;
     		if ($this->PlusData['token']) {
     			$this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
-                if (!$this->PlusData['TS']->isSuccessful()) { // 不成功跳至登录重新获取授权
+                if (isset($this->PlusData['TS']['statusCode']) && !$this->PlusData['TS']->isSuccessful()) { // 不成功跳至登录重新获取授权
                     // 刷新授权
                     $token = createRequest('PATCH', '/api/v2/tokens/' . $this->PlusData['token']);
                     if (!$this->PlusData['TS']->isSuccessful()) { // 刷新授权失败跳至登录页
