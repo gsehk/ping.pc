@@ -11,7 +11,7 @@ $('#oauth_btn').click(function() {
     // 类型[bind:绑定, register:注册]
     var oauthtype = $('input[name="verifiable_type"]').val();
 
-    var type = 'post';
+    var type = 'POST';
     var title = '';
     if (oauthtype == 'bind') {
         if (login == '') {
@@ -28,14 +28,13 @@ $('#oauth_btn').click(function() {
             $('input[name="name"]').focus();
             return false;
         }
-        type = 'patch';
+        type = 'PATCH';
         title = '注册';
     }
 
     $('#auth_form').ajaxSubmit({
         type: type,
         url: '/api/v2/socialite/' + othertype,
-        // data: data,
         beforeSend: function() {
             _this.text(title + '中');
             _this.css('cursor', 'no-drop');
