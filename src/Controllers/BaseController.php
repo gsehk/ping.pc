@@ -23,7 +23,7 @@ class BaseController extends Controller
                 if (!isset($this->PlusData['id'])) { // 不成功跳至登录重新获取授权
                     // 刷新授权
                     $token = createRequest('PATCH', '/api/v2/tokens/' . $this->PlusData['token']);
-                    if (!isset($this->PlusData['token'])) { // 刷新授权失败跳至登录页
+                    if (!isset($token['token'])) { // 刷新授权失败跳至登录页
                         Session::flush();
                         return redirect(route('pc:login'));
                     } else { // 重新获取用户信息
