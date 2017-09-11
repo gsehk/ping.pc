@@ -33,7 +33,7 @@
                     <img src="{{ $routes['resource'] }}/images/zixun-right.png" class="right"/>
                 </div>
 
-                <div class="detail_content markdown-body editormd-preview-container">{!! $news['content'] !!}</div>
+                <div class="detail_content markdown-body editormd-preview-container"></div>
 
                 <div class="detail_share">
                     <span id="collect{{ $news->id }}" rel="{{ $news->collect_count }}">
@@ -128,6 +128,7 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.news.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/markdown/lib/marked.js') }}"></script>
 <script>
 $(function(){
 
@@ -169,6 +170,11 @@ bdshare.addConfig('share', {
     'bdPic' : '{{ asset('zhiyicx/plus-component-pc/images/default_cover.png') }}'
 });
 });
+
+$(function(){
+    var content = marked("{{ $news['content'] }}");
+    $('.detail_content').html(content);
+})
 
 </script>
 @endsection
