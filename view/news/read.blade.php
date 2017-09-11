@@ -4,6 +4,7 @@
 
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -67,6 +68,26 @@
                         <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
                         <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
                         <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
+                    </div>
+                    <div class="reward-box">
+                        <p><button class="btn btn-warning btn-lg" id="J-reward-btn">打 赏</button></p>
+                        <div class="reward-user">
+                        <p class="reward-info tcolor">
+                            <font color="#F76C6A">{{$news['reward']['count']}} </font>次打赏，共
+                            <font color="#F76C6A">{{$news['reward']['amount'] or 0}} </font>元
+                        </p>
+                        @if (!$news->rewards->isEmpty())
+                        @foreach ($news->rewards as $reward)
+                            <div class="user-item">
+                                <img class="lazy round" data-original="{{ $reward['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
+                                @if ($reward['user']['sex'])
+                                    <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                                @endif
+                            </div>
+                        @endforeach
+                            <span class="more-user"></span>
+                        @endif
+                        </div>
                     </div>
                 </div>
 
@@ -140,6 +161,33 @@ setTimeout(function() {
     });
 }, 300);
 
+$('#J-reward-btn').on('click', function(){
+    var html = '<div class="reward-popups">'+
+        '<p class="ucolor font14">选择打赏金额</p>'+
+        '<div class="reward-sum">'+
+            '<label class="opt tcolor" for="sum1">¥1.00'+
+                '<input class="hide" id="sum1" type="radio" name="sum" value="1">'+
+            '</label>'+
+            '<label class="opt tcolor active" for="sum5">¥5.00'+
+                '<input class="hide" id="sum5" type="radio" name="sum" value="5" checked>'+
+            '</label>'+
+            '<label class="opt tcolor" for="sum10">¥10.00'+
+                '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
+            '</label>'+
+        '</div>'+
+        '<p><input class="custom-sum" type="number" name="custom" placeholder="自定金额，必须是整数"></p>'+
+        '<div class="reward-btn-box">'+
+            '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
+            '<button class="btn btn-primary news" onclick="rewarded.weibo(this, {{$news->id}});">&nbsp;打 赏&nbsp;</button>'+
+        '</div>'+
+    '</div>';
+    ly.loadHtml(html, '', '350px', '300px;');
+    $('.reward-sum label').on('click', function(){
+        $('.reward-sum label').removeClass('active');
+        $(this).addClass('active');
+    })
+});
+
 $('#J-comment-news').on('click', function(){
     if (MID == 0) {
         window.location.href = '/passport/index';
@@ -172,6 +220,7 @@ bdshare.addConfig('share', {
 });
 
 $(function(){
+    $("img.lazy").lazyload({effect: "fadeIn"});
     // 解析内容为markdown
     var content = "{{ $news['content'] }}";
     var marked_content = marked(content);

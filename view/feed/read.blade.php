@@ -74,49 +74,22 @@
                 </div>
                 <div class="reward-box">
                     <p><button class="btn btn-warning btn-lg" id="J-reward-btn">打 赏</button></p>
-                    <p class="reward-info tcolor"><font color="#F76C6A">111</font>人打赏，共<font color="#F76C6A">123.00</font>元</p>
+                    <p class="reward-info tcolor">
+                        <font color="#F76C6A">{{$feed['reward']['count']}} </font>次打赏，共
+                        <font color="#F76C6A">{{$feed['reward']['amount'] or 0}} </font>元
+                    </p>
                     <div class="reward-user">
+                    @if (!$feed->rewards->isEmpty())
+                    @foreach ($feed->rewards as $reward)
                         <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                            <img class="lazy round" data-original="{{ $reward['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
+                            @if ($reward['user']['sex'])
+                                <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                            @endif
                         </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
-                        <div class="user-item">
-                            <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                            <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                        </div>
+                    @endforeach
                         <span class="more-user"></span>
+                    @endif
                     </div>
                 </div>
             </div>
@@ -190,7 +163,7 @@ setTimeout(function() {
     scroll.init({
         container: '#comment_box',
         loading: '.feed_left',
-        url: '/feeds/'+{{$feed->id}}+'/comments' ,
+        url: '/feeds/{{$feed->id}}/comments' ,
         canload: true
     });
 }, 300);
@@ -209,14 +182,19 @@ $('#J-reward-btn').on('click', function(){
                 '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
             '</label>'+
         '</div>'+
-        '<p><input class="custom-sum" type="text" name="custom" placeholder="自定金额，必须是整数"></p>'+
+        '<p><input class="custom-sum" type="number" name="custom" placeholder="自定金额，必须是整数"></p>'+
         '<div class="reward-btn-box">'+
-            '<button class="btn btn-default mr20">&nbsp;取 消&nbsp;</button>'+
-            '<button class="btn btn-primary">&nbsp;打 赏&nbsp;</button>'+
+            '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
+            '<button class="btn btn-primary" onclick="rewarded.weibo(this, {{$feed->id}});">&nbsp;打 赏&nbsp;</button>'+
         '</div>'+
     '</div>';
     ly.loadHtml(html, '', '350px', '300px;');
+    $('.reward-sum label').on('click', function(){
+        $('.reward-sum label').removeClass('active');
+        $(this).addClass('active');
+    })
 })
+
 $(document).ready(function(){
     $("img.lazy").lazyload({effect: "fadeIn"});
 

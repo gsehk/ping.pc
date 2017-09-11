@@ -15,6 +15,9 @@ $.ajaxSetup({
 // layer 弹窗
 var load = 0;
 var ly = {
+    close: function () {
+        layer.closeAll();
+    },
     success: function(message, reload, url, close) {
         reload = typeof(reload) == 'undefined' ? true : reload;
         close = typeof(close) == 'undefined' ? false : close;
@@ -97,7 +100,7 @@ var ly = {
             area: [width,height],
             shadeClose: true,
             shade:0.5,
-            content: html
+            content: html,
         });
     }
 };
@@ -543,6 +546,33 @@ var checkIn = function(is_check, nums) {
     }
 }
 
+// 打赏
+var rewarded = {
+    weibo: function (obj, id) {
+        ly.close();
+        var sum = $('[name="sum"]:checked').val();
+        var custom = $('[name="custom"]').val();
+        var url = '/api/v2/feeds/'+id+'/rewards';
+        if ($(obj).hasClass('news')) {
+            url = '/api/v2/news/'+id+'/rewards';
+        }
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {amount: custom ? custom : sum},
+            dataType: 'json',
+            error: function(xml) {
+                noticebox('打赏失败', 0);
+            },
+            success: function(res) {
+                noticebox(res.message, 1, 'refresh');
+            }
+        });
+    }
+};
+
+
 // 存入搜索记录
 var setHistory = function(str) {
     if (localStorage.history) {
@@ -564,7 +594,7 @@ var getHistory = function() {
     var hisArr = new Array();
     if (localStorage.history) {
         str = localStorage.history;
-        //重新转换为对象 
+        //重新转换为对象
         hisArr = JSON.parse(str);
     }
     return hisArr;

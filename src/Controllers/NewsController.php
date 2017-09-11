@@ -40,7 +40,7 @@ class NewsController extends BaseController
     {
         $params = [
             'cate_id' => $request->query('cate_id'),
-            'after' => $request->query('after') ?: 0
+            'after' => $request->query('after', 0)
         ];
 
         // 获取资讯列表
@@ -65,6 +65,7 @@ class NewsController extends BaseController
 
         // 获取资讯详情
         $news = createRequest('GET', '/api/v2/news/' . $news_id);
+        $news->reward = createRequest('GET', '/api/v2/news/'.$news_id.'/rewards/sum');
         $news->collect_count = $news->collections->count();
 
         $data['news'] = $news;
@@ -77,7 +78,7 @@ class NewsController extends BaseController
     public function release(Request $request, int $news_id = 0)
     {
         $this->PlusData['current'] = 'news';
-        
+
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
         $data['news_id'] = $news_id;
