@@ -10,6 +10,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/markdown/css/editormd.css') }}"/>
 @endsection
 
 @section('content')
@@ -32,7 +33,7 @@
                     <img src="{{ $routes['resource'] }}/images/zixun-right.png" class="right"/>
                 </div>
 
-                <div class="detail_content">{!! $news['content'] !!}</div>
+                <div class="detail_content markdown-body editormd-preview-container">{!! $news['content'] !!}</div>
 
                 <div class="detail_share">
                     <span id="collect{{ $news->id }}" rel="{{ $news->collect_count }}">
