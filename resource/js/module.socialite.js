@@ -11,7 +11,7 @@ $('#oauth_btn').click(function() {
     // 类型[bind:绑定, register:注册]
     var oauthtype = $('input[name="verifiable_type"]').val();
 
-    var type = 'POST';
+    var type = 'PUT';
     var title = '';
     if (oauthtype == 'bind') {
         if (login == '') {
@@ -41,7 +41,7 @@ $('#oauth_btn').click(function() {
         },
         success: function(res) {
             console.log(res);
-            noticebox(title + '成功，跳转中...', 1, '/passport/token/' + res.token + '/1');
+            noticebox(title + '成功，跳转中...', 1, '/passport/token/' + res.token + '/0');
         },
         error: function(xhr) {
             showError(xhr.responseJSON);
