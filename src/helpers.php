@@ -142,8 +142,9 @@ function createRequest($method = 'POST', $url = '', $params = array())
     if ($url != '/api/v2/user/') { // 获取登录用户不需要传参
         app()->instance(Request::class, $request);
 
+        $access_request = AccessTokenRequest::create($url, $method, $params);
         // 第三方登录
-        app()->instance(AccessTokenRequest::class, $request);
+        app()->instance(AccessTokenRequest::class, $access_request);
     }
 
     $response = Route::dispatch($request)->original;
