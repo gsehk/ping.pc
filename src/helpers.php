@@ -146,12 +146,12 @@ function createRequest($method = 'POST', $url = '', $params = array())
         app()->instance(AccessTokenRequest::class, $request);
     }
 
-    $response = Route::dispatch($request);
-    if ($response->isSuccessful()){
-        return $response->original;
-    } else {
-        return $response;
-    }
+    return Route::dispatch($request)->original;
+    // if ($response->isSuccessful()){
+    //     return $response->original;
+    // } else {
+    //     return $response;
+    // }
 }
 
 function getTime($time)
