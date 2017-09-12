@@ -52,7 +52,7 @@
                             </span>
                             <span>
                                 <input @if($user['sex'] == 0) checked="checked" @endif id="secret" name="sex" type="radio" value="0" />
-                                <labe牛逼 for="secret">不方便透露</label>
+                                <label for="secret">不方便透露</label>
                             </span>
                             </div>
                         </div>

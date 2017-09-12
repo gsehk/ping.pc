@@ -180,6 +180,8 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/markdown/lib/marked.js') }}"></script>
 <script>
 $(function(){
+    $("img.lazy").lazyload({effect: "fadeIn"});
+
     setTimeout(function() {
         scroll.init({
             container: '#comment_box',
