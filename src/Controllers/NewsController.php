@@ -65,10 +65,14 @@ class NewsController extends BaseController
 
         // 获取资讯详情
         $news = createRequest('GET', '/api/v2/news/' . $news_id);
-        $news->reward = createRequest('GET', '/api/v2/news/'.$news_id.'/rewards/sum');
+        $news->reward = createRequest('GET', '/api/v2/news/' . $news_id . '/rewards/sum');
         $news->collect_count = $news->collections->count();
 
+        // 相关资讯
+        $news_rel = createRequest('GET', '/api/v2/news/' . $news_id . '/correlations');
+
         $data['news'] = $news;
+        $data['news_rel'] = $news_rel;
         return view('pcview::news.read', $data, $this->PlusData);
     }
 

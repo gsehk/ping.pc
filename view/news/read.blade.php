@@ -4,7 +4,7 @@
 
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
-    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -34,7 +34,9 @@
                     <img src="{{ asset('zhiyicx/plus-component-pc/images/zixun-right.png') }}" class="right"/>
                 </div>
 
-                <div class="detail_content markdown-body editormd-preview-container"></div>
+                <div class="detail_content markdown-body editormd-preview-container">
+                {!! Parsedown::instance()->setMarkupEscaped(true)->text($news->content) !!}
+                </div>
 
                 <div class="detail_share">
                     <span id="collect{{ $news->id }}" rel="{{ $news->collect_count }}">
@@ -69,6 +71,8 @@
                         <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
                         <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
                     </div>
+
+                    {{-- 打赏 --}}
                     <div class="reward-box">
                         <p><button class="btn btn-warning btn-lg" id="J-reward-btn">打 赏</button></p>
                         <div class="reward-user">
@@ -91,7 +95,41 @@
                     </div>
                 </div>
 
-                {{-- comment  --}}
+                {{-- 相关推荐 --}}
+                @if (!$news_rel->isEmpty())
+                <div class="detail_recommend">
+                    <p class="rel_title">相关推荐</p>
+                    <div class="rel_tags">
+                        @foreach ($news->tags as $tag)
+                        <span>{{ $tag->name }}</span>
+                        @endforeach
+                    </div>
+
+                    @foreach ($news_rel as $rel)
+                    <div class="rel_news_item clearfix">
+                         <div class="rel_news_img">
+                              <a href="{{ route('pc:newsread', ['news_id' => $rel['id']]) }}">
+                                   <img class="lazy" width="180" height="130" data-original="{{ getImageUrl($rel['image'], 180, 130)}}"/>
+                              </a>
+                         </div>
+                         <div class="rel_news_word">
+                              <a href="{{ route('pc:newsread', ['news_id' => $rel['id']]) }}">
+                                   <div class="news_title"> {{ $rel['title'] }} </div>
+                              </a>
+                              <p>{{ $rel['subject'] }}</p>
+                              <div class="news_bm">
+                                   <a href="javascript:;" class="cates_span">{{ $rel['category']['name'] }}</a>
+                                   <span>{{ $rel['from'] }}  ·  {{ $rel['hits'] }}浏览  ·  {{ getTime($rel['created_at']) }}</span>
+                              </div>
+                         </div>
+                    </div>
+                    @endforeach
+                </div>
+                @endif
+
+
+
+                {{-- 评论  --}}
                 <div class="detail_comment">
                     <div class="comment_title"><span class="comment_count">{{$news->comment_count}}</span>人评论</div>
                     <div class="comment_box">
@@ -116,16 +154,6 @@
 
                     </div>
                 </div>
-                {{-- /comment  --}}
-
-                {{-- 打赏 --}}
-                <div class="detail_pay">
-                </div>
-
-                {{-- 相关推荐 --}}
-                <div class="detail_recommend">
-                </div>
-
             </div>
         </div>
     </div>
@@ -152,80 +180,70 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/markdown/lib/marked.js') }}"></script>
 <script>
 $(function(){
+    setTimeout(function() {
+        scroll.init({
+            container: '#comment_box',
+            loading: '.detail_comment',
+            url: '/news/'+{{$news->id}}+'/comments'
+        });
+    }, 300);
 
-setTimeout(function() {
-    scroll.init({
-        container: '#comment_box',
-        loading: '.detail_comment',
-        url: '/news/'+{{$news->id}}+'/comments'
+    $('#J-reward-btn').on('click', function(){
+        var html = '<div class="reward-popups">'+
+            '<p class="ucolor font14">选择打赏金额</p>'+
+            '<div class="reward-sum">'+
+                '<label class="opt tcolor" for="sum1">¥1.00'+
+                    '<input class="hide" id="sum1" type="radio" name="sum" value="1">'+
+                '</label>'+
+                '<label class="opt tcolor active" for="sum5">¥5.00'+
+                    '<input class="hide" id="sum5" type="radio" name="sum" value="5" checked>'+
+                '</label>'+
+                '<label class="opt tcolor" for="sum10">¥10.00'+
+                    '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
+                '</label>'+
+            '</div>'+
+            '<p><input class="custom-sum" type="number" name="custom" placeholder="自定金额，必须是整数"></p>'+
+            '<div class="reward-btn-box">'+
+                '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
+                '<button class="btn btn-primary news" onclick="rewarded.weibo(this, {{$news->id}});">&nbsp;打 赏&nbsp;</button>'+
+            '</div>'+
+        '</div>';
+        ly.loadHtml(html, '', '350px', '300px;');
+        $('.reward-sum label').on('click', function(){
+            $('.reward-sum label').removeClass('active');
+            $(this).addClass('active');
+        })
     });
-}, 300);
 
-$('#J-reward-btn').on('click', function(){
-    var html = '<div class="reward-popups">'+
-        '<p class="ucolor font14">选择打赏金额</p>'+
-        '<div class="reward-sum">'+
-            '<label class="opt tcolor" for="sum1">¥1.00'+
-                '<input class="hide" id="sum1" type="radio" name="sum" value="1">'+
-            '</label>'+
-            '<label class="opt tcolor active" for="sum5">¥5.00'+
-                '<input class="hide" id="sum5" type="radio" name="sum" value="5" checked>'+
-            '</label>'+
-            '<label class="opt tcolor" for="sum10">¥10.00'+
-                '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
-            '</label>'+
-        '</div>'+
-        '<p><input class="custom-sum" type="number" name="custom" placeholder="自定金额，必须是整数"></p>'+
-        '<div class="reward-btn-box">'+
-            '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
-            '<button class="btn btn-primary news" onclick="rewarded.weibo(this, {{$news->id}});">&nbsp;打 赏&nbsp;</button>'+
-        '</div>'+
-    '</div>';
-    ly.loadHtml(html, '', '350px', '300px;');
-    $('.reward-sum label').on('click', function(){
-        $('.reward-sum label').removeClass('active');
-        $(this).addClass('active');
-    })
-});
+    $('#J-comment-news').on('click', function(){
+        if (MID == 0) {
+            window.location.href = '/passport/login';
+            return false;
+        }
+        var attrs = urlToObject($(this).data('args'));
+        comment.addComment(attrs, this);
+    });
 
-$('#J-comment-news').on('click', function(){
-    if (MID == 0) {
-        window.location.href = '/passport/login';
-        return false;
+    // 近期热点
+    if($('.time_menu li a').length > 0) {
+        $('.time_menu li').hover(function() {
+            var type = $(this).attr('type');
+
+            $(this).siblings().find('a').removeClass('hover');
+            $(this).find('a').addClass('hover');
+
+            $('.hot_news_list div').hide();
+            $('#' + type).show();
+        })
     }
-    var attrs = urlToObject($(this).data('args'));
-    comment.addComment(attrs, this);
+
+    bdshare.addConfig('share', {
+        "tag" : "share_feedlist",
+        'bdText' : '{{ $news['title'] }}',
+        'bdDesc' : '{{ $news['title'] }}',
+        'bdUrl' : window.location.href
+    });
 });
-
-// 近期热点
-if($('.time_menu li a').length > 0) {
-    $('.time_menu li').hover(function() {
-        var type = $(this).attr('type');
-
-        $(this).siblings().find('a').removeClass('hover');
-        $(this).find('a').addClass('hover');
-
-        $('.hot_news_list div').hide();
-        $('#' + type).show();
-    })
-}
-
-bdshare.addConfig('share', {
-    "tag" : "share_feedlist",
-    'bdText' : '{{ $news['title'] }}',
-    'bdDesc' : '{{ $news['title'] }}',
-    'bdUrl' : window.location.href,
-    'bdPic' : '{{ asset('zhiyicx/plus-component-pc/images/default_cover.png') }}'
-});
-});
-
-$(function(){
-    $("img.lazy").lazyload({effect: "fadeIn"});
-    // 解析内容为markdown
-    var content = "{{ $news['content'] }}";
-    var marked_content = marked(content);
-    $('.detail_content').html(marked_content);
-})
 
 </script>
 @endsection

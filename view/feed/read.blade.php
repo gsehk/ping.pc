@@ -18,7 +18,7 @@
             <div class="detail_user">
                 <div class="detail_user_header">
                     <a href="#">
-                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="">
+                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" alt="">
                     </a>
                 </div>
                 <div class="detail_user_info">
@@ -82,7 +82,7 @@
                     @if (!$feed->rewards->isEmpty())
                     @foreach ($feed->rewards as $reward)
                         <div class="user-item">
-                            <img class="lazy round" data-original="{{ $reward['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
+                            <img class="lazy round" data-original="{{ $reward['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" alt="avatar" width="42" />
                             @if ($reward['user']['sex'])
                                 <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                             @endif
@@ -125,7 +125,7 @@
             <div class="info clearfix">
                 <div class="auth_header">
                     <a href="#">
-                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}?s=50" alt="">
                     </a>
                 </div>
                 <div class="auth_info">
