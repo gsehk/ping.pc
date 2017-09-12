@@ -86,7 +86,11 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // 交易明细
     Route::get('/wallet/record/{record_id}', 'AccountController@record')->name('pc:walletrecord');
 
+    // 充值
     Route::get('/wallet/pay', 'AccountController@pay')->name('pc:walletpay');
+
+    // 提现
+    Route::get('/wallet/draw', 'AccountController@draw')->name('pc:walletdraw');
 
     // 获取我绑定信息
     Route::get('/bands', 'AccountController@getMyBands')->name('pc:bands');
@@ -94,19 +98,16 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
 
-    // 个人主页
+    // 动态
     Route::get('/{user?}', 'ProfileController@index')->where(['user' => '[0-9]+'])->name('pc:mine');
 
-    // use news
+    // 资讯
     Route::get('news', 'ProfileController@news')->name('pc:profilenews');
 
-    // user collect page
+    // 收藏
     Route::get('collect', 'ProfileController@collect')->name('pc:profilecollect');
 
-    // user article page
-    Route::get('article/{user?}', 'ProfileController@article')->where(['user' => '[0-9]+'])->name('pc:minearc');
-
-    // user feeds
+    // 获取动态列表
     Route::get('feeds', 'ProfileController@feeds');
 });
 

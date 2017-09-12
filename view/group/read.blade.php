@@ -16,7 +16,6 @@
         <div class="group-info">
             <!-- 圈子信息 -->
             <div class="info" id="group_box">
-                <div class="info-title">圈子 > {{$group->title}}</div>
                 <div class="info-content">
                     <div class="content-left">
                         <img src="{{ $routes['storage'].$group->avatar->id }}" width="120px" height="120px"/>

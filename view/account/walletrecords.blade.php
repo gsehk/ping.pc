@@ -3,6 +3,7 @@
     @if(!$records->isEmpty())
     <div class="wallet-table">
         <table class="table tborder" border="0" cellspacing="0" cellpadding="0">
+            @if ($loadcount == 1)
             <thead>
                 <tr>
                     <th width="25%">交易时间</th>
@@ -10,6 +11,7 @@
                     <th width="30%">交易金额</th>
                 </tr>
             </thead>
+            @endif
             <tbody>
                 @foreach ($records as $item)
                 <tr>
@@ -29,6 +31,7 @@
     @if(!$records->isEmpty())
     <div class="wallet-table">
         <table class="table tborder" border="0" cellspacing="0" cellpadding="0">
+            @if ($loadcount == 1)
             <thead>
                 <tr>
                     <th width="20%">申请时间</th>
@@ -37,6 +40,7 @@
                     <th width="10%">状态</th>
                 </tr>
             </thead>
+            @endif
             <tbody>
                 @foreach ($records as $item)
                 <tr>

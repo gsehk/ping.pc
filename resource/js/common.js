@@ -1,5 +1,5 @@
 var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/three-dots.svg' class='load'></div>";
-var clickHtml = "<div class='click_loading'><a href='javascript:;' onclick='scroll.clickMore();'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
+var clickHtml = "<div class='click_loading'><a href='javascript:;' onclick='scroll.clickMore(this);'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var initNums = 255;
 
@@ -212,6 +212,7 @@ scroll.loadMore = function() {
     // 将能加载参数关闭
     scroll.setting.canload = false;
     scroll.setting.loadcount++;
+    scroll.params.loadcount = scroll.setting.loadcount;
 
     $.ajax({
         url: scroll.setting.url,
@@ -252,10 +253,11 @@ scroll.loadMore = function() {
     });
 };
 
-scroll.clickMore = function() {
+scroll.clickMore = function(obj) {
     // 将能加载参数关闭
     scroll.setting.canload = false;
     scroll.setting.loadcount++;
+    $(obj).parent().html("<img src='" + RESOURCE_URL + "/images/three-dots.svg' class='load'>");
 
     $.ajax({
         url: scroll.setting.url,

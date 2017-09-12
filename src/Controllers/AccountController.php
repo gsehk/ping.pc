@@ -16,6 +16,8 @@ class AccountController extends BaseController
      */
     public function index(Request $request)
     {
+        $this->PlusData['account_cur'] = 'index';
+
         $user_id = $this->PlusData['TS']->id ?? 0;
 
         $user = $this->PlusData['TS'];
@@ -31,6 +33,8 @@ class AccountController extends BaseController
      */
     public function authenticate()
     {
+        $this->PlusData['account_cur'] = 'authenticate';
+
         $templet = 'authenticate';
         $data['info'] = createRequest('GET', '/api/v2/user/certification');
         if (isset($data['info']['status'])) {
@@ -46,6 +50,8 @@ class AccountController extends BaseController
      */
     public function tags()
     {
+        $this->PlusData['account_cur'] = 'tags';
+
         $user_id = $this->PlusData['TS']->id ?? 0;
         $data['tags'] = createRequest('GET', '/api/v2/tags');
         $data['user_tag'] = createRequest('GET', '/api/v2/user/tags');
@@ -59,6 +65,8 @@ class AccountController extends BaseController
      */
     public function security()
     {
+        $this->PlusData['account_cur'] = 'security';
+
         return view('pcview::account.security', $this->PlusData);
     }
 
@@ -69,6 +77,8 @@ class AccountController extends BaseController
      */
     public function wallet(Request $request, int $type = 1)
     {
+        $this->PlusData['account_cur'] = 'wallet';
+
         $data['order'] = createRequest('GET', '/api/v2/wallet/charges');
         $data['wallet'] = createRequest('GET', '/api/v2/wallet');
         $data['type'] = $type;
@@ -105,6 +115,7 @@ class AccountController extends BaseController
         $after = $record->pop()->id ?? 0;
         $data['records'] = $records;
         $data['type'] = $type;
+        $data['loadcount'] = $request->query('loadcount');
 
         $html = view('pcview::account.walletrecords', $data)->render();
 
@@ -128,7 +139,16 @@ class AccountController extends BaseController
 
     public function pay()
     {
-        return view('pcview::account.pay', $this->PlusData);
+        $this->PlusData['account_cur'] = 'wallet';
+
+        return view('pcview::account.walletpay', $this->PlusData);
+    }
+
+    public function draw()
+    {
+        $this->PlusData['account_cur'] = 'wallet';
+        
+        return view('pcview::account.walletdraw', $this->PlusData);
     }
 
     public function getMyBands()

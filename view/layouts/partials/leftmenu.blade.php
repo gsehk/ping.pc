@@ -26,11 +26,11 @@
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-rank"></use></svg>排行榜
             </a>
         </li>
-        {{-- <li>
+        <li>
             <a href="{{ route('pc:collect') }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collection"></use></svg>收藏的
             </a>
-        </li> --}}
+        </li>
         <li>
             <a href="{{ route('pc:account') }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-setting"></use></svg>设置

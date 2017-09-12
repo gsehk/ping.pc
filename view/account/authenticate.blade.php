@@ -127,20 +127,8 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script>
 $(function() {
-    var select = $(".zy_select");
-
-    select.on("click", function(e){
-        e.stopPropagation();
-        return !($(this).hasClass("open")) ? $(this).addClass("open") : $(this).removeClass("open");
-    });
-
-    select.on("click", "li", function(e){
-        e.stopPropagation();
-        var $this = $(this).parent("ul");
-        $(this).addClass("active").siblings(".active").removeClass("active");
-        $this.prev('span').html($(this).html());
-        $this.parent(".zy_select").removeClass("open");
-        $this.parent(".zy_select").data("value", $(this).data("value"));
+    $('.zy_select li').click(function(){
+        var type = $(this).data('value');
         if ($(this).data("value") ==  'user') {
             $('.org_authenticate').hide();
             $('.user_authenticate').show();
@@ -150,11 +138,7 @@ $(function() {
             $('.org_authenticate').show();
             authType = 'org';
         }
-    });
-
-    $(document).click(function() {
-        select.removeClass("open");
-    });
+    })
 });
 
 /*  提交用户认证信息*/
