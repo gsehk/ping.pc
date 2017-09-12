@@ -32,6 +32,9 @@
 <template>
   <div>
     <ul class="nav nav-tabs component-controller-nav">
+      <router-link to="/navmenu" tag="li" active-class="active">
+        <a href="#">导航配置</a>
+      </router-link>
       <router-link to="/authlist" tag="li" active-class="active">
         <a href="#">认证管理</a>
       </router-link>

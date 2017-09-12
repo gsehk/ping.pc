@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 
 // components.
 import AuthList from './component/pc/AuthList.vue';
+import Navmenu from './component/pc/Navmenu.vue';
+import Navmanage from './component/pc/Navmanage.vue';
 import Report from './component/report/Report.vue';
 
 Vue.use(VueRouter);
@@ -13,16 +15,33 @@ const router = new VueRouter({
     // root.
     {
       path: '/',
-      redirect: 'authlist'
+      redirect: 'navmenu'
     },
-    // Setting router.
+    {
+      path: '/navmenu',
+      component: Navmenu,
+    },
+    {
+      path: '/navmenu/:type',
+      component: Navmenu,
+    },
+    {
+      path: '/navmanage',
+      component: Navmanage,
+    },
+    {
+      path: '/navmanage/:navId',
+      component: Navmanage,
+    },
     {
       path: '/authlist',
-      component: AuthList
-    },{
+      component: AuthList,
+    },
+    {
       path: '/report',
-      component: Report
-    }]
+      component: Report,
+    }
+    ]
 });
 
 export default router;
