@@ -281,13 +281,14 @@
 }
 
 .feed_time {
-    line-height: 38px;
+    width: 50px;
+    line-height: 50px;
     position: absolute;
     top: 0;
     left: -163px;
-    width: 50px;
     text-align: center;
     color: #fff;
+    font-size: 14px;
 }
 
 .feed_time .profile_time {

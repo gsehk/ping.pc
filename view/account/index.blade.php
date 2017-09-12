@@ -5,8 +5,8 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.css')}}">
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/cropper/cropper.min.css')}}">
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                 <div class="perfect_row mb30">
                     <div class="account_heder">
                         <div class="header">
-                            <img id="J-image-preview" src="{{ $user['avatar'] or URL::asset('zhiyicx/plus-component-pc/images/avatar.png')}}">
+                            <img id="J-image-preview" src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}">
                             <input id="task_id" name="storage_task_id" type="hidden"/>
                         </div>
                         <a class="perfect_btn" id="J-file-upload-btn" href="javascript:;">更改头像</a>
@@ -76,9 +76,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script>
     // 地区搜索
     var last;

@@ -5,7 +5,7 @@
         <li>
             <!-- <a href="{{ route('pc:mine', ['user_id' => $user['id']]) }}"> -->
             <a href="javascript:;">
-                <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}"/>
+                <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50"/>
             </a>
             <span>
                 <!-- <a href="{{ route('pc:mine', ['user_id' => $user['id']]) }}">{{ $user['name'] }}</a> -->

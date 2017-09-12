@@ -9,7 +9,7 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
             <div class="detail_user">
                 <div class="detail_user_header">
                     <a href="#">
-                        <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" alt="">
+                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="">
                     </a>
                 </div>
                 <div class="detail_user_info">
@@ -125,7 +125,7 @@
             <div class="info clearfix">
                 <div class="auth_header">
                     <a href="#">
-                        <img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png'}}" alt="">
+                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
                     </a>
                 </div>
                 <div class="auth_info">
@@ -149,9 +149,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/layer/layer.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/layer/layer.js') }}"></script>
 <script type="text/javascript">
 layer.photos({
   photos: '#layer-photos-demo'
@@ -207,7 +207,7 @@ $(document).ready(function(){
 
     $('#J-comment-feed').on('click', function(){
         if (MID == 0) {
-            window.location.href = '/passport/index';
+            window.location.href = '/passport/login';
             return false;
         }
         var attrs = urlToObject($(this).data('args'));
@@ -218,8 +218,7 @@ $(document).ready(function(){
         "tag" : "share_feedlist",
         'bdText' : '{{$feed['share_desc']}}',
         'bdDesc' : '{{$feed['share_desc']}}',
-        'bdUrl' : window.location.href,
-        'bdPic' : '{{ $routes['resource'] }}/images/default_cover.png'
+        'bdUrl' : window.location.href
     });
 });
 

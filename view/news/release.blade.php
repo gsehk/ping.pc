@@ -7,8 +7,8 @@
 @section('content')
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.css') }}"/>
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/cropper/cropper.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
 @endsection
 
 <div class="news_left">
@@ -33,29 +33,28 @@
             <input type="hidden" name="cate_id" id="cate_id">
         </div>
         <div class="release_place">
-            {{--@include('pcview::widgets.editor' ,['url'=>$routes['resource'], 'height'=>'530px', 'content'=>$content ?? ''])--}}
-            @include('pcview::widgets.markdown' ,['url'=>$routes['resource'], 'height'=>'530px', 'width' => '100%', 'content'=>$content ?? ''])
+            @include('pcview::widgets.markdown', ['height'=>'530px', 'width' => '100%', 'content'=>$content ?? ''])
         </div>
-        {{--<div class="release_tags active">--}}
-            {{--<ul class="release_tags_selected" id="J-select-tags"></ul>--}}
-            {{--<div class="release_tags_list" id="J-tag-box" style="display: none;">--}}
-                {{--@foreach ($tags as $tag)--}}
-                    {{--<dl>--}}
-                        {{--<dt>{{$tag->name}}</dt>--}}
-                        {{--@foreach ($tag->tags as $item)--}}
-                            {{--<dd data-id="{{$item->id}}">{{$item->name}}</dd>--}}
-                        {{--@endforeach--}}
-                    {{--</dl>--}}
-                {{--@endforeach--}}
-            {{--</div>--}}
-            {{--<input type="hidden" name="tags" id="tags" />--}}
-        {{--</div>--}}
+        <div class="release_tags active">
+            <ul class="release_tags_selected" id="J-select-tags"></ul>
+            <div class="release_tags_list" id="J-tag-box" style="display: none;">
+                @foreach ($tags as $tag)
+                    <dl>
+                        <dt>{{ $tag->name }}</dt>
+                        @foreach ($tag->tags as $item)
+                            <dd data-id="{{$item->id}}">{{ $item->name }}</dd>
+                        @endforeach
+                    </dl>
+                @endforeach
+            </div>
+            <input type="hidden" name="tags" id="tags" />
+        </div>
         <div class="release_produce">
             <span class="release_bq" style="display: none;">
-                <img src="{{ $routes['resource'] }}/images/pro.png" /><input placeholder="添加标签，多个标签用逗号分开" />
+                <img src="{{ asset('zhiyicx/plus-component-pc/images/pro.png') }}" /><input placeholder="添加标签，多个标签用逗号分开" />
             </span>
             <span class="ai_face_box">
-                <img src="@if (!empty($storage)) {{$routes['storage']}}{{$storage}}?w=230&h=163 @else {{$routes['resource']}}/images/pic_upload.png @endif" id="J-image-preview" />
+                <img src="@if (!empty($storage)) {{ $routes['storage'] }}{{$storage}}?w=230&h=163 @else {{ asset('zhiyicx/plus-component-pc/images/pic_upload.png') }} @endif" id="J-image-preview" />
                 <div class="ai_upload">
                     <input name="subject-image" id="subject-image" type="hidden" value="{{$storage or 0}}" />
                 </div>
@@ -95,9 +94,9 @@
 @endsection
 
 @section('scripts')
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.news.js')}}"></script>
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.news.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script type="text/javascript">
 $('#J-select-tags').on('click', function(){
     $('#J-tag-box').show();

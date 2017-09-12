@@ -5,7 +5,7 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
 @endsection
 
 @section('content')
@@ -62,9 +62,9 @@
 
 @section('scripts')
 
-<script src="{{ $routes['resource'] }}/js/module.weibo.js"></script>
-<script src="{{ $routes['resource'] }}/js/jquery.uploadify.js"></script>
-<script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.uploadify.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
 <script type="text/javascript">
 // 加载微博
 var params = {

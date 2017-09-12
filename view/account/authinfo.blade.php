@@ -5,7 +5,7 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
 @endsection
 
 @section('content')

@@ -5,7 +5,7 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
 @endsection
 
 @section('content')
@@ -55,11 +55,11 @@
                         <label class="w80 required" for="desc"><font color="red">*</font>认证资料</label>
                         <div class="upload_file">
                             <span class="file_box">
-                                <img id="J-image-preview-front" src="{{ URL::asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
+                                <img id="J-image-preview-front" src="{{ asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
                                 <input class="J-file-upload front" type="file" name="file-front" />
                             </span>
                             <span  class="file_box">
-                                <img id="J-image-preview-behind" src="{{ URL::asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
+                                <img id="J-image-preview-behind" src="{{ asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
                                 <input class="J-file-upload behind" type="file" name="file-behind" />
                             </span>
                         </div>
@@ -104,7 +104,7 @@
                         <label class="w80 required" for="desc"><font color="red">*</font>认证资料</label>
                         <div class="upload_file">
                             <span class="file_box">
-                                <img id="J-image-preview" src="{{ URL::asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
+                                <img id="J-image-preview" src="{{ asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
                                 <input class="J-file-upload org" type="file" name="file-front" />
                             </span>
                         </div>
@@ -123,8 +123,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script>
 $(function() {
     var select = $(".zy_select");

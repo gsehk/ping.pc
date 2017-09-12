@@ -3,7 +3,7 @@
             <div class="nav" style=" padding-top: 11px;">
                 <div class="nav_left">
                     <a href="{{ route('pc:feeds') }}">
-                        <img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" />
+                        <img src="{{ asset('zhiyicx/plus-component-pc/images/logo.png') }}" class="nav_logo" />
                     </a>
                     <!-- <span class="nav_beta fs-16">beta</span> -->
                 </div>

@@ -571,6 +571,7 @@ $(function() {
 
     // 显示回复框
     $('#feeds-list, #article-list, #content-list').on('click', '.J-comment-show', function() {
+        alert();
         if (MID == 0) {
             window.location.href = '/passport/login';
             return;

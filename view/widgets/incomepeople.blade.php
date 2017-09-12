@@ -7,7 +7,7 @@
                 <li>
                     <div class="fans-span">{{$loop->iteration}}</div>
                     <div class="income-avatar">
-                        <img src="{{$income['avatar'] or $routes['resource'].'/images/avatar.png'}}" alt="{{$income['name']}}">
+                        <img src="{{ $income['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" alt="{{$income['name']}}">
                     </div>
                     <div class="income-name">
                         <a class="name" href="javascript:;">{{$income['name']}}</a>

@@ -9,11 +9,11 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/user.css') }}"/>
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/group.css') }}"/>
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/search.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/user.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/group.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/search.css') }}"/>
 @endsection
 
 @section('content')

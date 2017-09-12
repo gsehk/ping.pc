@@ -185,6 +185,10 @@
     background: #fff;
 }
 
+.detail_info span {
+    font-size: 14px;
+}
+
 .detail_info .right {
     float: right;
 }

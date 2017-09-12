@@ -106,7 +106,7 @@ class GroupController extends BaseController
 
         $post = clone $posts['posts'];
         $after = $post->pop()->id ?? 0;
-        $feedData = view('pcview::templates.group-posts', $posts, $this->PlusData)->render();
+        $feedData = view('pcview::templates.group_posts', $posts, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,
@@ -126,7 +126,7 @@ class GroupController extends BaseController
         $posts['posts'] = collect();
         $post = createRequest('GET', '/api/v2/groups/'.$request->group_id.'/posts/'.$request->post_id);
         $posts['posts']->push($post);
-        $feedData = view('pcview::templates.group-posts', $posts, $this->PlusData)->render();
+        $feedData = view('pcview::templates.group_posts', $posts, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,

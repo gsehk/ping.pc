@@ -29,8 +29,8 @@
 @endsection
 
 @section('scripts')
-<link href="{{ $routes['resource'] }}/css/user.css" rel="stylesheet">
-<script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
+<link href="{{ asset('zhiyicx/plus-component-pc/css/user.css') }}" rel="stylesheet">
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script type="text/javascript">
     $(function(){
         // 关注

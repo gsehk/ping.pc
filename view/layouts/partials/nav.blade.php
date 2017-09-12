@@ -1,12 +1,12 @@
 <div class="nav nav_border">
     <div class="nav_left">
-        <a href="{{ route('pc:feeds') }}"><img src="{{ $routes['resource'] }}/images/logo.png" class="nav_logo" /></a>
+        <a href="{{ route('pc:feeds') }}"><img src="{{ asset('zhiyicx/plus-component-pc/images/logo.png') }}" class="nav_logo" /></a>
         <!-- <span class="nav_beta fs-16">beta</span> -->
     </div>
 
     @if (!empty($TS))
     <div class="nav_right">
-        <img src="{{ $TS['avatar'] or $routes['resource'] . '/images/avatar.png' }}" id="menu_toggle" alt="{{ $TS['name'] }}"/>
+        <img src="{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=30" id="menu_toggle" alt="{{ $TS['name'] }}"/>
         <span class="fs-16 nav_name">{{$TS['name']}}</span>
 
         <div class="nav_menu">
@@ -40,7 +40,7 @@
                     <a href="javascript:void(0)" onclick="logout()">退出</a>
                 </li>
             </ul>
-            <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
+            <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
         </div>
     </div>
     @else

@@ -3,7 +3,7 @@
         <div class="user_header">
             <!-- <a href="{{route('pc:mine',['user_id'=>$data['id']])}}"> -->
             <a href="javascript:;">
-                <img src="{{ $data['avatar'] or $routes['resource'] . '/images/avatar.png' }} " class="user_avatar" alt="{{ $data['name'] }}"/>
+                <img src="{{ $data['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" class="user_avatar" alt="{{ $data['name'] }}"/>
             </a>
         </div>
         <div class="user_body">

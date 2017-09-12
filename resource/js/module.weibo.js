@@ -263,7 +263,7 @@ var comment = {
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
-                $('#comment_item_'+comment_id).fadeOut();
+                $('.comment'+comment_id).fadeOut();
                 var commentNum = $('.comment_count').text();
                 $('.comment_count').text(parseInt(commentNum)-1);
                 var nums = $('.cs' + feed_id);
@@ -305,23 +305,20 @@ var digg = {
             url: url,
             type: 'POST',
             dataType: 'json',
-            error: function(xml) {},
             success: function(res, data, xml) {
-                if (xml.status == 201) {
-                    $digg = $('#digg' + feed_id);
-                    var num = $digg.attr('rel');
-                    num++;
-                    $digg.attr('rel', num);
-                    if (page == 'read') {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
-                    } else {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>' + num + '</font></a>');
-                    }
+                $digg = $('#digg' + feed_id);
+                var num = $digg.attr('rel');
+                num++;
+                $digg.attr('rel', num);
+                if (page == 'read') {
+                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
                 } else {
-                    alert(res.message);
+                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>' + num + '</font></a>');
                 }
-
                 digg.digglock = 0;
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
             }
         });
 
@@ -337,23 +334,21 @@ var digg = {
             url: url,
             type: 'DELETE',
             dataType: 'json',
-            error: function(xml) {},
             success: function(res, data, xml) {
-                if (xml.status == 204) {
-                    $digg = $('#digg' + feed_id);
-                    var num = $digg.attr('rel');
-                    num--;
-                    $digg.attr('rel', num);
-                    if (page == 'read') {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
-                    } else {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>' + num + '</font></a>');
-                    }
+                $digg = $('#digg' + feed_id);
+                var num = $digg.attr('rel');
+                num--;
+                $digg.attr('rel', num);
+                if (page == 'read') {
+                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
                 } else {
-                    alert(res.message);
+                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>' + num + '</font></a>');
                 }
 
                 digg.digglock = 0;
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
             }
         });
     }
@@ -401,6 +396,9 @@ var collect = {
                 }
 
                 collect.collectlock = 0;
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
             }
         });
 
@@ -426,6 +424,9 @@ var collect = {
                     $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
                 }
                 collect.collectlock = 0;
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
             }
         });
     }
@@ -457,7 +458,6 @@ $(function() {
 
     // 显示回复框
     $('#feeds_list').on('click', '.J-comment-show', function() {
-        return false;
         if (MID == 0) {
             window.location.href = '/passport/login';
             return;

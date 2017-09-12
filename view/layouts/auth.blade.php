@@ -15,11 +15,9 @@
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
-    <link href="{{ $routes['resource'] }}/css/common.css" rel="stylesheet">
-    <link href="{{ $routes['resource'] }}/css/passport.css" rel="stylesheet">
-    <script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
-    <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
-    <script src="{{ $routes['resource'] }}/js/common.js"></script>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/passport.css') }}">
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.min.js') }}"></script>
 </head>
 
 <body @yield('body_class')>
@@ -40,6 +38,9 @@
     
     <!-- footer -->
     @include('pcview::layouts.partials.authfooter')
+
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/common.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/font/iconfont.js') }}"></script>
 
     <!-- js -->
     @yield('scripts')

@@ -23,6 +23,7 @@
     border: 1px solid #ededed;
     outline: none;
     background: #f3f6f7;
+    color: #666;
 }
 
 
@@ -571,6 +572,7 @@
     padding: 12px;
     border: 1px solid #ededed;
     background: #f3f6f7;
+    color: #666;
     outline: none;
     resize: none;
 }

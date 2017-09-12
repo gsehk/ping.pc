@@ -5,8 +5,8 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/group.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/group.css') }}">
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
 @endsection
 
 @section('content')
@@ -79,9 +79,10 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ $routes['resource'] }}/js/module.group.js"></script>
-    <script src="{{ $routes['resource'] }}/js/jquery.uploadify.js"></script>
-    <script src="{{ $routes['resource'] }}/js/md5.min.js"></script>
+    
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.uploadify.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
     <script>
         $(function () {
             // 切换加入状态

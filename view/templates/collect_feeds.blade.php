@@ -8,9 +8,9 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 
     <div class="feed_title">
         <a href="javascript:;">
-            <img class="round" src="{{ $post->user->avatar or $routes['resource'] . '/images/avatar.png' }}" width="50" />
+            <img class="round" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50" />
             @if($post->user->user_verified)
-            <img class="vip_auth" src="{{ $routes['resource'] }}/images/vip_icon.svg">
+            <img class="vip_auth" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
             @endif
         </a>
         <span class="uname tcolor">{{ $post->user->name }}</span>
@@ -249,13 +249,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                     <li><a href="javascript:;" onclick="weibo.delFeed({{$post->id}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
                     @endif
                 </ul>
-                <img src="{{ $routes['resource'] }}/images/triangle.png" class="triangle" />
+                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
             </div>
         </div>
 
         <div class="comment_box" style="display: none;">
             <div class="comment_line">
-                <img src="{{ $routes['resource'] }}/images/line.png" />
+                <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" />
             </div>
             <div class="comment_body" id="comment_box{{$post->id}}">
                 <div class="comment_textarea" id="editor_box{{ $post->id }}">

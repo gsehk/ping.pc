@@ -5,14 +5,14 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/profile.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/profile.css') }}"/>
 @endsection
 
 @section('content')
 <div class="profile_top">
 
     <div class="profile_top_cover">
-        <img class="user_bg" src="{{ $user['bg'] or URL::asset('zhiyicx/plus-component-pc/images/default_cover.png') }}"/>
+        <img class="user_bg" src="{{ $user['bg'] or asset('zhiyicx/plus-component-pc/images/default_cover.png') }}"/>
     </div>
 
     @if ($user['id'] == $TS['id'])
@@ -23,7 +23,7 @@
     <div class="profile_top_info">
         <div class="profile_top_img">
             <a href="{{ route('pc:mine', $user['id']) }}">
-                <img src="{{ $user['avatar'] or URL::asset('zhiyicx/plus-component-pc/images/avatar.png') }}"/>
+                <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}"/>
             </a>
         </div>
         <div class="profile_top_info_d">
@@ -79,7 +79,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script>
 setTimeout(function() {
     scroll.init({

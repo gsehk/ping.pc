@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="_token" content="{{ csrf_token() }}"/>
     <title>@yield('title')</title>
+    
     <script>
         var API = '{{ $routes["api"] }}';
         var MID = "{{ $TS['id'] or 0 }}";
@@ -14,8 +15,8 @@
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
     </script>
-    <link rel="stylesheet" href="{{ $routes['resource'] }}/css/common.css">
-    <script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/common.css') }}">
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.min.js') }}"></script>
     @yield('styles')
 </head>
 
@@ -41,15 +42,15 @@
         </div>
     </div>
 
-<!-- footer -->
-@include('pcview::layouts.partials.footer')
+    <!-- footer -->
+    @include('pcview::layouts.partials.footer')
 
-<script src="{{ $routes['resource'] }}/js/font/iconfont.js"></script>
-<script src="{{ $routes['resource'] }}/js/jquery.lazyload.min.js"></script>
-<script src="{{ $routes['resource'] }}/layer/layer.js"></script>
-<script src="{{ $routes['resource'] }}/js/common.js"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/common.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/font/iconfont.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.lazyload.min.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/layer/layer.js') }}"></script>
 
-@yield('scripts')
+    @yield('scripts')
 
 </body>
 </html>

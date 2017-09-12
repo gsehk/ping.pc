@@ -6,7 +6,7 @@
             @foreach ($author as $user)
                 <div class="fl">
                     <a href="{{ Route('pc:mine',['user_id'=>$user->user['id']]) }}">
-                        <img src="{{ $user->user['avatar'] or $routes['resource'] . '/images/avatar.png' }}" />
+                        <img src="{{ $user->user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" />
                     </a>
                 </div>
                 <div class="i_right">

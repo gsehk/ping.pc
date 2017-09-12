@@ -20,7 +20,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }} "></script>
 <script type="text/javascript">
     $(function(){
         // 关注

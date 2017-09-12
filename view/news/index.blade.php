@@ -7,7 +7,7 @@
 @section('extra_class')news_container @endsection
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/news.css') }}"/>
 @endsection
 
 @section('content')
@@ -52,8 +52,8 @@
 
 
 @section('scripts')
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.news.js') }}"></script>
-<script src="{{ URL::asset('zhiyicx/plus-component-pc/js/unslider.min.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.news.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/unslider.min.js') }}"></script>
 <script type="text/javascript">
 
 setTimeout(function() {

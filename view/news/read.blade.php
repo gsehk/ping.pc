@@ -29,9 +29,9 @@
 
 
                 <div class="detail_subject">
-                    <img src="{{ $routes['resource'] }}/images/zixun-left.png"/>
+                    <img src="{{ asset('zhiyicx/plus-component-pc/images/zixun-left.png') }}"/>
                     <div class="subject_content">{{ $news['subject'] }}</div>
-                    <img src="{{ $routes['resource'] }}/images/zixun-right.png" class="right"/>
+                    <img src="{{ asset('zhiyicx/plus-component-pc/images/zixun-right.png') }}" class="right"/>
                 </div>
 
                 <div class="detail_content markdown-body editormd-preview-container"></div>
@@ -190,7 +190,7 @@ $('#J-reward-btn').on('click', function(){
 
 $('#J-comment-news').on('click', function(){
     if (MID == 0) {
-        window.location.href = '/passport/index';
+        window.location.href = '/passport/login';
         return false;
     }
     var attrs = urlToObject($(this).data('args'));

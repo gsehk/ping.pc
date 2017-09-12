@@ -3,7 +3,7 @@
 @section('bgcolor')style="background-color:#f3f6f7"@endsection
 
 @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
 @endsection
 
 @section('content')

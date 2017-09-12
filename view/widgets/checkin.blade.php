@@ -5,7 +5,7 @@
             {{$TS['name']}}
         </span>
         <a href="{{ route('pc:mine') }}">
-            <img src="{{ $TS['avatar'] or $routes['resource'] . '/images/avatar.png' }}" alt="{{ $TS['name'] }}"/>
+            <img src="{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=100" alt="{{ $TS['name'] }}"/>
         </a>
     </div>
     @if(!$data['checked_in'])

@@ -78,6 +78,6 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/jquery.form.js"></script>
-<script src="{{ $routes['resource'] }}/js/module.passport.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.form.js') }} "></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.passport.js') }} "></script>
 @endsection

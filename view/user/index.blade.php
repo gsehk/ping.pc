@@ -5,7 +5,7 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/user.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/user.css') }}"/>
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ $routes['resource'] }}/js/module.profile.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script type="text/javascript">
 
     $(function(){

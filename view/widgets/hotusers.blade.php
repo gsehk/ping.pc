@@ -6,7 +6,7 @@
 		@foreach($users as $user)
 		<li>
 			<div class="hot_user_avatar">
-				<img src="{{ $user['avatar'] or $routes['resource'] . '/images/avatar.png' }}">
+				<img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60">
 			</div>
 			<div class="hot_user_info">
 				<a href="javascript:;"><span class="hot_user_name">{{ $user['name'] }}</span></a>

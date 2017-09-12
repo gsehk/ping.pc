@@ -7,8 +7,8 @@
 @section('bgcolor')style="background-color:#f3f6f7"@endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
-    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/account.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/cropper/cropper.min.css')}}">
 @endsection
 
 @section('content')
@@ -61,9 +61,9 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ URL::asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
-    <script src="{{ URL::asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
-    <script src="{{ URL::asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
     <script>
 
     </script>
