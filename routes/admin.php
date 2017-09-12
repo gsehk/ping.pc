@@ -22,3 +22,10 @@ Route::prefix('credit')->group(function () {
 	Route::get('/', 'CreditController@index');
 	Route::post('/handle', 'CreditController@handleCreditRule');
 });
+
+// 导航配置
+Route::prefix('nav')->group(function () {
+	Route::get('/list', 'ConfigController@index');
+	Route::get('/getnav', 'ConfigController@getnav');
+	Route::post('/manage', 'ConfigController@manage');
+});
