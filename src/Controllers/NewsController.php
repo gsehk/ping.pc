@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceImage;
 
 class NewsController extends BaseController
 {
@@ -67,6 +68,7 @@ class NewsController extends BaseController
         $news = createRequest('GET', '/api/v2/news/' . $news_id);
         $news->reward = createRequest('GET', '/api/v2/news/' . $news_id . '/rewards/sum');
         $news->collect_count = $news->collections->count();
+        $news->content = replaceImage($news->content);
 
         // 相关资讯
         $news_rel = createRequest('GET', '/api/v2/news/' . $news_id . '/correlations');

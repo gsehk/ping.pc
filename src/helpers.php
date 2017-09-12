@@ -161,7 +161,7 @@ function getTime($time)
     // 本地化
     Carbon::setLocale('zh');
 
-    $timezone = $_COOKIE['customer_timezone'] ?: 0;
+    $timezone = isset($_COOKIE['customer_timezone']) ? $_COOKIE['customer_timezone'] : 0;
     // 一小时内显示文字
     if (Carbon::now()->subHours(1) < $time) {
         return $time->diffForHumans();
@@ -183,4 +183,9 @@ function getImageUrl($image = array(), $width, $height)
     }
 
     return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height;
+}
+
+function replaceImage($content)
+{
+    return preg_replace('/\@\!\[(.*)\]\((\d+)\)/i', '![$1](' . getenv('APP_URL') . '/api/v2/files/$2)', $content);
 }
