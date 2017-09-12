@@ -84,11 +84,11 @@
             <p>详细补充您的咨询内容, 并提供一些相关的素材以供参与者更多的了解您所要表述的资讯思想。</p>
             <p>注：如果您的内容不够正式，为了数据更美观，您的投稿将不会通过；投稿内容一经审核通过，所投递的内容将共所有人可以阅读，并在您发布资讯中进行分享、点赞和评论</p>
         </div>
-        <a href="{{ route('pc:minearc') }}">
+        {{-- <a href="{{ route('pc:minearc') }}">
             <div class="release_right_bottom">
                 我的草稿<span class="release_right_num"><i class="icon iconfont icon-icon07"></i></span>
             </div>
-        </a>
+        </a> --}}
     </div>
 </div>
 @endsection
