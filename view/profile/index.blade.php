@@ -49,10 +49,25 @@
     <div class="profile_nav clearfix">
         <ul class="profile_nav_list clearfix">
             <li class="active"><a href="{{ route('pc:mine', $user['id']) }}">主页</a></li>
-            <li><a href="{{ route('pc:profilenews') }}">资讯</a></li>
-            <li><a href="{{ route('pc:profilecollect') }}">收藏</a></li>
+            @if ($user['id'] == $TS['id'])
+                <li><a href="{{ route('pc:profilenews') }}">资讯</a></li>
+                <li><a href="{{ route('pc:profilecollect') }}">收藏</a></li>
+            @endif
         </ul>
-        <a href="{{ route('pc:newsrelease') }}" class="profile_nav_btn">投稿</a>
+        @if($TS['id'] == $user['id'])
+            <a class="btn btn-primary contribute-btn" href="{{ route('pc:newsrelease') }}">
+                <svg class="icon"><use xlink:href="#icon-feiji"></use></svg>投稿
+            </a>
+        @endif
+        @if($TS['id'] != $user['id'])
+        <div class="follow-box">
+            @if ($user['hasFollower'] == 0)
+            <div id="follow" status="0" class="tcolor">+关注</div>
+            @else
+            <div id="follow" status="1" class="followed">已关注</div>
+            @endif
+        </div>
+        @endif
     </div>
 
 </div>
@@ -82,14 +97,15 @@
 // 加载微博
 var params = {
     type: 'users',
-    cate: 'all'
+    cate: 1,
+    user: {{$user->id}}
 };
 
 setTimeout(function() {
     scroll.init({
         container: '#feeds_list',
         loading: '.feed_content',
-        url: '/profile/feeds',
+        url: '/profile',
         params: params
     });
 }, 300);
@@ -107,11 +123,11 @@ var afterdata = function(target){
     if (target.attr('status') == 1) {
         target.text('+关注');
         target.attr('status', 0);
-        target.removeClass('their_followed');
+        target.removeClass('followed');
     } else {
         target.text('已关注');
         target.attr('status', 1);
-        target.addClass('their_followed');
+        target.addClass('followed');
     }
 }
 </script>

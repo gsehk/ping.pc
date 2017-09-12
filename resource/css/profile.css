@@ -1,5 +1,51 @@
 /*个人主页顶部*/
 
+.contribute-btn {
+    float: right;
+    margin-top: 21px;
+    border-radius: 18px;
+    padding: 7px 23px;
+}
+
+.contribute-btn > svg {
+    margin-right: 6px;
+    font-size: 19px;
+}
+
+.follow-box {
+    line-height: 80px;
+    float: right;
+}
+
+.follow-box > div {
+    line-height: 36px;
+    display: inline-block;
+    width: 100px;
+    height: 36px;
+    margin-left: 10px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    background: #fff;
+}
+
+.follow-box > div:hover {
+    color: #59b6d7;
+    border-color: #59b6d7;
+}
+
+.follow-box .followed {
+    color: #ccc;
+    border: 1px solid #ededed;
+}
+
+.follow-box .followed:hover {
+    color: #ccc;
+    border: 1px solid #ededed;
+}
+
 .profile_top {
     position: relative;
     width: 100%;

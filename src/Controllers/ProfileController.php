@@ -10,41 +10,36 @@ class ProfileController extends BaseController
 {
     public function index(Request $request, int $user_id = 0)
     {
-        $data['user'] = $user_id
-                        ? createRequest('GET', '/api/v2/users/' . $user_id)
-                        : createRequest('GET', '/api/v2/user');
+        if ($request->ajax()) {
+            $params = [
+                'type' => $request->query('type'),
+                'user' => $request->query('user'),
+                'after' => $request->query('after', 0),
+            ];
+            $cate = $request->query('cate', 1);
+            switch ($cate) {
+                case 1: //全部
+                    $feeds = createRequest('GET', '/api/v2/feeds', $params);
+                    $feed = clone $feeds['feeds'];
+                    $after = $feed->pop()->id ?? 0;
+                    $html = view('pcview::templates.profile_feed', $feeds, $this->PlusData)->render();
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+            return response()->json(static::createJsonData([
+                'status' => true,
+                'after' => $after,
+                'data' => $html
+            ]));
+        }
+
+        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
+        $data['user']->hasFollower = $data['user']->hasFollower($request->user());
 
         return view('pcview::profile.index', $data, $this->PlusData);
-    }
-
-    /**
-     * 分享列表.
-     *
-     * @param  Request $request [description]
-     * @return mixed
-     */
-    public function feeds(Request $request)
-    {
-        $params = [
-            'type' => $request->query('type'),
-            'after' => $request->query('after', 0)
-        ];
-
-        if ($request->cate == 'all') {
-            $feeds = createRequest('GET', '/api/v2/feeds', $params);
-            $feed = clone $feeds['feeds'];
-        }
-        if ($request->cate == 'img') {
-            # code...
-        }
-        $after = $feed->pop()->id ?? 0;
-        $html = view('pcview::templates.profile_feed', $feeds, $this->PlusData)->render();
-
-        return response()->json(static::createJsonData([
-            'status' => true,
-            'after' => $after,
-            'data' => $html
-        ]));
     }
 
     /**
