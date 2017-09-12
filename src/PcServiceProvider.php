@@ -4,12 +4,9 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
 use Blade;
 use Illuminate\Support\Facades\View;
-use Zhiyi\Plus\Support\PackageHandler;
 use Illuminate\Support\ServiceProvider;
 use Zhiyi\Plus\Support\ManageRepository;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
-    asset
-};
+use Zhiyi\Plus\Support\PackageHandler;
 
 class PcServiceProvider extends ServiceProvider
 {
@@ -34,6 +31,11 @@ class PcServiceProvider extends ServiceProvider
             dirname(__DIR__).'/router.php'
         );
 
+        // Register migration files.
+        $this->loadMigrationsFrom([
+            dirname(__DIR__).'/database/migrations',
+        ]);
+
         // load handle
         PackageHandler::loadHandleFrom('pc', PcPackageHandler::class);
 
@@ -57,7 +59,7 @@ class PcServiceProvider extends ServiceProvider
     {
         $this->app->make(ManageRepository::class)->loadManageFrom('PC端', 'pc:admin', [
             'route' => true,
-            'icon' => asset('pc-icon.png'),
+            'icon' => asset('zhiyicx/plus-component-pc/example-icon.png'),
         ]);
     }
 

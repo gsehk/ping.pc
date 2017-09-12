@@ -9,9 +9,8 @@
     }
   ],
   "autoload": {
-    "files": [
-      "src/helpers.php"
-    ],
+    "classmap": ["database/"],
+    "files": ["src/helpers.php"],
     "psr-4": {
       "Zhiyi\\Component\\ZhiyiPlus\\PlusComponentPc\\": "src/"
     }

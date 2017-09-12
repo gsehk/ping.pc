@@ -2,19 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
-use Closure;
-use Carbon\Carbon;
 use Zhiyi\Plus\Models\Comment;
-use Zhiyi\Plus\Models\Permission;
-use Zhiyi\Plus\Models\AdvertisingSpace;
-use Zhiyi\Component\Installer\PlusInstallPlugin\AbstractInstaller;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\{
-    route_path,
-    resource_path,
-    base_path as component_base_path
-};
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Zhiyi\Plus\Support\PackageHandler;
 
 class PcPackageHandler extends PackageHandler
@@ -29,47 +17,22 @@ class PcPackageHandler extends PackageHandler
 
     public function installHandle($command)
     {
-        AdvertisingSpace::create([
-            'channel' => 'pc',
-            'space' => 'pc:news:top',
-            'alias' => '资讯首页banner',
-            'allow_type' => 'image',
-            'format' => [
-                'image' => [
-                    'image' => '图片|string',
-                    'link' => '链接|string',
-                    'title' => '标题|string'
-                ],
-            ],
+        // publish public assets
+        $command->call('vendor:publish', [
+            '--provider' => PcServiceProvider::class,
+            '--tag' => 'public',
+            '--force' => true,
         ]);
 
-        AdvertisingSpace::create([
-            'channel' => 'pc',
-            'space' => 'pc:news:right',
-            'alias' => '资讯右侧广告',
-            'allow_type' => 'image',
-            'format' => [
-                'image' => [
-                    'image' => '图片|string',
-                    'link' => '链接|string',
-                ],
-            ],
-        ]);
+        // Run the database migrations
+        $command->call('migrate');
 
-        AdvertisingSpace::create([
-            'channel' => 'pc',
-            'space' => 'pc:feeds:right',
-            'alias' => '动态右侧广告',
-            'allow_type' => 'image',
-            'format' => [
-                'image' => [
-                    'image' => '图片|string',
-                    'link' => '链接|string',
-                ],
-            ],
-        ]);
-
-        $command->info('Install Successfully');
+        if ($command->confirm('Run seeder')) {
+            // Run the database seeds.
+            $command->call('db:seed', [
+                '--class' => \PcDatabaseSeeder::class,
+            ]);
+        }
     }
 
     /**
