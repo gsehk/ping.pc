@@ -25,7 +25,8 @@ Route::prefix('credit')->group(function () {
 
 // 导航配置
 Route::prefix('nav')->group(function () {
-	Route::get('/list', 'ConfigController@index');
-	Route::get('/getnav', 'ConfigController@getnav');
+	Route::get('/list/{posit}', 'ConfigController@index')->where(['nid'=>'[0-9]+']);
+	Route::get('/get/{nid}', 'ConfigController@getnav')->where(['nid'=>'[0-9]+']);
 	Route::post('/manage', 'ConfigController@manage');
+	Route::delete('/del/{nid}', 'ConfigController@delete')->where(['nid'=>'[0-9]+']);
 });

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 // components.
 import AuthList from './component/pc/AuthList.vue';
 import Navmenu from './component/pc/Navmenu.vue';
+import Footnav from './component/pc/Footnav.vue';
 import Navmanage from './component/pc/Navmanage.vue';
 import Report from './component/report/Report.vue';
 
@@ -22,15 +23,15 @@ const router = new VueRouter({
       component: Navmenu,
     },
     {
-      path: '/navmenu/:type',
-      component: Navmenu,
+      path: '/footnav',
+      component: Footnav,
     },
     {
       path: '/navmanage',
       component: Navmanage,
     },
     {
-      path: '/navmanage/:navId',
+      path: '/navmanage/:navId/:parentId',
       component: Navmanage,
     },
     {
