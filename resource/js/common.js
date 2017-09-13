@@ -616,6 +616,13 @@ var delHistory = function(str) {
     }
 }
 
+//验证登录
+var checkLogin = function (){
+    if (MID == 0) {
+        window.location.href = SITE_URL+'/passport/login';
+        return;
+    }
+}
 $(function() {
     //获得用户时区与GMT时区的差值
     if (getCookie('customer_timezone') == '') {
