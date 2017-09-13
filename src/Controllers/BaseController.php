@@ -4,6 +4,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Session;
 use Zhiyi\Plus\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -35,10 +36,21 @@ class BaseController extends Controller
     		}
             
 			// 站点配置
-	        $config = [];
+            $config = Cache::get('config');
+
+            if (!$config) {
+                $config = [];
+
+                // 启动信息
+                $config['bootstrappers'] = createRequest('GET', '/api/v2/bootstrappers/');
+
+                // 缓存配置信息
+                Cache::forever('config', $config);
+            }
+
 	        $this->PlusData['site']['conifg'] = $config;
 
-	        // 公共配置
+	        // 公共地址
             $app_url = getenv('APP_URL');
             $this->PlusData['routes']['siteurl'] = getenv('APP_URL');
             $this->PlusData['routes']['api'] = $app_url . '/api/v2';
