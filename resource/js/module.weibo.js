@@ -60,7 +60,7 @@ weibo.postFeed = function() {
 };
 
 weibo.afterPostFeed = function(feed_id) {
-    var url = '/feeds/getfeed/';
+    var url = '/feeds';
     $.ajax({
         url: url,
         type: 'get',

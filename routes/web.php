@@ -31,20 +31,13 @@ Route::prefix('passport')->group(function () {
 
 Route::prefix('feeds')->group(function () {
     // 动态首页
-    Route::get('/', 'FeedController@index')->name('pc:feeds');
-
-    // 获取动态列表
-    Route::get('/list', 'FeedController@list');
-
-    // 获取单条微博
-    Route::get('/getfeed', 'FeedController@feed');
+    Route::get('/', 'FeedController@feeds')->name('pc:feeds');
 
     // 动态详情
     Route::get('/{feed}', 'FeedController@read')->where(['feed' => '[0-9]+'])->name('pc:feedread');
 
+    // 动态详情获取评论
     Route::get('/{feed}/comments', 'FeedController@comments')->where(['feed' => '[0-9]+']);
-
-    Route::get('/collection', 'FeedController@collection')->name('pc:feedcollections');
 });
 
 Route::prefix('question')->group(function () {
@@ -98,33 +91,21 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
 
     // 动态
-    Route::get('/{user?}', 'ProfileController@index')->where(['user' => '[0-9]+'])->name('pc:mine');
+    Route::get('/{user?}', 'ProfileController@feeds')->where(['user' => '[0-9]+'])->name('pc:mine');
 
     // 资讯
     Route::get('news', 'ProfileController@news')->name('pc:profilenews');
 
     // 收藏
     Route::get('collect', 'ProfileController@collect')->name('pc:profilecollect');
-
-    // 获取动态列表
-    Route::get('feeds', 'ProfileController@feeds');
 });
 
 Route::prefix('users')->group(function () {
     // 找人
-    Route::get('/{type?}', 'UserController@index')->where(['type' => '[1-3]'])->name('pc:users');
+    Route::get('/{type?}', 'UserController@users')->where(['type' => '[1-3]'])->name('pc:users');
 
-    // 找人获取用户
-    Route::get('/getusers', 'UserController@getUsers');
-
-    // 粉丝
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/followers/{user_id?}', 'UserController@followers')->where(['user_id' => '[0-9]+'])->name('pc:followers');
-
-    // 关注
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/followings/{user_id?}', 'UserController@followings')->where(['user_id' => '[0-9]+'])->name('pc:followings');
-
-    // 获取粉丝关注用户
-    Route::get('/getfollows', 'UserController@getFollows');
+    // 粉丝关注
+    Route::middleware(PcMiddleware\CheckLogin::class)->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]', 'user_id' => '[0-9+]'])->name('pc:follows');
 });
 
 
@@ -138,17 +119,11 @@ Route::prefix('news')->group(function () {
     // 资讯详情
     Route::get('/{news_id}', 'NewsController@read')->where(['news_id' => '[0-9]+'])->name('pc:newsread');
 
-    // 投稿
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
-
-    // news comments list
+    // 文章详情评论
     Route::get('/{news_id}/comments', 'NewsController@comments')->where(['news_id' => '[0-9]+']);
 
-    // upload img
-    Route::post('/uploadImg', 'NewsController@uploadImg')->name('pc:uploadImg');
-
-    // news collections
-    Route::get('/collection', 'FeedController@newsCollect')->name('pc:newscollections');
+    // 投稿
+    Route::middleware(PcMiddleware\CheckLogin::class)->get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
 });
 
 Route::prefix('webmessage')->group(function () {

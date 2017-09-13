@@ -77,14 +77,15 @@
     <div class="center_box">
         {{-- 动态列表 --}}
         <div class="feed_content">
-        <div class="feed_menu">
-            <a href="javascript:;" class="active">全部</a>
-        </div>
+            <div class="feed_menu">
+                <a href="javascript:;" class="active">全部</a>
+            </div>
             <div id="feeds_list" class="feed_box"></div>
         </div>
     </div>
 
     <div class="right_box">
+        {{-- 推荐用户 --}}
         @include('pcview::widgets.recusers')
     </div>
 </div>

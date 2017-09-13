@@ -1,4 +1,5 @@
 @php $route = route::currentrouteName(); @endphp
+{{-- 左侧导航 --}}
 <div class="left_menu">
     <ul>
         <li>
@@ -12,12 +13,12 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:followers', ['user_id' => $TS['id']]) }}">
+            <a href="{{ route('pc:follows', ['user_id' => $TS['id']]) }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-myfans"></use></svg>我的粉丝
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:followings', ['user_id' => $TS['id']]) }}">
+            <a href="{{ route('pc:follows', ['user_id' => $TS['id'], 'type' => 2]) }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-attention"></use></svg>关注的人
             </a>
         </li>
@@ -26,11 +27,11 @@
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-rank"></use></svg>排行榜
             </a>
         </li>
-        {{-- <li>
-            <a href="{{ route('pc:collect') }}">
+        <li>
+            <a href="{{ route('pc:profilecollect') }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collection"></use></svg>收藏的
             </a>
-        </li> --}}
+        </li>
         <li>
             <a href="{{ route('pc:account') }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-setting"></use></svg>设置

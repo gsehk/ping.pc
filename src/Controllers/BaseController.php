@@ -40,7 +40,7 @@ class BaseController extends Controller
 			// 站点配置
             $config = Cache::get('config');
 
-            if ($config) {
+            if (!$config) {
                 $config = [];
 
                 // 启动信息

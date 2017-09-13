@@ -75,7 +75,7 @@ setTimeout(function() {
     scroll.init({
         container: '#feeds_list',
         loading: '.feed_content',
-        url: '/feeds/list',
+        url: '/feeds',
         params: params
     });
 }, 300);
@@ -94,7 +94,7 @@ $(function(){
         scroll.init({
             container: '#feeds_list',
             loading: '.feed_content',
-            url: '/feeds/list',
+            url: '/feeds',
             params: params
         });
 

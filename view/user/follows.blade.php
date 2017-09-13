@@ -1,25 +1,27 @@
-@section('title')
-    找伙伴
+@section('title') @if($type == 1) 粉丝 @else 关注 @endif
 @endsection
-
 @extends('pcview::layouts.default')
+
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/user.css') }}"/>
 @endsection
-
 @section('content')
     <div class="left_container">
         <div class="user_container">
             <ul class="user_menu">
-                <li><a type="1" href="javascript:;" @if($type == 1) class="selected" @endif>热门</a></li>
-                <li><a type="2" href="javascript:;" @if($type == 2) class="selected" @endif>最新</a></li>
-                <li><a type="3" href="javascript:;" @if($type == 3) class="selected" @endif>推荐</a></li>
+                @if($user_id && $user_id != $TS['id'])
+                <li><a type="1" href="javascript:void;" @if($type == 1) class="selected" @endif>TA的粉丝</a></li>
+                <li><a type="2" href="javascript:void;" @if($type == 2) class="selected" @endif>TA的关注</a></li>
+                @else
+                <li><a type="1" href="javascript:void;" @if($type == 1) class="selected" @endif>粉丝</a></li>
+                <li><a type="2" href="javascript:void;" @if($type == 2) class="selected" @endif>关注</a></li>
+                @endif
             </ul>
             <div class="clearfix" id="user_list"></div>
         </div>
     </div>
-
+    
     <div class="right_container">
         @include('pcview::widgets.hotusers')
     </div>
@@ -28,9 +30,9 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script type="text/javascript">
-
+    var user_id = {{ $user_id }};
+    var type = {{ $type }};
     $(function(){
-        var type = "{{ $type }}";
         // 关注
         $('#user_list').on('click', '.follow_btn', function(){
             var _this = $(this);
@@ -39,38 +41,33 @@
             follow(status, user_id, _this, afterdata);
         })
 
-        // 图片懒加载
-        $("img.lazy").lazyload({effect: "fadeIn"});
-
-        // 点击切换分类
+        // 导航点击切换
         $('.user_menu a').click(function(){
-            var type = $(this).attr('type');
-            switchType(type);
-            $(this).parents('ul').find('a').removeClass('selected');
+            var t = $(this).attr('type');
+            $(this).parents('.user_menu').find('a').removeClass('selected');
             $(this).addClass('selected');
+            switchType(t);
         })
+        $("img.lazy").lazyload({effect: "fadeIn"});
 
         switchType(type);
     })
 
-    // 切换类型加载数据
-    var switchType = function(type){
-
+    // 加载用户列表
+    function switchType(type) {
         $('#user_list').html('');
         var params = {
-            type: type,
-            limit: 10
+            user_id: user_id,
+            type: type
         };
-        setTimeout(function() {
-            scroll.init({
-                container: '#user_list',
-                loading: '.user_container',
-                url: '/users/getusers',
-                params: params,
-                loadtype: 1
-            });
-        }, 300);   
-    } 
+        scroll.init({
+            limit: 9,
+            container: '#user_list',
+            loading: '.user_container',
+            url: '/users/follows',
+            params: params
+        });
+    }
 
     // 关注回调
     var afterdata = function(target){

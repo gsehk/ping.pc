@@ -8,7 +8,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class ProfileController extends BaseController
 {
-    public function index(Request $request, int $user_id = 0)
+    public function feeds(Request $request, int $user_id = 0)
     {
         if ($request->ajax()) {
             $params = [

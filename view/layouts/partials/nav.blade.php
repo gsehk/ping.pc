@@ -5,6 +5,7 @@
         </a>
     </div>
 
+    {{-- 已登录 --}}
     @if (!empty($TS))
     <div class="nav_right">
         <img src="{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=30" id="menu_toggle" alt="{{ $TS['name'] }}"/>
@@ -14,11 +15,11 @@
             <div class="hover_cover clearfix">
             </div>
             <ul>
-                {{-- <li>
-                    <a href="{{ route('pc:collect') }}">
+                <li>
+                    <a href="{{ route('pc:profilecollect') }}">
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-shoucang-copy"></use></svg>我的收藏
                     </a>
-                </li> --}}
+                </li>
                 <li>
                     <a href="{{ route('pc:authenticate') }}">
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-renzheng3-copy"></use></svg>去认证
@@ -50,6 +51,7 @@
         </div>
     </div>
     @else
+    {{-- 未登录 --}}
     <div class="nav_right">
         <a class="nava" href="{{ route('pc:register') }}">注册</a>
         <a class="nava" href="{{ route('pc:login') }}">登录</a>
@@ -57,10 +59,13 @@
     @endif
     
     <div class="nav_list clearfix">
+        {{-- 导航 --}}
         <ul class="navs">
+            @if ($config['nav']->isEmpty())
             @foreach ($config['nav'] as $nav)
             <li>
                 <a target="{{ $nav->target }}" href="{{ $nav->url }}" @if(!empty($current) && $current == $nav->app_name) class="selected" @endif>{{ $nav->name}} </a>
+                {{-- 二级导航 --}}
                 @php
                     $nav_childs = $nav->items()->get();
                 @endphp
@@ -73,6 +78,7 @@
                 @endif
             </li>
             @endforeach
+            @endif
         </ul>
 
         <div class="nav_search">
@@ -82,7 +88,7 @@
             </a>
 
             <div class="head_search">
-                <!-- 搜索历史记录 -->
+                {{-- 搜索历史记录 --}}
                 <div class="history">
                     <p>历史记录</p>
                     <ul></ul>
@@ -91,7 +97,7 @@
                     </div>
                 </div>
 
-                <!-- 搜索类型 -->
+                {{-- 搜索类型 --}}
                 <div class="search_types">
                     <ul>
                         <li type="1"><span>与<span class="keywords"></span>相关的动态</span></li>
