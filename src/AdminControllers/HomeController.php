@@ -13,7 +13,7 @@ class HomeController extends Controller
     use AuthenticatesUsers {
         login as traitLogin;
     }
-  
+
     public function show(Request $request)
     {
         if (! $request->user()) {
@@ -24,13 +24,15 @@ class HomeController extends Controller
         $token = JWTCache::where('user_id', $request->user()->id)
             ->where('status', 0)
             ->value('value');
+
         $token = 'Bearer '.trim($token);
 
         return view('pcview::admin', [
             'token' => $token,
             'base_url' => route('pc:admin'),
             'csrf_token' => csrf_token(),
-            'api'        => url('api/v1'),
+            'api' => url('api/v2'),
+            'files' => url('/api/v2/files'),
         ]);
     }
 
@@ -61,7 +63,7 @@ class HomeController extends Controller
                 'admin' => $componentInfo->getAdminEntry(),
             ];
         }
-        
+
         return $menus;
     }
 }

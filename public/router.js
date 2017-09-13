@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import AuthList from './component/pc/AuthList.vue';
 import Navmenu from './component/pc/Navmenu.vue';
 import Footnav from './component/pc/Footnav.vue';
+import Setting from './component/pc/Setting.vue';
 import Navmanage from './component/pc/Navmanage.vue';
 import Report from './component/report/Report.vue';
 
@@ -16,7 +17,11 @@ const router = new VueRouter({
     // root.
     {
       path: '/',
-      redirect: 'navmenu'
+      redirect: 'setting'
+    },
+    {
+      path: '/setting',
+      component: Setting,
     },
     {
       path: '/navmenu',

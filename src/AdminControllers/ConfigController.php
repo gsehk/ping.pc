@@ -3,12 +3,22 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\AdminControllers;
 
 use Illuminate\Http\Request;
+use Zhiyi\Plus\Support\Configuration;
+use Illuminate\Contracts\Config\Repository;
 use Zhiyi\Plus\Http\Controllers\Controller;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
 
 class ConfigController extends Controller
 {
 
+    /**
+     * 导航配置列表.
+     *
+     * @param  Request     $request
+     * @param  int|integer $pos  0-顶部 1-底部
+     * @return mixed
+     */
     public function index(Request $request, int $pos = 0)
     {
         $data = [];
@@ -37,6 +47,12 @@ class ConfigController extends Controller
         ])->setStatusCode(200);
     }
 
+    /**
+     * 添加编辑导航.
+     *
+     * @param  Request $request
+     * @return mixed
+     */
     public function manage(Request $request)
     {
         $nid = $request->input('id', 0);
@@ -82,6 +98,13 @@ class ConfigController extends Controller
         ])->setStatusCode(200);
     }
 
+    /**
+     * 获取一条导航记录.
+     *
+     * @param  Request $request
+     * @param  int     $nid  记录id
+     * @return mixed
+     */
     public function getnav(Request $request, int $nid)
     {
         $nav = Navigation::find($nid);
@@ -91,6 +114,13 @@ class ConfigController extends Controller
         }
     }
 
+    /**
+     * 删除导航记录.
+     *
+     * @param  Request $request
+     * @param  int     $nid   记录id
+     * @return mixed
+     */
     public function delete(Request $request, int $nid)
     {
         $nav = Navigation::find($nid);
@@ -99,5 +129,45 @@ class ConfigController extends Controller
         }
 
         return response()->json(['message' => '删除成功']);
+    }
+
+    /**
+     * 获取pc基础配置信息.
+     *
+     * @return mixed
+     */
+    public function get(Request $request, Repository $config, ResponseFactory $response)
+    {
+
+        $greet = $config->get('pc.greet', '欢迎使用ThinkSNS+');
+        $qrcode = $config->get('pc.qrcode');
+        $logo = $config->get('pc.logo');
+
+        return $response->json([
+            'greet' => $greet,
+            'qrcode' => $qrcode,
+            'logo' => $logo,
+        ])->setStatusCode(200);
+    }
+
+    /**
+     * 更新pc站基本配置信息.
+     *
+     * @return mixed
+     */
+    public function updateSiteInfo(Request $request, Configuration $config, ResponseFactory $response)
+    {
+
+        $keys = ['greet', 'qrcode', 'logo'];
+
+        $site = [];
+        foreach ($request->only($keys) as $key => $value) {
+            $site['pc.'.$key] = $value;
+        }
+        $config->set($site);
+
+        return $response->json([
+            'message' => '更新成功',
+        ])->setStatusCode(201);
     }
 }
