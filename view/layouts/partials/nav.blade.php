@@ -53,6 +53,7 @@
     <div class="nav_list clearfix">
         <ul class="navs">
             <li><a href="{{ route('pc:feeds') }}" @if(!empty($current) && $current == 'feeds') class="selected" @endif>动态</a></li>
+            <li><a href="{{ route('pc:question') }}" @if(!empty($current) && $current == 'question') class="selected" @endif>问答</a></li>
             <li><a href="{{ route('pc:group') }}" @if(!empty($current) && $current == 'group') class="selected" @endif>圈子</a></li>
             <li><a href="{{ route('pc:news') }}" @if(!empty($current) && $current == 'news') class="selected" @endif>资讯</a></li>
             <li><a href="{{ route('pc:users') }}" @if(!empty($current) && $current == 'users') class="selected" @endif>找伙伴</a></li>
