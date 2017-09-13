@@ -126,7 +126,7 @@
         <!-- 推荐用户 -->
         @include('pcview::widgets.recusers')
         <!-- 收入达人 -->
-        @include('pcview::widgets.incomepeople')
+        @include('pcview::widgets.incomerank')
 
     </div>
 @endsection

@@ -8,19 +8,17 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 class QuestionController extends BaseController
 {
 
-    public function index()
+    public function question(Request $request)
     {
-        $issues = createRequest('GET', '/api/v2/questions', ['limit' => 9]);
+        if ($request->ajax()){
+            
+        }
+        return view('pcview::question.index', [], $this->PlusData);
+    }
 
-        $data['answerRank'] = [
-            'day' => createRequest('GET', '/api/v2/question-ranks/answers', ['limit' => 5, 'type' => 'day']),
-            'week' => createRequest('GET', '/api/v2/question-ranks/answers', ['limit' => 5, 'type' => 'week']),
-            'month' => createRequest('GET', '/api/v2/question-ranks/answers', ['limit' => 5, 'type' => 'month']),
-        ];
-
-        $data['issues'] = $issues;
-
-        return view('pcview::question.index', $data, $this->PlusData);
+    public function topic(Request $request)
+    {
+        return view('pcview::question.index', [], $this->PlusData);
     }
 
 }
