@@ -1945,12 +1945,16 @@ a {
     line-height: 25px;
     height: 25px;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .feed-content {
     color: #999;
     font-size: 12px;
     overflow: hidden;
+    padding: 4px 8px;
+    background-color: #F5F5F5;
 }
 
 .feed-content .con-img {
@@ -1965,7 +1969,8 @@ a {
 }
 
 .feed-content .con-con {
-    width: calc(100% - 45px);
+    width: 100%;
+    max-height: 41px;
 }
 
 .chat_left ul {

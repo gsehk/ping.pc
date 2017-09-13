@@ -35,10 +35,8 @@ class MessageController extends BaseController
     {
         $after = $request->input('after') ?: 0;
         $limit = $request->input('limit') ?: 10;
-        $return['count'] = 0;
-        $return['after'] = $after;
         $data['comments'] = createRequest('GET', '/api/v2/user/comments', ['after' => $after, 'limit' => $limit]);
-
+        $return = '';
         if (!$data['comments']->isEmpty()) {
             foreach ($data['comments'] as $v) {
                 switch ($v['commentable_type']) {
@@ -63,14 +61,12 @@ class MessageController extends BaseController
                 }
             }
 
-            $return['count'] = count($data['comments']);
-            $return['after'] = $data['comments'][$return['count'] - 1]['id'];
-            $return['html'] = view('pcview::message.comments', $data, $this->PlusData)->render();
+            $return = view('pcview::message.comments', $data, $this->PlusData)->render();
         }
 
         return response()->json([
             'status'  => true,
-            'data' => $return['html'],
+            'data' => $return,
         ]);
     }
 
@@ -83,10 +79,8 @@ class MessageController extends BaseController
     {
         $after = $request->input('after') ?: 0;
         $limit = $request->input('limit') ?: 0;
-        $return['count'] = 0;
-        $return['after'] = $after;
         $data['likes'] = createRequest('GET', '/api/v2/user/likes', ['after' => $after, 'limit' => $limit]);
-
+        $return = '';
         if (!$data['likes']->isEmpty()) {
             foreach ($data['likes'] as $v) {
                 switch ($v['likeable_type']) {
@@ -110,14 +104,13 @@ class MessageController extends BaseController
                         break;
                 }
             }
-            $return['count'] = count($data['likes']);
-            $return['after'] = $data['likes'][$return['count'] - 1]['id'];
-            $return['html'] = view('pcview::message.likes', $data, $this->PlusData)->render();
+
+            $return = view('pcview::message.likes', $data, $this->PlusData)->render();
         }
 
         return response()->json([
             'status'  => true,
-            'data' => $return['html'],
+            'data' => $return,
         ]);
     }
 
@@ -128,21 +121,17 @@ class MessageController extends BaseController
      */
     public function notifications(Request $request)
     {
-        $offset = $request->input('after') ?: 0;
+        $offset = $request->input('offset') ?: 0;
         $limit = $request->input('limit') ?: 0;
-        $return['count'] = 0;
-        $return['after'] = $offset;
         $data['notifications'] = createRequest('GET', '/api/v2/user/notifications', ['offset' => $offset, 'limit' => $limit]);
-
+        $return = '';
         if (!$data['notifications']->isEmpty()) {
-            $return['count'] = count($data['notifications']);
-            $return['after'] = $offset + $return['count'];
-            $return['html'] = view('pcview::message.notifications', $data, $this->PlusData)->render();
+            $return = view('pcview::message.notifications', $data, $this->PlusData)->render();
         }
 
         return response()->json([
             'status'  => true,
-            'data' => $return['html'],
+            'data' => $return,
         ]);
     }
 
