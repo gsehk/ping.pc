@@ -87,9 +87,9 @@ class GroupController extends BaseController
     public function postLists(Request $request)
     {
         $group_id = $request->input('group_id');
-        $type = $request->input('type') ?: 'new';
+        $type = $request->input('type', 'new');
         $params = [
-            'after' => $request->query('after') ?: 0
+            'after' => $request->query('after', 0),
         ];
 
         switch ($type) {

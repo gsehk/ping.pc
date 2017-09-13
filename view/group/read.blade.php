@@ -78,94 +78,100 @@
 @endsection
 
 @section('scripts')
-    
-    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
-    <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.uploadify.js') }}"></script>
-    <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
-    <script>
-        $(function () {
-            // 切换加入状态
-            $('.group-foot').on('click', '.group-join', function(){
-
-                if (MID == 0) {
-                    window.location.href = '/passport/login';
-                    return;
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.uploadify.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
+<script>
+    $(function () {
+        // 切换加入状态
+        $('.group-foot').on('click', '.group-join', function(){
+            checkLogin();
+            var _this = this;
+            var status = $(this).attr('status');
+            var group_id = $(this).attr('gid');
+            group(status, group_id, function(){
+                if (status == 1) {
+                    $(_this).text('+加入');
+                    $(_this).attr('status', 0);
+                    $(_this).addClass('add-join');
+                } else {
+                    $(_this).text('已加入');
+                    $(_this).attr('status', 1);
+                    $(_this).removeClass('add-join');
                 }
-                var _this = this;
-                var status = $(this).attr('status');
-                var group_id = $(this).attr('gid');
-                group(status, group_id, function(){
-                    if (status == 1) {
-                        $(_this).text('+加入');
-                        $(_this).attr('status', 0);
-                        $(_this).addClass('add-join');
-                    } else {
-                        $(_this).text('已加入');
-                        $(_this).attr('status', 1);
-                        $(_this).removeClass('add-join');
-                    }
-                });
-            });
-
-            // 切换帖子列表
-            $('.feed_menu a').on('click', function() {
-                var type = $(this).data('type');
-                var group_id = "{{$group->id}}";
-                // 清空数据
-                $('#feeds_list').html('');
-
-                // 加载相关微博
-                var params = {
-                    type: type,
-                    group_id: group_id
-                };
-                scroll.init({
-                    container: '#feeds_list',
-                    loading: '.feed_content',
-                    url: '/group/postLists',
-                    params: params
-                });
-
-                // 修改样式
-                $('.feed_menu a').removeClass('selected');
-                $(this).addClass('selected');
-            });
-
-            // 获取帖子列表
-            setTimeout(function() {
-                var params = {
-                    type: $(this).data('type'),
-                    group_id: "{{$group->id}}"
-                };
-                scroll.init({
-                    container: '#feeds_list',
-                    loading: '.feed_content',
-                    url: '/group/postLists',
-                    params: params
-                });
-            }, 300);
-
-            // 图片删除事件
-            $(".feed_post").on("click", ".imgdel", function() {
-                $(this).parent().remove();
-                if ($('#file_upload_1-queue').find('.uploadify-queue-item').length == 0) {
-                    $('.uploadify-queue-add').remove();
-                    $('#file_upload_1-queue').hide();
-                }
-                if ($('#file_upload_1-queue').find('.uploadify-queue-item').length != 0  && $('.uploadify-queue-add').length == 0 ){
-                    var add = '<a class="feed_picture_span uploadify-queue-add"></a>'
-                    $('.uploadify-queue').append(add);
-                }
-            });
-
-            // 发布微博
-            var up = $('.post_extra').Huploadify({
-                auto:true,
-                multi:true,
-                newUpload:true,
-                buttonText:'',
-                onUploadSuccess: post.afterUpload
             });
         });
-    </script>
+
+        // 切换帖子列表
+        $('.feed_menu a').on('click', function() {
+            var type = $(this).data('type');
+            var group_id = "{{$group->id}}";
+            // 清空数据
+            $('#feeds_list').html('');
+
+            // 加载相关微博
+            var params = {
+                type: type,
+                group_id: group_id
+            };
+            scroll.init({
+                container: '#feeds_list',
+                loading: '.feed_content',
+                url: '/group/postLists',
+                params: params
+            });
+
+            // 修改样式
+            $('.feed_menu a').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+        // 获取帖子列表
+        setTimeout(function() {
+            var params = {
+                type: $(this).data('type'),
+                group_id: "{{$group->id}}"
+            };
+            scroll.init({
+                container: '#feeds_list',
+                loading: '.feed_content',
+                url: '/group/postLists',
+                params: params
+            });
+        }, 300);
+
+        // 图片删除事件
+        $(".feed_post").on("click", ".imgdel", function() {
+            $(this).parent().remove();
+            if ($('#file_upload_1-queue').find('.uploadify-queue-item').length == 0) {
+                $('.uploadify-queue-add').remove();
+                $('#file_upload_1-queue').hide();
+            }
+            if ($('#file_upload_1-queue').find('.uploadify-queue-item').length != 0  && $('.uploadify-queue-add').length == 0 ){
+                var add = '<a class="feed_picture_span uploadify-queue-add"></a>'
+                $('.uploadify-queue').append(add);
+            }
+        });
+
+        // 显示回复框
+        $('#feeds_list').on('click', '.J-comment-show', function() {
+            checkLogin();
+            var comment_box = $(this).parent().siblings('.comment_box');
+            if (comment_box.css('display') == 'none') {
+                comment_box.show();
+            } else {
+                comment_box.hide();
+            }
+        });
+
+        // 发布微博
+        var up = $('.post_extra').Huploadify({
+            auto:true,
+            multi:true,
+            newUpload:true,
+            buttonText:'',
+            onUploadSuccess: post.afterUpload
+        });
+    });
+</script>
 @endsection

@@ -193,15 +193,16 @@ var digg={
 var comment = {
     // 初始化回复操作
     initReply: function(obj) {
-        console.log(obj);
-        $('.J-comment-feed' + obj.row_id).attr('to_uid', obj.to_uid);
-        var _textarea = $('#editor_box' + obj.row_id).find('textarea');
-        if (_textarea.size() == 0) _textarea = _textarea.find('input:eq(0)');
-        var html = '回复@' + obj.to_uname + ' ：';
+        var to_uname = $(obj).attr('to_uname');
+        var to_uid = $(obj).attr('to_uid');
+        var row_id = $(obj).attr('row_id');
+        $('#comment_box'+row_id).find('.J-btn').attr('to_uid', to_uid);
+        var editor = $('#editor_box' + row_id).find('textarea');
+        var html = '回复@' + to_uname + ' ：';
         //清空输入框
-        _textarea.val('');
-        _textarea.val(html);
-        _textarea.focus();
+        editor.val('');
+        editor.val(html);
+        editor.focus();
     },
     // 初始化回复操作
     initReadReply: function(obj) {
@@ -216,28 +217,19 @@ var comment = {
     },
 
     // 列表发表评论
-    addComment: function(afterComment, obj) {
+    post: function(obj) {
         var to_uid = $(obj).attr('to_uid') || 0;
         var group_id = $(obj).attr('group_id') || 0;
         var post_id = $(obj).attr('row_id') || 0;
-        var _textarea = $('#editor_box' + post_id).find('textarea');
+        var editor = $('#comment_box' + post_id).find('textarea');
 
-        if (_textarea.size() == 0) {
-            _textarea = $(obj).parent().find('input:eq(0)');
-        }
-        _textarea = _textarea.get(0);
-
-        if ("undefined" != typeof(this.addComment) && (this.addComment == true)) {
-            return false; //不要重复评论
-        }
-        var formData = {
-            body: _textarea.value,
-        };
+        var formData = {body: editor.val()};
         if (to_uid > 0) {
             formData.reply_user = to_uid;
         }
         var url = '/api/v2/groups/' + group_id + '/posts/' + post_id + '/comments';
         obj.innerHTML = '评论中..';
+
         $.ajax({
             url: url,
             type: 'POST',
@@ -249,13 +241,13 @@ var comment = {
                 }
                 var html = '<p class="comment'+res.comment.id+' comment_con">';
                 html += '<span>' + NAME + '：</span>' + formData.body + '';
-                html += '<a class="del_comment" onclick="comment.delComment('+res.comment.id+', '+post_id+');">删除</a>';
+                html += '<a class="del_comment" onclick="comment.delPost('+res.comment.id+', '+post_id+');">删除</a>';
                 html += '</p>';
                 var commentBox = $('#comment_ps' + post_id);
                 var commentNum = $('.cs' + post_id);
                 if ("undefined" != typeof(commentBox)) {
                     commentBox.prepend(html);
-                    _textarea.value = '';
+                    editor.val('');
                     $('.nums').text(initNums);
                     commentNum.text(parseInt(commentNum.text())+1);
                 }
@@ -329,7 +321,7 @@ var comment = {
             }
         });
     },
-    delComment: function(comment_id, post_id) {
+    delPost: function(comment_id, post_id) {
         // 获取group_id
         var urlString = window.location.pathname;
         var urlArray = urlString.split("/");
@@ -341,9 +333,9 @@ var comment = {
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
-                $('#comment_item_'+comment_id).fadeOut();
-                var commentNum = $('.comment_count').text();
-                $('.comment_count').text(parseInt(commentNum)-1);
+                $('.comment'+comment_id).fadeOut();
+                /*var commentNum = $('.comment_count').text();
+                $('.comment_count').text(parseInt(commentNum)-1);*/
                 var nums = $('.cs' + post_id);
                 nums.text(parseInt(nums.text())-1);
             },
