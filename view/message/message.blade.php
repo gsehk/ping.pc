@@ -1,4 +1,5 @@
 
+<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/message.css')}}"/>
 <div class="chat_dialog">
     <div class="chat_content">
         <div class="chat_left">
@@ -11,7 +12,7 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">评论的</span>
-                        <div>缘分评论了我</div>
+                        <div>{{$message['comment']}}评论了我</div>
                     </div>
                 </li>
                 <li @if($type=='zan')class="current_room"@endif data-type="zan">
@@ -22,7 +23,18 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">赞过的</span>
-                        <div>缘分赞了我</div>
+                        <div>{{$message['like']}}赞了我</div>
+                    </div>
+                </li>
+                <li @if($type=='tz')class="current_room"@endif data-type="tz">
+                    <div class="chat_left_icon">
+                        <svg class="icon chat_img" aria-hidden="true">
+                            <use xlink:href="#icon-xihuande-copy"></use>
+                        </svg>
+                    </div>
+                    <div class="left_class">
+                        <span class="chat_span">通知</span>
+                        <div>{{$message['notification']}}</div>
                     </div>
                 </li>
                 {{-- <li @if($type=='at')class="current_room"@endif data-type="at">
@@ -48,34 +60,118 @@
             </ul>
         </div>
         <div class="chat_right message-body">
-            
+            <div class="body-title">评论的</div>
+            <div class="message-content" id="message_content">
+
+            </div>
+
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-$(function(){
-	$('#root_list li').on('click', function(e){
-	$('#root_list li').removeClass('current_room');
-	$(this).addClass('current_room');
-	if ($(this).hasClass('room_item')) {
-		// 聊天室。。。
-	} else {
-		var type = $(this).data('type');
-		getMsgBody(type);
-	}
-})
+<script src="{{ $routes['resource'] }}/js/jquery.min.js"></script>
 
-var getMsgBody = function(type){
-	if (type) {
-		$('.message-body').html(loadHtml);
-		$.get('/webMessage/getBody/'+type, function(html) {
-			var html = JSON.parse(html);
-			$('.message-body').html(html);
-			$("img.lazy").lazyload({effect: "fadeIn"});
-		});
-	}
-};
-getMsgBody('{{$type}}');
-});
+<script type="text/javascript">
+    $(function () {
+        getData('pl');
+
+        // 切换消息类型
+        $('#root_list').on('click', 'li', function () {
+            $(this).hasClass("current_room") || ($(this).addClass("current_room").siblings('.current_room').removeClass('current_room'));
+            var type = $(this).data('type');
+
+            getData(type);
+        });
+
+        /**
+         * 获取消息列表
+         * @param type
+         * @param limit
+         * @param offset
+         */
+        function getData(type) {
+            var title = '';
+            switch(type) {
+                case 'pl': // 评论加载
+                    title = '评论的';
+                    scroll.init({
+                        container: '#message_content',
+                        loading: '.chat_content',
+                        url: '/webmessage/comments',
+                        params: {limit: 10}
+                    });
+
+                    break;
+                case 'zan': // 点赞加载
+                    title = '点赞的';
+                    scroll.init({
+                        container: '#message_content',
+                        loading: '.chat_content',
+                        url: '/webmessage/likes',
+                        params: {limit: 10}
+                    });
+
+                    break;
+                case 'tz': // 通知加载
+                    title = '通知';
+                    scroll.init({
+                        container: '#message_content',
+                        loading: '.chat_content',
+                        url: '/webmessage/notifications',
+                        setting: {loadtype: 1},
+                        params: {limit: 10}
+                    });
+
+                    break;
+            }
+
+            $('.body-title').text(title);
+        }
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{--$(function(){--}}
+	{{--$('#root_list li').on('click', function(e){--}}
+	{{--$('#root_list li').removeClass('current_room');--}}
+	{{--$(this).addClass('current_room');--}}
+	{{--if ($(this).hasClass('room_item')) {--}}
+		{{--// 聊天室。。。--}}
+	{{--} else {--}}
+		{{--var type = $(this).data('type');--}}
+		{{--getMsgBody(type);--}}
+	{{--}--}}
+{{--})--}}
+
+{{--var getMsgBody = function(type){--}}
+	{{--if (type) {--}}
+		{{--$('.message-body').html(loadHtml);--}}
+		{{--$.get('/webMessage/getBody/'+type, function(html) {--}}
+			{{--var html = JSON.parse(html);--}}
+			{{--$('.message-body').html(html);--}}
+			{{--$("img.lazy").lazyload({effect: "fadeIn"});--}}
+		{{--});--}}
+	{{--}--}}
+{{--};--}}
+{{--getMsgBody('{{$type}}');--}}
+{{--});--}}
 </script>

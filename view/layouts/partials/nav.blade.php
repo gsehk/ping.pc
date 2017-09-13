@@ -33,6 +33,11 @@
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qianbao"></use></svg>我的钱包
                     </a>
                 </li>
+                <li>
+                    <a href="javascript:;" onclick="ly.load('{{ route('pc:webmessage') }}', '')" >
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qianbao"></use></svg>我的消息
+                    </a>
+                </li>
                 <li style="border-top: 1px solid #ededed; padding-top: 20px;">
                     <a href="{{ route('pc:mine')}}">个人主页</a>
                 </li>
@@ -53,7 +58,7 @@
     <div class="nav_list clearfix">
         <ul class="navs">
             <li><a href="{{ route('pc:feeds') }}" @if(!empty($current) && $current == 'feeds') class="selected" @endif>动态</a></li>
-            <li><a href="{{ route('pc:question') }}" @if(!empty($current) && $current == 'question') class="selected" @endif>问答</a></li>
+{{--            <li><a href="{{ route('pc:question') }}" @if(!empty($current) && $current == 'question') class="selected" @endif>问答</a></li>--}}
             <li><a href="{{ route('pc:group') }}" @if(!empty($current) && $current == 'group') class="selected" @endif>圈子</a></li>
             <li><a href="{{ route('pc:news') }}" @if(!empty($current) && $current == 'news') class="selected" @endif>资讯</a></li>
             <li><a href="{{ route('pc:users') }}" @if(!empty($current) && $current == 'users') class="selected" @endif>找伙伴</a></li>

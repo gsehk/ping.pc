@@ -1,3 +1,9 @@
+a {
+    text-decoration:none;
+    color: #111;
+    cursor: pointer;
+    outline: none;
+}
 /*任务栏出场动画*/
 
 @keyframes taskbarcome {
@@ -1874,7 +1880,7 @@
 .chat_left {
     float: left;
     overflow: auto;
-    width: 239px;
+    width: 210px;
     height: 573px;
     border-right: 1px solid #ededed;
 }
@@ -1882,21 +1888,98 @@
 .chat_right {
     position: relative;
     float: left;
-    width: 479px;
+    width: 500px;
     height: 575px;
+}
+
+.message-content {
+    padding: 0 15px;
+    height: calc(100% - 100px);
+    overflow: auto;
+}
+
+.message-content .message-one {
+    border-bottom: 1px solid #ededed;
+    min-height: 100px;
+}
+
+.message-content .message-one>dt {
+    width: 55px;
+    padding: 0;
+    margin: 0;
+    height: 80px;
+}
+
+.message-content .message-one>dt>img {
+    width: 40px;
+    margin: 12px 0;
+}
+
+.message-content .message-one>dd {
+    margin-top: -80px;
+    width: calc(100% - 57px);
+    margin-left: 57px;
+}
+
+.message-content .one-title {
+    height: 25px;
+    line-height: 25px;
+    color: #999;
+}
+
+.message-content .one-date {
+    font-size: 13px;
+    color: #CFCFCF;
+    height: 30px;
+    line-height: 30px;
+}
+
+.message-content .one-cotent {
+    line-height: 20px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.message-content .content-comment {
+    line-height: 25px;
+    height: 25px;
+    overflow: hidden;
+}
+
+.feed-content {
+    color: #999;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.feed-content .con-img {
+    width: 43px;
+    float: left;
+    padding: 4px 0;
+}
+
+.feed-content>div>img {
+    width: 35px;
+    height: 35px;
+}
+
+.feed-content .con-con {
+    width: calc(100% - 45px);
 }
 
 .chat_left ul {
     width: 100%;
     height: auto;
     margin: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 .chat_left ul li {
     position: relative;
     width: 100%;
-    height: 63.7px;
-    padding: 12px;
+    height: 66px;
+    padding: 8px 0;
     border-bottom: 1px solid #ededed;
 }
 
@@ -1919,17 +2002,19 @@
 .chat_content {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .left_class {
     float: left;
-    width: 162px;
+    width: 127px;
     margin-left: 12px;
 }
 
 .chat_span {
     font-size: 14px;
     color: #333;
+    line-height: 30px;
 }
 
 .left_class div {
@@ -1939,6 +2024,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #999;
+    line-height: 20px;
 }
 
 .current_room {
@@ -1947,6 +2033,7 @@
 
 .chat_left_icon {
     float: left;
+    padding: 5px 0 0 10px;
 }
 
 .chat_body {
@@ -1969,6 +2056,16 @@
 
 .message-body > .loading {
     margin-top: 50%;
+}
+
+.message-body .body-title {
+    width: 100%;
+    font-size: 16px;
+    height: 66px;
+    padding: 8px 0;
+    text-align: center;
+    border-bottom: 1px solid #ededed;
+    line-height:50px;
 }
 
 .chat_title {
@@ -2119,61 +2216,61 @@
     color: #59b6d7;
 }
 
-.com_list {
-    width: 100%;
-    height: 105px;
-    padding: 18px;
-    border-bottom: 1px solid #ededed;
-}
+/*.com_list {*/
+    /*width: 100%;*/
+    /*height: 105px;*/
+    /*padding: 18px;*/
+    /*border-bottom: 1px solid #ededed;*/
+/*}*/
 
-.com_img {
-    float: left;
-    margin-top: 4px;
-    margin-right: 20px;
-}
+/*.com_img {*/
+    /*float: left;*/
+    /*margin-top: 4px;*/
+    /*margin-right: 20px;*/
+/*}*/
 
-.com_img img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
+/*.com_img img {*/
+    /*width: 40px;*/
+    /*height: 40px;*/
+    /*border-radius: 50%;*/
+/*}*/
 
-.com_center {
-    float: left;
-    width: 255px;
-}
+/*.com_center {*/
+    /*float: left;*/
+    /*width: 255px;*/
+/*}*/
 
-.com_name {
-    font-size: 14px;
-    display: block;
-    color: #333;
-}
+/*.com_name {*/
+    /*font-size: 14px;*/
+    /*display: block;*/
+    /*color: #333;*/
+/*}*/
 
-.com_time {
-    font-size: 14px;
-    color: #ccc;
-}
+/*.com_time {*/
+    /*font-size: 14px;*/
+    /*color: #ccc;*/
+/*}*/
 
-.com_right {
-    float: right;
-}
+/*.com_right {*/
+    /*float: right;*/
+/*}*/
 
-.com_right i {
-    font-size: 24px;
-    margin-right: 15px;
-    color: #fe8e8f;
-}
+/*.com_right i {*/
+    /*font-size: 24px;*/
+    /*margin-right: 15px;*/
+    /*color: #fe8e8f;*/
+/*}*/
 
-.com_subtitle {
-    font-size: 14px;
-    margin: 4px auto 6px;
-    color: #999;
-}
+/*.com_subtitle {*/
+    /*font-size: 14px;*/
+    /*margin: 4px auto 6px;*/
+    /*color: #999;*/
+/*}*/
 
-.comR_img {
-    width: 67px;
-    height: 67px;
-}
+/*.comR_img {*/
+    /*width: 67px;*/
+    /*height: 67px;*/
+/*}*/
 
 .zan_center {
     margin-top: 15px;
@@ -2185,4 +2282,33 @@
 
 .zan_img {
     margin-top: 15px !important;
+}
+
+/*test*/
+body {
+    background-color: rgba(1,1,1,0.2);
+}
+
+
+/*通知*/
+.tz-cont {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tz-cont>li {
+    border-bottom: 1px solid #ededed;
+    padding: 10px 0;
+}
+
+.tz-cont .tz-content {
+    line-height: 25px;
+}
+
+.tz-cont .tz-date {
+    font-size: 13px;
+    color: #CFCFCF;
+    height: 20px;
+    line-height: 20px;
 }

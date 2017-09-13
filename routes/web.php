@@ -153,6 +153,13 @@ Route::prefix('news')->group(function () {
 });
 
 Route::prefix('webmessage')->group(function () {
+    Route::get('/', 'MessageController@index')->name('pc:webmessage');
+    // 评论我的列表
+    Route::get('/comments', 'MessageController@comments')->name('pc:webmessagecomments');
+    // 点赞我的列表
+    Route::get('/likes', 'MessageController@likes')->name('pc:webmessagelikes');
+    // 通知列表
+    Route::get('/notifications', 'MessageController@notifications')->name('pc:webmessagenotifications');
 });
 
 Route::prefix('group')->group(function () {

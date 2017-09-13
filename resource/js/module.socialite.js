@@ -13,6 +13,7 @@ $('#oauth_btn').click(function() {
 
     var type = 'PUT';
     var title = '';
+    console.log(oauthtype);
     if (oauthtype == 'bind') {
         if (login == '') {
             $('input[name="login"]').focus();
@@ -24,13 +25,15 @@ $('#oauth_btn').click(function() {
         }
         title = '绑定';
     } else {
-        if (login == '') {
+        if (name == '') {
             $('input[name="name"]').focus();
             return false;
         }
         type = 'PATCH';
         title = '注册';
     }
+
+    console.log(oauthtype);
 
     $('#auth_form').ajaxSubmit({
         type: type,
