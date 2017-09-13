@@ -1,5 +1,5 @@
-
 <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/message.css')}}"/>
+
 <div class="chat_dialog">
     <div class="chat_content">
         <div class="chat_left">
@@ -61,8 +61,10 @@
         </div>
         <div class="chat_right message-body">
             <div class="body-title">评论的</div>
-            <div class="message-content" id="message_content">
+            <div class="message-content">
+                <div class="message-content-inner" id="message_content">
 
+                </div>
             </div>
 
         </div>
@@ -96,7 +98,7 @@
                     title = '评论的';
                     scroll.init({
                         container: '#message_content',
-                        loading: '.chat_content',
+                        loading: '.message-content-inner',
                         url: '/webmessage/comments',
                         params: {limit: 10}
                     });
@@ -106,7 +108,7 @@
                     title = '点赞的';
                     scroll.init({
                         container: '#message_content',
-                        loading: '.chat_content',
+                        loading: '.message-content-inner',
                         url: '/webmessage/likes',
                         params: {limit: 10}
                     });
@@ -116,7 +118,7 @@
                     title = '通知';
                     scroll.init({
                         container: '#message_content',
-                        loading: '.chat_content',
+                        loading: '.message-content-inner',
                         url: '/webmessage/notifications',
                         setting: {loadtype: 1},
                         params: {limit: 10}

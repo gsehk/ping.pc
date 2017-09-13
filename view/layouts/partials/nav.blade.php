@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;" onclick="ly.load('{{ route('pc:webmessage') }}', '')" >
+                    <a href="javascript:;" onclick="ly.load('{{ route('pc:webmessage') }}', '', '720px', '572px')" >
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qianbao"></use></svg>我的消息
                     </a>
                 </li>
