@@ -1311,6 +1311,7 @@ img.load {
     }
 }
 
+/*  模拟 select */
 .zy_select {
     display: inline-block;
     position: relative;
@@ -1720,3 +1721,71 @@ img.load {
     background-color: #F76C6A;
     border-color: #F76C6A;
 }
+
+/*分享评论*/
+
+.comment_line {
+    margin-top: 5px;
+}
+
+.comment_body {
+    font-size: 12px;
+    color: #999;
+}
+.comment_textarea {
+    margin: 10px 0 10px;
+}
+
+.comment_textarea textarea {
+    width: 100%;
+    height: 78px;
+    padding: 12px;
+    border: 1px solid #ededed;
+    background: #f3f6f7;
+    color: #666;
+    outline: none;
+    resize: none;
+}
+
+.comment_post {
+    line-height: 31px;
+    height: 37px;
+    margin-top: 10px;
+}
+
+.comment_post .post_button {
+    line-height: 32px;
+    float: right;
+    width: 85px;
+    height: 32px;
+    text-align: center;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    background: #59b6d7;
+    /* margin-right: 40px;.del_huifu */
+}
+
+
+.comment_post_nums {
+    font-size: 12px;
+    margin-left: 385px;
+}
+
+.comment_ps p{
+    word-break: break-all;
+    margin-bottom: 16px;
+}
+
+.comment_ps p span {
+    color: #333;
+}
+
+.comment_ps p a {
+    cursor: pointer;
+    display: none;
+    margin-left: 5px;
+    color: #59b6d7;
+}
+
+/*分割线*/
