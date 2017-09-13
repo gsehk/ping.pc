@@ -157,7 +157,9 @@ const NavmanageComponent = {
 
     },
     beforeMount() {
-        this.options.parent_id = this.$route.params.parentId;
+        if (this.$route.params.parentId > 0) {
+          this.options.parent_id = this.$route.params.parentId;
+        }
         if (this.$route.params.navId > 0) {
             this.getNavById(this.$route.params.navId);
         } else {

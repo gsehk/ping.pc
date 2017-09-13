@@ -74,24 +74,23 @@
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" />
             </div>
             <div class="comment_body" id="comment_box{{$post->id}}">
-                <div class="comment_textarea" id="editor_box{{ $post->id }}">
+                <div class="comment_textarea">
                     <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
                         <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                        <a href="javascript:;" class="post_button a_link J-comment-feed" to_uid="0" row_id="{{ $post->id }}">评论</a>
+                        <a class="post_button a_link J-comment-btn" onclick="comment.news(this)" to_uid="0" row_id="{{ $post->id }}">评论</a>
                     </div>
                 </div>
-
-                {{-- <div class="comment_ps" id="comment_ps{{ $post->id }}">
+                <div class="comment_ps" id="comment_wrap{{ $post->id }}">
                 @if($post->comments->count())
                 @foreach($post->comments as $cv)
                 <p class="comment{{$cv->id}} comment_con">
                     <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
                     @if($cv->user_id != $TS['id'])
-                        <a class="J-reply-comment" data-args="to_uname={{ $cv->user['name'] }}&to_uid={{$cv->user_id}}&row_id={{$post->id}}">回复</a>
+                        <a onclick="comment.initReply(this)" to_uname="{{ $cv->user['name'] }}" to_uid="{{$cv->user_id}}" row_id="{{$post->id}}">回复</a>
                     @endif
                     @if($cv->user_id == $TS['id'])
-                        <a class="comment_del" onclick="comment.delComment({{$cv->id}}, {{$post->id}})">删除</a>
+                        <a class="comment_del" onclick="comment.delNews({{$cv->id}}, {{$post->id}})">删除</a>
                     @endif
                 </p>
                 @endforeach
@@ -99,7 +98,7 @@
                 </div>
                 @if($post->comments->count() >= 5)
                 <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
-                @endif --}}
+                @endif
 
             </div>
         </div>
