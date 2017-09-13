@@ -9,11 +9,7 @@
 @section('content')
 <div class="login_container">
     <div class="login_left">
-        <div class="login_hy">欢迎来到ThinkSNS+</div>
-        <div class="login_code">
-            <img src="{{ $routes['resource'] }}/images/login_code.png" />
-        </div>
-        <div class="login_scan">扫描二维码体验APP</div>
+        <img src="@if(isset($config['common']['login_bg'])) {{ $routes['storage'] . $config['common']['login_bg'] }} @else {{ $routes['resource'] }}/images/login_bg.png @endif"/>
     </div>
     <div class="login_right">
         <form method="POST" id="login_form">

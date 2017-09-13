@@ -1,7 +1,8 @@
 <div class="nav nav_border">
     <div class="nav_left">
-        <a href="{{ route('pc:feeds') }}"><img src="{{ asset('zhiyicx/plus-component-pc/images/logo.png') }}" class="nav_logo" /></a>
-        <!-- <span class="nav_beta fs-16">beta</span> -->
+        <a href="{{ route('pc:feeds') }}">
+            <img src="@if(isset($config['common']['logo'])) {{ $routes['storage'] . $config['common']['logo'] }} @else {{ asset('zhiyicx/plus-component-pc/images/logo.png') }} @endif " class="nav_logo" />
+        </a>
     </div>
 
     @if (!empty($TS))
@@ -57,11 +58,21 @@
     
     <div class="nav_list clearfix">
         <ul class="navs">
-            <li><a href="{{ route('pc:feeds') }}" @if(!empty($current) && $current == 'feeds') class="selected" @endif>动态</a></li>
-{{--            <li><a href="{{ route('pc:question') }}" @if(!empty($current) && $current == 'question') class="selected" @endif>问答</a></li>--}}
-            <li><a href="{{ route('pc:group') }}" @if(!empty($current) && $current == 'group') class="selected" @endif>圈子</a></li>
-            <li><a href="{{ route('pc:news') }}" @if(!empty($current) && $current == 'news') class="selected" @endif>资讯</a></li>
-            <li><a href="{{ route('pc:users') }}" @if(!empty($current) && $current == 'users') class="selected" @endif>找伙伴</a></li>
+            @foreach ($config['nav'] as $nav)
+            <li>
+                <a target="{{ $nav->target }}" href="{{ $nav->url }}" @if(!empty($current) && $current == $nav->app_name) class="selected" @endif>{{ $nav->name}} </a>
+                @php
+                    $nav_childs = $nav->items()->get();
+                @endphp
+                @if (!$nav_childs->isEmpty())
+                    <div class="child_navs">
+                    @foreach ($nav_childs as $child)
+                        <a target="{{ $child->target }}" href="{{ $child->url }}">{{ $child->name}} </a>
+                    @endforeach
+                    </div>
+                @endif
+            </li>
+            @endforeach
         </ul>
 
         <div class="nav_search">

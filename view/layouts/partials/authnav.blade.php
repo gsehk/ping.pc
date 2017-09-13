@@ -1,9 +1,9 @@
     <div class="login_head">
         <div class="header">
-            <div class="nav" style=" padding-top: 11px;">
+            <div class="nav">
                 <div class="nav_left">
                     <a href="{{ route('pc:feeds') }}">
-                        <img src="{{ asset('zhiyicx/plus-component-pc/images/logo.png') }}" class="nav_logo" />
+                        <img src="@if(isset($config['common']['logo'])) {{ $routes['storage'] . $config['common']['logo'] }} @else {{ asset('zhiyicx/plus-component-pc/images/logo.png') }} @endif" class="nav_logo" />
                     </a>
                     <!-- <span class="nav_beta fs-16">beta</span> -->
                 </div>

@@ -631,6 +631,13 @@ $(function() {
         setCookie('customer_timezone', gmtHours, 1);
     }
 
+    // 二级导航
+    $('.nav_list .navs li').hover(function(){
+        $(this).find('.child_navs').show();
+    },function(){
+        $(this).find('.child_navs').hide();
+    })
+
     // 个人中心展开
     $('.nav_right').hover(function() {
         $('.nav_menu').toggle();

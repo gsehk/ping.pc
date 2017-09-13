@@ -9,6 +9,11 @@
     margin: auto;
 }
 
+.login_head .header .nav{
+    padding-top: 8px;
+}
+
+
 .login_top {
     position: absolute;
     top: 10px;

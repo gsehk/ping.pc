@@ -3,8 +3,10 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Session;
-use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Zhiyi\Plus\Http\Controllers\Controller;
+use Illuminate\Contracts\Config\Repository;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -38,21 +40,28 @@ class BaseController extends Controller
 			// 站点配置
             $config = Cache::get('config');
 
-            if (!$config) {
+            if ($config) {
                 $config = [];
 
                 // 启动信息
                 $config['bootstrappers'] = createRequest('GET', '/api/v2/bootstrappers/');
 
+                // 基本配置
+                $repository = app(\Illuminate\Contracts\Config\Repository::class);
+                $config['common'] = $repository->get('pc');
+
+                // 导航
+                $config['nav'] = Navigation::byPid(0)->get();
+
                 // 缓存配置信息
                 Cache::forever('config', $config);
             }
 
-	        $this->PlusData['site']['conifg'] = $config;
+	        $this->PlusData['config'] = $config;
 
 	        // 公共地址
             $app_url = getenv('APP_URL');
-            $this->PlusData['routes']['siteurl'] = getenv('APP_URL');
+            $this->PlusData['routes']['siteurl'] = $app_url;
             $this->PlusData['routes']['api'] = $app_url . '/api/v2';
             $this->PlusData['routes']['storage'] = $app_url . '/api/v2/files/';
             $this->PlusData['routes']['resource'] = asset('');

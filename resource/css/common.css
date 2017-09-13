@@ -160,6 +160,8 @@ a {
 }
 
 .nav_logo {
+    width: 64px;
+    height: 64px;
     float: left;
 }
 
@@ -190,6 +192,7 @@ a {
     text-align: center;
     margin-right: 15px;
     transition: all .3s;
+    position: relative;
 }
 
 .nav_list .navs li a {
@@ -217,6 +220,32 @@ a {
 .nav_list .navs li a:hover {
     text-decoration: none;
 }
+
+.nav_list .navs .child_navs{
+    display: none;
+    position: absolute;
+    z-index: 99;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 1px 22px #e2e0e0;
+    min-width: 120px;
+}
+
+.nav_list .navs .child_navs a {
+    display: block;
+    font-size: 14px;
+    margin: 0;
+    padding: 10px;
+    color: #343434;
+    transition: all .1s;
+    border-bottom: none;
+}
+
+.nav_list .navs .child_navs a:hover {
+    color: #59b6d7 !important;
+    border-bottom: none;
+}
+
 
 .nav_list .nav_search {
     position: relative;
