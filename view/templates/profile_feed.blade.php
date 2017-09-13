@@ -243,16 +243,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
                         </a>
                         @endif
                     </li>
-
-                    {{-- @if(!empty($TS['id']) && $post->user_id != $TS['id'])
-                    <li><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>置顶</a></li>
-                    @endif
-
-                    @if(!empty($TS['id']) && $post->user_id != $TS['id'])
-                    <li><a href="javascript:;" onclick="weibo.denounce(this);" feed_id="{{$post->id}}" to_uid="{{$post->user_id}}">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jubao-copy1"></use></svg>举报</a></li>
-                    @endif --}}
-
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
                     <li><a href="javascript:;" onclick="weibo.delFeed({{$post->id}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
                     @endif
@@ -270,7 +260,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
                     <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
                         <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                        <a class="post_button a_link J-comment-feed" onclick="comment.weibo(this);" to_uid="0" row_id="{{ $post->id }}">评论</a>
+                        <a class="post_button a_link J-btn" onclick="comment.weibo(this);" to_uid="0" row_id="{{ $post->id }}">评论</a>
                     </div>
                 </div>
 
@@ -292,7 +282,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
                 @if($post->comments->count() >= 5)
                 <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
                 @endif
-
             </div>
         </div>
         <div class="feed_line"></div>

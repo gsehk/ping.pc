@@ -87,20 +87,17 @@ var digg = {
 var comment = {
     // 初始化回复操作
     initReply: function(obj) {
-        var uname = $(obj).attr('to_uname');
+        var to_uname = $(obj).attr('to_uname');
         var to_uid = $(obj).attr('to_uid');
         var row_id = $(obj).attr('row_id');
-
-        $('.J-comment-feed' + obj.row_id).attr('to_uid', obj.to_uid);
-        var _textarea = $('#editor_box' + obj.row_id).find('textarea');
-        if (_textarea.size() == 0) _textarea = _textarea.find('input:eq(0)');
-        var html = '回复@' + obj.to_uname + ' ：';
+        $('#comment_box'+row_id).find('.J-btn').attr('to_uid', to_uid);
+        var editor = $('#editor_box' + row_id).find('textarea');
+        var html = '回复@' + to_uname + ' ：';
         //清空输入框
-        _textarea.val('');
-        _textarea.val(html);
-        _textarea.focus();
+        editor.val('');
+        editor.val(html);
+        editor.focus();
     },
-
     // 列表发表评论
     weibo: function(obj) {
         var to_uid = $(obj).attr('to_uid') || 0;
@@ -191,8 +188,6 @@ var comment = {
             dataType: 'json',
             success: function(res) {
                 $('.comment'+comment_id).fadeOut();
-                var commentNum = $('.comment_count').text();
-                $('.comment_count').text(parseInt(commentNum)-1);
                 var nums = $('.cs' + feed_id);
                 nums.text(parseInt(nums.text())-1);
             },
@@ -397,11 +392,4 @@ $(function() {
             comment_box.hide();
         }
     });
-
-    // 回复初始化
-    $('#feeds-list').on('click', '.J-reply-comment', function() {
-        var attrs = urlToObject($(this).data('args'));
-        comment.initReply(attrs);
-    });
-
 })

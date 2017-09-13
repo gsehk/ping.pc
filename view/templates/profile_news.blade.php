@@ -78,7 +78,7 @@
                     <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
                         <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                        <a class="post_button a_link J-comment-btn" onclick="comment.news(this)" to_uid="0" row_id="{{ $post->id }}">评论</a>
+                        <a class="post_button a_link J-btn" onclick="comment.news(this)" to_uid="0" row_id="{{ $post->id }}">评论</a>
                     </div>
                 </div>
                 <div class="comment_ps" id="comment_wrap{{ $post->id }}">
