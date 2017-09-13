@@ -197,14 +197,6 @@ $('#J-reward-btn').on('click', function(){
 
 $(document).ready(function(){
     $("img.lazy").lazyload({effect: "fadeIn"});
-
-    $('#j-recent-hot a').hover(function(){
-        $('.list').hide();
-        $('.list'+$(this).attr('cid')).show();
-        $('#j-recent-hot a').removeClass('a_border');
-        $(this).addClass('a_border');
-    });
-
     $('#J-comment-feed').on('click', function(){
         if (MID == 0) {
             window.location.href = '/passport/login';

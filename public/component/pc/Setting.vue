@@ -17,15 +17,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="position">二维码</label>
+          <label class="col-sm-2 control-label" for="position">登录背景图</label>
           <div class="col-sm-4">
-              <Upload :imgs='site.qrcode' @getTask_id="getqrcode_id" @updata='updataImg' />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="name">网站欢迎语</label>
-          <div class="col-sm-6">
-            <input type="text" name="name" class="form-control" id="name" v-model="site.greet">
+              <Upload :imgs='site.loginbg' @getTask_id="getloginbg_id" @updata='updataImg' />
           </div>
         </div>
         <!-- button -->
@@ -71,8 +65,7 @@ const NavmanageComponent = {
     },
     site: {
       logo: '',
-      qrcode: '',
-      greet: '欢迎使用TS+',
+      loginbg: '',
     }
   }),
   methods: {
@@ -108,8 +101,8 @@ const NavmanageComponent = {
     getlogo_id(task_id) {
         this.site.logo = task_id;
     },
-    getqrcode_id (task_id) {
-      this.site.qrcode = task_id;
+    getloginbg_id (task_id) {
+      this.site.loginbg = task_id;
     },
     // 清除图片ID || 任务ID
     updataImg() {

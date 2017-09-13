@@ -139,13 +139,11 @@ class ConfigController extends Controller
     public function get(Request $request, Repository $config, ResponseFactory $response)
     {
 
-        $greet = $config->get('pc.greet', '欢迎使用ThinkSNS+');
-        $qrcode = $config->get('pc.qrcode');
+        $loginbg = $config->get('pc.loginbg');
         $logo = $config->get('pc.logo');
 
         return $response->json([
-            'greet' => $greet,
-            'qrcode' => $qrcode,
+            'loginbg' => $loginbg,
             'logo' => $logo,
         ])->setStatusCode(200);
     }
@@ -158,7 +156,7 @@ class ConfigController extends Controller
     public function updateSiteInfo(Request $request, Configuration $config, ResponseFactory $response)
     {
 
-        $keys = ['greet', 'qrcode', 'logo'];
+        $keys = ['loginbg', 'logo'];
 
         $site = [];
         foreach ($request->only($keys) as $key => $value) {

@@ -146,20 +146,13 @@
             scroll.init({
                 container: '#comment_box',
                 loading: '.feed_left',
-                url: '/group/' + {{$post['group_id']}} + '/post/' + {{$post['id']}} + '/comments' ,
+                url: '/group/{{$post['group_id']}}/post/{{$post['id']}}/comments' ,
                 canload: true
             });
         }, 300);
 
         $(document).ready(function(){
             $("img.lazy").lazyload({effect: "fadeIn"});
-
-            $('#j-recent-hot a').hover(function(){
-                $('.list').hide();
-                $('.list'+$(this).attr('cid')).show();
-                $('#j-recent-hot a').removeClass('a_border');
-                $(this).addClass('a_border');
-            });
 
             $('#J-comment-feed').on('click', function(){
                 if (MID == 0) {
