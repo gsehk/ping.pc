@@ -1,6 +1,11 @@
+@section('title') 问答 @endsection
+@extends('pcview::layouts.default')
 
- @extends('pcview::layouts.default') @section('styles')
-<link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/profile.css') }}" /> @endsection @section('content')
+@section('styles')
+    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/question.css') }}" /> 
+@endsection 
+
+@section('content')
 <div class="question_left_container">
     <div class="question_nav">
         <a href="#">问答</a>
@@ -459,6 +464,20 @@
     <!-- /问答 -->
 </div>
 <div class="right_container">
-    @include('pcview::widgets.hotissues') {{-- @include('pcview::widgets.answerank') --}}
+    {{-- 发布问答 --}}
+    <div class="q_c_post_btn">
+        <a href="{{ route('pc:newsrelease') }}">
+            <span>
+                <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>提问
+            </span>
+        </a>
+    </div>
+
+
+    {{-- 热门问题 --}}
+    @include('pcview::widgets.hotquestions')
+
+    {{-- 问答达人排行 --}}
+    @include('pcview::widgets.questionrank')
 </div>
 @endsection

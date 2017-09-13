@@ -1,7 +1,7 @@
+@if(!$issues->isEmpty())
 <div class="hot-issues">
     <div class="title">热门问题</div>
     <ul class="hot-issues-list">
-        @if(!$issues->isEmpty())
             @foreach($issues as $issue)
                 <li>
                     <div class="rank-num">
@@ -13,8 +13,6 @@
                     </div>
                 </li>
             @endforeach
-        @else
-            <div class="no-issues">暂无相关信息</div>
-        @endif
     </ul>
 </div>
+@endif
