@@ -30,3 +30,9 @@ Route::prefix('nav')->group(function () {
 	Route::post('/manage', 'ConfigController@manage');
 	Route::delete('/del/{nid}', 'ConfigController@delete')->where(['nid'=>'[0-9]+']);
 });
+
+// 基础配置
+Route::prefix('site')->group(function () {
+    Route::get('baseinfo', 'ConfigController@get');
+    Route::patch('baseinfo', 'ConfigController@updateSiteInfo');
+});

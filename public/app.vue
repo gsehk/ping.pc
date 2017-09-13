@@ -32,6 +32,9 @@
 <template>
   <div>
     <ul class="nav nav-tabs component-controller-nav">
+      <router-link to="/setting" tag="li" active-class="active">
+        <a href="#">基础配置</a>
+      </router-link>
       <router-link to="/navmenu" tag="li" active-class="active">
         <a href="#">导航配置</a>
       </router-link>
@@ -56,3 +59,8 @@
     <router-view />
   </div>
 </template>
+<script>
+export default {
+    name: 'Pc'
+}
+</script>

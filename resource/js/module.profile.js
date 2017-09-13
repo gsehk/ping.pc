@@ -85,131 +85,6 @@ var digg = {
  * 核心评论对象
  */
 var comment = {
-    // 初始化评论对象
-    init: function(attrs) {
-        this.row_id = attrs.row_id || 0;
-        this.after = attrs.after || 0;
-        this.to_uid = attrs.to_uid || 0;
-        this.canload = attrs.canload || 1;
-        this.reply_to_user_id = attrs.reply_to_user_id || 0;
-        this.box = attrs.box || '#comment_detail';
-        this.editor = attrs.editor || '#mini_editor';
-
-        this.bindScroll();
-
-        if ($(this.box).length > 0 && this.canload > 0) {
-            $(this.box).append(loadHtml);
-            comment.loadMore();
-        }
-    },
-    // 页面底部触发事件
-    bindScroll: function() {
-        // 底部触发事件绑定
-        $(window).bind('scroll resize', function() {
-            if (comment.canload == true) {
-                var scrollTop = $(this).scrollTop();
-                var scrollHeight = $(document).height();
-                var windowHeight = $(this).height();
-                if (scrollTop + windowHeight == scrollHeight) {
-                    if ($(comment.box).length > 0) {
-                        $(comment.box).append(loadHtml);
-                        comment.loadMore();
-                    }
-                }
-            }
-        });
-    },
-    // 显示回复块
-    loadMore: function() {
-        comment.canload = false;
-        var url = request_url.feed_commnets.replace('{feed_id}', comment.row_id);
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: { after: comment.after},
-            dataType: 'json',
-            error: function(xml) {},
-            success: function(res) {
-                if (res.data.length > 0) {
-                    comment.canload = true;
-                    comment.after = res.after;
-                    var data = res.data,
-                        html = '';
-                    for (var i in data) {
-                        var avatar = data[i].user.avatar ? data[i].user.avatar : defaultAvatar;
-                        html += '<div class="delComment_list">';
-                        html += '<div class="comment_left">';
-                        html += '<img src="' + avatar + '" class="c_leftImg" />';
-                        html += '</div>';
-                        html += '<div class="comment_right">';
-                        html += '<span class="del_ellen">' + data[i].user.name + '</span>';
-                        html += '<span class="c_time">' + data[i].created_at + '</span>';
-                        html += '<i class="icon iconfont icon-gengduo-copy"></i>';
-                        html += '<p class="comment_con">' + data[i].body + '';
-                        html += '<span class="del_huifu">';
-                            if (data[i].user_id != MID) {
-                                html += '<a href="javascript:void(0)" data-args="editor=#mini_editor&box=#comment_detail&to_comment_uname=' + data[i].user.name + '&canload=0&to_uid=' + data[i].user_id + '"';
-                                html += 'class="J-reply-comment">回复</a>';
-                            }
-                            if (data[i].user_id == MID) {
-                                html += '<a href="javascript:void(0)" onclick="comment.delComment('+data[i].id+', '+data[i].commentable_id+')"';
-                                html += 'class="del_comment">删除</a>';
-                            }
-                        html += '</span>';
-                        html += '</p></div></div>';
-                    }
-                    $(comment.box).append(html);
-                    $('.loading').remove();
-                    $('.J-reply-comment').on('click', function() {
-                        var attrs = urlToObject($(this).data('args'));
-                        comment.initReadReply(attrs);
-                    });
-                } else {
-                    comment.canload = false;
-                    $('.loading').html('暂无相关内容');
-                }
-            }
-        });
-    },
-
-    // 显示编辑框
-    display: function(attr) {
-        var feedid = attr.row_id;
-        var editor_box = $('#editor_box' + feedid);
-        var comment_box = $('#comment_box' + feedid);
-        if (editor_box.length > 0) {
-            return false;
-        }
-
-        var boxhtml = '<div class="dyBox_comment" id="editor_box' + feedid + '">' +
-            '<textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, \'nums\');"></textarea>' +
-            '<div class="dy_company">' +
-            /*'<span class="fs-14">'+
-            '<svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-biaoqing"></use></svg>表情</span>'+*/
-            '<span class="dy_cs">可输入<span class="nums">255</span>字</span>' +
-            '<a href="javascript:;" class="dy_share a_link J-comment-feed' + feedid + '" to_uid="0" row_id=' + feedid + '>评论</a>' +
-            '</div>' +
-            '</div>';
-        comment_box.prepend(boxhtml);
-        if (attr.type != 'news') {
-            $('.J-comment-feed' + feedid).on('click', function() {
-                if (MID == 0) {
-                    window.location.href = '/passport/login';
-                    return false;
-                }
-                comment.addComment(null, this);
-            });
-        } else {
-            $('.J-comment-feed' + feedid).on('click', function() {
-                if (MID == 0) {
-                    window.location.href = '/passport/login';
-                    return false;
-                }
-                comment.addNewComment(null, this);
-            });
-        }
-
-    },
     // 初始化回复操作
     initReply: function(obj) {
         $('.J-comment-feed' + obj.row_id).attr('to_uid', obj.to_uid);
@@ -519,16 +394,6 @@ var collect = {
 
 
 $(function() {
-    // 关注
-    $('.infR_time li').hover(function() {
-        var type = $(this).attr('type');
-
-        $(this).siblings().find('a').removeClass('hover');
-        $(this).find('a').addClass('hover');
-
-        $('.dyrBottom div').hide();
-        $('#' + type).show();
-    })
 
     $('.change_cover').on('click', function() {
         $('#cover').click();
@@ -550,38 +415,14 @@ $(function() {
                 }
             });
     });
-
-    // 微博操作菜单
-    $('#feeds-list').on('click', '.options', function() {
-        if ($(this).next('.options_div').css('display') == 'none') {
-            $(this).next('.options_div').show();
-        } else {
-            $(this).next('.options_div').hide();
-        }
-    });
-    // 微博操作菜单
-    $('#content-list').on('click', '.options', function() {
-        if ($(this).next('.options_div').css('display') == 'none') {
-            $('.options_div').hide();
-            $(this).next('.options_div').show();
-        } else {
-            $(this).next('.options_div').hide();
-        }
-    });
-
     // 显示回复框
-    $('#feeds-list, #article-list, #content-list').on('click', '.J-comment-show', function() {
-        alert();
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
-        var attrs = urlToObject($(this).data('args'));
-        if ($(attrs.box).css('display') == 'none') {
-            $(attrs.box).show();
-            comment.display(attrs);
+    $('#feeds_list, #article-list, #content-list').on('click', '.J-comment-show', function() {
+        checkLogin();
+        var comment_box = $(this).parent().siblings('.comment_box');
+        if (comment_box.css('display') == 'none') {
+            comment_box.show();
         } else {
-            $(attrs.box).hide();
+            comment_box.hide();
         }
     });
 
