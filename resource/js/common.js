@@ -116,7 +116,8 @@ var ly = {
         layer.confirm(cont, {
             btn: [cancelBtn, confirmBtn], //按钮
             title: '',
-            area: [width, height]
+            area: [width, height],
+            shadeClose: true
         }, function(){
             layer.closeAll();
         }, callback);
