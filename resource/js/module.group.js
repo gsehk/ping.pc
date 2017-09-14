@@ -141,9 +141,9 @@ var digg={
                     num++;
                     $digg.attr('rel', num);
                     if (page == 'read') {
-                        $('#digg' + post_id).html('<a href="javascript:;" onclick="digg.delDigg(' + post_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
+                        $('#digg' + post_id).html('<a href="javascript:;" onclick="digg.delDigg('+group_id+', '+post_id+', \'read\');" class="act"><svg class="icon"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds"> '+num+'</font>人喜欢</a>');
                     } else {
-                        $('#digg' + post_id).html('<a href="javascript:;" onclick="digg.delDigg(' + post_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>' + num + '</font></a>');
+                        $('#digg' + post_id).html('<a href="javascript:;" onclick="digg.delDigg('+group_id+', '+post_id+');"><svg class="icon"><use xlink:href="#icon-xihuan-red"></use></svg><font> '+num+'</font></a>');
                     }
                 } else {
                     alert(res.message);
@@ -173,9 +173,9 @@ var digg={
                     num--;
                     $digg.attr('rel', num);
                     if (page == 'read') {
-                        $('#digg' + post_id).html('<a href="javascript:;" onclick="digg.addDigg(' + post_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
+                        $('#digg' + post_id).html('<a href="javascript:;" onclick="digg.addDigg('+group_id+', '+post_id+', \'read\');"><svg class="icon"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds"> '+num+'</font>人喜欢</a>');
                     } else {
-                        $('#digg' + post_id).html('<a href="javascript:;" onclick="digg.addDigg(' + post_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>' + num + '</font></a>');
+                        $('#digg' + post_id).html('<a href="javascript:;" onclick="digg.addDigg('+group_id+', '+post_id+');"><svg class="icon"><use xlink:href="#icon-xihuan-white"></use></svg><font> '+num+'</font></a>');
                     }
                 } else {
                     alert(res.message);
@@ -334,10 +334,11 @@ var comment = {
             dataType: 'json',
             success: function(res) {
                 $('.comment'+comment_id).fadeOut();
-                /*var commentNum = $('.comment_count').text();
-                $('.comment_count').text(parseInt(commentNum)-1);*/
-                var nums = $('.cs' + post_id);
-                nums.text(parseInt(nums.text())-1);
+                $('.cs' + post_id).text(parseInt($('.cs' + post_id).text())-1);
+                if ("undefined" != typeof($('#comment_item_'+comment_id))) {
+                    $('#comment_item_'+comment_id).fadeOut();
+                    $('.comment_count').text(parseInt($('.comment_count').text())-1);
+                }
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
@@ -382,9 +383,9 @@ var collect = {
                 num++;
                 $collect.attr('rel', num);
                 if (page == 'read') {
-                    $('#collect' + post_id).html('<a href="javascript:;" onclick="collect.delCollect(' + post_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">' + num + '</font>人收藏</a>');
+                    $('#collect' + post_id).html('<a href="javascript:;" onclick="collect.delCollect('+group_id+', '+post_id+', \'read\');" class="act"><svg class="icon"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs"> '+num+'</font>人收藏</a>');
                 } else {
-                    $('#collect' + post_id).html('<a href="javascript:;" onclick="collect.delCollect(' + post_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
+                    $('#collect' + post_id).html('<a href="javascript:;" onclick="collect.delCollect('+group_id+', '+post_id+');" class="act"><svg class="icon"><use xlink:href="#icon-shoucang-copy"></use></svg> 已收藏</a>');
                 }
 
                 collect.collectlock = 0;
@@ -408,9 +409,9 @@ var collect = {
                 num--;
                 $collect.attr('rel', num);
                 if (page == 'read') {
-                    $('#collect' + post_id).html('<a href="javascript:;" onclick="collect.addCollect(' + post_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">' + num + '</font>人收藏</a>');
+                    $('#collect' + post_id).html('<a href="javascript:;" onclick="collect.addCollect('+group_id+', '+post_id+', \'read\');"><svg class="icon"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs"> '+num+'</font>人收藏</a>');
                 } else {
-                    $('#collect' + post_id).html('<a href="javascript:;" onclick="collect.addCollect(' + post_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
+                    $('#collect' + post_id).html('<a href="javascript:;" onclick="collect.addCollect('+group_id+', '+post_id+');"><svg class="icon"><use xlink:href="#icon-shoucang-copy1"></use></svg> 收藏</a>');
                 }
                 collect.collectlock = 0;
             }

@@ -25,7 +25,7 @@
                     </a>
                 </div>
                 <div class="detail_user_info">
-                    <div class="detail_user_name"><a href="#">{{ $user['name'] }}</a></div>
+                    <div class="detail_user_name"><a href="#">{{ $post->user->name }}</a></div>
                     <div class="detail_time">{{ getTime($post['created_at']) }}</div>
                 </div>
             </div>
@@ -43,30 +43,26 @@
             </div>
 
             <div class="detail_share">
-                <span id="collect{{ $post['id'] }}" rel="{{ $post['collections'] }}">
-                    @if(!$post['has_collection'])
-                        <a href="javascript:;" onclick="collect.addCollect('{{ $post['group_id'] }}', '{{ $post['id'] }}')">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
-                        <font class="cs">{{ $post['collections'] }}</font>收藏
-                    </a>
+                <span id="collect{{ $post['id'] }}" rel="{{ $post->collections }}">
+                    @if($post->has_collection)
+                        <a href="javascript:;" onclick="collect.delCollect('{{ $post['group_id'] }}', '{{ $post['id'] }}', 'read');" class="act">
+                            <svg class="icon"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs"> {{ $post->collections }}</font>收藏
+                        </a>
                     @else
-                        <a href="javascript:;" onclick="collect.delCollect('{{ $post['group_id'] }}', '{{ $post['id'] }}');" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
-                        <font class="cs">{{ $post['collections'] }}</font>收藏
-                    </a>
+                        <a href="javascript:;" onclick="collect.addCollect('{{ $post['group_id'] }}', '{{ $post['id'] }}', 'read')">
+                            <svg class="icon"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs"> {{ $post->collections }}</font>收藏
+                        </a>
                     @endif
                 </span>
-                <span id="digg{{ $post['id'] }}" rel="{{ $post['diggs'] }}">
-                    @if(!$post['has_like'])
-                        <a href="javascript:;" onclick="digg.addDigg('{{ $post['group_id'] }}', '{{ $post['id'] }}');">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                        <font class="ds">{{ $post['diggs'] }}</font>人喜欢
-                    </a>
+                <span id="digg{{ $post['id'] }}" rel="{{ $post->diggs }}">
+                    @if($post->has_like)
+                        <a href="javascript:;" onclick="digg.delDigg('{{ $post['group_id'] }}', '{{ $post['id'] }}', 'read');" class="act">
+                            <svg class="icon"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds"> {{ $post->diggs }}</font>人喜欢
+                        </a>
                     @else
-                        <a href="javascript:;" onclick="digg.delDigg('{{ $post['group_id'] }}', '{{ $post['id'] }}');" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
-                        <font class="ds">{{ $post['diggs'] }}</font>人喜欢
-                    </a>
+                        <a href="javascript:;" onclick="digg.addDigg('{{ $post['group_id'] }}', '{{ $post['id'] }}', 'read');">
+                            <svg class="icon"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds"> {{ $post->diggs }}</font>人喜欢
+                        </a>
                     @endif
                 </span>
                 <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
@@ -108,19 +104,19 @@
             <div class="info clearfix">
                 <div class="auth_header">
                     <a href="#">
-                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                        <img src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" />
                     </a>
                 </div>
                 <div class="auth_info">
                     <div class="info_name">
-                        <a href="#">{{ $user['name'] }}</a>
+                        <a href="#">{{ $post->user->name }}</a>
                     </div>
-                    <p class="info_bio">{{ $user['bio'] or '暂无简介' }}</p>
+                    <p class="info_bio">{{ $post->user->bio or '暂无简介' }}</p>
                 </div>
             </div>
             <ul class="auth_fans">
-                <li>粉丝<a href="javascript:;">{{ $user['followers'] }}</a></li>
-                <li>关注<a href="javascript:;">{{ $user['followers'] }}</a></li>
+                <li>粉丝<a href="javascript:;">{{ $post->user->extra->followers_count }}</a></li>
+                <li>关注<a href="javascript:;">{{ $post->user->extra->followings_count }}</a></li>
             </ul>
         </div>
         <!-- 推荐用户 -->
@@ -134,7 +130,6 @@
 @section('scripts')
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
-    <script src="{{ asset('zhiyicx/plus-component-pc/layer/layer.js') }}"></script>
     <script type="text/javascript">
         layer.photos({
             photos: '#layer-photos-demo'

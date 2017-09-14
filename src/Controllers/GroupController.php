@@ -138,11 +138,7 @@ class GroupController extends BaseController
     {
         $this->PlusData['current'] = 'group';
 
-        $post = createRequest('GET', '/api/v2/groups/'.$group_id.'/posts/'.$post_id);
-        $data['post'] = $post;
-        $data['user'] = $post->user;
-        $data['user']['followers'] = $post->user->followers()->count();
-        $data['user']['followings'] = $post->user->followings()->count();
+        $data['post'] = createRequest('GET', '/api/v2/groups/'.$group_id.'/posts/'.$post_id);
 
         return view('pcview::group.post', $data, $this->PlusData);
     }

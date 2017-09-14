@@ -1797,6 +1797,7 @@ img.load {
     text-align: center;
     color: #fff;
     border: 0;
+    cursor: pointer;
     border-radius: 3px;
     background: #59b6d7;
     /* margin-right: 40px;.del_huifu */

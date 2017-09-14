@@ -19,8 +19,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 <div class="options_div">
                     <ul>
                         <li>
-                            <a href="javascript:;" onclick="comment.delComment({{$comment['id']}}, {{$comment['commentable_id']}});">
-                                <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                            <a href="javascript:;" onclick="comment.delPost({{$comment['id']}}, {{$comment['commentable_id']}});">
+                                <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
                             </a>
                         </li>
                     </ul>
