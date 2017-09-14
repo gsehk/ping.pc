@@ -38,6 +38,7 @@ class ProfileController extends BaseController
 
         $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
         $data['user']->hasFollower = $data['user']->hasFollower($request->user());
+        $this->PlusData['current'] = 'feeds';
 
         return view('pcview::profile.index', $data, $this->PlusData);
     }
@@ -45,7 +46,7 @@ class ProfileController extends BaseController
     /**
      * 投稿文章.
      *
-     * @param  Request $request [description]
+     * @param  Request $request
      * @return mixed
      */
     public function news(Request $request)
@@ -73,11 +74,18 @@ class ProfileController extends BaseController
         }
 
         $data['user'] = $this->PlusData['TS'];
+        $this->PlusData['current'] = 'news';
         $data['type'] = 0;
 
         return view('pcview::profile.news', $data, $this->PlusData);
     }
 
+    /**
+     * 个人收藏.
+     *
+     * @param  Request $request
+     * @return mixed
+     */
     public function collect(Request $request)
     {
         if ($request->ajax()) {
@@ -122,16 +130,42 @@ class ProfileController extends BaseController
         }
 
         $data['user'] = $this->PlusData['TS'];
+        $this->PlusData['current'] = 'collect';
         $data['type'] = 0;
 
         return view('pcview::profile.collect', $data, $this->PlusData);
     }
 
+    /**
+     * 加入的圈子.
+     *
+     * @param  Request     $request
+     * @param  int|integer $user_id
+     * @return mixed
+     */
     public function group(Request $request, int $user_id = 0)
     {
+        if ($request->ajax()) {
+            $params = [
+                'after' => $request->query('after', 0),
+                'user' => $request->query('user', 0),
+            ];
+            $groups = createRequest('GET', '/api/v2/groups', $params);
+            $group = clone $groups;
+            $after = $group->pop()->id ?? 0;
+            $data['group'] = $groups;
+            $groupData = view('pcview::templates.group', $data, $this->PlusData)->render();
+
+            return response()->json([
+                    'status'  => true,
+                    'data' => $groupData,
+                    'after' => $after
+            ]);
+        }
 
         $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
         $data['user']->hasFollower = $data['user']->hasFollower($request->user());
+        $this->PlusData['current'] = 'group';
 
         return view('pcview::profile.group', $data, $this->PlusData);
     }

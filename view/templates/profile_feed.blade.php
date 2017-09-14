@@ -212,20 +212,19 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
             <span class="digg" id="digg{{$post->id}}" rel="{{$post->like_count}}">
                 @if($post->has_like)
                 <a href="javascript:;" onclick="digg.delDigg({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post->like_count}}</font>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font> {{$post->like_count}}</font>
                 </a>
                 @else
                 <a href="javascript:;" onclick="digg.addDigg({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post->like_count}}</font>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font> {{$post->like_count}}</font>
                 </a>
                 @endif
             </span>
             <span class="comment J-comment-show">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}">{{$post->feed_comment_count}}</font>
+                <svg class="icon"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}"> {{$post->feed_comment_count}}</font>
             </span>
             <span class="view">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
-                {{$post->feed_view_count}}
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->feed_view_count}}
             </span>
             <span class="options">
                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>

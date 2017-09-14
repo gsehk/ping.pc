@@ -9,7 +9,7 @@
                     <span>订阅 <font class="mcolor">{{ $item->members_count }}</font></span>
                 </div>
                 <div class="join">
-                    @if ($item->has_join)
+                    @if ($item->is_member)
                         <button class="J-join joined" gid="{{ $item->id }}"  status="1">已加入</button>
                     @else
                         <button class="J-join" gid="{{ $item->id }}"  status="0">+加入</button>

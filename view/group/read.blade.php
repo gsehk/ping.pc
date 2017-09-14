@@ -29,7 +29,7 @@
                                 <span class="count">订阅 <font class="mcolor">{{ $group->members_count }}</font></span>
                             </div>
 
-                            @if ($group->has_join)
+                            @if ($group->is_member)
                                 <div class="group-join" gid="{{ $group->id }}"  status="1">已加入</div>
                             @else
                                 <div class="group-join add-join" gid="{{ $group->id }}"  status="0">+加入</div>

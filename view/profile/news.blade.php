@@ -1,6 +1,4 @@
-@section('title')
-{{ $user['name'] }}的个人主页
-@endsection
+@section('title') {{ $user->name }} 的个人主页@endsection
 
 @extends('pcview::layouts.default')
 
@@ -12,32 +10,32 @@
 <div class="profile_top">
 
     <div class="profile_top_cover">
-        <img class="user_bg" src="{{ $user['bg'] or asset('zhiyicx/plus-component-pc/images/default_cover.png') }}"/>
+        <img class="user_bg" src="{{ $user->bg or asset('zhiyicx/plus-component-pc/images/default_cover.png') }}"/>
     </div>
 
-    @if ($user['id'] == $TS['id'])
+    @if ($user->id == $TS->id)
         <input type="file" name="cover" style="display:none" id="cover">
         <span class="change_cover">更换封面</span>
     @endif
 
     <div class="profile_top_info">
         <div class="profile_top_img">
-            <a href="{{ route('pc:mine', $user['id']) }}">
-                <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}"/>
+            <a href="{{ route('pc:mine', $user->id) }}">
+                <img src="{{ $user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}"/>
             </a>
         </div>
         <div class="profile_top_info_d">
             <div class="profile_top_user">
-                <a href="{{ route('pc:mine', ['user_id' => $user['id']]) }}">{{ $user['name'] }}</a>
-                <span>{{$user['location'] or '未知'}}</span>
+                <a href="{{ route('pc:mine', $user->id) }}">{{ $user->name }}</a>
+                <span>{{$user->location or '未知'}}</span>
             </div>
-            <div class="profile_top_bio">{{ $user['bio'] or '这家伙很懒，什么都没留下'}}</div>
+            <div class="profile_top_bio">{{ $user->bio or '这家伙很懒，什么都没留下'}}</div>
             <div class="profile_top_tags">
-                {{-- @foreach ($user['tags'] as $tag)
-                    <span>{{$tag['name']}}</span>
-                @endforeach --}}
+                @foreach ($user->tags as $tag)
+                    <span>{{$tag->name}}</span>
+                @endforeach
             </div>
-            @if ($user['verified'])
+            @if ($user->verified)
                 <div class="profile_logo_icon">
                     <span><i class="tag_icon"></i>已认证：TS团队成员</span>
                 </div>
@@ -46,15 +44,8 @@
         </div>
     </div>
 
-    <div class="profile_nav clearfix">
-        <ul class="profile_nav_list clearfix">
-            <li><a href="{{ route('pc:mine', $user['id']) }}">主页</a></li>
-            <li><a href="{{ route('pc:profilegroup') }}">圈子</a></li>
-            <li class="active"><a href="{{ route('pc:profilenews') }}">资讯</a></li>
-            <li><a href="{{ route('pc:profilecollect') }}">收藏</a></li>
-        </ul>
-        <a href="{{ route('pc:newsrelease') }}" class="profile_nav_btn">投稿</a>
-    </div>
+    {{-- navbar个人中心导航栏 --}}
+    @include('pcview::profile.navbar')
 
 </div>
 

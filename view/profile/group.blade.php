@@ -1,9 +1,12 @@
-@section('title') {{ $user->name }} 的个人主页@endsection
+@section('title')
+{{ $user->name }}的个人主页
+@endsection
 
 @extends('pcview::layouts.default')
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/profile.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/group.css') }}"/>
 @endsection
 
 @section('content')
@@ -54,12 +57,9 @@
         {{-- 收藏列表 --}}
         <div class="feed_content">
             <div class="feed_menu J-menu">
-                <a class="active" href="javascript:;" cid="1">动态</a>
-                <a href="javascript:;" cid="2">文章</a>
-                {{-- <a href="javascript:;" cid="3">回答</a>
-                <a href="javascript:;" cid="3">活动</a> --}}
+                <a class="active" href="javascript:;" cid="1">@if ($TS->id == $user->id) 我加入的 @else TA加入的 @endif</a>
             </div>
-            <div id="feeds_list" class="feed_box"></div>
+            <div id="feeds_list" class="feed_box clearfix"></div>
         </div>
     </div>
 
@@ -77,25 +77,32 @@ setTimeout(function() {
     scroll.init({
         container: '#feeds_list',
         loading: '.feed_content',
-        url: '/profile/collect',
-        loadtype: 1,
-        params: {cate: 1, limit: 10}
+        url: '/profile/group',
+        params: {user: {{$user->id}} }
     });
 }, 300);
 
-$('.J-menu > a').on('click', function(){
-    var cate = $(this).attr('cid');
+$('#feeds_list').on('click', '.J-join', function(){
 
-    $('#feeds_list').html('');
-    scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
-        url: '/profile/collect',
-        params: {cate: cate }
+    if (MID == 0) {
+        window.location.href = '/passport/login';
+        return;
+    }
+    var _this = this;
+    var status = $(this).attr('status');
+    var group_id = $(this).attr('gid');
+    group(status, group_id, function(){
+        if (status == 1) {
+            $(_this).text('+关注');
+            $(_this).attr('status', 0);
+            $(_this).removeClass('joined');
+        } else {
+            $(_this).text('已加入');
+            $(_this).attr('status', 1);
+            $(_this).addClass('joined');
+        }
     });
-
-    $('.J-menu a').removeClass('active');
-    $(this).addClass('active');
 });
+
 </script>
 @endsection

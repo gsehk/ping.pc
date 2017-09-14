@@ -15,7 +15,7 @@ class SearchController extends BaseController
         return view('pcview::search.index', $data, $this->PlusData);
     }
 
-    public function getData(Request $request) 
+    public function getData(Request $request)
     {
         $type = $request->query('type');
         $limit = $request->query('limit') ?: 9;
@@ -72,19 +72,12 @@ class SearchController extends BaseController
 
                 $datas = createRequest('GET', '/api/v2/groups', $params);
 
-                $datas->map(function($group) use($user) {
-                    $has_join = array_where($group->members->toArray(), function ($value, $key) use ($user) {
-                            return $value['user_id'] === $user;
-                    });
-                    $group->has_join = (bool) $has_join;
-                });
-
                 $data['group'] = $datas;
                 $group = clone $data['group'];
                 $after = $group->pop()->id ?? 0;
                 $html = view('pcview::templates.group', $data, $this->PlusData)->render();
                 break;
-            
+
         }
 
         return response()->json([
@@ -92,6 +85,6 @@ class SearchController extends BaseController
             'data' => $html,
             'count' => count($datas),
             'after' => $after
-        ]);        
+        ]);
     }
 }

@@ -22,7 +22,6 @@ class GroupController extends BaseController
      */
     public function list(Request $request)
     {
-        $user = $this->PlusData['TS']['id'] ?? 0;
         $type = $request->input('type');
         $params = [
             'after' => $request->query('after') ?: 0
@@ -33,13 +32,6 @@ class GroupController extends BaseController
         if ($type == 2) {
             $groups = createRequest('GET', '/api/v2/groups/joined', $params);
         }
-
-        $groups->map(function($group) use($user) {
-            $has_join = array_where($group->members->toArray(), function ($value, $key) use ($user) {
-                    return $value['user_id'] === $user;
-            });
-            $group->has_join = (bool) $has_join;
-        });
 
         $group = clone $groups;
         $after = $group->pop()->id ?? 0;
@@ -68,10 +60,6 @@ class GroupController extends BaseController
         $data['type'] = $request->input('type') ?: ($this->PlusData['TS'] ? 'new' : 'hot');
         $user = $this->PlusData['TS']['id'] ?? 0;
         $group = createRequest('GET', '/api/v2/groups/'.$group_id);
-        $has_join = array_where($group->members->toArray(), function ($value) use ($user) {
-            return $value['user_id'] === $user;
-        });
-        $group->has_join = (bool)$has_join;
 
         $data['group'] = $group;
 
