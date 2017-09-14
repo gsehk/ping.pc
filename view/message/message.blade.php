@@ -82,6 +82,7 @@
          * @param offset
          */
         function getData(type) {
+            $('#message_content').html('');
             var title = '';
             switch(type) {
                 case 'pl': // 评论加载
