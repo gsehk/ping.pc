@@ -1835,6 +1835,7 @@ img.load {
 .layui_exit_body {
     padding: 55px 55px 40px;
     text-align: center;
+    color: #999;
 }
 .layui-layer-btn- {
     width: 100% !important;

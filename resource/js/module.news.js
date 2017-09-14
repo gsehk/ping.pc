@@ -1,25 +1,4 @@
-﻿
-
-// 认证提示
-var goVerified = function() {
-
-    var html = '<div class="modal-body layui_exit_body">'
-        + '<div class="exit_ts">投稿提示</div>'
-        + '<div class="exit_thinks">成功通过平台认证的用户才能投稿，是否去认证？</div>'
-        + '</div>';
-
-    layer.confirm(html, {
-        btn: ['取消','去认证'], //按钮
-        title: '',
-        area: ['360px']
-    }, function(){
-        layer.closeAll();
-    }, function(){
-        window.location.href = '/account/authenticate';
-    });
-};
-
-/**
+﻿/**
  * 文章投稿。
  */
 $('.subject-submit').on('click', function() {
@@ -70,23 +49,16 @@ $('.subject-submit').on('click', function() {
         var pay_conyribute = (parseInt(notice.pay_conyribute)/10).toFixed(1);
 
         if (isVerified > -1 && notice.verified == null) {
-            goVerified();
+
+            ly.confirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？', '' , '去认证', function(){
+                window.location.href = '/account/authenticate';
+            });
 
             return false;
         } else if (isPay > -1) {
-            var html = '<div class="modal-body layui_exit_body">'
-                + '<div class="exit_ts">投稿提示</div>'
-                + '<div class="exit_money">￥'+pay_conyribute+'</div>'
-                + '<div class="exit_thinks">本次投稿您需要支付￥'+pay_conyribute+'元，是否继续投稿？</div>'
-                + '</div>';
 
-            layer.confirm(html, {
-                btn: ['取消','投稿'], //按钮
-                title: '',
-                area: ['360px']
-            }, function(){
-                layer.closeAll();
-            }, function(){
+            var html = '<div class="exit_money">￥'+pay_conyribute+'</div>本次投稿您需要支付￥'+pay_conyribute+'元，是否继续投稿？';
+            ly.confirm('投稿提示', html, '' , '投稿', function(){
                 var url = '/api/v2/news/categories/'+args.cate_id+'/news';
                 $.ajax({
                     url: url,

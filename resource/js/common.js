@@ -102,6 +102,24 @@ var ly = {
             shade:0.5,
             content: html,
         });
+    },
+    confirm: function (title, html, cancelBtn, confirmBtn, callback, width, height) {
+        var cont = '<div class="modal-body layui_exit_body">'
+            + (title ? '<div class="exit_ts">'+title+'</div>' : '')
+            + (html ? html : '是否确认操作？')
+            + '</div>';
+
+        cancelBtn = cancelBtn || '取消';
+        confirmBtn = confirmBtn || '确认';
+        width = width || '360px';
+        height = height || 'auto';
+        layer.confirm(cont, {
+            btn: [cancelBtn, confirmBtn], //按钮
+            title: '',
+            area: [width, height]
+        }, function(){
+            layer.closeAll();
+        }, callback);
     }
 };
 
