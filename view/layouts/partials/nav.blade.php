@@ -61,7 +61,7 @@
     <div class="nav_list clearfix">
         {{-- 导航 --}}
         <ul class="navs">
-            @if ($config['nav']->isEmpty())
+            @if (!$config['nav']->isEmpty())
             @foreach ($config['nav'] as $nav)
             <li>
                 <a target="{{ $nav->target }}" href="{{ $nav->url }}" @if(!empty($current) && $current == $nav->app_name) class="selected" @endif>{{ $nav->name}} </a>
