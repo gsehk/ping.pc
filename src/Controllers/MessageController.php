@@ -78,7 +78,7 @@ class MessageController extends BaseController
     public function likes(Request $request)
     {
         $after = $request->input('after') ?: 0;
-        $limit = $request->input('limit') ?: 0;
+        $limit = $request->input('limit') ?: 10;
         $data['likes'] = createRequest('GET', '/api/v2/user/likes', ['after' => $after, 'limit' => $limit]);
         $return = '';
         if (!$data['likes']->isEmpty()) {
@@ -122,12 +122,41 @@ class MessageController extends BaseController
     public function notifications(Request $request)
     {
         $offset = $request->input('offset') ?: 0;
-        $limit = $request->input('limit') ?: 0;
+        $limit = $request->input('limit') ?: 10;
         $data['notifications'] = createRequest('GET', '/api/v2/user/notifications', ['offset' => $offset, 'limit' => $limit]);
         $return = '';
         if (!$data['notifications']->isEmpty()) {
             $return = view('pcview::message.notifications', $data, $this->PlusData)->render();
         }
+
+        return response()->json([
+            'status'  => true,
+            'data' => $return,
+        ]);
+    }
+
+    public function feedCommentTop(Request $request)
+    {
+        $after = $request->input('after') ?: 0;
+        $limit = $request->input('limit') ?: 10;
+        $data['comments'] = createRequest('GET', '/api/v2/user/feed-comment-pinneds', ['after' => $after, 'limit' => $limit]);
+        $return = view('pcview::message.feedcomment_top', $data, $this->PlusData)->render();
+
+        return response()->json([
+            'status'  => true,
+            'data' => $return,
+        ]);
+    }
+
+    public function newsCommentTop(Request $request)
+    {
+        $after = $request->input('after') ?: 0;
+        $limit = $request->input('limit') ?: 10;
+        $data['comments'] = createRequest('GET', '/api/v2/news/comments/pinneds', ['after' => $after, 'limit' => $limit]);
+
+//        dd($data['comments']->toArray());
+
+        $return = view('pcview::message.feedcomment_top', $data, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,

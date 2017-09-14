@@ -12,7 +12,7 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">评论的</span>
-                        <div>{{isset($message['comment']) && $message['comment'].'评论了我'}}</div>
+                        <div>{{isset($message['comment']) ? $message['comment'].'评论了我' : ''}}</div>
                     </div>
                 </li>
                 <li @if($type=='zan')class="current_room"@endif data-type="zan">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">赞过的</span>
-                        <div>{{isset($message['like']) && $message['like'].'赞了我'}}</div>
+                        <div>{{isset($message['like']) ? $message['like'].'赞了我' : ''}}</div>
                     </div>
                 </li>
                 <li @if($type=='tz')class="current_room"@endif data-type="tz">
@@ -34,7 +34,18 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">通知</span>
-                        <div>{{isset($message['notification']) && $message['notification']}}</div>
+                        <div>{{isset($message['notification']) ? $message['notification'] : ''}}</div>
+                    </div>
+                </li>
+                <li @if($type == 'feed_comment')class="current_room"@endif data-type="feed_comment">
+                    <div class="chat_left_icon">
+                        <svg class="icon chat_img" aria-hidden="true">
+                            <use xlink:href="#icon-xihuande-copy"></use>
+                        </svg>
+                    </div>
+                    <div class="left_class">
+                        <span class="chat_span">审核通知</span>
+                        <div>审核通知</div>
                     </div>
                 </li>
 
@@ -50,7 +61,20 @@
             </ul>
         </div>
         <div class="chat_right message-body">
+            {{--<div class="body-title">评论的</div>--}}
             <div class="body-title">评论的</div>
+
+            <div class="audit-top display">
+                <div data-value="" class="zy_select t_c gap12 message_select">
+                    <span>动态评论置顶</span>
+                    <ul>
+                        <li data-value="feed_comment" class="active">动态评论置顶</li>
+                        <li data-value="news_comment">文章评论置顶</li>
+                    </ul>
+                    <i></i>
+                </div>
+            </div>
+
             <div class="message-content">
                 <div class="message-content-inner" id="message_content">
 
@@ -65,6 +89,34 @@
 
 <script type="text/javascript">
     $(function () {
+        var body_title = $('.body-title');
+        var audit_top = $('.audit-top');
+        var select = $(".message_select");
+
+
+
+
+        select.on("click", function(e){
+            e.stopPropagation();
+            return !($(this).hasClass("open")) ? $(this).addClass("open") : $(this).removeClass("open");
+        });
+
+        select.on("click", "li", function(e){
+            e.stopPropagation();
+            var $this = $(this).parent("ul");
+            $(this).addClass("active").siblings(".active").removeClass("active");
+            $this.prev('span').html($(this).html());
+            $this.parent(".zy_select").removeClass("open");
+            $this.parent(".zy_select").data("value", $(this).data("value"));
+
+
+            getData($(this).data("value"));
+        });
+
+        $(document).click(function() {
+            select.removeClass("open");
+        });
+
         getData('pl');
 
         // 切换消息类型
@@ -93,6 +145,9 @@
                         url: '/webmessage/comments',
                         params: {limit: 10}
                     });
+                    body_title.html(title);
+                    body_title.removeClass('display');
+                    audit_top.addClass('display');
 
                     break;
                 case 'zan': // 点赞加载
@@ -103,6 +158,9 @@
                         url: '/webmessage/likes',
                         params: {limit: 10}
                     });
+                    body_title.html(title);
+                    body_title.removeClass('display');
+                    audit_top.addClass('display');
 
                     break;
                 case 'tz': // 通知加载
@@ -114,11 +172,39 @@
                         setting: {loadtype: 1},
                         params: {limit: 10}
                     });
+                    body_title.html(title);
+                    body_title.removeClass('display');
+                    audit_top.addClass('display');
+                    break;
+                case 'feed_comment': // 通知加载
+
+                    scroll.init({
+                        container: '#message_content',
+                        loading: '.message-content-inner',
+                        url: '/webmessage/feedCommentTop',
+                        params: {limit: 10}
+                    });
+                    body_title.addClass('display');
+                    audit_top.removeClass('display');
+
+                    break;
+
+                case 'news_comment': // 通知加载
+
+                    scroll.init({
+                        container: '#message_content',
+                        loading: '.message-content-inner',
+                        url: '/webmessage/newsCommentTop',
+                        params: {limit: 10}
+                    });
+
+                    body_title.addClass('display');
+                    audit_top.removeClass('display');
 
                     break;
             }
 
-            $('.body-title').text(title);
+
         }
 
     });

@@ -1851,3 +1851,41 @@ img.load {
     border: 1px solid #ccc;
     width: 100%;
 }
+
+
+/*消息select*/
+.message_select {
+
+}
+
+.comment-audit {
+    width: 100%;
+    margin: 10px 0 20px;
+}
+
+.comment-audit a {
+    color: #999;
+}
+
+.comment-audit a.green {
+    color: #4CB994;
+    margin-right: 20px;
+}
+
+.message-content .top-comment {
+    line-height: 25px;
+}
+
+.audit-top {
+    width: 100%;
+    font-size: 16px;
+    height: 66px;
+    padding: 8px 0;
+    text-align: center;
+    border-bottom: 1px solid #ededed;
+    line-height: 50px;
+}
+
+.display {
+    display: none;
+}

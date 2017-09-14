@@ -137,6 +137,11 @@ Route::prefix('webmessage')->group(function () {
     Route::get('/likes', 'MessageController@likes')->name('pc:webmessagelikes');
     // 通知列表
     Route::get('/notifications', 'MessageController@notifications')->name('pc:webmessagenotifications');
+    // 动态评论置顶消息列表
+    Route::get('/feedCommentTop', 'MessageController@feedCommentTop')->name('pc:webmessagefeedcomment');
+    // 文章评论置顶消息列表
+    Route::get('/newsCommentTop', 'MessageController@newsCommentTop')->name('pc:webmessagenewscomment');
+
 });
 
 Route::prefix('group')->group(function () {

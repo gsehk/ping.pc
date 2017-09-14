@@ -7,7 +7,7 @@
         <dl class="message-one">
             <dt><img src="{{$comment['user']['avatar']}}"></dt>
             <dd>
-                <div class="one-title"><a href="javascript:">{{$comment['user']['name']}}</a>{{$comment['source_type']}}</div>
+                <div class="one-title"><a href="/profile/{{$comment['user']['id']}}">{{$comment['user']['name']}}</a>{{$comment['source_type']}}</div>
                 <div class="one-date">{{ getTime($comment['created_at']) }}</div>
 
                 <a href="{{$comment['source_url']}}" class="one-cotent">

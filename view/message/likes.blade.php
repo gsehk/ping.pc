@@ -7,7 +7,7 @@
         <dl class="message-one">
             <dt><img src="{{$like['user']['avatar']}}"></dt>
             <dd>
-                <div class="one-title"><a href="javascript:">{{$like['user']['name']}}</a>{{$like['source_type']}}</div>
+                <div class="one-title"><a href="/profile/{{$like['user']['id']}}">{{$like['user']['name']}}</a>{{$like['source_type']}}</div>
                 <div class="one-date">{{ getTime($like['created_at']) }}</div>
 
                 <a href="{{$like['source_url']}}" class="one-cotent">
