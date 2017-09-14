@@ -39,7 +39,7 @@ class UserController extends BaseController
                 'status'  => true,
                 'data' => $html,
                 'count' => count($users)
-            ]);        
+            ]);
         }
 
         $data['type'] = $type;

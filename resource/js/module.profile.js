@@ -11,13 +11,8 @@ var digg = {
     init: function() {
         digg.digglock = 0;
     },
-    addDigg: function(feed_id, page) {
-        // 未登录弹出弹出层
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
-
+    addDigg: function(feed_id) {
+        checkLogin();
         if (digg.digglock == 1) {
             return false;
         }
@@ -35,21 +30,16 @@ var digg = {
                     var num = $digg.attr('rel');
                     num++;
                     $digg.attr('rel', num);
-                    if (page == 'read') {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
-                    } else {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>' + num + '</font></a>');
-                    }
+                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font> '+num+'</font></a>');
                 } else {
                     alert(res.message);
                 }
-
                 digg.digglock = 0;
             }
         });
 
     },
-    delDigg: function(feed_id, page) {
+    delDigg: function(feed_id) {
         if (digg.digglock == 1) {
             return false;
         }
@@ -67,15 +57,10 @@ var digg = {
                     var num = $digg.attr('rel');
                     num--;
                     $digg.attr('rel', num);
-                    if (page == 'read') {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
-                    } else {
-                        $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>' + num + '</font></a>');
-                    }
+                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font> '+num+'</font></a>');
                 } else {
                     alert(res.message);
                 }
-
                 digg.digglock = 0;
             }
         });
@@ -118,17 +103,16 @@ var comment = {
             success: function(res) {
                 if (obj != undefined) {
                     obj.innerHTML = '评论';
+                    editor.val('');
                 }
                 var html = '<p class="comment'+res.comment.id+' comment_con">';
                     html += '<span>' + NAME + '：</span>' + formData.body + '';
                     html += '<a class="del_comment" onclick="comment.delWeibo('+res.comment.id+', '+feedid+');">删除</a>';
                     html += '</p>';
                 var commentBox = $('#comment_ps' + feedid);
-                var commentNum = $('.cs' + feedid);
                     commentBox.prepend(html);
-                    editor.val('');
                     $('.nums').text(initNums);
-                    commentNum.text(parseInt(commentNum.text())+1);
+                    $('.cs' + feedid).text(parseInt($('.cs' + feedid).text())+1);
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
@@ -165,6 +149,7 @@ var comment = {
                 if (xml.status == 201) {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
+                        editor.val('');
                     }
                     var html = '<p class="comment'+res.comment.id+' comment_con">';
                     html += '<span>' + NAME + '：</span>' + formData.body + '';
@@ -172,8 +157,8 @@ var comment = {
                     html += '</p>';
                     var commentBox = $('#comment_wrap' + newsid);
                         commentBox.prepend(html);
-                        editor.val('');
                         $('.nums').text(initNums);
+                        $('.cs'+newsid).text(parseInt($('.cs'+newsid).text())+1);
                 } else {
                     noticebox(res.message, 0);
                 }
@@ -224,83 +209,67 @@ var collect = {
     init: function() {
         collect.collectlock = 0;
     },
-    addCollect: function(feed_id, page) {
-        // 未登录弹出弹出层
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
-
+    weibo: function(feed_id, page) {
+        checkLogin();
         if (collect.collectlock == 1) {
             return false;
         }
         collect.collectlock = 1;
 
-        var url = request_url.collect_feed.replace('{feed_id}', feed_id);
+        var url = '/api/v2/feeds/' + feed_id + '/collections';
 
         $.ajax({
             url: url,
             type: 'POST',
             dataType: 'json',
-            error: function(xml) {},
-            success: function(res) {
-                if (res.status == true) {
-                    $collect = $('#collect' + feed_id);
-                    var num = $collect.attr('rel');
-                    num++;
-                    $collect.attr('rel', num);
-                    if (page == 'read') {
-                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="collect_num">' + num + '</font>人收藏</a>');
-                    } else {
-                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
-                    }
+            success: function(res, data, xml) {
+                $collect = $('#collect' + feed_id);
+                var num = $collect.attr('rel');
+                num++;
+                $collect.attr('rel', num);
+                if (page == 'read') {
+                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect('+feed_id+ ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs"> '+num+'</font>人收藏</a>');
                 } else {
-                    noticebox(res.message, 0);
+                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect('+feed_id+');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
                 }
 
                 collect.collectlock = 0;
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
             }
         });
 
     },
-    delCollect: function(feed_id, page) {
-
+    delWeibo: function(feed_id, page) {
         if (collect.collectlock == 1) {
             return false;
         }
         collect.collectlock = 1;
-        var url = request_url.del_collect_feed.replace('{feed_id}', feed_id);
+        var url = '/api/v2/feeds/' + feed_id + '/uncollect'
         $.ajax({
             url: url,
             type: 'DELETE',
             dataType: 'json',
-            error: function(xml) {},
             success: function(res, data, xml) {
-                if (xml.status == 204) {
-                    $collect = $('#collect' + feed_id);
-                    var num = $collect.attr('rel');
-                    num--;
-                    $collect.attr('rel', num);
-                    if (page == 'read') {
-                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="collect_num">' + num + '</font>人收藏</a>');
-                    } else {
-                        $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
-                    }
+                $collect = $('#collect' + feed_id);
+                var num = $collect.attr('rel');
+                num--;
+                $collect.attr('rel', num);
+                if (page == 'read') {
+                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect('+feed_id+', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs"> '+num+'</font>人收藏</a>');
                 } else {
-                    noticebox(res.message, 0);
+                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect('+feed_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
                 }
-
                 collect.collectlock = 0;
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
             }
         });
     },
-    addNewsCollect: function(news_id) {
-        // 未登录弹出弹出层
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
-
+    news: function(news_id) {
+        checkLogin();
         if (collect.collectlock == 1) {
             return false;
         }
@@ -319,18 +288,16 @@ var collect = {
                     var num = $collect.attr('rel');
                     num++;
                     $collect.attr('rel', num);
-                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.delNewsCollect(' + news_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos">' + num + '</font></a>');
+                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.delNews('+news_id+');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cos"> '+num+'</font></a>');
                 } else {
                     noticebox(res.message, 0);
                 }
-
                 collect.collectlock = 0;
             }
         });
 
     },
-    delNewsCollect: function(news_id) {
-
+    delNews: function(news_id) {
         if (collect.collectlock == 1) {
             return false;
         }
@@ -347,18 +314,43 @@ var collect = {
                     var num = $collect.attr('rel');
                     num--;
                     $collect.attr('rel', num);
-                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.addNewsCollect(' + news_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cos">' + num + '</font></a>');
+                    $('#collect' + news_id).html('<a href="javascript:;" onclick="collect.news('+news_id+');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cos"> '+num+'</font></a>');
                 } else {
                     noticebox(res.message, 0);
                 }
-
                 collect.collectlock = 0;
             }
         });
     }
 };
 
+/**
+ * 微博操作
+ * @type {Object}
+ */
+var weibo = {
+    delete : function(feed_id) {
+        layer.confirm('确定删除这条信息？', {icon: 3}, function(index) {
+            var url = '/api/v2/feeds/' + feed_id;
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                dataType: 'json',
+                success: function(res) {
+                    $('#feed' + feed_id).fadeOut();
+                    layer.close(index);
+                },
+                error: function(xhr){
+                    showError(xhr.responseJSON);
+                }
+            });
+        });
+    }
+}
 
+var news = {
+
+};
 
 $(function() {
 

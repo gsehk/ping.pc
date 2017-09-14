@@ -49,6 +49,7 @@
     <div class="profile_nav clearfix">
         <ul class="profile_nav_list clearfix">
             <li><a href="{{ route('pc:mine', $user['id']) }}">主页</a></li>
+            <li><a href="{{ route('pc:profilegroup') }}">圈子</a></li>
             <li><a href="{{ route('pc:profilenews') }}">资讯</a></li>
             <li class="active"><a href="{{ route('pc:profilecollect') }}">收藏</a></li>
         </ul>
@@ -86,7 +87,8 @@ setTimeout(function() {
         container: '#feeds_list',
         loading: '.feed_content',
         url: '/profile/collect',
-        params: {cate: 1 }
+        loadtype: 1,
+        params: {cate: 1, limit: 10}
     });
 }, 300);
 

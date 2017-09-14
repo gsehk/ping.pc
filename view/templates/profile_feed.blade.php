@@ -5,13 +5,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 
 @if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
-<div class="feed_item">
+<div class="feed_item" id="feed{{$post->id}}">
 
     <span class="feed_time">
         @if(date('Y-m-d') == date('Y-m-d', strtotime($post->created_at)))
             今天
         @else
-            <a href="{{ route('pc:feedread', ['feed' => $post->id]) }}">
+            <a href="{{ route('pc:feedread', $post->id) }}">
             <span class="profile_time">
                 <sup style="font-size:90%">{{date('m', strtotime($post->created_at))}}</sup>
                 <sub style="font-size:60%">{{date('d', strtotime($post->created_at))}} </sub>
@@ -234,17 +234,21 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
                 <ul>
                     <li id="collect{{$post->id}}" rel="0">
                         @if($post->has_collect)
-                        <a href="javascript:;" onclick="collect.delCollect({{$post->id}});" class="act">
+                        <a href="javascript:;" onclick="collect.delWeibo({{$post->id}});" class="act">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
                         </a>
                         @else
-                        <a href="javascript:;" onclick="collect.addCollect({{$post->id}});">
+                        <a href="javascript:;" onclick="collect.weibo({{$post->id}});">
                           <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
                         </a>
                         @endif
                     </li>
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
-                    <li><a href="javascript:;" onclick="weibo.delFeed({{$post->id}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
+                    <li>
+                        <a href="javascript:;" onclick="weibo.delete({{$post->id}});">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                        </a>
+                    </li>
                     @endif
                 </ul>
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />

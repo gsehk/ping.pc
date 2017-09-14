@@ -203,21 +203,20 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
         <div class="feed_datas">
             <span class="digg" id="digg{{$post->id}}" rel="{{$post->like_count}}">
                 @if($post->has_like)
-                <a href="javascript:;" onclick="digg.delDigg({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post->like_count}}</font>
-                </a>
+                  <a href="javascript:;" onclick="digg.delDigg({{$post->id}})">
+                      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font> {{$post->like_count}}</font>
+                  </a>
                 @else
-                <a href="javascript:;" onclick="digg.addDigg({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post->like_count}}</font>
-                </a>
+                  <a href="javascript:;" onclick="digg.addDigg({{$post->id}})">
+                      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font> {{$post->like_count}}</font>
+                  </a>
                 @endif
             </span>
             <span class="comment J-comment-show">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}">{{$post->feed_comment_count}}</font>
+                <svg class="icon"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}"> {{$post->feed_comment_count}}</font>
             </span>
             <span class="view">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
-                {{$post->feed_view_count}}
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->feed_view_count}}
             </span>
             <span class="options">
                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
@@ -226,17 +225,21 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 <ul>
                     <li id="collect{{$post->id}}" rel="0">
                         @if($post->has_collect)
-                        <a href="javascript:;" onclick="collect.delCollect({{$post->id}});" class="act">
+                        <a href="javascript:;" onclick="collect.delWeibo({{$post->id}});" class="act">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
                         </a>
                         @else
-                        <a href="javascript:;" onclick="collect.addCollect({{$post->id}});">
+                        <a href="javascript:;" onclick="collect.weibo({{$post->id}});">
                           <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
                         </a>
                         @endif
                     </li>
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
-                    <li><a href="javascript:;" onclick="weibo.delFeed({{$post->id}});"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
+                      <li>
+                          <a href="javascript:;" onclick="weibo.delete({{$post->id}});">
+                              <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                          </a>
+                      </li>
                     @endif
                 </ul>
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
@@ -251,28 +254,33 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 <div class="comment_textarea" id="editor_box{{ $post->id }}">
                     <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
-                        <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
+                        <span class="dy_cs">可输入<span class="nums mcolor">255</span>字</span>
                         <a class="post_button a_link J-btn" onclick="comment.weibo(this);" to_uid="0" row_id="{{ $post->id }}">评论</a>
                     </div>
                 </div>
 
                 <div class="comment_ps" id="comment_ps{{ $post->id }}">
                 @if($post->comments->count())
-                @foreach($post->comments as $cv)
-                <p class="comment{{$cv->id}} comment_con">
-                    <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
-                    @if($cv->user_id != $TS['id'])
-                        <a onclick="comment.initReply(this)" to_uname="{{ $cv->user['name'] }}" to_uid="{{$cv->user_id}}" row_id="{{$post->id}}">回复</a>
-                    @endif
-                    @if($cv->user_id == $TS['id'])
-                        <a class="comment_del" onclick="comment.delWeibo({{$cv->id}}, {{$post->id}})">删除</a>
-                    @endif
-                </p>
-                @endforeach
+                  @foreach($post->comments as $cv)
+                  <p class="comment{{$cv->id}} comment_con">
+                      <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                        @if($cv->user_id != $TS['id'])
+                            <a
+                              onclick="comment.initReply(this)"
+                              to_uname="{{ $cv->user['name'] }}"
+                              to_uid="{{$cv->user_id}}"
+                              row_id="{{$post->id}}"
+                            >回复</a>
+                        @endif
+                      @if($cv->user_id == $TS['id'])
+                          <a class="comment_del" onclick="comment.delWeibo({{$cv->id}}, {{$post->id}})">删除</a>
+                      @endif
+                  </p>
+                  @endforeach
                 @endif
                 </div>
                 @if($post->comments->count() >= 5)
-                <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
+                  <div class="comit_all fs-12"><a href="{{ Route('pc:feedread', $post->id) }}">查看全部评论</a></div>
                 @endif
             </div>
         </div>

@@ -81,12 +81,13 @@ class ProfileController extends BaseController
     public function collect(Request $request)
     {
         if ($request->ajax()) {
-            $params = [
-                'after' => $request->query('after', 0)
-            ];
             $cate = $request->query('cate', 1);
             switch ($cate) {
                 case 1:
+                    $params = [
+                        'offset' => $request->query('offset', 0),
+                        'limit' => $request->query('limit'),
+                    ];
                     $feeds = createRequest('GET', '/api/v2/feeds/collections', $params);
                     $feed = clone $feeds;
                     $after = $feed->pop()->id ?? 0;
@@ -94,6 +95,10 @@ class ProfileController extends BaseController
                     $html = view('pcview::templates.collect_feeds', $data, $this->PlusData)->render();
                     break;
                 case 2:
+                    $params = [
+                        'after' => $request->query('after', 0),
+                        'limit' => $request->query('limit', 10),
+                    ];
                     $news = createRequest('GET', '/api/v2/news/collections', $params);
                     $news->map(function($item){
                         $item->collection_count = $item->collections->count();
@@ -120,6 +125,15 @@ class ProfileController extends BaseController
         $data['type'] = 0;
 
         return view('pcview::profile.collect', $data, $this->PlusData);
+    }
+
+    public function group(Request $request, int $user_id = 0)
+    {
+
+        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
+        $data['user']->hasFollower = $data['user']->hasFollower($request->user());
+
+        return view('pcview::profile.group', $data, $this->PlusData);
     }
 
 }

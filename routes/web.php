@@ -98,6 +98,9 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     // 收藏
     Route::get('collect', 'ProfileController@collect')->name('pc:profilecollect');
+
+    //圈子
+    Route::get('group/{user?}', 'ProfileController@group')->name('pc:profilegroup');
 });
 
 Route::prefix('users')->group(function () {

@@ -49,6 +49,7 @@
     <div class="profile_nav clearfix">
         <ul class="profile_nav_list clearfix">
             <li><a href="{{ route('pc:mine', $user['id']) }}">主页</a></li>
+            <li><a href="{{ route('pc:profilegroup') }}">圈子</a></li>
             <li class="active"><a href="{{ route('pc:profilenews') }}">资讯</a></li>
             <li><a href="{{ route('pc:profilecollect') }}">收藏</a></li>
         </ul>
