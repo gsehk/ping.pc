@@ -244,6 +244,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
                     </li>
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
                     <li>
+                        <a href="javascript:;" onclick="weibo.pinneds({{$post->id}});">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                        </a>
+                    </li>
+                    <li>
                         <a href="javascript:;" onclick="weibo.delete({{$post->id}});">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
                         </a>

@@ -1841,3 +1841,13 @@ img.load {
     width: 100% !important;
     padding: 0 92px 70px !important;
 }
+
+
+/*  申请置顶 */
+.apply-pinneds .day,
+.apply-pinneds .amount{
+    padding: 5px 10px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    width: 100%;
+}

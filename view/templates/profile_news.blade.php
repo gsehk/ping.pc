@@ -45,7 +45,7 @@
             <span class="view">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->hits}}
             </span>
-            {{-- <span class="options">
+            <span class="options">
                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
             </span>
             <div class="options_div">
@@ -59,7 +59,7 @@
                     @endif
                 </ul>
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
-            </div> --}}
+            </div>
         </div>
         @endif
         <div class="comment_box" style="display: none;">

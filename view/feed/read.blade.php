@@ -188,7 +188,7 @@ $('#J-reward-btn').on('click', function(){
             '<button class="btn btn-primary" onclick="rewarded.weibo(this, {{$feed->id}});">&nbsp;打 赏&nbsp;</button>'+
         '</div>'+
     '</div>';
-    ly.loadHtml(html, '', '350px', '300px;');
+    ly.loadHtml(html, '', '350px', '300px');
     $('.reward-sum label').on('click', function(){
         $('.reward-sum label').removeClass('active');
         $(this).addClass('active');
