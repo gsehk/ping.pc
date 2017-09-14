@@ -12,7 +12,7 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">评论的</span>
-                        <div>{{$message['comment']}}评论了我</div>
+                        <div>{{isset($message['comment']) && $message['comment'].'评论了我'}}</div>
                     </div>
                 </li>
                 <li @if($type=='zan')class="current_room"@endif data-type="zan">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">赞过的</span>
-                        <div>{{$message['like']}}赞了我</div>
+                        <div>{{isset($message['like']) && $message['like'].'赞了我'}}</div>
                     </div>
                 </li>
                 <li @if($type=='tz')class="current_room"@endif data-type="tz">
@@ -34,21 +34,11 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">通知</span>
-                        <div>{{$message['notification']}}</div>
+                        <div>{{isset($message['notification']) && $message['notification']}}</div>
                     </div>
                 </li>
-                {{-- <li @if($type=='at')class="current_room"@endif data-type="at">
-                    <div class="chat_left_icon">
-                        <svg class="icon chat_img" aria-hidden="true">
-                            <use xlink:href="#icon-xiangguande-copy"></use>
-                        </svg>
-                    </div>
-                    <div class="left_class">
-                        <span class="chat_span">提到我的</span>
-                        <div>缘分提到了我</div>
-                    </div>
-                </li> --}}
-                <li class="room_item">
+
+                {{--<li class="room_item">
                     <div class="chat_left_icon">
                         <img src="{{ $routes['resource'] }}/images/avatar.png" class="chat_img" />
                     </div>
@@ -56,7 +46,7 @@
                         <span class="chat_span">仰光</span>
                         <div>今天周五啦</div>
                     </div>
-                </li>
+                </li>--}}
             </ul>
         </div>
         <div class="chat_right message-body">
