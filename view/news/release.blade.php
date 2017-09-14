@@ -36,7 +36,7 @@
             @include('pcview::widgets.markdown', ['height'=>'530px', 'width' => '100%', 'content'=>$content ?? ''])
         </div>
         <div class="release_tags">
-            <label for="J-select-tags">请选择标签</label>
+            <label for="J-select-tags">请选择标签</label for="J-select-tags">
             <ul class="release_tags_selected" id="J-select-tags"></ul>
             <div class="release_tags_list" id="J-tag-box" style="display: none;">
                 @foreach ($tags as $tag)
@@ -107,10 +107,13 @@
         };
 
 
-        $('.release_tags').on('click', function(){
+        $('.release_tags').on('click', '>*', function(e){
+            e.stopPropagation();
             $('#J-tag-box').toggle();
         });
-        $('#J-tag-box dd').on('click', function(){
+
+        $('#J-tag-box dd').on('click', function(e){
+            e.stopPropagation();
             var selBox = $('#J-select-tags');
             var tag_id = $(this).data('id');
             var tag_name = $(this).text();
@@ -119,11 +122,16 @@
             }
 
             selBox.append('<li class="tag_'+tag_id+'" data-id="'+tag_id+'">'+tag_name+'</li>');
-            selBox.on('click', 'li', function(){ $(this).remove() });
+            selBox.on('click', 'li', function(){
+                $(this).remove();
+                if (selBox.find('li').length == 0) {
+                    $('.release_tags label').show();
+                }
+            });
 
             if (selBox.find('li').length >= 5) {
                 noticebox('标签最多五个', 0); return;
-            }  else if (selBox.find('li').length > 0) {
+            } else if (selBox.find('li').length > 0) {
                 $('.release_tags label').hide();
             }
         });
