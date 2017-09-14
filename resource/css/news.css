@@ -486,6 +486,14 @@
     position: relative;
 }
 
+.release_tags label {
+    position: absolute;
+    color: #ccc;
+    top: 50%;
+    left: 55px;
+    transform: translateY(-50%);
+}
+
 .release_tags .release_tags_selected {
     font-size: 14px;
     display: flex;

@@ -1,4 +1,24 @@
 ﻿
+
+// 认证提示
+var goVerified = function() {
+
+    var html = '<div class="modal-body layui_exit_body">'
+        + '<div class="exit_ts">投稿提示</div>'
+        + '<div class="exit_thinks">成功通过平台认证的用户才能投稿，是否去认证？</div>'
+        + '</div>';
+
+    layer.confirm(html, {
+        btn: ['取消','去认证'], //按钮
+        title: '',
+        area: ['360px']
+    }, function(){
+        layer.closeAll();
+    }, function(){
+        window.location.href = '/account/authenticate';
+    });
+};
+
 /**
  * 文章投稿。
  */
@@ -7,11 +27,11 @@ $('.subject-submit').on('click', function() {
         'author': $('#subject-author').val(),
         'title': $('#subject-title').val(),
         'subject': $('#subject-abstract').val(),
-        'content': $(editor).html(),
+        'content': editor.getMarkdown(),
         'image': $('#subject-image').val(),
         'from': $('#subject-from').val(),
         'cate_id': $('#cate_id').val(),
-        'news_id': $('#news_id').val() || 0,
+        'news_id': $('#news_id').val() || 0
     };
     var tags = [];
     $('#J-select-tags li').each(function(index){
@@ -23,14 +43,71 @@ $('.subject-submit').on('click', function() {
         noticebox('文章标题不合法', 0);
         return false;
     }
-    if (!$(editor).text() || getLength($(editor).text()) > 5000) {
+    if (!args.subject) {
+        noticebox('文章摘要不合法', 0);
+        return false;
+    }
+    if (args.cate_id == '') {
+        noticebox('请选择分类', 0);
+        return false;
+    }
+    if (!args.content || getLength(args.content) > 5000) {
         noticebox('文章内容不合法', 0);
         return false;
     }
-    if (!args.image) {
+    if (args.tags.length < 1) {
+        noticebox('请选择标签', 0);
+        return false;
+    }
+    if (!args.image || args.image == 0) {
         noticebox('请上传封面图片', 0);
         return false;
     }
+
+    if (notice.contribute.length > 0) {
+        var isVerified = $.inArray("verified", notice.contribute);
+        var isPay = $.inArray("pay", notice.contribute);
+        var pay_conyribute = (parseInt(notice.pay_conyribute)/10).toFixed(1);
+
+        if (isVerified > -1 && notice.verified == null) {
+            goVerified();
+
+            return false;
+        } else if (isPay > -1) {
+            var html = '<div class="modal-body layui_exit_body">'
+                + '<div class="exit_ts">投稿提示</div>'
+                + '<div class="exit_money">￥'+pay_conyribute+'</div>'
+                + '<div class="exit_thinks">本次投稿您需要支付￥'+pay_conyribute+'元，是否继续投稿？</div>'
+                + '</div>';
+
+            layer.confirm(html, {
+                btn: ['取消','投稿'], //按钮
+                title: '',
+                area: ['360px']
+            }, function(){
+                layer.closeAll();
+            }, function(){
+                var url = '/api/v2/news/categories/'+args.cate_id+'/news';
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: args,
+                    dataType: 'json',
+                    error: function(xml) {},
+                    success: function(res, data, xml) {
+                        if (xml.status == 201) {
+                            noticebox(res.message, 1, '/news');
+                        } else {
+                            noticebox(res.message, 0);
+                        }
+                    }
+                });
+            });
+
+            return false;
+        }
+    }
+
     var url = '/api/v2/news/categories/'+args.cate_id+'/news';
     $.ajax({
         url: url,
@@ -40,7 +117,7 @@ $('.subject-submit').on('click', function() {
         error: function(xml) {},
         success: function(res, data, xml) {
             if (xml.status == 201) {
-                noticebox(res.message, 1, '/profile/article/'+ MID);
+                noticebox(res.message, 1, '/news');
             } else {
                 noticebox(res.message, 0);
             }
