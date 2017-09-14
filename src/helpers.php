@@ -177,9 +177,9 @@ function getImageUrl($image = array(), $width, $height)
     $file = $image['file'] ?? $image['id'];
     $size = explode('x', $image['size']);
     if ($size[0] > $size[1]) {
-        $width = number_format($height / $size[1] * $size[0], 2);
+        $width = number_format($height / $size[1] * $size[0], 2, '', '');
     } else {
-        $height = number_format($width / $size[0] * $size[1], 2);
+        $height = number_format($width / $size[0] * $size[1], 2, '', '');
     }
 
     return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height;

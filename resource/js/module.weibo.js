@@ -484,4 +484,38 @@ $(function() {
         var attrs = urlToObject($(this).data('args'));
         comment.initReply(attrs);
     });
+
+    // 付费图片弹窗
+    $('#feeds_list').on('click', '.feed_image_pay', function() {
+        var _this = $(this);
+        if (MID == 0) {
+            window.location.href = '/passport/login';
+            return;
+        }
+        var amount = _this.data('amount');
+        var node = _this.data('node');
+        var file = _this.data('file');
+        var image = _this.data('original');
+
+        var title = '购买支付';
+        var html = '<div class="exit_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看高清大图，是否确认支付？';
+        ly.confirm(title, html, '', '', function(){
+            var url = '/api/v2/purchases/' + node;
+            // 确认支付
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                success: function(res) {
+                    var img = '<img class="lazy per_image" data-original="' + image + '"/>';
+                    _this.parent().replaceWith(img);
+                    $("img.lazy").lazyload({ effect: "fadeIn" });
+                    noticebox('支付成功', 1);
+                },
+                error: function(xhr) {
+                    showError(xhr.responseJSON);
+                }
+            });
+        })
+    });
 });

@@ -71,14 +71,12 @@ var params = {
     type: '{{ $type }}'
 };
 
-setTimeout(function() {
-    scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
-        url: '/feeds',
-        params: params
-    });
-}, 300);
+scroll.init({
+    container: '#feeds_list',
+    loading: '.feed_content',
+    url: '/feeds',
+    params: params
+});
 
 $(function(){
     // 切换分类

@@ -28,9 +28,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
         @if($post->images)
         <div id="layer-photos-demo{{$post->id}}">
         @if($post->images->count() == 1)
-            <div style="width: 100%;" class="image_box">
             @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 555, 'height' => 555])
-            </div>
         @elseif($post->images->count() == 2)
             <div style="width: 100%; display: flex;">
                 <div style="width: 50%;" class="image_box">
@@ -301,11 +299,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
     </div>
 </div>
 <script type="text/javascript">
-layer.photos({
-  photos: '#layer-photos-demo{{$post->id}}'
-  ,anim: 0
-  ,move: false
-});
+    layer.photos({
+      photos: '#layer-photos-demo{{$post->id}}'
+      ,anim: 0
+      ,move: false
+      ,img: '.per_image'
+    });
 </script>
 @endforeach
 @endif
