@@ -25,183 +25,180 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 
     <div class="feed_body">
         <p class="feed_text">{!! $post->feed_content !!}</p>
-
         @if($post->images)
         <div id="layer-photos-demo{{$post->id}}">
         @if($post->images->count() == 1)
-          @php
-              $size = explode('x', $post->images[0]['size']);
-              $style = $size[0] < $size[1] ? 'max-height:400px;height:auto' : 'max-width:555px;height:auto';
-          @endphp
-            <img class="lazy" style="{{ $style }}" data-original="{{ getImageUrl($post->images[0], 555, 720) }}"/>
+            <div style="width: 100%;" class="image_box">
+            @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 555, 'height' => 555])
+            </div>
         @elseif($post->images->count() == 2)
             <div style="width: 100%; display: flex;">
-                <div style="width: 35vw;" class="image_box">
-                      <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[0], 277, 273) }}" />
+                <div style="width: 50%;" class="image_box">
+                    @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 277, 'height' => 273])
                 </div>
-                <div style="width: 35vw;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 277, 273) }}" />
+                <div style="width: 50%;" class="image_box">
+                    @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 277, 'height' => 273])
                 </div>
             </div>
         @elseif($post->images->count() == 3)
             <div style="width: 100%; display: flex;">
                 <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 184, 180) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 184, 'height' => 180])
                 </div>
                 <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[1], 184, 180) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[1], 'width' => 184, 'height' => 180])
                 </div>
                 <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[2], 184, 180) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[2], 'width' => 184, 'height' => 180])
                 </div>
             </div>
         @elseif($post->images->count() == 4)
             <div style="width: 100%; display: flex;">
                 <div style="width: 50%">
+                    <div style="width: 100%;" class="image_box">
+                        @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 277, 'height' => 273])
+                    </div>
                   <div style="width: 100%;" class="image_box">
-                        <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[0], 277, 273) }}" />
-                  </div>
-                  <div style="width: 100%;" class="image_box">
-                        <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 277, 273) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[1], 'width' => 277, 'height' => 273])
                   </div>
                 </div>
                 <div style="width: 50%">
                   <div style="width: 100%;" class="image_box">
-                        <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[2], 277, 273) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[2], 'width' => 277, 'height' => 273])
                   </div>
                   <div style="width: 100%;" class="image_box">
-                        <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 277, 273) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[3], 'width' => 277, 'height' => 273])
                   </div>
                 </div>
             </div>
         @elseif($post->images->count() == 5)
             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                 <div style="width: 66.6666%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 370, 366) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 370, 'height' => 366])
                 </div>
                 <div style="width: 33.3333%">
                     <div style="width: 100%; padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[1], 185, 183) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[1], 'width' => 185, 'height' => 183])
                     </div>
                     <div style="width: 100% padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 185, 183) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[2], 'width' => 185, 'height' => 183])
                     </div>
                 </div>
                 <div style="width: 100%; display: flex;">
-                    <div style="width: 35vw;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 277, 273) }}" />
+                    <div style="width: 50%;" class="image_box">
+                        @include('pcview::templates.feed_image', ['image' => $post->images[3], 'width' => 277, 'height' => 273])
                     </div>
-                    <div style="width: 35vw;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 277, 273) }}" />
+                    <div style="width: 50%;" class="image_box">
+                        @include('pcview::templates.feed_image', ['image' => $post->images[4], 'width' => 277, 'height' => 273])
                     </div>
                 </div>
             </div>
         @elseif($post->images->count() == 6)
             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                 <div style="width: 66.6666%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 370, 366) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 370, 'height' => 366])
                 </div>
                 <div style="width: 33.3333%">
                     <div style="width: 100%; padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 185, 183) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[1], 'width' => 185, 'height' => 183])
                     </div>
                     <div style="width: 100% padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 185, 183) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[2], 'width' => 185, 'height' => 183])
                     </div>
                 </div>
                 <div style="width: 33.3333%;" class="image_box">
-                    <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[3], 'width' => 185, 'height' => 183])
                 </div>
                 <div style="width: 33.3333%;" class="image_box">
-                    <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[4], 'width' => 185, 'height' => 183])
                 </div>
                 <div style="width: 33.3333%;" class="image_box">
-                    <img class="lazy per_image" data-original="{{ getImageUrl($post->images[5], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[5], 'width' => 185, 'height' => 183])
                 </div>
             </div>
         @elseif($post->images->count() == 7)
             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                 <div style="width: 50%">
                     <div style="width: 100%" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 277, 273) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 277, 'height' => 273])
                     </div>
                     <div style="width: 100%" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 277, 273) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[1], 'width' => 277, 'height' => 273])
                     </div>
                 </div>
                 <div style="width: 50%; display: flex; flex-wrap: wrap;">
                     <div style="width: 50%; padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 138, 135) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[2], 'width' => 138, 'height' => 135])
                     </div>
                     <div style="width: 50%; padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 138, 135) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[3], 'width' => 138, 'height' => 135])
                     </div>
                     <div style="width: 100%;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 277, 273) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[4], 'width' => 277, 'height' => 273])
                     </div>
                     <div style="width: 50%;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[5], 138, 135) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[5], 'width' => 138, 'height' => 135])
                     </div>
                     <div style="width: 50%;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[6], 138, 135) }}" />
+                        @include('pcview::templates.feed_image', ['image' => $post->images[6], 'width' => 138, 'height' => 135])
                     </div>
                 </div>
             </div>
         @elseif($post->images->count() == 8)
             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 185, 'height' => 183])
                 </div>
                 <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[1], 'width' => 185, 'height' => 183])
                 </div>
                 <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[2], 'width' => 185, 'height' => 183])
                 </div>
                 <div style="width: 50%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 277, 273) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[3], 'width' => 277, 'height' => 273])
                 </div>
                 <div style="width: 50%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 277, 273) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[4], 'width' => 277, 'height' => 273])
                 </div>
                 <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[5], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[5], 'width' => 185, 'height' => 183])
                 </div>
                 <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[6], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[6], 'width' => 185, 'height' => 183])
                 </div>
                 <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[7], 185, 183) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[7], 'width' => 185, 'height' => 183])
                 </div>
             </div>
         @elseif($post->images->count() == 9)
             <div style="width: 100%; display: flex; flex-wrap: wrap;">
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 185, 'height' => 181])
                 </div>
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[1], 'width' => 185, 'height' => 181])
                 </div>
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[2], 'width' => 185, 'height' => 181])
                 </div>
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[3], 'width' => 185, 'height' => 181])
                 </div>
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[4], 'width' => 185, 'height' => 181])
                 </div>
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[5], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[5], 'width' => 185, 'height' => 181])
                 </div>
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[6], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[6], 'width' => 185, 'height' => 181])
                 </div>
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[7], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[7], 'width' => 185, 'height' => 181])
                 </div>
                 <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[8], 185, 181) }}" />
+                    @include('pcview::templates.feed_image', ['image' => $post->images[8], 'width' => 185, 'height' => 181])
                 </div>
             </div>
         @endif
@@ -306,7 +303,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 <script type="text/javascript">
 layer.photos({
   photos: '#layer-photos-demo{{$post->id}}'
-  ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数
+  ,anim: 0
   ,move: false
 });
 </script>
