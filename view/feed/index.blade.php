@@ -9,12 +9,12 @@
 @endsection
 
 @section('content')
-    <!-- 左侧菜单 -->
+    {{-- 左侧菜单 --}}
     @include('pcview::layouts.partials.leftmenu')
 
     <div class="feed_cont">
 
-        <!-- 动态发布 -->
+        {{-- 动态发布 --}}
         @if(!empty($TS))
         <div class="feed_post">
             <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
@@ -23,12 +23,23 @@
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
                     图片
                 </span>
+
                 <a href="javascript:;" class="post_button" onclick="weibo.postFeed()">分享</a>
+
+                {{-- 付费免费 --}}
+                <div data-value="free" class="zy_select t_c gap12 feed_select" id="feed_select">
+                    <span>免费</span>
+                    <ul>
+                        <li data-value="pay">付费</li>
+                        <li class="active" data-value="free">免费</a></li>
+                    </ul>
+                    <i></i>
+                </div>
             </div>
         </div>
         @endif
 
-        <!-- 动态列表 -->
+        {{-- 动态列表 --}}
         <div class="feed_content">
             <div class="feed_menu">
                 @if (!empty($TS))
@@ -43,19 +54,18 @@
 
 
     <div class="right_container">
+        {{-- 签到 --}}
         @if (!empty($TS))
-        <!-- 签到 -->
         @include('pcview::widgets.checkin')
         @endif
 
-        <!-- 推荐用户 -->
+        {{-- 推荐用户 --}}
         @include('pcview::widgets.recusers')
 
-        <!-- 动态首页右侧广告位 -->
+        {{-- 动态首页右侧广告位 --}}
         @include('pcview::widgets.ads', ['space' => 'pc:feeds:right', 'type' => 1])
 
-
-        <!-- 收入达人排行榜 -->
+        {{-- 收入大人排行榜 --}}
         @include('pcview::widgets.incomerank')
     </div>
 @endsection

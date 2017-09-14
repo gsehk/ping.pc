@@ -21,42 +21,50 @@ weibo.showImg = function(){
  * @return void
  */
 weibo.postFeed = function() {
+    // 登录判断
     if (MID == 0) {
         window.location.href = '/passport/login';
         return false;
     }
 
-    var images = [];
-    $('.feed_picture').find('img').each(function() {
-        images.push({'id':$(this).attr('tid')});
-    });
+    // 付费免费
+    var select = $('#feed_select').data('value');
 
-    var data = {
-        feed_content: $('#feed_content').val(),
-        images: images,
-        feed_from: 1,
-        feed_mark: MID + new Date().getTime(),
+    if (select == 'free') {
+        var images = [];
+        $('.feed_picture').find('img').each(function() {
+            images.push({'id':$(this).attr('tid')});
+        });
+
+        var data = {
+            feed_content: $('#feed_content').val(),
+            images: images,
+            feed_from: 1,
+            feed_mark: MID + new Date().getTime(),
+        }
+        var strlen = getLength(data.feed_content);
+            var leftnums = initNums - strlen;
+            if (leftnums < 0 || leftnums == initNums) {
+                noticebox('分享内容长度为1-' + initNums + '字', 0);
+                return false;
+            }
+        $.ajax({
+            url: '/api/v2/feeds',
+            type: 'post',
+            data: data,
+            success: function(res) {
+                noticebox('发布成功', 1);
+                $('.feed_picture').html('').hide();
+                $('#feed_content').val('');
+                weibo.afterPostFeed(res.id);
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        });
+    } else {
+        return false;
     }
-    var strlen = getLength(data.feed_content);
-        var leftnums = initNums - strlen;
-        if (leftnums < 0 || leftnums == initNums) {
-            noticebox('分享内容长度为1-' + initNums + '字', 0);
-            return false;
-        }
-    $.ajax({
-        url: '/api/v2/feeds',
-        type: 'post',
-        data: data,
-        success: function(res) {
-            noticebox('发布成功', 1);
-            $('.feed_picture').html('').hide();
-            $('#feed_content').val('');
-            weibo.afterPostFeed(res.id);
-        },
-        error: function(xhr){
-            showError(xhr.responseJSON);
-        }
-    })
 };
 
 weibo.afterPostFeed = function(feed_id) {

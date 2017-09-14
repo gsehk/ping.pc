@@ -42,6 +42,7 @@
 .feed_post .post_extra svg {
     display: inline-block;
     margin-right: 2px;
+    margin-bottom: 2px;
     font-size: 20px;
 }
 
@@ -58,6 +59,26 @@
     /* margin-right: 40px;.del_huifu */
 }
 
+.feed_post .feed_select {
+    float: right;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.feed_post .feed_select i {
+    margin-top: 10px;
+}
+
+.feed_post .feed_select ul {
+    margin-top: 0px;
+    padding: 10px 0px 5px;
+    width: 100px
+}
+
+.feed_post .feed_select ul li{
+    margin-bottom: 10px;
+}
 
 .feed_post .feed_picture {
     display: none;
