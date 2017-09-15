@@ -163,7 +163,7 @@ function getTime($time)
 
     $timezone = isset($_COOKIE['customer_timezone']) ? $_COOKIE['customer_timezone'] : 0;
     // 一小时内显示文字
-    if (Carbon::now()->subHours(1) < $time) {
+    if (Carbon::now()->subHours(24) < $time) {
         return $time->diffForHumans();
     }
     return $time->addHours($timezone);
