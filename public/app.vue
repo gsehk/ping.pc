@@ -38,13 +38,13 @@
       <router-link to="/navmenu" tag="li" active-class="active">
         <a href="#">导航配置</a>
       </router-link>
+      <!--
       <router-link to="/authlist" tag="li" active-class="active">
         <a href="#">认证管理</a>
       </router-link>
       <router-link to="/report" tag="li" active-class="active">
         <a href="#">举报管理</a>
       </router-link>
-      <!--
       <router-link to="/news/add_news" tag="li" active-class="active">
         <a href="#">添加资讯</a>
       </router-link>
