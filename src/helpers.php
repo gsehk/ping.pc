@@ -182,7 +182,7 @@ function getImageUrl($image = array(), $width, $height)
         $height = number_format($width / $size[0] * $size[1], 2, '', '');
     }
 
-    return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height;
+    return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height . '&token=' . Session::get('token');
 }
 
 function replaceImage($content)
