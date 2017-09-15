@@ -20,7 +20,7 @@
                 <a href="{{ route('pc:mine', $user->id) }}">{{ $user->name }}</a>
                 <span>{{$user->location or '未知'}}</span>
             </div>
-            <div class="profile_top_bio">{{ $user->bio or '这家伙很懒，什么都没留下'}}</div>
+            <div class="profile_top_bio txt-hide">{{ $user->bio or '这家伙很懒，什么都没留下'}}</div>
             <div class="profile_top_tags">
                 @foreach ($user->tags as $tag)
                     <span>{{$tag->name}}</span>
