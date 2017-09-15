@@ -215,7 +215,7 @@
     color: #333;
 }
 
-.feed_item .feed_title .feed_time {
+.feed_item .feed_title .date {
     float: right;
     margin-top: 17px;
     color: #ccc;

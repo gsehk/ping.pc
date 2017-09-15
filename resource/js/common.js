@@ -832,6 +832,19 @@ $(function() {
         })
     }
 
+    // 显示跳转详情文字
+    $('#feeds_list').on("mouseover mouseout", '.date', function(event){
+     if(event.type == "mouseover"){
+          var width = $(this).find('span').first().width();
+          $(this).find('span').first().hide();
+          $(this).find('span').last().css({display:'inline-block', width: width});
+          $(this).find('span').last().css({minWidth:'50px'});
+     }else if(event.type == "mouseout"){
+          $(this).find('span').first().show();
+          $(this).find('span').last().hide();
+     }
+    })
+
     // 搜索图标点击
     $('.nav_search_icon').click(function(){
         var val = $('#head_search').val();
