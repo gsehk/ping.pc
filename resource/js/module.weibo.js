@@ -125,8 +125,8 @@ weibo.denounce = function(obj) {
 };
 weibo.pinneds = function (feed_id) {
     var html = '<div class="apply-pinneds">'+
-            '<p><input class="day" type="number" name="day" placeholder="申请置顶天数" /></p>'+
-            '<p><input class="amount" type="number" name="amount" placeholder="申请置顶金额" /></p>'+
+            '<p><input class="day" type="number" min="0" name="day" placeholder="申请置顶天数" /></p>'+
+            '<p><input class="amount" type="number" min="0" name="amount" placeholder="申请置顶金额" /></p>'+
         '</div>';
     ly.confirm('申请置顶', html, '', '', function(){
         var data = { day: $('.day').val(), amount: $('.amount').val() };
