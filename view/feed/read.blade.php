@@ -182,7 +182,7 @@ $('#J-reward-btn').on('click', function(){
                 '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
             '</label>'+
         '</div>'+
-        '<p><input class="custom-sum" type="number" name="custom" placeholder="自定金额，必须是整数"></p>'+
+        '<p><input class="custom-sum" type="number" min="0" name="custom" placeholder="自定金额，必须是整数"></p>'+
         '<div class="reward-btn-box">'+
             '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
             '<button class="btn btn-primary" onclick="rewarded.weibo(this, {{$feed->id}});">&nbsp;打 赏&nbsp;</button>'+

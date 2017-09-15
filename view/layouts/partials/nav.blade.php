@@ -17,7 +17,7 @@
             <ul>
                 <li>
                     <a href="{{ route('pc:profilecollect') }}">
-                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-shoucang-copy"></use></svg>我的收藏
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-shoucang-copy1"></use></svg>我的收藏
                     </a>
                 </li>
                 <li>
@@ -57,7 +57,7 @@
         <a class="nava" href="{{ route('pc:login') }}">登录</a>
     </div>
     @endif
-    
+
     <div class="nav_list clearfix">
         {{-- 导航 --}}
         <ul class="navs">

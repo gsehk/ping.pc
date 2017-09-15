@@ -31,6 +31,9 @@ class GroupController extends BaseController
 
         if ($type == 2) {
             $groups = createRequest('GET', '/api/v2/groups/joined', $params);
+            $groups->map(function($item){
+                $item->is_member = true;
+            });
         }
 
         $group = clone $groups;
