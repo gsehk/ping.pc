@@ -10,7 +10,7 @@
                 <div class="one-title"><a href="/profile/{{$comment['user']['id']}}">{{$comment['user']['name']}}</a></div>
                 <div class="one-date">{{ getTime($comment['created_at']) }}</div>
 
-                <div class="top-comment">对你的动态进行了“<sapn>{{$comment['comment']['body']}}</sapn>”评论并申请置顶，请及时审核。</div>
+                <div class="top-comment">对你的文章进行了“<sapn>{{$comment['comment']['body']}}</sapn>”评论并申请置顶，请及时审核。</div>
 
                 <div class="comment-audit">
                     @if($comment['expires_at'] == null)
@@ -31,10 +31,10 @@
                 'Authorization': 'Bearer ' + TOKEN,
                 'Accept': 'application/json'
             }
-        })
+        });
         $('.comment-audit').on('click', 'a', function () {
+            var _this = this;
             var data = urlToObject($(this).data('args'));
-            console.log(data);
             var url = '';
             var type = 'PATCH';
 
@@ -50,12 +50,12 @@
                 dataType: 'json',
                 error: function(xml) {},
                 success: function(res, data, xml) {
-                    console.log(res);
-                    console.log(data);
-                    console.log(xml);
-
                     if (xml.status == 201) {
                         noticebox(res.message, 1);
+                        $(_this).parent('.comment-audit').html('<a href="javascript:">同意置顶</a>');
+                    } else if (xml.status == 204) {
+                        noticebox('拒绝置顶成功', 1);
+                        $(_this).parent('.comment-audit').html('<a href="javascript:">拒绝置顶</a>');
                     } else {
                         noticebox(res.message, 0);
                     }

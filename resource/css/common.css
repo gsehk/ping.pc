@@ -1854,8 +1854,21 @@ img.load {
 
 
 /*消息select*/
-.message_select {
+.zy_select.message_select {
 
+}
+
+.zy_select.message_select>i {
+    margin-top: 16px;
+}
+
+.zy_select.message_select>ul {
+    margin-top: 5px;
+    padding: 10px 3px;
+}
+
+.zy_select.message_select>ul>li {
+    margin: 0;
 }
 
 .comment-audit {

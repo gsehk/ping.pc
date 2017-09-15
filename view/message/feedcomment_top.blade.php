@@ -31,10 +31,10 @@
                 'Authorization': 'Bearer ' + TOKEN,
                 'Accept': 'application/json'
             }
-        })
+        });
         $('.comment-audit').on('click', 'a', function () {
+            var _this = this;
             var data = urlToObject($(this).data('args'));
-            console.log(data);
             var url = '';
             var type = 'PATCH';
 
@@ -51,12 +51,12 @@
                 dataType: 'json',
                 error: function(xml) {},
                 success: function(res, data, xml) {
-                    console.log(res);
-                    console.log(data);
-                    console.log(xml);
-
                     if (xml.status == 201) {
                         noticebox(res.message, 1);
+                        $(_this).parent('.comment-audit').html('<a href="javascript:">同意置顶</a>');
+                    } else if (xml.status == 204) {
+                        noticebox('拒绝置顶成功', 1);
+                        $(_this).parent('.comment-audit').html('<a href="javascript:">拒绝置顶</a>');
                     } else {
                         noticebox(res.message, 0);
                     }
