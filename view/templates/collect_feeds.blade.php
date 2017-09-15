@@ -7,7 +7,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 <div class="feed_item" @if($loop->first) style="margin-top:20px;" @endif>
 
     <div class="feed_title">
-        <a href="javascript:;">
+        <a href="{{ route('pc:mine', $post->user->id) }}">
             <img class="round" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50" />
             @if($post->user->user_verified)
             <img class="vip_auth" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
