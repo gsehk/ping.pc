@@ -10,9 +10,15 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @else
 	@if (isset($type) && $type == 'one')
 	@php
-	$size = explode('x', $image['size']);
-	$style = $size[0] > $size[1] ? 'max-width:555px;height:auto' : 'max-height:400px;height:auto';
-	$style = $size[0] < $size[1] ? 'max-height:400px;height:auto' : 'max-width:555px;height:auto';
+    $size = explode('x', $image['size']);
+    if ($size[0] > $size[1]) {
+    	$w = $size[0] > 555 ? 555 : $size[0];
+    	$h = number_format(($width / $size[0] * $size[1]), 2, '.', '');
+    } else {
+    	$w = $size[1] > 400 ? 400 : $size[1];
+    	$h = number_format($height / $size[1] * $size[0], 2, '.', '');
+    }
+    $style = 'width:' . $w . 'px;height:' . $h . 'px';
     @endphp
     <img style="{{ $style }}" class="lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}"/>
     @else
