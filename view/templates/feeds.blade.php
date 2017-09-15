@@ -28,7 +28,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
         @if($post->images)
         <div id="layer-photos-demo{{$post->id}}">
         @if($post->images->count() == 1)
-            @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 555, 'height' => 555, 'position' => 'relative'])
+            @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 555, 'height' => 555, 'type' => 'one'])
         @elseif($post->images->count() == 2)
             <div style="width: 100%; display: flex;">
                 <div style="width: 50%;" class="image_box">
