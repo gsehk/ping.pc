@@ -146,6 +146,7 @@ const NavmanageComponent = {
         this.submit.state = false;
         this.submit.type = 'success';
         this.submit.message = message;
+        this.$router.push({path:'/navmenu'})
       }).catch(({ response: { message: [ message = '提交失败' ] = [] } = {} }) => {
         this.submit.state = false;
         this.submit.type = 'danger';
