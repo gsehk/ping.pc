@@ -70,7 +70,6 @@ var ly = {
         if(undefined == requestData) {
             var requestData = {};
         }
-        layer.load(0, {shade: false});
         $.ajax({
             url: requestUrl,
             type: ajaxType,
@@ -85,6 +84,7 @@ var ly = {
                     area: [width,height],
                     shadeClose: true,
                     shade:0.5,
+                    scrollbar: false,
                     content: html
                 });
                 load = 0;
@@ -100,6 +100,7 @@ var ly = {
             area: [width,height],
             shadeClose: true,
             shade:0.5,
+            scrollbar: false,
             content: html,
         });
     },
@@ -117,7 +118,9 @@ var ly = {
             btn: [cancelBtn, confirmBtn], //按钮
             title: '',
             area: [width, height],
-            shadeClose: true
+            shadeClose: true,
+            shade:0.5,
+            scrollbar: false
         }, function(){
             layer.closeAll();
         }, callback);
