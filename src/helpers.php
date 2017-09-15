@@ -156,7 +156,7 @@ function createRequest($method = 'POST', $url = '', $params = array())
     // }
 }
 
-function getTime($time)
+function getTime($time, int $type = 1)
 {
     // 本地化
     Carbon::setLocale('zh');
@@ -166,7 +166,7 @@ function getTime($time)
     if (Carbon::now()->subHours(24) < $time) {
         return $time->diffForHumans();
     }
-    return $time->addHours($timezone);
+    return $type ? $time->addHours($timezone)->toDateString() : $time->addHours($timezone);
 }
 
 function getImageUrl($image = array(), $width, $height)
