@@ -14,9 +14,15 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
     if ($size[0] > $size[1]) {
     	$w = $size[0] > 555 ? 555 : $size[0];
     	$h = number_format(($width / $size[0] * $size[1]), 2, '.', '');
-    } else {
+    } 
+
+    if ($size[0] < $size[1]) {
     	$w = $size[1] > 400 ? 400 : $size[1];
     	$h = number_format($height / $size[1] * $size[0], 2, '.', '');
+    }
+
+    if ($size[0] == $size[1]) {
+    	$w = $h = $size[0] > 400 ? 400 : $size[0];
     }
     $style = 'width:' . $w . 'px;height:' . $h . 'px';
     @endphp
