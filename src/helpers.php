@@ -117,10 +117,10 @@ function getShort($str, $length = 40, $ext = '')
     return $output;
 }
 
-function replaceUrl($content)
+function formatContent($content)
 {
     $content = preg_replace_callback('/((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)/u', function($url){
-        return '<a href="'.$url[0].'" target="_blank" style="color:#0096e6;">访问链接+</a>';
+        return '<a href="'.$url[0].'" target="_blank" style="color:#59b6d7;">访问链接+</a>';
     }, $content);
 
     return $content;
@@ -177,9 +177,9 @@ function getImageUrl($image = array(), $width, $height)
     $file = $image['file'] ?? $image['id'];
     $size = explode('x', $image['size']);
     if ($size[0] > $size[1]) {
-        $width = number_format($height / $size[1] * $size[0], 2, '', '');
+        $width = number_format($height / $size[1] * $size[0], 2, '.', '');
     } else {
-        $height = number_format($width / $size[0] * $size[1], 2, '', '');
+        $height = number_format($width / $size[0] * $size[1], 2, '.', '');
     }
 
     return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height . '&token=' . Session::get('token');

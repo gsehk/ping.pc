@@ -1,6 +1,7 @@
 @php
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 @endphp
 
 @if(!$feeds->isEmpty())
@@ -24,7 +25,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
     </div>
 
     <div class="feed_body">
-        <p class="feed_text">{!! $post->feed_content !!}</p>
+        <p class="feed_text">{!! formatContent($post->feed_content) !!}</p>
         @if($post->images)
         <div id="layer-photos-demo{{$post->id}}">
         @if($post->images->count() == 1)
