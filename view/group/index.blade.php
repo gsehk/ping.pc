@@ -14,7 +14,7 @@
         <div class="group_navbar">
             <a class="active" href="javascript:;" data-type="1">全部圈子</a>
             @if(!empty($TS))
-            <a href="javascript:;" data-type="2">我关注的</a>
+            <a href="javascript:;" data-type="2">我加入的</a>
             @endif
         </div>
         <div class="group_list clearfix" id="group_box">
@@ -50,7 +50,7 @@ $('#group_box').on('click', '.J-join', function(){
     var group_id = $(this).attr('gid');
     group(status, group_id, function(){
         if (status == 1) {
-            $(_this).text('+关注');
+            $(_this).text('+加入');
             $(_this).attr('status', 0);
             $(_this).removeClass('joined');
         } else {
