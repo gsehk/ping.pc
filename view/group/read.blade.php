@@ -43,7 +43,7 @@
         <!-- 圈子动态发布 -->
         @if(!empty($TS))
             <div class="feed_post">
-                <input class="post_text" type="text" placeholder="有标题更吸引人" id="post_title">
+                <input class="post_text" type="text" placeholder="有标题更吸引人 （最多三十字）" id="post_title">
                 <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
                 <div class="post_extra">
                 <span class="fs-14" id="feed_pic">

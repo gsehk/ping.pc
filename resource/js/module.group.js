@@ -20,11 +20,7 @@ post.showImg = function(){
 };
 
 post.createPost = function (group_id) {
-    if (MID == 0) {
-        window.location.href = '/passport/login';
-        return false;
-    }
-
+    checkLogin();
     var images = [];
     $('.feed_picture').find('img').each(function() {
         images.push({'id':$(this).attr('tid')});
@@ -37,8 +33,8 @@ post.createPost = function (group_id) {
         group_post_mark: MID + new Date().getTime(),
     };
 
-    if (getLength(data.title) < 1) {
-        noticebox('标题不能为空', 0);
+    if (!data.title || getLength(data.title) > 30) {
+        noticebox('标题的字数为1 - 30个字符', 0);
         return false;
     }
 
