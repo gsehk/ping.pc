@@ -43,6 +43,8 @@ Route::prefix('feeds')->group(function () {
 Route::prefix('question')->group(function () {
     // 问答
     Route::get('/', 'QuestionController@question')->name('pc:question');
+
+    Route::get('topic', 'QuestionController@topic')->name('pc:topic');
 });
 
 Route::prefix('rank')->group(function () {

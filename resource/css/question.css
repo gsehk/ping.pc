@@ -24,13 +24,12 @@
 
 .question_nav>a + a{
     margin-left: 50px;
-} 
+}
 .question_nav>a.active{
     color: #333;
 }
 
 .question_body{
-    margin-bottom: 60px;
     padding: 0 40px 40px;
     width: 100%;
     background-color: #fff;
@@ -63,13 +62,13 @@
     font-size: 0;
 }
 
-.topic_list li{
+.topic-item{
     display: inline-block;
     margin-bottom: 60px;
     width: 50%;
 }
 
-.topic_list li .topic_l{
+.topic-item .topic_l{
     float: left;
     overflow: hidden;
     padding: 10px;
@@ -80,32 +79,36 @@
     font-size: 16px;
 }
 
-.topic_list li .topic_l img{
+.topic-item .topic_l img{
     display: block;
 }
 
-.topic_list li .topic_r {
+.topic-item .topic_r {
     float: left;
     margin-left: 20px;
 }
 
-.topic_list li .topic_r p{
+.topic-item .topic_r p{
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
     font-size: 16px;
     color: #333;
 }
-.topic_list li .topic_r div{
+.topic-item .topic_r div{
     font-size: 14px;
     color: #999;
 }
 
-.topic_list li .topic_r div span{
+.topic-item .topic_r div span{
     display: inline-block;
     margin: 0 13px 0 5px;
     color: #59b6d7;
 }
 
-.topic_list li .topic_r >a{
-    display: block;
+.topic-item .follow > a{
+    cursor: pointer;
+    display: inline-block;
     border: 1px solid #59b6d7;
     border-radius: 12px;
     margin-top: 25px;
@@ -115,6 +118,11 @@
     font-size: 12px;
     text-align: center;
     color: #59b6d7;
+}
+
+.topic_list .topic-item .followed {
+    border: 1px solid #ccc;
+    color: #ccc;
 }
 
 .question_list{
@@ -184,7 +192,7 @@
 
 .q_c .q_detail{
     line-height: 1.67;
-    color: #666;    
+    color: #666;
     cursor: pointer;
 }
 .q_c .q_detail:hover{
@@ -308,7 +316,7 @@
     border-radius: 3px;
 }
 
-.q_c .Button--link, 
+.q_c .Button--link,
 .q_c .Button--plain {
     height: auto;
     padding: 0;

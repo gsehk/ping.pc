@@ -430,6 +430,35 @@ var group = function(status, group_id, callback) {
     }
 }
 
+// 话题
+var topic = function(status, topic_id, callback) {
+    checkLogin();
+    var url = API + '/user/question-topics/' + topic_id;
+    if (status == 0) {
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            success: function(response) {
+                callback();
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        })
+    } else {
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(response) {
+                callback();
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        })
+    }
+}
+
 // 消息提示
 var noticebox = function(msg, status, tourl) {
     tourl = tourl || '';
