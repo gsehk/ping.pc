@@ -106,7 +106,7 @@ var ly = {
     },
     confirm: function (title, html, cancelBtn, confirmBtn, callback, width, height) {
         var cont = '<div class="modal-body layui_exit_body">'
-            + (title ? '<div class="exit_ts">'+title+'</div>' : '')
+            + (title ? '<div class="exit_ts">' + title + '</div>' : '')
             + (html ? html : '是否确认操作？')
             + '</div>';
 
@@ -507,22 +507,9 @@ var no_data = function(selector, type, txt) {
 
 // 退出登录提示
 var logout = function() {
-    $('.nav_menu').hide();
-    var html = '<div class="modal-content exit_content">'
-        + '<div class="modal-body exit_body">'
-        + '<div class="exit_ts">提示</div>'
-        + '<div class="exit_thinks">感谢您对ThinkSNS的信任，是否退出当前账号？</div>'
-        + '<div data-dismiss="modal" class="exit_btn">'
-        + '<a href="javascript:layer.closeAll()">取消</a>'
-        + '</div>'
-        + '<a href="/passport/logout"><span data-dismiss="modal" class="exit_btn exit_btn_bg">退出</span></a>'
-        + '</div></div>'
-    layer.open({
-      type: 1,
-      title: false,
-      closeBtn: 0,
-      shadeClose: true,
-      content: html
+    $('.nav_menu').hide();            
+    ly.confirm('提示', '感谢您对ThinkSNS的信任，是否退出当前账号？', '' , '退出', function(){
+        window.location.href = '/passport/logout';
     });
 }
 

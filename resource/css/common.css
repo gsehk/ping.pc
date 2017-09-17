@@ -1838,6 +1838,7 @@ img.load {
     color: #999;
 }
 .layui-layer-btn- {
+    font-size: 14px;
     width: 100% !important;
     padding: 0 92px 70px !important;
 }
