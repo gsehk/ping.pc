@@ -253,7 +253,7 @@
 }
 
 .q_c .q_detail .q_text *{
-    font-size: inherit;
+    font-size: 14px;
     font-weight: 400;
     font-style: normal;
     white-space: normal;

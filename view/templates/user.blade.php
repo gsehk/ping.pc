@@ -2,8 +2,11 @@
     <div class="user_item @if(($loop->iteration) % 2 == 0) user_item_right @endif">
         <div class="user_header">
             <!-- <a href="{{route('pc:mine',['user_id'=>$data['id']])}}"> -->
-            <a href="javascript:;">
+            <a class="avatar_box" href="javascript:;">
                 <img src="{{ $data['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" class="user_avatar" alt="{{ $data['name'] }}"/>
+                @if($data->verified)
+                <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                @endif
             </a>
         </div>
         <div class="user_body">

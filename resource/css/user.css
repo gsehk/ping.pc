@@ -56,6 +56,11 @@
     float: left;
 }
 
+.user_header .role-icon {
+    right: 22px;
+    bottom: -2px;
+}
+
 .user_item .user_header .user_avatar {
     width: 60px;
     height: 60px;
@@ -75,7 +80,7 @@
 
 .user_item .user_body .follow_btn {
     font-size: 12px;
-    line-height: 24px;
+    line-height: 22px;
     display: inline-block;
     float: right;
     width: 60px;
