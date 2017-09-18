@@ -2,7 +2,9 @@
 @if (!$data->isEmpty())
 @foreach ($data as $post)
     <div class="q_c">
-        <h2 class="q_title">{{ $post->subject }}</h2>
+        <h2 class="q_title">
+            <a href="{{ route('pc:questionread', ['question_id' => $post['id']]) }}">{{ $post->subject }}</a>
+        </h2>
         @if ($post->answer)
             <div class="q-answer">
                 <div class="q_user">
@@ -27,7 +29,7 @@
                     </div> --}}
                     <div class="q_text">
                         <span>{{ str_limit($post->answer->body, 250) }}</span>
-                        <button class="Button Button--plain btn_more">查看详情</button>
+                        <button class="Button Button--plain Button--more">查看详情</button>
                     </div>
                 </div>
             </div>

@@ -69,4 +69,18 @@ class QuestionController extends BaseController
         return view('pcview::question.topic', [], $this->PlusData);
     }
 
+    public function read(int $question_id)
+    {
+        $this->PlusData['current'] = 'question';
+
+        // $question = createRequest('get', 'api/v2/question'.$question_id );
+
+        // $data['question'] = $question;
+        
+        $data=[];
+
+        return view('pcview::question.read', $data, $this->PlusData);
+
+    }
+
 }

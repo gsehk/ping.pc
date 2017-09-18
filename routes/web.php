@@ -44,6 +44,8 @@ Route::prefix('question')->group(function () {
     // 问答
     Route::get('/', 'QuestionController@question')->name('pc:question');
 
+    Route::get('/{question_id}', 'QuestionController@read')->where(['question_id' => '[0-9]+'])->name('pc:questionread');
+
     Route::get('topic', 'QuestionController@topic')->name('pc:topic');
 });
 
