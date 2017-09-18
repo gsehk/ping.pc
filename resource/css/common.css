@@ -1031,6 +1031,7 @@ a {
     width: 23px;
     height: 23px;
     vertical-align: text-bottom;
+    background-repeat: no-repeat;
 }
 
 .share_feedlist .bds_tsina {
