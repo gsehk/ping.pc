@@ -1,7 +1,7 @@
 (function($){
     var loadgif = RESOURCE_URL + '/images/loading.png';
 	$.fn.Huploadify = function(opts){
-		var itemTemp = '<a class="feed_picture_span uploadify-queue-item" id="${fileID}"><img class="load imgload" src=" '+loadgif+' "/></a>';
+		var itemTemp = '<a class="feed_picture_span uploadify-queue-item" id="${fileID}"><img class="imgload" src=" '+loadgif+' "/></a>';
 		var defaults = {
 			fileTypeExts:'*.jpg;*.JPG;*.png;*.PNG',//允许上传的文件类型，格式'*.jpg;*.doc'
 			auto:true,//是否开启自动上传

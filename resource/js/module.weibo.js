@@ -5,7 +5,7 @@ var weibo = {};
  * @return void
  */
 weibo.afterUpload = function(image, f, task_id) {
-    var img = '<img class="imgloaded" onclick="weibo.showImg();" src="' + image.src + '" tid="' + task_id + '"/>';
+    var img = '<img class="imgloaded" onclick="weibo.showImg();" src="' + SITE_URL + '/api/v2/files/' + task_id + '?w=59&h=59"/ tid="' + task_id + '">';
     var del = '<span class="imgdel"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></span>'
     $('#' + 'fileupload_1_' + f.index).css('border', 'none').html(img + del);
 };
@@ -63,6 +63,13 @@ weibo.postFeed = function() {
             }
         });
     } else {
+        var image_box = '<div class="feed_pay_imagebox">';
+        $('.feed_picture').find('img').each(function() {
+            image_box += '<img src="' + $(this).attr('src') + '"/>';
+        });
+        image_box += '</div>';
+        console.log(image_box);
+
         return false;
     }
 };
