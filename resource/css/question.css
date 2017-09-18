@@ -378,5 +378,30 @@ button{
     background: #59b6d7;
 }
 
-/* 问答详情页 */
+/* 回答详情页 */
 
+.answer-detail-box {
+    padding: 20px 40px;
+}
+
+.user-box .body-box {
+    margin-left: 20px;
+    line-height: 24px;
+}
+
+.answer-detail-box .user-tags {
+    margin-top: 7px;
+}
+.answer-detail-box .tag {
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 14px;
+    margin-right: 7px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+
+.answer-detail-box .answer-body {
+    margin-top: 40px;
+    min-height: 300px;
+}

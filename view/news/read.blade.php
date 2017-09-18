@@ -74,7 +74,7 @@
 
                     {{-- 打赏 --}}
                     <div class="reward-box">
-                        <p><button class="btn btn-warning btn-lg" id="J-reward-btn">打 赏</button></p>
+                        <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{$news->id}}, 'news')">打 赏</button></p>
                         <div class="reward-user">
                         <p class="reward-info tcolor">
                             <font color="#F76C6A">{{$news['reward']['count']}} </font>次打赏，共

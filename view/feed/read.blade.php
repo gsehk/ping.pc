@@ -73,7 +73,7 @@
                     <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
                 </div>
                 <div class="reward-box">
-                    <p><button class="btn btn-warning btn-lg" id="J-reward-btn">打 赏</button></p>
+                    <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{$feed->id}}, 'feed')">打 赏</button></p>
                     <p class="reward-info tcolor">
                         <font color="#F76C6A">{{$feed['reward']['count']}} </font>次打赏，共
                         <font color="#F76C6A">{{$feed['reward']['amount'] or 0}} </font>元
@@ -167,33 +167,6 @@ setTimeout(function() {
         canload: true
     });
 }, 300);
-
-$('#J-reward-btn').on('click', function(){
-    var html = '<div class="reward-popups">'+
-        '<p class="ucolor font14">选择打赏金额</p>'+
-        '<div class="reward-sum">'+
-            '<label class="opt tcolor" for="sum1">¥1.00'+
-                '<input class="hide" id="sum1" type="radio" name="sum" value="1">'+
-            '</label>'+
-            '<label class="opt tcolor active" for="sum5">¥5.00'+
-                '<input class="hide" id="sum5" type="radio" name="sum" value="5" checked>'+
-            '</label>'+
-            '<label class="opt tcolor" for="sum10">¥10.00'+
-                '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
-            '</label>'+
-        '</div>'+
-        '<p><input class="custom-sum" type="number" min="0" name="custom" placeholder="自定金额，必须是整数"></p>'+
-        '<div class="reward-btn-box">'+
-            '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
-            '<button class="btn btn-primary" onclick="rewarded.weibo(this, {{$feed->id}});">&nbsp;打 赏&nbsp;</button>'+
-        '</div>'+
-    '</div>';
-    ly.loadHtml(html, '', '350px', '300px');
-    $('.reward-sum label').on('click', function(){
-        $('.reward-sum label').removeClass('active');
-        $(this).addClass('active');
-    })
-})
 
 $(document).ready(function(){
     $("img.lazy").lazyload({effect: "fadeIn"});

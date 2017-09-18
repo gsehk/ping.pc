@@ -69,18 +69,61 @@ class QuestionController extends BaseController
         return view('pcview::question.topic', [], $this->PlusData);
     }
 
+    /**
+     * 问题详情.
+     *
+     * @param  int    $question_id
+     * @return mixed
+     */
     public function read(int $question_id)
     {
         $this->PlusData['current'] = 'question';
 
-        // $question = createRequest('get', 'api/v2/question'.$question_id );
-
-        // $data['question'] = $question;
-        
-        $data=[];
+        $question = createRequest('GET', '/api/v2/questions/'.$question_id );
+        // dd($question->toArray());
+        $data['question'] = $question;
 
         return view('pcview::question.read', $data, $this->PlusData);
 
     }
 
+    /**
+     * 回答详情.
+     *
+     * @param  Request $request
+     * @param  int     $answer  回答id
+     * @return mixed
+     */
+    public function answer(int $answer)
+    {
+        $data['answer'] = createRequest('GET', '/api/v2/question-answers/'.$answer );
+        // dd($data['answer']->toArray());
+
+        return view('pcview::question.answer', $data, $this->PlusData);
+    }
+
+    /**
+     * 回答评论列表.
+     *
+     * @param  int    $answer 回答id
+     * @return mixed
+     */
+    public function answerComments(Request $request, int $answer)
+    {
+        $params = [
+            'after' => $request->query('after', 0),
+            'limit' => $request->query('limit', 10),
+        ];
+        $comments = createRequest('GET', '/api/v2/question-answers/'.$answer.'/comments', $params);
+        $comment = clone $comments;
+        $after = $comment->pop()->id ?? 0;
+        $data['comments'] = $comments;
+        $html = view('pcview::templates.comment', $data, $this->PlusData)->render();
+
+        return response()->json([
+            'status' => true,
+            'after' => $after,
+            'data' => $html
+        ]);
+    }
 }

@@ -507,7 +507,7 @@ var no_data = function(selector, type, txt) {
 
 // 退出登录提示
 var logout = function() {
-    $('.nav_menu').hide();            
+    $('.nav_menu').hide();
     ly.confirm('提示', '感谢您对ThinkSNS的信任，是否退出当前账号？', '' , '退出', function(){
         window.location.href = '/passport/logout';
     });
@@ -588,15 +588,43 @@ var checkIn = function(is_check, nums) {
 
 // 打赏
 var rewarded = {
-    weibo: function (obj, id) {
+    show: function(id, type) {
+        var html = '<div class="reward-popups">'+
+            '<p class="ucolor font14">选择打赏金额</p>'+
+            '<div class="reward-sum">'+
+                '<label class="opt tcolor" for="sum1">¥1.00'+
+                    '<input class="hide" id="sum1" type="radio" name="sum" value="1">'+
+                '</label>'+
+                '<label class="opt tcolor active" for="sum5">¥5.00'+
+                    '<input class="hide" id="sum5" type="radio" name="sum" value="5" checked>'+
+                '</label>'+
+                '<label class="opt tcolor" for="sum10">¥10.00'+
+                    '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
+                '</label>'+
+            '</div>'+
+            '<p><input class="custom-sum" type="number" min="0" name="custom" placeholder="自定金额，必须是整数"></p>'+
+            '<div class="reward-btn-box">'+
+                '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
+                '<button class="btn btn-primary answer" onclick="rewarded.weibo('+id+', \''+type+'\');">&nbsp;打 赏&nbsp;</button>'+
+            '</div>'+
+        '</div>';
+        ly.loadHtml(html, '', '350px', '300px');
+        $('.reward-sum label').on('click', function(){
+            $('.reward-sum label').removeClass('active');
+            $(this).addClass('active');
+        })
+    },
+    weibo: function (id, type) {
         ly.close();
         var sum = $('[name="sum"]:checked').val();
         var custom = $('[name="custom"]').val();
         var url = '/api/v2/feeds/'+id+'/rewards';
-        if ($(obj).hasClass('news')) {
+        if (type == 'news') {
             url = '/api/v2/news/'+id+'/rewards';
         }
-
+        if (type == 'answer') {
+            url = '/api/v2/question-answers/'+id+'/rewarders';
+        }
         $.ajax({
             url: url,
             type: 'POST',
@@ -607,6 +635,28 @@ var rewarded = {
             },
             success: function(res) {
                 noticebox(res.message, 1, 'refresh');
+            }
+        });
+    },
+    list: function(id, type){
+        var url = 'feeds';
+        var html = '<div class="reward-popups">'+
+        '<p class="reward-title ucolor font14">打赏列表<a class="close-reward" onclick="ly.close()"></a></p>'+
+        '<ul class="reward-list"></ul>'+
+        '</div>';
+        ly.loadHtml(html, '', '350px');
+        if (type == 'answer') {
+            url = '/api/v2/question-answers/'+id+'/rewarders';
+        }
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            error: function(xml) {
+                noticebox('打赏失败', 0);
+            },
+            success: function(res) {
+                console.log(res)
             }
         });
     }

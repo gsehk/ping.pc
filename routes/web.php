@@ -47,6 +47,10 @@ Route::prefix('question')->group(function () {
     Route::get('/{question_id}', 'QuestionController@read')->where(['question_id' => '[0-9]+'])->name('pc:questionread');
 
     Route::get('topic', 'QuestionController@topic')->name('pc:topic');
+
+    Route::get('answer/{answer}', 'QuestionController@answer')->name('pc:answeread');
+
+    Route::get('answer/{answer}/comments', 'QuestionController@answerComments');
 });
 
 Route::prefix('rank')->group(function () {
