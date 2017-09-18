@@ -10,7 +10,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
         <a href="{{ route('pc:mine', $post->user->id) }}">
             <img class="round" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50" />
             @if($post->user->verified)
-            <img class="vip_auth" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+            <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
             @endif
         </a>
         <span class="uname tcolor">{{ $post->user->name }}</span>

@@ -12,7 +12,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="avatar" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="50" />
             @if($post->user->verified)
-            <img class="vip_auth" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+            <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
             @endif
         </a>
 
