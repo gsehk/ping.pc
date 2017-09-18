@@ -30,6 +30,7 @@
                             <li data-value="org">机构认证</a></li>
                         </ul>
                         <i></i>
+                        <input id="authtype" type="hidden" value="user" />
                     </div>
                 </div>
 
@@ -117,7 +118,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 @endsection
@@ -126,9 +127,11 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script>
+var authType = 'user';
 $(function() {
     $('.zy_select li').click(function(){
         var type = $(this).data('value');
+        $('#authtype').val(type);
         if ($(this).data("value") ==  'user') {
             $('.org_authenticate').hide();
             $('.user_authenticate').show();
@@ -151,7 +154,7 @@ $('.J-authenticate-btn').on('click', function(e) {
             args.set(sel.attr('name'), sel.val());
         };
         args.set('desc', $('.text_box').text());
-        args.set('type', $('.J-authenticate-type').val());
+        args.set('type', $('#authtype').val());
 
         return args.get();
     };
