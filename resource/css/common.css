@@ -113,8 +113,8 @@ a {
     background: #f3f6f7;
 }
 
-.white {
-    background: #fff;
+.bgwhite {
+    background-color: white;
 }
 
 .icon {
