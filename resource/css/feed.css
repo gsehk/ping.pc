@@ -799,56 +799,6 @@
     font-size: 18px;
 }
 
-/* btn style reference bootstrap */
-
-.btn {
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.4;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
-
-/* btn size */
-.btn-lg {
-    padding: 8px 22px;
-    font-size: 18px;
-    line-height: 1.3;
-    border-radius: 3px;
-}
-
-.btn-sm{
-    padding: 5px 10px;
-    font-size: 12px;
-    line-height: 1.5;
-    border-radius: 3px;
-}
-/* btn theme */
-.btn-default {
-    color: #333;
-    background-color: #d4d4d4;
-    border-color: #d4d4d4;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #59b6d7;
-    border-color: #59b6d7;
-}
-
-.btn-warning {
-    color: #fff;
-    background-color: #F76C6A;
-    border-color: #F76C6A;
-}
-
 /* 打赏 style */
 
 .reward-box {
