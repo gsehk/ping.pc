@@ -88,7 +88,7 @@
                             @endif
                         </div>
                     @endforeach
-                        <span class="more-user"></span>
+                        <span class="more-user" onclick="rewarded.list({{$feed->id}}, 'feeds')"></span>
                     @endif
                     </div>
                 </div>

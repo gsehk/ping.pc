@@ -699,6 +699,7 @@
 .reward-box .more-user {
     position: relative;
     display: inline-block;
+    cursor: pointer;
     width: 1px;
     height: 12px;
 }
@@ -725,6 +726,21 @@
 
 .reward-popups {
     padding: 40px;
+}
+
+.reward-popups .reward-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.reward-popups .reward-list{
+    line-height: 60px;
+}
+
+.reward-popups .reward-list .uname{
+    color: #444;
+    margin: 0 20px;
 }
 
 .reward-popups .reward-sum .opt{

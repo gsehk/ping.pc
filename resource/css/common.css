@@ -84,8 +84,12 @@ a {
 
 /* border radius round */
 .round { border-radius: 50%; }
+.pointer { cursor: pointer; }
 
 .font14 { font-size: 14px; }
+.font16 { font-size: 16px; }
+.font18 { font-size: 18px; }
+.font20 { font-size: 20px; }
 
 .fl {
     float: left;
