@@ -74,11 +74,11 @@
                         <a class="post_button a_link J-btn" onclick="comment.news(this)" to_uid="0" row_id="{{ $post->id }}">评论</a>
                     </div>
                 </div>
-                <div class="comment_ps" id="comment_wrap{{ $post->id }}">
+                <div id="comment-list{{ $post->id }}">
                 @if($post->comments->count())
                 @foreach($post->comments as $cv)
-                <p class="comment{{$cv->id}} comment_con">
-                    <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                <p class="comment_con" id="comment{{$cv->id}}">
+                    <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
                     @if($cv->user_id != $TS['id'])
                         <a onclick="comment.initReply(this)" to_uname="{{ $cv->user['name'] }}" to_uid="{{$cv->user_id}}" row_id="{{$post->id}}">回复</a>
                     @endif

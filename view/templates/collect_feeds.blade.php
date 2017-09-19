@@ -7,7 +7,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 <div class="feed_item" @if($loop->first) style="margin-top:20px;" @endif>
 
     <div class="feed_title">
-        <a href="{{ route('pc:mine', $post->user->id) }}">
+        <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="round" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50" />
             @if($post->user->verified)
             <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
@@ -251,19 +251,19 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" />
             </div>
             <div class="comment_body" id="comment_box{{$post->id}}">
-                <div class="comment_textarea" id="editor_box{{ $post->id }}">
+                <div class="comment_textarea">
                     <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
                         <span class="dy_cs">可输入<span class="nums mcolor">255</span>字</span>
-                        <a class="post_button a_link J-btn" onclick="comment.weibo(this);" to_uid="0" row_id="{{ $post->id }}">评论</a>
+                        <a class="post_button a_link J-btn" onclick="comment.publish(this);" to_uid="0" row_id="{{ $post->id }}">评论</a>
                     </div>
                 </div>
 
-                <div class="comment_ps" id="comment_ps{{ $post->id }}">
+                <div id="comment-list{{ $post->id }}">
                 @if($post->comments->count())
                   @foreach($post->comments as $cv)
-                  <p class="comment{{$cv->id}} comment_con">
-                      <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                  <p class="comment_con" id="comment{{$cv->id}}">
+                    <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
                         @if($cv->user_id != $TS['id'])
                             <a
                               onclick="comment.initReply(this)"

@@ -143,7 +143,7 @@ var comment = {
     initReply: function(obj) {
         var attrs = urlToObject($(obj).data('args'));
         $('.J-comment-feed' + attrs.row_id).attr('to_uid', attrs.to_uid);
-        var editor = $('#editor_box' + attrs.row_id).find('textarea');
+        var editor = $('#comment_box' + attrs.row_id).find('textarea');
         var html = '回复@' + attrs.to_uname + ' ：';
         //清空输入框
         editor.val('');
@@ -189,9 +189,9 @@ var comment = {
                     $('.cs'+rowid).text(parseInt($('.cs'+rowid).text())+1);
                     editor.val('');
                 }
-                var html = '<p class="comment'+res.comment.id+' comment_con">';
-                    html +=     '<span>' + NAME + '：</span>' + formData.body + '';
-                    html +=     '<a class="del_comment" onclick="comment.delComment('+res.comment.id+', '+rowid+');">删除</a>';
+                var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
+                    html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
+                    html +=     '<a class="del_comment" onclick="comment.delete('+res.comment.id+', '+rowid+');">删除</a>';
                     html += '</p>';
 
                 $('#comment-list'+rowid).prepend(html);

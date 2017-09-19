@@ -91,12 +91,12 @@
                 <div class="comment_tool">
                     <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
                     <button
-                        class="commnet_btn"
+                        class="btn btn-primary"
                         id="J-comment-answer"
                         row_id="{{$answer->id}}"
                         to_uid="0"
                         onclick="comment.publish(this)"
-                    >评论</button>
+                    > 评 论 </button>
                 </div>
             </div>
             <div class="comment_list" id="comment_box">

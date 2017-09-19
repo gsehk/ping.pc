@@ -76,7 +76,7 @@ var comment = {
         var to_uid = $(obj).attr('to_uid');
         var row_id = $(obj).attr('row_id');
         $('#comment_box'+row_id).find('.J-btn').attr('to_uid', to_uid);
-        var editor = $('#editor_box' + row_id).find('textarea');
+        var editor = $('#comment_box' + row_id).find('textarea');
         var html = '回复@' + to_uname + ' ：';
         //清空输入框
         editor.val('');
@@ -84,16 +84,20 @@ var comment = {
         editor.focus();
     },
     // 列表发表评论
-    weibo: function(obj) {
+    publish: function(obj) {
+        checkLogin();
         var to_uid = $(obj).attr('to_uid') || 0;
-        var feedid = $(obj).attr('row_id') || 0;
-        var editor = $('#comment_box' + feedid).find('textarea');
+        var rowid = $(obj).attr('row_id') || 0;
+        var editor = $('#comment_box'+rowid).find('textarea');
 
         var formData = { body: editor.val() };
+        if (!editor.val()) {
+            layer.msg('评论内容不能为空');return;
+        }
         if (to_uid > 0) {
             formData.reply_user = to_uid;
         }
-        var url = '/api/v2/feeds/' + feedid + '/comments';
+        var url = '/api/v2/feeds/' + rowid + '/comments';
         obj.innerHTML = '评论中..';
         $.ajax({
             url: url,
@@ -103,16 +107,16 @@ var comment = {
             success: function(res) {
                 if (obj != undefined) {
                     obj.innerHTML = '评论';
+                    $('.nums').text(initNums);
+                    $('.cs'+rowid).text(parseInt($('.cs'+rowid).text())+1);
                     editor.val('');
                 }
-                var html = '<p class="comment'+res.comment.id+' comment_con">';
-                    html += '<span>' + NAME + '：</span>' + formData.body + '';
-                    html += '<a class="del_comment" onclick="comment.delWeibo('+res.comment.id+', '+feedid+');">删除</a>';
+                var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
+                    html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
+                    html +=     '<a class="del_comment" onclick="comment.delWeibo('+res.comment.id+', '+rowid+');">删除</a>';
                     html += '</p>';
-                var commentBox = $('#comment_ps' + feedid);
-                    commentBox.prepend(html);
-                    $('.nums').text(initNums);
-                    $('.cs' + feedid).text(parseInt($('.cs' + feedid).text())+1);
+
+                    $('#comment-list'+rowid).prepend(html);
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
@@ -149,16 +153,16 @@ var comment = {
                 if (xml.status == 201) {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
-                        editor.val('');
-                    }
-                    var html = '<p class="comment'+res.comment.id+' comment_con">';
-                    html += '<span>' + NAME + '：</span>' + formData.body + '';
-                    html += '<a class="del_comment" onclick="comment.delNews('+res.comment.id+', '+newsid+');">删除</a>';
-                    html += '</p>';
-                    var commentBox = $('#comment_wrap' + newsid);
-                        commentBox.prepend(html);
                         $('.nums').text(initNums);
                         $('.cs'+newsid).text(parseInt($('.cs'+newsid).text())+1);
+                        editor.val('');
+                    }
+                    var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
+                        html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
+                        html +=     '<a class="del_comment" onclick="comment.delNews('+res.comment.id+', '+newsid+');">删除</a>';
+                        html += '</p>';
+
+                    $('#comment-list' + newsid).prepend(html);
                 } else {
                     noticebox(res.message, 0);
                 }
@@ -172,7 +176,7 @@ var comment = {
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
-                $('.comment'+comment_id).fadeOut();
+                $('#comment'+comment_id).fadeOut();
                 var nums = $('.cs' + feed_id);
                 nums.text(parseInt(nums.text())-1);
             },
@@ -189,7 +193,7 @@ var comment = {
             dataType: 'json',
             error: function(xml) { noticebox('删除失败请重试', 0); },
             success: function(res) {
-                $('.comment' + comment_id).fadeOut(1000);
+                $('#comment' + comment_id).fadeOut(1000);
                 var nums = $('.cs' + news_id);
                 nums.text(parseInt(nums.text()) - 1);
             }

@@ -285,7 +285,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
                 <div id="comment-list{{ $post->id }}">
                 @if($post->comments->count())
                 @foreach($post->comments as $cv)
-                <p class="comment_item" id="comment{{$cv->id}}">
+                <p class="comment_con" id="comment{{$cv->id}}">
                     <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
                     @if($cv->user_id != $TS['id'])
                         <a onclick="comment.initReply(this)" data-args="to_uname={{ $cv->user['name'] }}&to_uid={{$cv->user_id}}&row_id={{$post->id}}">回复</a>

@@ -264,19 +264,19 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" />
             </div>
             <div class="comment_body" id="comment_box{{$post->id}}">
-                <div class="comment_textarea" id="editor_box{{ $post->id }}">
+                <div class="comment_textarea">
                     <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
                         <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                        <a class="post_button a_link J-btn" onclick="comment.weibo(this);" to_uid="0" row_id="{{ $post->id }}">评论</a>
+                        <a class="post_button a_link J-btn" onclick="comment.publish(this);" to_uid="0" row_id="{{ $post->id }}">评论</a>
                     </div>
                 </div>
 
-                <div class="comment_ps" id="comment_ps{{ $post->id }}">
+                <div id="comment-list{{ $post->id }}">
                 @if($post->comments->count())
                 @foreach($post->comments as $cv)
-                <p class="comment{{$cv->id}} comment_con">
-                    <span>{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                <p class="comment_con" id="comment{{$cv->id}}">
+                    <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
                     @if($cv->user_id != $TS['id'])
                         <a onclick="comment.initReply(this)" to_uname="{{ $cv->user['name'] }}" to_uid="{{$cv->user_id}}" row_id="{{$post->id}}">回复</a>
                     @endif

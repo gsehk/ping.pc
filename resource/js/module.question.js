@@ -26,7 +26,7 @@ var comment = {
                     $('.nums').text(initNums);
                     editor.val('');
                 }
-                var html  = '<div class="comment_item" id="comment_item_'+res.comment.id+'">';
+                var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
                     html += '    <dl class="clearfix">';
                     html += '        <dt>';
                     html += '            <img src="'+AVATAR+'" width="50">';
@@ -41,6 +41,7 @@ var comment = {
                     html += '        </dd>';
                     html += '    </dl>';
                     html += '</div>';
+
                     $('#comment_box').prepend(html);
                     $('.comment_count').text(parseInt($('.comment_count').text())+1);
             },
@@ -57,15 +58,16 @@ var comment = {
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
-                if ("undefined" != typeof($('#comment_item_'+comment_id))) {
-                    $('#comment'+comment_id).fadeOut();
-                    $('.comment_count').text(parseInt($('.comment_count').text())-1);
-                }
+                $('#comment'+comment_id).fadeOut();
+                $('.comment_count').text(parseInt($('.comment_count').text())-1);
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
             }
         });
+    },
+    pinneds: function() {
+        return;
     }
 }
 

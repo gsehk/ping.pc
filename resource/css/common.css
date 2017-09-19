@@ -1813,16 +1813,12 @@ img.load {
     margin-left: 385px;
 }
 
-.comment_item{
+.comment_box .comment_con{
     word-break: break-all;
     margin-bottom: 16px;
 }
 
-.comment_item span {
-    color: #333;
-}
-
-.comment_item a {
+.comment_box .comment_con a {
     cursor: pointer;
     display: none;
     margin-left: 5px;
