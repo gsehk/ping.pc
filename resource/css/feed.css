@@ -792,6 +792,10 @@
     width: 587px;
 }
 
+.feed_pay_box .pay_title {
+    font-size: 20px;
+}
+
 .feed_pay_box .pay_images {
     width: 100%;
 }
@@ -799,13 +803,14 @@
 .feed_pay_box .pay_images .pay_image{
     display: inline-block;
     position: relative;
+    margin-right: 3px;
 }
 
 .feed_pay_box .pay_images .pay_image img {
     width: 59px;
     height: 59px;
     display: inline-block;
-    border: 1px solid transparent;
+    box-sizing: border-box;
 }
 
 .feed_pay_box .pay_images .pay_image svg {
@@ -821,16 +826,17 @@
 }
 
 .feed_pay_box .pay_images .pay_image img.current {
-    border: 1px solid red;
+    border: 1px solid #59b6d7;
 }
 
 .feed_pay_box .pay_images .triangle {
-    margin-left: 24px;
+    margin-top: 8px;
+    margin-left: 23px;
     width: 0;
     height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-bottom: 10px solid #f3f6f7;
+    border-bottom: 8px solid #f3f6f7;
 }
 
 .feed_pay_box .pay_info {
@@ -841,6 +847,10 @@
 
 .feed_pay_box .pay_info .pay_head {
     width: 100%;
+}
+
+.feed_pay_box .pay_info .pay_head span{
+    cursor: pointer;
 }
 
 .feed_pay_box .pay_info .pay_head .pay_text {
@@ -868,7 +878,7 @@
     height: 28px;
     line-height: 28px;
     border: 1px solid #ccc;
-    color: #ccc;
+    color: #666;
     margin-right: 10px;
 }
 
@@ -878,13 +888,15 @@
 }
 
 .feed_pay_box .pay_info .pay_body input {
+    margin-left: 20px;
     outline: none;
     text-indent: 10px;
     background-color: transparent;
-    height: 30px;
-    line-height: 30px;
-    width: 264px;
+    height: 28px;
+    line-height: 28px;
+    width: 263px;
     border: 1px solid #ccc;
+    vertical-align: bottom;
 }
 
 

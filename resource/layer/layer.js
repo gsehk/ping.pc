@@ -185,7 +185,7 @@ function(e, t) {
                 for (var t = 0,
                          i = r.btn.length; t < i; t++)e += '<a class="' + l[6] + t + '">' + r.btn[t] + "</a>";
             }
-            return '<div class="' + l[6] + " layui-layer-btn-" + (r.btnAlign || "") + '"><div style="text-align:center">' + e + "</div></div>"
+            return '<div style="text-align:center" class="' + l[6] + " layui-layer-btn-" + (r.btnAlign || "") + '">' + e + "</div>"
         } () : "") + (r.resize ? '<span class="layui-layer-resize"></span>': "") + "</div>"], u, i('<div class="layui-layer-move"></div>')),
         n
     },
