@@ -665,7 +665,7 @@ button{
     margin-left: 70px;
 }
 .invitation-con {
-
+    display: none;
 }
 .invitation-con>dl {
     color: #6B6B6B;

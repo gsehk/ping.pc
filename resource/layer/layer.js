@@ -178,8 +178,12 @@ function(e, t) {
         function() {
             var e = "";
             "string" == typeof r.btn && (r.btn = [r.btn]);
-            for (var t = 0,
-            i = r.btn.length; t < i; t++) e += '<a class="' + l[6] + t + '">' + r.btn[t] + "</a>";
+            if (r.btn.length == 1) {
+                e += '<a class="layui-layer-btn-notice">' + r.btn + "</a>"
+            } else {
+                for (var t = 0,
+                         i = r.btn.length; t < i; t++)e += '<a class="' + l[6] + t + '">' + r.btn[t] + "</a>";
+            }
             return '<div class="' + l[6] + " layui-layer-btn-" + (r.btnAlign || "") + '">' + e + "</div>"
         } () : "") + (r.resize ? '<span class="layui-layer-resize"></span>': "") + "</div>"], u, i('<div class="layui-layer-move"></div>')),
         n

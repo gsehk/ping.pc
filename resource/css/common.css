@@ -1254,6 +1254,7 @@ a {
 .exit_ts {
     font-size: 20px;
     margin-bottom: 20px;
+    text-align: center;
     color: #333;
 }
 
@@ -1840,12 +1841,21 @@ img.load {
     text-align: center;
     color: #999;
 }
+.layer_exit_body {
+    padding: 30px 15px;
+    color: #999;
+}
 .layui-layer-btn- {
     font-size: 14px;
     width: 100% !important;
     padding: 0 92px 70px !important;
 }
-
+.layui-layer-btn-notice {
+    width: auto !important;
+    display: table !important;
+    margin: auto !important;
+    padding: 0 15px !important;
+}
 
 /*  申请置顶 */
 .apply-pinneds .day,

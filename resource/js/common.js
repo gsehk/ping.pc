@@ -99,9 +99,9 @@ var ly = {
             title: title,
             area: [width,height],
             shadeClose: true,
-            shade:0.5,
+            shade: 0.5,
             scrollbar: false,
-            content: html,
+            content: html
         });
     },
     confirm: function (title, html, cancelBtn, confirmBtn, callback, width, height) {
@@ -124,6 +124,23 @@ var ly = {
         }, function(){
             layer.closeAll();
         }, callback);
+    },
+    alert: function (title, content, btn, callback, width, height) {
+        title = title || '提示';
+        btn = btn || '知道了';
+        width = width || '480px';
+        height = height || 'auto';
+        var cont = '<div class="modal-body layer_exit_body">'
+            + (title ? '<div class="exit_ts">' + title + '</div>' : '')
+            + (content ? content : '')
+            + '</div>';
+
+        layer.alert(cont, {
+            btn: btn, //按钮
+            title: '',
+            area: [width, height],
+            scrollbar: false
+        });
     }
 };
 
