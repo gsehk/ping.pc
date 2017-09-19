@@ -308,32 +308,20 @@ var comment = {
                 $('.comment_count').text(parseInt($('.comment_count').text()) - 1);
             }
         });
+    },
+    // 评论申请置顶
+    pinneds: function (obj){
+        var url = '';
+        if (obj.commentable_type == 'news') {
+            url = '/api/v2/news/'+obj.commentable_id+'/comments/'+obj.id+'/pinneds';
+            pinneds(url);
+        }
     }
 };
 
 var news = {
     pinneds: function (news_id) {
-        var html = '<div class="apply-pinneds">'+
-                '<p><input class="day" type="number" name="day" placeholder="申请置顶天数" /></p>'+
-                '<p><input class="amount" type="number" name="amount" placeholder="申请置顶金额" /></p>'+
-            '</div>';
-        ly.confirm('申请置顶', html, '', '', function(){
-            var data = { day: $('.day').val(), amount: $('.amount').val() };
-            if (!data.day || !data.amount) {
-                layer.msg('请输入置顶参数');
-                return false;
-            }
-            $.ajax({
-                url: '/api/v2/news/'+news_id+'/pinneds',
-                type: 'POST',
-                data: data,
-                success: function(res) {
-                    noticebox(res.message, 1);
-                },
-                error: function(error) {
-                    layer.msg(error.responseJSON.message);
-                }
-            });
-        });
+        var url = '/api/v2/news/'+news_id+'/pinneds';
+        pinneds(url);
     }
 };

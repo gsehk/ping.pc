@@ -131,28 +131,8 @@ weibo.denounce = function(obj) {
     });
 };
 weibo.pinneds = function (feed_id) {
-    var html = '<div class="apply-pinneds">'+
-            '<p><input class="day" type="number" min="0" name="day" placeholder="申请置顶天数" /></p>'+
-            '<p><input class="amount" type="number" min="0" name="amount" placeholder="申请置顶金额" /></p>'+
-        '</div>';
-    ly.confirm('申请置顶', html, '', '', function(){
-        var data = { day: $('.day').val(), amount: $('.amount').val() };
-        if (!data.day || !data.amount) {
-            layer.msg('请输入置顶参数');
-            return false;
-        }
-        $.ajax({
-            url: '/api/v2/feeds/'+feed_id+'/pinneds',
-            type: 'POST',
-            data: data,
-            success: function(res) {
-                noticebox(res.message, 1);
-            },
-            error: function(error) {
-                layer.msg('已经申请过了');
-            }
-        });
-    });
+    var url = '/api/v2/feeds/'+feed_id+'/pinneds';
+    pinneds(url);
 };
 
 /**
@@ -313,6 +293,14 @@ var comment = {
                 showError(xhr.responseJSON);
             }
         });
+    },
+    // 评论申请置顶
+    pinneds: function (obj){
+        var url = '';
+        if (obj.commentable_type == 'feeds') {
+            url = '/api/v2/feeds/'+obj.commentable_id+'/comments/'+obj.id+'/pinneds';
+            pinneds(url);
+        }
     }
 };
 

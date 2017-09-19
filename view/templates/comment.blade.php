@@ -18,11 +18,18 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 </span>
                 <div class="options_div">
                     <ul>
-                        <li>
-                            <a href="javascript:;" onclick="comment.delPost({{$comment['id']}}, {{$comment['commentable_id']}});">
-                                <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
-                            </a>
-                        </li>
+                        @if ($comment['user']['id'] == $TS['id'])
+                            <li>
+                                <a href="javascript:;" onclick="comment.pinneds({{$comment}});">
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" onclick="comment.delPost({{$comment['id']}}, {{$comment['commentable_id']}});">
+                                    <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                     <img src="http://tss.io/zhiyicx/plus-component-pc/images/triangle.png" class="triangle">
                 </div>

@@ -347,55 +347,15 @@ var weibo = {
         });
     },
     pinneds: function (feed_id) {
-        var html = '<div class="apply-pinneds">'+
-                '<p><input class="day" type="number" min="0" name="day" placeholder="申请置顶天数" /></p>'+
-                '<p><input class="amount" type="number" min="0" name="amount" placeholder="申请置顶金额" /></p>'+
-            '</div>';
-        ly.confirm('申请置顶', html, '', '', function(){
-            var data = { day: $('.day').val(), amount: $('.amount').val() };
-            if (!data.day || !data.amount) {
-                layer.msg('请输入置顶参数');
-                return false;
-            }
-            $.ajax({
-                url: '/api/v2/feeds/'+feed_id+'/pinneds',
-                type: 'POST',
-                data: data,
-                success: function(res) {
-                    noticebox(res.message, 1);
-                },
-                error: function(error) {
-                    layer.msg('已经申请过了');
-                }
-            });
-        });
+        var url = '/api/v2/feeds/'+feed_id+'/pinneds';
+        pinneds(url);
     }
 }
 
 var news = {
     pinneds: function (news_id) {
-        var html = '<div class="apply-pinneds">'+
-                '<p><input class="day" type="number" name="day" placeholder="申请置顶天数" /></p>'+
-                '<p><input class="amount" type="number" name="amount" placeholder="申请置顶金额" /></p>'+
-            '</div>';
-        ly.confirm('申请置顶', html, '', '', function(){
-            var data = { day: $('.day').val(), amount: $('.amount').val() };
-            if (!data.day || !data.amount) {
-                layer.msg('请输入置顶参数');
-                return false;
-            }
-            $.ajax({
-                url: '/api/v2/news/'+news_id+'/pinneds',
-                type: 'POST',
-                data: data,
-                success: function(res) {
-                    noticebox(res.message, 1);
-                },
-                error: function(error) {
-                    layer.msg(error.responseJSON.message);
-                }
-            });
-        });
+        var url = '/api/v2/news/'+news_id+'/pinneds';
+        pinneds(url);
     }
 };
 

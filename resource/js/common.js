@@ -679,7 +679,40 @@ var rewarded = {
     }
 };
 
-
+/**
+ * 申请置顶
+ * @param  url
+ */
+var pinneds = function (url) {
+    var html =
+        '<div class="apply-pinneds" id="J-pinneds-popups">'+
+            '<p><input class="day" type="number" name="day" placeholder="申请置顶天数" /></p>'+
+            '<p><input class="amount" type="number" name="amount" placeholder="申请置顶金额" /></p>'+
+        '</div>';
+    ly.confirm('申请置顶', html, '', '', function(){
+        var data = {
+            day: $('#J-pinneds-popups .day').val(),
+            amount: $('#J-pinneds-popups .amount').val()
+        };
+        if (!data.day || !data.amount) {
+            layer.msg('请输入置顶参数');
+            return false;
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(res) {
+                noticebox(res.message, 1);
+            },
+            error: function(error) {
+                if (error.status === 422) {
+                    layer.msg('已经申请过');
+                }
+            }
+        });
+    });
+}
 // 存入搜索记录
 var setHistory = function(str) {
     if (localStorage.history) {
