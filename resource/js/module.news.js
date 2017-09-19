@@ -106,11 +106,7 @@ var digg = {
         digg.digglock = 0;
     },
     addDigg: function(news_id) {
-        // 未登录弹出弹出层
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
+        checkLogin();
         if (digg.digglock == 1) {
             return false;
         }
@@ -132,7 +128,6 @@ var digg = {
                 } else {
                     alert(res.message);
                 }
-
                 digg.digglock = 0;
             }
         });
@@ -143,7 +138,6 @@ var digg = {
             return false;
         }
         digg.digglock = 1;
-
         var url = '/api/v2/news/'+news_id+'/likes';
         $.ajax({
             url: url,
@@ -160,7 +154,6 @@ var digg = {
                 } else {
                     alert(res.message);
                 }
-
                 digg.digglock = 0;
             }
         });
@@ -176,19 +169,13 @@ var collect = {
         collect.collectlock = 0;
     },
     addCollect: function(news_id) {
-        // 未登录弹出弹出层
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
-
+        checkLogin();
         if (collect.collectlock == 1) {
             return false;
         }
         collect.collectlock = 1;
 
         var url = '/api/v2/news/'+news_id+'/collections';
-
         $.ajax({
             url: url,
             type: 'POST',
@@ -204,7 +191,6 @@ var collect = {
                 } else {
                     alert(res.message);
                 }
-
                 collect.collectlock = 0;
             }
         });
@@ -231,7 +217,6 @@ var collect = {
                 } else {
                     alert(res.message);
                 }
-
                 collect.collectlock = 0;
             }
         });
@@ -255,24 +240,14 @@ var comment = {
     },
     // 发表评论
     addComment: function(attrs, obj) {
-        var _textarea = $('#mini_editor');
-        if (_textarea.size() == 0) {
-            return;
-        }
-        _textarea = _textarea.get(0);
-        var strlen = getLength(_textarea.value);
-
+        var editor = $('#mini_editor');
+        var strlen = getLength(editor.val());
         var leftnums = initNums - strlen;
         if (leftnums < 0 || leftnums == initNums) {
             noticebox('评论内容长度为1-' + initNums + '字', 0);
             return false;
         }
-        if ("undefined" != typeof(this.addComment) && (this.addComment == true)) {
-            return false; //不要重复评论
-        }
-        var formData = {
-            body: _textarea.value,
-        };
+        var formData = {body: editor.val(),};
         if (attrs.to_uid > 0) {
             formData.reply_user = attrs.to_uid;
         }
@@ -290,6 +265,8 @@ var comment = {
                 if (xml.status == 201) {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
+                        $('.nums').text(initNums);
+                        editor.val('');
                     }
                     var html  = '<div class="comment_item" id="comment_item_'+res.comment.id+'">';
                         html += '    <dl class="clearfix">';
@@ -306,18 +283,13 @@ var comment = {
                         html += '        </dd>';
                         html += '    </dl>';
                         html += '</div>';
-                    var commentBox = $('#comment_box');
-                    if ("undefined" != typeof(commentBox)) {
-                        commentBox.prepend(html);
-                        _textarea.value = '';
-                        $('.nums').text(initNums);
+
+                    $('#comment_box').prepend(html);
+                    $('.comment_count').text(parseInt($('.comment_count').text()) + 1);
+                    $('.J-reply-comment').on('click', function() {
                         /*绑定回复操作*/
-                        $('.J-reply-comment').on('click', function() {
-                            comment.initReply();
-                        });
-                    }
-                    var commentNum = $('.comment_count').text();
-                    $('.comment_count').text(parseInt(commentNum) + 1);
+                        comment.initReply();
+                    });
                 } else {
                     noticebox(res.message, 0);
                 }
@@ -333,9 +305,35 @@ var comment = {
             error: function(xml) { noticebox('删除失败请重试', 0); },
             success: function(res) {
                 $('#comment_item_' + comment_id).fadeOut();
-                var commentNum = $('.comment_count').text();
-                $('.comment_count').text(parseInt(commentNum) - 1);
+                $('.comment_count').text(parseInt($('.comment_count').text()) - 1);
             }
+        });
+    }
+};
+
+var news = {
+    pinneds: function (news_id) {
+        var html = '<div class="apply-pinneds">'+
+                '<p><input class="day" type="number" name="day" placeholder="申请置顶天数" /></p>'+
+                '<p><input class="amount" type="number" name="amount" placeholder="申请置顶金额" /></p>'+
+            '</div>';
+        ly.confirm('申请置顶', html, '', '', function(){
+            var data = { day: $('.day').val(), amount: $('.amount').val() };
+            if (!data.day || !data.amount) {
+                layer.msg('请输入置顶参数');
+                return false;
+            }
+            $.ajax({
+                url: '/api/v2/news/'+news_id+'/pinneds',
+                type: 'POST',
+                data: data,
+                success: function(res) {
+                    noticebox(res.message, 1);
+                },
+                error: function(error) {
+                    layer.msg(error.responseJSON.message);
+                }
+            });
         });
     }
 };

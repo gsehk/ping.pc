@@ -72,7 +72,7 @@ class NewsController extends BaseController
 
         // 相关资讯
         $news_rel = createRequest('GET', '/api/v2/news/' . $news_id . '/correlations');
-
+        // dd($news->user->toArray());
         $data['news'] = $news;
         $data['news_rel'] = $news_rel;
         return view('pcview::news.read', $data, $this->PlusData);

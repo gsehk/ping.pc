@@ -785,6 +785,11 @@
     clear: both;
 }
 
+.feed_datas svg {
+    font-size: 24px;
+    vertical-align: -7px;
+}
+
 .feed_datas .options {
     float: right;
     width: 30px;
@@ -828,16 +833,13 @@
     color: #666;
 }
 
+.feed_datas .options_div .act,
 .feed_datas .options_div > ul a:hover {
     color: #59b6d7;
 }
 
 .feed_datas .options_div .icon {
     margin-right: 12px;
-}
-
-.feed_datas .options_div .act {
-    color: #59b6d7;
 }
 
 /* 打赏 style */

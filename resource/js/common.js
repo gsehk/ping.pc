@@ -754,7 +754,7 @@ $(function() {
     })
 
     // 评论操作菜单
-    $('#feeds_list, #comment_box').on('click', '.options', function() {
+    $('#feeds_list, #comment_box, #news_toolbar').on('click', '.options', function() {
         if ($(this).next('.options_div').css('display') == 'none') {
             $('.options_div').hide();
             $(this).next('.options_div').show();
