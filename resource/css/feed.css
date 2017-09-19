@@ -786,6 +786,108 @@
     fill: white;
 }
 
+
+/*动态付费弹窗*/
+.feed_pay_box {
+    width: 587px;
+}
+
+.feed_pay_box .pay_images {
+    width: 100%;
+}
+
+.feed_pay_box .pay_images .pay_image{
+    display: inline-block;
+    position: relative;
+}
+
+.feed_pay_box .pay_images .pay_image img {
+    width: 59px;
+    height: 59px;
+    display: inline-block;
+    border: 1px solid transparent;
+}
+
+.feed_pay_box .pay_images .pay_image svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+.feed_pay_box .pay_images .pay_image img.current {
+    border: 1px solid red;
+}
+
+.feed_pay_box .pay_images .triangle {
+    margin-left: 24px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 10px solid #f3f6f7;
+}
+
+.feed_pay_box .pay_info {
+    padding: 20px;
+    background: #f3f6f7;
+    font-size: 14px;
+}
+
+.feed_pay_box .pay_info .pay_head {
+    width: 100%;
+}
+
+.feed_pay_box .pay_info .pay_head .pay_text {
+    float: left;
+}
+
+.feed_pay_box .pay_info .pay_head .pay_btn {
+    margin-left: 20px;
+    float: right
+}
+
+.feed_pay_box .pay_info .pay_head .pay_btn_yes{
+    color: #59b6d7;
+}
+
+.feed_pay_box .pay_info .pay_body {
+    margin-top: 10px;
+}
+
+.feed_pay_box .pay_info .pay_body span {
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    width: 78px;
+    height: 28px;
+    line-height: 28px;
+    border: 1px solid #ccc;
+    color: #ccc;
+    margin-right: 10px;
+}
+
+.feed_pay_box .pay_info .pay_body span.current {
+    border: 1px solid #59b6d7;
+    color: #59b6d7;
+}
+
+.feed_pay_box .pay_info .pay_body input {
+    outline: none;
+    text-indent: 10px;
+    background-color: transparent;
+    height: 30px;
+    line-height: 30px;
+    width: 264px;
+    border: 1px solid #ccc;
+}
+
+
 /*分页*/
 /*.dy_pageCont {
     margin: 0 auto;

@@ -104,20 +104,12 @@ var ly = {
             content: html
         });
     },
-    confirm: function (title, html, cancelBtn, confirmBtn, callback, width, height) {
-        var cont = '<div class="modal-body layui_exit_body">'
-            + (title ? '<div class="exit_ts">' + title + '</div>' : '')
-            + (html ? html : '是否确认操作？')
-            + '</div>';
-
+    confirm: function (html, cancelBtn, confirmBtn, callback) {
         cancelBtn = cancelBtn || '取消';
         confirmBtn = confirmBtn || '确认';
-        width = width || '360px';
-        height = height || 'auto';
-        layer.confirm(cont, {
+        layer.confirm(html, {
             btn: [cancelBtn, confirmBtn], //按钮
             title: '',
-            area: [width, height],
             shadeClose: true,
             shade:0.5,
             scrollbar: false
@@ -525,7 +517,7 @@ var no_data = function(selector, type, txt) {
 // 退出登录提示
 var logout = function() {
     $('.nav_menu').hide();
-    ly.confirm('提示', '感谢您对ThinkSNS的信任，是否退出当前账号？', '' , '退出', function(){
+    ly.confirm('感谢您对ThinkSNS的信任，是否退出当前账号？', '' , '退出', function(){
         window.location.href = '/passport/logout';
     });
 }

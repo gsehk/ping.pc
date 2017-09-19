@@ -1234,69 +1234,6 @@ a {
     vertical-align: text-bottom;
 }
 
-
-/*退出弹框*/
-
-.exit_dialog {
-    width: 400px !important;
-    height: 300px !important;
-    margin-top: 150px !important;
-}
-
-.exit_body {
-    padding: 70px !important;
-}
-
-.exit_content {
-    text-align: center;
-}
-
-.exit_ts {
-    font-size: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-}
-
-.exit_money {
-    margin-bottom: 5px;
-    font-size: 23px;
-    color: #F4504D;
-    line-height:30px;
-}
-
-.exit_thinks {
-    font-size: 14px;
-    line-height: 24px;
-    color: #999;
-}
-
-.exit_btn {
-    line-height: 30px;
-    display: inline-block;
-    width: 70px;
-    height: 30px;
-    margin: 50px 10px 0;
-    cursor: pointer;
-    color: #fff;
-    border-radius: 3px;
-    background: #59b6d7;
-}
-
-.exit_btn a {
-    font-size: 14px;
-    color: #fff;
-}
-
-.exit_btn_bg {
-    background: #ccc !important;
-}
-
-.modal.fade.in {
-    margin: auto !important;
-}
-
-
 .loading {
     font-size: 14px;
     padding: 20px 0 10px 0;
@@ -1829,28 +1766,22 @@ img.load {
 
 
 /*layer样式*/
-.layui-layer-setwin {
-    display: none;
+.notice_title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
 }
-.layui_exit_body {
+
+.notice_body {
     padding: 55px 55px 40px;
     text-align: center;
     color: #999;
 }
-.layer_exit_body {
-    padding: 30px 15px;
-    color: #999;
-}
+
 .layui-layer-btn- {
     font-size: 14px;
-    width: 100% !important;
-    padding: 0 92px 70px !important;
-}
-.layui-layer-btn-notice {
-    width: auto !important;
-    display: table !important;
-    margin: auto !important;
-    padding: 0 15px !important;
+    padding: 0px 0px 30px 0px !important;
 }
 
 /*  申请置顶 */
