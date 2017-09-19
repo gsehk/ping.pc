@@ -64,7 +64,7 @@
             {{--<div class="body-title">评论的</div>--}}
             <div class="body-title">评论的</div>
 
-            <div class="audit-top display">
+            <div class="audit-top hide">
                 <div data-value="" class="zy_select t_c gap12 message_select">
                     <span>动态评论置顶</span>
                     <ul>
@@ -146,8 +146,8 @@
                         params: {limit: 10}
                     });
                     body_title.html(title);
-                    body_title.removeClass('display');
-                    audit_top.addClass('display');
+                    body_title.removeClass('hide');
+                    audit_top.addClass('hide');
 
                     break;
                 case 'zan': // 点赞加载
@@ -159,8 +159,8 @@
                         params: {limit: 10}
                     });
                     body_title.html(title);
-                    body_title.removeClass('display');
-                    audit_top.addClass('display');
+                    body_title.removeClass('hide');
+                    audit_top.addClass('hide');
 
                     break;
                 case 'tz': // 通知加载
@@ -173,8 +173,8 @@
                         params: {limit: 10}
                     });
                     body_title.html(title);
-                    body_title.removeClass('display');
-                    audit_top.addClass('display');
+                    body_title.removeClass('hide');
+                    audit_top.addClass('hide');
                     break;
                 case 'feed_comment': // 通知加载
 
@@ -184,8 +184,8 @@
                         url: '/webmessage/feedCommentTop',
                         params: {limit: 10}
                     });
-                    body_title.addClass('display');
-                    audit_top.removeClass('display');
+                    body_title.addClass('hide');
+                    audit_top.removeClass('hide');
 
                     break;
 
@@ -198,8 +198,8 @@
                         params: {limit: 10}
                     });
 
-                    body_title.addClass('display');
-                    audit_top.removeClass('display');
+                    body_title.addClass('hide');
+                    audit_top.removeClass('hide');
 
                     break;
             }

@@ -126,4 +126,33 @@ class QuestionController extends BaseController
             'data' => $html
         ]);
     }
+
+    public function createQuestion()
+    {
+        $data['topics'] = createRequest('GET', '/api/v2/question-topics');
+
+        return view('pcview::question.create_question', $data, $this->PlusData);
+    }
+
+    public function getUsers(Request $request)
+    {
+        $ajax = $request->input('ajax');
+        $params['limit'] = $request->input('limit') ?: 10;
+        $params['topics'] = is_array($request->input('topics')) ? implode(',', $request->input('topics')) : $request->input('topics') ?: '';
+        $params['keyword'] = $request->input('keyword') ?: '';
+        $data['topics'] = $params['topics'];
+        if ($ajax == 1) {
+            $data['users'] = createRequest('GET', '/api/v2/question-experts', $params);
+            $return['html'] = view('pcview::question.user_list', $data)
+                ->render();
+
+            return response()->json([
+                'status'  => true,
+                'data' => $return,
+            ]);
+        } else {
+            return view('pcview::question.users', $data, $this->PlusData);
+        }
+    }
+
 }
