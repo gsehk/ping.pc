@@ -56,7 +56,6 @@
 
                 <li @if($current == 'group') class="active" @endif><a href="{{ route('pc:profilegroup', $user->id) }}">TA的圈子</a></li>
             </ul>
-
             <div class="follow-box">
                 @if ($user->hasFollower == 0)
                     <div id="follow" status="0" class="tcolor">+关注</div>
@@ -64,6 +63,10 @@
                     <div id="follow" status="1" class="followed">已关注</div>
                 @endif
             </div>
+
+            <a class="btn reward-btn" href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
+                <svg class="icon"><use xlink:href="#icon-uptop"></use></svg>打赏
+            </a>
         @endif
     </div>
 </div>

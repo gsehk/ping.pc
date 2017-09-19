@@ -622,7 +622,7 @@ var rewarded = {
             '<p><input class="custom-sum" type="number" min="0" name="custom" placeholder="自定金额，必须是整数"></p>'+
             '<div class="reward-btn-box">'+
                 '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
-                '<button class="btn btn-primary answer" onclick="rewarded.weibo('+id+', \''+type+'\');">&nbsp;打 赏&nbsp;</button>'+
+                '<button class="btn btn-primary answer" onclick="rewarded.post('+id+', \''+type+'\');">&nbsp;打 赏&nbsp;</button>'+
             '</div>'+
         '</div>';
         ly.loadHtml(html, '', '350px', '300px');
@@ -631,7 +631,7 @@ var rewarded = {
             $(this).addClass('active');
         })
     },
-    weibo: function (id, type) {
+    post: function (id, type) {
         ly.close();
         var sum = $('[name="sum"]:checked').val();
         var custom = $('[name="custom"]').val();
@@ -641,6 +641,9 @@ var rewarded = {
         }
         if (type == 'answer') {
             url = '/api/v2/question-answers/'+id+'/rewarders';
+        }
+        if (type == 'user') {
+            url = '/api/v2/user/'+id+'/rewards';
         }
         $.ajax({
             url: url,
