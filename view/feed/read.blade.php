@@ -105,12 +105,12 @@
                     <div class="comment_tool">
                         <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
                         <button
-                            class="commnet_btn"
+                            class="btn btn-primary"
                             id="J-comment-feed"
-                            data-args="to_uid=0&row_id={{$feed->id}}"
-                            to_comment_id="0"
+                            row_id="{{$feed->id}}"
                             to_uid="0"
-                        >评论</button>
+                            onclick="comment.publish(this)"
+                        > 评 论 </button>
                     </div>
                 </div>
                 <div class="comment_list" id="comment_box">
@@ -170,15 +170,6 @@ setTimeout(function() {
 
 $(document).ready(function(){
     $("img.lazy").lazyload({effect: "fadeIn"});
-    $('#J-comment-feed').on('click', function(){
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return false;
-        }
-        var attrs = urlToObject($(this).data('args'));
-        comment.addReadComment(attrs, this);
-    });
-
     bdshare.addConfig('share', {
         "tag" : "share_feedlist",
         'bdText' : '{{$feed['share_desc']}}',

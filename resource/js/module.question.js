@@ -1,11 +1,15 @@
 
 var comment = {
-    addComment: function(obj) {
+    publish: function(obj) {
+        checkLogin();
         var to_uid = $(obj).attr('to_uid') || 0;
         var rowid = $(obj).attr('row_id') || 0;
         var editor = $('#mini_editor');
 
         var formData = { body: editor.val() };
+        if (!editor.val()) {
+            layer.msg('评论内容不能为空');return;
+        }
         if (to_uid > 0) {
             formData.reply_user = to_uid;
         }
@@ -19,6 +23,7 @@ var comment = {
             success: function(res) {
                 if (obj != undefined) {
                     obj.innerHTML = '评论';
+                    $('.nums').text(initNums);
                     editor.val('');
                 }
                 var html  = '<div class="comment_item" id="comment_item_'+res.comment.id+'">';
@@ -36,9 +41,7 @@ var comment = {
                     html += '        </dd>';
                     html += '    </dl>';
                     html += '</div>';
-                var commentBox = $('#comment_box');
-                    commentBox.prepend(html);
-                    $('.nums').text(initNums);
+                    $('#comment_box').prepend(html);
                     $('.comment_count').text(parseInt($('.comment_count').text())+1);
             },
             error: function(xhr){
@@ -47,7 +50,7 @@ var comment = {
             }
         });
     },
-    delPost: function(comment_id, post_id) {
+    delete: function(comment_id, post_id) {
         var url = '/api/v2/question-answers/' + post_id + '/comments/' + comment_id;
         $.ajax({
             url: url,
@@ -55,7 +58,7 @@ var comment = {
             dataType: 'json',
             success: function(res) {
                 if ("undefined" != typeof($('#comment_item_'+comment_id))) {
-                    $('#comment_item_'+comment_id).fadeOut();
+                    $('#comment'+comment_id).fadeOut();
                     $('.comment_count').text(parseInt($('.comment_count').text())-1);
                 }
             },

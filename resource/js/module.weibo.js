@@ -141,48 +141,41 @@ weibo.pinneds = function (feed_id) {
 var comment = {
     // 初始化回复操作
     initReply: function(obj) {
-        $('.J-comment-feed' + obj.row_id).attr('to_uid', obj.to_uid);
-        var _textarea = $('#editor_box' + obj.row_id).find('textarea');
-        if (_textarea.size() == 0) _textarea = _textarea.find('input:eq(0)');
-        var html = '回复@' + obj.to_uname + ' ：';
+        var attrs = urlToObject($(obj).data('args'));
+        $('.J-comment-feed' + attrs.row_id).attr('to_uid', attrs.to_uid);
+        var editor = $('#editor_box' + attrs.row_id).find('textarea');
+        var html = '回复@' + attrs.to_uname + ' ：';
         //清空输入框
-        _textarea.val('');
-        _textarea.val(html);
-        _textarea.focus();
+        editor.val('');
+        editor.val(html);
+        editor.focus();
     },
     // 初始化回复操作
-    initReadReply: function(obj) {
-        $('#J-comment-news').attr('to_uid', obj.to_uid);
-        var _textarea = $(obj.editor);
-        if (_textarea.size() == 0) _textarea = _textarea.find('input:eq(0)');
-        var html = '回复@' + obj.to_comment_uname + ' ：';
+    reply: function(obj) {
+        $('#J-comment-feed').attr('to_uid', obj.user_id);
+        var editor = $('#mini_editor');
+        var html = '回复@' + obj.user.name + ' ：';
         //清空输入框
-        _textarea.val('');
-        _textarea.val(html);
-        _textarea.focus();
+        editor.val('');
+        editor.val(html);
+        editor.focus();
     },
 
     // 列表发表评论
-    addComment: function(afterComment, obj) {
+    publishs: function(obj) {
+        checkLogin();
         var to_uid = $(obj).attr('to_uid') || 0;
-        var feedid = $(obj).attr('row_id') || 0;
-        var _textarea = $('#editor_box' + feedid).find('textarea');
+        var rowid = $(obj).attr('row_id') || 0;
+        var editor = $('#comment_box'+rowid).find('textarea');
 
-        if (_textarea.size() == 0) {
-            _textarea = $(obj).parent().find('input:eq(0)');
+        var formData = { body: editor.val() };
+        if (!editor.val()) {
+            layer.msg('评论内容不能为空');return;
         }
-        _textarea = _textarea.get(0);
-
-        if ("undefined" != typeof(this.addComment) && (this.addComment == true)) {
-            return false; //不要重复评论
-        }
-        var formData = {
-            body: _textarea.value,
-        };
         if (to_uid > 0) {
             formData.reply_user = to_uid;
         }
-        var url = '/api/v2/feeds/' + feedid + '/comments';
+        var url = '/api/v2/feeds/' + rowid + '/comments';
         obj.innerHTML = '评论中..';
         $.ajax({
             url: url,
@@ -192,19 +185,16 @@ var comment = {
             success: function(res) {
                 if (obj != undefined) {
                     obj.innerHTML = '评论';
+                    $('.nums').text(initNums);
+                    $('.cs'+rowid).text(parseInt($('.cs'+rowid).text())+1);
+                    editor.val('');
                 }
                 var html = '<p class="comment'+res.comment.id+' comment_con">';
-                    html += '<span>' + NAME + '：</span>' + formData.body + '';
-                    html += '<a class="del_comment" onclick="comment.delComment('+res.comment.id+', '+feedid+');">删除</a>';
+                    html +=     '<span>' + NAME + '：</span>' + formData.body + '';
+                    html +=     '<a class="del_comment" onclick="comment.delComment('+res.comment.id+', '+rowid+');">删除</a>';
                     html += '</p>';
-                var commentBox = $('#comment_ps' + feedid);
-                var commentNum = $('.cs' + feedid);
-                if ("undefined" != typeof(commentBox)) {
-                    commentBox.prepend(html);
-                    _textarea.value = '';
-                    $('.nums').text(initNums);
-                    commentNum.text(parseInt(commentNum.text())+1);
-                }
+
+                $('#comment-list'+rowid).prepend(html);
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
@@ -213,26 +203,21 @@ var comment = {
         });
     },
     // 详情发表评论
-    addReadComment: function(attrs, obj) {
-        var _textarea = $('#mini_editor');
-        if (_textarea.size() == 0) {
-            return;
-        }
-        _textarea = _textarea.get(0);
-        var formData = {
-            body: _textarea.value,
-        };
-        if (attrs.to_uid > 0) {
-            formData.reply_user = attrs.to_uid;
-        }
+    publish: function(obj) {
+        checkLogin();
+        var to_uid = $(obj).attr('to_uid') || 0;
+        var rowid = $(obj).attr('row_id') || 0;
+        var editor = $('#mini_editor');
 
-        if ("undefined" != typeof(this.addReadComment) && (this.addReadComment == true)) {
-            return false; //不要重复评论
+        var formData = { body: editor.val() };
+        if (!editor.val()) {
+            layer.msg('评论内容不能为空');return;
         }
-        var url = '/api/v2/feeds/'+attrs.row_id+'/comments';
-        var _this = this;
+        if (to_uid > 0) {
+            formData.reply_user = to_uid;
+        }
+        var url = '/api/v2/feeds/'+rowid+'/comments';
         obj.innerHTML = '评论中..';
-
         $.ajax({
             url: url,
             type: 'POST',
@@ -241,6 +226,9 @@ var comment = {
             success: function(res, data, xml) {
                 if (obj != undefined) {
                     obj.innerHTML = '评论';
+                    $('.nums').text(initNums);
+                    $('#J-comment-feed').attr('to_uid', 0);
+                    editor.val('');
                 }
                 var html  = '<div class="comment_item" id="comment_item_'+res.comment.id+'">';
                     html += '    <dl class="clearfix">';
@@ -257,18 +245,12 @@ var comment = {
                     html += '        </dd>';
                     html += '    </dl>';
                     html += '</div>';
-                var commentBox = $('#comment_box');
-                if ("undefined" != typeof(commentBox)) {
-                    commentBox.prepend(html);
-                    _textarea.value = '';
-                    $('.nums').text(initNums);
-                    /*绑定回复操作*/
-                    $('.J-reply-comment').on('click', function() {
-                        comment.initReply();
-                    });
-                }
-                var commentNum = $('.comment_count').text();
-                $('.comment_count').text(parseInt(commentNum)+1);
+
+                $('#comment_box').prepend(html);
+                $('.comment_count').text(parseInt($('.comment_count').text())+1);
+                $('.J-reply-comment').on('click', function() {
+                    comment.initReply();
+                });
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
@@ -276,18 +258,20 @@ var comment = {
             }
         });
     },
-    delComment: function(comment_id, feed_id) {
+    delete: function(comment_id, feed_id) {
         var url = '/api/v2/feeds/' + feed_id + '/comments/' + comment_id;
         $.ajax({
             url: url,
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
-                $('.comment'+comment_id).fadeOut();
-                var commentNum = $('.comment_count').text();
-                $('.comment_count').text(parseInt(commentNum)-1);
-                var nums = $('.cs' + feed_id);
-                nums.text(parseInt(nums.text())-1);
+                $('#comment'+comment_id).fadeOut();
+                if (undefined != typeof($('.cs' + feed_id))) {
+                    $('.cs' + feed_id).text(parseInt($('.cs' + feed_id).text())-1);
+                }
+                if (undefined != typeof($('.comment_count'))) {
+                    $('.comment_count').text(parseInt($('.comment_count').text())-1);
+                }
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
@@ -486,31 +470,13 @@ $(function() {
 
     // 显示回复框
     $('#feeds_list').on('click', '.J-comment-show', function() {
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
+        checkLogin();
         var comment_box = $(this).parent().siblings('.comment_box');
         if (comment_box.css('display') == 'none') {
             comment_box.show();
         } else {
             comment_box.hide();
         }
-    });
-
-    // 评论
-    $('#feeds_list').on('click', '.J-comment-feed', function() {
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return false;
-        }
-        comment.addComment(null, this);
-    });
-
-    // 回复初始化
-    $('#feeds_list').on('click', '.J-reply-comment', function() {
-        var attrs = urlToObject($(this).data('args'));
-        comment.initReply(attrs);
     });
 
     // 付费图片弹窗

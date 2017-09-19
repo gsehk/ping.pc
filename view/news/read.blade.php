@@ -133,7 +133,7 @@
                               </a>
                               <p>{{ $rel['subject'] }}</p>
                               <div class="news_bm">
-                                   <a href="javascript:;" class="cates_span">{{ $rel['category']['name'] }}</a>
+                                   <a href="javascript:;" class="cates_span">{{ $rel['category']['name'] or '默认'}}</a>
                                    <span>{{ $rel['from'] }}  ·  {{ $rel['hits'] }}浏览  ·  {{ getTime($rel['created_at']) }}</span>
                               </div>
                          </div>
@@ -157,12 +157,12 @@
                         <div class="comment_tool">
                             <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
                             <button
-                                class="commnet_btn"
+                                class="btn btn-primary"
                                 id="J-comment-news"
-                                data-args="to_uid=0&row_id={{$news->id}}"
-                                to_comment_id="0"
+                                row_id="{{$news->id}}"
                                 to_uid="0"
-                            >评论</button>
+                                onclick="comment.publish(this)"
+                            > 评 论 </button>
                         </div>
                     </div>
                     <div class="comment_list" id="comment_box">
@@ -204,42 +204,6 @@ $(function(){
             url: '/news/'+{{$news->id}}+'/comments'
         });
     }, 300);
-
-    $('#J-reward-btn').on('click', function(){
-        var html = '<div class="reward-popups">'+
-            '<p class="ucolor font14">选择打赏金额</p>'+
-            '<div class="reward-sum">'+
-                '<label class="opt tcolor" for="sum1">¥1.00'+
-                    '<input class="hide" id="sum1" type="radio" name="sum" value="1">'+
-                '</label>'+
-                '<label class="opt tcolor active" for="sum5">¥5.00'+
-                    '<input class="hide" id="sum5" type="radio" name="sum" value="5" checked>'+
-                '</label>'+
-                '<label class="opt tcolor" for="sum10">¥10.00'+
-                    '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
-                '</label>'+
-            '</div>'+
-            '<p><input class="custom-sum" type="number" min="0" name="custom" placeholder="自定金额，必须是整数"></p>'+
-            '<div class="reward-btn-box">'+
-                '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
-                '<button class="btn btn-primary news" onclick="rewarded.weibo(this, {{$news->id}});">&nbsp;打 赏&nbsp;</button>'+
-            '</div>'+
-        '</div>';
-        ly.loadHtml(html, '', '350px', '300px;');
-        $('.reward-sum label').on('click', function(){
-            $('.reward-sum label').removeClass('active');
-            $(this).addClass('active');
-        })
-    });
-
-    $('#J-comment-news').on('click', function(){
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return false;
-        }
-        var attrs = urlToObject($(this).data('args'));
-        comment.addComment(attrs, this);
-    });
 
     // 近期热点
     if($('.time_menu li a').length > 0) {

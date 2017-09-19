@@ -95,6 +95,7 @@
                         id="J-comment-answer"
                         row_id="{{$answer->id}}"
                         to_uid="0"
+                        onclick="comment.publish(this)"
                     >评论</button>
                 </div>
             </div>
@@ -125,11 +126,6 @@ $(function(){
             canload: true
         });
     }, 200);
-
-    $('#J-comment-answer').on('click', function(){
-        checkLogin();
-        comment.addComment(this);
-    });
 
     bdshare.addConfig('share', {
         "tag" : "share_feedlist",

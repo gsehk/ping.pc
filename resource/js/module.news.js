@@ -228,33 +228,31 @@ var collect = {
  */
 var comment = {
     // 初始化回复操作
-    initReply: function(obj) {
-        $('#J-comment-news').attr('to_uid', obj.to_uid);
-        var _textarea = $(obj.editor);
-        if (_textarea.size() == 0) _textarea = _textarea.find('input:eq(0)');
-        var html = '回复@' + obj.to_comment_uname + ' ：';
+    reply: function(obj) {
+        $('#J-comment-news').attr('to_uid', obj.user_id);
+        var editor = $('#mini_editor');
+        var html = '回复@' + obj.user.name + ' ：';
         //清空输入框
-        _textarea.val('');
-        _textarea.val(html);
-        _textarea.focus();
+        editor.val('');
+        editor.val(html);
+        editor.focus();
     },
     // 发表评论
-    addComment: function(attrs, obj) {
+    publish: function(obj) {
+        checkLogin();
+        var to_uid = $(obj).attr('to_uid') || 0;
+        var rowid = $(obj).attr('row_id') || 0;
         var editor = $('#mini_editor');
-        var strlen = getLength(editor.val());
-        var leftnums = initNums - strlen;
-        if (leftnums < 0 || leftnums == initNums) {
-            noticebox('评论内容长度为1-' + initNums + '字', 0);
-            return false;
-        }
-        var formData = {body: editor.val(),};
-        if (attrs.to_uid > 0) {
-            formData.reply_user = attrs.to_uid;
-        }
-        var url = '/api/v2/news/'+attrs.row_id+'/comments';
-        var _this = this;
-        obj.innerHTML = '评论中..';
 
+        var formData = { body: editor.val() };
+        if (!editor.val()) {
+            layer.msg('评论内容不能为空');return;
+        }
+        if (to_uid > 0) {
+            formData.reply_user = to_uid;
+        }
+        var url = '/api/v2/news/'+rowid+'/comments';
+        obj.innerHTML = '评论中..';
         $.ajax({
             url: url,
             type: 'POST',
@@ -266,6 +264,7 @@ var comment = {
                     if (obj != undefined) {
                         obj.innerHTML = '评论';
                         $('.nums').text(initNums);
+                        $('#J-comment-news').attr('to_uid', 0);
                         editor.val('');
                     }
                     var html  = '<div class="comment_item" id="comment_item_'+res.comment.id+'">';
@@ -296,7 +295,7 @@ var comment = {
             }
         });
     },
-    delComment: function(comment_id, news_id) {
+    delete: function(comment_id, news_id) {
         var url = '/api/v2/news/' + news_id + '/comments/' + comment_id;
         $.ajax({
             url: url,
@@ -304,7 +303,7 @@ var comment = {
             dataType: 'json',
             error: function(xml) { noticebox('删除失败请重试', 0); },
             success: function(res) {
-                $('#comment_item_' + comment_id).fadeOut();
+                $('#comment' + comment_id).fadeOut();
                 $('.comment_count').text(parseInt($('.comment_count').text()) - 1);
             }
         });

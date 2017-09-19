@@ -317,7 +317,7 @@ var comment = {
             }
         });
     },
-    delPost: function(comment_id, post_id) {
+    delete: function(comment_id, post_id) {
         // 获取group_id
         var urlString = window.location.pathname;
         var urlArray = urlString.split("/");
@@ -331,8 +331,8 @@ var comment = {
             success: function(res) {
                 $('.comment'+comment_id).fadeOut();
                 $('.cs' + post_id).text(parseInt($('.cs' + post_id).text())-1);
-                if ("undefined" != typeof($('#comment_item_'+comment_id))) {
-                    $('#comment_item_'+comment_id).fadeOut();
+                if ("undefined" != typeof($('#comment'+comment_id))) {
+                    $('#comment'+comment_id).fadeOut();
                     $('.comment_count').text(parseInt($('.comment_count').text())-1);
                 }
             },

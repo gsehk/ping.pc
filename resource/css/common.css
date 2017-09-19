@@ -1805,25 +1805,23 @@ img.load {
     cursor: pointer;
     border-radius: 3px;
     background: #59b6d7;
-    /* margin-right: 40px;.del_huifu */
 }
-
 
 .comment_post_nums {
     font-size: 12px;
     margin-left: 385px;
 }
 
-.comment_ps p{
+.comment_item{
     word-break: break-all;
     margin-bottom: 16px;
 }
 
-.comment_ps p span {
+.comment_item span {
     color: #333;
 }
 
-.comment_ps p a {
+.comment_item a {
     cursor: pointer;
     display: none;
     margin-left: 5px;

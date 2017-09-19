@@ -737,16 +737,6 @@
     color: #777;
 }
 
-.comment_tool .commnet_btn {
-    width: 85px;
-    height: 32px;
-    color: #fff;
-    cursor: pointer;
-    border: 0;
-    border-radius: 3px;
-    background: #59b6d7;
-}
-
 .comment_item{
     border-bottom: 1px solid #ededed;
     margin-top: 40px;

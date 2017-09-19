@@ -4,7 +4,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 
 @if (!$comments->isEmpty())
 @foreach ($comments as $comment)
-<div class="comment_item" id="comment_item_{{$comment['id']}}">
+<div class="comment_item" id="comment{{$comment['id']}}">
     <dl class="clearfix">
         <dt>
             <img src="{{$comment['user']['avatar']}}" width="50">
@@ -25,8 +25,15 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:;" onclick="comment.delPost({{$comment['id']}}, {{$comment['commentable_id']}});">
+                                <a href="javascript:;" onclick="comment.delete({{$comment['id']}}, {{$comment['commentable_id']}});">
                                     <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                </a>
+                            </li>
+                        @endif
+                        @if ($comment['user']['id'] != $TS['id'])
+                            <li>
+                                <a href="javascript:;" onclick="comment.reply({{$comment}});">
+                                    <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>回复
                                 </a>
                             </li>
                         @endif
