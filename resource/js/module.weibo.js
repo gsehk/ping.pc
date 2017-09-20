@@ -338,12 +338,7 @@ var digg = {
         digg.digglock = 0;
     },
     addDigg: function(feed_id, page) {
-        // 未登录弹出弹出层
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
-
+        checkLogin();
         if (digg.digglock == 1) {
             return false;
         }
