@@ -2,7 +2,6 @@
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatPayContent;
 @endphp
 
 @if(!$feeds->isEmpty())
@@ -23,6 +22,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatPayContent;
             <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
             <span class="feed_time font12 hide">查看详情</span>
         </a>
+        @if ($post->pinned == 1)
+        <a class="pinned">
+            <span class="font12">置顶</span>
+        </a>
+        @endif
     </div>
 
     <div class="feed_body">
