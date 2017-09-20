@@ -85,7 +85,8 @@
     $(function () {
         // 切换加入状态
         $('.group-foot').on('click', '.group-join', function(){
-            checkLogin();
+            if (!checkLogin()) return false;
+
             var _this = this;
             var status = $(this).attr('status');
             var group_id = $(this).attr('gid');
@@ -155,7 +156,8 @@
 
         // 显示回复框
         $('#feeds_list').on('click', '.J-comment-show', function() {
-            checkLogin();
+            if (!checkLogin()) return false;
+
             var comment_box = $(this).parent().siblings('.comment_box');
             if (comment_box.css('display') == 'none') {
                 comment_box.show();

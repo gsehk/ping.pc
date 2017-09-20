@@ -15,7 +15,6 @@
     <div class="feed_cont">
 
         {{-- 动态发布 --}}
-        @if(!empty($TS))
         <div class="feed_post">
             <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
             <div class="post_extra">
@@ -37,7 +36,6 @@
                 </div>
             </div>
         </div>
-        @endif
 
         {{-- 动态列表 --}}
         <div class="feed_content">

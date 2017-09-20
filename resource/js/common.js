@@ -436,7 +436,8 @@ var group = function(status, group_id, callback) {
 
 // 话题
 var topic = function(status, topic_id, callback) {
-    checkLogin();
+    if (!checkLogin()) return false;
+    
     var url = API + '/user/question-topics/' + topic_id;
     if (status == 0) {
         $.ajax({
@@ -762,7 +763,7 @@ var delHistory = function(str) {
 var checkLogin = function() {
     if (MID == 0) {
         window.location.href = SITE_URL+'/passport/login';
-        return;
+        return false;
     }
 }
 

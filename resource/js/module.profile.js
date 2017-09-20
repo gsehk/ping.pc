@@ -12,7 +12,8 @@ var digg = {
         digg.digglock = 0;
     },
     addDigg: function(feed_id) {
-        checkLogin();
+        if (!checkLogin()) return false;
+
         if (digg.digglock == 1) {
             return false;
         }
@@ -85,7 +86,8 @@ var comment = {
     },
     // 列表发表评论
     publish: function(obj) {
-        checkLogin();
+        if (!checkLogin()) return false;
+
         var to_uid = $(obj).attr('to_uid') || 0;
         var rowid = $(obj).attr('row_id') || 0;
         var editor = $('#comment_box'+rowid).find('textarea');
@@ -214,7 +216,8 @@ var collect = {
         collect.collectlock = 0;
     },
     weibo: function(feed_id, page) {
-        checkLogin();
+        if (!checkLogin()) return false;
+
         if (collect.collectlock == 1) {
             return false;
         }
@@ -273,7 +276,8 @@ var collect = {
         });
     },
     news: function(news_id) {
-        checkLogin();
+        if (!checkLogin()) return false;
+
         if (collect.collectlock == 1) {
             return false;
         }
@@ -387,7 +391,8 @@ $(function() {
     });
     // 显示回复框
     $('#feeds_list').on('click', '.J-comment-show', function() {
-        checkLogin();
+        if (!checkLogin()) return false;
+
         var comment_box = $(this).parent().siblings('.comment_box');
         if (comment_box.css('display') == 'none') {
             comment_box.show();

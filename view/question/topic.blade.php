@@ -71,7 +71,8 @@ $('.question_sub_nav a').on('click', function() {
 });
 
 $('#topic-list').on('click', '.J-follow', function(){
-    checkLogin();
+    if (!checkLogin()) return false;
+
     var _this = this;
     var status = $(this).attr('status');
     var topic_id = $(this).attr('tid');

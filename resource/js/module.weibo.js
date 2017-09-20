@@ -5,7 +5,7 @@ var weibo = {};
  * @return void
  */
 weibo.afterUpload = function(image, f, task_id) {
-    var img = '<img class="imgloaded" onclick="weibo.showImg();" src="' + SITE_URL + '/api/v2/files/' + task_id + '?w=59&h=59"/ tid="' + task_id + '" amount="">';
+    var img = '<img class="imgloaded" onclick="weibo.showImg();" src="' + SITE_URL + '/api/v2/files/' + task_id + '"/ tid="' + task_id + '" amount="">';
     var del = '<span class="imgdel"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></span>'
     $('#' + 'fileupload_1_' + f.index).css('border', 'none').html(img + del);
 };
@@ -22,111 +22,92 @@ weibo.showImg = function(){
  */
 weibo.postFeed = function() {
     // 登录判断
-    if (MID == 0) {
-        window.location.href = '/passport/login';
-        return false;
-    }
+    if (!checkLogin()) return false;
 
     // 付费免费
     var select = $('#feed_select').data('value');
 
-    if (select == 'free') {
-        var images = [];
+    if (select == 'pay') {
+        if ($('.feed_picture').find('img').length > 0) { // 图片付费弹窗
+            var pay_box = '<div class="feed_pay_box"><p class="pay_title">付费设置</p>';
+            var images_box = '<div class="pay_images">';
+            var info_box = '';
+            $('.feed_picture').find('img').each(function(index) {
+                var amount = $(this).attr('amount') != '' ? $(this).attr('amount') : '';
+
+                var svg = amount == '' ? '' : '<svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>';
+                images_box += '<div class="pay_image"><img ' + (index == 0 ? 'class="current"' : '') + 'src="' + $(this).attr('src') + '" tid="' + $(this).attr('tid') + '" amount="' + amount + '"/>' + svg + '</div>';
+
+                // 如果为第一张图，添加付费信息
+                if (index == 0){
+                    // 付费信息
+                    info_box = '<div class="pay_info"><div class="pay_head clearfix">'
+                                    + '<span class="pay_text">设置图片收费金额</span>'
+                                    + '<span class="pay_btn pay_btn_yes">确定</span>'
+                                    + '<span class="pay_btn pay_btn_reset">重置</span>'
+                                + '</div>';
+
+                    info_box +=  '<div class="pay_body">'
+                                    + '<span' + (amount == '1' ? ' class="current"' : '') + ' amount="1">￥1</span>'
+                                    + '<span' + (amount == '5' ? ' class="current"' : '') + ' amount="5">￥5</span>'
+                                    + '<span' + (amount == '10' ? ' class="current"' : '') + ' amount="10">￥10</span>'
+                                    + '<input type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
+                                +'</div>';
+
+                }
+            });
+            images_box += '<div class="triangle"></div></div>';
+            info_box += '</div>'
+
+            var html = pay_box + images_box + info_box + '</div>';
+        } else { // 文字付费弹窗
+
+        }
+        ly.confirm(html, '', '', weibo.doPostFeed('pay'))
+    }
+};
+
+weibo.doPostFeed = function(type) {
+    // 分享字数
+    var strlen = getLength(data.feed_content);
+    var leftnums = initNums - strlen;
+    if (leftnums < 0 || leftnums == initNums) {
+        noticebox('分享内容长度为1-' + initNums + '字', 0);
+        return false;
+    }
+
+    var images = [];
+    if (type == 'free') { // 免费
         $('.feed_picture').find('img').each(function() {
             images.push({'id':$(this).attr('tid')});
         });
-        var data = {
-            feed_content: $('#feed_content').val(),
-            images: images,
-            feed_from: 1,
-            feed_mark: MID + new Date().getTime(),
-        }
-        var strlen = getLength(data.feed_content);
-            var leftnums = initNums - strlen;
-            if (leftnums < 0 || leftnums == initNums) {
-                noticebox('分享内容长度为1-' + initNums + '字', 0);
-                return false;
-            }
-        $.ajax({
-            url: '/api/v2/feeds',
-            type: 'post',
-            data: data,
-            success: function(res) {
-                noticebox('发布成功', 1);
-                $('.feed_picture').html('').hide();
-                $('#feed_content').val('');
-                weibo.afterPostFeed(res.id);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
+    } else {  // 付费
+        $('.pay_images').find('img').each(function() {
+            images.push({'id':$(this).attr('tid'), 'type': 'read', amount:$(this).attr('amount')});
         });
-    } else {
-        var pay_box = '<div class="feed_pay_box"><p class="pay_title">付费设置</p>';
-        var images_box = '<div class="pay_images">';
-        var info_box = '';
-        $('.feed_picture').find('img').each(function(index) {
-            var amount = $(this).attr('amount') != '' ? $(this).attr('amount') : '';
-
-            var svg = amount == '' ? '' : '<svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>';
-            images_box += '<div class="pay_image"><img ' + (index == 0 ? 'class="current"' : '') + 'src="' + $(this).attr('src') + '" tid="' + $(this).attr('tid') + '" amount="' + amount + '"/>' + svg + '</div>';
-
-            // 如果为第一张图，添加付费信息
-            if (index == 0){
-                // 付费信息
-                info_box = '<div class="pay_info"><div class="pay_head clearfix">'
-                                + '<span class="pay_text">设置图片收费金额</span>'
-                                + '<span class="pay_btn pay_btn_yes">确定</span>'
-                                + '<span class="pay_btn pay_btn_reset">重置</span>'
-                            + '</div>';
-
-                info_box +=  '<div class="pay_body">'
-                                + '<span' + (amount == '1' ? ' class="current"' : '') + ' amount="1">￥1</span>'
-                                + '<span' + (amount == '5' ? ' class="current"' : '') + ' amount="5">￥5</span>'
-                                + '<span' + (amount == '10' ? ' class="current"' : '') + ' amount="10">￥10</span>'
-                                + '<input type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
-                            +'</div>';
-
-            }
-        });
-        images_box += '<div class="triangle"></div></div>';
-        info_box += '</div>'
-
-        var html = pay_box + images_box + info_box + '</div>';
-        ly.confirm(html, '', '', function(){
-            var images = [];
-            $('.pay_images').find('img').each(function() {
-                images.push({'id':$(this).attr('tid'), 'type': 'read', amount:$(this).attr('amount')});
-            });
-            var data = {
-                feed_content: $('#feed_content').val(),
-                images: images,
-                feed_from: 1,
-                feed_mark: MID + new Date().getTime(),
-            }
-            var strlen = getLength(data.feed_content);
-                var leftnums = initNums - strlen;
-                if (leftnums < 0 || leftnums == initNums) {
-                    noticebox('分享内容长度为1-' + initNums + '字', 0);
-                    return false;
-                }
-            $.ajax({
-                url: '/api/v2/feeds',
-                type: 'post',
-                data: data,
-                success: function(res) {
-                    noticebox('发布成功', 1);
-                    $('.feed_picture').html('').hide();
-                    $('#feed_content').val('');
-                    weibo.afterPostFeed(res.id);
-                },
-                error: function(xhr){
-                    showError(xhr.responseJSON);
-                }
-            });
-        })
     }
-};
+
+    var data = {
+        feed_content: $('#feed_content').val(),
+        images: images,
+        feed_from: 1,
+        feed_mark: MID + new Date().getTime(),
+    }
+    $.ajax({
+        url: '/api/v2/feeds',
+        type: 'post',
+        data: data,
+        success: function(res) {
+            noticebox('发布成功', 1);
+            $('.feed_picture').html('').hide();
+            $('#feed_content').val('');
+            weibo.afterPostFeed(res.id);
+        },
+        error: function(xhr){
+            showError(xhr.responseJSON);
+        }
+    });
+}
 
 weibo.afterPostFeed = function(feed_id) {
     var url = '/feeds';
@@ -217,7 +198,8 @@ var comment = {
 
     // 列表发表评论
     publishs: function(obj) {
-        checkLogin();
+        if (!checkLogin()) return false;
+
         var to_uid = $(obj).attr('to_uid') || 0;
         var rowid = $(obj).attr('row_id') || 0;
         var editor = $('#comment_box'+rowid).find('textarea');
@@ -258,7 +240,8 @@ var comment = {
     },
     // 详情发表评论
     publish: function(obj) {
-        checkLogin();
+        if (!checkLogin()) return false;
+
         var to_uid = $(obj).attr('to_uid') || 0;
         var rowid = $(obj).attr('row_id') || 0;
         var editor = $('#mini_editor');
@@ -524,7 +507,8 @@ $(function() {
 
     // 显示回复框
     $('#feeds_list').on('click', '.J-comment-show', function() {
-        checkLogin();
+        if (!checkLogin()) return false;
+
         var comment_box = $(this).parent().siblings('.comment_box');
         if (comment_box.css('display') == 'none') {
             comment_box.show();
