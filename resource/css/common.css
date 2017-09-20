@@ -1319,14 +1319,12 @@ img.load {
 .zy_select>ul {
     display: none;
     overflow-x: hidden;
-    overflow-y: auto;
     position: absolute;
     top: 100%;
     left: 0;
     margin: 0;
     padding: 0;
     width: calc(100% + 2px);
-    max-height: 170px;
     background: #fff;
 }
 
@@ -1354,9 +1352,9 @@ img.load {
 .zy_select.gap12>ul{
     left: 50%;
     margin-top: 12px;
-    padding: 25px 0 5px;
-    width: 122px;
-    border-radius: 5px;
+    padding: 15px 0 5px;
+    width: 111px;
+    border-radius: 2px;
     box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
     transform: translateX(-50%);
 }
@@ -1364,7 +1362,7 @@ img.load {
 .zy_select.gap12>ul li{
     background: none !important;
     padding: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .zy_select.gap12>ul li.active,
