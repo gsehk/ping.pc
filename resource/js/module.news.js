@@ -49,16 +49,13 @@ $('.subject-submit').on('click', function() {
         var pay_conyribute = (parseInt(notice.pay_conyribute)/10).toFixed(1);
 
         if (isVerified > -1 && notice.verified == null) {
-
-            ly.confirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？', '' , '去认证', function(){
+            ly.confirm(formatConfirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？'), '' , '去认证', function(){
                 window.location.href = '/account/authenticate';
             });
-
             return false;
         } else if (isPay > -1) {
-
-            var html = '<div class="exit_money">￥'+pay_conyribute+'</div>本次投稿您需要支付￥'+pay_conyribute+'元，是否继续投稿？';
-            ly.confirm('投稿提示', html, '' , '投稿', function(){
+            var html = formatConfirm('投稿提示', '<div class="confirm_money">￥' + pay_conyribute + '</div>本次投稿您需要支付￥' + pay_conyribute + '元，是否继续投稿？');
+            ly.confirm(html, '' , '投稿', function(){
                 var url = '/api/v2/news/categories/'+args.cate_id+'/news';
                 $.ajax({
                     url: url,

@@ -1759,6 +1759,13 @@ img.load {
     text-align: center;
 }
 
+.confirm_money {
+    margin-bottom: 5px;
+    font-size: 22px;
+    color: #F4504D;
+    line-height:30px;
+}
+
 .confirm_text {
     width: 280px;
     text-align: justify;
