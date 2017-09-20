@@ -143,7 +143,7 @@ class QuestionController extends BaseController
         $data['topics'] = $params['topics'];
         if ($ajax == 1) {
             $data['users'] = createRequest('GET', '/api/v2/question-experts', $params);
-            $return['html'] = view('pcview::question.user_list', $data)
+            $return = view('pcview::question.user_list', $data)
                 ->render();
 
             return response()->json([

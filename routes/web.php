@@ -53,7 +53,7 @@ Route::prefix('question')->group(function () {
     Route::get('answer/{answer}/comments', 'QuestionController@answerComments');
 
     Route::get('create', 'QuestionController@createQuestion')->name('pc:createquestion');
-    Route::post('users', 'QuestionController@getUsers')->name('pc:questionusers');
+    Route::get('users', 'QuestionController@getUsers')->name('pc:questionusers');
 });
 
 Route::prefix('rank')->group(function () {

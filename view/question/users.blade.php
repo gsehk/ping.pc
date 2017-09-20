@@ -21,19 +21,16 @@
 
     function getUsers() {
         var keyword = input.val();
-        $.ajax({
-            type: "POST",
+        scroll.init({
+            container: '.lists',
+            loading: '.lists',
             url: '/question/users',
-            data: {
+            params: {
+                limit: 10,
+                ajax: 1,
                 keyword: keyword,
                 topics: "{{$topics}}",
-                ajax: 1,
-                limit: 10
-            },
-            success: function(res) {
-                if (res.status == true) {
-                    lists.html(res.data.html);
-                }
+                loadtype: 1
             }
         });
     }

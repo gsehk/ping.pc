@@ -739,7 +739,6 @@ button{
 .search-user .lists>dl>dd>.user-info>p {
     margin: 0;
     font-size: 14px;
-    font-weight: 700;
     height: 25px;
 }
 .search-user .lists>dl>dd .extra-count {

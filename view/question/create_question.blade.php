@@ -223,7 +223,8 @@
             $('.invitation-con').toggle();
         });
         $('#invitation-add').on('click', function () {
-            ly.load('/question/users', '', '490px', '500px', 'POST',
+            args.topics = '3,4';
+            ly.load('/question/users', '', '490px', '500px', 'GET',
                 {'topics' : args.topics
                 });
         });
