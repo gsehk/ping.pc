@@ -28,6 +28,13 @@ class FeedController extends BaseController
                     'after' => $request->query('after') ?: 0
                 ];
                 $feeds = createRequest('GET', '/api/v2/feeds', $params);
+                if (!$feeds['pinned']->isEmpty()) { // 置顶动态
+                    $feeds['pinned']->each(function ($item, $key) use ($feeds) {
+                        $item->pinned = 1;
+                        $feeds['feeds']->prepend($item);
+                    });
+                }
+
                 $feed = clone $feeds['feeds'];
                 $after = $feed->pop()->id ?? 0;
                 $feedData = view('pcview::templates.feeds', $feeds, $this->PlusData)->render();
