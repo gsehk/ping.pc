@@ -517,7 +517,7 @@ var no_data = function(selector, type, txt) {
 // 退出登录提示
 var logout = function() {
     $('.nav_menu').hide();
-    ly.confirm('感谢您对ThinkSNS的信任，是否退出当前账号？', '' , '退出', function(){
+    ly.confirm(formatConfirm('提示', '感谢您对ThinkSNS的信任，是否退出当前账号？'), '' , '退出', function(){
         window.location.href = '/passport/logout';
     });
 }
@@ -767,11 +767,20 @@ var delHistory = function(str) {
 }
 
 //验证登录
-var checkLogin = function (){
+var checkLogin = function() {
     if (MID == 0) {
         window.location.href = SITE_URL+'/passport/login';
         return;
     }
+}
+
+// 组装确认提示
+var formatConfirm = function(title, text) {
+    var html = '<div class="confirm_body">'
+                + '<div class="confirm_title">' + title + '</div>'
+                + '<div class="confirm_text">' + text + '</div>'
+                + '</div>';
+    return html;
 }
 $(function() {
     //获得用户时区与GMT时区的差值

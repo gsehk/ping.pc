@@ -1748,17 +1748,21 @@ img.load {
 
 
 /*layer样式*/
-.notice_title {
+.confirm_body {
+    padding: 40px 55px 40px;
+    text-align: center;
+    color: #999;
+}
+
+.confirm_title {
     font-size: 20px;
     margin-bottom: 20px;
     color: #333;
     text-align: center;
 }
 
-.notice_body {
-    padding: 55px 55px 40px;
-    text-align: center;
-    color: #999;
+.confirm_text {
+    width: 220px;
 }
 
 .layui-layer-btn- {
