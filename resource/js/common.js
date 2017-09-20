@@ -122,7 +122,8 @@ var ly = {
         layer.alert(html, {
             btn: btn, //按钮
             title: '',
-            scrollbar: false
+            scrollbar: false,
+            area: ['auto', 'auto']
         });
     }
 };
