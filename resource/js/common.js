@@ -369,10 +369,7 @@ var checkNums = function(obj, len, show) {
 
 // 关注
 var follow = function(status, user_id, target, callback) {
-    if (MID == 0) {
-        window.location.href = '/passport/login';
-        return false;
-    }
+    checkLogin();
 
     var url = API + '/user/followings/' + user_id;
     if (status == 0) {
@@ -403,10 +400,7 @@ var follow = function(status, user_id, target, callback) {
 
 // 圈子
 var group = function(status, group_id, callback) {
-    if (MID == 0) {
-        window.location.href = '/passport/login';
-        return false;
-    }
+    checkLogin();
 
     var url = API + '/groups/' + group_id + '/join';
     if (status == 0) {
@@ -436,7 +430,7 @@ var group = function(status, group_id, callback) {
 
 // 话题
 var topic = function(status, topic_id, callback) {
-    if (!checkLogin()) return false;
+    checkLogin();
 
     var url = API + '/user/question-topics/' + topic_id;
     if (status == 0) {

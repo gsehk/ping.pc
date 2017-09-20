@@ -97,9 +97,8 @@ class ProfileController extends BaseController
                         'limit' => $request->query('limit'),
                     ];
                     $feeds = createRequest('GET', '/api/v2/feeds/collections', $params);
-                    $feed = clone $feeds;
-                    $after = $feed->pop()->id ?? 0;
                     $data['feeds'] = $feeds;
+                    $after = 0;
                     $html = view('pcview::templates.collect_feeds', $data, $this->PlusData)->render();
                     break;
                 case 2:
@@ -170,4 +169,76 @@ class ProfileController extends BaseController
         return view('pcview::profile.group', $data, $this->PlusData);
     }
 
+    /**
+     * 问答信息.
+     *
+     * @param  Request     $request
+     * @param  int|integer $user_id
+     * @return mixed
+     */
+    public function question(Request $request, int $user_id = 0)
+    {
+        if ($request->ajax()) {
+            $cate = $request->query('cate', 1);
+            switch ($cate) {
+                case 1:
+                    $params = [
+                        'after' => $request->query('after', 0),
+                        'type' => $request->query('type', 'all'),
+                    ];
+                    $questions = createRequest('GET', '/api/v2/user/questions', $params);
+                    $question = clone $questions;
+                    $after = $question->pop()->id ?? 0;
+                    $data['datas'] = $questions;
+                    $html = view('pcview::templates.qa_list', $data, $this->PlusData)->render();
+
+                    break;
+                case 2:
+                    $params = [
+                        'after' => $request->query('after', 0),
+                        'type' => $request->query('type', 'all'),
+                    ];
+                    $answers = createRequest('GET', '/api/v2/user/question-answer', $params);
+                    $answer = clone $answers;
+                    $after = $answer->pop()->id ?? 0;
+                    $data['datas'] = $answers;
+                    $html = view('pcview::templates.qa_list', $data, $this->PlusData)->render();
+                    break;
+                case 3:
+                    $params = [
+                        'offset' => $request->query('offset', 0),
+                        'limit' => $request->query('limit'),
+                    ];
+                    $watches = createRequest('GET', '/api/v2/user/question-watches', $params);
+                    $data['datas'] = $watches;
+                    $after = 0;
+                    $html = view('pcview::templates.qa_list', $data, $this->PlusData)->render();
+                    break;
+                case 4:
+                    $params = [
+                        'after' => $request->query('after', 0),
+                        'type' => $request->query('type', 'follow'),
+                    ];
+                    $topics = createRequest('GET', '/api/v2/user/question-topics', $params);
+                    $topics->map(function($item){
+                        $item->has_follow = true;
+                    });
+                    $topic = clone $topics;
+                    $after = $topic->pop()->id ?? 0;
+                    $data['data'] = $topics;
+                    $html = view('pcview::templates.topic', $data, $this->PlusData)->render();
+                    break;
+            }
+
+            return response()->json([
+                'data' => $html,
+                'after' => $after
+            ]);
+        }
+        $data['data'] = createRequest('GET', '/api/v2/user/questions');
+        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
+        $this->PlusData['current'] = 'question';
+
+        return view('pcview::profile.question', $data, $this->PlusData);
+    }
 }

@@ -17,7 +17,6 @@ class QuestionController extends BaseController
                 'type' => $request->query('type', 'all'),
             ];
             $question['data'] = createRequest('GET', '/api/v2/questions', $params);
-
             $html = view('pcview::templates.question', $question, $this->PlusData)->render();
 
             return response()->json([

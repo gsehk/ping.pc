@@ -35,7 +35,7 @@
     @include('pcview::widgets.hotquestions')
 
     {{-- 问答达人排行 --}}
-    @include('pcview::widgets.questionrank')
+    {{-- @include('pcview::widgets.questionrank') --}}
 </div>
 @endsection
 
@@ -71,7 +71,7 @@ $('.question_sub_nav a').on('click', function() {
 });
 
 $('#topic-list').on('click', '.J-follow', function(){
-    if (!checkLogin()) return false;
+    checkLogin();
 
     var _this = this;
     var status = $(this).attr('status');
