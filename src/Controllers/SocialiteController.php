@@ -19,6 +19,16 @@ class SocialiteController extends BaseController
                     'client_secret' => '278b2212b43ce359ee27e19dfd230313',
                     'redirect'      => env('APP_URL').'/socialite/weibo/callback',
                 ],
+                'qq' => [
+                    'client_id'     => '101418557',
+                    'client_secret' => '67d647556551c8e2c53f4ba315f87c93',
+                    'redirect'      => env('APP_URL').'/socialite/qq/callback',
+                ],
+                'wechat' => [
+                    'client_id'     => '',
+                    'client_secret' => '',
+                    'redirect'      => env('APP_URL').'/socialite/wechat/callback',
+                ],
             ]
         ];
     }
