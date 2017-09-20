@@ -61,38 +61,65 @@ weibo.postFeed = function() {
 
             var html = pay_box + images_box + info_box + '</div>';
         } else { // 文字付费弹窗
+            var amount = $('#feed_content').attr('amount') != '' ? $('#feed_content').attr('amount') : '';
+            var pay_box = '<div class="feed_pay_box"><p class="pay_title">付费设置</p>';
+            var info_box = '';
+            info_box = '<div class="pay_info"><div class="pay_head clearfix">'
+                            + '<span class="pay_text">设置文字收费金额</span>'
+                        + '</div>';
 
+            info_box +=  '<div class="pay_body">'
+                            + '<span' + (amount == '1' ? ' class="current"' : '') + ' amount="1">￥1</span>'
+                            + '<span' + (amount == '5' ? ' class="current"' : '') + ' amount="5">￥5</span>'
+                            + '<span' + (amount == '10' ? ' class="current"' : '') + ' amount="10">￥10</span>'
+                            + '<input type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
+                        +'</div>';
+            info_box += '</div>'
+
+            var html = pay_box + info_box + '</div>';
         }
-        ly.confirm(html, '', '', weibo.doPostFeed('pay'))
+        ly.confirm(html, '', '', function(){
+            weibo.doPostFeed('pay');
+        });
+    } else {
+        weibo.doPostFeed('free');
     }
 };
 
 weibo.doPostFeed = function(type) {
-    // 分享字数
-    var strlen = getLength(data.feed_content);
+    // 分享字数限制
+    var strlen = getLength($('#feed_content').val());
     var leftnums = initNums - strlen;
     if (leftnums < 0 || leftnums == initNums) {
         noticebox('分享内容长度为1-' + initNums + '字', 0);
         return false;
     }
 
+
+    // 组装数据
+    var data = {
+        feed_content: $('#feed_content').val(),
+        feed_from: 1,
+        feed_mark: MID + new Date().getTime(),
+    }
     var images = [];
     if (type == 'free') { // 免费
         $('.feed_picture').find('img').each(function() {
             images.push({'id':$(this).attr('tid')});
         });
+        if (images.length != 0) data.images = images;
     } else {  // 付费
+        // 图片付费
         $('.pay_images').find('img').each(function() {
             images.push({'id':$(this).attr('tid'), 'type': 'read', amount:$(this).attr('amount')});
         });
+        if (images.length != 0) data.images = images;
+
+        // 文字付费
+        var amount = $('#feed_content').attr('amount');
+        if (amount != '') data.amount = amount;
     }
 
-    var data = {
-        feed_content: $('#feed_content').val(),
-        images: images,
-        feed_from: 1,
-        feed_mark: MID + new Date().getTime(),
-    }
     $.ajax({
         url: '/api/v2/feeds',
         type: 'post',
@@ -338,7 +365,9 @@ var digg = {
         digg.digglock = 0;
     },
     addDigg: function(feed_id, page) {
+        // 未登录弹出弹出层
         checkLogin();
+
         if (digg.digglock == 1) {
             return false;
         }
@@ -514,17 +543,15 @@ $(function() {
 
     // 付费图片弹窗
     $('#feeds_list').on('click', '.feed_image_pay', function() {
+        if(!checkLogin()) return false;
+
         var _this = $(this);
-        if (MID == 0) {
-            window.location.href = '/passport/login';
-            return;
-        }
         var amount = _this.data('amount');
         var node = _this.data('node');
         var file = _this.data('file');
         var image = _this.data('original');
 
-        var html = '<div class="exit_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看高清大图，是否确认支付？';
+        var html = '<div class="confirm_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看高清大图，是否确认支付？';
         ly.confirm(html, '', '', function(){
             var url = '/api/v2/purchases/' + node;
             // 确认支付
@@ -544,6 +571,33 @@ $(function() {
             });
         })
     });
+
+    // 文字弹窗
+    $('#feeds_list').on('click', '.feed_pay_text', function() {
+        if(!checkLogin()) return false;
+
+        var _this = $(this);
+        var amount = _this.data('amount');
+        var node = _this.data('node');
+
+        var html = formatConfirm('购买支付', '<div class="confirm_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看完整内容，是否确认支付？');
+        ly.confirm(html, '', '', function(){
+            var url = '/api/v2/purchases/' + node;
+            // 确认支付
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                success: function(res) {
+                    noticebox('支付成功', 1);
+                },
+                error: function(xhr) {
+                    showError(xhr.responseJSON);
+                }
+            });
+        })
+    });
+
 
     // 付费设置确认
     $('body').on('click', '.pay_btn_yes', function() {
@@ -609,10 +663,20 @@ $(function() {
         $(this).siblings().removeClass('current');
         $(this).addClass('current');
         $(this).parent().find('input').val('');
+
+        // 若为文字付费
+        if ($('.pay_images').length == 0) {
+            $('#feed_content').attr('amount', $(this).attr('amount'));
+        }
     });
 
     // 收费金额输入
-    $('body').on('focus', '.pay_body input', function() {
+    $('body').on('focus change', '.pay_body input', function() {
         $(this).parent().find('span').removeClass('current');
+
+        // 若为文字付费
+        if ($('.pay_images').length == 0) {
+            $('#feed_content').attr('amount', $(this).val());
+        }
     });
 });

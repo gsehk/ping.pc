@@ -2,12 +2,12 @@
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatPayContent;
 @endphp
 
 @if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
 <div class="feed_item" id="feed{{$post->id}}">
-
     <div class="feed_title">
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="avatar" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="50" />
@@ -26,7 +26,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
     </div>
 
     <div class="feed_body">
+        {{-- 文字付费 --}}
+        @if ($post->paid_node && $post->paid_node['paid'] == false)
+        <p class="feed_text feed_pay_text" data-amount="{{ $post->paid_node['amount'] }}" data-node="{{ $post->paid_node['node'] }}">{!! formatContent($post->feed_content) !!}</p>
+        @else
         <p class="feed_text">{!! formatContent($post->feed_content) !!}</p>
+        @endif
         @if($post->images)
         <div id="layer-photos-demo{{$post->id}}">
         @if($post->images->count() == 1)

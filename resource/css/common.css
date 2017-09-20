@@ -1760,15 +1760,16 @@ img.load {
 }
 
 .confirm_money {
-    margin-bottom: 5px;
     font-size: 22px;
     color: #F4504D;
     line-height:30px;
+    padding: 20px 0px 10px 0px;
+    text-align: center;
 }
 
 .confirm_text {
-    width: 280px;
-    text-align: justify;
+    width: 240px;
+    text-align: center;
 }
 
 .layui-layer-btn- {

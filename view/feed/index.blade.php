@@ -16,7 +16,7 @@
 
         {{-- 动态发布 --}}
         <div class="feed_post">
-            <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
+            <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content" amount=""></textarea>
             <div class="post_extra">
                 <span class="font14" id="feed_pic">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
