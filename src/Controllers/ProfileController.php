@@ -49,13 +49,16 @@ class ProfileController extends BaseController
      * @param  Request $request
      * @return mixed
      */
-    public function news(Request $request)
+    public function news(Request $request, int $user_id = 0)
     {
         if ($request->ajax()) {
             $params = [
                 'type' => $request->query('type'),
                 'after' => $request->query('after', 0)
             ];
+            if ($request->query('user')) {
+                $params['user'] = $request->query('user');
+            }
             $news = createRequest('GET', '/api/v2/user/news/contributes', $params);
             $news->map(function($item){
                 $item->collection_count = $item->collections->count();
@@ -73,7 +76,8 @@ class ProfileController extends BaseController
             ]);
         }
 
-        $data['user'] = $this->PlusData['TS'];
+        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
+        $data['user']->hasFollower = $data['user']->hasFollower($request->user());
         $this->PlusData['current'] = 'news';
         $data['type'] = 0;
 
@@ -202,7 +206,7 @@ class ProfileController extends BaseController
                     $answer = clone $answers;
                     $after = $answer->pop()->id ?? 0;
                     $data['datas'] = $answers;
-                    $html = view('pcview::templates.qa_list', $data, $this->PlusData)->render();
+                    $html = view('pcview::templates.answer', $data, $this->PlusData)->render();
                     break;
                 case 3:
                     $params = [

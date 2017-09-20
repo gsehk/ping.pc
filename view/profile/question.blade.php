@@ -99,5 +99,23 @@ $('.J-menu a').on('click', function(){
     $(this).addClass('active');
 });
 
+$('#feeds_list').on('click', '.J-follow', function(){
+    checkLogin();
+    var _this = this;
+    var status = $(this).attr('status');
+    var topic_id = $(this).attr('tid');
+    topic(status, topic_id, function(){
+        if (status == 1) {
+            $(_this).text('+关注');
+            $(_this).attr('status', 0);
+            $(_this).removeClass('followed');
+        } else {
+            $(_this).text('已关注');
+            $(_this).attr('status', 1);
+            $(_this).addClass('followed');
+        }
+    });
+});
+
 </script>
 @endsection

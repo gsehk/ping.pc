@@ -105,7 +105,7 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('/{user?}', 'ProfileController@feeds')->where(['user' => '[0-9]+'])->name('pc:mine');
 
     // 资讯
-    Route::get('news', 'ProfileController@news')->name('pc:profilenews');
+    Route::get('news/{user?}', 'ProfileController@news')->name('pc:profilenews');
 
     // 收藏
     Route::get('collect', 'ProfileController@collect')->name('pc:profilecollect');

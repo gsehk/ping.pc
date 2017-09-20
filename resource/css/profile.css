@@ -370,10 +370,6 @@
     border-bottom: 1px solid #f1f1f1;
 }
 
-.qa-item .qa-body {
-    margin: 20px 0;
-}
-
 .qa-item .qa-toolbar .ctime {
     line-height: 30px;
 }

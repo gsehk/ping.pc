@@ -19,7 +19,7 @@
 	        <span class="gcolor ctime fr">{{ $data->created_at }}</span>
 	    @endif
 	    </div>
-	    <div class="qa-body clearfix">
+	    <div class="qa-body mt20 mb20 clearfix">
 	        @if (0)
 	        	<img class="fl mr20" src="{{ asset('zhiyicx/plus-component-pc/images/pic_locked.png') }}" height="100">
 	        @endif

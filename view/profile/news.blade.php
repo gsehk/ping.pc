@@ -17,9 +17,11 @@
         {{-- 动态列表 --}}
         <div class="feed_content">
         <div class="feed_menu J-menu">
+        @if ($user->id == $TS->id)
             <a class="active" href="javascript:;" cid="0">已发布</a>
             <a href="javascript:;" cid="1">投稿中</a>
             <a href="javascript:;" cid="3">被驳回</a>
+        @endif
         </div>
             <div id="feeds_list" class="feed_box"></div>
         </div>
@@ -35,12 +37,17 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script>
+var params = {type: {{ $type }} };
+
+@if ($user->id != $TS->id)
+    params = { user: {{$user->id}} }
+@endif
 setTimeout(function() {
     scroll.init({
         container: '#feeds_list',
         loading: '.feed_content',
         url: '/profile/news',
-        params: {type: {{ $type }} }
+        params: params
     });
 }, 300);
 

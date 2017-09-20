@@ -38,7 +38,7 @@
     <div class="profile_nav clearfix">
         @if ($TS->id == $user->id)
             <ul class="profile_nav_list clearfix">
-                <li @if($current == 'feeds') class="active" @endif><a href="{{ route('pc:mine', $user['id']) }}">主页</a></li>
+                <li @if($current == 'feeds') class="active" @endif><a href="{{ route('pc:mine', $user->id) }}">主页</a></li>
 
                 <li @if($current == 'group') class="active" @endif><a href="{{ route('pc:profilegroup') }}">圈子</a></li>
 
@@ -54,9 +54,11 @@
             </a>
         @else
             <ul class="profile_nav_list clearfix">
-                <li @if($current == 'feeds') class="active" @endif><a href="{{ route('pc:mine', $user['id']) }}">TA的主页</a></li>
+                <li @if($current == 'feeds') class="active" @endif><a href="{{ route('pc:mine', $user->id) }}">TA的主页</a></li>
 
                 <li @if($current == 'group') class="active" @endif><a href="{{ route('pc:profilegroup', $user->id) }}">TA的圈子</a></li>
+
+                <li @if($current == 'news') class="active" @endif><a href="{{ route('pc:profilenews', $user->id) }}">TA的文章</a></li>
             </ul>
             <div class="follow-box">
                 @if ($user->hasFollower == 0)
