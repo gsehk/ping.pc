@@ -22,7 +22,7 @@ weibo.showImg = function(){
  */
 weibo.postFeed = function() {
     // 登录判断
-    if (!checkLogin()) return false;
+    checkLogin()
 
     // 付费免费
     var select = $('#feed_select').data('value');
@@ -225,7 +225,7 @@ var comment = {
 
     // 列表发表评论
     publishs: function(obj) {
-        if (!checkLogin()) return false;
+        checkLogin()
 
         var to_uid = $(obj).attr('to_uid') || 0;
         var rowid = $(obj).attr('row_id') || 0;
@@ -267,7 +267,7 @@ var comment = {
     },
     // 详情发表评论
     publish: function(obj) {
-        if (!checkLogin()) return false;
+        checkLogin()
 
         var to_uid = $(obj).attr('to_uid') || 0;
         var rowid = $(obj).attr('row_id') || 0;
@@ -543,7 +543,7 @@ $(function() {
 
     // 付费图片弹窗
     $('#feeds_list').on('click', '.feed_image_pay', function() {
-        if(!checkLogin()) return false;
+        checkLogin()
 
         var _this = $(this);
         var amount = _this.data('amount');
@@ -574,7 +574,7 @@ $(function() {
 
     // 文字弹窗
     $('#feeds_list').on('click', '.feed_pay_text', function() {
-        if(!checkLogin()) return false;
+        checkLogin()
 
         var _this = $(this);
         var amount = _this.data('amount');

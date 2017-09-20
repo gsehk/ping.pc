@@ -103,7 +103,7 @@ var digg = {
         digg.digglock = 0;
     },
     addDigg: function(news_id) {
-        if (!checkLogin()) return false;
+        checkLogin()
 
         if (digg.digglock == 1) {
             return false;
@@ -167,7 +167,7 @@ var collect = {
         collect.collectlock = 0;
     },
     addCollect: function(news_id) {
-        if (!checkLogin()) return false;
+        checkLogin()
 
         if (collect.collectlock == 1) {
             return false;
@@ -238,7 +238,7 @@ var comment = {
     },
     // 发表评论
     publish: function(obj) {
-        if (!checkLogin()) return false;
+        checkLogin()
 
         var to_uid = $(obj).attr('to_uid') || 0;
         var rowid = $(obj).attr('row_id') || 0;

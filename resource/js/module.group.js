@@ -20,7 +20,7 @@ post.showImg = function(){
 };
 
 post.createPost = function (group_id) {
-    if (!checkLogin()) return false;
+    checkLogin()
 
     var images = [];
     $('.feed_picture').find('img').each(function() {
@@ -213,7 +213,7 @@ var comment = {
     },
     // 列表发表评论
     post: function(obj) {
-        if (!checkLogin()) return false;
+        checkLogin()
 
         var to_uid = $(obj).attr('to_uid') || 0;
         var group_id = $(obj).attr('group_id') || 0;
@@ -256,7 +256,7 @@ var comment = {
         });
     },
     publish: function(obj) {
-        if (!checkLogin()) return false;
+        checkLogin()
         
         var group_id = $(obj).attr('group_id') || 0;
         var to_uid = $(obj).attr('to_uid') || 0;
