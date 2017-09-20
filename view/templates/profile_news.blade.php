@@ -90,7 +90,7 @@
                 @endif
                 </div>
                 @if($post->comments->count() >= 5)
-                <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
+                <div class="comit_all font12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
                 @endif
 
             </div>

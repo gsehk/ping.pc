@@ -17,11 +17,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
         </a>
 
         <a href="javascript:;">
-            <span class="feed_uname fs-14">{{ $post->user->name }}</span>
+            <span class="feed_uname font14">{{ $post->user->name }}</span>
         </a>
         <a class="date" href="{{ route('pc:feedread', $post->id) }}">
-            <span class="feed_time fs-12">{{ getTime($post->created_at) }}</span>
-            <span class="feed_time fs-12 hide">查看详情</span>
+            <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
+            <span class="feed_time font12 hide">查看详情</span>
         </a>
     </div>
 
@@ -298,7 +298,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
                 @endif
                 </div>
                 @if($post->comments->count() >= 5)
-                <div class="comit_all fs-12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
+                <div class="comit_all font12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
                 @endif
 
             </div>

@@ -87,40 +87,21 @@ a {
 .round { border-radius: 50%; }
 .pointer { cursor: pointer; }
 
+.font12 { font-size: 12px; }
 .font14 { font-size: 14px; }
 .font16 { font-size: 16px; }
 .font18 { font-size: 18px; }
 .font20 { font-size: 20px; }
 
-.fl {
-    float: left;
-}
-.fr {
-    float: right;
-}
-.fs-12 {
-    font-size: 12px;
-}
-
-.fs-14 {
-    font-size: 14px;
-}
-
-.fs-16 {
-    font-size: 16px;
-}
+.fl { float: left; }
+.fr { float: right; }
 
 .mr10 { margin-right: 10px; }
 .mr20 { margin-right: 20px; }
 
 
-.gray {
-    background: #f3f6f7;
-}
-
-.bgwhite {
-    background-color: white;
-}
+.gray { background: #f3f6f7; }
+.bgwhite { background-color: white; }
 
 .icon {
     font-size: 1.5em;

@@ -15,10 +15,10 @@
         </a>
 
         <a href="javascript:;">
-            <span class="feed_uname fs-14">{{ $post->user->name }}</span>
+            <span class="feed_uname font14">{{ $post->user->name }}</span>
         </a>
         <a href="{{ route('pc:grouppost', ['group_id' => $post->group_id, 'post_id' => $post->id]) }}">
-            <span class="feed_time fs-12">{{ getTime($post->created_at) }}</span>
+            <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
         </a>
     </div>
 
@@ -282,7 +282,7 @@
                 @endif
                 </div>
                 @if($post->comments->count() >= 5)
-                <div class="comit_all fs-12"><a href="{{Route('pc:grouppost', [$post->group_id, $post->id])}}">查看全部评论</a></div>
+                <div class="comit_all font12"><a href="{{Route('pc:grouppost', [$post->group_id, $post->id])}}">查看全部评论</a></div>
                 @endif
             </div>
         </div>

@@ -8,7 +8,7 @@
             <i class="arrow-rank-r" id="{{$genre}}next" onclick="gorank({{(isset($nowPage) ? $nowPage : 1) + 1}},'{{$genre}}',10)"></i>
           </span>
     </div>
-    <div class="list_pm fs-14">
+    <div class="list_pm font14">
         <span class="pm_1">排名</span>
         <span class="pm_2">昵称</span>
         @if(isset($tabName))

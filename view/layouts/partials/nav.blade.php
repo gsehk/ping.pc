@@ -9,7 +9,7 @@
     @if (!empty($TS))
     <div class="nav_right">
         <img src="{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=30" id="menu_toggle" alt="{{ $TS['name'] }}"/>
-        <span class="fs-16 nav_name">{{$TS['name']}}</span>
+        <span class="font16 nav_name">{{$TS['name']}}</span>
 
         <div class="nav_menu">
             <div class="hover_cover clearfix">

@@ -46,7 +46,7 @@
                 <input class="post_text" type="text" placeholder="有标题更吸引人 （最多三十字）" id="post_title">
                 <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
                 <div class="post_extra">
-                <span class="fs-14" id="feed_pic">
+                <span class="font14" id="feed_pic">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
                     图片
                 </span>
@@ -60,10 +60,10 @@
     <div class="feed_content">
         <div class="feed_menu">
             @if (!empty($TS))
-                <a href="javascript:;" data-type="follow" class="fs-16 @if ($type == 'follow')selected @endif">关注的</a>
+                <a href="javascript:;" data-type="follow" class="font16 @if ($type == 'follow')selected @endif">关注的</a>
             @endif
-            <a href="javascript:;" data-type="hot" class="fs-16 @if ($type == 'hot')selected @endif">热门</a>
-            <a href="javascript:;" data-type="new" class="fs-16 @if ($type == 'new')selected @endif">最新</a>
+            <a href="javascript:;" data-type="hot" class="font16 @if ($type == 'hot')selected @endif">热门</a>
+            <a href="javascript:;" data-type="new" class="font16 @if ($type == 'new')selected @endif">最新</a>
         </div>
         <div id="feeds_list"></div>
     </div>
