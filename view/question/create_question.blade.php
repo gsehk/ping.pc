@@ -6,7 +6,7 @@
         <div class="question-tw">提问</div>
         <div class="question-form-row" style="position:relative">
             <input type="hidden" id="question_id" name="id" value="{{$id or 0}}" />
-            <input id="subject" name="subject" type="text" value="" placeholder="请输入问题并已问号结束"/>
+            <input id="subject" name="subject" type="text" value="" placeholder="请输入问题并已问号结束" autocomplete="off"/>
             <div class="subject-error"></div>
             <div class="question-searching">
                 <div class="searching-existing"></div>
@@ -124,6 +124,10 @@
                                 }
                             });
                             question_searching.show();
+                            $('.searching-notice').on('click', function () {
+                                searching_existing.html('');
+                                $('.searching-notice').remove();
+                            })
                         }
                     }
                 });
