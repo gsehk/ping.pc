@@ -117,20 +117,11 @@ var ly = {
             layer.closeAll();
         }, callback);
     },
-    alert: function (title, content, btn, callback, width, height) {
-        title = title || '提示';
+    alert: function (html, btn) {
         btn = btn || '知道了';
-        width = width || '480px';
-        height = height || 'auto';
-        var cont = '<div class="modal-body layer_exit_body">'
-            + (title ? '<div class="exit_ts">' + title + '</div>' : '')
-            + (content ? content : '')
-            + '</div>';
-
-        layer.alert(cont, {
+        layer.alert(html, {
             btn: btn, //按钮
             title: '',
-            area: [width, height],
             scrollbar: false
         });
     }

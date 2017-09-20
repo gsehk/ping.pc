@@ -1760,7 +1760,8 @@ img.load {
 }
 
 .confirm_text {
-    width: 220px;
+    width: 280px;
+    text-align: justify;
 }
 
 .layui-layer-btn- {
