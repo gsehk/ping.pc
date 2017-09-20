@@ -609,7 +609,8 @@ button{
     color: #9C9C9C;
     height: 35px;
 }
-.reward-row .reward-notice::after {
+
+.reward-row .test-img::after {
     font-size: 0;
     display: inline-block;
     width: 16px;
@@ -617,6 +618,10 @@ button{
     margin-left: 5px;
     content: 'X';
     vertical-align: middle;
+    background-image: url(../images/arrow_news_down.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
 }
 
 .reward-example {

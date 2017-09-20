@@ -41,7 +41,7 @@
     lists.on('click', '.invitation-a', function () {
         var id = $(this).data('id');
         var name = $(this).data('name');
-        $('#invitation_user').html('已邀请：'+name)
+        $('#invitation_user').html('已邀请：'+name);
         args.invitations = [id];
         ly.close();
     })

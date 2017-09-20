@@ -48,7 +48,7 @@
         </div>
         <div class="reward-row">
             <div class="invitation-notice">
-                <div class="reward-notice">悬赏邀请</div>
+                <div class="reward-notice test-img">悬赏邀请</div>
                 <span>邀请答题人，设置围观等</span>
             </div>
             <div class="invitation-con">
@@ -75,6 +75,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
     <script>
         // 问题搜索
         var last;
@@ -219,12 +220,14 @@
         });
 
         // 邀请专家
-        $('.reward-notice').on('click', function () {
+        $('.test-img').on('click', function () {
+            //background-image: url(../images/arrow_news_down.png);
+
+
             $('.invitation-con').toggle();
         });
         $('#invitation-add').on('click', function () {
-            args.topics = '3,4';
-            ly.load('/question/users', '', '490px', '500px', 'GET',
+            ly.load('/question/users', '', '480px', '550px', 'GET',
                 {'topics' : args.topics
                 });
         });
