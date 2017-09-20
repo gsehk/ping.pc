@@ -223,6 +223,7 @@
     float: right;
     margin-top: 17px;
     color: #ccc;
+    text-align: right;
 }
 
 .feed_item .feed_title .pinned {
