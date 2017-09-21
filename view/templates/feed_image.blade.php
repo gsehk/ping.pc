@@ -17,8 +17,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
     } 
 
     if ($size[0] < $size[1]) {
-    	$w = $size[1] > 400 ? 400 : $size[1];
-    	$h = number_format($height / $size[1] * $size[0], 2, '.', '');
+    	$h = $size[1] > 400 ? 400 : $size[1];
+    	$w = number_format($height / $size[1] * $size[0], 2, '.', '');
     }
 
     if ($size[0] == $size[1]) {
