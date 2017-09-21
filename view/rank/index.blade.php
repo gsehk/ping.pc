@@ -29,7 +29,7 @@
                         @include('pcview::templates.rank', ['title' => '收入达人排行榜', 'genre' => 'income', 'post' => $income])
                     @endif
                     @if(!isset($check['message']) && !$check->isEmpty())
-                        @include('pcview::templates.rank', ['title' => '社区签到排行榜', 'genre' => 'check', 'post' => $check])
+                        @include('pcview::templates.rank', ['title' => '社区签到排行榜', 'genre' => 'check', 'post' => $check, 'tabName' => '连续签到'])
                     @endif
                     @if(!$experts->isEmpty())
                         @include('pcview::templates.rank', ['title' => '社区专家排行榜', 'genre' => 'experts', 'post' => $experts])
@@ -95,6 +95,13 @@
             var last = $('div[rel="'+genre+'div"][current="1"]').prev();
             var postArgs = {};
             postArgs.offset = (curnum - 1) * num;
+            if (postArgs.offset >= 100) {
+
+                noticebox('已无更多啦', 0);
+
+                return false;
+            }
+
             postArgs.limit = num;
             postArgs.genre = genre;
             if ( last != undefined ) {
