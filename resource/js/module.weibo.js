@@ -215,43 +215,46 @@ weibo.addComment = function (obj, type) {
     });
 };
 
-/**
- * 赞核心Js
- * @type {Object}
- */
-var digg = {
-    // 给工厂调用的接口
-    _init: function(attrs) {
-        digg.init();
-    },
-    init: function() {
-        digg.digglock = 0;
-    },
-    addDigg: function(feed_id, page) {
-        // 未登录弹出弹出层
+var liked = {
+    init: function(row_id, cate, type){
         checkLogin();
+        this.row_id = row_id || 0;
+        this.type = type || 0;
+        this.cate = cate || '';
+        this.likeBox = $('#J-likes'+row_id);
+        this.likeNum = this.likeBox.attr('rel');
+        this.likeStatus = this.likeBox.attr('status');
+        this.res = this.get_link();
 
-        if (digg.digglock == 1) {
-            return false;
+        if (parseInt(this.likeStatus)) {
+            this.unlike();
+        } else {
+            this.like();
         }
-        digg.digglock = 1;
-
-        var url = '/api/v2/feeds/' + feed_id + '/like';
+    },
+    like: function(row_id, cate, type) {
+        var _this = this;
+        if (_this.lockStatus == 1) {
+            return;
+        }
+        _this.lockStatus = 1;
         $.ajax({
-            url: url,
+            url: _this.res.link,
             type: 'POST',
             dataType: 'json',
-            success: function(res, data, xml) {
-                $digg = $('#digg' + feed_id);
-                var num = $digg.attr('rel');
-                num++;
-                $digg.attr('rel', num);
-                if (page == 'read') {
-                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
+            success: function() {
+                _this.likeNum ++;
+                _this.lockStatus = 0;
+                _this.likeBox.attr('rel', _this.likeNum);
+                _this.likeBox.attr('status', 1);
+                _this.likeBox.find('a').addClass('act');
+                _this.likeBox.find('font').text(_this.likeNum);
+                if (_this.type) {
+                    _this.likeBox.find('svg').html('<use xlink:href="#icon-xihuan-red"></use>');
                 } else {
-                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.delDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>' + num + '</font></a>');
+                    _this.likeBox.find('svg').html('<use xlink:href="#icon-xihuan-white-copy"></use>');
                 }
-                digg.digglock = 0;
+
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
@@ -259,34 +262,44 @@ var digg = {
         });
 
     },
-    delDigg: function(feed_id, page) {
-        if (digg.digglock == 1) {
-            return false;
+    unlike: function(feed_id, page) {
+        var _this = this;
+        if (_this.lockStatus == 1) {
+            return;
         }
-        digg.digglock = 1;
-
-        var url = '/api/v2/feeds/' + feed_id + '/unlike';
+        _this.lockStatus = 1;
         $.ajax({
-            url: url,
+            url: _this.res.unlink,
             type: 'DELETE',
             dataType: 'json',
-            success: function(res, data, xml) {
-                $digg = $('#digg' + feed_id);
-                var num = $digg.attr('rel');
-                num--;
-                $digg.attr('rel', num);
-                if (page == 'read') {
-                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds">' + num + '</font>人喜欢</a>');
-                } else {
-                    $('#digg' + feed_id).html('<a href="javascript:;" onclick="digg.addDigg(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>' + num + '</font></a>');
-                }
-
-                digg.digglock = 0;
+            success: function() {
+                _this.likeNum --;
+                _this.lockStatus = 0;
+                _this.likeBox.attr('rel', _this.likeNum);
+                _this.likeBox.attr('status', 0);
+                _this.likeBox.find('a').removeClass('act');
+                _this.likeBox.find('font').text(_this.likeNum);
+                _this.likeBox.find('svg').html('<use xlink:href="#icon-xihuan-white"></use>');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
             }
         });
+    },
+    get_link: function(){
+        var res = {};
+        switch (this.cate) {
+            case 'feeds':
+                res.link = '/api/v2/feeds/' + this.row_id + '/like';
+                res.unlink = '/api/v2/feeds/' + this.row_id + '/unlike';
+                break;
+            case 'news':
+                res.link = '/api/v2/news/' + this.row_id + '/like';
+                res.unlink = '/api/v2/news/' + this.row_id + '/unlike';
+            break;
+        }
+
+        return res;
     }
 };
 
@@ -446,7 +459,7 @@ $(function() {
           $(this).find('span').first().show();
           $(this).find('span').last().hide();
         }
-    })    
+    })
 
     // 文字弹窗
     $('#feeds_list').on('click', '.feed_pay_text', function() {

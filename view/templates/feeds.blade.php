@@ -36,36 +36,35 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
         @else
         <p class="feed_text">{!! formatContent($post->feed_content) !!}</p>
         @endif
-        
+
         @include('pcview::templates.feed_images')
     </div>
 
     <div class="feed_bottom">
         <div class="feed_datas">
-            <span class="digg" id="digg{{$post->id}}" rel="{{$post->like_count}}">
+            <span class="digg" id="J-likes{{$post->id}}" rel="{{$post->like_count}}" status="{{(int) $post->has_like}}">
                 @if($post->has_like)
-                <a href="javascript:;" onclick="digg.delDigg({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post->like_count}}</font>
+                <a href="javascript:void(0)" onclick="liked.init({{$post->id}}, 'feeds', 1)">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg> <font>{{$post->like_count}}</font>
                 </a>
                 @else
-                <a href="javascript:;" onclick="digg.addDigg({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post->like_count}}</font>
+                <a href="javascript:;" onclick="liked.init({{$post->id}}, 'feeds', 1)">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg> <font>{{$post->like_count}}</font>
                 </a>
                 @endif
             </span>
             <span class="comment J-comment-show">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}">{{$post->feed_comment_count}}</font>
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg> <font class="cs{{$post->id}}">{{$post->feed_comment_count}}</font>
             </span>
             <span class="view">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
-                {{$post->feed_view_count}}
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->feed_view_count}}
             </span>
             <span class="options">
                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
             </span>
             <div class="options_div">
                 <ul>
-                    <li id="collect{{$post->id}}" rel="0">
+                    <li id="J-collect{{$post->id}}" rel="0">
                         @if($post->has_collect)
                         <a href="javascript:;" onclick="collect.delCollect({{$post->id}});" class="act">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏

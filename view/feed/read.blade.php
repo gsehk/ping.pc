@@ -61,16 +61,14 @@
                     </a>
                     @endif
                 </span>
-                <span id="digg{{ $feed['id'] }}" rel="{{ $feed['like_count'] }}">
-                    @if(!$feed['has_like'])
-                    <a href="javascript:;" onclick="digg.addDigg('{{ $feed['id'] }}', 'read');">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                        <font class="ds">{{ $feed['like_count'] }}</font>人喜欢
+                <span id="J-likes{{$feed->id}}" rel="{{ $feed->like_count }}" status="{{(int) $feed->has_like}}">
+                    @if($feed->has_like)
+                    <a href="javascript:;" onclick="liked.init({{$feed->id}}, 'feeds', 0);" class="act">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg> <font>{{ $feed->like_count }}</font>人喜欢
                     </a>
                     @else
-                    <a href="javascript:;" onclick="digg.delDigg('{{ $feed['id'] }}', 'read');" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
-                        <font class="ds">{{ $feed['like_count'] }}</font>人喜欢
+                    <a href="javascript:;" onclick="liked.init({{$feed->id}}, 'feeds', 0);">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg> <font>{{ $feed->like_count }}</font>人喜欢
                     </a>
                     @endif
                 </span>
