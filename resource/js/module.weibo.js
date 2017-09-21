@@ -51,7 +51,7 @@ weibo.postFeed = function() {
                                     + '<span' + (amount == '1' ? ' class="current"' : '') + ' amount="1">￥1</span>'
                                     + '<span' + (amount == '5' ? ' class="current"' : '') + ' amount="5">￥5</span>'
                                     + '<span' + (amount == '10' ? ' class="current"' : '') + ' amount="10">￥10</span>'
-                                    + '<input min="1" oninput="if(value.length>8)value=value.slice(0,8)"  type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
+                                    + '<input min="1" oninput="value=moneyLimit(value)"  type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
                                 +'</div>';
 
                 }
@@ -72,7 +72,7 @@ weibo.postFeed = function() {
                             + '<span' + (amount == '1' ? ' class="current"' : '') + ' amount="1">￥1</span>'
                             + '<span' + (amount == '5' ? ' class="current"' : '') + ' amount="5">￥5</span>'
                             + '<span' + (amount == '10' ? ' class="current"' : '') + ' amount="10">￥10</span>'
-                            + '<input min="1" oninput="if(value.length>8)value=value.slice(0,8)"  type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
+                            + '<input min="1" oninput="value=moneyLimit(value)"  type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
                         +'</div>';
             info_box += '</div>'
 

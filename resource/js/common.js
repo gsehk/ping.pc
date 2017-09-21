@@ -930,6 +930,20 @@ var getParams = function(url, key) {
     return null;
 }
 
+// 置顶等限制金额
+var moneyLimit = function(value) {
+    // 最多八位
+    if(value.length > 8) {
+        value = value.slice(0,8);
+    }
+
+    // 最小值为1
+    if(value <= 0) {
+        value = '';
+    }
+    return value;
+}
+
 $(function() {
     //获得用户时区与GMT时区的差值
     if (getCookie('customer_timezone') == '') {
