@@ -113,7 +113,7 @@ weibo.doPostFeed = function(type) {
         $('.pay_images').find('img').each(function() {
             var amount = $(this).attr('amount');
             if (amount == '') {
-                images.push({'id':$(this).attr('tid'), 'type': 'read'});
+                images.push({'id':$(this).attr('tid')});
             } else {
                 images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount});
             }
