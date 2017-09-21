@@ -7,10 +7,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 <div class="comment_item" id="comment{{$comment['id']}}">
     <dl class="clearfix">
         <dt>
-            <img src="{{ $comment['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50">
+            <a href="{{ route('pc:mine', $comment['user']['id']) }}">
+                <img src="{{ $comment['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50">
+            </a>
         </dt>
         <dd>
-            <span class="reply_name">{{$comment['user']['name']}}</span>
+            <a href="{{ route('pc:mine', $comment['user']['id']) }}"><span class="reply_name">{{$comment['user']['name']}}</span></a>
             <div class="reply_tool feed_datas">
                 <span class="reply_time">{{ getTime($comment['created_at']) }}</span>
                 <span class="reply_action options">

@@ -747,6 +747,9 @@ var comment = {
                     html += '</div>';
                 }
 
+                // 第一次评论去掉缺省图
+                $('#J-commentbox'+_this.support.row_id).find('.no_data_div').remove();
+
                 $('#J-commentbox'+_this.support.row_id).prepend(html);
 
                 callback(res);
