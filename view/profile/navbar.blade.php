@@ -6,7 +6,7 @@
 
     @if ($user->id == $TS->id)
         <input type="file" name="cover" style="display:none" id="cover">
-        <span class="change_cover">更换封面</span>
+        <span class="change_cover" onclick="$('#cover').click()">更换封面</span>
     @endif
 
     <div class="profile_top_info">

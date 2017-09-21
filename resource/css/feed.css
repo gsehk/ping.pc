@@ -812,6 +812,7 @@
 
 .feed_pay_box .pay_title {
     font-size: 20px;
+    font-weight: 500;
 }
 
 .feed_pay_box .pay_images {
@@ -915,6 +916,7 @@
     width: 263px;
     border: 1px solid #ccc;
     vertical-align: bottom;
+    border-radius: 5px;
 }
 
 

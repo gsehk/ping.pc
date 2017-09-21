@@ -111,7 +111,12 @@ weibo.doPostFeed = function(type) {
     } else {  // 付费
         // 图片付费
         $('.pay_images').find('img').each(function() {
-            images.push({'id':$(this).attr('tid'), 'type': 'read', amount:$(this).attr('amount')});
+            var amount = $(this).attr('amount');
+            if (amount == '') {
+                images.push({'id':$(this).attr('tid'), 'type': 'read'});
+            } else {
+                images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount});
+            }
         });
         if (images.length != 0) data.images = images;
 
@@ -430,6 +435,19 @@ $(function() {
         })
     });
 
+    // 显示跳转详情文字
+    $('#feeds_list').on("mouseover mouseout", '.date', function(event){
+        if(event.type == "mouseover"){
+          var width = $(this).find('span').first().width();
+          $(this).find('span').first().hide();
+          $(this).find('span').last().css({display:'inline-block', width: width});
+          $(this).find('span').last().css({minWidth:'50px'});
+        }else if(event.type == "mouseout"){
+          $(this).find('span').first().show();
+          $(this).find('span').last().hide();
+        }
+    })    
+
     // 文字弹窗
     $('#feeds_list').on('click', '.feed_pay_text', function() {
         checkLogin()
@@ -514,6 +532,10 @@ $(function() {
                 $('.pay_body input').val(amount);
             }
         }
+
+        // 三角位置
+        var left = $(this).parent().position().left + 3;
+        $(this).parents('.pay_images').find('.triangle').css('margin-left', left);
     });
 
     // 收费金额选择

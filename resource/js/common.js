@@ -657,7 +657,7 @@ var rewarded = {
             if (res.length) {
                 var html = '';
                 html += '<div class="reward-popups">';
-                html += '<p class="reward-title ucolor font14">打赏列表<a class="close fr pointer" onclick="ly.close()">×</a></p>';
+                html += '<p class="reward-title ucolor font14">打赏列表</p>';
                 html += '<ul class="reward-list" id="J-reward-list">';
                 for (var i in res) {
                     html +=
@@ -765,6 +765,9 @@ var comment = {
             case 'feeds':
                 url = '/api/v2/feeds/' + obj.commentable_id + '/comments/' + obj.id;
                 break;
+            case 'news':
+                url = '/api/v2/news/' + obj.commentable_id + '/comments/' + obj.id;
+                break;
         }
         $.ajax({
             url: url,
@@ -797,15 +800,42 @@ var comment = {
  * @param  url
  */
 var pinneds = function (url) {
-    var html =
-        '<div class="apply-pinneds" id="J-pinneds-popups">'+
-            '<p><input class="day" type="number" name="day" placeholder="申请置顶天数" /></p>'+
-            '<p><input class="amount" type="number" name="amount" placeholder="申请置顶金额" /></p>'+
-        '</div>';
-    ly.confirm('申请置顶', html, '', '', function(){
+    var html = '<div class="pinned_box">'
+                    + '<div class="pinned_item">'
+                        + '<input class="pinned_value" type="hidden" value="" name="pinned_days">'
+                        + '<div class="pinned_title">申请置顶</div>'
+                        + '<div class="pinned_text">选择置顶天数</div>'
+                        + '<div class="pinned_options">'
+                            + '<div class="pinned_spans">'
+                                + '<span amount="1">1d</span>'
+                                + '<span amount="5">5d</span>'
+                                + '<span amount="10">10d</span>'
+                            + '</div>'
+                            + '<div class="pinned_input">'
+                                + '<input type="number" placeholder="自定义置顶天数">'
+                            + '</div>'
+                        + '</div>'
+                    + '</div>'
+                    + '<div class="pinned_item">'
+                        + '<input class="pinned_value" type="hidden" value="" name="pinned_money">'
+                        + '<div class="pinned_text">选择置顶金额</div>'
+                        + '<div class="pinned_options">'
+                            + '<div class="pinned_spans">'
+                                + '<span amount="1">¥1</span>'
+                                + '<span amount="5">¥5</span>'
+                                + '<span amount="10">¥10</span>'
+                            + '</div>'
+                            + '<div class="pinned_input">'
+                                + '<input type="number" placeholder="自定义置顶金额">'
+                            + '</div>'
+                        + '</div>'
+                    + '</div>'
+                + '</div>';
+
+    ly.confirm(html, '', '', function(){
         var data = {
-            day: $('#J-pinneds-popups .day').val(),
-            amount: $('#J-pinneds-popups .amount').val()
+            day: $('input[name="pinned_days"]').val(),
+            amount: $('input[name="pinned_money"]').val()
         };
         if (!data.day || !data.amount) {
             layer.msg('请输入置顶参数');
@@ -1044,19 +1074,6 @@ $(function() {
         })
     }
 
-    // 显示跳转详情文字
-    $('#feeds_list').on("mouseover mouseout", '.date', function(event){
-     if(event.type == "mouseover"){
-          var width = $(this).find('span').first().width();
-          $(this).find('span').first().hide();
-          $(this).find('span').last().css({display:'inline-block', width: width});
-          $(this).find('span').last().css({minWidth:'50px'});
-     }else if(event.type == "mouseout"){
-          $(this).find('span').first().show();
-          $(this).find('span').last().hide();
-     }
-    })
-
     // 搜索图标点击
     $('.nav_search_icon').click(function(){
         var val = $('#head_search').val();
@@ -1084,4 +1101,22 @@ $(function() {
             select.removeClass("open");
         });
     }
+
+    // 置顶弹窗操作
+    $('body').on('click', '.pinned_item span', function() {
+        $(this).siblings().removeClass('current');
+        $(this).addClass('current');
+        $(this).parents('.pinned_item').find('input').val('');
+
+        var amount = $(this).attr('amount');
+        var type = $(this).parents('pinned_item').attr('type');
+        $(this).parents('.pinned_item').find('.pinned_value').val(amount);
+    });
+
+    $('body').on('focus change', '.pinned_item input', function() {
+        $(this).parents('.pinned_item').find('span').removeClass('current');
+
+        var amount = $(this).val();
+        $(this).parents('.pinned_item').find('.pinned_value').val(amount);
+    });
 });

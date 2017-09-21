@@ -1,5 +1,6 @@
 @php
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 @endphp
 
 @if(!$feeds->isEmpty())
@@ -18,7 +19,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     </div>
 
     <div class="feed_body">
-        <a href="{{ route('pc:feedread', $post->id) }}"><p class="feed_text tcolor">{!! $post->feed_content !!}</p></a>
+        <a href="{{ route('pc:feedread', $post->id) }}"><p class="feed_text tcolor">{!! formatContent($post->feed_content) !!}</p></a>
 
         @if($post->images)
         <div style="" id="layer-photos-demo{{$post->id}}">
@@ -235,8 +236,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                         @endif
                     </li>
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
+                    <li>
+                        <a href="javascript:;" onclick="profile.pinneds({{$post->id}}, 'feeds');">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                        </a>
+                    </li>
                       <li>
-                          <a href="javascript:;" onclick="weibo.delete({{$post->id}});">
+                          <a href="javascript:;" onclick="profile.delete({{$post->id}}, 'feeds');">
                               <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
                           </a>
                       </li>
@@ -252,32 +258,26 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
             </div>
             <div class="comment_body" id="comment_box{{$post->id}}">
                 <div class="comment_textarea">
-                    <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
+                    <textarea class="comment-editor" id="J-editor{{$post->id}}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
-                        <span class="dy_cs">可输入<span class="nums mcolor">255</span>字</span>
-                        <a class="post_button a_link J-btn" onclick="comment.publish(this);" to_uid="0" row_id="{{ $post->id }}">评论</a>
+                        <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
+                        <a class="btn btn-primary fr" id="J-button{{$post->id}}" onclick="profile.addComment({{$post}}, 1, 'feeds')"> 评 论 </a>
                     </div>
                 </div>
-
-                <div id="comment-list{{ $post->id }}">
-                @if($post->comments->count())
-                  @foreach($post->comments as $cv)
-                  <p class="comment_con" id="comment{{$cv->id}}">
-                    <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
-                        @if($cv->user_id != $TS['id'])
-                            <a
-                              onclick="comment.initReply(this)"
-                              to_uname="{{ $cv->user['name'] }}"
-                              to_uid="{{$cv->user_id}}"
-                              row_id="{{$post->id}}"
-                            >回复</a>
-                        @endif
-                      @if($cv->user_id == $TS['id'])
-                          <a class="comment_del" onclick="comment.delWeibo({{$cv->id}}, {{$post->id}})">删除</a>
-                      @endif
-                  </p>
-                  @endforeach
-                @endif
+                <div id="J-commentbox{{ $post->id }}">
+                    @if($post->comments->count())
+                        @foreach($post->comments as $cv)
+                            <p class="comment_con" id="comment{{$cv->id}}">
+                                <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                                @if($cv->user_id != $TS['id'])
+                                    <a onclick="comment.reply({{$cv}})">回复</a>
+                                @else
+                                    <a class="comment_del" onclick="comment.pinneds({{$cv}})">申请置顶</a>
+                                    <a class="comment_del" onclick="comment.delete({{$cv}})">删除</a>
+                                @endif
+                            </p>
+                        @endforeach
+                    @endif
                 </div>
                 @if($post->comments->count() >= 5)
                   <div class="comit_all font12"><a href="{{ Route('pc:feedread', $post->id) }}">查看全部评论</a></div>

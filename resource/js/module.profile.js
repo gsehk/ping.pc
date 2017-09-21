@@ -68,142 +68,6 @@ var digg = {
     }
 };
 /**
- * 核心评论对象
- */
-var comment = {
-    // 初始化回复操作
-    initReply: function(obj) {
-        var to_uname = $(obj).attr('to_uname');
-        var to_uid = $(obj).attr('to_uid');
-        var row_id = $(obj).attr('row_id');
-        $('#comment_box'+row_id).find('.J-btn').attr('to_uid', to_uid);
-        var editor = $('#comment_box' + row_id).find('textarea');
-        var html = '回复@' + to_uname + ' ：';
-        //清空输入框
-        editor.val('');
-        editor.val(html);
-        editor.focus();
-    },
-    // 列表发表评论
-    publish: function(obj) {
-        checkLogin()
-
-        var to_uid = $(obj).attr('to_uid') || 0;
-        var rowid = $(obj).attr('row_id') || 0;
-        var editor = $('#comment_box'+rowid).find('textarea');
-
-        var formData = { body: editor.val() };
-        if (!editor.val()) {
-            layer.msg('评论内容不能为空');return;
-        }
-        if (to_uid > 0) {
-            formData.reply_user = to_uid;
-        }
-        var url = '/api/v2/feeds/' + rowid + '/comments';
-        obj.innerHTML = '评论中..';
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(res) {
-                if (obj != undefined) {
-                    obj.innerHTML = '评论';
-                    $('.nums').text(initNums);
-                    $('.cs'+rowid).text(parseInt($('.cs'+rowid).text())+1);
-                    editor.val('');
-                }
-                var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
-                    html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
-                    html +=     '<a class="del_comment" onclick="comment.delWeibo('+res.comment.id+', '+rowid+');">删除</a>';
-                    html += '</p>';
-
-                    $('#comment-list'+rowid).prepend(html);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-                obj.innerHTML = '评论';
-            }
-        });
-    },
-    // 文章列表评论
-    news: function(obj) {
-        var to_uid = $(obj).attr('to_uid') || 0;
-        var newsid = $(obj).attr('row_id') || 0;
-        var editor = $('#comment_box' + newsid).find('textarea');
-
-        var strlen = getLength(editor.val());
-        var leftnums = initNums - strlen;
-        if (leftnums < 0 || leftnums == initNums) {
-            noticebox('评论内容长度为1-' + initNums + '字', 0);
-            return false;
-        }
-        var formData = { body: editor.val() };
-        if (to_uid > 0) {
-            formData.reply_user = to_uid;
-        }
-        var url = '/api/v2/news/' + newsid + '/comments';
-        obj.innerHTML = '评论中...';
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            error: function(xml) {},
-            success: function(res, data, xml) {
-                if (xml.status == 201) {
-                    if (obj != undefined) {
-                        obj.innerHTML = '评论';
-                        $('.nums').text(initNums);
-                        $('.cs'+newsid).text(parseInt($('.cs'+newsid).text())+1);
-                        editor.val('');
-                    }
-                    var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
-                        html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
-                        html +=     '<a class="del_comment" onclick="comment.delNews('+res.comment.id+', '+newsid+');">删除</a>';
-                        html += '</p>';
-
-                    $('#comment-list' + newsid).prepend(html);
-                } else {
-                    noticebox(res.message, 0);
-                }
-            }
-        });
-    },
-    delWeibo: function(comment_id, feed_id) {
-        var url = '/api/v2/feeds/' + feed_id + '/comments/' + comment_id;
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function(res) {
-                $('#comment'+comment_id).fadeOut();
-                var nums = $('.cs' + feed_id);
-                nums.text(parseInt(nums.text())-1);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
-    },
-    delNews: function(comment_id, news_id) {
-        var url = '/api/v2/news/' + news_id + '/comments/' + comment_id;
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            error: function(xml) { noticebox('删除失败请重试', 0); },
-            success: function(res) {
-                $('#comment' + comment_id).fadeOut(1000);
-                var nums = $('.cs' + news_id);
-                nums.text(parseInt(nums.text()) - 1);
-            }
-        });
-    }
-};
-
-/**
  * 收藏核心Js
  * @type {Object}
  */
@@ -336,16 +200,19 @@ var collect = {
  * 微博操作
  * @type {Object}
  */
-var weibo = {
-    delete : function(feed_id) {
+var profile = {
+    delete : function(id, type) {
+        var url = '';
+        if (type == 'feeds') {
+            url = '/api/v2/feeds/' + id;
+        }
         layer.confirm('确定删除这条信息？', {icon: 3}, function(index) {
-            var url = '/api/v2/feeds/' + feed_id;
             $.ajax({
                 url: url,
                 type: 'DELETE',
                 dataType: 'json',
                 success: function(res) {
-                    $('#feed' + feed_id).fadeOut();
+                    $('#feed' + id).fadeOut();
                     layer.close(index);
                 },
                 error: function(xhr){
@@ -354,25 +221,32 @@ var weibo = {
             });
         });
     },
-    pinneds: function (feed_id) {
-        var url = '/api/v2/feeds/'+feed_id+'/pinneds';
-        pinneds(url);
+    pinneds: function (id, type) {
+        if (type == 'feeds') {
+            var url = '/api/v2/feeds/'+id+'/pinneds';
+            pinneds(url);
+        }
+        if (type == 'news') {
+            var url = '/api/v2/news/'+id+'/pinneds';
+            pinneds(url);
+        }
+
+    },
+    addComment: function (obj, type, cate) {
+        var row_id = type ? obj.id : obj;
+        var url = '/api/v2/'+cate+'/' + row_id + '/comments';
+        comment.support.row_id = row_id;
+        comment.support.position = type;
+        comment.support.editor = $('#J-editor'+row_id);
+        comment.support.button = $('#J-button'+row_id);
+        comment.publish(url, function(res){
+            $('.nums').text(comment.support.wordcount);
+            $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);
+        });
     }
 }
 
-var news = {
-    pinneds: function (news_id) {
-        var url = '/api/v2/news/'+news_id+'/pinneds';
-        pinneds(url);
-    }
-};
-
 $(function() {
-
-    $('.change_cover').on('click', function() {
-        $('#cover').click();
-    })
-
     $('#cover').on('change', function(e) {
         var file = e.target.files[0];
         var formDatas = new FormData();
@@ -391,8 +265,7 @@ $(function() {
     });
     // 显示回复框
     $('#feeds_list').on('click', '.J-comment-show', function() {
-        checkLogin()
-
+        checkLogin();
         var comment_box = $(this).parent().siblings('.comment_box');
         if (comment_box.css('display') == 'none') {
             comment_box.show();

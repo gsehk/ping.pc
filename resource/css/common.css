@@ -1869,3 +1869,64 @@ img.load {
     height: 20px;
     border-radius: 50%;
 }
+
+/*置顶弹窗*/
+.pinned_box {
+
+}
+
+.pinned_box .pinned_title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.pinned_box .pinned_text {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.pinned_box .pinned_options {
+
+}
+
+.pinned_box .pinned_options .pinned_spans {
+    margin-bottom: 10px;
+}
+
+.pinned_box .pinned_options .pinned_spans span{
+    cursor: pointer;
+    display: inline-block;
+    width: 80px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    color: #333;
+    height: 28px;
+    line-height: 28px;
+    margin-right: 10px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.pinned_box .pinned_options .pinned_spans span.current{
+    color: #59b6d7;
+    border: 1px solid #59b6d7;
+}
+
+.pinned_box .pinned_options .pinned_input {
+    margin-bottom: 20px;
+}
+
+.pinned_box .pinned_options .pinned_input input{
+    outline: none;
+    text-indent: 10px;
+    background-color: transparent;
+    height: 28px;
+    line-height: 28px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    vertical-align: bottom;
+    width: 260px;
+}
