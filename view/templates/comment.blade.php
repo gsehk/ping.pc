@@ -22,19 +22,19 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                     <ul>
                         @if ($comment['user']['id'] == $TS['id'])
                             <li>
-                                <a href="javascript:;" onclick="comment.pinneds({{$comment}});">
+                                <a href="javascript:;" onclick="comment.pinneds('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:;" onclick="comment.delete({{$comment}});">
+                                <a href="javascript:;" onclick="comment.delete('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
                                     <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
                                 </a>
                             </li>
                         @endif
                         @if ($comment['user']['id'] != $TS['id'])
                             <li>
-                                <a href="javascript:;" onclick="comment.reply({{$comment}});">
+                                <a href="javascript:;" onclick="comment.reply({{$comment['user']['id']}}, '{{$comment['user']['name']}}', {{$comment['commentable_id']}});">
                                     <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>回复
                                 </a>
                             </li>

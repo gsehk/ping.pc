@@ -690,10 +690,10 @@ var comment = {
         wordcount: 255,
     },
     // 初始化回复操作
-    reply: function(obj) {
-        this.support.to_uid = obj.user_id;
-        this.support.to_uname = obj.user.name;
-        this.support.row_id = obj.commentable_id;
+    reply: function(id, name, source_id) {
+        this.support.to_uid = id;
+        this.support.to_uname = name;
+        this.support.row_id = source_id;
         this.support.editor = $('#J-editor'+this.support.row_id);
         this.support.editor.val('回复@'+this.support.to_uname+'：');
         this.support.editor.focus();
@@ -723,7 +723,6 @@ var comment = {
                     id: res.comment.id,
                     commentable_id: _this.support.row_id,
                 };
-
                 if (_this.support.position) {
                 var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
                     html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
@@ -737,9 +736,24 @@ var comment = {
                     html += '        </dt>';
                     html += '        <dd>';
                     html += '            <span class="reply_name">'+NAME+'</span>';
-                    html += '            <div class="reply_tool">';
+                    html += '            <div class="reply_tool feed_datas">';
                     html += '                <span class="reply_time">刚刚</span>';
-                    html += '                <span class="reply_action"><i class="icon iconfont icon-gengduo-copy"></i></span>';
+                    html += '                <span class="reply_action options"><svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg></span>';
+                    html += '                <div class="options_div">'
+                    html += '                    <ul>'
+                    html += '                        <li>'
+                    html += '                            <a href="javascript:;" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
+                    html += '                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶'
+                    html += '                            </a>'
+                    html += '                        </li>'
+                    html += '                        <li>'
+                    html += '                            <a href="javascript:;" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
+                    html += '                                <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除'
+                    html += '                            </a>'
+                    html += '                        </li>'
+                    html += '                    </ul>'
+                    html += '                    <img src="http://tss.io/zhiyicx/plus-component-pc/images/triangle.png" class="triangle">'
+                    html += '                </div>'
                     html += '            </div>';
                     html += '            <div class="replay_body">'+formData.body+'</div>';
                     html += '        </dd>';
@@ -760,21 +774,21 @@ var comment = {
             }
         });
     },
-    delete: function(obj) {
+    delete: function(type, source_id, id) {
         var url = '';
-        switch (obj.commentable_type) {
+        switch (type) {
             case 'feeds':
-                url = '/api/v2/feeds/' + obj.commentable_id + '/comments/' + obj.id;
+                url = '/api/v2/feeds/' + source_id + '/comments/' + id;
                 break;
             case 'news':
-                url = '/api/v2/news/' + obj.commentable_id + '/comments/' + obj.id;
+                url = '/api/v2/news/' + source_id + '/comments/' + id;
                 break;
             case 'group-posts':
                 var group_id = window.location.pathname.split("/")[2];
-                url = '/api/v2/groups/' + group_id + '/posts/' + obj.commentable_id + '/comments/' + obj.id;
+                url = '/api/v2/groups/' + group_id + '/posts/' + source_id + '/comments/' + id;
                 break;
             case 'question-answers':
-                url = '/api/v2/question-answers/' + obj.commentable_id + '/comments/' + obj.id;
+                url = '/api/v2/question-answers/' + source_id + '/comments/' + id;
                 break;
         }
         $.ajax({
@@ -782,22 +796,22 @@ var comment = {
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
-                $('#comment' + obj.id).fadeOut();
-                $('.cs' + obj.commentable_id).text(parseInt($('.cs' + obj.commentable_id).text())-1);
+                $('#comment' + id).fadeOut();
+                $('.cs' + source_id).text(parseInt($('.cs' + source_id).text())-1);
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
             }
         });
     },
-    pinneds: function (obj){
+    pinneds: function (type, source_id, id){
         var url = '';
-        if (obj.commentable_type == 'feeds') {
-            url = '/api/v2/feeds/'+obj.commentable_id+'/comments/'+obj.id+'/pinneds';
+        if (type == 'feeds') {
+            url = '/api/v2/feeds/' + source_id + '/comments/' + id + '/pinneds';
             pinneds(url);
         }
-        if (obj.commentable_type == 'news') {
-            url = '/api/v2/news/'+obj.commentable_id+'/comments/'+obj.id+'/pinneds';
+        if (type == 'news') {
+            url = '/api/v2/news/' + source_id + '/comments/' + id + '/pinneds';
             pinneds(url);
         }
     }

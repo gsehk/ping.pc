@@ -9,7 +9,7 @@
         var API = '{{ $routes["api"] }}';
         var MID = "{{ $TS['id'] or 0 }}";
         var NAME = "{{ $TS['name'] or '' }}";
-        var AVATAR = "{{ $TS['avatar'] }}";
+        var AVATAR = "{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}";
         var TOKEN = "{{ $token or '' }}";
         var SITE_URL = "{{ $routes['siteurl'] }}";
         var RESOURCE_URL = '{{ $routes["resource"] }}';

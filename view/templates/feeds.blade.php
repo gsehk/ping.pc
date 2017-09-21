@@ -116,6 +116,9 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
                                 @if($cv->user_id != $TS['id'])
                                     <a onclick="comment.reply({{$cv}})">回复</a>
                                 @else
+                                    @php
+                                        dump($cv);
+                                    @endphp
                                     <a class="comment_del" onclick="comment.pinneds({{$cv}})">申请置顶</a>
                                     <a class="comment_del" onclick="comment.delete({{$cv}})">删除</a>
                                 @endif
