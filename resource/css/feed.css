@@ -565,6 +565,10 @@
     float: left;
 }
 
+.comment_list .comment_item dt img{
+    border-radius: 50%;
+}
+
 .comment_list .comment_item dd{
     font-size: 14px;
     margin-left:20px;
