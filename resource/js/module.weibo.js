@@ -221,12 +221,12 @@ var liked = {
         this.row_id = row_id || 0;
         this.type = type || 0;
         this.cate = cate || '';
-        this.likeBox = $('#J-likes'+row_id);
-        this.likeNum = this.likeBox.attr('rel');
-        this.likeStatus = this.likeBox.attr('status');
+        this.box = $('#J-likes'+row_id);
+        this.num = this.box.attr('rel');
+        this.status = this.box.attr('status');
         this.res = this.get_link();
 
-        if (parseInt(this.likeStatus)) {
+        if (parseInt(this.status)) {
             this.unlike();
         } else {
             this.like();
@@ -243,16 +243,16 @@ var liked = {
             type: 'POST',
             dataType: 'json',
             success: function() {
-                _this.likeNum ++;
+                _this.num ++;
                 _this.lockStatus = 0;
-                _this.likeBox.attr('rel', _this.likeNum);
-                _this.likeBox.attr('status', 1);
-                _this.likeBox.find('a').addClass('act');
-                _this.likeBox.find('font').text(_this.likeNum);
+                _this.box.attr('rel', _this.num);
+                _this.box.attr('status', 1);
+                _this.box.find('a').addClass('act');
+                _this.box.find('font').text(_this.num);
                 if (_this.type) {
-                    _this.likeBox.find('svg').html('<use xlink:href="#icon-xihuan-red"></use>');
+                    _this.box.find('svg').html('<use xlink:href="#icon-xihuan-red"></use>');
                 } else {
-                    _this.likeBox.find('svg').html('<use xlink:href="#icon-xihuan-white-copy"></use>');
+                    _this.box.find('svg').html('<use xlink:href="#icon-xihuan-white-copy"></use>');
                 }
 
             },
@@ -273,13 +273,13 @@ var liked = {
             type: 'DELETE',
             dataType: 'json',
             success: function() {
-                _this.likeNum --;
+                _this.num --;
                 _this.lockStatus = 0;
-                _this.likeBox.attr('rel', _this.likeNum);
-                _this.likeBox.attr('status', 0);
-                _this.likeBox.find('a').removeClass('act');
-                _this.likeBox.find('font').text(_this.likeNum);
-                _this.likeBox.find('svg').html('<use xlink:href="#icon-xihuan-white"></use>');
+                _this.box.attr('rel', _this.num);
+                _this.box.attr('status', 0);
+                _this.box.find('a').removeClass('act');
+                _this.box.find('font').text(_this.num);
+                _this.box.find('svg').html('<use xlink:href="#icon-xihuan-white"></use>');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
@@ -303,48 +303,41 @@ var liked = {
     }
 };
 
-/**
- * 收藏核心Js
- * @type {Object}
- */
-var collect = {
-    // 给工厂调用的接口
-    _init: function(attrs) {
-        collect.init();
+var collected = {
+    init: function(row_id, cate, type){
+        checkLogin();
+        this.row_id = row_id || 0;
+        this.type = type || 0;
+        this.cate = cate || '';
+        this.box = $('#J-collect'+row_id);
+        this.num = this.box.attr('rel');
+        this.status = this.box.attr('status');
+        this.res = this.get_link();
+
+        if (parseInt(this.status)) {
+            this.uncollect();
+        } else {
+            this.collect();
+        }
     },
-    init: function() {
-        collect.collectlock = 0;
-    },
-    addCollect: function(feed_id, page) {
-        // 未登录弹出弹出层
-        if (MID == 0) {
-            window.location.href = '/passport/login';
+    collect: function(row_id, cate, type) {
+        var _this = this;
+        if (_this.lockStatus == 1) {
             return;
         }
-
-        if (collect.collectlock == 1) {
-            return false;
-        }
-        collect.collectlock = 1;
-
-        var url = '/api/v2/feeds/' + feed_id + '/collections';
-
+        _this.lockStatus = 1;
         $.ajax({
-            url: url,
+            url: _this.res.link,
             type: 'POST',
             dataType: 'json',
-            success: function(res, data, xml) {
-                $collect = $('#collect' + feed_id);
-                var num = $collect.attr('rel');
-                num++;
-                $collect.attr('rel', num);
-                if (page == 'read') {
-                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ', \'read\');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs">' + num + '</font>人收藏</a>');
-                } else {
-                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.delCollect(' + feed_id + ');" class="act"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏</a>');
-                }
-
-                collect.collectlock = 0;
+            success: function() {
+                _this.num ++;
+                _this.lockStatus = 0;
+                _this.box.attr('rel', _this.num);
+                _this.box.attr('status', 1);
+                _this.box.find('a').addClass('act');
+                _this.box.find('font').text(_this.num);
+                _this.box.find('svg').html('<use xlink:href="#icon-shoucang-copy"></use>');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
@@ -352,32 +345,44 @@ var collect = {
         });
 
     },
-    delCollect: function(feed_id, page) {
-        if (collect.collectlock == 1) {
-            return false;
+    uncollect: function(feed_id, page) {
+        var _this = this;
+        if (_this.lockStatus == 1) {
+            return;
         }
-        collect.collectlock = 1;
-        var url = '/api/v2/feeds/' + feed_id + '/uncollect'
+        _this.lockStatus = 1;
         $.ajax({
-            url: url,
+            url: _this.res.unlink,
             type: 'DELETE',
             dataType: 'json',
-            success: function(res, data, xml) {
-                $collect = $('#collect' + feed_id);
-                var num = $collect.attr('rel');
-                num--;
-                $collect.attr('rel', num);
-                if (page == 'read') {
-                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ', \'read\');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs">' + num + '</font>人收藏</a>');
-                } else {
-                    $('#collect' + feed_id).html('<a href="javascript:;" onclick="collect.addCollect(' + feed_id + ');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏</a>');
-                }
-                collect.collectlock = 0;
+            success: function() {
+                _this.num --;
+                _this.lockStatus = 0;
+                _this.box.attr('rel', _this.num);
+                _this.box.attr('status', 0);
+                _this.box.find('a').removeClass('act');
+                _this.box.find('font').text(_this.num);
+                _this.box.find('svg').html('<use xlink:href="#icon-shoucang-copy1"></use>');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
             }
         });
+    },
+    get_link: function(){
+        var res = {};
+        switch (this.cate) {
+            case 'feeds':
+                res.link = '/api/v2/feeds/' + this.row_id + '/collections';
+                res.unlink = '/api/v2/feeds/' + this.row_id + '/uncollect';
+                break;
+            case 'news':
+                res.link = '/api/v2/news/' + this.row_id + '/like';
+                res.unlink = '/api/v2/news/' + this.row_id + '/uncollect';
+            break;
+        }
+
+        return res;
     }
 };
 

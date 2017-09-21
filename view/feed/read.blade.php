@@ -48,27 +48,29 @@
             </div>
 
             <div class="detail_share">
-                <span id="collect{{ $feed['id'] }}" rel="{{ $feed['collect_count'] }}">
-                    @if(!$feed['has_collect'])
-                    <a href="javascript:;" onclick="collect.addCollect('{{ $feed['id'] }}', 'read')">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
-                        <font class="cs">{{ $feed['collect_count'] }}</font>人收藏
+                <span id="J-collect{{ $feed->id }}" rel="{{ $feed->collect_count }}" status="{{(int) $feed->has_collect}}">
+                    @if($feed->has_collect)
+                    <a href="javascript:;" onclick="collected.init({{$feed->id}}, 'feeds', 0);" class="act">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                        <font class="cs">{{ $feed->collect_count }}</font> 人收藏
                     </a>
                     @else
-                    <a href="javascript:;" onclick="collect.delCollect('{{ $feed['id'] }}', 'read');" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
-                        <font class="cs">{{ $feed['collect_count'] }}</font>人收藏
+                    <a href="javascript:;" onclick="collected.init({{$feed->id}}, 'feeds', 0);">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                        <font class="cs">{{ $feed->collect_count }}</font> 人收藏
                     </a>
                     @endif
                 </span>
                 <span id="J-likes{{$feed->id}}" rel="{{ $feed->like_count }}" status="{{(int) $feed->has_like}}">
                     @if($feed->has_like)
                     <a href="javascript:;" onclick="liked.init({{$feed->id}}, 'feeds', 0);" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg> <font>{{ $feed->like_count }}</font>人喜欢
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
+                        <font>{{ $feed->like_count }}</font> 人喜欢
                     </a>
                     @else
                     <a href="javascript:;" onclick="liked.init({{$feed->id}}, 'feeds', 0);">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg> <font>{{ $feed->like_count }}</font>人喜欢
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                        <font>{{ $feed->like_count }}</font> 人喜欢
                     </a>
                     @endif
                 </span>
