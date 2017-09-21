@@ -202,8 +202,7 @@ weibo.pinneds = function (feed_id) {
     var url = '/api/v2/feeds/'+feed_id+'/pinneds';
     pinneds(url);
 };
-weibo.addComment = function (obj, type) {
-    var row_id = type ? obj.id : obj;
+weibo.addComment = function (row_id, type) {
     var url = '/api/v2/feeds/' + row_id + '/comments';
     comment.support.row_id = row_id;
     comment.support.position = type;
