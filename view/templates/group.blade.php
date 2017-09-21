@@ -1,7 +1,7 @@
 @foreach ($group as $item)
     <div class="group_item @if(($loop->iteration) % 2 == 0) group_item_right @endif">
         <dl class="clearfix">
-            <dt><img src="{{ $routes['storage'].$item->avatar->id }}" width="120" height="120"></dt>
+            <dt><a href="{{Route('pc:groupread', $item->id)}}"><img src="{{ $routes['storage'].$item->avatar->id }}" width="120" height="120"></a></dt>
             <dd>
                 <a class="title" href="{{Route('pc:groupread', $item->id)}}">{{ $item->title }}</a>
                 <div class="tool">
