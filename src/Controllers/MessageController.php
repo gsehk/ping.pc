@@ -44,7 +44,7 @@ class MessageController extends BaseController
                         $v['source_type'] = '评论了你的动态';
                         $v['source_url'] = Route('pc:feedread', $v['commentable']['id']);
                         $v['source_content'] = $v['commentable']['feed_content'];
-                        $v['commentable']['images'][0] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['commentable']['images'][0]['id'].'?w=35&h=35';
+                        count($v['commentable']['images']) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$v['commentable']['images'][0]['id'].'?w=35&h=35';
                         break;
                     case 'group-posts':
                         $v['source_type'] = '评论了你的圈子';
@@ -88,7 +88,7 @@ class MessageController extends BaseController
                         $v['source_type'] = '赞了你的动态';
                         $v['source_url'] = Route('pc:feedread', $v['likeable']['id']);
                         $v['source_content'] = $v['likeable']['feed_content'];
-                        $v['likeable']['images'][0] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['images'][0]['id'].'?w=35&h=35';
+                        count($v['commentable']['images']) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['images'][0]['id'].'?w=35&h=35';
                         break;
                     case 'group-posts':
                         $v['source_type'] = '赞了你的圈子';
@@ -153,9 +153,7 @@ class MessageController extends BaseController
         $after = $request->input('after') ?: 0;
         $limit = $request->input('limit') ?: 10;
         $data['comments'] = createRequest('GET', '/api/v2/news/comments/pinneds', ['after' => $after, 'limit' => $limit]);
-
-//        dd($data['comments']->toArray());
-
+        
         $return = view('pcview::message.feedcomment_top', $data, $this->PlusData)->render();
 
         return response()->json([
