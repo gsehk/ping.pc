@@ -46,7 +46,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
                     @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 277, 'height' => 273])
                 </div>
                 <div style="width: 50%;" class="image_box">
-                    @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 277, 'height' => 273])
+                    @include('pcview::templates.feed_image', ['image' => $post->images[1], 'width' => 277, 'height' => 273])
                 </div>
             </div>
         @elseif($post->images->count() == 3)
