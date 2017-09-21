@@ -15,8 +15,8 @@ class SocialiteController extends BaseController
         $this->config = [
             'weibo' => [
                 'weibo' => [
-                    'client_id'     => '3690191563',
-                    'client_secret' => '278b2212b43ce359ee27e19dfd230313',
+                    'client_id'     => '845138498',
+                    'client_secret' => 'a75c65670ea302940b69edbcc1fedb81',
                     'redirect'      => env('APP_URL').'/socialite/weibo/callback',
                 ]
             ],
@@ -37,6 +37,11 @@ class SocialiteController extends BaseController
         ];
     }
 
+    /**
+     * 三方登录
+     * @param Request $request
+     * @param $service
+     */
     public function redirectToProvider(Request $request, $service)
     {
 
@@ -50,6 +55,29 @@ class SocialiteController extends BaseController
         $socialite = new SocialiteManager($config);
 
         $response = $socialite->driver($service)->redirect();
+
+        $response->send();
+    }
+
+    /**
+     * 三方绑定
+     * @param Request $request
+     * @param $service
+     * @author zuo
+     */
+    public function redirectToProviderByBind(Request $request, $service)
+    {
+        $config = $this->config[$service] ?: [];
+        $config[$service]['redirect'] = $config[$service]['redirect'].'/bind';
+
+        if (!$config) {
+
+            dd('暂未开通'.$service.'登录');
+        }
+
+        $socialite = new SocialiteManager($config);
+
+        $response = $socialite->driver($service)->with(['type' => 'bind'])->redirect();
 
         $response->send();
     }
@@ -85,6 +113,23 @@ class SocialiteController extends BaseController
         }
 
         return;
+    }
+
+    public function handleProviderByBindCallback(Request $request, $service)
+    {
+        $config = $this->config[$service] ?: [];
+
+        $socialite = new SocialiteManager($config);
+        $user = $socialite->driver($service)->user();
+        $access_token = $user->getToken()->access_token;
+
+        $res = createRequest('PATCH', '/api/v2/user/socialite/'.$service, ['access_token' => $access_token]);
+
+        if (isset($res['message']) && $res['message'] = '你已绑定了其他第三方账号') {
+            dd($res['message']);
+        }
+
+        return  redirect(route('pc:success', ['message' => '绑定成功', 'content' => '您的账号已成功绑定！', 'url' => Route('pc:binds')]));
     }
 
     /**

@@ -151,8 +151,15 @@ class AccountController extends BaseController
         return view('pcview::account.walletdraw', $this->PlusData);
     }
 
-    public function getMyBands()
+    /**
+     * 获取绑定信息
+     * @author zuo
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     */
+    public function getMyBinds()
     {
+        $this->PlusData['account_cur'] = 'binds';
+
         $data = [
             'phone' => false,
             'email' => false,
@@ -162,16 +169,26 @@ class AccountController extends BaseController
         ];
         // 手机邮箱绑定状态
         $user = createRequest('GET', '/api/v2/user');
+
         $data['phone'] = (boolean)$user->phone;
         $data['email'] = (boolean)$user->email;
 
         // 三方绑定状态
-        $bands = createRequest('GET', '/api/v2/user/socialite');
-        foreach ($bands as $v) {
+        $binds = createRequest('GET', '/api/v2/user/socialite');
+        foreach ($binds as $v) {
             $data[$v] = true;
         }
 
-        return view('pcview::account.bands', $data, $this->PlusData);
+        return view('pcview::account.binds', $data, $this->PlusData);
+    }
+
+    public function success(Request $request)
+    {
+        $data['message'] = $request->query('message');
+        $data['content'] = $request->query('content');
+        $data['url'] = $request->query('url');
+
+        return view('pcview::templates.success', $data, $this->PlusData);
     }
 
 }
