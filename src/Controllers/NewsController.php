@@ -48,6 +48,7 @@ class NewsController extends BaseController
         $news['news'] = createRequest('GET', '/api/v2/news', $params);
         $new = clone $news['news'];
         $after = $new->pop()->id ?? 0;
+        $news['cate_id'] = $params['cate_id'];
         $newsData = view('pcview::templates.news', $news, $this->PlusData)->render();
 
         return response()->json([
