@@ -7,7 +7,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 <div class="comment_item" id="comment{{$comment['id']}}">
     <dl class="clearfix">
         <dt>
-            <img src="{{$comment['user']['avatar']}}" width="50">
+            <img src="{{ $comment['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50">
         </dt>
         <dd>
             <span class="reply_name">{{$comment['user']['name']}}</span>
