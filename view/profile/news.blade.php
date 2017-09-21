@@ -21,6 +21,8 @@
             <a class="active" href="javascript:;" cid="0">已发布</a>
             <a href="javascript:;" cid="1">投稿中</a>
             <a href="javascript:;" cid="3">被驳回</a>
+        @else
+            <a class="active" href="javascript:;">TA的文章</a>
         @endif
         </div>
             <div id="feeds_list" class="feed_box"></div>

@@ -765,6 +765,9 @@ var comment = {
             case 'feeds':
                 url = '/api/v2/feeds/' + obj.commentable_id + '/comments/' + obj.id;
                 break;
+            case 'news':
+                url = '/api/v2/news/' + obj.commentable_id + '/comments/' + obj.id;
+                break;
         }
         $.ajax({
             url: url,
@@ -1099,7 +1102,7 @@ $(function() {
         });
     }
 
-    // 置顶弹窗操作    
+    // 置顶弹窗操作
     $('body').on('click', '.pinned_item span', function() {
         $(this).siblings().removeClass('current');
         $(this).addClass('current');
