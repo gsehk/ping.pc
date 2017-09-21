@@ -25,7 +25,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:;" onclick="comment.delete({{$comment['id']}}, {{$comment['commentable_id']}});">
+                                <a href="javascript:;" onclick="comment.delete({{$comment}});">
                                     <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
                                 </a>
                             </li>

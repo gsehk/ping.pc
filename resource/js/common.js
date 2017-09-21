@@ -676,6 +676,120 @@ var rewarded = {
             }
         });
     }
+}
+
+var comment = {
+    support: {
+        count: 0,
+        row_id: 0,
+        to_uid: 0,
+        to_uname: '',
+        position: 0,
+        editor: {},
+        button: {},
+        wordcount: 255,
+    },
+    // 初始化回复操作
+    reply: function(obj) {
+        this.support.to_uid = obj.user_id;
+        this.support.to_uname = obj.user.name;
+        this.support.row_id = obj.commentable_id;
+        this.support.editor = $('#J-editor'+this.support.row_id);
+        this.support.editor.val('回复@'+this.support.to_uname+'：');
+        this.support.editor.focus();
+    },
+
+    // 列表发表评论
+    publish: function(url, callback) {
+        checkLogin()
+        var _this = this;
+        var formData = { body: this.support.editor.val() };
+        if (!formData.body) {
+            layer.msg('评论内容不能为空');return;
+        }
+        if (this.support.to_uid > 0) {
+            formData.body = formData.body.split('：')[1];
+            formData.reply_user = this.support.to_uid;
+        }
+        this.support.button.text('评论中..');
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(res) {
+                _this.support.button.text('评论');
+                _this.support.editor.val('');
+
+                var info = {
+                    id: res.comment.id,
+                    commentable_id: _this.support.row_id,
+                };
+
+                if (_this.support.position) {
+                var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
+                    html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
+                    // html +=     '<a class="del_comment" onclick="weibo.delComment('+info+');">删除</a>';
+                    html += '</p>';
+                } else {
+                var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
+                    html += '    <dl class="clearfix">';
+                    html += '        <dt>';
+                    html += '            <img src="'+AVATAR+'" width="50">';
+                    html += '        </dt>';
+                    html += '        <dd>';
+                    html += '            <span class="reply_name">'+NAME+'</span>';
+                    html += '            <div class="reply_tool">';
+                    html += '                <span class="reply_time">刚刚</span>';
+                    html += '                <span class="reply_action"><i class="icon iconfont icon-gengduo-copy"></i></span>';
+                    html += '            </div>';
+                    html += '            <div class="replay_body">'+formData.body+'</div>';
+                    html += '        </dd>';
+                    html += '    </dl>';
+                    html += '</div>';
+                }
+
+                $('#J-commentbox'+_this.support.row_id).prepend(html);
+
+                callback(res);
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+                _this.support.button.text('评论');
+            }
+        });
+    },
+    delete: function(obj) {
+        var url = '';
+        switch (obj.commentable_type) {
+            case 'feeds':
+                url = '/api/v2/feeds/' + obj.commentable_id + '/comments/' + obj.id;
+                break;
+        }
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            dataType: 'json',
+            success: function(res) {
+                $('#comment' + obj.id).fadeOut();
+                $('.cs' + obj.commentable_id).text(parseInt($('.cs' + obj.commentable_id).text())-1);
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        });
+    },
+    pinneds: function (obj){
+        var url = '';
+        if (obj.commentable_type == 'feeds') {
+            url = '/api/v2/feeds/'+obj.commentable_id+'/comments/'+obj.id+'/pinneds';
+            pinneds(url);
+        }
+        if (obj.commentable_type == 'news') {
+            url = '/api/v2/news/'+obj.commentable_id+'/comments/'+obj.id+'/pinneds';
+            pinneds(url);
+        }
+    }
 };
 
 /**
@@ -712,6 +826,8 @@ var pinneds = function (url) {
         });
     });
 }
+
+
 // 存入搜索记录
 var setHistory = function(str) {
     if (localStorage.history) {
@@ -796,7 +912,7 @@ $(function() {
     })
 
     // 评论操作菜单
-    $('#feeds_list, #comment_box, #news_toolbar').on('click', '.options', function() {
+    $('#feeds_list, .J-commentbox, #news_toolbar').on('click', '.options', function() {
         if ($(this).next('.options_div').css('display') == 'none') {
             $('.options_div').hide();
             $(this).next('.options_div').show();

@@ -146,11 +146,11 @@
 
                 {{-- 评论  --}}
                 <div class="detail_comment">
-                    <div class="comment_title"><span class="comment_count">{{$news->comment_count}}</span>人评论</div>
+                    <div class="comment_title"><span class="comment_count cs{{$news->id}}">{{$news->comment_count}}</span>人评论</div>
                     <div class="comment_box">
                         <textarea
                             class="comment_editor"
-                            id="mini_editor"
+                            id="J-editor{{$news->id}}"
                             placeholder="说点什么吧"
                             onkeyup="checkNums(this, 255, 'nums');"
                         ></textarea>
@@ -158,14 +158,12 @@
                             <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
                             <button
                                 class="btn btn-primary"
-                                id="J-comment-news"
-                                row_id="{{$news->id}}"
-                                to_uid="0"
-                                onclick="comment.publish(this)"
+                                id="J-button{{$news->id}}"
+                                onclick="news.addComment({{$news->id}}, 0)"
                             > 评 论 </button>
                         </div>
                     </div>
-                    <div class="comment_list" id="comment_box">
+                    <div class="comment_list J-commentbox" id="J-commentbox{{$news->id}}">
 
                     </div>
                 </div>
@@ -199,9 +197,9 @@ $(function(){
 
     setTimeout(function() {
         scroll.init({
-            container: '#comment_box',
+            container: '.J-commentbox',
             loading: '.detail_comment',
-            url: '/news/'+{{$news->id}}+'/comments'
+            url: '/news/{{$news->id}}/comments'
         });
     }, 300);
 

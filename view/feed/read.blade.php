@@ -94,11 +94,11 @@
                 </div>
             </div>
             <div class="detail_comment">
-                <div class="comment_title"><span class="comment_count">{{$feed['feed_comment_count']}}</span>人评论</div>
+                <div class="comment_title"><span class="comment_count cs{{$feed->id}}">{{$feed['feed_comment_count']}}</span>人评论</div>
                 <div class="comment_box">
                     <textarea
                         class="comment_editor"
-                        id="mini_editor"
+                        id="J-editor{{$feed->id}}"
                         placeholder="说点什么吧"
                         onkeyup="checkNums(this, 255, 'nums');"
                     ></textarea>
@@ -106,14 +106,12 @@
                         <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
                         <button
                             class="btn btn-primary"
-                            id="J-comment-feed"
-                            row_id="{{$feed->id}}"
-                            to_uid="0"
-                            onclick="comment.publish(this)"
+                            id="J-button{{$feed->id}}"
+                            onclick="weibo.addComment({{$feed->id}}, 0)"
                         > 评 论 </button>
                     </div>
                 </div>
-                <div class="comment_list" id="comment_box">
+                <div class="comment_list J-commentbox" id="J-commentbox{{$feed->id}}">
 
                 </div>
             </div>
@@ -161,7 +159,7 @@ layer.photos({
 
 setTimeout(function() {
     scroll.init({
-        container: '#comment_box',
+        container: '.J-commentbox',
         loading: '.feed_left',
         url: '/feeds/{{$feed->id}}/comments' ,
         canload: true

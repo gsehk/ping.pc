@@ -192,164 +192,22 @@ weibo.denounce = function(obj) {
         layer.close(index);
     });
 };
+//微博申请置顶
 weibo.pinneds = function (feed_id) {
     var url = '/api/v2/feeds/'+feed_id+'/pinneds';
     pinneds(url);
 };
-
-/**
- * 核心评论对象
- */
-var comment = {
-    // 初始化回复操作
-    initReply: function(obj) {
-        var attrs = urlToObject($(obj).data('args'));
-        $('.J-comment-feed' + attrs.row_id).attr('to_uid', attrs.to_uid);
-        var editor = $('#comment_box' + attrs.row_id).find('textarea');
-        var html = '回复@' + attrs.to_uname + ' ：';
-        //清空输入框
-        editor.val('');
-        editor.val(html);
-        editor.focus();
-    },
-    // 初始化回复操作
-    reply: function(obj) {
-        $('#J-comment-feed').attr('to_uid', obj.user_id);
-        var editor = $('#mini_editor');
-        var html = '回复@' + obj.user.name + ' ：';
-        //清空输入框
-        editor.val('');
-        editor.val(html);
-        editor.focus();
-    },
-
-    // 列表发表评论
-    publishs: function(obj) {
-        checkLogin()
-
-        var to_uid = $(obj).attr('to_uid') || 0;
-        var rowid = $(obj).attr('row_id') || 0;
-        var editor = $('#comment_box'+rowid).find('textarea');
-
-        var formData = { body: editor.val() };
-        if (!editor.val()) {
-            layer.msg('评论内容不能为空');return;
-        }
-        if (to_uid > 0) {
-            formData.reply_user = to_uid;
-        }
-        var url = '/api/v2/feeds/' + rowid + '/comments';
-        obj.innerHTML = '评论中..';
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(res) {
-                if (obj != undefined) {
-                    obj.innerHTML = '评论';
-                    $('.nums').text(initNums);
-                    $('.cs'+rowid).text(parseInt($('.cs'+rowid).text())+1);
-                    editor.val('');
-                }
-                var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
-                    html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
-                    html +=     '<a class="del_comment" onclick="comment.delete('+res.comment.id+', '+rowid+');">删除</a>';
-                    html += '</p>';
-
-                $('#comment-list'+rowid).prepend(html);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-                obj.innerHTML = '评论';
-            }
-        });
-    },
-    // 详情发表评论
-    publish: function(obj) {
-        checkLogin()
-
-        var to_uid = $(obj).attr('to_uid') || 0;
-        var rowid = $(obj).attr('row_id') || 0;
-        var editor = $('#mini_editor');
-
-        var formData = { body: editor.val() };
-        if (!editor.val()) {
-            layer.msg('评论内容不能为空');return;
-        }
-        if (to_uid > 0) {
-            formData.reply_user = to_uid;
-        }
-        var url = '/api/v2/feeds/'+rowid+'/comments';
-        obj.innerHTML = '评论中..';
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(res, data, xml) {
-                if (obj != undefined) {
-                    obj.innerHTML = '评论';
-                    $('.nums').text(initNums);
-                    $('#J-comment-feed').attr('to_uid', 0);
-                    editor.val('');
-                }
-                var html  = '<div class="comment_item" id="comment_item_'+res.comment.id+'">';
-                    html += '    <dl class="clearfix">';
-                    html += '        <dt>';
-                    html += '            <img src="'+AVATAR+'" width="50">';
-                    html += '        </dt>';
-                    html += '        <dd>';
-                    html += '            <span class="reply_name">'+NAME+'</span>';
-                    html += '            <div class="reply_tool">';
-                    html += '                <span class="reply_time">刚刚</span>';
-                    html += '                <span class="reply_action"><i class="icon iconfont icon-gengduo-copy"></i></span>';
-                    html += '            </div>';
-                    html += '            <div class="replay_body">'+formData.body+'</div>';
-                    html += '        </dd>';
-                    html += '    </dl>';
-                    html += '</div>';
-
-                $('#comment_box').prepend(html);
-                $('.comment_count').text(parseInt($('.comment_count').text())+1);
-                $('.J-reply-comment').on('click', function() {
-                    comment.initReply();
-                });
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-                obj.innerHTML = '评论';
-            }
-        });
-    },
-    delete: function(comment_id, feed_id) {
-        var url = '/api/v2/feeds/' + feed_id + '/comments/' + comment_id;
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function(res) {
-                $('#comment'+comment_id).fadeOut();
-                if (undefined != typeof($('.cs' + feed_id))) {
-                    $('.cs' + feed_id).text(parseInt($('.cs' + feed_id).text())-1);
-                }
-                if (undefined != typeof($('.comment_count'))) {
-                    $('.comment_count').text(parseInt($('.comment_count').text())-1);
-                }
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
-    },
-    // 评论申请置顶
-    pinneds: function (obj){
-        var url = '';
-        if (obj.commentable_type == 'feeds') {
-            url = '/api/v2/feeds/'+obj.commentable_id+'/comments/'+obj.id+'/pinneds';
-            pinneds(url);
-        }
-    }
+weibo.addComment = function (obj, type) {
+    var row_id = type ? obj.id : obj;
+    var url = '/api/v2/feeds/' + row_id + '/comments';
+    comment.support.row_id = row_id;
+    comment.support.position = type;
+    comment.support.editor = $('#J-editor'+row_id);
+    comment.support.button = $('#J-button'+row_id);
+    comment.publish(url, function(res){
+        $('.nums').text(comment.support.wordcount);
+        $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);
+    });
 };
 
 /**
