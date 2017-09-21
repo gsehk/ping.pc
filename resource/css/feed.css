@@ -459,12 +459,16 @@
 }
 
 .detail_images {
-    background: #ccc;
+    background: #f3f6f7;
+    padding: 10px 0px;
 }
 
 .detail_images img {
-    width: 100%;
+    display: block;
+    max-width: 675px;
+    height: auto;
     margin: 0 auto;
+    padding: 10px 0px;
 }
 
 

@@ -30,7 +30,7 @@
             @if($feed->images)
             <div class="detail_images" id="layer-photos-demo">
             @foreach($feed->images as $store)
-            <img data-original="{{ $routes['storage']}}{{$store['file'] }}?w=675&h=380" class="lazy img-responsive"/>
+            <img src="{{ $routes['storage']}}{{$store['file'] }}?w=675&h=380&token={{ Session::get('token') }}"/>
             @endforeach
             </div>
             @endif
