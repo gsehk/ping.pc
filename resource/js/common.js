@@ -797,12 +797,39 @@ var comment = {
  * @param  url
  */
 var pinneds = function (url) {
-    var html =
-        '<div class="apply-pinneds" id="J-pinneds-popups">'+
-            '<p><input class="day" type="number" name="day" placeholder="申请置顶天数" /></p>'+
-            '<p><input class="amount" type="number" name="amount" placeholder="申请置顶金额" /></p>'+
-        '</div>';
-    ly.confirm('申请置顶', html, '', '', function(){
+    var html = '<div class="pinned_box">'
+                    + '<div class="pinned_item">'
+                        + '<input class="pinned_value" type="hidden" value="" name="pinned_days">'
+                        + '<div class="pinned_title">申请置顶</div>'
+                        + '<div class="pinned_text">选择置顶天数</div>'
+                        + '<div class="pinned_options">'
+                            + '<div class="pinned_spans">'
+                                + '<span amount="1">1d</span>'
+                                + '<span amount="5">5d</span>'
+                                + '<span amount="10">10d</span>'
+                            + '</div>'
+                            + '<div class="pinned_input">'
+                                + '<input type="number" placeholder="自定义置顶天数">'
+                            + '</div>'
+                        + '</div>'
+                    + '</div>'
+                    + '<div class="pinned_item">'
+                        + '<input class="pinned_value" type="hidden" value="" name="pinned_money">'
+                        + '<div class="pinned_text">选择置顶金额</div>'
+                        + '<div class="pinned_options">'
+                            + '<div class="pinned_spans">'
+                                + '<span amount="1">¥1</span>'
+                                + '<span amount="5">¥5</span>'
+                                + '<span amount="10">¥10</span>'
+                            + '</div>'
+                            + '<div class="pinned_input">'
+                                + '<input type="number" placeholder="自定义置顶金额">'
+                            + '</div>'
+                        + '</div>'
+                    + '</div>'
+                + '</div>';
+                
+    ly.confirm(html, '', '', function(){
         var data = {
             day: $('#J-pinneds-popups .day').val(),
             amount: $('#J-pinneds-popups .amount').val()
