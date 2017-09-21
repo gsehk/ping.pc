@@ -1896,6 +1896,7 @@ img.load {
 }
 
 .pinned_box .pinned_options .pinned_spans span{
+    cursor: pointer;
     display: inline-block;
     width: 80px;
     box-sizing: border-box;
