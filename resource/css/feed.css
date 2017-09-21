@@ -613,19 +613,17 @@
 .right_about .info .auth_header{
     float: left;
     overflow: hidden;
-    border-radius: 50%;
     width: 60px;
     height: 60px;
-
     line-height: 60px;
     text-align: center;
-
     flex-grow: 0;
     flex-shrink: 0;
 }
 
 .right_about .info .auth_header a,
 .right_about .info .auth_header img{
+    border-radius: 50%;
     display: block;
 }
 
