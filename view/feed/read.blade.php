@@ -18,7 +18,7 @@
         <div class="feed_left">
             <div class="detail_user">
                 <div class="detail_user_header">
-                    <a href="#">
+                    <a href="{{ route('pc:mine', $user['id']) }}">
                         <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" alt="">
                     </a>
                 </div>
@@ -130,7 +130,7 @@
         <div class="right_about">
             <div class="info clearfix">
                 <div class="auth_header">
-                    <a href="#">
+                    <a href="{{ route('pc:mine', $user['id']) }}">
                         <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}?s=50" alt="">
                     </a>
                 </div>
