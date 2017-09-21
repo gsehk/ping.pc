@@ -828,11 +828,11 @@ var pinneds = function (url) {
                         + '</div>'
                     + '</div>'
                 + '</div>';
-                
+
     ly.confirm(html, '', '', function(){
         var data = {
-            day: $('#J-pinneds-popups .day').val(),
-            amount: $('#J-pinneds-popups .amount').val()
+            day: $('input[name="pinned_days"]').val(),
+            amount: $('input[name="pinned_money"]').val()
         };
         if (!data.day || !data.amount) {
             layer.msg('请输入置顶参数');
