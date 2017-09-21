@@ -657,7 +657,7 @@ var rewarded = {
             if (res.length) {
                 var html = '';
                 html += '<div class="reward-popups">';
-                html += '<p class="reward-title ucolor font14">打赏列表<a class="close fr pointer" onclick="ly.close()">×</a></p>';
+                html += '<p class="reward-title ucolor font14">打赏列表</p>';
                 html += '<ul class="reward-list" id="J-reward-list">';
                 for (var i in res) {
                     html +=
