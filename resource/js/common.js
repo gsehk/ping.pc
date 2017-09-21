@@ -698,8 +698,6 @@ var comment = {
         this.support.editor.val('回复@'+this.support.to_uname+'：');
         this.support.editor.focus();
     },
-
-    // 列表发表评论
     publish: function(url, callback) {
         checkLogin()
         var _this = this;
@@ -771,6 +769,9 @@ var comment = {
             case 'group-posts':
                 var group_id = window.location.pathname.split("/")[2];
                 url = '/api/v2/groups/' + group_id + '/posts/' + obj.commentable_id + '/comments/' + obj.id;
+                break;
+            case 'question-answers':
+                url = '/api/v2/question-answers/' + obj.commentable_id + '/comments/' + obj.id;
                 break;
         }
         $.ajax({

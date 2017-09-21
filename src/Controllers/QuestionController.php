@@ -95,8 +95,9 @@ class QuestionController extends BaseController
      */
     public function answer(int $answer)
     {
-        $data['answer'] = createRequest('GET', '/api/v2/question-answers/'.$answer );
-        // dd($data['answer']->toArray());
+        $answer = createRequest('GET', '/api/v2/question-answers/'.$answer );
+        $answer->collect_count =  $answer->collectors->count();
+        $data['answer'] = $answer;
 
         return view('pcview::question.answer', $data, $this->PlusData);
     }
