@@ -52,8 +52,11 @@
                     </div>
                     <div class="account_form_row">
                         <label class="w80 required" for="desc">认证资料</label>
-                        <img class="image" src="{{ $routes['storage'].$info['data']['files'][0] }}">
-                        <img class="image" src="{{ $routes['storage'].$info['data']['files'][0] }}">
+                        @if ($info['data']['files'])
+                            @foreach ($info['data']['files'] as $img)
+                                <img class="image" src="{{ $routes['storage'].$img }}?w=230&h=163">
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 @endif
@@ -95,13 +98,17 @@
                     </div>
                     <div class="account_form_row">
                         <label class="w80 required">认证资料</label>
-                        <a class="a-link" target="_blank" href="{{ $routes['storage'].$info['data']['files'][0] }}"> 点击查看 </a>
+                        @if ($info['data']['files'])
+                            @foreach ($info['data']['files'] as $img)
+                                <img class="image" src="{{ $routes['storage'].$img }}?w=230&h=163">
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 @endif
             </div>
         </div>
     </div>
-    
+
 </div>
 @endsection
