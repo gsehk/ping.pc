@@ -9,7 +9,7 @@
                         <a href="{{ route('pc:mine', ['user_id'=>$postv['id']]) }}">{{$postv['name']}}</a>
                     </div>
                     @if($tabName !== '')
-                        <div class="fans_span3">{{$postv['extra']['count']}}</div>
+                        <div class="fans_span3">{{$postv['extra']['count'] or 0}}</div>
                     @endif
                 @endif
             </li>
