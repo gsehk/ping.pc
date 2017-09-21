@@ -28,7 +28,9 @@
             @include('pcview::widgets.markdown', ['height'=>'400px', 'width' => '100%', 'content'=>$content ?? ''])
         </div>
         <div class="question-form-row">
-            <input type="checkbox" name="anonymity" id="anonymity"><span class="question-anonymity">启动匿名</span>
+
+            <input id="anonymity" name="anonymity" type="checkbox" class="input-checkbox"/>
+            <label for="anonymity">启动匿名</label>
         </div>
         <div class="question-next"><button id="question-next">下一步</button></div>
     </div>
@@ -45,11 +47,26 @@
                 <li>10.00</li>
             </ul>
             <input type="text" class="custom-money" id="amount" placeholder="自定义悬赏金额">
+            <input type="hidden" id="amount-hide" name="amount">
         </div>
         <div class="reward-row">
             <div class="invitation-notice">
-                <div class="reward-notice test-img">悬赏邀请</div>
-                <span>邀请答题人，设置围观等</span>
+                {{--<div class="reward-notice">悬赏邀请</div>--}}
+                {{--<span>--}}
+                    {{--<input id="reward" name="reward" type="checkbox" class="input-checkbox"/>--}}
+                {{--<label for="reward">邀请答题人，设置围观等</label>--}}
+                {{--</span>--}}
+
+
+                <div class="reward-notice">悬赏邀请</div>
+                <span>
+                    <input id="rewardyes" name="reward" type="radio" value="1" class="input-radio"/>
+                    <label for="rewardyes">是</label>
+                </span>
+                <span>
+                    <input id="rewardno" name="reward" type="radio" value="0" checked="checked" class="input-radio"/>
+                    <label for="rewardno">否</label>
+                </span>
             </div>
             <div class="invitation-con">
                 <dl>
@@ -61,8 +78,14 @@
                 <dl>
                     <dt>是否开启围观</dt>
                     <dd>
-                        <input type="radio" name="look" value="1" checked="checked">是
-                        <input type="radio" name="look" value="0" checked="checked">否
+                        <span>
+                            <input id="lookyes" name="look" type="radio" value="1" class="input-radio"/>
+                             <label for="lookyes">是</label>
+                        </span>
+                        <span>
+                            <input id="lookno" name="look" type="radio" value="0" checked="checked" class="input-radio"/>
+                             <label for="lookno">否</label>
+                        </span>
                     </dd>
                 </dl>
             </div>
@@ -214,18 +237,31 @@
             }else{
                 $(this).siblings().removeClass('select-amount');
                 $(this).addClass('select-amount');
-                $('#amount').val($(this).text());
+                $("#amount-hide").val($(this).text());
+                $('#amount').val('');
             }
 
         });
-
-        // 邀请专家
-        $('.test-img').on('click', function () {
-            //background-image: url(../images/arrow_news_down.png);
-
-
-            $('.invitation-con').toggle();
+        $('#amount').focus(function () {
+            $('.select-amount').removeClass('select-amount');
         });
+
+        // 是否开启悬赏邀请
+        $('#rewardno').on('click', function () {
+            $('.invitation-con').hide('fast');
+        });
+        $('#rewardyes').on('click', function () {
+            $('.invitation-con').show('fast');
+        });
+        $('#reward').on('click', function () {
+            if ($("input[type='checkbox'][name='reward']:checked").val() == 'on') {
+                $('.invitation-con').show('fast');
+            } else {
+                $('.invitation-con').hide('fast');
+            }
+        });
+
+        // 添加邀请人
         $('#invitation-add').on('click', function () {
             ly.load('/question/users', '', '480px', '550px', 'GET',
                 {'topics' : args.topics
@@ -233,7 +269,7 @@
         });
         // 发布问题
         $('#question-submit').on('click', function () {
-            args.amount = parseInt($('#amount').val()) || 0;
+            args.amount = parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0;
             args.look = $("input[type='radio'][name='look']:checked").val();
             var topic = [];
             for (var key in args.topics) {
