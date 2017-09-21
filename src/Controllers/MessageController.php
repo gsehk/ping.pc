@@ -153,7 +153,7 @@ class MessageController extends BaseController
         $after = $request->input('after') ?: 0;
         $limit = $request->input('limit') ?: 10;
         $data['comments'] = createRequest('GET', '/api/v2/news/comments/pinneds', ['after' => $after, 'limit' => $limit]);
-        
+
         $return = view('pcview::message.feedcomment_top', $data, $this->PlusData)->render();
 
         return response()->json([

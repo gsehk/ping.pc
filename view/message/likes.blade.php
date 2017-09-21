@@ -5,7 +5,7 @@
 @if (!$likes->isEmpty())
     @foreach($likes as $like)
         <dl class="message-one">
-            <dt><img src="{{$like['user']['avatar']}}"></dt>
+            <dt><img src="{{$like['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=40}}"></dt>
             <dd>
                 <div class="one-title"><a href="/profile/{{$like['user']['id']}}">{{$like['user']['name']}}</a>{{$like['source_type']}}</div>
                 <div class="one-date">{{ getTime($like['created_at']) }}</div>
