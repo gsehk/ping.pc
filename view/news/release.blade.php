@@ -254,13 +254,14 @@
         // 资讯分类点击
         $('.release_cates span').on('click', function(e){
             if ($(this).hasClass('current')) {
+                $('#cate_id').val('');
                 $(this).removeClass('current');
             }else{
                 $(this).siblings().removeClass('current');
                 $(this).addClass('current');
+                var cid  = $(this).data('cid');
+                $('#cate_id').val(cid);
             }
-            var cid  = $(this).data('cid');
-            $('#cate_id').val(cid);
         });
     </script>
 @endsection

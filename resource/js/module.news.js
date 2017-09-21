@@ -12,6 +12,7 @@ $('.subject-submit').on('click', function() {
         'cate_id': $('#cate_id').val(),
         'news_id': $('#news_id').val() || 0
     };
+
     var tags = [];
     $('#J-select-tags li').each(function(index){
         tags.push($(this).data('id'));
@@ -38,10 +39,15 @@ $('.subject-submit').on('click', function() {
         noticebox('请选择标签', 0);
         return false;
     }
-    if (!args.image || args.image == 0) {
-        noticebox('请上传封面图片', 0);
-        return false;
-    }
+    // if (!args.image || args.image == 0) {
+    //     /*var reg = /\@\!\[\]\((\w+)\)/;
+    //     var imgs = reg.exec(args.content);
+    //     if (imgs != null) {
+    //         args.image = imgs[1];
+    //     }*/
+    //     noticebox('请上传封面图片', 0);
+    //     return false;
+    // }
 
     if (notice.contribute.length > 0) {
         var isVerified = $.inArray("verified", notice.contribute);

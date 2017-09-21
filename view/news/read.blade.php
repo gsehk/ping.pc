@@ -24,7 +24,7 @@
 
                 <div class="detail_info feed_datas" id="news_toolbar">
                     <a href="javascript:;" class="cates_span">{{ $news['category']['name'] or '默认' }}</a>
-                    <span>{{ $news['from'] }}  ·  {{ $news['hits'] }}浏览  ·  {{ getTime($news['created_at']) }}</span>
+                    <span>{{ $news['from'] ?: $news['user']['name'] }}  ·  {{ $news['hits'] }}浏览  ·  {{ getTime($news['created_at']) }}</span>
                     <span class="options">
                         <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                     </span>
