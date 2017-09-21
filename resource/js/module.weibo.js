@@ -405,8 +405,8 @@ $(function() {
     });
 
     // 付费图片弹窗
-    $('#feeds_list').on('click', '.feed_image_pay', function() {
-        checkLogin()
+    $('#feeds_list, .detail_images').on('click', '.feed_image_pay', function() {
+        checkLogin();
 
         var _this = $(this);
         var amount = _this.data('amount');

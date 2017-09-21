@@ -4,6 +4,7 @@
 
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -30,7 +31,14 @@
             @if($feed->images)
             <div class="detail_images" id="layer-photos-demo">
             @foreach($feed->images as $store)
-            <img src="{{ $routes['storage']}}{{$store['file'] }}?w=675&h=380&token={{ Session::get('token') }}"/>
+                @if (isset($store['paid']) && $store['paid'] == false)
+                    <div class="locked_image" style="position:relative">
+                        <img src="{{ $routes['resource'] }}/images/pic_locked.png" class="feed_image_pay" data-node="{{ $store['paid_node'] }}" data-amount="{{ $store['amount'] }}" data-file="{{ $store['file'] }}" data-original="{{ getImageUrl($store, '', '', false) }}"/>
+                        <svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>
+                    </div>
+                @else
+                <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy"/>
+                @endif
             @endforeach
             </div>
             @endif
@@ -149,33 +157,31 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/layer/layer.js') }}"></script>
 <script type="text/javascript">
-layer.photos({
-  photos: '#layer-photos-demo'
-  ,anim: 5
-  ,move: false
-});
-
-setTimeout(function() {
-    scroll.init({
-        container: '.J-commentbox',
-        loading: '.feed_left',
-        url: '/feeds/{{$feed->id}}/comments' ,
-        canload: true
+    layer.photos({
+      photos: '#layer-photos-demo'
+      ,anim: 5
+      ,move: false
+      ,img: '.per_image'
     });
-}, 300);
 
-$(document).ready(function(){
-    $("img.lazy").lazyload({effect: "fadeIn"});
-    bdshare.addConfig('share', {
-        "tag" : "share_feedlist",
-        'bdText' : '{{$feed['share_desc']}}',
-        'bdDesc' : '{{$feed['share_desc']}}',
-        'bdUrl' : window.location.href
+    setTimeout(function() {
+        scroll.init({
+            container: '.J-commentbox',
+            loading: '.feed_left',
+            url: '/feeds/{{$feed->id}}/comments' ,
+            canload: true
+        });
+    }, 300);
+
+    $(document).ready(function(){
+        $("img.lazy").lazyload({effect: "fadeIn"});
+        bdshare.addConfig('share', {
+            "tag" : "share_feedlist",
+            'bdText' : '{{$feed['share_desc']}}',
+            'bdDesc' : '{{$feed['share_desc']}}',
+            'bdUrl' : window.location.href
+        });
     });
-});
-
-
 </script>
 @endsection

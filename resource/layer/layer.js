@@ -740,11 +740,13 @@ function(e, t) {
                     p.find(t.img).each(function(e) {
                         var t = i(this);
                         var url = t.attr("layer-src") || t.attr("data-original") || t.attr("src");
+                        // 付费图片添加token
+                        var src = url.split('?')[0] + '?token=' + getParams(url, 'token');
                         t.attr("layer-index", e),
                         u.push({
                             alt: t.attr("alt"),
                             pid: t.attr("layer-pid"),
-                            src: url.split('?')[0],
+                            src: src,
                             thumb: t.attr("data-original")
                         })
                     })

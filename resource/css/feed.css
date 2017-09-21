@@ -460,15 +460,13 @@
 
 .detail_images {
     background: #f3f6f7;
-    padding: 10px 0px;
+    position: relative;
 }
 
 .detail_images img {
     display: block;
     max-width: 675px;
     height: auto;
-    margin: 0 auto;
-    padding: 10px 0px;
 }
 
 

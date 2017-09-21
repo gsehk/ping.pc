@@ -921,6 +921,15 @@ var formatConfirm = function(title, text) {
                 + '</div>';
     return html;
 }
+
+// 获取参数
+var getParams = function(url, key) {
+    var reg = new RegExp("(^|&)"+ key +"=([^&]*)(&|$)");
+    var r = url.match(reg);
+    if(r!=null) return unescape(r[2]);
+    return null;
+}
+
 $(function() {
     //获得用户时区与GMT时区的差值
     if (getCookie('customer_timezone') == '') {
