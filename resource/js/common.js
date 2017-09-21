@@ -768,6 +768,10 @@ var comment = {
             case 'news':
                 url = '/api/v2/news/' + obj.commentable_id + '/comments/' + obj.id;
                 break;
+            case 'group-posts':
+                var group_id = window.location.pathname.split("/")[2];
+                url = '/api/v2/groups/' + group_id + '/posts/' + obj.commentable_id + '/comments/' + obj.id;
+                break;
         }
         $.ajax({
             url: url,

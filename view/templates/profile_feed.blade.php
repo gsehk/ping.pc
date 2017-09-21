@@ -269,7 +269,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
                     <textarea class="comment-editor" id="J-editor{{$post->id}}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
                         <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                        <a class="btn btn-primary fr" id="J-button{{$post->id}}" onclick="profile.addComment({{$post}}, 1, 'feeds')"> 评 论 </a>
+                        <a class="btn btn-primary fr" id="J-button{{$post->id}}" onclick="profile.addComment({{$post->id}}, 1, 'feeds')"> 评 论 </a>
                     </div>
                 </div>
                 <div id="J-commentbox{{ $post->id }}">

@@ -232,8 +232,7 @@ var profile = {
         }
 
     },
-    addComment: function (obj, type, cate) {
-        var row_id = type ? obj.id : obj;
+    addComment: function (row_id, type, cate) {
         var url = '/api/v2/'+cate+'/' + row_id + '/comments';
         comment.support.row_id = row_id;
         comment.support.position = type;

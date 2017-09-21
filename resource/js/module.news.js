@@ -227,8 +227,7 @@ var news = {
         var url = '/api/v2/news/'+news_id+'/pinneds';
         pinneds(url);
     },
-    addComment: function (obj, type) {
-        var row_id = type ? obj.id : obj;
+    addComment: function (row_id, type) {
         var url = '/api/v2/news/' + row_id + '/comments';
         comment.support.row_id = row_id;
         comment.support.position = type;

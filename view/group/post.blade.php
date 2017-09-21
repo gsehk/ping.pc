@@ -73,27 +73,24 @@
                 </div>
             </div>
             <div class="detail_comment">
-                <div class="comment_title"><span class="comment_count">{{$post['comments_count']}}</span>人评论</div>
+                <div class="comment_title"><span class="comment_count cs{{$post->id}}"">{{$post['comments_count']}} </span>人评论</div>
                 <div class="comment_box">
                     <textarea
                             class="comment_editor"
-                            id="mini_editor"
+                            id="J-editor{{$post->id}}"
                             placeholder="说点什么吧"
                             onkeyup="checkNums(this, 255, 'nums');"
                     ></textarea>
                     <div class="comment_tool">
                         <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
                         <button
-                                class="btn btn-primary"
-                                id="J-comment-group"
-                                to_uid="0"
-                                row_id="{{$post->id}}"
-                                group_id="{{$post->group_id}}"
-                                onclick="comment.publish(this)"
+                            class="btn btn-primary"
+                            id="J-button{{$post->id}}"
+                            onclick="post.addComment({{$post->id}}, {{$post->group_id}}, 0)"
                         > 评 论 </button>
                     </div>
                 </div>
-                <div class="comment_list" id="comment_box" data-args="group_id={{$post->group_id}}">
+                <div class="comment_list J-commentbox" id="J-commentbox{{$post->id}}">
 
                 </div>
             </div>
@@ -140,7 +137,7 @@
 
         setTimeout(function() {
             scroll.init({
-                container: '#comment_box',
+                container: '.J-commentbox',
                 loading: '.feed_left',
                 url: '/group/{{$post['group_id']}}/post/{{$post['id']}}/comments' ,
                 canload: true

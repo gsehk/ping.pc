@@ -99,7 +99,17 @@ post.delPost = function(group_id, post_id) {
         });
     });
 };
-
+post.addComment = function (row_id, group_id, type) {
+    var url = '/api/v2/groups/' + group_id + '/posts/' + row_id + '/comments';
+    comment.support.row_id = row_id;
+    comment.support.position = type;
+    comment.support.editor = $('#J-editor'+row_id);
+    comment.support.button = $('#J-button'+row_id);
+    comment.publish(url, function(res){
+        $('.nums').text(comment.support.wordcount);
+        $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);
+    });
+}
 /**
  * 赞核心Js
  * @type {Object}
@@ -181,160 +191,6 @@ var digg={
                 digg.digglock = 0;
             }
         });
-    }
-};
-
-/**
- * 核心评论对象
- */
-var comment = {
-    // 初始化回复操作
-    reply: function(obj) {
-        $('#J-comment-group').attr('to_uid', obj.user_id);
-        var editor = $('#mini_editor');
-        var html = '回复@' + obj.user.name + ' ：';
-        //清空输入框
-        editor.val('');
-        editor.val(html);
-        editor.focus();
-    },
-    // 初始化回复操作
-    initReply: function(obj) {
-        var to_uname = $(obj).attr('to_uname');
-        var to_uid = $(obj).attr('to_uid');
-        var row_id = $(obj).attr('row_id');
-        $('#comment_box'+row_id).find('.J-btn').attr('to_uid', to_uid);
-        var editor = $('#comment_box' + row_id).find('textarea');
-        var html = '回复@' + to_uname + ' ：';
-        //清空输入框
-        editor.val('');
-        editor.val(html);
-        editor.focus();
-    },
-    // 列表发表评论
-    post: function(obj) {
-        checkLogin()
-
-        var to_uid = $(obj).attr('to_uid') || 0;
-        var group_id = $(obj).attr('group_id') || 0;
-        var post_id = $(obj).attr('row_id') || 0;
-        var editor = $('#comment_box' + post_id).find('textarea');
-
-        var formData = {body: editor.val()};
-        if (!editor.val()) {
-            layer.msg('评论内容不能为空');return;
-        }
-        if (to_uid > 0) {
-            formData.reply_user = to_uid;
-        }
-        var url = '/api/v2/groups/' + group_id + '/posts/' + post_id + '/comments';
-        obj.innerHTML = '评论中..';
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(res) {
-                if (obj != undefined) {
-                    obj.innerHTML = '评论';
-                    editor.val('');
-                    $('.nums').text(initNums);
-                    $('.cs' + post_id).text(parseInt($('.cs' + post_id).text())+1);
-                }
-                var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
-                    html +=     '<span class="tcolor">' + NAME + '：</span>' + formData.body + '';
-                    html +=     '<a class="del_comment" onclick="comment.delete('+res.comment.id+', '+post_id+');">删除</a>';
-                    html += '</p>';
-
-                    $('#comment-list'+post_id).prepend(html);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-                obj.innerHTML = '评论';
-            }
-        });
-    },
-    publish: function(obj) {
-        checkLogin()
-        
-        var group_id = $(obj).attr('group_id') || 0;
-        var to_uid = $(obj).attr('to_uid') || 0;
-        var rowid = $(obj).attr('row_id') || 0;
-        var editor = $('#mini_editor');
-
-        var formData = { body: editor.val() };
-        if (!editor.val()) {
-            layer.msg('评论内容不能为空');return;
-        }
-        if (to_uid > 0) {
-            formData.reply_user = to_uid;
-        }
-        var url = '/api/v2/groups/' + group_id + '/posts/' + rowid + '/comments';
-        obj.innerHTML = '评论中..';
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            error: function(xml) {},
-            success: function(res, data, xml) {
-                if (xml.status == 201) {
-                    if (obj != undefined) {
-                        obj.innerHTML = '评论';
-                        $('.nums').text(initNums);
-                        $('#J-comment-group').attr('to_uid', 0);
-                        editor.val('');
-                    }
-                    var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
-                        html += '    <dl class="clearfix">';
-                        html += '        <dt>';
-                        html += '            <img src="'+AVATAR+'" width="50">';
-                        html += '        </dt>';
-                        html += '        <dd>';
-                        html += '            <span class="reply_name">'+NAME+'</span>';
-                        html += '            <div class="reply_tool">';
-                        html += '                <span class="reply_time">刚刚</span>';
-                        html += '                <span class="reply_action"><i class="icon iconfont icon-gengduo-copy"></i></span>';
-                        html += '            </div>';
-                        html += '            <div class="replay_body">'+formData.body+'</div>';
-                        html += '        </dd>';
-                        html += '    </dl>';
-                        html += '</div>';
-
-                    $('#comment_box').prepend(html);
-                    $('.comment_count').text(parseInt($('.comment_count').text()) + 1);
-                } else {
-                    noticebox(res.message, 0);
-                }
-            }
-        });
-    },
-    delete: function(comment_id, post_id) {
-        // 获取group_id
-        var urlString = window.location.pathname;
-        var urlArray = urlString.split("/");
-        var group_id = urlArray[2];
-
-        var url = '/api/v2/groups/' + group_id + '/posts/' + post_id + '/comments/' + comment_id;
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function(res) {
-                $('#comment'+comment_id).fadeOut();
-                $('.cs' + post_id).text(parseInt($('.cs' + post_id).text())-1);
-                if ("undefined" != typeof($('.comment_count'))) {
-                    $('.comment_count').text(parseInt($('.comment_count').text())-1);
-                }
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
-    },
-    pinneds: function() {
-        return;
     }
 };
 

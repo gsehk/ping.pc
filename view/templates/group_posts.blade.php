@@ -1,6 +1,7 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 @endphp
 
 @if(!$posts->isEmpty())
@@ -25,7 +26,7 @@
     <div class="post-title"><a href="{{ route('pc:grouppost', ['group_id' => $post->group_id, 'post_id' => $post->id]) }}">{{$post->title}}</a></div>
 
     <div class="feed_body">
-        <p class="feed_text">{!! $post->content !!}</p>
+        <p class="feed_text">{!! formatContent($post->content) !!}</p>
 
         @if($post->images)
         <div id="layer-photos-demo{{$post->id}}">
@@ -245,8 +246,12 @@
                             </a>
                         @endif
                     </li>
-                    @if(!empty($TS['id']) && $post->user_id == $TS['id'])
-                        <li><a href="javascript:;" onclick="post.delPost('{{$post->group_id}}', '{{$post->id}}');"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除</a></li>
+                    @if($post->user_id == $TS['id'])
+                        <li>
+                            <a href="javascript:;" onclick="post.delPost('{{$post->group_id}}', '{{$post->id}}');">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                            </a>
+                        </li>
                     @endif
                 </ul>
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
@@ -259,27 +264,26 @@
             </div>
             <div class="comment_body" id="comment_box{{$post->id}}">
                 <div class="comment_textarea">
-                    <textarea placeholder="" class="comment-editor" onkeyup="checkNums(this, 255, 'nums');"></textarea>
+                    <textarea class="comment-editor" id="J-editor{{$post->id}}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
                         <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                        <a class="post_button J-btn" onclick="comment.post(this);" to_uid="0" row_id="{{ $post->id }}" group_id="{{$post->group_id}}">评论</a>
+                        <a class="btn btn-primary fr" id="J-button{{$post->id}}" onclick="post.addComment({{$post->id}}, {{$post->group_id}}, 1)"> 评 论 </a>
                     </div>
                 </div>
-
-                <div id="comment-list{{ $post->id }}">
-                @if($post->comments->count())
-                @foreach($post->comments as $cv)
-                <p class="comment_con" id="comment{{$cv->id}}">
-                    <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
-                    @if($cv->user_id != $TS['id'])
-                        <a onclick="comment.initReply(this)" to_uname="{{ $cv->user['name'] }}" to_uid="{{$cv->user_id}}" row_id="{{$post->id}}">回复</a>
+                <div id="J-commentbox{{ $post->id }}">
+                    @if($post->comments->count())
+                        @foreach($post->comments as $cv)
+                            <p class="comment_con" id="comment{{$cv->id}}">
+                                <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                                @if($cv->user_id != $TS['id'])
+                                    <a onclick="comment.reply({{$cv}})">回复</a>
+                                @else
+                                    {{-- <a class="comment_del" onclick="comment.pinneds({{$cv}})">申请置顶</a> --}}
+                                    <a class="comment_del" onclick="comment.delete({{$cv}})">删除</a>
+                                @endif
+                            </p>
+                        @endforeach
                     @endif
-                    @if($cv->user_id == $TS['id'])
-                        <a class="comment_del" onclick="comment.delete({{$cv->id}}, {{$post->id}})">删除</a>
-                    @endif
-                </p>
-                @endforeach
-                @endif
                 </div>
                 @if($post->comments->count() >= 5)
                 <div class="comit_all font12"><a href="{{Route('pc:grouppost', [$post->group_id, $post->id])}}">查看全部评论</a></div>
