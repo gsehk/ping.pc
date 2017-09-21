@@ -64,13 +64,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
             </span>
             <div class="options_div">
                 <ul>
-                    <li id="J-collect{{$post->id}}" rel="0">
+                    <li id="J-collect{{$post->id}}" rel="0" status="{{(int) $post->has_collect}}">
                         @if($post->has_collect)
-                        <a href="javascript:;" onclick="collect.delCollect({{$post->id}});" class="act">
+                        <a href="javascript:;" onclick="collected.init({{$post->id}}, 'feeds', 0);" class="act">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
                         </a>
                         @else
-                        <a href="javascript:;" onclick="collect.addCollect({{$post->id}});">
+                        <a href="javascript:;" onclick="collected.init({{$post->id}}, 'feeds', 0);">
                           <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
                         </a>
                         @endif
