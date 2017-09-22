@@ -4,10 +4,14 @@
 	    <h3 class="qa-title tcolor">{{ $data->subject }}</h3>
 	    <div class="qa-toolbar font14">
 	    @if ($data->anonymity)
-	    	<img class="mr10" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="30">
+	    	<a href="{{ route('pc:mine', $data->user->id) }}">
+            	<img class="round mr10" src="{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="30">
+            </a>
 	    	<span class="tcolor mr10">匿名</span>
 	    @else
-			<img class="mr10" src="{{ $data->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="30">
+			<a href="{{ route('pc:mine', $data->user->id) }}">
+            	<img class="round mr10" src="{{ $data->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="30">
+            </a>
 	        <span class="tcolor mr10">{{ $data->user->name }}</span>·&nbsp;&nbsp;
 	        @if ($data->user->tags)
 		        <span class="gcolor">
