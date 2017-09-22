@@ -15,8 +15,8 @@ class SocialiteController extends BaseController
         $this->config = [
             'weibo' => [
                 'weibo' => [
-                    'client_id'     => '845138498',
-                    'client_secret' => 'a75c65670ea302940b69edbcc1fedb81',
+                    'client_id'     =>  '3690191563',
+                    'client_secret' => '278b2212b43ce359ee27e19dfd230313',
                     'redirect'      => env('APP_URL').'/socialite/weibo/callback',
                 ]
             ],
