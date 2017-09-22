@@ -34,7 +34,7 @@
                     </div>
                 @endforeach
             </div>
-            <p class="font14 tcolor">最多可选5个标签，已选 <font class="mcolor num">{{ $user_tag->count() }}</font> 个</p>
+            <p class="mt20 font14 tcolor">最多可选5个标签，已选 <font class="mcolor num">{{ $user_tag->count() }}</font> 个</p>
             <ul class="selected-box">
                 @foreach ($user_tag as $item)
                     <li class="taged{{$item->id}}" data-id="{{$item->id}}">{{$item->name}}</li>

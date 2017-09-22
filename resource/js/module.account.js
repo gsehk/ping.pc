@@ -14,9 +14,13 @@ $('#J-user-info').on('click', function(e) {
         return args.get();
     };
     var arg = getArgs();
-    if (arg.bio && getLength(args.bio) > 50) {
+    if (!args.bio) {
+        noticebox('个人简介不能为空', 0);
+        return;
+    }
+    if (getLength(args.bio) > 50) {
         noticebox('个人简介不能超过50个字符', 0);
-        return false;
+        return;
     }
     $.ajax({
         url: '/api/v2/user',
