@@ -30,7 +30,7 @@
                     </span>
                     <div class="options_div">
                     <ul>
-                        @if($news->user->id == $TS->id)
+                        @if(isset($TS->id) && $news->user->id == $TS->id)
                             <li>
                                 <a href="javascript:;" onclick="news.pinneds({{$news->id}});">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
@@ -41,7 +41,7 @@
                     <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
                     </div>
                 </div>
-                
+
                 @if($news['subject'])
                     <div class="detail_subject">
                         <img src="{{ asset('zhiyicx/plus-component-pc/images/zixun-left.png') }}"/>
