@@ -6,7 +6,7 @@
                 <a class="title" href="{{Route('pc:groupread', $item->id)}}">{{ $item->title }}</a>
                 <div class="tool">
                     <span>分享 <font class="mcolor">{{ $item->posts_count }}</font></span>
-                    <span>订阅 <font class="mcolor">{{ $item->members_count }}</font></span>
+                    <span>订阅 <font class="mcolor" id="join-count-{{ $item->id }}">{{ $item->members_count }}</font></span>
                 </div>
                 <div class="join">
                     @if ($item->is_member)

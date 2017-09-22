@@ -26,7 +26,7 @@
                         <div class="group-foot">
                             <div class="foot-count">
                                 <span class="count">分享 <font class="mcolor">{{ $group->posts_count }}</font></span>
-                                <span class="count">订阅 <font class="mcolor">{{ $group->members_count }}</font></span>
+                                <span class="count">订阅 <font class="mcolor" id="join-count">{{ $group->members_count }}</font></span>
                             </div>
 
                             @if ($group->is_member)
@@ -90,15 +90,18 @@
             var _this = this;
             var status = $(this).attr('status');
             var group_id = $(this).attr('gid');
+            var joinCount = parseInt($('#join-count').text());
             group(status, group_id, function(){
                 if (status == 1) {
                     $(_this).text('+加入');
                     $(_this).attr('status', 0);
                     $(_this).addClass('add-join');
+                    $('#join-count').text(joinCount - 1);
                 } else {
                     $(_this).text('已加入');
                     $(_this).attr('status', 1);
                     $(_this).removeClass('add-join');
+                    $('#join-count').text(joinCount + 1);
                 }
             });
         });

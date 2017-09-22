@@ -48,15 +48,18 @@ $('#group_box').on('click', '.J-join', function(){
     var _this = this;
     var status = $(this).attr('status');
     var group_id = $(this).attr('gid');
+    var joinCount = parseInt($('#join-count-'+group_id).text());
     group(status, group_id, function(){
         if (status == 1) {
             $(_this).text('+加入');
             $(_this).attr('status', 0);
             $(_this).removeClass('joined');
+            $('#join-count-'+group_id).text(joinCount - 1);
         } else {
             $(_this).text('已加入');
             $(_this).attr('status', 1);
             $(_this).addClass('joined');
+            $('#join-count-'+group_id).text(joinCount + 1);
         }
     });
 });
