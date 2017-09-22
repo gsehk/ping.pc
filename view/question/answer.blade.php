@@ -26,30 +26,30 @@
         <div class="answer-body">{{ $answer->body }}</div>
 
         <div class="detail_share">
-            <span id="collect{{$answer->id}}" rel="{{ $answer->collect_count }}">
+            <span id="J-collect{{ $answer->id }}" rel="{{ $answer->collect_count }}" status="{{(int) $answer->collected}}">
                 @if($answer->collected)
-                    <a href="javascript:;" onclick="collect.delCollect({{$answer->id}}, 'read');" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
-                        <font class="cs">{{ $answer->collect_count }} </font>人收藏
-                    </a>
-                    @else
-                    <a href="javascript:;" onclick="collect.addCollect({{$answer->id}}, 'read')">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
-                        <font class="cs">{{ $answer->collect_count }} </font>人收藏
-                    </a>
+                <a class="act" href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                    <font class="cs">{{ $answer->collect_count }}</font> 人收藏
+                </a>
+                @else
+                <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                    <font class="cs">{{ $answer->collect_count }}</font> 人收藏
+                </a>
                 @endif
             </span>
-            <span id="digg{{$answer->id}}" rel="{{$answer->likes_count}}">
+            <span id="J-likes{{$answer->id}}" rel="{{ $answer->likes_count }}" status="{{(int) $answer->liked}}">
                 @if($answer->liked)
-                    <a href="javascript:;" onclick="digg.delDigg({{$answer->id}}, 'read');" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
-                        <font class="ds">{{ $answer->likes_count }} </font>人喜欢
-                    </a>
-                    @else
-                    <a href="javascript:;" onclick="digg.addDigg({{$answer->id}}, 'read');">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                        <font class="ds">{{ $answer->likes_count }} </font>人喜欢
-                    </a>
+                <a class="act" href="javascript:;" onclick="liked.init({{$answer->id}}, 'question', 0);">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
+                    <font>{{ $answer->likes_count }}</font> 人喜欢
+                </a>
+                @else
+                <a href="javascript:;" onclick="liked.init({{$answer->id}}, 'question', 0);">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                    <font>{{ $answer->likes_count }}</font> 人喜欢
+                </a>
                 @endif
             </span>
             <div class="del_share bdsharebuttonbox share_feedlist clearfix bdshare-button-style0-16" data-tag="share_feedlist" data-bd-bind="1505717855934">

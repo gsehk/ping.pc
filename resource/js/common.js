@@ -905,6 +905,10 @@ var liked = {
                 res.link = '/api/v2/groups/' + group_id + '/posts/' + this.row_id + '/like';
                 res.unlink = res.link;
             break;
+            case 'question':
+                res.link = '/api/v2/question-answers/' + this.row_id + '/likes';
+                res.unlink = res.link;
+            break;
         }
 
         return res;
@@ -991,6 +995,10 @@ var collected = {
             case 'group':
                 var group_id = window.location.pathname.split("/")[2];
                 res.link = '/api/v2/groups/' + group_id + '/posts/' + this.row_id + '/collection';
+                res.unlink = res.link;
+            break;
+            case 'question':
+                res.link = '/api/v2/user/question-answer/collections/' + this.row_id;
                 res.unlink = res.link;
             break;
         }
