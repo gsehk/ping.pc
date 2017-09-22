@@ -41,13 +41,14 @@
                     <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
                     </div>
                 </div>
-
-
-                <div class="detail_subject">
-                    <img src="{{ asset('zhiyicx/plus-component-pc/images/zixun-left.png') }}"/>
-                    <div class="subject_content">{{ $news['subject'] }}</div>
-                    <img src="{{ asset('zhiyicx/plus-component-pc/images/zixun-right.png') }}" class="right"/>
-                </div>
+                
+                @if($news['subject'])
+                    <div class="detail_subject">
+                        <img src="{{ asset('zhiyicx/plus-component-pc/images/zixun-left.png') }}"/>
+                        <div class="subject_content">{{ $news['subject'] }}</div>
+                        <img src="{{ asset('zhiyicx/plus-component-pc/images/zixun-right.png') }}" class="right"/>
+                    </div>
+                @endif
 
                 <div class="detail_content markdown-body editormd-preview-container">
                 {!! Parsedown::instance()->setMarkupEscaped(true)->text($news->content) !!}

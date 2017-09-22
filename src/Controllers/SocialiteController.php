@@ -15,7 +15,7 @@ class SocialiteController extends BaseController
         $this->config = [
             'weibo' => [
                 'weibo' => [
-                    'client_id'     =>  '3690191563',
+                    'client_id'     => '3690191563',
                     'client_secret' => '278b2212b43ce359ee27e19dfd230313',
                     'redirect'      => env('APP_URL').'/socialite/weibo/callback',
                 ]
@@ -29,8 +29,8 @@ class SocialiteController extends BaseController
             ],
             'wechat' => [
                'wechat' => [
-                   'client_id'     => '',
-                   'client_secret' => '',
+                   'client_id'     => 'wx183dc69dabad5f29',
+                   'client_secret' => '1aee4dd5b6708e67d5e4d2ffa5d37a13',
                    'redirect'      => env('APP_URL').'/socialite/wechat/callback',
                ]
             ],
