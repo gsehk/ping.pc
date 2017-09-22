@@ -12,7 +12,6 @@ $('.subject-submit').on('click', function() {
         'cate_id': $('#cate_id').val(),
         'news_id': $('#news_id').val() || 0
     };
-
     var tags = [];
     $('#J-select-tags li').each(function(index){
         tags.push($(this).data('id'));
@@ -23,31 +22,34 @@ $('.subject-submit').on('click', function() {
         noticebox('文章标题不合法', 0);
         return false;
     }
-    if (!args.subject) {
-        noticebox('文章摘要不合法', 0);
-        return false;
-    }
     if (args.cate_id == '') {
         noticebox('请选择分类', 0);
+        return false;
+    }
+    if (getLength(args.subject) > 10) {
+        noticebox('摘要内容不能超过200字', 0);
         return false;
     }
     if (!args.content || getLength(args.content) > 5000) {
         noticebox('文章内容不合法', 0);
         return false;
     }
+    if (!args.subject) { // 如果没有摘要，则截取内容前200字作为摘要
+        args.subject = subString(editor.getHTML().replace(/<.*?>/ig,""), 200)
+    }
     if (args.tags.length < 1) {
         noticebox('请选择标签', 0);
         return false;
     }
-    // if (!args.image || args.image == 0) {
-    //     /*var reg = /\@\!\[\]\((\w+)\)/;
-    //     var imgs = reg.exec(args.content);
-    //     if (imgs != null) {
-    //         args.image = imgs[1];
-    //     }*/
-    //     noticebox('请上传封面图片', 0);
-    //     return false;
-    // }
+    if (!args.image || args.image == 0) {
+        /*var reg = /\@\!\[\]\((\w+)\)/;
+        var imgs = reg.exec(args.content);
+        if (imgs != null) {
+            args.image = imgs[1];
+        }*/
+        noticebox('请上传封面图片', 0);
+        return false;
+    }
 
     if (notice.contribute.length > 0) {
         var isVerified = $.inArray("verified", notice.contribute);
@@ -117,3 +119,25 @@ var news = {
         });
     }
 };
+
+function subString(str, len, hasDot) {
+    hasDot = hasDot ? hasDot : false;
+    var newLength = 0;
+    var newStr = "";
+    var chineseRegex = /[^\x00-\xff]/g;
+    var singleChar = "";
+    var strLength = str.replace(chineseRegex, "**").length;
+    for (var i = 0; i < strLength; i++) {
+        singleChar = str.charAt(i).toString();
+        newLength++;
+        if (newLength > len) {
+            break;
+        }
+        newStr += singleChar;
+    }
+
+    if (hasDot && strLength > len) {
+        newStr += "...";
+    }
+    return newStr;
+}
