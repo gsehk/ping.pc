@@ -18,7 +18,7 @@ class NewsController extends BaseController
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function index(Request $request, int $cate_id = 0)
+    public function index(Request $request)
     {
         $this->PlusData['current'] = 'news';
 
@@ -26,7 +26,7 @@ class NewsController extends BaseController
         $cates = createRequest('GET', '/api/v2/news/cates');
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
 
-        $data['cate_id'] = $cate_id;
+        $data['cate_id'] = $request->query('cate_id') ?: 0;
 
         return view('pcview::news.index', $data, $this->PlusData);
     }

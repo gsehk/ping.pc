@@ -134,7 +134,7 @@
                               </a>
                               <p>{{ $rel['subject'] }}</p>
                               <div class="news_bm">
-                                   <a href="javascript:;" class="cates_span">{{ $rel['category']['name'] or '默认'}}</a>
+                                   <a href="{{ route('pc:news', ['cate_id' => $rel['category']['id']]) }}" class="cates_span">{{ $rel['category']['name'] or '默认'}}</a>
                                    <span>{{ $rel['from'] }}  ·  {{ $rel['hits'] }}浏览  ·  {{ getTime($rel['created_at']) }}</span>
                               </div>
                          </div>
