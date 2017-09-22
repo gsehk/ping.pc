@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="detail_share">
-                    <span id="collect{{ $news->id }}" rel="{{ $news->collect_count }}">
+                    {{-- <span id="collect{{ $news->id }}" rel="{{ $news->collect_count }}">
                         @if(!$news->has_collect)
                         <a href="javascript:;" onclick="collect.addCollect('{{ $news->id }}')">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
@@ -66,17 +66,30 @@
                             <font class="cs">{{ $news->collect_count }}</font>收藏
                         </a>
                         @endif
-                    </span>
-                    <span id="digg{{ $news->id }}" rel="{{ $news->digg_count }}">
-                        @if(!$news->has_like)
-                        <a href="javascript:;" onclick="digg.addDigg('{{ $news->id }}');">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                            <font class="ds">{{ $news->digg_count }}</font>人喜欢
+                    </span> --}}
+                    <span id="J-collect{{ $news->id }}" rel="{{ $news->collect_count }}" status="{{(int) $news->has_collect}}">
+                        @if($news->has_collect)
+                        <a class="act" href="javascript:;" onclick="collected.init({{$news->id}}, 'news', 0);" class="act">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                            <font class="cs">{{ $news->collect_count }}</font> 人收藏
                         </a>
                         @else
-                        <a href="javascript:;" onclick="digg.delDigg('{{ $news->id }}');" class="act">
+                        <a href="javascript:;" onclick="collected.init({{$news->id}}, 'news', 0);">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                            <font class="cs">{{ $news->collect_count }}</font> 人收藏
+                        </a>
+                        @endif
+                    </span>
+                    <span class="digg" id="J-likes{{$news->id}}" rel="{{$news->digg_count}}" status="{{(int) $news->has_like}}">
+                        @if($news->has_like)
+                        <a class="act" href="javascript:void(0)" onclick="liked.init({{$news->id}}, 'news', 0)">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
-                            <font class="ds">{{ $news->digg_count }}</font>人喜欢
+                            <font>{{$news->digg_count}}</font> 人喜欢
+                        </a>
+                        @else
+                        <a href="javascript:;" onclick="liked.init({{$news->id}}, 'news', 0)">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                            <font>{{$news->digg_count}}</font> 人喜欢
                         </a>
                         @endif
                     </span>
