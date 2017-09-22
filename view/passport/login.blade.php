@@ -39,7 +39,7 @@
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qq"></use>
                     </svg>
                 </a>
-                <a href="{{route('pc:socialite', 'weixin')}}">
+                <a href="{{route('pc:socialite', 'wechat')}}">
                     <svg class="icon icon_weixin" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weixin"></use>
                     </svg>
