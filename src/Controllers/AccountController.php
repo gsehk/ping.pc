@@ -44,6 +44,22 @@ class AccountController extends BaseController
     }
 
     /**
+     * 更新认证信息.
+     *
+     * @return mixed
+     */
+    public function updateAuthenticate()
+    {
+        $this->PlusData['account_cur'] = 'authenticate';
+        $data['info'] = createRequest('GET', '/api/v2/user/certification');
+        if ($data['info']['status'] == 1) {
+            return redirect('/account/authenticate');
+        }
+
+        return view('pcview::account.update_authenticate', $data, $this->PlusData);
+    }
+
+    /**
      * 标签管理.
      *
      * @return mixed
@@ -147,7 +163,7 @@ class AccountController extends BaseController
     public function draw()
     {
         $this->PlusData['account_cur'] = 'wallet';
-        
+
         return view('pcview::account.walletdraw', $this->PlusData);
     }
 

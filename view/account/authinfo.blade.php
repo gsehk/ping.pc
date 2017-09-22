@@ -31,9 +31,17 @@
                         <div class="text">
                             @if ($info->status == 0)待审核 @endif
                             @if ($info->status == 1)通过 @endif
-                            @if ($info->status == 2)拒绝 @endif
+                            @if ($info->status == 2)拒绝
+                                <a class="ml20 mcolor" href="{{ route('pc:update_authenticate') }}">重新认证</a>
+                            @endif
                         </div>
                     </div>
+                    @if ($info->status == 2)
+                        <div class="account_form_row">
+                            <label class="w80 required" for="realName">拒绝原因</label>
+                            <div class="text">{{ $info['data']['reject_content'] }}</div>
+                        </div>
+                    @endif
                     <div class="account_form_row">
                         <label class="w80 required" for="realName">真实姓名</label>
                         <div class="text">{{$info['data']['name']}}</div>
@@ -69,9 +77,17 @@
                         <div>
                             @if ($info->status == 0)待审核 @endif
                             @if ($info->status == 1)通过 @endif
-                            @if ($info->status == 2)拒绝 @endif
+                            @if ($info->status == 2)拒绝
+                                <a class="ml20 mcolor" href="{{ route('pc:update_authenticate') }}">重新认证</a>
+                            @endif
                         </div>
                     </div>
+                    @if ($info->status == 2)
+                        <div class="account_form_row">
+                            <label class="w80 required" for="realName">拒绝原因</label>
+                            <div class="text">{{ $info['data']['reject_content'] }}</div>
+                        </div>
+                    @endif
                     <div class="account_form_row">
                         <label class="w80 required">机构名称</label>
                         <div>{{$info['data']['org_name']}}</div>

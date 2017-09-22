@@ -71,6 +71,9 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // 认证
     Route::get('/authenticate', 'AccountController@authenticate')->name('pc:authenticate');
 
+    //更新认证信息
+    Route::get('update/authenticate', 'AccountController@updateAuthenticate')->name('pc:update_authenticate');
+
     // 提交认证
     Route::post('/authenticate', 'AccountController@doAuthenticate');
 
