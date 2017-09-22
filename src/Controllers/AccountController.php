@@ -182,11 +182,13 @@ class AccountController extends BaseController
         return view('pcview::account.binds', $data, $this->PlusData);
     }
 
-    public function success(Request $request)
+    public function successCon(Request $request)
     {
+        $data['status'] = $request->query('status');
         $data['message'] = $request->query('message');
         $data['content'] = $request->query('content');
         $data['url'] = $request->query('url');
+        $data['time'] = $request->query('time');
 
         return view('pcview::templates.success', $data, $this->PlusData);
     }

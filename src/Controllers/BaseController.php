@@ -69,5 +69,17 @@ class BaseController extends Controller
     		return $next($request);
     	});
     }
+
+    public function success($url, $message = '', $content = '', $time = 10)
+    {
+
+        return redirect(route('pc:success', ['status' => 1, 'message' => $message, 'content' => $content, 'url' => $url, 'time' => $time]));
+    }
+
+    public function error($url, $message = '', $content = '', $time = 10)
+    {
+
+        return redirect(route('pc:success', ['status' => 0, 'message' => $message, 'content' => $content, 'url' => $url, 'time' => $time]));
+    }
 }
 

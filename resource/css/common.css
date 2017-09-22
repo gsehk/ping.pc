@@ -1940,6 +1940,10 @@ img.load {
     height: 520px;
     position: relative;
 }
+.success>img {
+    width: 200px;
+    margin-top: 60px;
+}
 
 .success .content {
     position: absolute;

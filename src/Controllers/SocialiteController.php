@@ -15,8 +15,8 @@ class SocialiteController extends BaseController
         $this->config = [
             'weibo' => [
                 'weibo' => [
-                    'client_id'     => '3690191563',
-                    'client_secret' => '278b2212b43ce359ee27e19dfd230313',
+                    'client_id'     => '845138498',
+                    'client_secret' => 'a75c65670ea302940b69edbcc1fedb81',
                     'redirect'      => env('APP_URL').'/socialite/weibo/callback',
                 ]
             ],
@@ -86,8 +86,9 @@ class SocialiteController extends BaseController
      * 第三方回调页.
      * @param Request $request
      * @param $service
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View|void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
+
     public function handleProviderCallback(Request $request, $service)
     {
         $config = $this->config[$service] ?: [];
@@ -101,11 +102,9 @@ class SocialiteController extends BaseController
         if ($type == 'bind') {
             $res = createRequest('PATCH', '/api/v2/user/socialite/'.$service, ['access_token' => $access_token]);
 
-            if (isset($res['message']) && $res['message'] = '你已绑定了其他第三方账号') {
-                dd($res['message']);
-            }
-
-            return  redirect(route('pc:success', ['message' => '绑定成功', 'content' => '您的账号已成功绑定！', 'url' => Route('pc:binds')]));
+            return isset($res['message'])
+                ? $this->error(Route('pc:binds'), '绑定失败', $res['message'])
+                : $this->success(Route('pc:binds'), '绑定成功', '您的账号已成功绑定');
 
         } else {
         // 未登录时账号注册/绑定

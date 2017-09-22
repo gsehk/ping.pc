@@ -98,7 +98,7 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // 获取我绑定信息
     Route::get('/binds', 'AccountController@getMyBinds')->name('pc:binds');
 
-    Route::get('/success', 'AccountController@success')->name('pc:success');
+    Route::get('/success', 'AccountController@successCon')->name('pc:success');
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
