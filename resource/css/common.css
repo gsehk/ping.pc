@@ -1943,6 +1943,7 @@ img.load {
 
 .success .content {
     position: absolute;
+    left: 0;
     bottom: 70px;
     width: 100%;
 }
