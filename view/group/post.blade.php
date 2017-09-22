@@ -43,26 +43,30 @@
             </div>
 
             <div class="detail_share">
-                <span id="collect{{ $post['id'] }}" rel="{{ $post->collections }}">
+                <span id="J-collect{{ $post->id }}" rel="{{ $post->collections }}" status="{{(int) $post->has_collection}}">
                     @if($post->has_collection)
-                        <a href="javascript:;" onclick="collect.delCollect('{{ $post['group_id'] }}', '{{ $post['id'] }}', 'read');" class="act">
-                            <svg class="icon"><use xlink:href="#icon-shoucang-copy"></use></svg><font class="cs"> {{ $post->collections }}</font>收藏
-                        </a>
+                    <a class="act" href="javascript:;" onclick="collected.init({{$post->id}}, 'group', 0);">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                        <font class="cs">{{ $post->collections }}</font> 人收藏
+                    </a>
                     @else
-                        <a href="javascript:;" onclick="collect.addCollect('{{ $post['group_id'] }}', '{{ $post['id'] }}', 'read')">
-                            <svg class="icon"><use xlink:href="#icon-shoucang-copy1"></use></svg><font class="cs"> {{ $post->collections }}</font>收藏
-                        </a>
+                    <a href="javascript:;" onclick="collected.init({{$post->id}}, 'group', 0);">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                        <font class="cs">{{ $post->collections }}</font> 人收藏
+                    </a>
                     @endif
                 </span>
-                <span id="digg{{ $post['id'] }}" rel="{{ $post->diggs }}">
+                <span class="digg" id="J-likes{{$post->id}}" rel="{{$post->diggs}}" status="{{(int) $post->has_like}}">
                     @if($post->has_like)
-                        <a href="javascript:;" onclick="digg.delDigg('{{ $post['group_id'] }}', '{{ $post['id'] }}', 'read');" class="act">
-                            <svg class="icon"><use xlink:href="#icon-xihuan-white-copy"></use></svg><font class="ds"> {{ $post->diggs }}</font>人喜欢
-                        </a>
+                    <a class="act" href="javascript:void(0)" onclick="liked.init({{$post->id}}, 'group', 0)">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
+                        <font>{{$post->diggs}}</font> 人喜欢
+                    </a>
                     @else
-                        <a href="javascript:;" onclick="digg.addDigg('{{ $post['group_id'] }}', '{{ $post['id'] }}', 'read');">
-                            <svg class="icon"><use xlink:href="#icon-xihuan-white"></use></svg><font class="ds"> {{ $post->diggs }}</font>人喜欢
-                        </a>
+                    <a href="javascript:;" onclick="liked.init({{$post->id}}, 'group', 0)">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                        <font>{{$post->diggs}}</font> 人喜欢
+                    </a>
                     @endif
                 </span>
                 <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">

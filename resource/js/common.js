@@ -898,7 +898,12 @@ var liked = {
                 break;
             case 'news':
                 res.link = '/api/v2/news/' + this.row_id + '/likes';
-                res.unlink = '/api/v2/news/' + this.row_id + '/likes';
+                res.unlink = res.link;
+            break;
+            case 'group':
+                var group_id = window.location.pathname.split("/")[2];
+                res.link = '/api/v2/groups/' + group_id + '/posts/' + this.row_id + '/like';
+                res.unlink = res.link;
             break;
         }
 
@@ -981,7 +986,12 @@ var collected = {
                 break;
             case 'news':
                 res.link = '/api/v2/news/' + this.row_id + '/collections';
-                res.unlink = '/api/v2/news/' + this.row_id + '/collections';
+                res.unlink = res.link;
+            break;
+            case 'group':
+                var group_id = window.location.pathname.split("/")[2];
+                res.link = '/api/v2/groups/' + group_id + '/posts/' + this.row_id + '/collection';
+                res.unlink = res.link;
             break;
         }
 

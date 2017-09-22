@@ -28,199 +28,21 @@
     <div class="feed_body">
         <p class="feed_text">{!! formatContent($post->content) !!}</p>
 
-        @if($post->images)
-        <div id="layer-photos-demo{{$post->id}}">
-        @if($post->images->count() == 1)
-          @php
-              $size = explode('x', $post->images[0]['size']);
-              $style = $size[0] < $size[1] ? 'max-height:400px;height:auto' : 'max-width:555px;height:auto';
-          @endphp
-            <img class="lazy" style="{{ $style }}" data-original="{{ getImageUrl($post->images[0], 555, 720) }}"/>
-        @elseif($post->images->count() == 2)
-            <div style="width: 100%; display: flex;">
-                <div style="width: 35vw;" class="image_box">
-                      <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[0], 277, 273) }}" />
-                </div>
-                <div style="width: 35vw;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 277, 273) }}" />
-                </div>
-            </div>
-        @elseif($post->images->count() == 3)
-            <div style="width: 100%; display: flex;">
-                <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 184, 180) }}" />
-                </div>
-                <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[1], 184, 180) }}" />
-                </div>
-                <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[2], 184, 180) }}" />
-                </div>
-            </div>
-        @elseif($post->images->count() == 4)
-            <div style="width: 100%; display: flex;">
-                <div style="width: 50%">
-                  <div style="width: 100%;" class="image_box">
-                        <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[0], 277, 273) }}" />
-                  </div>
-                  <div style="width: 100%;" class="image_box">
-                        <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 277, 273) }}" />
-                  </div>
-                </div>
-                <div style="width: 50%">
-                  <div style="width: 100%;" class="image_box">
-                        <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[2], 277, 273) }}" />
-                  </div>
-                  <div style="width: 100%;" class="image_box">
-                        <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 277, 273) }}" />
-                  </div>
-                </div>
-            </div>
-        @elseif($post->images->count() == 5)
-            <div style="width: 100%; display: flex; flex-wrap: wrap;">
-                <div style="width: 66.6666%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 370, 366) }}" />
-                </div>
-                <div style="width: 33.3333%">
-                    <div style="width: 100%; padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image"  data-original="{{ getImageUrl($post->images[1], 185, 183) }}" />
-                    </div>
-                    <div style="width: 100% padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 185, 183) }}" />
-                    </div>
-                </div>
-                <div style="width: 100%; display: flex;">
-                    <div style="width: 35vw;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 277, 273) }}" />
-                    </div>
-                    <div style="width: 35vw;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 277, 273) }}" />
-                    </div>
-                </div>
-            </div>
-        @elseif($post->images->count() == 6)
-            <div style="width: 100%; display: flex; flex-wrap: wrap;">
-                <div style="width: 66.6666%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 370, 366) }}" />
-                </div>
-                <div style="width: 33.3333%">
-                    <div style="width: 100%; padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 185, 183) }}" />
-                    </div>
-                    <div style="width: 100% padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 185, 183) }}" />
-                    </div>
-                </div>
-                <div style="width: 33.3333%;" class="image_box">
-                    <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 185, 183) }}" />
-                </div>
-                <div style="width: 33.3333%;" class="image_box">
-                    <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 185, 183) }}" />
-                </div>
-                <div style="width: 33.3333%;" class="image_box">
-                    <img class="lazy per_image" data-original="{{ getImageUrl($post->images[5], 185, 183) }}" />
-                </div>
-            </div>
-        @elseif($post->images->count() == 7)
-            <div style="width: 100%; display: flex; flex-wrap: wrap;">
-                <div style="width: 50%">
-                    <div style="width: 100%" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 277, 273) }}" />
-                    </div>
-                    <div style="width: 100%" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 277, 273) }}" />
-                    </div>
-                </div>
-                <div style="width: 50%; display: flex; flex-wrap: wrap;">
-                    <div style="width: 50%; padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 138, 135) }}" />
-                    </div>
-                    <div style="width: 50%; padding-bottom: 2px;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 138, 135) }}" />
-                    </div>
-                    <div style="width: 100%;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 277, 273) }}" />
-                    </div>
-                    <div style="width: 50%;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[5], 138, 135) }}" />
-                    </div>
-                    <div style="width: 50%;" class="image_box">
-                      <img class="lazy per_image" data-original="{{ getImageUrl($post->images[6], 138, 135) }}" />
-                    </div>
-                </div>
-            </div>
-        @elseif($post->images->count() == 8)
-            <div style="width: 100%; display: flex; flex-wrap: wrap;">
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 185, 183) }}" />
-                </div>
-                <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 185, 183) }}" />
-                </div>
-                <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 185, 183) }}" />
-                </div>
-                <div style="width: 50%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 277, 273) }}" />
-                </div>
-                <div style="width: 50%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 277, 273) }}" />
-                </div>
-                <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[5], 185, 183) }}" />
-                </div>
-                <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[6], 185, 183) }}" />
-                </div>
-                <div style="width: 33.3333%;" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[7], 185, 183) }}" />
-                </div>
-            </div>
-        @elseif($post->images->count() == 9)
-            <div style="width: 100%; display: flex; flex-wrap: wrap;">
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[0], 185, 181) }}" />
-                </div>
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[1], 185, 181) }}" />
-                </div>
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[2], 185, 181) }}" />
-                </div>
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[3], 185, 181) }}" />
-                </div>
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[4], 185, 181) }}" />
-                </div>
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[5], 185, 181) }}" />
-                </div>
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[6], 185, 181) }}" />
-                </div>
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[7], 185, 181) }}" />
-                </div>
-                <div style="width: 33.3333%" class="image_box">
-                  <img class="lazy per_image" data-original="{{ getImageUrl($post->images[8], 185, 181) }}" />
-                </div>
-            </div>
-        @endif
-        </div>
-        @endif
+        @include('pcview::templates.feed_images')
     </div>
 
     <div class="feed_bottom">
         <div class="feed_datas">
-            <span class="digg" id="digg{{$post->id}}" rel="{{$post->diggs}}">
+            <span class="digg" id="J-likes{{$post->id}}" rel="{{$post->diggs}}" status="{{(int) $post->has_like}}">
                 @if($post->has_like)
-                    <a href="javascript:;" onclick="digg.delDigg('{{$post->group_id}}', '{{$post->id}}')">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font>{{$post->diggs}}</font>
+                <a href="javascript:void(0)" onclick="liked.init({{$post->id}}, 'group', 1)">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg>
+                    <font>{{$post->diggs}}</font>
                 </a>
                 @else
-                    <a href="javascript:;" onclick="digg.addDigg('{{$post->group_id}}', '{{$post->id}}')">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font>{{$post->diggs}}</font>
+                <a href="javascript:;" onclick="liked.init({{$post->id}}, 'group', 1)">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                    <font>{{$post->diggs}}</font>
                 </a>
                 @endif
             </span>
@@ -235,15 +57,15 @@
             </span>
             <div class="options_div">
                 <ul>
-                    <li class="collect" id="collect{{$post->id}}" rel="0">
+                    <li id="J-collect{{$post->id}}" rel="0" status="{{(int) $post->has_collection}}">
                         @if($post->has_collection)
-                            <a href="javascript:;" onclick="collect.delCollect('{{$post->group_id}}', '{{$post->id}}');" class="act">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
-                            </a>
+                        <a class="act" href="javascript:;" onclick="collected.init({{$post->id}}, 'group', 1);" class="act">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
+                        </a>
                         @else
-                            <a href="javascript:;" onclick="collect.addCollect('{{$post->group_id}}', '{{$post->id}}');">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
-                            </a>
+                        <a href="javascript:;" onclick="collected.init({{$post->id}}, 'group', 1);">
+                          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
+                        </a>
                         @endif
                     </li>
                     @if($post->user_id == $TS['id'])
