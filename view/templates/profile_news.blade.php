@@ -28,19 +28,22 @@
     <div class="feed_bottom">
         @if ($post->audit_status == 0)
         <div class="feed_datas">
-            <span class="collect" id="collect{{$post->id}}" rel="{{$post->collection_count}}">
+            <span class="collect" id="J-collect{{$post->id}}" rel="{{$post->collection_count}}" status="{{(int) $post->has_collect}}">
                 @if($post->has_collect)
-                <a href="javascript:;" onclick="collect.delNews({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg><font> {{$post->collection_count}}</font>
+                <a href="javascript:;" onclick="collected.init({{$post->id}}, 'news', 1);">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                    <font>{{$post->collection_count}}</font>
                 </a>
                 @else
-                <a href="javascript:;" onclick="collect.news({{$post->id}})">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg><font> {{$post->collection_count}}</font>
+                <a href="javascript:;" onclick="collected.init({{$post->id}}, 'news', 1);">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                    <font>{{$post->collection_count}}</font>
                 </a>
                 @endif
             </span>
             <span class="comment J-comment-show">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg><font class="cs{{$post->id}}"> {{$post->comment_count}}</font>
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
+                <font class="cs{{$post->id}}">{{$post->comment_count}}</font>
             </span>
             <span class="view">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->hits}}
@@ -50,7 +53,7 @@
             </span>
             <div class="options_div">
                 <ul>
-                    @if(!empty($TS['id']) && $post->user_id == $TS['id'])
+                    @if($post->user_id == $TS['id'])
                     <li>
                         <a href="javascript:;" onclick="profile.pinneds({{$post->id}}, 'news');">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶

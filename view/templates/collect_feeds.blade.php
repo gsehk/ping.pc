@@ -19,198 +19,24 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
     </div>
 
     <div class="feed_body">
-        <a href="{{ route('pc:feedread', $post->id) }}"><p class="feed_text tcolor">{!! formatContent($post->feed_content) !!}</p></a>
+        <a href="{{ route('pc:feedread', $post->id) }}">
+          <p class="feed_text tcolor">{!! formatContent($post->feed_content) !!}</p>
+        </a>
 
-        @if($post->images)
-        <div style="" id="layer-photos-demo{{$post->id}}">
-        @if($post->images->count() == 1)
-          <img class="lazy" style="max-width:100%;min-height:auto;" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}"/>
-        @elseif($post->images->count() == 2)
-            <div style="width: 100%; display: flex;">
-              <div style="width: 35vw;" class="image_box">
-                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=277&h=273" />
-              </div>
-              <div style="width: 35vw;" class="image_box">
-                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=277&h=273" />
-              </div>
-            </div>
-        @elseif($post->images->count() == 3)
-            <div style="width: 100%; display: flex;">
-              <div style="width: 33.3333%;" class="image_box">
-                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=184&h=180" />
-              </div>
-              <div style="width: 33.3333%;" class="image_box">
-                <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=184&h=180" />
-              </div>
-              <div style="width: 33.3333%;" class="image_box">
-                <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=184&h=180" />
-              </div>
-            </div>
-        @elseif($post->images->count() == 4)
-            <div style="width: 100%; display: flex;">
-            <div style="width: 50%">
-              <div style="width: 100%;" class="image_box">
-                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=277&h=273" />
-              </div>
-              <div style="width: 100%;" class="image_box">
-                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=277&h=273" />
-              </div>
-            </div>
-              <div style="width: 50%">
-              <div style="width: 100%;" class="image_box">
-                    <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=277&h=273" />
-              </div>
-              <div style="width: 100%;" class="image_box">
-                    <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=277&h=273" />
-              </div>
-            </div>
-            </div>
-        @elseif($post->images->count() == 5)
-            <div style="width: 100%; display: flex; flex-wrap: wrap;">
-              <div style="width: 66.6666%" class="image_box">
-                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=370&h=366" />
-              </div>
-              <div style="width: 33.3333%">
-                <div style="width: 100%; padding-bottom: 2px;" class="image_box">
-                  <img class="lazy per_image"  data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=185&h=183" />
-                </div>
-                <div style="width: 100% padding-bottom: 2px;" class="image_box">
-                  <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=185&h=183" />
-                </div>
-              </div>
-              <div style="width: 100%; display: flex;">
-              <div style="width: 35vw;" class="image_box">
-                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=277&h=273" />
-              </div>
-              <div style="width: 35vw;" class="image_box">
-                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=277&h=273" />
-              </div>
-              </div>
-            </div>
-        @elseif($post->images->count() == 6)
-            <div style="width: 100%; display: flex; flex-wrap: wrap;">
-              <div style="width: 66.6666%" class="image_box">
-                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=370&h=366" />
-              </div>
-              <div style="width: 33.3333%">
-                <div style="width: 100%; padding-bottom: 2px;" class="image_box">
-                  <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=185&h=183" />
-                </div>
-                <div style="width: 100% padding-bottom: 2px;" class="image_box">
-                  <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=185&h=183" />
-                </div>
-              </div>
-              <div style="width: 33.3333%;" class="image_box">
-                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=185&h=183" />
-              </div>
-              <div style="width: 33.3333%;" class="image_box">
-                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=185&h=183" />
-              </div>
-              <div style="width: 33.3333%;" class="image_box">
-                <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['file']}}?w=185&h=183" />
-              </div>
-            </div>
-        @elseif($post->images->count() == 7)
-        <div style="width: 100%; display: flex; flex-wrap: wrap;">
-          <div style="width: 50%">
-            <div style="width: 100%" class="image_box">
-              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=277&h=273" />
-            </div>
-            <div style="width: 100%" class="image_box">
-              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=277&h=273" />
-            </div>
-          </div>
-          <div style="width: 50%; display: flex; flex-wrap: wrap;">
-            <div style="width: 50%; padding-bottom: 2px;" class="image_box">
-              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=138&h=135" />
-            </div>
-            <div style="width: 50%; padding-bottom: 2px;" class="image_box">
-              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=138&h=135" />
-            </div>
-            <div style="width: 100%;" class="image_box">
-              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=277&h=273" />
-            </div>
-            <div style="width: 50%;" class="image_box">
-              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['file']}}?w=138&h=135" />
-            </div>
-            <div style="width: 50%;" class="image_box">
-              <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['file']}}?w=138&h=135" />
-            </div>
-          </div>
-        </div>
-        @elseif($post->images->count() == 8)
-        <div style="width: 100%; display: flex; flex-wrap: wrap;">
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=185&h=183" />
-          </div>
-          <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=185&h=183" />
-          </div>
-          <div style="width: 33.3333%; padding-bottom: 2px;" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=185&h=183" />
-          </div>
-          <div style="width: 50%;" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=277&h=273" />
-          </div>
-          <div style="width: 50%;" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=277&h=273" />
-          </div>
-          <div style="width: 33.3333%;" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['file']}}?w=185&h=183" />
-          </div>
-          <div style="width: 33.3333%;" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['file']}}?w=185&h=183" />
-          </div>
-          <div style="width: 33.3333%;" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[7]['file']}}?w=185&h=183" />
-          </div>
-        </div>
-        @elseif($post->images->count() == 9)
-        <div style="width: 100%; display: flex; flex-wrap: wrap;">
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[0]['file']}}?w=185&h=181" />
-          </div>
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[1]['file']}}?w=185&h=181" />
-          </div>
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[2]['file']}}?w=185&h=181" />
-          </div>
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[3]['file']}}?w=185&h=181" />
-          </div>
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[4]['file']}}?w=185&h=181" />
-          </div>
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[5]['file']}}?w=185&h=181" />
-          </div>
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[6]['file']}}?w=185&h=181" />
-          </div>
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[7]['file']}}?w=185&h=181" />
-          </div>
-          <div style="width: 33.3333%" class="image_box">
-            <img class="lazy per_image" data-original="{{$routes['storage']}}{{$post->images[8]['file']}}?w=185&h=181" />
-          </div>
-        </div>
-        @endif
-        </div>
-        @endif
+        @include('pcview::templates.feed_images')
     </div>
 
     <div class="feed_bottom">
         <div class="feed_datas">
-            <span class="digg" id="digg{{$post->id}}" rel="{{$post->like_count}}">
+            <span class="digg" id="J-likes{{$post->id}}" rel="{{$post->like_count}}" status="{{(int) $post->has_like}}">
                 @if($post->has_like)
-                  <a href="javascript:;" onclick="digg.delDigg({{$post->id}})">
-                      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg><font> {{$post->like_count}}</font>
-                  </a>
+                <a href="javascript:void(0)" onclick="liked.init({{$post->id}}, 'feeds', 1)">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg> <font>{{$post->like_count}}</font>
+                </a>
                 @else
-                  <a href="javascript:;" onclick="digg.addDigg({{$post->id}})">
-                      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg><font> {{$post->like_count}}</font>
-                  </a>
+                <a href="javascript:;" onclick="liked.init({{$post->id}}, 'feeds', 1)">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg> <font>{{$post->like_count}}</font>
+                </a>
                 @endif
             </span>
             <span class="comment J-comment-show">
@@ -224,13 +50,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
             </span>
             <div class="options_div">
                 <ul>
-                    <li id="collect{{$post->id}}" rel="0">
+                    <li id="J-collect{{$post->id}}" rel="0" status="{{(int) $post->has_collect}}">
                         @if($post->has_collect)
-                        <a href="javascript:;" onclick="collect.delWeibo({{$post->id}});" class="act">
+                        <a class="act" href="javascript:;" onclick="collected.init({{$post->id}}, 'feeds', 0);">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
                         </a>
                         @else
-                        <a href="javascript:;" onclick="collect.weibo({{$post->id}});">
+                        <a href="javascript:;" onclick="collected.init({{$post->id}}, 'feeds', 0);">
                           <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
                         </a>
                         @endif
@@ -241,11 +67,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
                         </a>
                     </li>
-                      <li>
-                          <a href="javascript:;" onclick="profile.delete({{$post->id}}, 'feeds');">
-                              <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
-                          </a>
-                      </li>
+                    <li>
+                        <a href="javascript:;" onclick="profile.delete({{$post->id}}, 'feeds');">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                        </a>
+                    </li>
                     @endif
                 </ul>
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
