@@ -50,7 +50,7 @@
                             @if (isset($info['data']['files'][0]))
                                 <img id="J-image-preview-front" src="{{$routes['storage'].$info['data']['files'][0]}}" />
                             @else
-                                <img id="J-image-preview-front" src="{{asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
+                                <img id="J-image-preview-front" src="{{asset('zhiyicx/plus-component-pc/images/upload_zm.png')}}" />
                             @endif
                                 <input class="J-file-upload front" type="file" name="file-front" />
                             </span>
@@ -58,7 +58,7 @@
                             @if (isset($info['data']['files'][1]))
                                 <img id="J-image-preview-behind" src="{{$routes['storage'].$info['data']['files'][1]}}" />
                             @else
-                                <img id="J-image-preview-behind" src="{{asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
+                                <img id="J-image-preview-behind" src="{{asset('zhiyicx/plus-component-pc/images/upload_fm.png')}}" />
                             @endif
                                 <input class="J-file-upload behind" type="file" name="file-behind" />
                             </span>

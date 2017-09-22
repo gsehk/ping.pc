@@ -56,11 +56,11 @@
                         <label class="w80 required" for="desc"><font color="red">*</font>认证资料</label>
                         <div class="upload_file">
                             <span class="file_box">
-                                <img id="J-image-preview-front" src="{{ asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
+                                <img id="J-image-preview-front" src="{{ asset('zhiyicx/plus-component-pc/images/upload_zm.png')}}" />
                                 <input class="J-file-upload front" type="file" name="file-front" />
                             </span>
                             <span  class="file_box">
-                                <img id="J-image-preview-behind" src="{{ asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
+                                <img id="J-image-preview-behind" src="{{ asset('zhiyicx/plus-component-pc/images/upload_fm.png')}}" />
                                 <input class="J-file-upload behind" type="file" name="file-behind" />
                             </span>
                         </div>

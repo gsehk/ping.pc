@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="_token" content="{{ csrf_token() }}"/>
     <title>@yield('title')</title>
-    
+
     <script>
         var API = '{{ $routes["api"] }}';
         var MID = "{{ $TS['id'] or 0 }}";
@@ -35,7 +35,7 @@
         @yield('content')
         </div>
     </div>
-    
+
     <!-- footer -->
     @include('pcview::layouts.partials.authfooter')
 
@@ -44,7 +44,7 @@
 
     <!-- js -->
     @yield('scripts')
-    
+
 </body>
 
 </html>
