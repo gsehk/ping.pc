@@ -121,6 +121,10 @@
                 noticebox('标签已存在', 0); return;
             }
 
+            if (selBox.find('li').length > 4) {
+                noticebox('标签最多五个', 0); return;
+            }
+
             selBox.append('<li class="tag_'+tag_id+'" data-id="'+tag_id+'">'+tag_name+'</li>');
             selBox.on('click', 'li', function(){
                 $(this).remove();
@@ -128,12 +132,7 @@
                     $('.release_tags label').show();
                 }
             });
-
-            if (selBox.find('li').length >= 5) {
-                noticebox('标签最多五个', 0); return;
-            } else if (selBox.find('li').length > 0) {
-                $('.release_tags label').hide();
-            }
+            $('.release_tags label').hide();
         });
         $('#J-image-preview').on('click',function(){
             var html = '<div id="model">'
