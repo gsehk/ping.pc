@@ -818,6 +818,177 @@ var comment = {
     }
 };
 
+var liked = {
+    init: function(row_id, cate, type){
+        checkLogin();
+        this.row_id = row_id || 0;
+        this.type = type || 0;
+        this.cate = cate || '';
+        this.box = $('#J-likes'+row_id);
+        this.num = this.box.attr('rel');
+        this.status = this.box.attr('status');
+        this.res = this.get_link();
+
+        if (parseInt(this.status)) {
+            this.unlike();
+        } else {
+            this.like();
+        }
+    },
+    like: function(row_id, cate, type) {
+        var _this = this;
+        if (_this.lockStatus == 1) {
+            return;
+        }
+        _this.lockStatus = 1;
+        $.ajax({
+            url: _this.res.link,
+            type: 'POST',
+            dataType: 'json',
+            success: function() {
+                _this.num ++;
+                _this.lockStatus = 0;
+                _this.box.attr('rel', _this.num);
+                _this.box.attr('status', 1);
+                _this.box.find('a').addClass('act');
+                _this.box.find('font').text(_this.num);
+                if (_this.type) {
+                    _this.box.find('svg').html('<use xlink:href="#icon-xihuan-red"></use>');
+                } else {
+                    _this.box.find('svg').html('<use xlink:href="#icon-xihuan-white-copy"></use>');
+                }
+
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
+            }
+        });
+
+    },
+    unlike: function(feed_id, page) {
+        var _this = this;
+        if (_this.lockStatus == 1) {
+            return;
+        }
+        _this.lockStatus = 1;
+        $.ajax({
+            url: _this.res.unlink,
+            type: 'DELETE',
+            dataType: 'json',
+            success: function() {
+                _this.num --;
+                _this.lockStatus = 0;
+                _this.box.attr('rel', _this.num);
+                _this.box.attr('status', 0);
+                _this.box.find('a').removeClass('act');
+                _this.box.find('font').text(_this.num);
+                _this.box.find('svg').html('<use xlink:href="#icon-xihuan-white"></use>');
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
+            }
+        });
+    },
+    get_link: function(){
+        var res = {};
+        switch (this.cate) {
+            case 'feeds':
+                res.link = '/api/v2/feeds/' + this.row_id + '/like';
+                res.unlink = '/api/v2/feeds/' + this.row_id + '/unlike';
+                break;
+            case 'news':
+                res.link = '/api/v2/news/' + this.row_id + '/likes';
+                res.unlink = '/api/v2/news/' + this.row_id + '/likes';
+            break;
+        }
+
+        return res;
+    }
+};
+
+var collected = {
+    init: function(row_id, cate, type){
+        checkLogin();
+        this.row_id = row_id || 0;
+        this.type = type || 0;
+        this.cate = cate || '';
+        this.box = $('#J-collect'+row_id);
+        this.num = this.box.attr('rel');
+        this.status = this.box.attr('status');
+        this.res = this.get_link();
+
+        if (parseInt(this.status)) {
+            this.uncollect();
+        } else {
+            this.collect();
+        }
+    },
+    collect: function(row_id, cate, type) {
+        var _this = this;
+        if (_this.lockStatus == 1) {
+            return;
+        }
+        _this.lockStatus = 1;
+        $.ajax({
+            url: _this.res.link,
+            type: 'POST',
+            dataType: 'json',
+            success: function() {
+                _this.num ++;
+                _this.lockStatus = 0;
+                _this.box.attr('rel', _this.num);
+                _this.box.attr('status', 1);
+                _this.box.find('a').addClass('act');
+                _this.box.find('font').text(_this.num);
+                _this.box.find('svg').html('<use xlink:href="#icon-shoucang-copy"></use>');
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
+            }
+        });
+
+    },
+    uncollect: function(feed_id, page) {
+        var _this = this;
+        if (_this.lockStatus == 1) {
+            return;
+        }
+        _this.lockStatus = 1;
+        $.ajax({
+            url: _this.res.unlink,
+            type: 'DELETE',
+            dataType: 'json',
+            success: function() {
+                _this.num --;
+                _this.lockStatus = 0;
+                _this.box.attr('rel', _this.num);
+                _this.box.attr('status', 0);
+                _this.box.find('a').removeClass('act');
+                _this.box.find('font').text(_this.num);
+                _this.box.find('svg').html('<use xlink:href="#icon-shoucang-copy1"></use>');
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
+            }
+        });
+    },
+    get_link: function(){
+        var res = {};
+        switch (this.cate) {
+            case 'feeds':
+                res.link = '/api/v2/feeds/' + this.row_id + '/collections';
+                res.unlink = '/api/v2/feeds/' + this.row_id + '/uncollect';
+                break;
+            case 'news':
+                res.link = '/api/v2/news/' + this.row_id + '/collections';
+                res.unlink = '/api/v2/news/' + this.row_id + '/collections';
+            break;
+        }
+
+        return res;
+    }
+};
+
 /**
  * 申请置顶
  * @param  url
