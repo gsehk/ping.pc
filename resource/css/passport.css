@@ -119,7 +119,7 @@
     overflow: hidden;
 }
 
-.login_right .login_extra .forget_pwd {    
+.login_right .login_extra .forget_pwd {
     float: right;
     color: #b3b3b3;
     font-size: 12px;
@@ -435,16 +435,58 @@
 }
 
 
-.perfect_selected{
-    margin-top: 30px;
+/* 设置用户标签 */
+
+.selected-box{
+    font-size: 14px;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    border: 1px solid #ededed;
+    align-items: center;
 }
 
-.perfect_selected > label{
-    display: block;
-    margin-bottom: 15px;
-    font-size: 14px;
-    color: #999;
+.selected-box li {
+    line-height: 36px;
+    height: 36px;
+    margin-left: 10px;
+    padding: 0 10px;
+    cursor: pointer;
+    color: #59b6d7;
+    border-radius: 3px;
+    background-color: #eef8fb;
+    /*background-color: rgba(89, 182, 183, .1);*/
 }
+
+.selected-box li::after {
+    font-size: 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    content: 'X';
+    vertical-align: middle;
+    background-image: url(./img/close_icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
+}
+
+
+.icon.close{
+    display: inline-block;
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    font-size: 0;
+    vertical-align: sub;
+    background-image: url(./img/close_icon.png);
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: center;
+}
+
 
 .perfect_label_list{
     font-size: 0;
@@ -483,37 +525,4 @@
 
 .perfect_selected_list li:first-child{
     margin-left: 0;
-}
-
-.icon.close{
-    text-align: center;
-    display: inline-block;
-    margin-left: 5px;
-    width: 12px;
-    height: 12px;
-    font-size: 12px;
-    line-height: 12px;
-    font-style: normal;
-    vertical-align: baseline;
-}
-
-.perfect_btns{
-    margin-top: 40px;
-}
-
-.perfect_btn{
-    display: inline-block;
-    width: 100px;
-    height: 36px; 
-    font-size: 16px;
-    color: #fff;
-    line-height: 36px;
-    text-align: center;
-    background-color: #ccc;
-    border-radius: 3px;
-}
-
-.perfect_btns .save{
-    background-color: #59b6d7;
-    margin-right: 20px;
 }

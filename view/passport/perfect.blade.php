@@ -13,31 +13,29 @@
         </div>
 
         @foreach ($tags as $tag)
-        <div class="perfect_row">
-            <label>{{$tag->name}}</label>
-            <ul class="perfect_label_list" id="J-tags">
-            @foreach ($tag->tags as $item)
-                <li class="
-                @foreach ($user_tag as $t)
-                    @if ($t->name == $item->name) active @endif
-                @endforeach" data-id="{{$item->id}}">{{$item->name}}</li>
-            @endforeach
-            </ul>
-        </div>
+            <div class="perfect_row">
+                <label>{{$tag->name}}</label>
+                    <ul class="perfect_label_list" id="J-tags">
+                    @foreach ($tag->tags as $item)
+                        <li class="tag_{{$item->id}}
+                        @foreach ($user_tag as $t)
+                            @if ($t->name == $item->name) active @endif
+                        @endforeach" data-id="{{$item->id}}">{{$item->name}}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endforeach
 
-        {{-- <div class="perfect_selected">
-            <label>最多可选<span class="total">5</span>个标签，已选择<span class="cur_count">0</span>个</label>
-            <ul class="perfect_selected_list">
-                <li>建筑师<i class="icon close">x</i></li>
-                <li>旅行家<i class="icon close">x</i></li>
-                <li>运动达人<i class="icon close">x</i></li>
-            </ul>
-        </div> --}}
+        <p class="mt20 font14 tcolor">最多可选5个标签，已选 <font class="mcolor num">{{ $user_tag->count() }}</font> 个</p>
+        <ul class="selected-box mb20">
+            @foreach ($user_tag as $item)
+                <li class="taged{{$item->id}}" data-id="{{$item->id}}">{{$item->name}}</li>
+            @endforeach
+        </ul>
 
         <div class="perfect_btns">
             {{-- <a href="javascript:;" class="perfect_btn save" id="save">保存</a> --}}
-            <a href="{{ route('pc:feeds') }}" class="perfect_btn skip" id="skip">跳过</a>
+            <a href="{{ route('pc:feeds') }}" class="btn btn-default btn-lg mt20 tcolor skip" id="skip">跳 过</a>
         </div>
     </div>
 </div>
@@ -48,17 +46,20 @@
 $('#J-tags li').on('click', function(e){
     var _this = $(this);
     var tag_id = $(this).data('id');
+    var tag_name = $(this).text();
     var lenth = $('#J-tags li.active').length;
     if (_this.hasClass('active')) {
         $.ajax({
             url: '/api/v2/user/tags/'+tag_id,
             type: 'DELETE',
             dataType: 'json',
-            error: function(response) {
-                noticebox(response.responseJSON.message, 0);
+            error: function(xml) {
+                noticebox('操作失败', 0, 'refresh');
             },
             success: function(res) {
+                $('.num').text(lenth-1);
                 _this.removeClass('active');
+                $('.taged'+tag_id).remove();
             }
         });
     } else {
@@ -70,15 +71,32 @@ $('#J-tags li').on('click', function(e){
             url: '/api/v2/user/tags/'+tag_id,
             type: 'PUT',
             dataType: 'json',
-            error: function(response) {
-                console.log()
-                noticebox(response.responseJSON.message, 0);
+            error: function(xml) {
+                noticebox('操作失败', 0, 'refresh');
             },
             success: function(res) {
                 _this.addClass('active');
+                $('.num').text(lenth+1);
+                $('.selected-box').append('<li class="taged'+tag_id+'" data-id="'+tag_id+'">'+tag_name+'</li>');
             }
         });
     }
+});
+
+$('.selected-box').on('click', 'li', function(){
+    var _self = this;
+    var tid = $(_self).data('id');
+    var lenth = $('#J-tags li.active').length;
+    $.ajax({
+        url: '/api/v2/user/tags/'+tid,
+        type: 'DELETE',
+        dataType: 'json',
+        success: function(res) {
+            $(_self).remove();
+            $('.num').text(lenth-1);
+            $('.tag_'+tid).removeClass('active');
+        }
+    });
 });
 </script>
 @endsection
