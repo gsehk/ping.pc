@@ -8,7 +8,6 @@
             </a>
             <span>
                 <a href="{{ route('pc:mine', $user['id']) }}">{{ $user['name'] }}</a>
-                <a href="javascript:;">{{ $user['name'] }}</a>
             </span>
         </li>
         @endforeach
