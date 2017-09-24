@@ -134,27 +134,45 @@ class ConfigController extends Controller
     /**
      * 获取pc基础配置信息.
      *
-     * @return mixed
+     * @param Repository $config
+     * @param Configuration $configuration
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function get(Request $request, Repository $config, ResponseFactory $response, Configuration $configuration)
+    public function get(Repository $config, Configuration $configuration)
     {
         $configs = $config->get('pc');
 
         if (is_null($configs)) {
-            $config->set('pc.status', 1);
-            $config->set('pc.logo', '');
-            $config->set('pc.loginbg', '');
-            $config->set('pc.weibo.client_id', '');
-            $config->set('pc.weibo.client_secret', '');
-            $config->set('pc.wechat.client_id', '');
-            $config->set('pc.wechat.client_secret', '');
-            $config->set('pc.qq.client_id', '');
-            $config->set('pc.qq.client_secret', '');
-
-            $configuration->save($config);
+            $configs = $this->initSiteConfiguration($configuration);
         }
 
-        return $response->json($config['pc'])->setStatusCode(200);
+        return response()->json($configs, 200);
+    }
+
+    /**
+     * 初始化站点设置.
+     *
+     * @param Repository $config
+     * @param Configuration $configuration
+     * @return mixed
+     */
+    private function initSiteConfiguration(Configuration $configuration)
+    {
+        $config = $configuration->getConfiguration();
+
+        $config->set('pc.status', 1);
+        $config->set('pc.logo', '');
+        $config->set('pc.loginbg', '');
+        $config->set('pc.weibo.client_id', '');
+        $config->set('pc.weibo.client_secret', '');
+        $config->set('pc.wechat.client_id', '');
+        $config->set('pc.wechat.client_secret', '');
+        $config->set('pc.qq.client_id', '');
+        $config->set('pc.qq.client_secret', '');
+
+        $configuration->save($config);
+
+        return $config['pc'];
     }
 
     /**
@@ -162,12 +180,14 @@ class ConfigController extends Controller
      *
      * @return mixed
      */
-    public function updateSiteInfo(Request $request, Configuration $config, ResponseFactory $response)
+    public function updateSiteInfo(Request $request, Configuration $configuration)
     {
+        $config = $configuration->getConfiguration();
+
         $config->set('pc', $request->input('site'));
 
-        return $response->json([
-            'message' => '更新成功',
-        ])->setStatusCode(201);
+        $configuration->save($config);
+
+        return response()->json(['message' => ['更新站点配置成功']], 201);
     }
 }

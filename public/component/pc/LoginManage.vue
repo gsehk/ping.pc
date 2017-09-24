@@ -71,12 +71,8 @@
 
 <script>
 import request, { createRequestURI } from '../../util/request';
-import Upload from '../Upload_v2';
 
-const NavmanageComponent = {
-  components: {
-      Upload,
-  },
+const LoginManageComponent = {
   data: () => ({
     loadding: {
       state: 0,
@@ -107,7 +103,6 @@ const NavmanageComponent = {
       request.get(createRequestURI('site/baseinfo'), {
         validateStatus: status => status === 200
       }).then(({ data = {} }) => {
-      	console.log(data)
         this.site = data;
         this.loadding.state = 1;
       }).catch(({ response: { data: { message = '加载失败' } = {} } = {} }) => {
@@ -116,14 +111,12 @@ const NavmanageComponent = {
       });
     },
     submitHandle() {
-      console.log(this.site)
       this.submit.state = true;
       request.patch(
         createRequestURI('site/baseinfo'),
         {site: this.site},
         { validateStatus: status => status === 201 }
       ).then(({ message = '操作成功' }) => {
-        console.log(message)
         this.submit.state = false;
         this.submit.type = 'success';
         this.submit.message = message;
@@ -132,23 +125,12 @@ const NavmanageComponent = {
         this.submit.type = 'danger';
         this.submit.message = message;
       });
-    },
-    // 获取图片ID || 图片上传任务ID
-    getlogo_id(task_id) {
-        this.site.logo = task_id;
-    },
-    getloginbg_id (task_id) {
-      this.site.loginbg = task_id;
-    },
-    // 清除图片ID || 任务ID
-    updataImg() {
-        this.image = null;
-    },
+    }
   },
 	created() {
 		this.requestSiteInfo();
 	}
 };
 
-export default NavmanageComponent;
+export default LoginManageComponent;
 </script>

@@ -99,7 +99,6 @@ const NavmanageComponent = {
         {site: this.site},
         { validateStatus: status => status === 201 }
       ).then(({ message = '操作成功' }) => {
-        console.log(message)
         this.submit.state = false;
         this.submit.type = 'success';
         this.submit.message = message;
@@ -114,6 +113,7 @@ const NavmanageComponent = {
         this.site.logo = task_id;
     },
     getloginbg_id (task_id) {
+      console.log(task_id)
       this.site.loginbg = task_id;
     },
     // 清除图片ID || 任务ID
