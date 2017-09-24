@@ -81,7 +81,7 @@
                         <div class="mb30 bind-line">
                             <div class="bind-left">绑定QQ</div>
                             @if($qq)
-                                <div class="bind-right remove" data-type="qq" data-bind="1">已绑定</div>
+                                <a class="bind-right remove" data-type="qq" data-bind="1">已绑定</a>
                             @else
                                 <a class="bind-right blue" href="{{route('pc:socialitebind').'/qq/bind'}}">去绑定</a>
                             @endif
@@ -90,7 +90,7 @@
                         <div class="mb30 bind-line">
                             <div class="bind-left">绑定微信</div>
                             @if($wechat)
-                                <div class="bind-right remove" data-type="wechat" data-bind="1">已绑定</div>
+                                <a class="bind-right remove" data-type="wechat" data-bind="1">已绑定</a>
                             @else
                                 <a class="bind-right blue" href="{{route('pc:socialitebind').'/wechat/bind'}}">去绑定</a>
                             @endif
