@@ -510,11 +510,12 @@ var logout = function() {
 }
 
 // 接口返回错误解析
-var showError = function(message, defaultMessage) {
+var showError = function(message, defaultMessage = '操作失败') {
+    defaultMessage = defaultMessage || '操作失败';
     if (message.errors && message.errors !== null) {
         var message = message.errors;
         for (var key in message) {
-            if (Array.isArray(message[key])) {
+            if (Array.isArray(message)) {
 
                 noticebox(message[key], 0);
                 return;
@@ -527,7 +528,7 @@ var showError = function(message, defaultMessage) {
     if (message.message && message.message !== null) {
         var message = message.message;
         for (var key in message) {
-            if (Array.isArray(message[key])) {
+            if (Array.isArray(message)) {
 
                 noticebox(message[key], 0);
                 return;
@@ -539,7 +540,7 @@ var showError = function(message, defaultMessage) {
     }
 
     for (var key in message) {
-        if (Array.isArray(message[key])) {
+        if (Array.isArray(message)) {
 
             noticebox(message[key], 0);
             return;
