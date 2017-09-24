@@ -6,7 +6,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Session;
 use Overtrue\Socialite\SocialiteManager;
 use Illuminate\Http\Request;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\socialiteRequest;
 
 class SocialiteController extends BaseController
 {
@@ -74,7 +74,7 @@ class SocialiteController extends BaseController
 
         // 已登录时账号绑定
         if ($type == 'bind') {
-            $res = createRequest('PATCH', '/api/v2/user/socialite/'.$service, ['access_token' => $access_token]);
+            $res = socialiteRequest('PATCH', '/api/v2/user/socialite/'.$service, ['access_token' => $access_token]);
 
             return isset($res['message'])
                 ? $this->error(Route('pc:binds'), '绑定失败', $res['message'])
@@ -83,7 +83,7 @@ class SocialiteController extends BaseController
         } else {
         // 未登录时账号注册/绑定
 
-            $res = createRequest('POST', '/api/v2/socialite/'.$service, ['access_token' => $access_token]);
+            $res = socialiteRequest('POST', '/api/v2/socialite/'.$service, ['access_token' => $access_token]);
             Session::put('initial_password', $res['user']['initial_password']);
 
             if (isset($res['token'])) { // 登录

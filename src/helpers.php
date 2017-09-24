@@ -142,10 +142,6 @@ function createRequest($method = 'POST', $url = '', $params = array())
     // 解决请求传参问题
     if ($url != '/api/v2/user/' && $url != '/api/v2/bootstrappers/' && $url != '/api/v2/tokens/') { // 获取登录用户不需要传参
         app()->instance(Request::class, $request);
-
-        $access_request = AccessTokenRequest::create($url, $method, $params);
-        // 第三方登录
-        app()->instance(AccessTokenRequest::class, $access_request);
     }
 
     $response = Route::dispatch($request)->original;
@@ -155,6 +151,27 @@ function createRequest($method = 'POST', $url = '', $params = array())
     // } else {
     //     return $response;
     // }
+}
+
+function socialiteRequest($method = 'POST', $url = '', $params = array())
+{
+    $request = AccessTokenRequest::create($url, $method, $params);
+    $request->headers->add(['Accept' => 'application/json', 'Authorization' => 'Bearer '. Session::get('token')]);
+
+    // 注入JWT请求单例
+    app(\Tymon\JWTAuth\JWTAuth::class)->setRequest($request);
+
+    // 解决获取认证用户
+    $request->setUserResolver(function($guard) {
+        return Auth::user($guard);
+    });
+    // 解决请求传参问题
+    if ($url != '/api/v2/user/' && $url != '/api/v2/bootstrappers/' && $url != '/api/v2/tokens/') { // 获取登录用户不需要传参
+        app()->instance(AccessTokenRequest::class, $request);
+    }
+
+    $response = Route::dispatch($request)->original;
+    return $response;
 }
 
 function getTime($time, int $type = 1)
