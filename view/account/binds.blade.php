@@ -334,7 +334,7 @@
                     data: {},
                     dataType: 'json',
                     error: function (xml) {
-                        showError(xml.responseJSON.message);
+                        noticebox(xml.responseJSON.message[0], 0);
                     },
                     success: function (res, data, xml) {
                         if (xml.status == 204) {
