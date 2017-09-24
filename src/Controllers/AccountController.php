@@ -2,6 +2,7 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
+use Session;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -76,14 +77,16 @@ class AccountController extends BaseController
 
     /**
      * 安全设置.
-     *
      * @return mixed
      */
     public function security()
     {
         $this->PlusData['account_cur'] = 'security';
 
-        return view('pcview::account.security', $this->PlusData);
+        $showPassword = Session::get('service');
+        $data['showPassword'] = $showPassword;
+
+        return view('pcview::account.security', $data, $this->PlusData);
     }
 
     /**

@@ -27,35 +27,55 @@
                         <div class="mb30 bind-line">
                             <div class="bind-left">绑定手机</div>
                             @if($phone)
-                                <a class="bind-right">已绑定</a>
+                                <a class="bind-right unbind" data-type="phone">已绑定</a>
                             @else
                                 <a class="bind-right blue to_bind" data-type="phone">去绑定</a>
                             @endif
-                            {{--<div class="bind-right {{$phone ?: 'blue'}}">{{$phone ? '已绑定' : '去绑定'}}</div>--}}
 
-                            <div class="bind-content">
+                            <form class="bind-content">
                                 <div class="bind_form_row">
-                                    <label for="mobile">手机号</label>
-                                    <input id="mobile" name="mobile" type="text" value="">
-                                    <a id="send_code" href="javascript:">获取验证码</a>
+                                    <label for="phone">手机号</label>
+                                    <input id="phone" name="phone" type="text" value="">
+                                    <a data-type="phone" class="send_code{{isset($phone_number) ? ' blue-color' : ''}}" href="javascript:">获取验证码</a>
                                 </div>
                                 <div class="bind_form_row">
-                                    <label for="rg_code">验证码</label>
-                                    <input id="rg_code" name="rg_code" type="text" value="">
+                                    <label for="verifiable_code">验证码</label>
+                                    <input id="verifiable_code" name="verifiable_code" type="text" value="">
                                 </div>
-                                <div class="bind_form_row">
+                                <div class="bind_form_row form-password">
                                     <label for="password">密码</label>
                                     <input id="password" name="password" type="password" value="">
                                 </div>
                                 <a class="bind-submit" href="javascript:">确定</a>
-                            </div>
-
-
+                            </form>
                         </div>
 
                         <div class="mb30 bind-line">
                             <div class="bind-left">绑定邮箱</div>
-                            <div class="bind-right {{$email ?: 'blue'}}">{{$email ? '已绑定' : '去绑定'}}</div>
+
+                            @if($email)
+                                <a class="bind-right unbind" data-type="email">已绑定</a>
+                            @else
+                                <a class="bind-right blue to_bind" data-type="email">去绑定</a>
+                            @endif
+
+                            <form class="bind-content">
+                                <div class="bind_form_row">
+                                    <label for="email">邮箱账号</label>
+                                    <input id="email" name="email" type="text" value="">
+                                    <a data-type="email" class="send_code{{isset($phone_number) ? ' blue-color' : ''}}" href="javascript:">获取验证码</a>
+                                </div>
+                                <div class="bind_form_row">
+                                    <label for="verifiable_code">验证码</label>
+                                    <input id="verifiable_code" name="verifiable_code" type="text" value="">
+                                </div>
+                                <div class="bind_form_row form-password">
+                                    <label for="password">密码</label>
+                                    <input id="password" name="password" type="password" value="">
+                                </div>
+                                <a class="bind-submit" href="javascript:">确定</a>
+                            </form>
+                            {{--<div class="bind-right {{$email ?: 'blue'}}">{{$email ? '已绑定' : '去绑定'}}</div>--}}
                         </div>
 
                         <div class="mb30 bind-line">
@@ -100,26 +120,208 @@
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.account.js')}}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
     <script>
-        // 绑定手机页面
+        $('#phone').on('keyup', function () {
+            if((/^1(3|4|5|7|8)\d{9}$/.test($(this).val()))){
+                $(this).siblings('.send_code').addClass('blue-color');
+            } else {
+                $(this).siblings('.send_code').hasClass('blue-color') && $('.send_code').removeClass('blue-color');
+            }
+        });
+        $('#email').on('keyup', function () {
+            if(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test($(this).val())){
+                $(this).siblings('.send_code').addClass('blue-color');
+            } else {
+                $(this).siblings('.send_code').hasClass('blue-color') && $('.send_code').removeClass('blue-color');
+            }
+        });
+        // 绑定页面 (手机、邮箱)
         $('.bind-box').on('click', 'a.to_bind', function () {
+            var initial_password = "{{Session::get('initial_password')}}";
+            if (!initial_password) {
+                ly.confirm(formatConfirm('绑定提示', '绑定手机号码前需先填写密码，是否去修改密码？'), '' , '去修改', function(){
+                    window.location.href = '/account/security?showPassword=-1';
+                });
+            }
+
             var _this = $(this);
             var type = _this.data('type');
-            if (type == 'phone') {
-                _this.siblings('.bind-content').show('fast');
-                _this.addClass('hide');
+            toBind(_this, type);
+
+            return false;
+        });
+
+        // 取消绑定页面 (手机、邮箱)
+        $('.bind-box').on('click', 'a.unbind', function () {
+            var _this = $(this);
+            var type = _this.data('type');
+            unBind(_this, type);
+        });
+
+        // 绑定操作 (手机、邮箱)
+        function toBind(obj, type) {
+            obj.siblings('.bind-content').show('fast');
+            obj.addClass('hide');
+            obj.siblings('.bind-content').find('.form-password').hide();
+            var title = '';
+            obj.siblings('.bind-content').find('.bind-submit').on('click', function () {
+                var data = getFormJson(obj.siblings('.bind-content'));
+                console.log(data);
+                if (type == 'phone') {
+                    if(!(/^1(3|4|5|7|8)\d{9}$/.test(data.phone))) {
+
+                        noticebox('请填写正确的手机号', 0);
+                        return false;
+                    }
+                    title = '手机号码';
+                } else if(type == 'email') {
+                    if(!(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(data.email))) {
+
+                        noticebox('请填写邮箱账号', 0);
+                        return false;
+                    }
+                    title = '邮箱';
+                }
+                if (data.verifiable_code.length < 4 || data.verifiable_code.length > 6) {
+
+                    noticebox('验证码不正确', 0);
+                    return false;
+                }
+
+                var url = '/api/v2/user';
+                $.ajax({
+                    type: 'PUT',
+                    url: url,
+                    data: data,
+                    success: function (res, data, xml) {
+                        if (xml.status == 204) {
+
+                            noticebox('已成功绑定' + title, 1, '/account/binds');
+                        }
+                    },
+                    error: function (xhr) {
+
+                        noticebox(xhr.responseJSON.message, 0);
+                    }
+                }, 'json');
+            });
+        }
+
+        // 取消绑定操作 (手机、邮箱)
+        function unBind(obj, type) {
+            var bindContent = obj.siblings('.bind-content');
+            bindContent.show('fast');
+            obj.addClass('hide');
+            var title = '';
+            bindContent.find('.bind-submit').on('click', function () {
+                var data = getFormJson(bindContent);
+                console.log(data);
+                if (type == 'phone') {
+                    if(!(/^1(3|4|5|7|8)\d{9}$/.test(data.phone))) {
+
+                        noticebox('请填写正确的手机号', 0);
+                        return false;
+                    }
+                    title = '手机号码';
+                } else if(type == 'email') {
+                    if(!(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(data.email))) {
+
+                        noticebox('请填写邮箱账号', 0);
+                        return false;
+                    }
+                    title = '邮箱';
+                }
+
+                if (data.verifiable_code.length < 4 || data.verifiable_code.length > 6) {
+
+                    noticebox('验证码不正确', 0);
+                    return false;
+                }
+                if (data.password.length < 1) {
+
+                    noticebox('请填写密码', 0);
+                    return false;
+                }
+
+                var url = '/api/v2/user/' + type;
+                $.ajax({
+                    type: 'DELETE',
+                    url: url,
+                    data: data,
+                    success: function (res, data, xml) {
+                        if (xml.status == 204) {
+                            noticebox('已取消'+title+'绑定', 1, '/account/binds');
+                        }
+                    },
+                    error: function (xhr) {
+
+                        noticebox(xhr.responseJSON.message, 0);
+                    }
+                }, 'json');
+            })
+        }
+
+        // 发送验证码
+        $('.send_code').on('click', function () {
+            var _this = $(this);
+            if (!_this.hasClass('blue-color'))
                 return false;
+            var type = _this.data('type');
+            var bind = _this.parents('.bind-content').siblings('a');
+            var url = '';
+            var data = {};
+            if (bind.hasClass('to_bind')) {
+                url = '/api/v2/verifycodes/register';
+            } else if (bind.hasClass('unbind')) {
+                url = '/api/v2/verifycodes';
             }
+            if (type == 'phone') {
+                data.phone = $('#phone').val();
+                if (!data.phone) {
+                    noticebox('请填写手机号', 0);
+                    return false;
+                }
+            } else if (type == 'email') {
+                data.email = $('#email').val();
+                if (!data.email) {
+                    noticebox('请填写邮箱账号', 0);
+                    return false;
+                }
+            }
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success: function() {
+                    var str = '等待<span id="passsec">60</span>秒';
+                    _this.html(str);
+                    timeDown(60);
+                    $('#code').val('');
+                    noticebox('验证码发送成功', 1);
+                },
+                error: function(xhr) {
+                    showError(xhr.responseJSON);
+                }
+            }, 'json');
         });
 
-        $('#mobile').on('keyup', function () {
-            if((/^1(3|4|5|7|8)\d{9}$/.test($(this).val()))){
-                $('#send_code').addClass('blue-color');
-            } else {
-                $('#send_code').hasClass('blue-color') && $('#send_code').removeClass('blue-color');
-            }
-        });
+        // 验证码倒计时
+        var downTimeHandler = null;
+        var timeDown = function(timeLeft) {
+            clearInterval(downTimeHandler);
+            if (timeLeft <= 0) return;
+            $('.send_code').removeClass('blue-color');
+            $('#passsec').html(timeLeft);
+            downTimeHandler = setInterval(function() {
+                timeLeft--;
+                $('#passsec').html(timeLeft);
+                if (timeLeft <= -1) {
+                    clearInterval(downTimeHandler);
+                    $('.send_code').html('获取验证码').addClass('blue-color');
+                }
+            }, 1000);
+        };
 
-        // 移除绑定信息 qq/wechat/weibo
+        // 移除三方绑定信息 qq/wechat/weibo
         $('.bind-box').on('click', 'a.remove', function () {
             var _this = $(this);
             var type = _this.data('type');
@@ -132,6 +334,7 @@
                     data: {},
                     dataType: 'json',
                     error: function (xml) {
+                        showError(xml.responseJSON.message);
                     },
                     success: function (res, data, xml) {
                         if (xml.status == 204) {
@@ -150,6 +353,22 @@
 
             }
         });
+
+        function getFormJson(form) {
+            var o = {};
+            var a = $(form).serializeArray();
+            $.each(a, function () {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        }
 
     </script>
 @endsection

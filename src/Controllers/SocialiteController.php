@@ -1,6 +1,9 @@
 <?php
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
+
+
+use Session;
 use Overtrue\Socialite\SocialiteManager;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
@@ -15,8 +18,8 @@ class SocialiteController extends BaseController
         $this->config = [
             'weibo' => [
                 'weibo' => [
-                    'client_id'     => '3690191563',
-                    'client_secret' => '278b2212b43ce359ee27e19dfd230313',
+                    'client_id'     => '845138498',
+                    'client_secret' => 'a75c65670ea302940b69edbcc1fedb81',
                     'redirect'      => env('APP_URL').'/socialite/weibo/callback',
                 ]
             ],
@@ -110,6 +113,7 @@ class SocialiteController extends BaseController
         // 未登录时账号注册/绑定
 
             $res = createRequest('POST', '/api/v2/socialite/'.$service, ['access_token' => $access_token]);
+            Session::put('initial_password', $res['user']['initial_password']);
 
             if (isset($res['token'])) { // 登录
 

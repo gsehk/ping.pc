@@ -20,10 +20,12 @@
                 <div class="perfect_title">
                     <p>修改密码</p>
                 </div>
-                <div class="account_form_row">
-                    <label class="w80 required" for="old_password"><font color="red">*</font>原密码</label>
-                    <input id="old_password" name="old_password" type="password">
-                </div>
+                @if($showPassword)
+                    <div class="account_form_row">
+                        <label class="w80 required" for="old_password"><font color="red">*</font>原密码</label>
+                        <input id="old_password" name="old_password" type="password">
+                    </div>
+                @endif
                 <div class="account_form_row">
                     <label class="w80 required" for="password"><font color="red">*</font>设置新密码</label>
                     <input id="password" name="password" type="password">
