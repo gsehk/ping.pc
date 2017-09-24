@@ -14,6 +14,7 @@ class PassportController extends BaseController
     public function token(string $token, int $type)
     {
         Session::put('token', $token);
+        Session::put('initial_password', true);
         if ($type) {
             return redirect(route('pc:perfect'));
         } else {

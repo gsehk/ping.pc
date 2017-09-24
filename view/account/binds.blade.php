@@ -35,16 +35,16 @@
                             <form class="bind-content">
                                 <div class="bind_form_row">
                                     <label for="phone">手机号</label>
-                                    <input id="phone" name="phone" type="text" value="">
-                                    <a data-type="phone" class="send_code{{isset($phone_number) ? ' blue-color' : ''}}" href="javascript:">获取验证码</a>
+                                    <input id="phone" name="phone" type="text" value="" autocomplete="off">
+                                    <a data-type="phone" class="send_code" href="javascript:">获取验证码</a>
                                 </div>
                                 <div class="bind_form_row">
                                     <label for="verifiable_code">验证码</label>
-                                    <input id="verifiable_code" name="verifiable_code" type="text" value="">
+                                    <input id="verifiable_code" name="verifiable_code" type="text" value="" autocomplete="off">
                                 </div>
                                 <div class="bind_form_row form-password">
                                     <label for="password">密码</label>
-                                    <input id="password" name="password" type="password" value="">
+                                    <input id="password" name="password" type="password" value="" autocomplete="off">
                                 </div>
                                 <a class="bind-submit" href="javascript:">确定</a>
                             </form>
@@ -62,16 +62,16 @@
                             <form class="bind-content">
                                 <div class="bind_form_row">
                                     <label for="email">邮箱账号</label>
-                                    <input id="email" name="email" type="text" value="">
-                                    <a data-type="email" class="send_code{{isset($phone_number) ? ' blue-color' : ''}}" href="javascript:">获取验证码</a>
+                                    <input id="email" name="email" type="text" value="" autocomplete="off">
+                                    <a data-type="email" class="send_code" href="javascript:">获取验证码</a>
                                 </div>
                                 <div class="bind_form_row">
                                     <label for="verifiable_code">验证码</label>
-                                    <input id="verifiable_code" name="verifiable_code" type="text" value="">
+                                    <input id="verifiable_code" name="verifiable_code" type="text" value="" autocomplete="off">
                                 </div>
                                 <div class="bind_form_row form-password">
                                     <label for="password">密码</label>
-                                    <input id="password" name="password" type="password" value="">
+                                    <input id="password" name="password" type="password" value="" autocomplete="off">
                                 </div>
                                 <a class="bind-submit" href="javascript:">确定</a>
                             </form>
