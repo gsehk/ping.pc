@@ -198,9 +198,8 @@
                             noticebox('已成功绑定' + title, 1, '/account/binds');
                         }
                     },
-                    error: function (xhr) {
-
-                        noticebox(xhr.responseJSON.message, 0);
+                    error: function (xml) {
+                        showError(xml);
                     }
                 }, 'json');
             });
@@ -252,9 +251,9 @@
                             noticebox('已取消'+title+'绑定', 1, '/account/binds');
                         }
                     },
-                    error: function (xhr) {
+                    error: function (xml) {
 
-                        noticebox(xhr.responseJSON.message, 0);
+                        showError(xml);
                     }
                 }, 'json');
             })
@@ -298,8 +297,8 @@
                     $('#code').val('');
                     noticebox('验证码发送成功', 1);
                 },
-                error: function(xhr) {
-                    showError(xhr.responseJSON);
+                error: function(xml) {
+                    showError(xml);
                 }
             }, 'json');
         });
@@ -334,7 +333,7 @@
                     data: {},
                     dataType: 'json',
                     error: function (xml) {
-                        noticebox(xml.responseJSON.message[0], 0);
+                        showError(xml);
                     },
                     success: function (res, data, xml) {
                         if (xml.status == 204) {

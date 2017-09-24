@@ -37,9 +37,14 @@ class SocialiteController extends BaseController
      * @param Request $request
      * @param $service
      * @author zuo
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\think\response\Redirect
      */
     public function redirectToProviderByBind(Request $request, $service)
     {
+        if ($this->PlusData['TS']->phone == null) {
+
+            return $this->error(Route('pc:binds'), '绑定失败', '绑定第三方账号必须绑定手机号码');
+        }
         $config[$service] = $this->PlusData['config']['common'][$service];
         $config[$service]['redirect'] = $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback?type=bind';
 
