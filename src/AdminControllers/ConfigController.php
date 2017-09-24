@@ -138,14 +138,7 @@ class ConfigController extends Controller
      */
     public function get(Request $request, Repository $config, ResponseFactory $response)
     {
-
-        $loginbg = $config->get('pc.loginbg');
-        $logo = $config->get('pc.logo');
-
-        return $response->json([
-            'loginbg' => $loginbg,
-            'logo' => $logo,
-        ])->setStatusCode(200);
+        return $response->json($config['pc'])->setStatusCode(200);
     }
 
     /**
@@ -155,14 +148,7 @@ class ConfigController extends Controller
      */
     public function updateSiteInfo(Request $request, Configuration $config, ResponseFactory $response)
     {
-
-        $keys = ['loginbg', 'logo'];
-
-        $site = [];
-        foreach ($request->only($keys) as $key => $value) {
-            $site['pc.'.$key] = $value;
-        }
-        $config->set($site);
+        $config->set('pc', $request->input('site'));
 
         return $response->json([
             'message' => '更新成功',

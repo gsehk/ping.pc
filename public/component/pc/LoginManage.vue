@@ -2,7 +2,7 @@
   <div class="component-container container-fluid">
     <div class="panel panel-default">
       <!-- Title -->
-      <div class="panel-heading">基础配置</div>
+      <div class="panel-heading">三方配置</div>
             <!-- Loading -->
       <div v-if="loadding.state === 0" class="panel-body text-center">
         <span class="glyphicon glyphicon-refresh component-loadding-icon"></span>
@@ -11,34 +11,47 @@
       <!-- Body -->
       <div v-else-if="loadding.state === 1" class="panel-body form-horizontal">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="url">站点logo</label>
+          <label class="col-sm-2 control-label" for="url">微博 app_key</label>
           <div class="col-sm-4">
-            <Upload :imgs='site.logo' @getTask_id="getlogo_id" @updata='updataImg' />
+            <input type="text" name="weibo_app_key" class="form-control" id="weibo_app_key" v-model="site.weibo_app_key">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="position">登录背景图</label>
+          <label class="col-sm-2 control-label" for="position">微博 app_secret</label>
           <div class="col-sm-4">
-              <Upload :imgs='site.loginbg' @getTask_id="getloginbg_id" @updata='updataImg' />
+              <input type="text" name="weibo_app_secret" class="form-control" id="weibo_app_secret" v-model="site.weibo_app_secret">
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="position">PC端 </label>
-          <div class="col-md-4">
-              <label class="radio-inline">
-                <input type="radio" value="1" v-model="site.status"> 开启
-              </label>
-              <label class="radio-inline">
-                <input type="radio" value="0" v-model="site.status"> 关闭
-              </label>
-            </div>
+		<div class="form-group">
+          <label class="col-sm-2 control-label" for="position">微信 app_key</label>
+          <div class="col-sm-4">
+              <input type="text" name="wechat_app_key" class="form-control" id="wechat_app_key" v-model="site.wechat_app_key">
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-sm-2 control-label" for="position">微信 app_secret</label>
+          <div class="col-sm-4">
+              <input type="text" name="wechat_app_secret" class="form-control" id="wechat_app_secret" v-model="site.wechat_app_secret">
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-sm-2 control-label" for="position">QQ app_key</label>
+          <div class="col-sm-4">
+              <input type="text" name="qq_app_key" class="form-control" id="qq_app_key" v-model="site.qq_app_key">
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-sm-2 control-label" for="position">QQ app_secret</label>
+          <div class="col-sm-4">
+              <input type="text" name="qq_app_secret" class="form-control" id="qq_app_secret" v-model="site.qq_app_secret">
+          </div>
         </div>
         <!-- button -->
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-4">
             <button v-if="submit.state === true" class="btn btn-primary" type="submit" disabled="disabled">
               <span class="glyphicon glyphicon-refresh component-loadding-icon"></span>
-              提交...
+              提 交...
             </button>
             <button v-else type="button" class="btn btn-primary" @click.stop.prevent="submitHandle">提交</button>
           </div>
@@ -75,9 +88,12 @@ const NavmanageComponent = {
       message: '',
     },
     site: {
-      logo: '',
-      loginbg: '',
-      status: 1,
+      weibo_app_key: '',
+      weibo_app_secret: '',
+      wechat_app_key: '',
+      wechat_app_secret: '',
+      qq_app_key: '',
+      qq_app_secret: '',
     }
   }),
   methods: {
@@ -85,6 +101,7 @@ const NavmanageComponent = {
       request.get(createRequestURI('site/baseinfo'), {
         validateStatus: status => status === 200
       }).then(({ data = {} }) => {
+      	console.log(data)
         this.site = data;
         this.loadding.state = 1;
       }).catch(({ response: { data: { message = '加载失败' } = {} } = {} }) => {

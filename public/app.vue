@@ -35,6 +35,9 @@
       <router-link to="/setting" tag="li" active-class="active">
         <a href="#">基础配置</a>
       </router-link>
+      <router-link to="/loginmanage" tag="li" active-class="active">
+        <a href="#">三方配置</a>
+      </router-link>
       <router-link to="/navmenu" tag="li" active-class="active">
         <a href="#">导航配置</a>
       </router-link>

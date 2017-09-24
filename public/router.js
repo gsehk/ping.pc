@@ -6,6 +6,7 @@ import AuthList from './component/pc/AuthList.vue';
 import Navmenu from './component/pc/Navmenu.vue';
 import Footnav from './component/pc/Footnav.vue';
 import Setting from './component/pc/Setting.vue';
+import LoginManage from './component/pc/LoginManage.vue';
 import Navmanage from './component/pc/Navmanage.vue';
 import Report from './component/report/Report.vue';
 
@@ -22,6 +23,10 @@ const router = new VueRouter({
     {
       path: '/setting',
       component: Setting,
+    },
+    {
+      path: '/loginmanage',
+      component: LoginManage
     },
     {
       path: '/navmenu',
