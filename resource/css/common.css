@@ -1910,7 +1910,7 @@ img.load {
     margin-bottom: 20px;
 }
 
-.pinned_box .pinned_input input{
+.pinned_box .pinned_input input {
     outline: none;
     text-indent: 10px;
     background-color: transparent;
@@ -1921,6 +1921,11 @@ img.load {
     border-radius: 5px;
     vertical-align: bottom;
     width: 260px;
+}
+
+.pinnnd_box .pinned_total {
+    font-size: 20px;
+    color: #59b6d7;
 }
 
 .success {
