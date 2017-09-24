@@ -15,7 +15,6 @@ $('#J-user-info').on('click', function(e) {
     };
     var arg = getArgs();
     if (!args.data.bio) {
-        showError('', '个人简介不能为空');
         noticebox('个人简介不能为空', 0);
         return;
     }

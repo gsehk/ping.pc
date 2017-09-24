@@ -545,6 +545,8 @@ var showError = function(message, defaultMessage) {
             return;
         }
     }
+    noticebox(defaultMessage, 0);
+    return;
 }
 
 // 验证手机号
