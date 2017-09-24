@@ -13,37 +13,37 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="url">微博 app_key</label>
           <div class="col-sm-4">
-            <input type="text" name="weibo_app_key" class="form-control" id="weibo_app_key" v-model="site.weibo_app_key">
+            <input type="text" name="weibo_app_key" class="form-control" id="weibo_app_key" v-model="site.weibo.client_id">
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="position">微博 app_secret</label>
           <div class="col-sm-4">
-              <input type="text" name="weibo_app_secret" class="form-control" id="weibo_app_secret" v-model="site.weibo_app_secret">
+              <input type="text" name="weibo_app_secret" class="form-control" id="weibo_app_secret" v-model="site.weibo.client_secret">
           </div>
         </div>
 		<div class="form-group">
           <label class="col-sm-2 control-label" for="position">微信 app_key</label>
           <div class="col-sm-4">
-              <input type="text" name="wechat_app_key" class="form-control" id="wechat_app_key" v-model="site.wechat_app_key">
+              <input type="text" name="wechat_app_key" class="form-control" id="wechat_app_key" v-model="site.wechat.client_id">
           </div>
         </div>
 		<div class="form-group">
           <label class="col-sm-2 control-label" for="position">微信 app_secret</label>
           <div class="col-sm-4">
-              <input type="text" name="wechat_app_secret" class="form-control" id="wechat_app_secret" v-model="site.wechat_app_secret">
+              <input type="text" name="wechat_app_secret" class="form-control" id="wechat_app_secret" v-model="site.wechat.client_secret">
           </div>
         </div>
 		<div class="form-group">
           <label class="col-sm-2 control-label" for="position">QQ app_key</label>
           <div class="col-sm-4">
-              <input type="text" name="qq_app_key" class="form-control" id="qq_app_key" v-model="site.qq_app_key">
+              <input type="text" name="qq_app_key" class="form-control" id="qq_app_key" v-model="site.qq.client_id">
           </div>
         </div>
 		<div class="form-group">
           <label class="col-sm-2 control-label" for="position">QQ app_secret</label>
           <div class="col-sm-4">
-              <input type="text" name="qq_app_secret" class="form-control" id="qq_app_secret" v-model="site.qq_app_secret">
+              <input type="text" name="qq_app_secret" class="form-control" id="qq_app_secret" v-model="site.qq.client_secret">
           </div>
         </div>
         <!-- button -->
@@ -88,12 +88,18 @@ const NavmanageComponent = {
       message: '',
     },
     site: {
-      weibo_app_key: '',
-      weibo_app_secret: '',
-      wechat_app_key: '',
-      wechat_app_secret: '',
-      qq_app_key: '',
-      qq_app_secret: '',
+      weibo: {
+        client_id: '',
+        client_secret: '',
+      },
+      wechat: {
+        client_id: '',
+        client_secret: '',
+      },
+      qq: {
+        client_id: '',
+        client_secret: '',
+      }
     }
   }),
   methods: {
@@ -110,6 +116,7 @@ const NavmanageComponent = {
       });
     },
     submitHandle() {
+      console.log(this.site)
       this.submit.state = true;
       request.patch(
         createRequestURI('site/baseinfo'),

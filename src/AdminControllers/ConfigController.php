@@ -136,8 +136,24 @@ class ConfigController extends Controller
      *
      * @return mixed
      */
-    public function get(Request $request, Repository $config, ResponseFactory $response)
+    public function get(Request $request, Repository $config, ResponseFactory $response, Configuration $configuration)
     {
+        $configs = $config->get('pc');
+
+        if (is_null($configs)) {
+            $config->set('pc.status', 1);
+            $config->set('pc.logo', '');
+            $config->set('pc.loginbg', '');
+            $config->set('pc.weibo.client_id', '');
+            $config->set('pc.weibo.client_secret', '');
+            $config->set('pc.wechat.client_id', '');
+            $config->set('pc.wechat.client_secret', '');
+            $config->set('pc.qq.client_id', '');
+            $config->set('pc.qq.client_secret', '');
+
+            $configuration->save($config);
+        }
+
         return $response->json($config['pc'])->setStatusCode(200);
     }
 
