@@ -1872,10 +1872,6 @@ img.load {
 }
 
 /*置顶弹窗*/
-.pinned_box {
-
-}
-
 .pinned_box .pinned_title {
     font-size: 20px;
     margin-bottom: 20px;
@@ -1887,16 +1883,11 @@ img.load {
     margin-bottom: 10px;
     color: #ccc;
 }
-
-.pinned_box .pinned_options {
-
-}
-
-.pinned_box .pinned_options .pinned_spans {
+.pinned_box .pinned_spans {
     margin-bottom: 10px;
 }
 
-.pinned_box .pinned_options .pinned_spans span{
+.pinned_box .pinned_spans span{
     cursor: pointer;
     display: inline-block;
     width: 80px;
@@ -1910,16 +1901,16 @@ img.load {
     border-radius: 5px;
 }
 
-.pinned_box .pinned_options .pinned_spans span.current{
+.pinned_box .pinned_spans span.current{
     color: #59b6d7;
     border: 1px solid #59b6d7;
 }
 
-.pinned_box .pinned_options .pinned_input {
+.pinned_box .pinned_input {
     margin-bottom: 20px;
 }
 
-.pinned_box .pinned_options .pinned_input input{
+.pinned_box .pinned_input input{
     outline: none;
     text-indent: 10px;
     background-color: transparent;
