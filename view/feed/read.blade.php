@@ -23,7 +23,7 @@
                     </a>
                 </div>
                 <div class="detail_user_info">
-                    <div class="detail_user_name"><a href="#">{{ $user['name'] }}</a></div>
+                    <div class="detail_user_name"><a href="{{ route('pc:mine', $user['id']) }}"">{{ $user['name'] }}</a></div>
                     <div class="detail_time">{{ getTime($feed['created_at']) }}</div>
                 </div>
             </div>
@@ -83,8 +83,8 @@
                 <div class="reward-box">
                     <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{$feed->id}}, 'feed')">打 赏</button></p>
                     <p class="reward-info tcolor">
-                        <font color="#F76C6A">{{$feed['reward']['count']}} </font>次打赏，共
-                        <font color="#F76C6A">{{$feed['reward']['amount'] or 0}} </font>元
+                        <font color="#F76C6A">{{ $feed['reward']['count'] }} </font>次打赏，共
+                        <font color="#F76C6A">{{ $feed['reward']['amount'] / 100 }} </font>元
                     </p>
                     <div class="reward-user">
                     @if (!$feed->rewards->isEmpty())

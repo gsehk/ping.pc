@@ -616,57 +616,55 @@ var checkIn = function(is_check, nums) {
 // 打赏
 var rewarded = {
     show: function(id, type) {
-        var html = '<div class="reward-popups">'+
-            '<p class="ucolor font14">选择打赏金额</p>'+
-            '<div class="reward-sum">'+
-                '<label class="opt tcolor" for="sum1">¥1.00'+
-                    '<input class="hide" id="sum1" type="radio" name="sum" value="1">'+
-                '</label>'+
-                '<label class="opt tcolor active" for="sum5">¥5.00'+
-                    '<input class="hide" id="sum5" type="radio" name="sum" value="5" checked>'+
-                '</label>'+
-                '<label class="opt tcolor" for="sum10">¥10.00'+
-                    '<input class="hide" id="sum10" type="radio" name="sum" value="10">'+
-                '</label>'+
-            '</div>'+
-            '<p><input class="custom-sum" type="number" min="0" name="custom" placeholder="自定金额，必须是整数"></p>'+
-            '<div class="reward-btn-box">'+
-                '<button class="btn btn-default mr20" onclick="ly.close();">&nbsp;取 消&nbsp;</button>'+
-                '<button class="btn btn-primary answer" onclick="rewarded.post('+id+', \''+type+'\');">&nbsp;打 赏&nbsp;</button>'+
-            '</div>'+
-        '</div>';
-        ly.loadHtml(html, '', '350px', '300px');
+        var html = '<div class="pinned_box">'
+                        + '<div class="pinned_title">打赏</div>'
+                        + '<div class="pinned_text">选择打赏金额</div>'
+                        + '<div class="pinned_spans">'
+                            + '<span num="100">¥1</span>'
+                            + '<span num="500">¥5</span>'
+                            + '<span num="1000">¥10</span>'
+                        + '</div>'
+                        + '<div class="pinned_input">'
+                            + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义打赏金额，必须为整数">'
+                        + '</div>'
+                    + '</div>';
+
+        ly.confirm(html, '', '打赏', function(){
+            var num = $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('num') : '';
+            var amount = $('.pinned_input input').val();
+
+            if (!num && !amount) {
+                return false;
+            }
+
+            var url = '/api/v2/feeds/'+id+'/rewards';
+            if (type == 'news') {
+                url = '/api/v2/news/'+id+'/rewards';
+            }
+            if (type == 'answer') {
+                url = '/api/v2/question-answers/'+id+'/rewarders';
+            }
+            if (type == 'user') {
+                url = '/api/v2/user/'+id+'/rewards';
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {amount: num ? num : amount},
+                dataType: 'json',
+                error: function(xml) {
+                    showError(xhr.responseJSON);
+                },
+                success: function(res) {
+                    noticebox(res.message, 1, 'refresh');
+                }
+            });
+        });
+
         $('.reward-sum label').on('click', function(){
             $('.reward-sum label').removeClass('active');
             $(this).addClass('active');
         })
-    },
-    post: function (id, type) {
-        ly.close();
-        var sum = $('[name="sum"]:checked').val();
-        var custom = $('[name="custom"]').val();
-        var url = '/api/v2/feeds/'+id+'/rewards';
-        if (type == 'news') {
-            url = '/api/v2/news/'+id+'/rewards';
-        }
-        if (type == 'answer') {
-            url = '/api/v2/question-answers/'+id+'/rewarders';
-        }
-        if (type == 'user') {
-            url = '/api/v2/user/'+id+'/rewards';
-        }
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {amount: custom ? custom : sum},
-            dataType: 'json',
-            error: function(xml) {
-                noticebox('打赏失败', 0);
-            },
-            success: function(res) {
-                noticebox(res.message, 1, 'refresh');
-            }
-        });
     },
     list: function(id, type){
         var index = layer.load(0, {shade: false});
@@ -709,6 +707,7 @@ var rewarded = {
     }
 }
 
+// 评论
 var comment = {
     support: {
         count: 0,
@@ -1042,50 +1041,36 @@ var collected = {
     }
 };
 
-/**
- * 申请置顶
- * @param  url
- */
+// 申请置顶
 var pinneds = function (url) {
     var html = '<div class="pinned_box">'
-                    + '<div class="pinned_item">'
-                        + '<input class="pinned_value" type="hidden" value="" name="pinned_days">'
-                        + '<div class="pinned_title">申请置顶</div>'
-                        + '<div class="pinned_text">选择置顶天数</div>'
-                        + '<div class="pinned_options">'
-                            + '<div class="pinned_spans">'
-                                + '<span amount="1">1d</span>'
-                                + '<span amount="5">5d</span>'
-                                + '<span amount="10">10d</span>'
-                            + '</div>'
-                            + '<div class="pinned_input">'
-                                + '<input type="number" placeholder="自定义置顶天数">'
-                            + '</div>'
-                        + '</div>'
+                    + '<div class="pinned_title">申请置顶</div>'
+                    + '<div class="pinned_text">选择置顶天数</div>'
+                    + '<div class="pinned_spans">'
+                        + '<span days="1">1d</span>'
+                        + '<span days="5">5d</span>'
+                        + '<span days="10">10d</span>'
                     + '</div>'
-                    + '<div class="pinned_item">'
-                        + '<input class="pinned_value" type="hidden" value="" name="pinned_money">'
-                        + '<div class="pinned_text">选择置顶金额</div>'
-                        + '<div class="pinned_options">'
-                            + '<div class="pinned_spans">'
-                                + '<span amount="1">¥1</span>'
-                                + '<span amount="5">¥5</span>'
-                                + '<span amount="10">¥10</span>'
-                            + '</div>'
-                            + '<div class="pinned_input">'
-                                + '<input type="number" placeholder="自定义置顶金额">'
-                            + '</div>'
-                        + '</div>'
+                    + '<div class="pinned_text">设置置顶金额</div>'
+                    + '<div class="pinned_input">'
+                        + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义置顶金额，必须为整数">'
                     + '</div>'
+                    + '<div class="pinned_text">当前平均置顶金额为¥200/天，钱包余额为¥' + BALANCE + '</div>'
+                    + '<div class="pinned_text">需要支付总金额：</div>'
+                    + '<div class="pinned_total">¥<span>0</span></div>'
                 + '</div>';
 
     ly.confirm(html, '', '', function(){
         var data = {
-            day: $('input[name="pinned_days"]').val(),
-            amount: $('input[name="pinned_money"]').val()
+            day: $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '',
+            amount: $('.pinned_input input').val() * 100
         };
-        if (!data.day || !data.amount) {
-            layer.msg('请输入置顶参数');
+        if (!data.day) {
+            // layer.msg('请选择置顶天数');
+            return false;
+        }
+        if (!data.amount) {
+            // layer.msg('请输入置顶金额');
             return false;
         }
         $.ajax({
@@ -1096,14 +1081,12 @@ var pinneds = function (url) {
                 noticebox(res.message, 1);
             },
             error: function(error) {
-                if (error.status === 422) {
-                    layer.msg('已经申请过');
-                }
+                layer.closeAll();
+                showError(error.responseJSON);
             }
         });
     });
 }
-
 
 // 存入搜索记录
 var setHistory = function(str) {
@@ -1151,7 +1134,7 @@ var checkLogin = function() {
     if (MID == 0) {
         window.location.href = SITE_URL+'/passport/login';
 
-        throw new FatalError("you need login!");
+        throw new FatalError("请登录");
     }
 }
 
@@ -1373,20 +1356,20 @@ $(function() {
     }
 
     // 置顶弹窗操作
-    $('body').on('click', '.pinned_item span', function() {
+    $('body').on('click', '.pinned_spans span', function() {
         $(this).siblings().removeClass('current');
         $(this).addClass('current');
-        $(this).parents('.pinned_item').find('input').val('');
 
-        var amount = $(this).attr('amount');
-        var type = $(this).parents('pinned_item').attr('type');
-        $(this).parents('.pinned_item').find('.pinned_value').val(amount);
+        var days = $(this).attr('days');
+        var amount = $('.pinned_input input').val();
+
+        if (amount != '') $('.pinned_total span').html(days*amount);
     });
 
-    $('body').on('focus change', '.pinned_item input', function() {
-        $(this).parents('.pinned_item').find('span').removeClass('current');
-
+    $('body').on('focus keyup change', '.pinned_input input', function() {
+        var days = $('.pinned_spans span.current').length > 0 ? $('.pinned_spans span.current').attr('days') : '';
         var amount = $(this).val();
-        $(this).parents('.pinned_item').find('.pinned_value').val(amount);
+
+        if (days != '') $('.pinned_total span').html(days*amount);
     });
 });
