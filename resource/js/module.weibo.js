@@ -61,6 +61,14 @@ weibo.postFeed = function() {
 
             var html = pay_box + images_box + info_box + '</div>';
         } else { // 文字付费弹窗
+            // 分享字数限制
+            var strlen = getLength($('#feed_content').val());
+            var leftnums = initNums - strlen;
+            if (leftnums < 0 || leftnums == initNums || strlen < 50) {
+                noticebox('付费动态内容长度为50-' + initNums + '字', 0);
+                return false;
+            }
+
             var amount = $('#feed_content').attr('amount') != '' ? $('#feed_content').attr('amount') : '';
             var pay_box = '<div class="feed_pay_box"><p class="pay_title">付费设置</p>';
             var info_box = '';
@@ -87,14 +95,17 @@ weibo.postFeed = function() {
 };
 
 weibo.doPostFeed = function(type) {
+
     // 分享字数限制
     var strlen = getLength($('#feed_content').val());
     var leftnums = initNums - strlen;
-    if (leftnums < 0 || leftnums == initNums) {
+
+    // 免费并仅有文字时验证1-255个字，其余不超过255字即可
+    var check = (type == 'free' && $('.feed_picture').find('img').length == 0)  ? (leftnums < 0 || leftnums == initNums) : (leftnums < 0);
+    if (check) {
         noticebox('分享内容长度为1-' + initNums + '字', 0);
         return false;
     }
-
 
     // 组装数据
     var data = {

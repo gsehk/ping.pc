@@ -8,7 +8,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     <dl class="clearfix">
         <dt>
             <a href="{{ route('pc:mine', $comment['user']['id']) }}">
-                <img src="{{ $comment['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50">
+                <img src="{{ $comment['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="50">
             </a>
         </dt>
         <dd>

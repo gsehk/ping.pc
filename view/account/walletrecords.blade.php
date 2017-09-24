@@ -1,3 +1,7 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+@endphp
+
 @if ($type == 2 || $type == 3) 
     {{-- 交易记录 --}}
     @if(!$records->isEmpty())
@@ -15,7 +19,7 @@
             <tbody>
                 @foreach ($records as $item)
                 <tr>
-                    <td width="25%">{{ $item->created_at }}</td>
+                    <td width="25%">{{ getTime($item->created_at, 0, 0) }}</td>
                     <td width="30%">{{ $item->subject }}</td>
                     <td width="30%">
                         <font color="#FF9400">{{ $item->action==1 ? '+'.$item->amount/100 : '-'.$item->amount/100 }}</font>

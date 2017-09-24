@@ -515,7 +515,7 @@ var showError = function(message, defaultMessage = '操作失败') {
     if (message.errors && message.errors !== null) {
         var message = message.errors;
         for (var key in message) {
-            if (Array.isArray(message)) {
+            if (Array.isArray(message[key])) {
 
                 noticebox(message[key], 0);
                 return;
@@ -528,11 +528,11 @@ var showError = function(message, defaultMessage = '操作失败') {
     if (message.message && message.message !== null) {
         var message = message.message;
         for (var key in message) {
-            if (Array.isArray(message)) {
+            // if (Array.isArray(message[key])) {
 
                 noticebox(message[key], 0);
                 return;
-            }
+            // }
         }
 
         noticebox(defaultMessage, 0);
@@ -540,7 +540,7 @@ var showError = function(message, defaultMessage = '操作失败') {
     }
 
     for (var key in message) {
-        if (Array.isArray(message)) {
+        if (Array.isArray(message[key])) {
 
             noticebox(message[key], 0);
             return;

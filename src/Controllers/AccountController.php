@@ -83,7 +83,7 @@ class AccountController extends BaseController
     {
         $this->PlusData['account_cur'] = 'security';
 
-        $showPassword = Session::get('service');
+        $showPassword = Session::get('service') ?: true;
         $data['showPassword'] = $showPassword;
 
         return view('pcview::account.security', $data, $this->PlusData);

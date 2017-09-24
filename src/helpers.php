@@ -174,14 +174,14 @@ function socialiteRequest($method = 'POST', $url = '', $params = array())
     return $response;
 }
 
-function getTime($time, int $type = 1)
+function getTime($time, int $type = 1, int $format = 1)
 {
     // 本地化
     Carbon::setLocale('zh');
 
     $timezone = isset($_COOKIE['customer_timezone']) ? $_COOKIE['customer_timezone'] : 0;
     // 一小时内显示文字
-    if (Carbon::now()->subHours(24) < $time) {
+    if ((Carbon::now()->subHours(24) < $time) && $format) {
         return $time->diffForHumans();
     }
     return $type ? $time->addHours($timezone)->toDateString() : $time->addHours($timezone);
