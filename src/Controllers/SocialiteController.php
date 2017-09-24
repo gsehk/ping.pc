@@ -10,36 +10,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class SocialiteController extends BaseController
 {
-    protected $config = [];
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->config = [
-            'weibo' => [
-                'weibo' => [
-                    'client_id'     => '3690191563',
-                    'client_secret' => '278b2212b43ce359ee27e19dfd230313',
-                    'redirect'      => env('APP_URL').'/socialite/weibo/callback',
-                ]
-            ],
-            'qq' => [
-               'qq' => [
-                   'client_id'     => '101418557',
-                   'client_secret' => '67d647556551c8e2c53f4ba315f87c93',
-                   'redirect'      => env('APP_URL').'/socialite/qq/callback',
-               ]
-            ],
-            'wechat' => [
-               'wechat' => [
-                   'client_id'     => 'wx183dc69dabad5f29',
-                   'client_secret' => '1aee4dd5b6708e67d5e4d2ffa5d37a13',
-                   'redirect'      => env('APP_URL').'/socialite/wechat/callback',
-               ]
-            ],
-        ];
-    }
-
     /**
      * 三方登录/绑定（未登录时）.
      * @param Request $request
@@ -47,8 +17,8 @@ class SocialiteController extends BaseController
      */
     public function redirectToProvider(Request $request, $service)
     {
-
-        $config = $this->config[$service] ?: [];
+        $config[$service] = $this->PlusData['config']['common'][$service];
+        $config[$service]['redirect'] = $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback';
 
         if (!$config) {
 
@@ -70,8 +40,8 @@ class SocialiteController extends BaseController
      */
     public function redirectToProviderByBind(Request $request, $service)
     {
-        $config = $this->config[$service] ?: [];
-        $config[$service]['redirect'] = $config[$service]['redirect'].'?type=bind';
+        $config[$service] = $this->PlusData['config']['common'][$service];
+        $config[$service]['redirect'] = $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback?type=bind';
 
         if (!$config) {
 
@@ -94,8 +64,9 @@ class SocialiteController extends BaseController
 
     public function handleProviderCallback(Request $request, $service)
     {
-        $config = $this->config[$service] ?: [];
+        $config[$service] = $this->PlusData['config']['common'][$service];
         $type = isset($_GET['type']) ? $_GET['type'] : '';
+        $config[$service]['redirect'] = $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback'.($type != '' ? '?type=bind' : '');
 
         $socialite = new SocialiteManager($config);
         $user = $socialite->driver($service)->user();
