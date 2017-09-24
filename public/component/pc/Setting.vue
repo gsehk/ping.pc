@@ -13,13 +13,13 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="url">站点logo</label>
           <div class="col-sm-4">
-            <Upload :imgs='site.logo' @getTask_id="getlogo_id" @updata='updataImg' />
+            <Upload :imgs='site.logo' @getTask_id="getlogo_id" @updata='updataLogo' />
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="position">登录背景图</label>
           <div class="col-sm-4">
-              <Upload :imgs='site.loginbg' @getTask_id="getloginbg_id" @updata='updataImg' />
+              <Upload :imgs='site.loginbg' @getTask_id="getloginbg_id" @updata='updataIoginbg' />
           </div>
         </div>
         <div class="form-group">
@@ -117,8 +117,11 @@ const NavmanageComponent = {
       this.site.loginbg = task_id;
     },
     // 清除图片ID || 任务ID
-    updataImg() {
-        this.image = null;
+    updataLogo() {
+        this.site.logo = null;
+    },
+    updataIoginbg() {
+        this.site.loginbg = null;
     },
   },
 	created() {
