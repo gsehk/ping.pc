@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="success">
-        <img src="{{ $status == 1 ? asset('zhiyicx/plus-component-pc/images/pic_default_internet.png') : asset('zhiyicx/plus-component-pc/images/pic_default_people.png')}}" alt="">
+        <img src="{{ $status == 1 ? asset('zhiyicx/plus-component-pc/images/pay_pic_succeed.png') : asset('zhiyicx/plus-component-pc/images/pay_pic_failed.png')}}" alt="">
         <div class="content">
             <div class="success-message">{{$message or '操作成功'}}</div>
             <div class="success-content">
