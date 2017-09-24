@@ -59,8 +59,8 @@ $('#J-user-security').on('click', function(){
         type: 'PUT',
         data: getArgs(),
         dataType: 'json',
-        error: function(xml) {
-            noticebox('密码修改失败', 0);
+        error: function(xhr) {
+            showError(xhr.responseJSON);
         },
         success: function(res) {
             noticebox('密码修改成功', 1, 'refresh');

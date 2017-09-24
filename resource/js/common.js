@@ -510,11 +510,40 @@ var logout = function() {
 }
 
 // 接口返回错误解析
-var showError = function(obj) {
-    for (var key in obj)
-    {
-       noticebox(obj[key], 0);
-       break;
+var showError = function(message, defaultMessage) {
+    if (message.errors && message.errors !== null) {
+        var message = message.errors;
+        for (var key in message) {
+            if (Array.isArray(message[key])) {
+
+                noticebox(message[key], 0);
+                return;
+            }
+        }
+
+        noticebox(defaultMessage, 0);
+        return;
+    }
+    if (message.message && message.message !== null) {
+        var message = message.message;
+        for (var key in message) {
+            if (Array.isArray(message[key])) {
+
+                noticebox(message[key], 0);
+                return;
+            }
+        }
+
+        noticebox(defaultMessage, 0);
+        return;
+    }
+
+    for (var key in message) {
+        if (Array.isArray(message[key])) {
+
+            noticebox(message[key], 0);
+            return;
+        }
     }
 }
 
