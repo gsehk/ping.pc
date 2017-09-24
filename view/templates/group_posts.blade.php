@@ -98,7 +98,7 @@
                             <p class="comment_con" id="comment{{$cv->id}}">
                                 <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
                                 @if($cv->user_id != $TS['id'])
-                                    <a onclick="comment.reply({{$cv}})">回复</a>
+                                    <a onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
                                 @else
                                     <a class="comment_del" onclick="comment.delete({{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
                                 @endif

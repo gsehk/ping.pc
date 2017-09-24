@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use SlimKit\PlusSocialite\API\Requests\AccessTokenRequest;
 use Illuminate\Support\Facades\Route;
+use Zhiyi\Plus\Models\User;
 use function asset as plus_asset;
 use function view as plus_view;
 
@@ -194,4 +195,10 @@ function getImageUrl($image = array(), $width, $height, $cut = true)
 function replaceImage($content)
 {
     return preg_replace('/\@\!\[(.*)\]\((\d+)\)/i', '![$1](' . getenv('APP_URL') . '/api/v2/files/$2)', $content);
+}
+
+function getUserInfo($id)
+{
+    $user = User::where('id', '=', $id)->first();
+    return $user;
 }

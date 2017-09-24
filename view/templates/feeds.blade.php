@@ -1,7 +1,7 @@
 @php
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
 @endphp
 
 @if(!$feeds->isEmpty())
@@ -112,9 +112,17 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
                     @if($post->comments->count())
                         @foreach($post->comments as $cv)
                             <p class="comment_con" id="comment{{$cv->id}}">
-                                <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
+                                <span class="tcolor">{{ $cv->user['name'] }}：</span>
+                                @if ($cv->reply_user != 0)
+                                    @php
+                                        $user = getUserInfo($cv->reply_user);
+                                    @endphp
+                                    回复{{ '@'.$user->name }}：
+                                @endif
+
+                                {{$cv->body}}
                                 @if($cv->user_id != $TS['id'])
-                                    <a onclick="comment.reply({{$cv}})">回复</a>
+                                    <a onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
                                 @else
                                     <a class="comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
                                     <a class="comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
