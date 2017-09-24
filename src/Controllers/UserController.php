@@ -43,6 +43,7 @@ class UserController extends BaseController
         }
 
         $data['type'] = $type;
+        $data['area'] = createRequest('GET', '/api/v2/locations/hots');
 
         $this->PlusData['current'] = 'users';
         return view('pcview::user.users', $data, $this->PlusData);

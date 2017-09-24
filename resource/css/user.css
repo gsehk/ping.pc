@@ -34,6 +34,48 @@
     border-bottom: 2px solid #59b6d7;
 }
 
+.user_filter .area_search{
+    position: relative;
+}
+
+.user_filter .search_input {
+    border:0;
+    width: 235px;
+    padding: 7px 15px;
+    padding-right: 35px;
+    border-radius: 18px;
+    background-color: #f3f6f7;
+}
+
+.user_filter .search_icon {
+    position: absolute;
+    left: 201px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.user_filter .area_searching{
+    position: absolute;
+    background: #fff;
+    width: 500px;
+    left: 0;
+    box-shadow: 0 1px 22px #e2e0e0;
+    margin-top: 5px;
+}
+
+.user_filter .area_searching a{
+    display: inline-block;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    float: left;
+    cursor: pointer;
+    text-indent: 10px;
+}
+
+.user_filter .area_searching a:hover {
+    background: #ccc;
+}
 .user_item {
     float: left;
     width: 352px;

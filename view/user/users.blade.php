@@ -15,7 +15,34 @@
                 <li><a type="1" href="javascript:;" @if($type == 1) class="selected" @endif>热门</a></li>
                 <li><a type="2" href="javascript:;" @if($type == 2) class="selected" @endif>最新</a></li>
                 <li><a type="3" href="javascript:;" @if($type == 3) class="selected" @endif>推荐</a></li>
+                <li><a type="4" href="javascript:;" @if($type == 4) class="selected" @endif>地区</a></li>
             </ul>
+            <div class="user_filter @if($type != 4) hide @endif">
+                <div class="area_search mt20">
+                    <input class="font14 search_input" id="location" type="text" name="search_key" placeholder="输入关键字搜索">
+                    <div class="area_searching font14 hide"></div>
+                    <a class="search_icon" id="J-search-area">
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-sousuo"></use></svg>
+                    </a>
+                    <div class="head_search">
+                        <div class="history">
+                            <p>历史记录</p>
+                            <ul></ul>
+                            <div class="clear">
+                                <a href="javascript:;" onclick="delHistory('all')">清空历史记录</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hots_area">
+                    <span class="ucolor">热门城市：</span>
+                    <p class="inline font14 mb0" id="J-area">
+                        <span class="mr10">北京</span>
+                        <span class="mr10">上海</span>
+                        <span class="mr10">四川</span>
+                    </p>
+                </div>
+            </div>
             <div class="clearfix" id="user_list"></div>
         </div>
     </div>
@@ -28,8 +55,8 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script type="text/javascript">
-
     $(function(){
+        var last;
         var type = "{{ $type }}";
         // 关注
         $('#user_list').on('click', '.follow_btn', function(){
@@ -45,6 +72,11 @@
         // 点击切换分类
         $('.user_menu a').click(function(){
             var type = $(this).attr('type');
+            if(type ==4) {
+                $('.user_filter').show();
+            } else {
+                $('.user_filter').hide();
+            }
             switchType(type);
             $(this).parents('ul').find('a').removeClass('selected');
             $(this).addClass('selected');
@@ -53,14 +85,87 @@
         switchType(type);
     })
 
+    $("#location").keyup(function(event){
+        last = event.timeStamp;
+        setTimeout(function(){
+            if(last - event.timeStamp == 0){
+                location_search();
+            }
+        }, 500);
+    })
+
+    $('.area_searching').on('click', 'a', function() {
+        $('#location').val($(this).text());
+        $('.area_searching').hide();
+    })
+
+    function location_search(event)
+    {
+        var val = $.trim($("#location").val());
+        var area_searching = $(".area_searching");
+        area_searching.html('').hide();
+
+        if (val != "") {
+            $.ajax({
+                type: "GET",
+                url: '/api/v2/locations/search',
+                data: {
+                    name: val
+                },
+                success: function(res) {
+                    if (res.length > 0) {
+                        $.each(res, function(key, value) {
+                            if (key < 3) {
+                                var text = tree(value.tree);
+                                var html = '<a>' + text + '</a>';
+                                area_searching.append(html);
+                            }
+                        });
+                        area_searching.show();
+                    }
+                }
+            });
+        }
+    }
+
+    function tree(obj)
+    {
+        var text = '';
+        if (obj.parent != null) {
+            text = tree(obj.parent) + ' ' +  obj.name;
+        } else {
+            text = obj.name;
+        }
+        return text;
+    }
+
+    $('#J-search-area').on('click', function(){
+        var key = $('.search_input').val();
+        if(key) {
+            $.ajax({
+                type: "GET",
+                url: '/api/v2/around-amap/geo',
+                data: { address: key },
+                success: function(res) {
+                    console.log(res)
+                    switchType(type, 11, 22);
+                }
+            });
+        }
+    })
+
     // 切换类型加载数据
-    var switchType = function(type){
+    var switchType = function(type, lat, lng){
 
         $('#user_list').html('');
         var params = {
             type: type,
             limit: 10
         };
+        if (type === 4) {
+            params.latitude = lat;
+            params.longitude = lng;
+        }
         setTimeout(function() {
             scroll.init({
                 container: '#user_list',
@@ -69,8 +174,8 @@
                 params: params,
                 loadtype: 1
             });
-        }, 300);   
-    } 
+        }, 100);
+    }
 
     // 关注回调
     var afterdata = function(target){

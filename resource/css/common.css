@@ -83,6 +83,8 @@ a {
 /* line color */
 .lcolor { color: #EDEDED; }
 
+.wcolor { color: white !important; }
+
 /* border radius round */
 .round { border-radius: 50%; }
 .pointer { cursor: pointer; }
@@ -141,9 +143,8 @@ a {
     content: '.';
 }
 
-.hide {
-    display: none;
-}
+.hide { display: none; }
+.inline { display: inline-block; }
 
 /*导航*/
 
