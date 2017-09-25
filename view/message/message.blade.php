@@ -29,7 +29,7 @@
                 <li @if($type=='tz')class="current_room"@endif data-type="tz">
                     <div class="chat_left_icon">
                         <svg class="icon chat_img" aria-hidden="true">
-                            <use xlink:href="#icon-tongzhi"></use>
+                            <use xlink:href="#icon-tongzhi2"></use>
                         </svg>
                     </div>
                     <div class="left_class">
