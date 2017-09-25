@@ -359,7 +359,9 @@ $(function() {
         $('.feed_picture img').eq(index).attr('amount', real);
 
         // 添加标示
-        $('.pay_images .pay_image').eq(index).append('<svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>');
+        if ($('.pay_images .pay_image').eq(index).find('svg').length == 0){
+            $('.pay_images .pay_image').eq(index).append('<svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>');
+        }
     });
 
     $('body').on('click', '.pay_btn_reset', function() {
