@@ -199,7 +199,7 @@
                         }
                     },
                     error: function (xml) {
-                        showError(xml);
+                        showError(xml.responseJSON.message);
                     }
                 }, 'json');
             });
@@ -252,8 +252,7 @@
                         }
                     },
                     error: function (xml) {
-
-                        showError(xml);
+                        showError(xml.responseJSON.message, 0);
                     }
                 }, 'json');
             })
@@ -298,7 +297,7 @@
                     noticebox('验证码发送成功', 1);
                 },
                 error: function(xml) {
-                    showError(xml);
+                    showError(xml.responseJSON);
                 }
             }, 'json');
         });
@@ -333,7 +332,7 @@
                     data: {},
                     dataType: 'json',
                     error: function (xml) {
-                        showError(xml);
+                        showError(xml.responseJSON.message[0]);
                     },
                     success: function (res, data, xml) {
                         if (xml.status == 204) {
