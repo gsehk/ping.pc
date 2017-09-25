@@ -59,7 +59,7 @@
         var last;
         var type = "{{ $type }}";
         // 关注
-        $('#user_list').on('click', '.follow_btn', function(){
+        $('#content_list').on('click', '.follow_btn', function(){
             var _this = $(this);
             var status = $(this).attr('status');
             var user_id = $(this).attr('uid');
