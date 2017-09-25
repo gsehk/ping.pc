@@ -5,8 +5,8 @@
             {{$TS['name']}}
         </span>
         <a class="avatar" href="{{ route('pc:mine') }}">
-            <img src="{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=100" alt="{{ $TS['name'] }}"/>
-            @if(!$TS->verified)
+            <img class="round" src="{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=100"/>
+            @if($TS->verified)
                 <img class="role-icon" src="{{ $TS->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
             @endif
         </a>

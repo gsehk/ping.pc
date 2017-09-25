@@ -62,7 +62,7 @@
                         <label class="w80 required" for="desc">认证资料</label>
                         @if ($info['data']['files'])
                             @foreach ($info['data']['files'] as $img)
-                                <img class="image" src="{{ $routes['storage'].$img }}?w=230&h=163">
+                                <img class="image" src="{{ $routes['storage'].$img }}?w=232&h=163">
                             @endforeach
                         @endif
                     </div>
@@ -116,7 +116,7 @@
                         <label class="w80 required">认证资料</label>
                         @if ($info['data']['files'])
                             @foreach ($info['data']['files'] as $img)
-                                <img class="image" src="{{ $routes['storage'].$img }}?w=230&h=163">
+                                <img class="image" src="{{ $routes['storage'].$img }}?w=232&h=163">
                             @endforeach
                         @endif
                     </div>
