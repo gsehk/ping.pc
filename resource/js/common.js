@@ -1217,7 +1217,7 @@ $(function() {
     })
 
     // 评论操作菜单
-    $('#feeds_list, .J-commentbox, .feed_datas').on('click', '.options', function() {
+    $('body').on('click', '.options', function() {
         if ($(this).next('.options_div').css('display') == 'none') {
             $('.options_div').hide();
             $(this).next('.options_div').show();

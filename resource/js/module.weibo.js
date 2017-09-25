@@ -253,7 +253,7 @@ $(function() {
     });
 
     // 显示回复框
-    $('#feeds_list').on('click', '.J-comment-show', function() {
+    $('body').on('click', '.J-comment-show', function() {
         checkLogin();
 
         var comment_box = $(this).parent().siblings('.comment_box');
@@ -265,7 +265,7 @@ $(function() {
     });
 
     // 付费图片弹窗
-    $('#feeds_list, .detail_images').on('click', '.locked_image', function() {
+    $('body').on('click', '.locked_image', function() {
         checkLogin();
 
         var _this = $(this);
@@ -296,7 +296,7 @@ $(function() {
     });
 
     // 显示跳转详情文字
-    $('#feeds_list').on("mouseover mouseout", '.date', function(event){
+    $('body').on("mouseover mouseout", '.date', function(event){
         if(event.type == "mouseover"){
           var width = $(this).find('span').first().width();
           $(this).find('span').first().hide();
@@ -309,7 +309,7 @@ $(function() {
     })
 
     // 文字弹窗
-    $('#feeds_list').on('click', '.feed_pay_text', function() {
+    $('body').on('click', '.feed_pay_text', function() {
         checkLogin();
 
         var _this = $(this);
