@@ -809,6 +809,10 @@
     fill: white;
 }
 
+.feed_image_pay{
+    width: 100%;
+}
+
 
 /*动态付费弹窗*/
 .feed_pay_box {
