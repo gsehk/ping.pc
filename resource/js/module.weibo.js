@@ -168,7 +168,7 @@ weibo.afterPostFeed = function(feed_id) {
         }
     })
 };
-weibo.delFeed = function(feed_id) {
+weibo.delFeed = function(feed_id, type) {
     layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
         var url = '/api/v2/feeds/' + feed_id;
         $.ajax({
@@ -176,6 +176,9 @@ weibo.delFeed = function(feed_id) {
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
+                if (type) {
+                    noticebox('删除成功', 1, '/feeds');
+                }
                 $('#feed' + feed_id).fadeOut();
                 layer.closeAll();
             },

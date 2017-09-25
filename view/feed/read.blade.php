@@ -16,17 +16,39 @@
 @section('content')
     <div class="left_container clearfix">
         <div class="feed_left">
-            <div class="detail_user">
-                <div class="detail_user_header">
+            <dl class="user-box clearfix">
+                <dt class="fl">
                     <a href="{{ route('pc:mine', $user['id']) }}">
-                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" alt="">
-                    </a>
-                </div>
-                <div class="detail_user_info">
-                    <div class="detail_user_name"><a href="{{ route('pc:mine', $user['id']) }}"">{{ $user['name'] }}</a></div>
-                    <div class="detail_time">{{ getTime($feed['created_at']) }}</div>
-                </div>
-            </div>
+                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60"></a>
+                </dt>
+                <dd class="fl ml20 body-box">
+                    <span class="tcolor">{{ $user['name'] }}</span>
+                    <div class="gcolor mt10">{{ getTime($feed['created_at']) }}</div>
+                </dd>
+                <dd class="fr mt20 relative feed_datas">
+                    <span class="options">
+                        <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                    </span>
+                    <div class="options_div">
+                    <ul>
+                        @if(isset($TS->id) && $user->id == $TS->id)
+                        <li>
+                            <a href="javascript:;" onclick="weibo.pinneds({{$feed->id}});">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" onclick="weibo.delFeed({{$feed->id}}, 1);">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                            </a>
+                        </li>
+                        @endif
+
+                    </ul>
+                    <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
+                    </div>
+                </dd>
+            </dl>
 
             @if($feed->images)
             <div class="detail_images" id="layer-photos-demo">

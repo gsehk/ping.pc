@@ -31,11 +31,11 @@
                     <div class="options_div">
                     <ul>
                         @if(isset($TS->id) && $news->user->id == $TS->id)
-                            <li>
-                                <a href="javascript:;" onclick="news.pinneds({{$news->id}});">
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
-                                </a>
-                            </li>
+                        <li>
+                            <a href="javascript:;" onclick="news.pinneds({{$news->id}});">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                            </a>
+                        </li>
                         @endif
                     </ul>
                     <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />

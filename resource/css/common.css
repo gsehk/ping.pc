@@ -145,6 +145,8 @@ a {
 
 .hide { display: none; }
 .inline { display: inline-block; }
+.relative { position: relative; }
+.absolute { position: absolute; }
 
 /*导航*/
 

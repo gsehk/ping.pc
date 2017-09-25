@@ -251,7 +251,7 @@
 
 .feed_item .feed_body .feed_pay_text {
     cursor: pointer;
-    text-shadow: 0 0 8px #000; 
+    text-shadow: 0 0 8px #000;
     color: rgba(255,255,255,0);
     -webkit-user-select:none;
     -moz-user-select:none;
@@ -410,7 +410,7 @@
     width: 815px;
     background: #fff;
     margin-right: 30px;
-    padding: 50px;
+    padding: 20px 40px;
 }
 
 .detail_user {

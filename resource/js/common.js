@@ -318,7 +318,7 @@ scroll.clickMore = function(obj) {
                 var html = res.data;
                 $(scroll.setting.container).append(html);
                 $('.click_loading').remove();
-                
+
                 // 点击加载更多
                 if (scroll.setting.loadtype == 2) {
                     $(scroll.setting.loading).after(clickHtml);
@@ -1217,7 +1217,7 @@ $(function() {
     })
 
     // 评论操作菜单
-    $('#feeds_list, .J-commentbox, #news_toolbar').on('click', '.options', function() {
+    $('#feeds_list, .J-commentbox, .feed_datas').on('click', '.options', function() {
         if ($(this).next('.options_div').css('display') == 'none') {
             $('.options_div').hide();
             $(this).next('.options_div').show();
