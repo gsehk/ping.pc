@@ -12,7 +12,7 @@
     <div class="profile_top_info">
         <div class="profile_top_img relative fl">
             <a href="{{ route('pc:mine', $user->id) }}">
-                <img class="round" src="{{ $user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=150"/>
+                <img class="round" src="{{ $user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=160"/>
                 @if($user->verified)
                     <img class="role-icon" src="{{ $user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                 @endif
