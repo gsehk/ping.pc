@@ -71,8 +71,8 @@
                 @endif
             </div>
 
-            <a class="btn reward-btn" href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
-                <svg class="icon"><use xlink:href="#icon-uptop"></use></svg>打赏
+            <a class="btn reward-btn mcolor" href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
+                <svg class="icon"><use xlink:href="#icon-dashang"></use></svg>打赏
             </a>
         @endif
     </div>
