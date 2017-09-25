@@ -1886,7 +1886,7 @@ a {
 }
 
 .chat_right {
-    overflow-y: auto;
+    overflow-y: hidden;
     position: relative;
     float: left;
     width: 510px;
@@ -1895,7 +1895,8 @@ a {
 
 .message-content {
     padding: 0 15px;
-    height: calc(100% - 100px);
+    height: calc(100% - 66px);
+    overflow-y: auto;
 }
 
 .message-content .message-one {
@@ -2316,4 +2317,8 @@ body {
     color: #CFCFCF;
     height: 20px;
     line-height: 20px;
+}
+
+.click_loading {
+    margin-top: -15px;
 }

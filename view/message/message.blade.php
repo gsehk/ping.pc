@@ -143,7 +143,8 @@
                         container: '#message_content',
                         loading: '.message-content-inner',
                         url: '/webmessage/comments',
-                        params: {limit: 10}
+                        params: {limit: 10},
+                        loadtype: 2
                     });
                     body_title.html(title);
                     body_title.removeClass('hide');
@@ -156,7 +157,8 @@
                         container: '#message_content',
                         loading: '.message-content-inner',
                         url: '/webmessage/likes',
-                        params: {limit: 10}
+                        params: {limit: 10},
+                        loadtype: 2
                     });
                     body_title.html(title);
                     body_title.removeClass('hide');
@@ -169,8 +171,9 @@
                         container: '#message_content',
                         loading: '.message-content-inner',
                         url: '/webmessage/notifications',
-                        setting: {paramtype: 1, loadtype: 2},
-                        params: {limit: 10}
+                        setting: {paramtype: 1},
+                        params: {limit: 10},
+                        loadtype: 2
                     });
                     body_title.html(title);
                     body_title.removeClass('hide');
@@ -182,7 +185,8 @@
                         container: '#message_content',
                         loading: '.message-content-inner',
                         url: '/webmessage/feedCommentTop',
-                        params: {limit: 10}
+                        params: {limit: 10},
+                        loadtype: 2
                     });
                     body_title.addClass('hide');
                     audit_top.removeClass('hide');
@@ -195,7 +199,8 @@
                         container: '#message_content',
                         loading: '.message-content-inner',
                         url: '/webmessage/newsCommentTop',
-                        params: {limit: 10}
+                        params: {limit: 10},
+                        loadtype: 2
                     });
 
                     body_title.addClass('hide');
