@@ -66,6 +66,14 @@ $(function() {
     var keywords = '{{ $keywords }}';
     switchType(type);
 
+    // 用户关注
+    $('#content_list').on('click', '.follow_btn', function(){
+        var _this = $(this);
+        var status = $(this).attr('status');
+        var user_id = $(this).attr('uid');
+        follow(status, user_id, _this, afterdata);
+    })
+
     // 问答话题切换
     var select = $(".zy_select");
 
@@ -99,6 +107,13 @@ $(function() {
         type = $(this).attr('type');
         $(this).parents('ul').find('a').removeClass('selected');
         $(this).addClass('selected');
+        switchType(type);
+    })
+
+    // 搜索点击
+    $('.search_icon').click(function(){
+        var val = $('#search_input').val();
+        keywords = val;
         switchType(type);
     })
 
@@ -164,12 +179,19 @@ $(function() {
         };
     }
 
-    // 搜索点击
-    $('.search_icon').click(function(){
-        var val = $('#search_input').val();
-        keywords = val;
-        switchType(type);
-    })
+    // 关注回调
+    var afterdata = function(target){
+        if (target.attr('status') == 1) {
+            target.text('+关注');
+            target.attr('status', 0);
+            target.removeClass('followed');
+        } else {
+            target.text('已关注');
+            target.attr('status', 1);
+            target.addClass('followed');
+        }
+    }
+
 });
 
 </script>

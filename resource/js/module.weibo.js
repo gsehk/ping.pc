@@ -310,11 +310,12 @@ $(function() {
 
     // 文字弹窗
     $('#feeds_list').on('click', '.feed_pay_text', function() {
-        checkLogin()
+        checkLogin();
 
         var _this = $(this);
         var amount = _this.data('amount');
         var node = _this.data('node');
+        var tourl = _this.data('url') || '';
 
         var html = formatConfirm('购买支付', '<div class="confirm_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看完整内容，是否确认支付？');
         ly.confirm(html, '', '', function(){
@@ -325,7 +326,11 @@ $(function() {
                 type: 'POST',
                 dataType: 'json',
                 success: function(res) {
-                    noticebox('支付成功', 1);
+                    if (tourl == '') {
+                        noticebox('支付成功', 1);
+                    } else {
+                        noticebox('支付成功', 1, tourl);
+                    }
                 },
                 error: function(xhr) {
                     showError(xhr.responseJSON);

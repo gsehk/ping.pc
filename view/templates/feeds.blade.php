@@ -18,10 +18,18 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
         <a href="javascript:;">
             <span class="feed_uname font14">{{ $post->user->name }}</span>
         </a>
+
+        @if ($post->paid_node && $post->paid_node['paid'] == false)
+        <a class="date" href="javascript:;">
+            <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
+            <span class="feed_pay_text feed_time font12 hide" data-amount="{{ $post->paid_node['amount'] }}" data-node="{{ $post->paid_node['node'] }}" data-url="{{ route('pc:feedread', $post->id) }}">查看详情</span>
+        </a>
+        @else
         <a class="date" href="{{ route('pc:feedread', $post->id) }}">
             <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
             <span class="feed_time font12 hide">查看详情</span>
         </a>
+        @endif
         @if ($post->pinned == 1)
         <a class="pinned" href="javascript:;">
             <span class="font12">置顶</span>
