@@ -89,10 +89,10 @@ class SocialiteController extends BaseController
         // 未登录时账号注册/绑定
 
             $res = socialiteRequest('POST', '/api/v2/socialite/'.$service, ['access_token' => $access_token]);
-            Session::put('initial_password', $res['user']['initial_password']);
 
             if (isset($res['token'])) { // 登录
-
+                Session::put('initial_password', $res['user']['initial_password']);
+                
                 return redirect(route('pc:token', ['token' => $res['token'], 'type' => 0]));
 
             } elseif (isset($res['message']) && $res['message'] == '请绑定账号') { // 绑定、注册
