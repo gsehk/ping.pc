@@ -13,7 +13,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('pc:follows', ['user_id' => $TS['id']]) }}">
+            <a href="{{ route('pc:follows', ['user_id' => $TS['id'], 'type' => 1]) }}">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-myfans"></use></svg>我的粉丝
             </a>
         </li>
