@@ -126,7 +126,7 @@ weibo.doPostFeed = function(type) {
             if (amount == '') {
                 images.push({'id':$(this).attr('tid')});
             } else {
-                images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount});
+                images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount * 100});
             }
         });
         if (images.length != 0) data.images = images;
