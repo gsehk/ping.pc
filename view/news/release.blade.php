@@ -18,7 +18,7 @@
             <input type="text" id="subject-title" name="title" value="{{$title or ''}}" placeholder="请在此输入20字以内的标题"/>
         </div>
         <div class="release_title p_30">
-            <input type="text" id="subject-abstract" name="abstract" value="{{$subject or ''}}" placeholder="请在此输入60字以内的文章摘要,不填写默认为文章内容前60字"/>
+            <input type="text" id="subject-abstract" name="abstract" value="{{$subject or ''}}" placeholder="请在此输入200字以内的文章摘要,不填写默认为文章内容前60字"/>
         </div>
         <div class="release_title p_30 release_cates">
             @if(isset($cates))

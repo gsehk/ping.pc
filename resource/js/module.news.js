@@ -26,7 +26,7 @@ $('.subject-submit').on('click', function() {
         noticebox('请选择分类', 0);
         return false;
     }
-    if (getLength(args.subject) > 10) {
+    if (getLength(args.subject) > 200) {
         noticebox('摘要内容不能超过200字', 0);
         return false;
     }
