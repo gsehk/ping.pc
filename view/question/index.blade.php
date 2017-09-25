@@ -49,7 +49,7 @@ setTimeout(function() {
         container: '#question-list',
         loading: '.question_body',
         url: '/question',
-        loadtype: 1,
+        paramtype: 1,
         params: {type: 'new', limit: 10}
     });
 }, 300);
@@ -65,7 +65,7 @@ $('.question_sub_nav a').on('click', function() {
             container: '#question-list',
             loading: '.question_body',
             url: '/question',
-            loadtype: 1,
+            paramtype: 1,
             params: {type: type, limit: 10}
         });
     }, 300);

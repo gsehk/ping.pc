@@ -30,7 +30,7 @@
                 ajax: 1,
                 keyword: keyword,
                 topics: "{{$topics}}",
-                loadtype: 1
+                paramtype: 1
             }
         });
     }

@@ -40,7 +40,7 @@ setTimeout(function() {
         container: '#feeds_list',
         loading: '.feed_content',
         url: '/profile/collect',
-        loadtype: 1,
+        paramtype: 1,
         params: {cate: 1, limit: 10}
     });
 }, 300);

@@ -172,7 +172,7 @@
                 loading: '.user_container',
                 url: '/users',
                 params: params,
-                loadtype: 1
+                paramtype: 1
             });
         }, 100);
     }

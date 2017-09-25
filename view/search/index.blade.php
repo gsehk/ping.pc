@@ -145,7 +145,7 @@ $(function() {
                     loading: '.search_container',
                     url: '/search/data',
                     params: params,
-                    loadtype: 1
+                    paramtype: 1
                 });
                 break;
 

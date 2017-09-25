@@ -46,7 +46,7 @@ setTimeout(function() {
         container: '#topic-list',
         loading: '.question_body',
         url: '/question/topic',
-        loadtype: 1,
+        paramtype: 1,
         params: {cate: 1, limit: 10}
     });
 }, 300);
@@ -61,7 +61,7 @@ $('.question_sub_nav a').on('click', function() {
         container: '#topic-list',
         loading: '.question_body',
         url: '/question/topic',
-        loadtype: 1,
+        paramtype: 1,
         params: {cate: type, limit: 10}
     });
 

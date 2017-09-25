@@ -1,5 +1,5 @@
 var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/three-dots.svg' class='load'></div>";
-var clickHtml = "<div class='click_loading'><a href='javascript:;' onclick='scroll.clickMore(this);'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
+var clickHtml = "<div class='click_loading'><a href='javascript:;'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var initNums = 255;
 
@@ -191,7 +191,8 @@ scroll.params = {};
 scroll.init = function(option) {
     this.params = option.params || {};
     this.setting.container = option.container; // 容器ID
-    this.setting.loadtype = option.loadtype || 0; // 加载方式，0为after，1为offset
+    this.setting.paramtype = option.paramtype || 0; // 参数类型，0为after，1为offset
+    this.setting.loadtype = option.loadtype || 0; // 加载方式，0为一直加载更多，1为3次以后点击加载，2为点击加载
     this.setting.loading = option.loading; //加载图位置
     this.setting.loadcount = option.loadcount || 0; // 加载次数
     this.setting.canload = option.canload || true; // 是否能加载
@@ -199,6 +200,7 @@ scroll.init = function(option) {
     this.setting.nodata = option.nodata || 0; // 0显示，1不显示
 
     scroll.bindScroll();
+
     if ($(scroll.setting.container).length > 0 && this.setting.canload) {
         $('.loading').remove();
         $('.click_loading').remove();
@@ -215,15 +217,24 @@ scroll.bindScroll = function() {
             var windowHeight = $(this).height();
             if (scrollTop + windowHeight == scrollHeight) {
                 if ($(scroll.setting.container).length > 0) {
-                    if ((scroll.setting.loadcount % 3) != 0) {
+                    // 一直加载更多
+                    if (scroll.setting.loadtype == 0) {
                         $('.loading').remove();
                         $(scroll.setting.loading).after(loadHtml);
                         scroll.loadMore();
-                    } else {
-                        if ($(scroll.setting.loading).siblings('.click_loading').length == 0) {
-                            $(scroll.setting.loading).after(clickHtml);
+                    }
+
+                    // 加载三次点击加载更多
+                    if (scroll.setting.loadtype == 1) {
+                        if ((scroll.setting.loadcount % 3) != 0) {
+                            $('.loading').remove();
+                            $(scroll.setting.loading).after(loadHtml);
+                            scroll.loadMore();
+                        } else {
+                            if ($(scroll.setting.loading).siblings('.click_loading').length == 0) {
+                                $(scroll.setting.loading).after(clickHtml);
+                            }
                         }
-                        return false;
                     }
                 }
             }
@@ -248,7 +259,7 @@ scroll.loadMore = function() {
                 scroll.setting.canload = true;
 
                 // 两种不同的加载方式
-                if (scroll.setting.loadtype == 0) {
+                if (scroll.setting.paramtype == 0) {
                     scroll.params.after = res.after;
                 } else {
                     scroll.params.offset = scroll.setting.loadcount * scroll.params.limit;
@@ -261,6 +272,11 @@ scroll.loadMore = function() {
                     $(scroll.setting.container).append(html);
                 }
                 $('.loading').remove();
+
+                // 点击加载更多
+                if (scroll.setting.loadtype == 2) {
+                    $(scroll.setting.loading).after(clickHtml);
+                }
 
                 $("img.lazy").lazyload({ effect: "fadeIn" });
             } else {
@@ -293,7 +309,7 @@ scroll.clickMore = function(obj) {
                 scroll.setting.canload = true;
 
                 // 两种不同的加载方式
-                if (scroll.setting.loadtype == 0) {
+                if (scroll.setting.paramtype == 0) {
                     scroll.params.after = res.after;
                 } else {
                     scroll.params.offset = scroll.setting.loadcount * scroll.params.limit;
@@ -302,6 +318,11 @@ scroll.clickMore = function(obj) {
                 var html = res.data;
                 $(scroll.setting.container).append(html);
                 $('.click_loading').remove();
+                
+                // 点击加载更多
+                if (scroll.setting.loadtype == 2) {
+                    $(scroll.setting.loading).after(clickHtml);
+                }
 
                 $("img.lazy").lazyload({ effect: "fadeIn" });
             } else {
@@ -1372,5 +1393,9 @@ $(function() {
         var amount = $(this).val();
 
         if (days != '') $('.pinned_total span').html(days*amount);
+    });
+
+    $('body').on('click', '.click_loading a', function() {
+        scroll.clickMore(this);
     });
 });

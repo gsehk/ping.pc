@@ -169,7 +169,7 @@
                         container: '#message_content',
                         loading: '.message-content-inner',
                         url: '/webmessage/notifications',
-                        setting: {loadtype: 1},
+                        setting: {paramtype: 1, loadtype: 2},
                         params: {limit: 10}
                     });
                     body_title.html(title);

@@ -83,7 +83,8 @@ scroll.init({
     container: '#feeds_list',
     loading: '.feed_content',
     url: '/feeds',
-    params: params
+    params: params,
+    loadtype: 1
 });
 
 $(function(){
