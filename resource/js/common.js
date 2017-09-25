@@ -675,7 +675,7 @@ var rewarded = {
                 data: {amount: num ? num : amount},
                 dataType: 'json',
                 error: function(xml) {
-                    showError(xhr.responseJSON);
+                    showError(xml.responseJSON);
                 },
                 success: function(res) {
                     noticebox(res.message, 1, 'refresh');
