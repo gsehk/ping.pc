@@ -19,7 +19,7 @@
             <dl class="user-box clearfix">
                 <dt class="fl">
                     <a href="{{ route('pc:mine', $user['id']) }}">
-                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60"></a>
+                        <img class="round" src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60"></a>
                 </dt>
                 <dd class="fl ml20 body-box">
                     <span class="tcolor">{{ $user['name'] }}</span>
