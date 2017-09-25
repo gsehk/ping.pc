@@ -531,7 +531,7 @@ var logout = function() {
 }
 
 // 接口返回错误解析
-var showError = function(message, defaultMessage = '操作失败') {
+var showError = function(message, defaultMessage) {
     defaultMessage = defaultMessage || '操作失败';
     if (message.errors && message.errors !== null) {
         var message = message.errors;
