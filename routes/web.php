@@ -95,6 +95,9 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // 充值
     Route::get('/wallet/pay', 'AccountController@pay')->name('pc:walletpay');
 
+    // 跳转充值
+    Route::get('/wallet/payto', 'AccountController@payto')->name('pc:walletpayto');
+
     // 提现
     Route::get('/wallet/draw', 'AccountController@draw')->name('pc:walletdraw');
 
@@ -126,7 +129,8 @@ Route::prefix('users')->group(function () {
     Route::get('/{type?}', 'UserController@users')->where(['type' => '[1-4]'])->name('pc:users');
 
     // 粉丝关注
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]', 'user_id' => '[0-9+]'])->name('pc:follows');
+    // Route::middleware(PcMiddleware\CheckLogin::class)->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]', 'user_id' => '[0-9+]'])->name('pc:follows');
+    Route::middleware(PcMiddleware\CheckLogin::class)->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]'])->name('pc:follows');
 });
 
 
