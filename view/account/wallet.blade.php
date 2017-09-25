@@ -39,8 +39,8 @@
                         <div class="wallet-info clearfix">
                             <div class="remaining-sum">{{ $TS['wallet']['balance']/100 }}</div>
                             <div class="operate">
-                                <button><a href="{{ route('pc:walletpay') }}">充值</a></button>
-                                <button><a href="{{ route('pc:walletdraw') }}">提现</a></button>
+                                <a href="{{ route('pc:walletpay') }}"><button>充值</button></a>
+                                <a href="{{ route('pc:walletdraw') }}"><button class="gray">提现</button></a>
                             </div>
                             <p class="gcolor">账户余额（元）</p>
                         </div>
