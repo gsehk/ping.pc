@@ -59,11 +59,11 @@
     <!-- 动态列表 -->
     <div class="feed_content">
         <div class="feed_menu">
+            <a href="javascript:;" data-type="new" class="font16 @if ($type == 'new')selected @endif">最新</a>
+            <a href="javascript:;" data-type="hot" class="font16 @if ($type == 'hot')selected @endif">热门</a>
             @if (!empty($TS))
                 <a href="javascript:;" data-type="follow" class="font16 @if ($type == 'follow')selected @endif">关注的</a>
             @endif
-            <a href="javascript:;" data-type="hot" class="font16 @if ($type == 'hot')selected @endif">热门</a>
-            <a href="javascript:;" data-type="new" class="font16 @if ($type == 'new')selected @endif">最新</a>
         </div>
         <div id="feeds_list"></div>
     </div>
