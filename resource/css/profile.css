@@ -578,52 +578,21 @@
     color: #fff;
 }
 
-/* 打赏弹出层 */
-.reward-popups {
-    padding: 40px;
+/*付费图片*/
+.locked_image {
+    position: absolute;
+    top: 0;
+    overflow: hidden;
 }
 
-.reward-popups .reward-title {
-    font-size: 18px;
-    margin-bottom: 10px;
-    margin-top: 0;
-}
-
-.reward-popups .reward-list{
-    line-height: 60px;
-}
-
-.reward-popups .reward-list .uname{
-    color: #444;
-    margin: 0 20px;
-}
-
-.reward-popups .reward-sum .opt{
-    cursor: pointer;
-    display: inline-block;
-    padding: 5px 15px;
-    margin-right: 20px;
-    border:1px solid #CCC;
-    border-radius: 2px;
-    background-color: white;
-}
-
-.reward-popups .reward-sum .active {
-    color: #59b6d7;
-    border-color: #59b6d7;
-}
-
-.reward-popups .reward-sum .opt:last-child {
-    margin-right: 0;
-}
-
-.reward-popups .custom-sum {
-    padding: 5px 10px;
-    border-radius: 2px;
-    border: 1px solid #ccc;
-    width: 100%;
-}
-
-.reward-popups .reward-btn-box {
-    margin-top: 40px;
+.locked_image .lock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    fill: white;
 }
