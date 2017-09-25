@@ -15,7 +15,7 @@
                 <li><a type="1" href="javascript:;" @if($type == 1) class="selected" @endif>热门</a></li>
                 <li><a type="2" href="javascript:;" @if($type == 2) class="selected" @endif>最新</a></li>
                 <li><a type="3" href="javascript:;" @if($type == 3) class="selected" @endif>推荐</a></li>
-                <li><a type="4" href="javascript:;" @if($type == 4) class="selected" @endif>地区</a></li>
+                {{-- <li><a type="4" href="javascript:;" @if($type == 4) class="selected" @endif>地区</a></li> --}}
             </ul>
             <div class="user_filter @if($type != 4) hide @endif">
                 <div class="area_search mt20">

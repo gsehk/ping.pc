@@ -723,6 +723,7 @@ a {
     -webkit-box-orient: vertical;
     overflow: hidden;
     display: -webkit-box;
+    word-break: break-all;
 }
 
 /*推荐用户*/

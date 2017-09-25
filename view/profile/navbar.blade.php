@@ -42,7 +42,7 @@
 
                 <li @if($current == 'group') class="active" @endif><a href="{{ route('pc:profilegroup') }}">圈子</a></li>
 
-                <li @if($current == 'question') class="active" @endif><a href="{{ route('pc:profilequestion') }}">问答</a></li>
+                {{-- <li @if($current == 'question') class="active" @endif><a href="{{ route('pc:profilequestion') }}">问答</a></li> --}}
 
                 <li @if($current == 'news') class="active" @endif><a href="{{ route('pc:profilenews') }}">资讯</a></li>
 
