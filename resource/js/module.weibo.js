@@ -265,7 +265,7 @@ $(function() {
     });
 
     // 付费图片弹窗
-    $('#feeds_list, .detail_images').on('click', '.feed_image_pay', function() {
+    $('#feeds_list, .detail_images').on('click', '.locked_image', function() {
         checkLogin();
 
         var _this = $(this);
@@ -284,7 +284,7 @@ $(function() {
                 dataType: 'json',
                 success: function(res) {
                     var img = '<img class="lazy per_image" data-original="' + image + '"/>';
-                    _this.parent().replaceWith(img);
+                    _this.replaceWith(img);
                     $("img.lazy").lazyload({ effect: "fadeIn" });
                     noticebox('支付成功', 1);
                 },
