@@ -393,6 +393,14 @@ a {
     margin: 16px 50px;
 }
 
+.nav_right .role-icon {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    bottom: -3px;
+    left: 20px;
+}
+
 .nav_right a.nava {
     font-size: 14px;
     color: #666;
@@ -1198,13 +1206,20 @@ a {
     overflow: hidden;
 }
 
-.checkin_user img{
+.checkin_user .avatar{
     position: absolute;
     top: -10px;
     right: 10px;
     width: 100px;
     height: 100px;
     border-radius: 50%;
+}
+
+.checkin_user .role-icon {
+    width: 28px;
+    position: absolute;
+    right: 5px;
+    top: 72px;
 }
 
 .checkin_div {

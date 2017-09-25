@@ -10,9 +10,12 @@
     @endif
 
     <div class="profile_top_info">
-        <div class="profile_top_img">
+        <div class="profile_top_img relative fl">
             <a href="{{ route('pc:mine', $user->id) }}">
-                <img src="{{ $user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=150"/>
+                <img src="{{ $user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=220"/>
+                @if($user->verified)
+                    <img class="role-icon" src="{{ $user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                @endif
             </a>
         </div>
         <div class="profile_top_info_d">
