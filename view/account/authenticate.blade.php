@@ -105,7 +105,7 @@
                         <label class="w80 required" for="desc"><font color="red">*</font>认证资料</label>
                         <div class="upload_file">
                             <span class="file_box">
-                                <img id="J-image-preview" src="{{ asset('zhiyicx/plus-component-pc/images/pic_upload.png')}}" />
+                                <img id="J-image-preview" src="{{ asset('zhiyicx/plus-component-pc/images/upload_jg.png')}}" />
                                 <input class="J-file-upload org" type="file" name="file-front" />
                             </span>
                         </div>
