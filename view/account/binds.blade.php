@@ -199,7 +199,7 @@
                         }
                     },
                     error: function (xml) {
-                        showError(xml.responseJSON.message);
+                        showError(xml.responseJSON);
                     }
                 }, 'json');
             });
@@ -252,7 +252,7 @@
                         }
                     },
                     error: function (xml) {
-                        showError(xml.responseJSON.message, 0);
+                        showError(xml.responseJSON, 0);
                     }
                 }, 'json');
             })
@@ -332,7 +332,7 @@
                     data: {},
                     dataType: 'json',
                     error: function (xml) {
-                        showError(xml.responseJSON.message[0]);
+                        showError(xml.responseJSON);
                     },
                     success: function (res, data, xml) {
                         if (xml.status == 204) {
@@ -341,8 +341,6 @@
                             _this.attr('href', SITE_URL + '/socialite/'+type+'/bind');
 
                             noticebox('操作成功', 1);
-                        } else {
-                            noticebox(res.message, 0);
                         }
 
                         return false;
