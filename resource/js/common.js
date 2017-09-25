@@ -637,8 +637,8 @@ var checkIn = function(is_check, nums) {
 
 // 打赏
 var rewarded = {
-    checkLogin();
     show: function(id, type) {
+        checkLogin();
         var html = '<div class="reward_box">'
                         + '<div class="reward_title">打赏</div>'
                         + '<div class="reward_text">选择打赏金额</div>'
