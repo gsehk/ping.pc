@@ -264,7 +264,7 @@
 
 .profile_body .center_box {
     float: left;
-    width: 725px;
+    width: 721px;
     margin-left: -56px;
     padding-left: 85px;
 }
@@ -281,7 +281,7 @@
 
 /*  分享列表  */
 .feed_content {
-    padding: 22px 40px;
+    padding: 22px 42px;
     background: white;
 }
 

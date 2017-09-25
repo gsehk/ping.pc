@@ -14,7 +14,7 @@
 
         <p class="tcolor">设置充值金额</p>
         <div class="pay-sum">
-            <label class="opt" for="sum10">¥10.00<input class="hide" id="sum10" type="radio" name="sum" value="1000"></label>
+            <label class="opt" for="sum10">¥10.00<input class="hide" id="sum10" type="radio" name="sum" value="10"></label>
             <label class="opt active" for="sum50">¥50.00<input class="hide" id="sum50" type="radio" name="sum" value="5000" checked></label>
             <label class="opt" for="sum100">¥100.00<input class="hide" id="sum100" type="radio" name="sum" value="10000"></label>
         </div>
@@ -24,7 +24,7 @@
         <p class="tcolor">选择充值方式</p>
         <div class="pay-way">
             <img src="{{ asset('zhiyicx/plus-component-pc/images/pay_pic_zfb_on.png') }}"/>
-            {{-- <label class="opt active" for="alipay">支付宝<input class="hide" id="alipay" type="radio" name="payway" value="alipay_pc_direct" checked></label> --}}
+            <input class="hide" id="alipay" type="radio" name="payway" value="alipay_pc_direct" checked>
             {{-- <label class="opt" for="wxpay">微信<input class="hide" id="wxpay" type="radio" name="payway" value="wx"></label> --}}
         </div>
 
@@ -75,8 +75,6 @@ $('#J-pay-btn').on('click', function(){
             showError(xml.responseJSON);
         },
         success: function(res) {
-            console.log(res);
-            return false;
             // ping++ 创建支付宝支付
             pingpp.createPayment(res.charge);
         }

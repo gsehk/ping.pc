@@ -638,22 +638,22 @@ var checkIn = function(is_check, nums) {
 // 打赏
 var rewarded = {
     show: function(id, type) {
-        var html = '<div class="pinned_box">'
-                        + '<div class="pinned_title">打赏</div>'
-                        + '<div class="pinned_text">选择打赏金额</div>'
-                        + '<div class="pinned_spans">'
+        var html = '<div class="reward_box">'
+                        + '<div class="reward_title">打赏</div>'
+                        + '<div class="reward_text">选择打赏金额</div>'
+                        + '<div class="reward_spans">'
                             + '<span num="100">¥1</span>'
                             + '<span num="500">¥5</span>'
                             + '<span num="1000">¥10</span>'
                         + '</div>'
-                        + '<div class="pinned_input">'
+                        + '<div class="reward_input">'
                             + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义打赏金额，必须为整数">'
                         + '</div>'
                     + '</div>';
 
         ly.confirm(html, '', '打赏', function(){
-            var num = $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('num') : '';
-            var amount = $('.pinned_input input').val();
+            var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
+            var amount = $('.reward_input input').val() * 100;
 
             if (!num && !amount) {
                 return false;
@@ -1377,7 +1377,7 @@ $(function() {
         });
     }
 
-    // 置顶弹窗操作
+    // 置顶弹窗
     $('body').on('click', '.pinned_spans span', function() {
         $(this).siblings().removeClass('current');
         $(this).addClass('current');
@@ -1393,6 +1393,17 @@ $(function() {
         var amount = $(this).val();
 
         if (days != '') $('.pinned_total span').html(days*amount);
+    });
+
+    // 打赏弹窗
+    $('body').on('click', '.reward_spans span', function() {
+        $('.reward_input input').val('');
+        $(this).siblings().removeClass('current');
+        $(this).addClass('current');
+    });
+
+    $('body').on('focus keyup change', '.reward_input input', function() {
+        $('.reward_spans span').removeClass('current');
     });
 
     $('body').on('click', '.click_loading a', function() {
