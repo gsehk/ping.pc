@@ -28,7 +28,7 @@
             <div class="reg_input">
                 <label>手机验证码</label>
                 <span class="input_span w_280"><input type="text" placeholder="输入手机验证码" name="verifiable_code"autocomplete="off"/></span>
-                <span class="get_code" id="smscode" type="findpwd">获取短信验证码</span>
+                <span class="get_code" id="smscode" type="findpwd">获取验证码</span>
             </div>
             <div class="reg_input">
                 <label>新密码</label>
@@ -58,7 +58,7 @@
             <div class="reg_input">
                 <label>邮箱验证码</label>
                 <span class="input_span w_280"><input type="text" placeholder="输入手机验证码" name="verifiable_code"autocomplete="off"/></span>
-                <span class="get_code" id="smscode" type="findpwd">获取短信验证码</span>
+                <span class="get_code" id="smscode" type="findpwd">获取验证码</span>
             </div>
             <div class="reg_input">
                 <label>新密码</label>

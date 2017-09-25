@@ -269,7 +269,7 @@ var timeDown = function(timeLeft) {
         $('#passsec').html(timeLeft);
         if (timeLeft <= -1) {
             clearInterval(downTimeHandler);
-            $('#smscode').html('获取短信验证码').removeClass('get_code_disable');
+            $('#smscode').html('获取验证码').removeClass('get_code_disable');
         }
     }, 1000);
 };

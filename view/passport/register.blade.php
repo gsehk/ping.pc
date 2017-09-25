@@ -32,7 +32,7 @@
             <div class="reg_input">
                 <label>手机验证码</label>
                 <span class="input_span w_280"><input type="text" placeholder="输入手机验证码" name="verifiable_code" /></span>
-                <span class="get_code" id="smscode" type="reg">获取短信验证码</span>
+                <span class="get_code" id="smscode" type="reg">获取验证码</span>
             </div>
             <div class="reg_input">
                 <label>设置昵称</label>
@@ -78,7 +78,7 @@
                 <span class="input_span w_280">
                     <input type="text" placeholder="输入邮箱验证码" name="verifiable_code" />
                 </span>
-                <span class="get_code" id="smscode" type="reg">获取邮箱验证码</span>
+                <span class="get_code" id="smscode" type="reg">获取验证码</span>
             </div>
             <div class="reg_input">
                 <label>设置昵称</label>
