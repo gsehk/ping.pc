@@ -1886,7 +1886,7 @@ a {
 }
 
 .chat_right {
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
     float: left;
     width: 510px;

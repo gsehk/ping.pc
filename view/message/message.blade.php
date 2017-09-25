@@ -29,7 +29,7 @@
                 <li @if($type=='tz')class="current_room"@endif data-type="tz">
                     <div class="chat_left_icon">
                         <svg class="icon chat_img" aria-hidden="true">
-                            <use xlink:href="#icon-xihuande-copy"></use>
+                            <use xlink:href="#icon-tongzhi"></use>
                         </svg>
                     </div>
                     <div class="left_class">
@@ -40,7 +40,7 @@
                 <li @if($type == 'feed_comment')class="current_room"@endif data-type="feed_comment">
                     <div class="chat_left_icon">
                         <svg class="icon chat_img" aria-hidden="true">
-                            <use xlink:href="#icon-xihuande-copy"></use>
+                            <use xlink:href="#icon-shenhetongzhi"></use>
                         </svg>
                     </div>
                     <div class="left_class">
