@@ -92,17 +92,29 @@ class SocialiteController extends BaseController
 
             if (isset($res['token'])) { // 登录
                 Session::put('initial_password', $res['user']['initial_password']);
-                
-                return redirect(route('pc:token', ['token' => $res['token'], 'type' => 0]));
 
-            } elseif (isset($res['message']) && $res['message'] == '请绑定账号') { // 绑定、注册
+                $return = [
+                    'status' => 1,
+                    'message' => '登录成功',
+                    'data' => [
+                        'token' => $res['token'],
+                    ],
+                ];
 
-                $data['other_type'] = $service;
-                $data['access_token'] = $access_token;
-                $data['name'] = $user->getName();
-
-                return $this->bind($data);
+            } else { // 绑定、注册
+                $return = [
+                    'status' => -1,
+                    'message' => '正在前往绑定窗口...',
+                    'data' => [
+                        'other_type' => $service,
+                        'access_token' => $access_token,
+                        'name' => $user->getName(),
+                    ],
+                ];
             }
+
+
+            return view('pcview::socialite.socialite', $return, $this->PlusData);
         }
 
         return;
@@ -110,11 +122,11 @@ class SocialiteController extends BaseController
 
     /**
      * 三方用户注册/绑定账号（未登录时）.
-     * @param array $data
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function bind(array $data = [])
+    public function bind(Request $request)
     {
+        $data = $request->input();
 
         return view('pcview::socialite.bind', $data, $this->PlusData);
     }
