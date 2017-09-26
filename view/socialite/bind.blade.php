@@ -14,7 +14,7 @@
         </ul>
 
             <div class="reg_form">
-                <form method="POST" id="auth_form">
+                <form method="POST" id="auth_form" autocomplete="off">
 
                     <div id="other_register">
                         <div class="reg_input">
