@@ -1,7 +1,12 @@
 @if($post->images)
     <div id="layer-photos-demo{{$post->id}}">
     @if($post->images->count() == 1)
-        @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => 555, 'height' => 555, 'type' => 'one'])
+        @php
+            // 单张图片默认展示宽高
+            $conw = isset($conw) ? $conw : 555;
+            $conh = isset($conh) ? $conh : 400;
+        @endphp
+        @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => $conw, 'height' => $conh, 'count' => 'one'])
     @elseif($post->images->count() == 2)
         <div style="width: 100%; display: flex;">
             <div style="width: 50%;" class="image_box">
