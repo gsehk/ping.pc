@@ -275,7 +275,10 @@ scroll.loadMore = function() {
 
                 // 点击加载更多
                 if (scroll.setting.loadtype == 2) {
-                    $(scroll.setting.loading).after(clickHtml);
+                    res.count = res.count ? res.count : 0;
+                    if (scroll.params.limit <= res.count) {
+                        $(scroll.setting.loading).after(clickHtml);
+                    }
                 }
 
                 $("img.lazy").lazyload({ effect: "fadeIn" });

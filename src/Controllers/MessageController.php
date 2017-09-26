@@ -68,7 +68,8 @@ class MessageController extends BaseController
         return response()->json([
             'status'  => true,
             'data' => $return,
-            'after' => $data['comments']->pop()->id ?? 0
+            'count' => $data['comments']->count(),
+            'after' => $data['comments']->pop()->id ?? 0,
         ]);
     }
 
@@ -113,6 +114,7 @@ class MessageController extends BaseController
         return response()->json([
             'status'  => true,
             'data' => $return,
+            'count' => $data['likes']->count(),
             'after' => $data['likes']->pop()->id ?? 0
         ]);
     }
@@ -135,6 +137,7 @@ class MessageController extends BaseController
         return response()->json([
             'status'  => true,
             'data' => $return,
+            'count' => $data['notifications']->count(),
         ]);
     }
 
@@ -149,6 +152,7 @@ class MessageController extends BaseController
         return response()->json([
             'status'  => true,
             'data' => $return,
+            'count' => $data['comments']->count(),
             'after' => $data['comments']->pop()->id ?? 0
         ]);
     }
@@ -164,6 +168,7 @@ class MessageController extends BaseController
         return response()->json([
             'status'  => true,
             'data' => $return,
+            'count' => $data['comments']->count(),
             'after' => $data['comments']->pop()->id ?? 0
         ]);
     }
