@@ -13,7 +13,7 @@
     @include('pcview::layouts.partials.leftmenu')
 
     <div class="feed_cont">
-
+        @if (!empty($TS))
         {{-- 动态发布 --}}
         <div class="feed_post">
             <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content" amount=""></textarea>
@@ -36,11 +36,11 @@
                 </div>
             </div>
         </div>
+        @endif
 
         {{-- 动态列表 --}}
         <div class="feed_content">
             <div class="feed_menu">
-                @if (!empty($TS))
                 <a href="javascript:;" data-type="follow" class="font16 @if ($type == 'follow')selected @endif">关注的</a>
                 @endif
                 <a href="javascript:;" data-type="hot" class="font16 @if ($type == 'hot')selected @endif">热门</a>
