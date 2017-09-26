@@ -205,7 +205,7 @@ Route::prefix('socialite')->group(function () {
     // 三方回调
     Route::get('/{service}/callback', 'SocialiteController@handleProviderCallback')->where(['service' => 'weibo|qq|wechat']);
 
-    Route::get('/', 'SocialiteController@bind')->name('pc:socialitebind');
+    Route::post('/', 'SocialiteController@bind')->name('pc:socialitebind');
 });
 
 

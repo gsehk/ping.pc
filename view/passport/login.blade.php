@@ -29,24 +29,23 @@
             <span class="no_account">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
             <div class="login_share" >
                 三方登录：
-                <a href="{{route('pc:socialite', 'weibo')}}">
+                <a href="javascript:" data-type="weibo" class="bind">
                     <svg class="icon icon_weibo" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weibo"></use>
                     </svg>
                 </a>
-                <a href="{{route('pc:socialite', 'qq')}}">
+                <a href="javascript:" data-type="qq" class="bind">
                     <svg class="icon icon_qq" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qq"></use>
                     </svg>
                 </a>
-                <a href="{{route('pc:socialite', 'wechat')}}">
+                <a href="javascript:" data-type="wechat" class="bind">
                     <svg class="icon icon_weixin" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-weixin"></use>
                     </svg>
                 </a>
             </div>
         </div>
-
     </div>
 </div>
 @endsection
@@ -56,11 +55,41 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.passport.js') }} "></script>
 <script type="text/javascript">
 $(function(){ 
-    $(document).keydown(function(event){ 
-        if(event.keyCode==13){ 
-            $("#login_btn").click(); 
+    $(document).keydown(function(event){
+        if(event.keyCode==13){
+            $("#login_btn").click();
         }
     });
-}); 
+    $('.bind').click('on', function () {
+        var type = $(this).data('type');
+        window.open("/socialite/"+type, "", "height=300, width=700");
+    });
+});
+
+function getToken(token) {
+    window.location.href = '/passport/token/' + token + '/0';
+}
+
+function toBind(other_type, access_token, name) {
+    var _token = $('meta[name="_token"]').attr('content');
+    var args = {};
+    args.other_type = other_type;
+    args.access_token = access_token;
+    args.name = name;
+    args._token = _token;
+    var form = $("<form method='post'></form>"),
+        input;
+
+    form.attr({"action": '/socialite'});
+
+    $.each(args,function(key,value){
+        input = $("<input type='hidden'>");
+        input.attr({"name":key});
+        input.val(value);
+        form.append(input);
+    });
+    form.appendTo(document.body);
+    form.submit();
+}
 </script>
 @endsection

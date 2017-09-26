@@ -32,7 +32,7 @@
                                 <a class="bind-right blue to_bind" data-type="phone">去绑定</a>
                             @endif
 
-                            <form class="bind-content">
+                            <form class="bind-content" autocomplete="off">
                                 <div class="bind_form_row">
                                     <label for="phone">手机号</label>
                                     <input id="phone" name="phone" type="text" value="" autocomplete="off">
@@ -59,7 +59,7 @@
                                 <a class="bind-right blue to_bind" data-type="email">去绑定</a>
                             @endif
 
-                            <form class="bind-content">
+                            <form class="bind-content" autocomplete="off">
                                 <div class="bind_form_row">
                                     <label for="email">邮箱账号</label>
                                     <input id="email" name="email" type="text" value="" autocomplete="off">
@@ -165,7 +165,6 @@
             var title = '';
             obj.siblings('.bind-content').find('.bind-submit').on('click', function () {
                 var data = getFormJson(obj.siblings('.bind-content'));
-                console.log(data);
                 if (type == 'phone') {
                     if(!(/^1(3|4|5|7|8)\d{9}$/.test(data.phone))) {
 
