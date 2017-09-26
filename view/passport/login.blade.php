@@ -62,7 +62,7 @@ $(function(){
     });
     $('.bind').click('on', function () {
         var type = $(this).data('type');
-        window.open("/socialite/"+type, "", "height=300, width=700");
+        window.open("/socialite/"+type, "", "height=560, width=700");
     });
 });
 

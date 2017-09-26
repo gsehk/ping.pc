@@ -21,7 +21,7 @@
             <div class="detail_user">
                 <div class="detail_user_header">
                     <a href="#">
-                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="">
+                        <img src="{{ $post['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="">
                     </a>
                 </div>
                 <div class="detail_user_info">
