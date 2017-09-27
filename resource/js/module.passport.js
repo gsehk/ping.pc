@@ -91,6 +91,12 @@ $(function() {
             return false;
         }
 
+        if (password.length < 6 || password.length > 15) {
+            noticebox('密码长度必须在6-15个字符', 0);
+            $('input[name="repassword"]').focus();
+            return false;
+        }
+
         if (password != repassword) {
             noticebox('两次密码输入不一致', 0);
             $('input[name="repassword"]').focus();
@@ -172,6 +178,12 @@ $(function() {
 
         if (password == '') {
             $('input[name="password"]').focus();
+            return false;
+        }
+
+        if (password.length < 6 || password.length > 15) {
+            noticebox('密码长度必须在6-15个字符', 0);
+            $('input[name="repassword"]').focus();
             return false;
         }
 

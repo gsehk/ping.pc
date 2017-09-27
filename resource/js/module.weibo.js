@@ -298,13 +298,15 @@ $(function() {
     // 显示跳转详情文字
     $('body').on("mouseover mouseout", '.date', function(event){
         if(event.type == "mouseover"){
+          var width = $(this).find('span').first().width();
+            width = width < 60 ? 60 : width;
           $(this).find('span').first().hide();
-          $(this).find('span').last().css({display:'inline-block'});
+          $(this).find('span').last().css({display:'inline-block', width: width});
         }else if(event.type == "mouseout"){
           $(this).find('span').first().show();
           $(this).find('span').last().hide();
         }
-    })
+    });
 
     // 文字弹窗
     $('body').on('click', '.feed_pay_text', function() {
