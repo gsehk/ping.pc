@@ -11,7 +11,7 @@ class UserController extends BaseController
     {
         if ($request->ajax()){
             $type = $request->query('type');
-            $limit = $request->query('limit') ?: 9;
+            $limit = $request->query('limit') ?: 10;
             $offset = $request->query('offset') ?: 0;
 
             $params = [
@@ -57,7 +57,7 @@ class UserController extends BaseController
 
             $params = [
                 'after' => $request->query('after'),
-                'limit' => 9
+                'limit' => 10
             ];
 
             // 判断是否为自己
