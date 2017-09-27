@@ -12,17 +12,17 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class BaseController extends Controller
 {
-	protected $PlusData;
+    protected $PlusData;
 
     public function __construct()
     {
-    	$this->middleware(function($request, $next){
+        $this->middleware(function($request, $next){
             // 用户信息
-    		$this->PlusData['token'] = Session::get('token');
+            $this->PlusData['token'] = Session::get('token');
 
-    		$this->PlusData['TS'] = null;
-    		if ($this->PlusData['token']) {
-    			$this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
+            $this->PlusData['TS'] = null;
+            if ($this->PlusData['token']) {
+                $this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
                 if (!isset($this->PlusData['TS']['id'])) { // 不成功跳至登录重新获取授权
                     // 刷新授权
                     $token = createRequest('PATCH', '/api/v2/tokens/' . $this->PlusData['token']);
@@ -35,9 +35,9 @@ class BaseController extends Controller
                     }
                 }
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
-    		}
+            }
             
-			// 站点配置
+            // 站点配置
             $config = Cache::get('config');
 
             if (!$config) {
@@ -50,24 +50,27 @@ class BaseController extends Controller
                 $repository = app(\Illuminate\Contracts\Config\Repository::class);
                 $config['common'] = $repository->get('pc');
 
-                // 导航
-                $config['nav'] = Navigation::byPid(0)->get();
+                // 顶部导航
+                $config['nav'] = Navigation::byPid(0)->byPos(0)->get();
+
+                // 底部导航
+                $config['nav_bottom'] = Navigation::byPid(0)->byPos(1)->get();
 
                 // 缓存配置信息
                 Cache::forever('config', $config);
             }
 
-	        $this->PlusData['config'] = $config;
+            $this->PlusData['config'] = $config;
 
-	        // 公共地址
+            // 公共地址
             $app_url = getenv('APP_URL');
             $this->PlusData['routes']['siteurl'] = $app_url;
             $this->PlusData['routes']['api'] = $app_url . '/api/v2';
             $this->PlusData['routes']['storage'] = $app_url . '/api/v2/files/';
             $this->PlusData['routes']['resource'] = asset('');
 
-    		return $next($request);
-    	});
+            return $next($request);
+        });
     }
 
     public function success($url, $message = '', $content = '', $time = 10)
