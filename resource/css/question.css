@@ -451,6 +451,7 @@ button{
     font-size: 14px;
     line-height: 30px;
     border: 1px solid #ededed;
+    color: #333;
 }
 .subject-error {
     width: 100%;
@@ -634,6 +635,7 @@ button{
     padding: 0 13px;
     border: 1px solid #ededed;
     border-radius: 4px;
+    color: #333;
 }
 
 .invitation-notice {

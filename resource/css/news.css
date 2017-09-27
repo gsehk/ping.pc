@@ -450,6 +450,7 @@
     width: 100%;
     border: none;
     outline: none;
+    color: #333;
 }
 
 .release_cates span {
@@ -626,6 +627,7 @@
     width: 100%;
     border: none;
     outline: none;
+    color: #333;
 }
 
 .release_after {
