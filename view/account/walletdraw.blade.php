@@ -18,7 +18,7 @@
         <p class="tcolor">选择提现方式</p>
         <div class="pay-way">
             <img src="{{ asset('zhiyicx/plus-component-pc/images/pay_pic_zfb_on.png') }}"/>
-            <input class="hide" id="alipay" type="radio" name="payway" value="alipay_pc_direct" checked>
+            <input class="hide" id="alipay" type="radio" name="payway" value="alipay" checked>
             {{-- <label class="opt" for="wxpay">微信<input class="hide" id="wxpay" type="radio" name="payway" value="wx"></label> --}}
         </div>
 
@@ -53,9 +53,9 @@ $('#J-pay-btn').on('click', function(){
 
     var params = {
         type: payway,
-        value: custom,
+        value: custom * 100,
         account: account
-    }
+    };
 
     $.ajax({
         url: '/api/v2/wallet/cashes',
