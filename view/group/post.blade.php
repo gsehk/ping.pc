@@ -152,8 +152,8 @@
             $("img.lazy").lazyload({effect: "fadeIn"});
             bdshare.addConfig('share', {
                 "tag" : "share_feedlist",
-                'bdText' : '{{$post['share_desc']}}',
-                'bdDesc' : '{{$post['share_desc']}}',
+                'bdText' : '{{$post['title']}}',
+                'bdDesc' : '{{$post['content']}}',
                 'bdUrl' : window.location.href
             });
         });

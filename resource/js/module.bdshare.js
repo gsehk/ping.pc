@@ -38,6 +38,9 @@ bdshare = {
 			var i = window._bd_share_config[itemName].length;
 			window._bd_share_config[itemName][i] = config;
 		}
+		if(bdshare.status) {
+			window._bd_share_main.init();
+		}
 	},
 
 	feedlistConfig: false,
