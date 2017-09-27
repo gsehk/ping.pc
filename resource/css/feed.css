@@ -226,6 +226,14 @@
     text-align: right;
 }
 
+.feed_item .feed_title .date>span{
+    min-width: 60px;
+}
+
+.feed_item .feed_title .date>span:first-child{
+    display: inline-block;
+}
+
 .feed_item .feed_title .pinned {
     float: right;
     margin-top: 17px;

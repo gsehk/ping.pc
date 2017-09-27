@@ -298,10 +298,8 @@ $(function() {
     // 显示跳转详情文字
     $('body').on("mouseover mouseout", '.date', function(event){
         if(event.type == "mouseover"){
-          var width = $(this).find('span').first().width();
           $(this).find('span').first().hide();
-          $(this).find('span').last().css({display:'inline-block', width: width});
-          $(this).find('span').last().css({minWidth:'50px'});
+          $(this).find('span').last().css({display:'inline-block'});
         }else if(event.type == "mouseout"){
           $(this).find('span').first().show();
           $(this).find('span').last().hide();
