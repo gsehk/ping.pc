@@ -381,15 +381,15 @@ var checkNums = function(obj, len, show) {
     var _length = getLength(str);
     var surplus = len - _length;
     if (surplus < 0) {
-        $('.' + show)
+        $(obj).parent().find('.' + show)
             .text(surplus)
             .css('color', 'red');
     } else {
-        $('.' + show)
+        $(obj).parent().find('.' + show)
             .text(surplus)
             .css('color', '#59b6d7');
     }
-}
+};
 
 // 关注
 var follow = function(status, user_id, target, callback) {
