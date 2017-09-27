@@ -221,7 +221,8 @@ $(function(){
         "tag" : "share_feedlist",
         'bdText' : '{{ $news['title'] }}',
         'bdDesc' : '{{ $news['title'] }}',
-        'bdUrl' : window.location.href
+        'bdUrl' : window.location.href,
+        'bdPic': "{{count($news['image']) > 0 ? $routes['storage'].$news['image']['id'] : ''}}"
     });
 });
 

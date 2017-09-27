@@ -154,7 +154,8 @@
                 "tag" : "share_feedlist",
                 'bdText' : '{{$post['title']}}',
                 'bdDesc' : '{{$post['content']}}',
-                'bdUrl' : window.location.href
+                'bdUrl' : window.location.href,
+                'bdPic': "{{count($post['images']) > 0 ? $routes['storage'].$post['images'][0]['id'] : ''}}"
             });
         });
 

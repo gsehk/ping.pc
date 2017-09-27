@@ -200,9 +200,10 @@
         $("img.lazy").lazyload({effect: "fadeIn"});
         bdshare.addConfig('share', {
             "tag" : "share_feedlist",
-            'bdText' : '{{$feed['content']}}',
-            'bdDesc' : '{{$feed['content']}}',
-            'bdUrl' : window.location.href
+            'bdText' : '{{$feed['feed_content']}}',
+            'bdDesc' : '{{$feed['feed_content']}}',
+            'bdUrl' : window.location.href,
+            'bdPic': "{{count($feed['images']) > 0 ? $routes['storage'].$feed['images'][0]['file'] : ''}}"
         });
     });
 </script>
