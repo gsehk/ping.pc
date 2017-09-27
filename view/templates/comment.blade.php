@@ -21,11 +21,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
                 <div class="options_div">
                     <ul>
                         @if ($comment['user']['id'] == $TS['id'])
-                            <li>
-                                <a href="javascript:;" onclick="comment.pinneds('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
-                                </a>
-                            </li>
+                            @if(isset($top) ? $top : true)
+                                <li>
+                                    <a href="javascript:;" onclick="comment.pinneds('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
+                                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                                    </a>
+                                </li>
+                            @endif
                             <li>
                                 <a href="javascript:;" onclick="comment.delete('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
                                     <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除

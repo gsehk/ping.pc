@@ -149,6 +149,7 @@ class GroupController extends BaseController
 
             return $item;
         });
+        $comments['top'] = false;
         $commentData = view('pcview::templates.comment', $comments, $this->PlusData)->render();
 
         return response()->json([
