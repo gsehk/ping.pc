@@ -744,6 +744,7 @@ var comment = {
         editor: {},
         button: {},
         wordcount: 255,
+        top: true
     },
     // 初始化回复操作
     reply: function(id, source_id, name) {
@@ -786,6 +787,7 @@ var comment = {
                 if (_this.support.position) {
                     var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
                         html +=     '<span class="tcolor">' + NAME + '：</span>' + original_body + '';
+                        if (_this.support.top)
                         html +=     '<a class="comment_del" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
                         html +=     '<a class="comment_del" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
                         html += '</p>';
@@ -801,12 +803,14 @@ var comment = {
                         html += '                <span class="reply_time">刚刚</span>';
                         html += '                <span class="reply_action options"><svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg></span>';
                         html += '                <div class="options_div">'
-                        html += '                    <ul>'
+                        html += '                    <ul>';
+                    if (_this.support.top) {
                         html += '                        <li>'
                         html += '                            <a href="javascript:;" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
                         html += '                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶'
                         html += '                            </a>'
-                        html += '                        </li>'
+                        html += '                        </li>';
+                    }
                         html += '                        <li>'
                         html += '                            <a href="javascript:;" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
                         html += '                                <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除'
