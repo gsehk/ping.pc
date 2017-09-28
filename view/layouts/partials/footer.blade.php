@@ -1,6 +1,6 @@
 <div class="footer">
     <div class="footer_cont">
-        @if (!$config['nav_bottom']->isEmpty())
+        @if (isset($config['nav_bottom']) && !$config['nav_bottom']->isEmpty())
         <ul>
             @foreach ($config['nav_bottom'] as $nav)
             <li>
