@@ -3,7 +3,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @endphp
 
 @if (isset($image['paid']) && !$image['paid'])
-    <div class="locked_image" @if (isset($count) && $count == 'one') style="position:relative" @endif data-node="{{ $image['paid_node'] }}" data-amount="{{ $image['amount'] }}" data-file="{{ $image['file'] }}" data-original="{{ getImageUrl($image, $width, $height) }}">
+    <div class="locked_image" @if (isset($count) && $count == 'one') style="position:relative" @endif data-node="{{ $image['paid_node'] }}" data-amount="{{ $image['amount'] / 100 }}" data-file="{{ $image['file'] }}" data-original="{{ getImageUrl($image, $width, $height) }}">
 	    <img src="{{ $routes['resource'] }}/images/pic_locked.png" class="feed_image_pay"/>
 	    <svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>
     </div>
