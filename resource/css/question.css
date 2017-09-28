@@ -129,7 +129,6 @@
     overflow: hidden;
     border-bottom: 1px solid #ededed;
     padding: 16px 0;
-    margin-bottom: 10px;
     width: 100%;
 }
 
@@ -271,12 +270,12 @@
 }
 
 /* Icon */
-.Icon{
+.icon{
     vertical-align: text-bottom;
     fill: #9fadc7;
 }
 
-.Icon.Icon--left{
+.icon.icon-left{
     margin-right: 6px;
 }
 
@@ -294,12 +293,12 @@ button{
     appearance: none;
 }
 
-.Button:not(:first-of-type){
+.button:not(:first-of-type){
     margin-left: 24px;
     font-size: 14px;
 }
 
-.Button{
+.button{
     display: inline-block;
     padding: 0 16px;
     font-size: 14px;
@@ -312,8 +311,8 @@ button{
     border-radius: 3px;
 }
 
-.Button--link,
-.Button--plain {
+.button-link,
+.button-plain {
     height: auto;
     padding: 0;
     line-height: inherit;
@@ -322,32 +321,32 @@ button{
     border-radius: 0;
 }
 
-.Button--more{
+.button-more{
     margin-left: 4px;
     color: #5caac6;
 }
 
-.Button--blue {
+.button-blue {
     color: #59b6d7;
     border: 1px solid #59b6d7;
 }
 
-.Button--grey{
+.button-grey{
     color: #ccc;
     border: 1px solid #ccc;
 }
 
-.Button--primary {
+.button-primary {
     background-color: #59b6d7;
     color: #fff;
 }
 
-.QuestionButtonGroup {
+.question-button-group {
     display: inline-block;
     margin: 0 -8px;
 }
 
-.QuestionButtonGroup .Button {
+.question-button-group .button {
     margin: 0 8px;
 }
 

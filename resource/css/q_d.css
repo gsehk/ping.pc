@@ -1,25 +1,25 @@
-.Avatar {
+.avatar {
   border-radius: 2px;
   background: #fff;
 }
 
-.Avatar--medium {
+.avatar--medium {
   border-radius: 3px;
 }
 
-.Avatar--large {
+.avatar--large {
   border-radius: 4px;
 }
 
-.Avatar--round {
+.avatar--round {
   border-radius: 50%;
 }
 
-.QuestionPage {
+.questionpage {
   position: relative;
 }
 
-.QuestionPage .QuestionHeader {
+.questionpage .questionheader {
   overflow: hidden;
   position: relative;
   padding: 16px 0;
@@ -28,7 +28,7 @@
   box-shadow: 0 1px 3px 0 rgba(0, 37, 55, 0.1);
 }
 
-.QuestionPage .QuestionHeader-content {
+.questionpage .questionheader-content {
   display: -webkit-box;
   display: flex;
   margin: 0 auto;
@@ -38,19 +38,19 @@
   justify-content: space-between;
 }
 
-.QuestionPage .QuestionHeader-main {
+.questionpage .questionheader-main {
   position: relative;
   margin-right: 45px;
   padding-left: 20px;
   width: 800px;
 }
 
-.QuestionPage .QuestionHeader-side {
+.questionpage .questionheader-side {
   width: 235px;
   text-align: right;
 }
 
-.QuestionPage .QuestionHeader-price {
+.questionpage .questionheader-price {
   position: absolute;
   top: 1px;
   right: 0;
@@ -58,7 +58,7 @@
   color: #f24343;
 }
 
-.QuestionPage .QuestionHeader-onlook {
+.questionpage .questionheader-onlook {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -66,14 +66,14 @@
   color: #59b6d7;
 }
 
-.QuestionPage .QuestionHeader-tags,
-.QuestionPage .QuestionHeader-topics {
+.questionpage .questionheader-tags,
+.questionpage .questionheader-topics {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.QuestionPage .QuestionHeader-topics {
+.questionpage .questionheader-topics {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-box-align: center;
@@ -87,17 +87,17 @@
   flex-wrap: wrap;
 }
 
-.QuestionPage .QuestionHeader-topics .QuestionTopic {
+.questionpage .questionheader-topics .questiontopic {
   margin: 3px 14px 3px 0;
   vertical-align: middle;
 }
 
-.QuestionPage .QuestionHeader-topics .Button {
+.questionpage .questionheader-topics .button {
   margin-left: 12px;
   vertical-align: middle;
 }
 
-.QuestionPage .QuestionHeader-topics .Tag {
+.questionpage .questionheader-topics .tag {
   display: inline-block;
   position: relative;
   border-radius: 100px;
@@ -110,13 +110,13 @@
   background: rgba(89, 182, 215, 0.2);
 }
 
-.RichText a:not(.link-box):not(.UserLink-link) {
+.richtext a:not(.link-box):not(.userlink-link) {
   border-bottom: 1px solid rgba(64, 64, 64, 0.72);
   text-decoration: none;
   cursor: pointer;
 }
 
-.QuestionHeader-title {
+.questionheader-title {
   overflow: hidden;
   margin-top: 12px;
   margin-bottom: 4px;
@@ -129,46 +129,46 @@
   cursor: pointer;
 }
 
-.QuestionHeader-detail {
+.questionheader-detail {
   min-height: 10px;
 }
 
-.QuestionRichText {
+.questionrichtext {
   font-size: 14px;
   line-height: 25px;
   color: #666;
 }
 
-.QuestionRichText--expandable.QuestionRichText--collapsed {
+.questionrichtext--expandable.questionrichtext--collapsed {
   overflow: hidden;
   max-height: 75px;
   transition: color .14s ease-out;
   cursor: pointer;
 }
 
-.QuestionRichText--expandable.QuestionRichText--collapsed .RichText {
+.questionrichtext--expandable.questionrichtext--collapsed .richtext {
   pointer-events: none;
 }
 
-.QuestionRichText--expandable.QuestionRichText--collapsed:hover {
+.questionrichtext--expandable.questionrichtext--collapsed:hover {
   color: #777;
 }
 
-.QuestionRichText--expandable.QuestionRichText--collapsed:hover a:not(.video-box):not(.link-box):not(.VideoCard-link),
-.QuestionRichText--expandable.QuestionRichText--collapsed:hover u {
+.questionrichtext--expandable.questionrichtext--collapsed:hover a:not(.video-box):not(.link-box):not(.videocard-link),
+.questionrichtext--expandable.questionrichtext--collapsed:hover u {
   border-bottom: 1px solid rgba(112, 112, 112, 0.72);
 }
 
-.QuestionRichText--expandable.QuestionRichText--collapsed:hover a:not(.video-box):not(.link-box):not(.VideoCard-link) u,
-.QuestionRichText--expandable.QuestionRichText--collapsed:hover u u {
+.questionrichtext--expandable.questionrichtext--collapsed:hover a:not(.video-box):not(.link-box):not(.videocard-link) u,
+.questionrichtext--expandable.questionrichtext--collapsed:hover u u {
   border-color: transparent;
 }
 
-.QuestionRichText-more:hover {
+.questionrichtext-more:hover {
   color: #7a8599;
 }
 
-.NumberBoard {
+.numberboard {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -178,87 +178,87 @@
   -ms-flex-align: center;
 }
 
-.NumberBoard-item {
+.numberboard-item {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
 }
 
-.NumberBoard-name {
+.numberboard-name {
   margin-top: 15px;
   font-size: 14px;
   line-height: 20px;
   color: #ccc;
 }
 
-.NumberBoard-value {
+.numberboard-value {
   font-size: 20px;
   font-weight: 500;
   line-height: 24px;
   color: #59b6d7;
 }
 
-.NumberBoard-item.Button:hover .NumberBoard-name,
-.NumberBoard-item.Button:hover .NumberBoard-value {
+.numberboard-item.button:hover .numberboard-name,
+.numberboard-item.button:hover .numberboard-value {
   color: #175199;
 }
 
-.NumberBoard-divider {
+.numberboard-divider {
   border-right: 1px solid #f0f2f7;
   align-self: stretch;
   -ms-flex-item-align: stretch;
 }
 
-.QuestionFollowStatus-counts {
+.questionfollowstatus-counts {
   margin-left: auto;
   width: 200px;
 }
 
-.QuestionFollowStatus-counts .NumberBoard-name {
+.questionfollowstatus-counts .numberboard-name {
   line-height: 14px;
 }
 
-.QuestionFollowStatus-counts .NumberBoard-value {
+.questionfollowstatus-counts .numberboard-value {
   margin-top: 6px;
   line-height: 18px;
 }
 
-.QuestionFollowStatus-people {
+.questionfollowstatus-people {
   margin-top: 30px;
   height: 32px;
 }
 
-.QuestionFollowStatus-people .UserLink {
+.questionfollowstatus-people .userlink {
   display: inline-block;
   vertical-align: middle;
 }
 
-.QuestionFollowStatus-people .UserLink + .UserLink {
+.questionfollowstatus-people .userlink + .userlink {
   margin-left: -8px;
 }
 
-.QuestionFollowStatus-people .Avatar {
+.questionfollowstatus-people .avatar {
   display: block;
   border: 1px solid #fff;
   -webkit-box-shadow: 0 2px 4px rgba(4, 27, 45, 0.1);
   box-shadow: 0 2px 4px rgba(4, 27, 45, 0.1);
 }
 
-.QuestionFollowStatus-people-tip {
+.questionfollowstatus-people-tip {
   margin-right: 8px;
   font-size: 14px;
   vertical-align: middle;
   color: #999;
 }
 
-.QuestionHeader-footer {
+.questionheader-footer {
   margin-top: 4px;
   margin-bottom: -12px;
   padding-bottom: 12px;
   background: #fff;
 }
 
-.QuestionHeader-footer.is-fixed {
+.questionheader-footer.is-fixed {
   margin-top: 0;
   margin-bottom: 0;
   border-top: 1px solid #e7eaf1;
@@ -268,7 +268,7 @@
   box-shadow: 0 -1px 3px rgba(0, 34, 77, 0.05);
 }
 
-.QuestionHeader-footer-inner {
+.questionheader-footer-inner {
   -webkit-box-align: center;
   margin: 0 auto;
   padding: 0 20px;
@@ -278,8 +278,8 @@
   -ms-flex-align: center;
 }
 
-.QuestionHeader-footer-inner,
-.QuestionHeader-footer-main {
+.questionheader-footer-inner,
+.questionheader-footer-main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -288,34 +288,34 @@
   justify-content: space-between;
 }
 
-.QuestionHeaderActions {
+.questionheaderactions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.QuestionHeaderActions > .Button:not(:first-child), .QuestionHeaderActions > .Popover:not(:first-child) {
+.questionheaderactions > .button:not(:first-child), .questionheaderactions > .popover:not(:first-child) {
   margin-left: 24px;
 }
 
 @media (max-width: 690px) {
-  .QuestionHeaderActions > .Button:not(:first-child), .QuestionHeaderActions > .Popover:not(:first-child) {
+  .questionheaderactions > .button:not(:first-child), .questionheaderactions > .popover:not(:first-child) {
     margin-left: 16px;
   }
 }
 
-.Question-main {
+.question-main {
   margin-top: 30px;
 }
 
-.Question-main .Question-main-l {
+.question-main .question-main-l {
   position: relative;
   width: 800px;
   background: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 37, 55, 0.1);
 }
 
-.Question-answers-list .Question-answers-list-header {
+.question-answers-list .question-answers-list-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -332,18 +332,18 @@
   font-size: 14px;
 }
 
-.Question-answers-list .Question-answers-list-header .HeaderTxt {
+.question-answers-list .question-answers-list-header .headertxt {
   margin: 0;
   font-size: 18px;
   color: #333;
 }
 
-.Question-answers-list .List-item {
+.question-answers-list .list-item {
   width: 100%;
   padding: 20px 40px;
 }
 
-.Question-answers-list .List-item .List-item-header {
+.question-answers-list .list-item .list-item-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -352,14 +352,14 @@
   align-items: center;
 }
 
-.Question-answers-list .List-item .List-item-header .AuthorInfo-avatarWrapper {
+.question-answers-list .list-item .list-item-header .authorinfo-avatarwrapper {
   overflow: hidden;
   width: 44px;
   height: 44px;
   border-radius: 50%;
 }
 
-.Question-answers-list .List-item .List-item-header .AuthorInfo-content {
+.question-answers-list .list-item .list-item-header .authorinfo-content {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -367,7 +367,7 @@
   overflow: hidden;
 }
 
-.Question-answers-list .List-item .List-item-header .AuthorInfo-content .AuthorInfo-head {
+.question-answers-list .list-item .list-item-header .authorinfo-content .authorinfo-head {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -380,21 +380,21 @@
   flex-shrink: 0;
 }
 
-.Question-answers-list .List-item .List-item-header .AuthorInfo-content .AuthorInfo-head .AuthorInfo-name {
+.question-answers-list .list-item .list-item-header .authorinfo-content .authorinfo-head .authorinfo-name {
   font-size: 15px;
   font-weight: 500;
   color: #333;
 }
 
-.Question-answers-list .List-item .List-item-header .AuthorInfo-content .AuthorInfo-time {
+.question-answers-list .list-item .list-item-header .authorinfo-content .authorinfo-time {
   margin-top: 9px;
   font-size: 14px;
   color: #ccc;
 }
 
-.Question-answers-list .List-item .Content-inner {
+.question-answers-list .list-item .content-inner {
   margin-top: 15px;
   line-height: 1.67;
 }
 
-/*# sourceMappingURL=scss/maps/q_d.css.map */
+/*# sourcemappingurl=scss/maps/q_d.css.map */
