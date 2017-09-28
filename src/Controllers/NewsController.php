@@ -68,6 +68,9 @@ class NewsController extends BaseController
         // 获取资讯详情
         $news = createRequest('GET', '/api/v2/news/' . $news_id);
         $news->reward = createRequest('GET', '/api/v2/news/' . $news_id . '/rewards/sum');
+        $news->rewards = $news->rewards->shuffle()->filter(function ($value, $key) {
+            return $key < 10;
+        });
         $news->collect_count = $news->collections->count();
         $news->content = replaceImage($news->content);
 

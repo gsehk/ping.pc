@@ -9,7 +9,7 @@
                         </span>
                     </div>
                     <div class="hot-subject">
-                        <a class="hot-issues-title" href="{{ Route('pc:groupread', $issue->id) }}">{{$issue->subject}}</a>
+                        <a class="hot-issues-title" href="{{ Route('pc:questionread', $issue->id) }}">{{$issue->subject}}</a>
                     </div>
                 </li>
             @endforeach

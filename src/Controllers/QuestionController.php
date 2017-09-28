@@ -4,6 +4,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceImage;
 
 class QuestionController extends BaseController
 {
@@ -79,7 +80,7 @@ class QuestionController extends BaseController
         $this->PlusData['current'] = 'question';
 
         $question = createRequest('GET', '/api/v2/questions/'.$question_id );
-        // dd($question->toArray());
+        $question->body = replaceImage($question->body);
         $data['question'] = $question;
 
         return view('pcview::question.read', $data, $this->PlusData);
@@ -153,6 +154,22 @@ class QuestionController extends BaseController
         } else {
             return view('pcview::question.users', $data, $this->PlusData);
         }
+    }
+
+    public function getAnswers(Request $request, int $question_id)
+    {
+        $params['limit'] = $request->input('limit') ?: 10;
+        $params['offset'] = $request->input('offset') ?: 0;
+        $params['order_type'] = $request->input('order_type') ?: 'default';
+
+        $data['answers'] = createRequest('GET', '/api/v2/questions/'.$question_id.'/answers', $params);
+        $return = view('pcview::question.question_answer', $data)
+            ->render();
+
+        return response()->json([
+            'status'  => true,
+            'data' => $return,
+        ]);
     }
 
 }
