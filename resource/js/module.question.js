@@ -60,6 +60,18 @@ var QA = {
 };
 
 var question = {
+    addComment: function (row_id, type) {
+        var url = '/api/v2/questions/' + row_id + '/comments';
+        comment.support.row_id = row_id;
+        comment.support.position = type;
+        comment.support.editor = $('#J-editor'+row_id);
+        comment.support.button = $('#J-button'+row_id);
+        comment.support.top = false;
+        comment.publish(url, function(res){
+            $('.nums').text(comment.support.wordcount);
+            $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);
+        });
+    },
     delQuestion: function(question_id) {
         ly.confirm(formatConfirm('提示', '确定删除这条信息？'), '' , '', function(){
             var url ='/api/v2/questions/' + question_id;

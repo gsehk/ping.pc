@@ -23,26 +23,26 @@
 
                 <div class="answer-footer">
                     <div class="answer-footer-inner">
-                        <button class="button button-plain">
+                        <a href="{{ route('pc:answeread', $answer->id) }}" class="button button-plain">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
                             {{ $answer->comments_count }} 评论
-                        </button>
-                        <button class="button button-plain show-share" onclick="QA.share({{$answer->id}})">
+                        </a>
+                        <a href="{{ route('pc:answeread', $answer->id) }}" class="button button-plain">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-fenxiang1"></use></svg>
                             {{ $answer->likes_count }} 分享
-                        </button>
-                        <button class="button button-plain" id="J-likes{{$answer->id}}" onclick="liked.init({{$answer->id}}, 'question', 1);" status="{{(int) (isset($TS) && $answer->liked)}}" rel="{{ $answer['likes_count'] }}">
+                        </a>
+                        <a href="javascript:;" class="button button-plain" id="J-likes{{$answer->id}}" onclick="liked.init({{$answer->id}}, 'question', 1);" status="{{(int) (isset($TS) && $answer->liked)}}" rel="{{ $answer['likes_count'] }}">
                             @if(isset($TS) && $answer->liked)
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg>
                             @else
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
                             @endif
                             <font>{{ $answer->likes_count }}</font> 点赞
-                        </button>
+                        </a>
 
-                        <button class="button button-plain options" type="button" aria-haspopup="true" aria-expanded="false">
+                        <a href="javascript:;" class="button button-plain options" type="button" aria-haspopup="true" aria-expanded="false">
                             <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
-                        </button>
+                        </a>
                         <div class="options_div">
                             <ul>
                                 @if(isset($TS) && $answer->question->user_id == $TS['id'])
@@ -85,25 +85,9 @@
                             </ul>
                             <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
                         </div>
-                        <div class="share-show">
-                            <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_answerlist">
-                                分享至：
-                                <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                                <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
-                                <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
-                            </div>
-                            <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
 @endif
-<script>
-    $('.show-share').on('click', function () {
-        var _this = $(this);
-        _this.siblings('.share-show').fadeToggle();
-    });
-</script>

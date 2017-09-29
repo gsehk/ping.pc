@@ -54,9 +54,15 @@ Route::prefix('question')->group(function () {
 
     // 创建问题
     Route::get('create', 'QuestionController@createQuestion')->name('pc:createquestion');
+
     Route::get('users', 'QuestionController@getUsers')->name('pc:questionusers');
     // 回答列表
     Route::get('{question_id}/answers', 'QuestionController@getAnswers')->name('pc:questionanswers');
+
+    // 问题评论列表
+    Route::get('{question_id}/comments', 'QuestionController@questionComments')->name('pc:questioncomments');
+
+
 });
 
 Route::prefix('rank')->group(function () {

@@ -888,8 +888,8 @@ button{
 
 .share-show {
     position: absolute;
-    left: 30px;
-    top: 30px;
+    left: 10px;
+    top: 40px;
     border-radius: 3px;
     background: #fff;
     box-shadow: 0 1px 22px #e2e0e0;
@@ -943,4 +943,16 @@ button{
 .right-relevant .relevant-issues-list li>span {
     color: #59b6d7;
     margin-left: 15px;
+}
+
+/*评论*/
+.detail_comment {
+    padding: 1px 40px;
+    color: #666;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.detail_comment .comment_title{
+    margin-top: 20px;
 }

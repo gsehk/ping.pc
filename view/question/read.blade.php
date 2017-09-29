@@ -5,6 +5,7 @@
 @section('styles')
     <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/question.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/q_d.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/feed.css') }}" />
 @endsection
 
 @section('content')
@@ -77,7 +78,7 @@
                     @endif
                     <div class="questionheaderactions">
                         <div class="questionheader-comment">
-                            <button class="button button-plain" type="button">
+                            <button class="button button-plain" type="button" id="comment-button">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
                                 {{ $question->comments_count }} 评论
                             </button>
@@ -152,6 +153,27 @@
     <!-- /question-header -->
     <!-- quesition-main -->
     <div class="question-main">
+        <div class="detail_comment hide">
+            <div class="comment_title"><span class="comment_count cs{{$question->id}}">{{$question['comments_count']}}</span>人评论</div>
+            <div class="comment_box">
+                    <textarea
+                            class="comment_editor"
+                            id="J-editor{{$question->id}}"
+                            placeholder="说点什么吧"
+                            onkeyup="checkNums(this, 255, 'nums');"
+                    ></textarea>
+                <div class="comment_tool">
+                    <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
+                    <button
+                            class="btn btn-primary"
+                            id="J-button{{$question->id}}"
+                            onclick="question.addComment({{$question->id}}, 0)"
+                    > 评 论 </button>
+                </div>
+            </div>
+            <div class="comment_list J-commentbox" id="J-commentbox{{$question->id}}">
+            </div>
+        </div>
         <div class="question-main-l">
             <div class="question-answers">
                 <div class="question-answers-list">
@@ -201,6 +223,7 @@
         </div>
         <!----发布回答 end-->
     </div>
+
     <!-- /quesition-main -->
 
     {{-- 相关问题推荐 --}}
@@ -279,6 +302,10 @@
             var _targetTop = $('.question-main-r').offset().top;//获取位置
             jQuery("html,body").animate({scrollTop:_targetTop},300);//跳转
         });
+        $('.show-share').on('click', function () {
+            var _this = $(this);
+            _this.siblings('.share-show').stop().fadeToggle();
+        });
         // 回答问题
         $('#answer-send').on('click', function () {
             var args = {
@@ -304,5 +331,20 @@
                 }
             });
         });
+
+        $('#comment-button').on('click', function(){
+            $('.detail_comment').fadeIn();
+            $('.question-main-l').fadeOut();
+            $('.question-main-r').fadeOut();
+            setTimeout(function() {
+                scroll.init({
+                    container: '.J-commentbox',
+                    loading: '.question-main',
+                    url: '/question/{{$question->id}}/comments' ,
+                    canload: true
+                });
+            }, 300);
+        });
+
     </script>
 @endsection

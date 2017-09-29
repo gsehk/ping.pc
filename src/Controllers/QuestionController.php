@@ -163,12 +163,49 @@ class QuestionController extends BaseController
         $params['order_type'] = $request->input('order_type') ?: 'default';
 
         $data['answers'] = createRequest('GET', '/api/v2/questions/'.$question_id.'/answers', $params);
+        /*$question = createRequest('GET', '/api/v2/questions/'.$question_id );
+        if (!empty($question['invitation_answers'])) { // 悬赏人回答
+            $question['invitation_answers']->each(function ($item, $key) use ($data) {
+                $data['answers']->prepend($item);
+            });
+        }
+        if (!empty($question['adoption_answers'])) { // 采纳回答
+            $question['adoption_answers']->each(function ($item, $key) use ($data) {
+                $data['answers']->prepend($item);
+            });
+        }*/
+
         $return = view('pcview::question.question_answer', $data, $this->PlusData)
             ->render();
 
         return response()->json([
             'status'  => true,
             'data' => $return,
+        ]);
+    }
+
+    /**
+     * 问题评论列表.
+     *
+     * @param  int    $question 问题id
+     * @return mixed
+     */
+    public function questionComments(Request $request, int $question)
+    {
+        $params = [
+            'after' => $request->query('after', 0),
+            'limit' => $request->query('limit', 10),
+        ];
+        $comments = createRequest('GET', '/api/v2/questions/'.$question.'/comments', $params);
+        $comment = clone $comments;
+        $after = $comment->pop()->id ?? 0;
+        $data['comments'] = $comments;
+        $html = view('pcview::templates.comment', $data, $this->PlusData)->render();
+
+        return response()->json([
+            'status' => true,
+            'after' => $after,
+            'data' => $html
         ]);
     }
 
