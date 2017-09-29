@@ -32,7 +32,7 @@
                     <!-- js增删  .questionrichtext--collapsed 改变content字数 -->
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
-                            <span class="hide">{!! $body = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+                            <span class="hide show-body">{!! $body = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
                             <span class="richtext" itemprop="text">{!! str_limit(strip_tags($body), 300, "...") !!}</span>
                             <button class="button button-plain button-more questionrichtext-more">显示全部</button>
                         </div>
@@ -72,7 +72,9 @@
         <div class="questionheader-footer">
             <div class="questionheader-footer-inner">
                 <div class="questionheader-main questionheader-footer-main">
-                    <span class="questionheader-onlook">￥0.0围观</span>
+                    @if($question['look'] == 1)
+                        <span class="questionheader-onlook">￥0.0围观</span>
+                    @endif
                     <div class="questionheaderactions">
                         <div class="questionheader-comment">
                             <button class="button button-plain" type="button">
@@ -81,11 +83,18 @@
                             </button>
                         </div>
                         <div class="popover sharemenu">
-                            <div>
-                                <button class="button button-plain" type="button">
-                                   <svg class="icon" aria-hidden="true"><use xlink:href="#icon-fenxiang1"></use></svg>
-                                    分享
-                                </button>
+                            <button class="button button-plain show-share" type="button" onclick="question.share({{$question['id']}})">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-fenxiang1"></use></svg>
+                                分享
+                            </button>
+                            <div class="share-show">
+                                <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_questionlist">
+                                    分享至：
+                                    <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                                    <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
+                                    <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
+                                </div>
+                                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
                             </div>
                         </div>
                         @if($question['user_id'] == $TS['id'])
@@ -93,9 +102,29 @@
                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>
                                 编辑
                             </button>
+
+                            <button class="button button-plain options" type="button" aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                            </button>
+                            <div class="options_div">
+                                <ul>
+                                    <li>
+                                        <a href="javascript:;" onclick="alert('暂无接口');">
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jingxuanwenda"></use></svg>申请为精选问答
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;" onclick="question.delQuestion('{{$question['id']}}')">
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                        </a>
+                                    </li>
+                                </ul>
+                                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
+                            </div>
+
                         @else
                             <button class="button button-plain" type="button">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
                                 收藏
                             </button>
                             <button class="button button-plain" type="button">
@@ -103,17 +132,13 @@
                                 举报
                             </button>
                         @endif
-                        <div class="popover">
-                            <button class="button button-plain" type="button" id="popover-6485-72543-toggle" aria-haspopup="true" aria-expanded="false" aria-owns="popover-6485-72543-content">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
-                             </button>
-                         </div>
+
                     </div>
                     <div class="questionheader-actions"></div>
                 </div>
                 <div class="questionheader-side">
                     <div class="question-button-group">
-                        @if ($question->watched)
+                        @if (isset($TS) && $question->watched)
                             <button class="button button-grey watched" type="button" data-watched="1">已关注</button>
                         @else
                             <button class="button button-primary button-blue watched" type="button" data-watched="0">关注</button>
@@ -131,7 +156,7 @@
             <div class="question-answers">
                 <div class="question-answers-list">
                     <div class="question-answers-list-header">
-                        <h4 class="headertxt">{{$question['answers_count']}}个回答</h4>
+                        <h4 class="headertxt"><span class="qs{{$question->id}}">{{$question['answers_count']}}</span>个回答</h4>
                         <div data-value="" class="zy_select t_c gap12 ">
                             <span>默认排序</span>
                             <ul>
@@ -185,6 +210,9 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js')}}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
+
     <script>
         setTimeout(function() {
             scroll.init({
@@ -272,7 +300,6 @@
                     }
                 },
                 error:function (xml) {
-                    console.log(xml);
                     showError(xml.responseJSON);
                 }
             });

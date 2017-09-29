@@ -10,5 +10,83 @@ var QA = {
             $('.nums').text(comment.support.wordcount);
             $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);
         });
+    },
+    adoptions: function (question_id, answer_id) {
+        var url = '/api/v2/questions/' + question_id + '/adoptions/' + answer_id;
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            dataType: 'json',
+            success: function(res) {
+                noticebox(res.message, 1, '/question/' + question_id);
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        });
+    },
+    delAnswer: function (question_id, answer_id) {
+        url = '/api/v2/question-answers/' + answer_id;
+         $.ajax({
+             url: url,
+             type: 'DELETE',
+             dataType: 'json',
+             success: function(res, data, xml) {
+                 if (xml.status == 204) {
+                     $('#answer' + answer_id).fadeOut();
+                     $('.qs' + question_id).text(parseInt($('.qs' + question_id).text())-1);
+                 }
+             },
+             error: function(xhr){
+                 showError(xhr.responseJSON);
+             }
+         });
+    },
+    share: function (answer_id) {
+        var bdDesc = $('#answer' + answer_id).find('.answer-body').text();
+        var reg = /<img src="(.*?)".*?/;
+        var imgs = reg.exec($('.show-answer-body').html());
+        var img = imgs != null ? imgs[1] : '';
+        bdshare.addConfig('share', {
+            "tag" : "share_answerlist",
+            'bdText' : bdDesc,
+            'bdDesc' : '',
+            'bdUrl' : SITE_URL + '/question/answer/' + answer_id,
+            'bdPic': img
+        });
+
+        console.log(bdDesc);
     }
-}
+};
+
+var question = {
+    delQuestion: function(question_id) {
+        ly.confirm(formatConfirm('提示', '确定删除这条信息？'), '' , '', function(){
+            var url ='/api/v2/questions/' + question_id;
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                dataType: 'json',
+                success: function(res) {
+                    noticebox('删除成功', 1, '/question');
+                },
+                error: function(xhr){
+                    showError(xhr.responseJSON);
+                }
+            });
+        });
+    },
+    share: function (question_id) {
+        var bdDesc = $('.richtext').text();
+        var reg = /<img src="(.*?)".*?/;
+        var imgs = reg.exec($('.show-body').html());
+        var img = imgs != null ? imgs[1] : '';
+        bdshare.addConfig('share', {
+            "tag" : "share_questionlist",
+            'bdText' : bdDesc,
+            'bdDesc' : "",
+            'bdUrl' : SITE_URL + '/question/' + question_id,
+            'bdPic': img
+        });
+    }
+};

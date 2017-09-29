@@ -163,7 +163,7 @@ class QuestionController extends BaseController
         $params['order_type'] = $request->input('order_type') ?: 'default';
 
         $data['answers'] = createRequest('GET', '/api/v2/questions/'.$question_id.'/answers', $params);
-        $return = view('pcview::question.question_answer', $data)
+        $return = view('pcview::question.question_answer', $data, $this->PlusData)
             ->render();
 
         return response()->json([

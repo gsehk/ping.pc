@@ -1014,6 +1014,7 @@ var collected = {
                 _this.box.find('a').addClass('act');
                 _this.box.find('font').text(_this.num);
                 _this.box.find('svg').html('<use xlink:href="#icon-shoucang-copy"></use>');
+                _this.box.find('span.collect').text('已收藏');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
@@ -1039,6 +1040,7 @@ var collected = {
                 _this.box.find('a').removeClass('act');
                 _this.box.find('font').text(_this.num);
                 _this.box.find('svg').html('<use xlink:href="#icon-shoucang-copy1"></use>');
+                _this.box.find('span.collect').text('收藏');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
@@ -1255,6 +1257,11 @@ $(function() {
         // 顶部搜索
         if (!target.is('.head_search') && target.parents('.head_search').length == 0 && target.parents('.nav_search').length == 0) {
             $('.head_search').hide();
+        }
+
+        // 分享
+        if(!target.is('div.share-show,button.show-share') && target.parents('.share-show').length == 0) {
+            $('.share-show').fadeOut();
         }
     });
 

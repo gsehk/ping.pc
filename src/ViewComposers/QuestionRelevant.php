@@ -8,7 +8,7 @@ class QuestionRelevant
 {
     public function compose(View $view)
     {
-        $issues = createRequest('GET', '/api/v2/questions', ['limit' => 9]);
+        $issues = createRequest('GET', '/api/v2/questions', ['limit' => 10]);
 
         $view->with('issues', $issues);
     }
