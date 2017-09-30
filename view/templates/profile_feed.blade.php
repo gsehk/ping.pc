@@ -6,6 +6,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 
 @if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
+<div class="feed_box">
 <div class="feed_item" id="feed{{$post->id}}">
 
     <span class="feed_time">
@@ -113,6 +114,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
         </div>
         <div class="feed_line"></div>
     </div>
+</div>
 </div>
 <script type="text/javascript">
     layer.photos({

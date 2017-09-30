@@ -279,7 +279,7 @@
 
 /*  分享列表  */
 .feed_content {
-    padding: 22px 42px;
+    padding: 30px 40px;
     background: white;
 }
 
@@ -292,20 +292,20 @@
     color: #333;
 }
 
-.center_box .feed_box {
-    margin-left: -136px;
+.left_container .feed_box {
+    margin-left: 53px;
     padding-bottom: 10px;
-    padding-left: 136px;
+    padding-left: 90px;
     border-left: 1px solid #ccc;
 }
 
-.center_box .feed_item {
+.left_container .feed_item {
     position: relative;
 }
 
-.center_box .feed_item:before {
+.left_container .feed_item:before {
     position: absolute;
-    left: -163px;
+    left: -115px;
     display: inline-block;
     width: 50px;
     height: 50px;
@@ -337,7 +337,7 @@
     line-height: 38px;
     position: absolute;
     top: 0;
-    left: -163px;
+    left: -115px;
     text-align: center;
     color: #fff;
     font-size: 14px;
@@ -354,7 +354,7 @@
     line-height: 24px;
     display: -webkit-box;
     overflow: hidden;
-    margin: 15px 0;
+    margin-top: 0;
     word-break: break-word;
     color: #666;
     -webkit-line-clamp: 3;

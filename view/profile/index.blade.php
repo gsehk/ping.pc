@@ -12,18 +12,17 @@
 @include('pcview::profile.navbar')
 
 <div class="profile_body">
-    <div class="left_box"></div>
-    <div class="center_box">
+    <div class="left_container">
         {{-- 动态列表 --}}
         <div class="feed_content">
-            <div class="feed_menu">
+            <div class="feed_menu mb30">
                 <a href="javascript:;" class="active">全部</a>
             </div>
-            <div id="feeds_list" class="feed_box"></div>
+            <div id="feeds_list"></div>
         </div>
     </div>
 
-    <div class="right_box">
+    <div class="right_container">
         {{-- 推荐用户 --}}
         @include('pcview::widgets.recusers')
     </div>
@@ -33,7 +32,7 @@
 
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
+{{-- <script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script> --}}
 <script>
 // 加载微博
 var params = {

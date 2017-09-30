@@ -12,11 +12,10 @@
 @include('pcview::profile.navbar')
 
 <div class="profile_body">
-    <div class="left_box"></div>
-    <div class="center_box">
-        {{-- 动态列表 --}}
+    <div class="left_container">
+        {{-- 资讯列表 --}}
         <div class="feed_content">
-        <div class="feed_menu J-menu">
+        <div class="feed_menu mb30 J-menu">
         @if ($user->id == $TS->id)
             <a class="active" href="javascript:;" cid="0">已发布</a>
             <a href="javascript:;" cid="1">投稿中</a>
@@ -25,11 +24,11 @@
             <a class="active" href="javascript:;">TA的文章</a>
         @endif
         </div>
-            <div id="feeds_list" class="feed_box"></div>
+            <div id="feeds_list"></div>
         </div>
     </div>
 
-    <div class="right_box">
+    <div class="right_container">
         @include('pcview::widgets.recusers')
     </div>
 </div>

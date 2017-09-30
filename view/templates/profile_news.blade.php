@@ -3,6 +3,7 @@
 
 @if(!$data->isEmpty())
 @foreach($data as $key => $post)
+<div class="feed_box">
 <div class="feed_item" @if($loop->first) style="margin-top:20px;" @endif>
 
     <span class="feed_time">
@@ -100,6 +101,7 @@
         </div>
         <div class="feed_line"></div>
     </div>
+</div>
 </div>
 @endforeach
 @endif

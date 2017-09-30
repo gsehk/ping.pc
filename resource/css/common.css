@@ -100,23 +100,22 @@ a {
 
 .margin0 { margin: 0; }
 .padding0 { padding: 0; }
-
 .mt0 { margin-top: 0; }
 .mt10 { margin-top: 10px; }
 .mt20 { margin-top: 20px; }
-
+.mt30 { margin-top: 30px; }
+.mt40 { margin-top: 40px; }
 .mr0 { margin-right: 0; }
 .mr10 { margin-right: 10px; }
 .mr20 { margin-right: 20px; }
-
 .mb0 { margin-bottom: 0; }
 .mb10 { margin-bottom: 10px; }
 .mb20 { margin-bottom: 20px; }
-
+.mb30 { margin-bottom: 30px; }
+.mb40 { margin-bottom: 40px; }
 .ml0 { margin-left: 0; }
 .ml10 { margin-left: 10px; }
 .ml20 { margin-left: 20px; }
-
 .gray { background: #f3f6f7; }
 .bgwhite { background-color: white; }
 
