@@ -2314,6 +2314,7 @@ body {
 
 .tz-cont .tz-content {
     line-height: 25px;
+    word-break: break-all;
 }
 
 .tz-cont .tz-date {
