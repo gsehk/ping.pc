@@ -279,6 +279,8 @@
     float: left;
     clear: both;
     width: 180px;
+    height: 130px;
+    overflow: hidden;
 }
 
 .rel_news_word {
