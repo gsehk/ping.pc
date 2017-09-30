@@ -17,6 +17,7 @@
         <div class="nav_menu">
             <div class="hover_cover clearfix">
             </div>
+            <div class="triangle"></div>
             <ul>
                 <li>
                     <a href="{{ route('pc:profilecollect') }}">
@@ -50,7 +51,6 @@
                     <a href="javascript:void(0)" onclick="logout()">退出</a>
                 </li>
             </ul>
-            <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
         </div>
     </div>
     @else

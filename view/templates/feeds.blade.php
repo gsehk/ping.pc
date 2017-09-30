@@ -65,6 +65,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
             </span>
             <div class="options_div">
+                <div class="triangle"></div>
                 <ul>
                     <li id="J-collect{{$post->id}}" rel="0" status="{{(int) $post->has_collect}}">
                         @if($post->has_collect)
@@ -94,7 +95,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
                     </li>
                     @endif
                 </ul>
-                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
             </div>
         </div>
 

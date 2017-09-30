@@ -340,12 +340,9 @@
     box-shadow: 0 1px 22px #e2e0e0;
 }
 
-
-
 .feed_datas .options_div .triangle {
-    position: absolute;
-    top: -14px;
-    left: 47px;
+    margin-top: -8px;
+    margin-left: 55px;
 }
 
 .feed_datas .options_div ul {
@@ -783,11 +780,7 @@
 .feed_pay_box .pay_images .triangle {
     margin-top: 8px;
     margin-left: 23px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid #f3f6f7;
+    border-bottom: 8px solid #fff;
 }
 
 .feed_pay_box .pay_info {

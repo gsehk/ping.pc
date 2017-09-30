@@ -454,9 +454,8 @@ a {
 }
 
 .nav_menu .triangle {
-    position: absolute;
-    top: -18px;
-    left: 120px;
+    margin-left: 128px;
+    margin-top: -18px;
 }
 
 .nav_menu ul li {
@@ -1873,6 +1872,16 @@ img.load {
 .a_link:hover {
     text-decoration: none;
     color: #fff !important;
+}
+
+/*三角*/
+.triangle {
+    margin-top: -8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
 }
 
 

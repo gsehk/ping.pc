@@ -25,7 +25,6 @@ class QuestionController extends BaseController
                 'data' => $html
             ]);
         }
-
         return view('pcview::question.index', [], $this->PlusData);
     }
 

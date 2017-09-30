@@ -1120,6 +1120,12 @@ var pinneds = function (url) {
     });
 }
 
+// 更多操作
+var options = function(obj) {
+    var options = $(obj).parent().find('.options_div');
+    $(options).show();
+}
+
 // 存入搜索记录
 var setHistory = function(str) {
     if (localStorage.history) {
