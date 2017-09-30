@@ -801,8 +801,9 @@ var comment = {
                         html += '            <span class="reply_name">'+NAME+'</span>';
                         html += '            <div class="reply_tool feed_datas">';
                         html += '                <span class="reply_time">刚刚</span>';
-                        html += '                <span class="reply_action options"><svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg></span>';
+                        html += '                <span class="reply_action options" onclick="options(this)"><svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg></span>';
                         html += '                <div class="options_div">'
+                        html += '                    <div class="triangle_one"></div>'
                         html += '                    <ul>';
                     if (_this.support.top) {
                         html += '                        <li>'
@@ -817,7 +818,6 @@ var comment = {
                         html += '                            </a>'
                         html += '                        </li>'
                         html += '                    </ul>'
-                        html += '                    <img src="http://tss.io/zhiyicx/plus-component-pc/images/triangle.png" class="triangle">'
                         html += '                </div>'
                         html += '            </div>';
                         html += '            <div class="reply_body">'+original_body+'</div>';
@@ -1122,8 +1122,12 @@ var pinneds = function (url) {
 
 // 更多操作
 var options = function(obj) {
-    var options = $(obj).parent().find('.options_div');
-    $(options).show();
+    if ($(obj).next('.options_div').css('display') == 'none') {
+        $('.options_div').hide();
+        $(obj).next('.options_div').show();
+    } else {
+        $(obj).next('.options_div').hide();
+    }
 }
 
 // 存入搜索记录
@@ -1231,16 +1235,6 @@ $(function() {
     $('#gotop').click(function() {
         $(window).scrollTop(0);
     })
-
-    // 评论操作菜单
-    $('body').on('click', '.options', function() {
-        if ($(this).next('.options_div').css('display') == 'none') {
-            $('.options_div').hide();
-            $(this).next('.options_div').show();
-        } else {
-            $(this).next('.options_div').hide();
-        }
-    });
 
     // 弹出层点击其他地方关闭
     $('body').click(function(e) {

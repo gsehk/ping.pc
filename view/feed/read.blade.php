@@ -102,26 +102,9 @@
                     <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
                     <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
                 </div>
-                <div class="reward-box">
-                    <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{$feed->id}}, 'feed')">打 赏</button></p>
-                    <p class="reward-info tcolor">
-                        <font color="#F76C6A">{{ $feed['reward']['count'] }} </font>次打赏，共
-                        <font color="#F76C6A">{{ $feed['reward']['amount'] / 100 }} </font>元
-                    </p>
-                    <div class="reward-user">
-                    @if (!$feed->rewards->isEmpty())
-                    @foreach ($feed->rewards as $reward)
-                        <div class="user-item">
-                            <img class="lazy round" data-original="{{ $reward['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" alt="avatar" width="42" />
-                            @if ($reward['user']['sex'])
-                                <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                            @endif
-                        </div>
-                    @endforeach
-                        <span class="more-user" onclick="rewarded.list({{$feed->id}}, 'feeds')"></span>
-                    @endif
-                    </div>
-                </div>
+
+                {{-- 打賞 --}}
+                @include('pcview::widgets.rewards' , ['rewards_data' => $feed->rewards, 'rewards_type' => 'feeds', 'rewards_id' => $feed->id, 'rewards_info' => $feed->reward])
             </div>
             <div class="detail_comment">
                 <div class="comment_title"><span class="comment_count cs{{$feed->id}}">{{$feed['feed_comment_count']}}</span>人评论</div>

@@ -61,7 +61,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
             <span class="view">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->feed_view_count}}
             </span>
-            <span class="options">
+            <span class="options" onclick="options(this)">
                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
             </span>
             <div class="options_div">
@@ -78,10 +78,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
                         </a>
                         @endif
                     </li>
-                    {{--@if(!empty($TS['id']) && $post->user_id != $TS['id'])
-                    <li><a href="javascript:;" onclick="weibo.denounce(this);" feed_id="{{$post->id}}" to_uid="{{$post->user_id}}">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jubao-copy1"></use></svg>举报</a></li>
-                    @endif --}}
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
                     <li>
                         <a href="javascript:;" onclick="weibo.pinneds({{$post->id}});">

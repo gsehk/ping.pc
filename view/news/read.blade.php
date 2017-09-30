@@ -89,26 +89,7 @@
                     </div>
 
                     {{-- 打赏 --}}
-                    <div class="reward-box">
-                        <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{$news->id}}, 'news')">打 赏</button></p>
-                        <div class="reward-user">
-                        <p class="reward-info tcolor">
-                            <font color="#F76C6A">{{$news['reward']['count']}} </font>次打赏，共
-                            <font color="#F76C6A">{{$news['reward']['amount'] or 0}} </font>元
-                        </p>
-                        @if (!$news->rewards->isEmpty())
-                        @foreach ($news->rewards as $reward)
-                            <div class="user-item">
-                                <img class="lazy round" data-original="{{ $reward['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="avatar" width="42" />
-                                @if ($reward['user']['sex'])
-                                    <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                                @endif
-                            </div>
-                        @endforeach
-                            <span class="more-user" onclick="rewarded.list({{$news->id}}, 'news')"></span>
-                        @endif
-                        </div>
-                    </div>
+                    @include('pcview::widgets.rewards' , ['rewards_data' => $news->rewards, 'rewards_type' => 'news', 'rewards_id' => $news->id, 'rewards_info' => $news['reward']])
                 </div>
 
                 {{-- 相关推荐 --}}
