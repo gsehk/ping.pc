@@ -820,7 +820,7 @@ var comment = {
                         html += '                    <img src="http://tss.io/zhiyicx/plus-component-pc/images/triangle.png" class="triangle">'
                         html += '                </div>'
                         html += '            </div>';
-                        html += '            <div class="replay_body">'+formData.body+'</div>';
+                        html += '            <div class="reply_body">'+original_body+'</div>';
                         html += '        </dd>';
                         html += '    </dl>';
                         html += '</div>';
@@ -1266,7 +1266,7 @@ $(function() {
     });
 
     // 显示隐藏评论操作
-    $(document).on("mouseover mouseout",".comment_con",function(event){
+    $(document).on("mouseover mouseout",".comment_con, .reply_body",function(event){
         if(event.type == "mouseover"){
             $(this).find("a").show();
         }else if(event.type == "mouseout"){

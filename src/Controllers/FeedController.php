@@ -48,7 +48,7 @@ class FeedController extends BaseController
         }
 
         // 渲染模板
-        $data['type'] = $request->input('type') ?: ($this->PlusData['TS'] ? 'follow' : 'hot');
+        $data['type'] = $request->input('type') ?: 'new';
 
         $this->PlusData['current'] = 'feeds';
         return view('pcview::feed.index', $data, $this->PlusData);
