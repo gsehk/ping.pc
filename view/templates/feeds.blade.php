@@ -6,7 +6,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
 
 @if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
-<div class="feed_item" id="feed{{$post->id}}">
+<div class="feed_item" id="{{$post->id}}" data-amount="{{ $post->paid_node['amount'] }}" data-node="{{ $post->paid_node['node'] }}">
     <div class="feed_title">
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="avatar" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="50" />
@@ -19,17 +19,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
             <span class="feed_uname font14">{{ $post->user->name }}</span>
         </a>
 
-        @if ($post->paid_node && $post->paid_node['paid'] == false)
-        <a class="date" href="javascript:;">
-            <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
-            <span class="feed_pay_text feed_time font12 hide" data-amount="{{ $post->paid_node['amount'] }}" data-node="{{ $post->paid_node['node'] }}" data-url="{{ route('pc:feedread', $post->id) }}">查看详情</span>
-        </a>
-        @else
-        <a class="date" href="{{ route('pc:feedread', $post->id) }}">
+        <a class="date" href="javascript:;" @if($post->paid_node && $post->paid_node['paid'] == false) onclick="weibo.payText(this, '{{ route('pc:feedread', $post->id) }}')" @endif>
             <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
             <span class="feed_time font12 hide">查看详情</span>
         </a>
-        @endif
+        
         @if ($post->pinned == 1)
         <a class="pinned" href="javascript:;">
             <span class="font12">置顶</span>
@@ -40,7 +34,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
     <div class="feed_body">
         {{-- 文字付费 --}}
         @if ($post->paid_node && $post->paid_node['paid'] == false)
-        <p class="feed_text feed_pay_text" data-amount="{{ $post->paid_node['amount'] }}" data-node="{{ $post->paid_node['node'] }}">{!! formatContent($post->feed_content) !!}</p>
+        <p class="feed_text feed_pay_text" onclick="weibo.payText(this)">{!! formatContent($post->feed_content) !!}</p>
         @else
         <p class="feed_text">{!! formatContent($post->feed_content) !!}</p>
         @endif

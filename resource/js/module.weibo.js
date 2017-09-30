@@ -227,6 +227,48 @@ weibo.addComment = function (row_id, type) {
         $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);
     });
 };
+weibo.payText = function(obj, tourl){
+    checkLogin();
+
+    var _this = $(obj);
+    tourl = tourl || '';
+    var feed_item = $(obj).parents('.feed_item');
+    var id = feed_item.attr('id');
+    var amount = feed_item.data('amount');
+    var node = feed_item.data('node');
+
+    var html = formatConfirm('购买支付', '<div class="confirm_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看完整内容，是否确认支付？');
+    ly.confirm(html, '', '', function(){
+        var url = '/api/v2/purchases/' + node;
+        // 确认支付
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            success: function(res) {
+                if (tourl == '') {
+                    noticebox('支付成功', 1);
+
+                    // 获取动态完整内容
+                    $.ajax({
+                        url: '/api/v2/feeds/' + id,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(res) {
+                            $(obj).text(res.feed_content);
+                            $(obj).removeClass('feed_pay_text');
+                        }
+                    });
+                } else {
+                    noticebox('支付成功', 1, tourl);
+                }
+            },
+            error: function(xhr) {
+                showError(xhr.responseJSON);
+            }
+        });
+    })
+}
 
 $(function() {
 
@@ -307,38 +349,6 @@ $(function() {
           $(this).find('span').last().hide();
         }
     });
-
-    // 文字弹窗
-    $('body').on('click', '.feed_pay_text', function() {
-        checkLogin();
-
-        var _this = $(this);
-        var amount = _this.data('amount');
-        var node = _this.data('node');
-        var tourl = _this.data('url') || '';
-
-        var html = formatConfirm('购买支付', '<div class="confirm_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看完整内容，是否确认支付？');
-        ly.confirm(html, '', '', function(){
-            var url = '/api/v2/purchases/' + node;
-            // 确认支付
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                success: function(res) {
-                    if (tourl == '') {
-                        noticebox('支付成功', 1);
-                    } else {
-                        noticebox('支付成功', 1, tourl);
-                    }
-                },
-                error: function(xhr) {
-                    showError(xhr.responseJSON);
-                }
-            });
-        })
-    });
-
 
     // 付费设置确认
     $('body').on('click', '.pay_btn_yes', function() {
