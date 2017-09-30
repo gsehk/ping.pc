@@ -10,18 +10,18 @@
             @if ($loadcount == 1)
             <thead>
                 <tr>
-                    <th width="25%">交易时间</th>
-                    <th width="30%">交易名称</th>
-                    <th width="30%">交易金额</th>
+                    <th width="20%">交易时间</th>
+                    <th width="60%">交易名称</th>
+                    <th width="20%">交易金额</th>
                 </tr>
             </thead>
             @endif
             <tbody>
                 @foreach ($records as $item)
                 <tr>
-                    <td width="25%">{{ getTime($item->created_at, 0, 0) }}</td>
-                    <td width="30%">{{ $item->subject }}</td>
-                    <td width="30%">
+                    <td width="20%">{{ getTime($item->created_at, 0, 0) }}</td>
+                    <td width="60%"><p class="ptext">{{ $item->subject }}</p></td>
+                    <td width="20%">
                         <font color="#FF9400">{{ $item->action==1 ? '+'.$item->amount/100 : '-'.$item->amount/100 }}</font>
                     </td>
                 </tr>
@@ -39,9 +39,9 @@
             <thead>
                 <tr>
                     <th width="20%">申请时间</th>
-                    <th width="30%">备注</th>
-                    <th width="10%">提现金额</th>
-                    <th width="10%">状态</th>
+                    <th width="50%">备注</th>
+                    <th width="15%">提现金额</th>
+                    <th width="15%">状态</th>
                 </tr>
             </thead>
             @endif
@@ -49,9 +49,9 @@
                 @foreach ($records as $item)
                 <tr>
                     <td width="20%">{{ $item->created_at }}</td>
-                    <td width="30%">{{ $item->remark }}</td>
-                    <td width="10%"><font color="#FF9400">{{ $item->value/100 }}</font></td>
-                    <td width="10%">
+                    <td width="50%"><p class="ptext">{{ $item->remark }}</p></td>
+                    <td width="15%"><font color="#FF9400">{{ $item->value/100 }}</font></td>
+                    <td width="15%">
                         @if ($item->status == 0) 待审批 @endif
                         @if ($item->status == 1) 已审批 @endif
                         @if ($item->status == 2) 拒绝 @endif

@@ -436,66 +436,6 @@
     color: #ccc;
 }
 
-.feed_datas svg {
-    font-size: 24px;
-    vertical-align: -7px;
-}
-
-.feed_datas .options {
-    float: right;
-    width: 30px;
-    cursor: pointer;
-    text-align: right;
-}
-
-.feed_datas .options_div {
-    position: absolute;
-    z-index: 99;
-    top: 30px;
-    right: -50px;
-    display: none;
-    width: 125px;
-    border-radius: 3px;
-    background: #fff;
-    box-shadow: 0 1px 22px #e2e0e0;
-}
-
-.feed_datas .triangle {
-    position: absolute;
-    top: -14px;
-    left: 47px;
-}
-
-.feed_datas .options_div > ul {
-    padding: 20px 0;
-}
-
-.feed_datas .options_div li {
-    margin-top: 18px;
-    padding-left: 20px;
-}
-
-.feed_datas .options_div > ul a {
-    font-size: 14px;
-    line-height: 24px;
-    display: block;
-    width: 100%;
-    height: 24px;
-    color: #666;
-}
-
-.feed_datas .options_div > ul a:hover {
-    color: #59b6d7;
-}
-
-.feed_datas .options_div .icon {
-    margin-right: 12px;
-}
-
-.feed_datas .options_div .act {
-    color: #59b6d7;
-}
-
 .feed_line {
     width: 100%;
     height: 6px;

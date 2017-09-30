@@ -759,7 +759,8 @@ var comment = {
         var _this = this;
         var formData = { body: this.support.editor.val() };
         if (!formData.body) {
-            layer.msg('评论内容不能为空');return;
+            noticebox('评论内容不能为空', 0);
+            return false;
         }
 
         // 保留原始回复内容
@@ -802,7 +803,7 @@ var comment = {
                         html += '                <span class="reply_time">刚刚</span>';
                         html += '                <span class="reply_action options" onclick="options(this)"><svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg></span>';
                         html += '                <div class="options_div">'
-                        html += '                    <div class="triangle_one"></div>'
+                        html += '                    <div class="triangle"></div>'
                         html += '                    <ul>';
                     if (_this.support.top) {
                         html += '                        <li>'

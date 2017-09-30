@@ -87,7 +87,7 @@ weibo.postFeed = function() {
             var html = pay_box + info_box + '</div>';
         }
         ly.confirm(html, '', '', function(){
-            weibo.doPostFeed('pay');
+            return weibo.doPostFeed('pay');
         });
     } else {
         weibo.doPostFeed('free');
@@ -121,19 +121,29 @@ weibo.doPostFeed = function(type) {
         if (images.length != 0) data.images = images;
     } else {  // 付费
         // 图片付费
-        $('.pay_images').find('img').each(function() {
-            var amount = $(this).attr('amount');
-            if (amount == '') {
-                images.push({'id':$(this).attr('tid')});
-            } else {
-                images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount * 100});
+        if ($('.pay_images').length > 0) {
+            var has_amount = 0;
+            $('.pay_images').find('img').each(function() {
+                var amount = $(this).attr('amount');
+                if (amount == '') {
+                    images.push({'id':$(this).attr('tid')});
+                } else {
+                    has_amount = 1;
+                    images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount * 100});
+                }
+            });
+            // 判断是否有图片添加付费信息
+            if (!has_amount) {
+                noticebox('应配置至少一张图片费用' , 0);
+                return false;
             }
-        });
-        if (images.length != 0) data.images = images;
 
-        // 文字付费
-        var amount = $('#feed_content').attr('amount');
-        if (amount != '') data.amount = amount;
+            if (images.length != 0) data.images = images;
+        } else {
+            // 文字付费
+            var amount = $('#feed_content').attr('amount');
+            if (amount != '') data.amount = amount;
+        }
     }
 
     $.ajax({
