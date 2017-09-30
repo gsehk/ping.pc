@@ -166,18 +166,17 @@ class QuestionController extends BaseController
         $params['order_type'] = $request->input('order_type') ?: 'default';
         $data['answers'] = createRequest('GET', '/api/v2/questions/'.$question_id.'/answers', $params);
         $question = createRequest('GET', '/api/v2/questions/'.$question_id );
+        if (!empty($question['adoption_answers'])) { // 采纳回答
+            $question['adoption_answers']->each(function ($item, $key) use ($data) {
+                $data['answers']->prepend($item);
+            });
+        }
         if (!empty($question['invitation_answers'])) { // 悬赏人回答
             $question['invitation_answers']->each(function ($item, $key) use ($data) {
                 $item->invitation = 1;
                 $data['answers']->prepend($item);
             });
         }
-        /*if (!empty($question['adoption_answers'])) { // 采纳回答
-            $question['adoption_answers']->each(function ($item, $key) use ($data) {
-                $data['answers']->prepend($item);
-            });
-        }*/
-
         $return = view('pcview::question.question_answer', $data, $this->PlusData)
             ->render();
 

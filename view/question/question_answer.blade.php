@@ -11,9 +11,12 @@
                 </span>
                 <div class="authorinfo-content">
                     <div class="authorinfo-head">
-                        <span class="userlink authorinfo-name">{{ $answer->user->name }}</span>
+                        <span class="userlink authorinfo-name">{{ $answer->anonymity == 1 ? '匿名用户' : $answer->user->name }}</span>
                         @if(isset($answer->invitation) && $answer->invitation == 1)
                             <span class="blue-tag">邀请回答</span>
+                        @endif
+                        @if($answer->adoption == 1)
+                            <span class="green-tag">已采纳</span>
                         @endif
                     </div>
                     <div class="authorinfo-time">
@@ -28,7 +31,7 @@
                     {{--@endif--}}
                     <span class="hide show-answer-body">{!! $answer->body = Parsedown::instance()->setMarkupEscaped(true)->text($answer->body) !!}</span>
                     <span class="answer-body">{!! str_limit(strip_tags($answer->body), 250, "...") !!}</span>
-                        @if(!isset($answer->invitation) || $answer->invitation == 1)
+                        @if(!isset($answer->invitation) || $answer->cloud)
                             <button class="button button-plain button-more"><a href="{{ route('pc:answeread', $answer->id) }}">查看详情</a></button>
                         @endif
                 </div>
@@ -101,7 +104,7 @@
                         @if(isset($answer->invitation) && $answer->invitation == 1)
                             <div class="look-answer">
                                 <span class="look-user">{{ $answer['onlookers_count'] }}人正在围观</span>
-                                @if($answer->cloud)
+                                @if(!$answer->cloud)
                                     <button class="button button-blue button-primary look-cloud" onclick="QA.look({{ $answer->id }}, 0.1, {{ $answer->question_id }})" type="button">围观</button>
                                 @endif
                             </div>

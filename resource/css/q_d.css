@@ -543,6 +543,16 @@
     cursor: pointer;
 }
 
+.green-tag {
+    color: #86CFB6;
+    border: 1px solid;
+    border-radius: 5px;
+    font-size: 11px;
+    padding: 2px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
 .look-answer {
     display: inline;
     float: right;

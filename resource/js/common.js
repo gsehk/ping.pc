@@ -1263,6 +1263,16 @@ $(function() {
         if(!target.is('div.share-show,button.show-share') && target.parents('.share-show').length == 0) {
             $('.share-show').fadeOut();
         }
+
+        // 相关问题
+        if(!target.is('div.question-searching') && target.parents('.question-searching').length == 0) {
+            $('.question-searching').fadeOut();
+        }
+
+        // 问题话题
+        if(!target.is('div.question-topics-list') && !target.is('dl,dt,dd,li')) {
+            $('.question-topics-list').fadeOut();
+        }
     });
 
     // 显示隐藏评论操作
