@@ -47,18 +47,9 @@
                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jinqian"></use></svg>
                {{ $post->amount/100 }}
             </button>
-            <button class="button button-plain">
-                <svg viewBox="0 0 18 4" class="Icon" width="20" height="20" aria-hidden="true">
-                    <title></title>
-                    <g>
-                        <g>
-                            <circle cx="2" cy="2" r="2"></circle>
-                            <circle cx="9" cy="2" r="2"></circle>
-                            <circle cx="16" cy="2" r="2"></circle>
-                        </g>
-                    </g>
-                </svg>
-            </button>
+            {{-- <button class="button button-plain fr">
+                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+            </button> --}}
         </div>
     </div>
 @endforeach

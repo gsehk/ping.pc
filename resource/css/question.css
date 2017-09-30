@@ -270,11 +270,6 @@
 }
 
 /* Icon */
-.icon{
-    vertical-align: text-bottom;
-    fill: #9fadc7;
-}
-
 .icon.icon-left{
     margin-right: 6px;
 }
