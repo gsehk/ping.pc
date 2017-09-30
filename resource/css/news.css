@@ -104,16 +104,18 @@
 .news_title {
     font-size: 20px;
     line-height: 28px;
+    height:28px;
     display: -webkit-box;
     overflow: hidden;
     color: #333;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
 
 .news_word p {
     font-size: 14px;
     line-height: 24px;
+    height: 48px;
     display: -webkit-box;
     overflow: hidden;
     margin: 25px auto 25px;
