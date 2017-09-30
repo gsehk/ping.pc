@@ -14,11 +14,11 @@
 <div class="profile_body">
     <div class="left_container">
         {{-- 动态列表 --}}
-        <div class="feed_content">
-            <div class="feed_menu mb30">
+        <div class="profile_content">
+            <div class="profile_menu">
                 <a href="javascript:;" class="active">全部</a>
             </div>
-            <div id="feeds_list"></div>
+            <div id="content_list" class="profile_list"></div>
         </div>
     </div>
 
@@ -32,7 +32,6 @@
 
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
-{{-- <script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script> --}}
 <script>
 // 加载微博
 var params = {
@@ -41,14 +40,12 @@ var params = {
     user: {{$user->id}}
 };
 
-setTimeout(function() {
-    scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
-        url: '/profile',
-        params: params
-    });
-}, 300);
+scroll.init({
+    container: '#content_list',
+    loading: '.profile_content',
+    url: '/profile',
+    params: params
+});
 
 // 关注
 $('#follow').click(function(){

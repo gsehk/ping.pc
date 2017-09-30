@@ -7,7 +7,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 @foreach($feeds as $key => $post)
 <div class="feed_item" @if($loop->first) style="margin-top:20px;" @endif>
 
-    <div class="feed_title">
+    <div class="feed_title mb10">
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="round" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50" />
             @if($post->user->verified)

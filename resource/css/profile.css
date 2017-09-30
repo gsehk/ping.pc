@@ -274,36 +274,47 @@
 
 .profile_body .collect_box {
     float: left;
-    width: 818px;
+    width: 815px;
 }
 
-/*  分享列表  */
-.feed_content {
-    padding: 30px 40px;
-    background: white;
+/*  列表  */
+.profile_content {
+    background: #fff;
+    padding: 0px 40px;
 }
 
-.feed_menu > a {
+.profile_menu {
+    padding: 30px 0px;
+    height: 81px;
+}
+
+.profile_menu > a {
     color: #999;
     margin-right: 20px;
 }
 
-.feed_menu > a.active {
+.profile_menu > a.active {
     color: #333;
 }
 
-.left_container .feed_box {
+.profile_list {
+    display: none;
+    padding-bottom: 30px;
+}
+
+/*动态列表*/
+.feed_box {
     margin-left: 53px;
     padding-bottom: 10px;
     padding-left: 90px;
     border-left: 1px solid #ccc;
 }
 
-.left_container .feed_item {
+.feed_item {
     position: relative;
 }
 
-.left_container .feed_item:before {
+.feed_item_time:before {
     position: absolute;
     left: -115px;
     display: inline-block;
@@ -314,18 +325,6 @@
     border-radius: 50%;
     background: #ccc;
 }
-
-.collect_box .feed_time{
-    display: none;
-}
-
-.collect_box .collect_time {
-    float: right;
-    font-size: 14px;
-    margin-top: 17px;
-    color: #ccc;
-}
-
 
 .feed_item .uname {
     font-size: 14px;
@@ -370,8 +369,12 @@
     -webkit-box-orient: vertical;
 }
 
-/* 问答列表  */
+/*圈子列表*/
+.group_item {
+    margin-top: 0px;
+}
 
+/*问答列表*/
 .qa-item {
     padding: 20px 0;
     border-bottom: 1px solid #f1f1f1;
@@ -391,8 +394,15 @@
     color: #ccc;
 }
 
-/* 多图片样式 */
+/*收藏列表*/
+.collect_time {
+    float: right;
+    font-size: 14px;
+    margin-top: 17px;
+    color: #ccc;
+}
 
+/* 多图片样式 */
 .image_box {
     position: relative;
     left: -1px;
@@ -444,8 +454,7 @@
 }
 
 
-/*个人中心文章*/
-
+/*文章列表*/
 .artic_left {
     line-height: 60px;
     position: absolute;

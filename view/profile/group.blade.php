@@ -5,8 +5,8 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/profile.css') }}"/>
 <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/group.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/profile.css') }}"/>
 @endsection
 
 @section('content')
@@ -15,13 +15,13 @@
 @include('pcview::profile.navbar')
 
 <div class="profile_body">
-    <div class="collect_box">
+    <div class="left_container">
         {{-- 收藏列表 --}}
-        <div class="feed_content">
-            <div class="feed_menu J-menu">
+        <div class="profile_content">
+            <div class="profile_menu J-menu">
                 <a class="active" href="javascript:;" cid="1">@if ($TS->id == $user->id) 我加入的 @else TA加入的 @endif</a>
             </div>
-            <div id="feeds_list" class="feed_box clearfix"></div>
+            <div id="content_list" class="profile_list clearfix"></div>
         </div>
     </div>
 
@@ -35,14 +35,12 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script>
-setTimeout(function() {
-    scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
-        url: '/profile/group',
-        params: {user: {{$user->id}} }
-    });
-}, 300);
+scroll.init({
+    container: '#content_list',
+    loading: '.profile_content',
+    url: '/profile/group',
+    params: {user: {{$user->id}} }
+});
 
 $('#feeds_list').on('click', '.J-join', function(){
 

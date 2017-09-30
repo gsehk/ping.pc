@@ -7,7 +7,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 @if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
 <div class="feed_box">
-<div class="feed_item" id="feed{{$post->id}}">
+<div class="feed_item feed_item_time" id="feed{{$post->id}}">
 
     <span class="feed_time">
         @if(date('Y-m-d') == date('Y-m-d', strtotime($post->created_at)))

@@ -12,16 +12,14 @@
 @include('pcview::profile.navbar')
 
 <div class="profile_body">
-    <div class="collect_box">
+    <div class="left_container">
         {{-- 收藏列表 --}}
-        <div class="feed_content">
-            <div class="feed_menu J-menu">
+        <div class="profile_content">
+            <div class="profile_menu J-menu">
                 <a class="active" href="javascript:;" cid="1">动态</a>
                 <a href="javascript:;" cid="2">文章</a>
-                {{-- <a href="javascript:;" cid="3">回答</a>
-                <a href="javascript:;" cid="3">活动</a> --}}
             </div>
-            <div id="feeds_list" class="feed_box"></div>
+            <div id="content_list" class="profile_list"></div>
         </div>
     </div>
 
@@ -37,8 +35,8 @@
 <script>
 setTimeout(function() {
     scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
+        container: '#content_list',
+        loading: '.profile_content',
         url: '/profile/collect',
         paramtype: 1,
         params: {cate: 1, limit: 10}
@@ -48,10 +46,10 @@ setTimeout(function() {
 $('.J-menu > a').on('click', function(){
     var cate = $(this).attr('cid');
 
-    $('#feeds_list').html('');
+    $('#content_list').html('').hide();
     scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
+        container: '#content_list',
+        loading: '.profile_content',
         url: '/profile/collect',
         params: {cate: cate }
     });

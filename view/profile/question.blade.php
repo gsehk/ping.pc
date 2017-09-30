@@ -14,9 +14,9 @@
 
 <div class="profile_body">
 
-    <div class="collect_box">
-        <div class="feed_content">
-            <div class="feed_menu J-menu">
+    <div class="left_container">
+        <div class="profile_content">
+            <div class="profile_menu J-menu">
                 <div data-value="1" class="zy_select t_c gap12 mr20" id="J-question">
                     <span class="qa_opt">全部问题</span>
                     <ul>
@@ -40,8 +40,7 @@
                 <a class="qa_opt ucolor" href="javascript:;" data-value="3">关注的问题</a>
                 <a class="qa_opt ucolor" href="javascript:;" data-value="4">关注的话题</a>
             </div>
-            <div id="feeds_list" class="feed_box follow_topic clearfix">
-
+            <div id="content_list" class="profile_list follow_topic clearfix">
             </div>
         </div>
     </div>
@@ -55,31 +54,29 @@
 
 @section('scripts')
 <script>
-setTimeout(function() {
-    scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
-        url: '/profile/question',
-        params: {type: 'all' }
-    });
-}, 300);
+scroll.init({
+    container: '#content_list',
+    loading: '.profile_content',
+    url: '/profile/question',
+    params: {type: 'all' }
+});
 
 $('#J-question li').on('click', function(){
     var type = $(this).data('value');
-    $('#feeds_list').html('');
+    $('#content_list').html('');
     scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
+        container: '#content_list',
+        loading: '.profile_content',
         url: '/profile/question',
         params: {type: type, cate: 1 }
     });
 });
 $('#J-answer li').on('click', function(){
     var type = $(this).data('value');
-    $('#feeds_list').html('');
+    $('#content_list').html('');
     scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
+        container: '#content_list',
+        loading: '.profile_content',
         url: '/profile/question',
         params: {type: type, cate: 2 }
     });
@@ -87,10 +84,10 @@ $('#J-answer li').on('click', function(){
 
 $('.J-menu a').on('click', function(){
     var type = $(this).data('value');
-    $('#feeds_list').html('');
+    $('#content_list').html('');
     scroll.init({
-        container: '#feeds_list',
-        loading: '.feed_content',
+        container: '#content_list',
+        loading: '.profile_content',
         url: '/profile/question',
         params: {cate: type }
     });
@@ -99,7 +96,7 @@ $('.J-menu a').on('click', function(){
     $(this).addClass('active');
 });
 
-$('#feeds_list').on('click', '.J-follow', function(){
+$('#content_list').on('click', '.J-follow', function(){
     checkLogin();
     var _this = this;
     var status = $(this).attr('status');

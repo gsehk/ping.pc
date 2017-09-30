@@ -31,6 +31,7 @@
 
 .question_body{
     padding: 0 40px 40px;
+    padding: 0 40px;
     width: 100%;
     background-color: #fff;
 }
@@ -38,6 +39,7 @@
 .question_sub_nav{
     padding: 21px 0;
     border-bottom: 1px solid #ededed;
+    padding: 21px 0px;
     height: 65px;
     font-size: 0;
 }
