@@ -15,7 +15,7 @@
                 <li><a class="menu @if($type == 1) selected @endif" type="1" href="javascript:;" >热门</a></li>
                 <li><a class="menu @if($type == 2) selected @endif" type="2" href="javascript:;">最新</a></li>
                 <li><a class="menu @if($type == 3) selected @endif" type="3" href="javascript:;">推荐</a></li>
-                <li><a href="{{ route('pc:userarea') }}">地区</a></li>
+                {{-- <li><a href="{{ route('pc:userarea') }}">地区</a></li> --}}
             </ul>
             <div class="user_filter @if($type != 4) hide @endif">
                 <div class="area_search mt20">
