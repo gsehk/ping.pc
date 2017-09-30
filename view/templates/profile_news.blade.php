@@ -8,7 +8,7 @@
 
     <span class="feed_time">
         @if(date('Y-m-d') == date('Y-m-d', strtotime($post->created_at)))
-            今天
+            <span class="today">今天</span>
         @else
             <span class="profile_time">
                 <sup style="font-size:90%">{{ date('m', strtotime($post->created_at)) }}</sup>

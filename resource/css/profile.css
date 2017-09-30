@@ -312,7 +312,7 @@
     content: '';
     color: #fff;
     border-radius: 50%;
-    background: #6eb5d3;
+    background: #ccc;
 }
 
 .collect_box .feed_time{
@@ -341,6 +341,15 @@
     text-align: center;
     color: #fff;
     font-size: 14px;
+}
+
+.feed_time .today {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    padding-top: 5px;
+    background: #6eb5d3;
 }
 
 .feed_time .profile_time {

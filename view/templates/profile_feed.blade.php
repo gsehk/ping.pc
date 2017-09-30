@@ -11,7 +11,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 
     <span class="feed_time">
         @if(date('Y-m-d') == date('Y-m-d', strtotime($post->created_at)))
-            今天
+            <span class="today">今天</span>
         @else
             <a href="{{ route('pc:feedread', $post->id) }}">
             <span class="profile_time">
