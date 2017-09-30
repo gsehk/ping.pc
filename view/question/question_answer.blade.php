@@ -29,11 +29,14 @@
                     {{--@if(isset($answer->invitation) && $answer->invitation == 1)--}}
                         {{--{{ $answer->body }}--}}
                     {{--@endif--}}
-                    <span class="hide show-answer-body">{!! $answer->body = Parsedown::instance()->setMarkupEscaped(true)->text($answer->body) !!}</span>
-                    <span class="answer-body">{!! str_limit(strip_tags($answer->body), 250, "...") !!}</span>
-                        @if(!isset($answer->invitation) || $answer->cloud)
-                            <button class="button button-plain button-more"><a href="{{ route('pc:answeread', $answer->id) }}">查看详情</a></button>
-                        @endif
+                    {{$answer->body = Parsedown::instance()->setMarkupEscaped(true)->text($answer->body)}}
+                    @if(isset($answer->invitation) && $answer->invitation == 1 && !$answer->cloud)
+                        <span class="answer-body fuzzy">{!! str_limit(strip_tags($answer->body), 250, "...") !!}</span>
+                    @else
+                        <span class="hide show-answer-body">{!! $answer->body !!}</span>
+                        <span class="answer-body">{!! str_limit(strip_tags($answer->body), 250, "...") !!}</span>
+                        <button class="button button-plain button-more"><a href="{{ route('pc:answeread', $answer->id) }}">查看详情</a></button>
+                    @endif
                 </div>
 
                 <div class="answer-footer">
@@ -75,8 +78,8 @@
                                     </li>
                                 @endif
                                 <li>
-                                    <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);" id="J-collect{{$answer->id}}" status="{{(int) $answer->collected}}">
-                                        @if($answer['collected'] == 1)
+                                    <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);" id="J-collect{{$answer->id}}" status="{{(int) (isset($TS) && $answer->collected)}}">
+                                        @if(isset($TS) && $answer['collected'] == 1)
                                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
                                             <span class="collect">已收藏</span>
                                         @else

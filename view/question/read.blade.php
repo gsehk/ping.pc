@@ -154,7 +154,7 @@
     <!-- quesition-main -->
     <div class="question-main">
         <div class="detail_comment hide">
-            <span id="answer-button" class="answer-button">返回问答</span>
+            <span id="answer-button" class="answer-button"><img src="{{asset('zhiyicx/plus-component-pc/images/arrow_news_up.png')}}" alt=""></span>
             <div class="comment_title"><span class="comment_count cs{{$question->id}}">{{$question['comments_count']}}</span>人评论</div>
             <div class="comment_box">
                     <textarea
