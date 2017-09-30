@@ -477,6 +477,7 @@
 }
 
 .right_about .info .auth_header{
+    position: relative;
     float: left;
     overflow: hidden;
     width: 60px;
@@ -487,10 +488,13 @@
     flex-shrink: 0;
 }
 
-.right_about .info .auth_header a,
-.right_about .info .auth_header img{
+.info .auth_header .role-icon {
+    position: absolute;
+    right: 4px;
+    bottom: 1px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    display: block;
 }
 
 .auth_info{

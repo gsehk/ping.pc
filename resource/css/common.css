@@ -1866,11 +1866,6 @@ img.load {
     display: none;
 }
 
-.avatar_box {
-    position: relative;
-    display: inline-block;
-}
-
 .a_link:hover {
     text-decoration: none;
     color: #fff !important;

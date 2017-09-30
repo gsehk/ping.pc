@@ -18,8 +18,12 @@
         <div class="feed_left">
             <dl class="user-box clearfix">
                 <dt class="fl">
-                    <a href="{{ route('pc:mine', $user['id']) }}">
-                        <img class="round" src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60"></a>
+                    <a class="avatar_box" href="{{ route('pc:mine', $user['id']) }}">
+                    <img class="round" src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60">
+                    @if($user->verified)
+                    <img class="role-icon" src="{{ $user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                    @endif
+                    </a>
                 </dt>
                 <dd class="fl ml20 body-box">
                     <span class="tcolor">{{ $user['name'] }}</span>
@@ -136,7 +140,10 @@
             <div class="info clearfix">
                 <div class="auth_header">
                     <a href="{{ route('pc:mine', $user['id']) }}">
-                        <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}?s=50" alt="">
+                        <img class="round" src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}?s=50" width="50">
+                        @if($user->verified)
+                        <img class="role-icon" src="{{ $user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                        @endif
                     </a>
                 </div>
                 <div class="auth_info">
