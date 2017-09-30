@@ -17,7 +17,7 @@
                         </span>
                     </div>
                     <div class="rank-avatar">
-                        <img src="{{ $day['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60" height="60" />
+                        <img src="{{ $day['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60" height="60" class="avatar"/>
                     </div>
                     <div class="rank-info">
                         <span class="tcolor">{{ $day['name'] }}</span>
@@ -41,7 +41,7 @@
                         </span>
                     </div>
                     <div class="rank-avatar">
-                        <img src="{{ $week['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60" height="60" />
+                        <img src="{{ $week['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60" height="60" class="avatar"/>
                     </div>
                     <div class="rank-info">
                         <span class="tcolor">{{ $week['name'] }}</span>
@@ -65,7 +65,7 @@
                         </span>
                     </div>
                     <div class="rank-avatar">
-                        <img src="{{ $month['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60" height="60" />
+                        <img src="{{ $month['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60" height="60" class="avatar"/>
                     </div>
                     <div class="rank-info">
                         <span class="tcolor">{{ $month['name'] }}</span>
