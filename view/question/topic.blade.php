@@ -25,7 +25,7 @@
 
 <div class="right_container">
     <div class="q_c_post_btn">
-        <a href="{{ route('pc:newsrelease') }}">
+        <a href="{{ route('pc:createquestion') }}">
             <span>
                 <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>提问
             </span>
