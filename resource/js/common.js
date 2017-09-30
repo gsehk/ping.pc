@@ -693,7 +693,6 @@ var rewarded = {
         })
     },
     list: function(id, type){
-        var index = layer.load(0, {shade: false});
         var url = '/api/v2/feeds/'+id+'/rewards';
         if (type == 'answer') {
             url = '/api/v2/question-answers/'+id+'/rewarders';
@@ -709,25 +708,25 @@ var rewarded = {
                 noticebox('打赏失败', 0);
             },
             success: function(res) {
-            if (res.length) {
-                var html = '';
-                html += '<div class="reward-popups">';
-                html += '<p class="reward-title ucolor font14">打赏列表</p>';
-                html += '<ul class="reward-list" id="J-reward-list">';
-                for (var i in res) {
-                    html +=
-                    '<li>'+
-                        '<img class="lazy round" data-original="'+res[i].user.avatar+'" width="40"/>'+
-                        '<span class="uname">'+res[i].user.name+'</span>'+
-                        '<font color="#aaa">打赏了 回答</font>'+
-                    '</li>';
+                if (res.length) {
+                    var html = '';
+                    html += '<div class="reward_popups">';
+                    html += '<p class="reward_title ucolor font14">打赏列表</p>';
+                    html += '<ul class="reward_list" id="J-reward-list">';
+                    for (var i in res) {
+                        html +=
+                        '<li>'+
+                            '<img class="lazy round" data-original="' + (res[i].user.avatar ? res[i].user.avatar : DEFAULT_AVATAR) + '" width="40"/>'+
+                            '<span class="uname">'+res[i].user.name+'</span>'+
+                            '<font color="#aaa">打赏了 回答</font>'+
+                        '</li>';
+                    }
+                    html += '</ul>';
+                    html += '</div>';
+                    ly.loadHtml(html, '');
+                    $("img.lazy").lazyload();
+                    layer.close(index);
                 }
-                html += '</ul>';
-                html += '</div>';
-                ly.loadHtml(html, '', '350px', '600px');
-                $("img.lazy").lazyload();
-                layer.close(index);
-            }
             }
         });
     }

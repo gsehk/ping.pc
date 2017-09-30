@@ -22,7 +22,7 @@ weibo.showImg = function(){
  */
 weibo.postFeed = function() {
     // 登录判断
-    checkLogin()
+    checkLogin();
 
     // 付费免费
     var select = $('#feed_select').data('value');
