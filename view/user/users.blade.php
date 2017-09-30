@@ -34,14 +34,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="hots_area">
-                    <span class="ucolor">热门城市：</span>
-                    <p class="inline font14 mb0" id="J-area">
-                        <span class="mr10">北京</span>
-                        <span class="mr10">上海</span>
-                        <span class="mr10">四川</span>
-                    </p>
-                </div>
             </div>
             <div class="clearfix" id="user_list"></div>
         </div>
