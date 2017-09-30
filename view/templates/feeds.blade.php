@@ -19,7 +19,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
             <span class="feed_uname font14">{{ $post->user->name }}</span>
         </a>
 
-        <a class="date" href="javascript:;" @if($post->paid_node && $post->paid_node['paid'] == false) onclick="weibo.payText(this, '{{ route('pc:feedread', $post->id) }}')" @endif>
+        <a class="date" @if($post->paid_node && $post->paid_node['paid'] == false) href="javascript:;"  onclick="weibo.payText(this, '{{ route('pc:feedread', $post->id) }}')" @else href="{{ route('pc:feedread', ['feedid' => $post->id]) }}" @endif>
             <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
             <span class="feed_time font12 hide">查看详情</span>
         </a>
