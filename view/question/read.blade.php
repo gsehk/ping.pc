@@ -74,7 +74,7 @@
             <div class="questionheader-footer-inner">
                 <div class="questionheader-main questionheader-footer-main">
                     @if($question['look'] == 1)
-                        <span class="questionheader-onlook">￥0.0围观</span>
+                        <span class="questionheader-onlook">￥0.1围观</span>
                     @endif
                     <div class="questionheaderactions">
                         <div class="questionheader-comment">
@@ -99,18 +99,19 @@
                             </div>
                         </div>
                         @if($question['user_id'] == $TS['id'])
-                            <button class="button button-plain" type="button">
+                            <a class="button button-plain" type="button" href="{{ route('pc:createquestion', $question['id']) }}">
                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>
                                 编辑
-                            </button>
+                            </a>
 
-                            <button class="button button-plain options" type="button" aria-haspopup="true" aria-expanded="false">
+                            <button class="button button-plain options" onclick="options(this)" type="button" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                             </button>
                             <div class="options_div">
+                                <div class="triangle"></div>
                                 <ul>
                                     <li>
-                                        <a href="javascript:;" onclick="alert('暂无接口');">
+                                        <a href="javascript:;" onclick="question.selected({{ $question['id'] }}, 1)">
                                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jingxuanwenda"></use></svg>申请为精选问答
                                         </a>
                                     </li>
@@ -120,7 +121,6 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
                             </div>
 
                         @else
@@ -128,10 +128,10 @@
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
                                 收藏
                             </button>
-                            <button class="button button-plain" type="button">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
-                                举报
-                            </button>
+                            {{--<button class="button button-plain" type="button">--}}
+                                {{--<svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>--}}
+                                {{--举报--}}
+                            {{--</button>--}}
                         @endif
 
                     </div>
@@ -144,7 +144,7 @@
                         @else
                             <button class="button button-primary button-blue watched" type="button" data-watched="0">关注</button>
                         @endif
-                        <button class="button button-blue" id="write-answer" type="button">写回答</button>
+                        <button class="button button-blue button-primary" id="write-answer" type="button">写回答</button>
                     </div>
                 </div>
             </div>
@@ -154,6 +154,7 @@
     <!-- quesition-main -->
     <div class="question-main">
         <div class="detail_comment hide">
+            <span id="answer-button" class="answer-button">返回问答</span>
             <div class="comment_title"><span class="comment_count cs{{$question->id}}">{{$question['comments_count']}}</span>人评论</div>
             <div class="comment_box">
                     <textarea
@@ -327,7 +328,7 @@
                     }
                 },
                 error:function (xml) {
-                    showError(xml.responseJSON);
+                    showError(xml);
                 }
             });
         });
@@ -339,12 +340,26 @@
             setTimeout(function() {
                 scroll.init({
                     container: '.J-commentbox',
-                    loading: '.question-main',
+                    loading: '.detail_comment',
                     url: '/question/{{$question->id}}/comments' ,
                     canload: true
                 });
             }, 300);
         });
 
+        $('#answer-button').on('click', function () {
+            $('.question-main-l').fadeIn();
+            $('.detail_comment').fadeOut();
+            $('.question-main-r').fadeOut();
+            setTimeout(function() {
+                scroll.init({
+                    container: '#question-answers-list',
+                    loading: '.question-answers-list',
+                    url: '/question/{{$question['id']}}/answers',
+                    paramtype: 1,
+                    params: {order_type: 'default', limit: 10}
+                });
+            }, 300);
+        });
     </script>
 @endsection

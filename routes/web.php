@@ -52,8 +52,9 @@ Route::prefix('question')->group(function () {
 
     Route::get('answer/{answer}/comments', 'QuestionController@answerComments');
 
+
     // 创建问题
-    Route::get('create', 'QuestionController@createQuestion')->name('pc:createquestion');
+    Route::get('create/{question_id?}', 'QuestionController@createQuestion')->where(['question_id' => '[0-9]+'])->name('pc:createquestion');
 
     Route::get('users', 'QuestionController@getUsers')->name('pc:questionusers');
     // 回答列表

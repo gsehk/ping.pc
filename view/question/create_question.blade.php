@@ -5,16 +5,22 @@
     <div class="step1">
         <div class="question-tw">提问</div>
         <div class="question-form-row" style="position:relative">
-            <input type="hidden" id="question_id" name="id" value="{{$id or 0}}" />
-            <input id="subject" name="subject" type="text" value="" placeholder="请输入问题并已问号结束" autocomplete="off"/>
+            <input type="hidden" id="question_id" name="id" value="{{ $id or 0 }}" />
+            <input id="subject" name="subject" type="text" value="{{ $question['subject'] or '' }}" placeholder="请输入问题并已问号结束" autocomplete="off"/>
             <div class="subject-error"></div>
             <div class="question-searching">
                 <div class="searching-existing"></div>
             </div>
         </div>
         <div class="question-form-row question-topics">
-            <label for="J-select-topics">请选择话题</label>
-            <ul class="question-topics-selected" id="J-select-topics"></ul>
+            <label for="J-select-topics" @if(isset($question)) style="display: none;" @endif>请选择话题</label>
+            <ul class="question-topics-selected" id="J-select-topics">
+                @if(isset($question))
+                    @foreach($question['topics'] as $tc)
+                        <li class="topic_{{ $tc['id'] }}" data-id="{{ $tc['id'] }}">{{ $tc['name'] }}</li>
+                    @endforeach
+                @endif
+            </ul>
             <div class="question-topics-list" id="J-topic-box" style="display: none;">
                 <dl>
                     @foreach ($topics as $topic)
@@ -25,74 +31,80 @@
             <input type="hidden" name="topics" id="topics" />
         </div>
         <div class="question-form-row">
-            @include('pcview::widgets.markdown', ['height'=>'400px', 'width' => '100%', 'content'=>$content ?? ''])
+            @include('pcview::widgets.markdown', ['height'=>'400px', 'width' => '100%', 'content' => $question['body'] ?? ''])
         </div>
         <div class="question-form-row">
 
-            <input id="anonymity" name="anonymity" type="checkbox" class="input-checkbox"/>
+            <input id="anonymity" name="anonymity" type="checkbox" @if(isset($question) && $question['anonymity'] == 1) checked="checked" @endif class="input-checkbox"/>
             <label for="anonymity">启动匿名</label>
         </div>
-        <div class="question-next"><button id="question-next">下一步</button></div>
+        @if(isset($question) && ($question['amount'] > 0 || empty($question['invitations'])))
+            <div class="question-next"><button id="question-submit">完成</button></div>
+        @else
+            <div class="question-next"><button id="question-next">下一步</button></div>
+        @endif
     </div>
-    <div class="step2">
-        <div class="question-tw">设置悬赏
-            <span class="tw-notice">(可跳过)</span>
-            <span class="reward-rule">悬赏规则</span>
-        </div>
-        <div class="reward-row">
-            <div class="reward-notice">设置悬赏金额</div>
-            <ul class="reward-example">
-                <li>1.00</li>
-                <li>5.00</li>
-                <li>10.00</li>
-            </ul>
-            <input type="text" class="custom-money" id="amount" placeholder="自定义悬赏金额">
-            <input type="hidden" id="amount-hide" name="amount">
-        </div>
-        <div class="reward-row">
-            <div class="invitation-notice">
-                {{--<div class="reward-notice">悬赏邀请</div>--}}
-                {{--<span>--}}
-                    {{--<input id="reward" name="reward" type="checkbox" class="input-checkbox"/>--}}
-                {{--<label for="reward">邀请答题人，设置围观等</label>--}}
-                {{--</span>--}}
-
-
-                <div class="reward-notice">悬赏邀请</div>
-                <span>
-                    <input id="rewardyes" name="reward" type="radio" value="1" class="input-radio"/>
-                    <label for="rewardyes">是</label>
-                </span>
-                <span>
-                    <input id="rewardno" name="reward" type="radio" value="0" checked="checked" class="input-radio"/>
-                    <label for="rewardno">否</label>
-                </span>
+    @if(!isset($question) || ($question['amount'] == 0 || empty($question['invitations'])))
+        <div class="step2">
+            <div class="question-tw">设置悬赏
+                <span class="tw-notice">(可跳过)</span>
+                <span class="reward-rule">悬赏规则</span>
             </div>
-            <div class="invitation-con">
-                <dl>
-                    <dt>邀请回答</dt>
-                    <dd id="invitation_user">
-                        <a href="javascript:" id="invitation-add">添加</a>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>是否开启围观</dt>
-                    <dd>
+            <div class="reward-row">
+                <div class="reward-notice">设置悬赏金额</div>
+                <ul class="reward-example">
+                    <li>1.00</li>
+                    <li>5.00</li>
+                    <li>10.00</li>
+                </ul>
+                <input type="text" min="1" oninput="value=moneyLimit(value)" class="custom-money" id="amount" placeholder="自定义悬赏金额">
+                <input type="hidden" id="amount-hide" name="amount">
+            </div>
+            @if(!isset($question))
+                <div class="reward-row">
+                    <div class="invitation-notice">
+                        {{--<div class="reward-notice">悬赏邀请</div>--}}
+                        {{--<span>--}}
+                        {{--<input id="reward" name="reward" type="checkbox" class="input-checkbox"/>--}}
+                        {{--<label for="reward">邀请答题人，设置围观等</label>--}}
+                        {{--</span>--}}
+                        <div class="reward-notice">悬赏邀请</div>
+                        <span>
+                            <input id="rewardyes" name="reward" type="radio" value="1" class="input-radio"/>
+                            <label for="rewardyes">是</label>
+                        </span>
+                        <span>
+                            <input id="rewardno" name="reward" type="radio" value="0" checked="checked" class="input-radio"/>
+                            <label for="rewardno">否</label>
+                        </span>
+                    </div>
+                    <div class="invitation-con">
+                        <dl>
+                            <dt>邀请回答</dt>
+                            <dd id="invitation_user">
+                                <a href="javascript:" id="invitation-add">添加</a>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>是否开启围观</dt>
+                            <dd>
                         <span>
                             <input id="lookyes" name="look" type="radio" value="1" class="input-radio"/>
                              <label for="lookyes">是</label>
                         </span>
-                        <span>
+                                <span>
                             <input id="lookno" name="look" type="radio" value="0" checked="checked" class="input-radio"/>
                              <label for="lookno">否</label>
                         </span>
-                    </dd>
-                </dl>
-            </div>
-            <div class="question-next"><button id="question-submit">发布问题</button></div>
-        </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            @endif
+            <div class="question-next"><button id="question-submit">@if(isset($question))完成@else发布问题@endif</button></div>
 
-    </div>
+        </div>
+    @endif
 
 </div>
 @endsection
@@ -106,6 +118,8 @@
         var args = {};
         var step1 = $('.step1');
         var step2 = $('.step2');
+        var question_id = {{ $question['id'] or 0}};
+        var selBox = $('#J-select-topics');
         subject.keyup(function (event) {
             //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值
             last = event.timeStamp;
@@ -165,19 +179,12 @@
         });
         $('#J-topic-box dd').on('click', function(e){
             e.stopPropagation();
-            var selBox = $('#J-select-topics');
             var topic_id = $(this).data('id');
             var topic_name = $(this).text();
             if (selBox.find('li').hasClass('topic_'+topic_id)) {
                 noticebox('话题已存在', 0); return;
             }
             selBox.append('<li class="topic_'+topic_id+'" data-id="'+topic_id+'">'+topic_name+'</li>');
-            selBox.on('click', 'li', function(){
-                $(this).remove();
-                if (selBox.find('li').length == 0) {
-                    $('.question-topics label').show();
-                }
-            });
             if (selBox.find('li').length >= 5) {
                 noticebox('话题最多五个', 0);
                 return;
@@ -185,43 +192,21 @@
                 $('.question-topics label').hide();
             }
         });
+        selBox.on('click', 'li', function(){
+            $(this).remove();
+            if (selBox.find('li').length == 0) {
+                $('.question-topics label').show();
+            }
+        });
 
         // 下一步
         $('#question-next').on('click', function () {
-            args.subject = $('#subject').val().replace(/(\s*$)/g, "");
-            args.body = editor.getMarkdown();
-            args.anonymity = $("input[type='checkbox'][name='anonymity']:checked").val() == 'on' ? 1 : 0;
-            args.question_id = $('#question_id').val() || 0;
-            args.topics = [];
-            $('#J-select-topics li').each(function(index){
-                args.topics.push($(this).data('id'));
-            });
-            if (args.subject.length < 1) {
-                $('#subject').focus();
-                $('.subject-error').text('请输入标题').show();
-
-                return false;
-            } else if (args.subject.charAt(args.subject.length - 1) != '?' && args.subject.charAt(args.subject.length - 1) != '？') {
-                $('#subject').focus();
-                $('.subject-error').text('请以问号结束提问').show();
-
-                return false;
-            } else if (args.subject.match(/([\u4E00-\u9FA5A-Za-z0-9])/g) == null) {
-                 $('#subject').focus();
-                 $('.subject-error').text('请认真填写标题').show();
-
-                 return false;
-             }
-
-            if (args.topics.length < 1) {
-                noticebox('请选择话题', 0);
+            if (!stepOne()) {
 
                 return false;
             }
-
             step1.hide();
             step2.show();
-
         });
 
         // 悬赏规则
@@ -297,7 +282,10 @@
                 }
                 args.automaticity = 1;
             }
+            if (question_id > 0) {
 
+                return update();
+            }
             $.ajax({
                 type: 'POST',
                 url: '/api/v2/questions',
@@ -308,9 +296,72 @@
                     } else {
                         noticebox(res.message, 0);
                     }
+                },
+                error: function (xml) {
+                    showError(xml.responseJSON);
                 }
             });
-        })
+        });
+
+        function stepOne() {
+            args.subject = $('#subject').val().replace(/(\s*$)/g, "");
+            args.body = editor.getMarkdown();
+            args.anonymity = $("input[type='checkbox'][name='anonymity']:checked").val() == 'on' ? 1 : 0;
+            args.topics = [];
+            $('#J-select-topics li').each(function(index){
+                args.topics.push($(this).data('id'));
+            });
+            if (args.subject.length < 1) {
+                $('#subject').focus();
+                $('.subject-error').text('请输入标题').show();
+
+                return false;
+            } else if (args.subject.charAt(args.subject.length - 1) != '?' && args.subject.charAt(args.subject.length - 1) != '？') {
+                $('#subject').focus();
+                $('.subject-error').text('请以问号结束提问').show();
+
+                return false;
+            } else if (args.subject.match(/([\u4E00-\u9FA5A-Za-z0-9])/g) == null) {
+                $('#subject').focus();
+                $('.subject-error').text('请认真填写标题').show();
+
+                return false;
+            }
+
+            if (args.topics.length < 1) {
+                noticebox('请选择话题', 0);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        function update() {
+            if (!args.subject || !args.body || !args.topics) {
+                if (!stepOne()) {
+
+                    return false;
+                }
+            }
+
+            $.ajax({
+                type: 'PATCH',
+                url: '/api/v2/questions/' + question_id,
+                data: args,
+                success: function(res, data, xml) {
+                    console.log(res)
+                    if (xml.status == 204) {
+                        noticebox('修改成功', 1);
+                    } else {
+                        noticebox(res.message, 0);
+                    }
+                },
+                error: function (xml) {
+                    showError(xml.responseJSON);
+                }
+            });
+        }
 
     </script>
 @endsection

@@ -892,14 +892,24 @@ button{
     margin-left: 15px;
 }
 
+
 /*评论*/
 .detail_comment {
     padding: 1px 40px;
     color: #666;
     font-size: 14px;
     background-color: #fff;
+    position: relative;
 }
 
 .detail_comment .comment_title{
     margin-top: 20px;
+}
+
+.detail_comment .answer-button{
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    line-height: 36px;
+    cursor: pointer;
 }

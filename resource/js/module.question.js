@@ -56,6 +56,23 @@ var QA = {
         });
 
         console.log(bdDesc);
+    },
+    look: function (answer_id, money, question_id) {
+        ly.confirm(formatConfirm('围观支付', '本次围观您需要支付' + money + '元，是否继续围观？'), '' , '', function(){
+            var url ='/api/v2/question-answers/' + answer_id + '/onlookers';
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                success: function(res) {
+                    noticebox('围观成功', 1, '/question/' + question_id);
+                },
+                error: function(xhr){
+                    showError(xhr.responseJSON);
+                }
+            });
+        });
     }
 };
 
@@ -99,6 +116,26 @@ var question = {
             'bdDesc' : "",
             'bdUrl' : SITE_URL + '/question/' + question_id,
             'bdPic': img
+        });
+    },
+    selected: function (question_id, money) {
+        var html = formatConfirm('精选问答支付', '<div class="confirm_money">￥' + money + '</div>本次申请精选您需要支付' + money + '元，是否继续申请？');
+
+        ly.confirm(html, '' , '', function(){
+            var url ='/api/v2/user/question-application/' + question_id;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                success: function(res, data, xml) {
+                    if (xml.status == 201) {
+                        noticebox('申请成功', 1);
+                    }
+                },
+                error: function(xhr){
+                    showError(xhr.responseJSON);
+                }
+            });
         });
     }
 };

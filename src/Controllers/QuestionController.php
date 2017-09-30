@@ -127,8 +127,12 @@ class QuestionController extends BaseController
         ]);
     }
 
-    public function createQuestion()
+    public function createQuestion(Request $request, int $question_id = 0)
     {
+        if ($question_id > 0) {
+            $data['question'] = createRequest('GET', '/api/v2/questions/'.$question_id );
+        }
+
         $data['topics'] = createRequest('GET', '/api/v2/question-topics');
 
         return view('pcview::question.create_question', $data, $this->PlusData);
@@ -160,15 +164,15 @@ class QuestionController extends BaseController
         $params['limit'] = $request->input('limit') ?: 10;
         $params['offset'] = $request->input('offset') ?: 0;
         $params['order_type'] = $request->input('order_type') ?: 'default';
-
         $data['answers'] = createRequest('GET', '/api/v2/questions/'.$question_id.'/answers', $params);
-        /*$question = createRequest('GET', '/api/v2/questions/'.$question_id );
+        $question = createRequest('GET', '/api/v2/questions/'.$question_id );
         if (!empty($question['invitation_answers'])) { // 悬赏人回答
             $question['invitation_answers']->each(function ($item, $key) use ($data) {
+                $item->invitation = 1;
                 $data['answers']->prepend($item);
             });
         }
-        if (!empty($question['adoption_answers'])) { // 采纳回答
+        /*if (!empty($question['adoption_answers'])) { // 采纳回答
             $question['adoption_answers']->each(function ($item, $key) use ($data) {
                 $data['answers']->prepend($item);
             });

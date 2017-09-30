@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('zhiyicx/plus-component-pc/markdown/css/editormd.css') }}">
 <div id="layout" class="div">
     <div class="editormd" id="TS_edit">
-        <textarea></textarea>
+        <textarea>{{$content}}</textarea>
     </div>
 </div>
 <script type="text/javascript" charset="utf-8" src="{{ asset('zhiyicx/plus-component-pc/markdown/js/editormd.js') }}"></script>
