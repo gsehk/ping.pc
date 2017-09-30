@@ -136,7 +136,8 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
 Route::prefix('users')->group(function () {
     // 找人
     Route::get('/{type?}', 'UserController@users')->where(['type' => '[1-4]'])->name('pc:users');
-
+    // 地区查找
+    Route::get('/area', 'UserController@area')->name('pc:userarea');
     // 粉丝关注
     // Route::middleware(PcMiddleware\CheckLogin::class)->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]', 'user_id' => '[0-9+]'])->name('pc:follows');
     Route::middleware(PcMiddleware\CheckLogin::class)->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]'])->name('pc:follows');

@@ -26,7 +26,13 @@ class UserController extends BaseController
             } elseif ($type == 3) { // 推荐
                 $api = '/api/v2/user/find-by-tags';
             } else { // 地区
-                $api = '';
+                $params = [
+                    'page' => $offset,
+                    'limit' => $limit,
+                    'latitude' => $request->query('latitude'),
+                    'longitude' => $request->query('longitude'),
+                ];
+                $api = '/api/v2/around-amap';
             }
 
             $users = createRequest('GET', $api, $params);
@@ -43,10 +49,24 @@ class UserController extends BaseController
         }
 
         $data['type'] = $type;
-        $data['area'] = createRequest('GET', '/api/v2/locations/hots');
 
         $this->PlusData['current'] = 'users';
         return view('pcview::user.users', $data, $this->PlusData);
+    }
+
+    /**
+     * 根据地区搜索.
+     *
+     * @param  Request $request
+     * @return mixed
+     */
+    public function area(Request $request)
+    {
+
+        $data['area'] = createRequest('GET', '/api/v2/locations/hots');
+        $this->PlusData['current'] = 'users';
+
+        return view('pcview::user.area', $data, $this->PlusData);
     }
 
     public function follows(Request $request, int $type = 1, int $user_id = 0)

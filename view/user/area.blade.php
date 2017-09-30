@@ -1,6 +1,4 @@
-@section('title')
-    找伙伴
-@endsection
+@section('title') 找伙伴 - 地区查找 @endsection
 
 @extends('pcview::layouts.default')
 
@@ -12,12 +10,12 @@
     <div class="left_container">
         <div class="user_container">
             <ul class="user_menu">
-                <li><a class="menu @if($type == 1) selected @endif" type="1" href="javascript:;" >热门</a></li>
-                <li><a class="menu @if($type == 2) selected @endif" type="2" href="javascript:;">最新</a></li>
-                <li><a class="menu @if($type == 3) selected @endif" type="3" href="javascript:;">推荐</a></li>
-                <li><a href="{{ route('pc:userarea') }}">地区</a></li>
+                <li><a type="1" href="{{ route('pc:users', 1) }}">热门</a></li>
+                <li><a type="2" href="{{ route('pc:users', 2) }}">最新</a></li>
+                <li><a type="3" href="{{ route('pc:users', 3) }}">推荐</a></li>
+                <li><a type="4" href="javascript:;" class="selected">地区</a></li>
             </ul>
-            <div class="user_filter @if($type != 4) hide @endif">
+            <div class="user_filter">
                 <div class="area_search mt20">
                     <input class="font14 search_input" id="location" type="text" name="search_key" placeholder="输入关键字搜索">
                     <div class="area_searching font14 hide"></div>
@@ -37,9 +35,9 @@
                 <div class="hots_area">
                     <span class="ucolor">热门城市：</span>
                     <p class="inline font14 mb0" id="J-area">
-                        <span class="mr10">北京</span>
-                        <span class="mr10">上海</span>
-                        <span class="mr10">四川</span>
+                        <span class="mr10 pointer">北京</span>
+                        <span class="mr10 pointer">上海</span>
+                        <span class="mr10 pointer">四川</span>
                     </p>
                 </div>
             </div>
@@ -57,7 +55,6 @@
 <script type="text/javascript">
     $(function(){
         var last;
-        var type = "{{ $type }}";
         // 关注
         $('#user_list').on('click', '.follow_btn', function(){
             var _this = $(this);
@@ -65,64 +62,64 @@
             var user_id = $(this).attr('uid');
             follow(status, user_id, _this, afterdata);
         })
+        // switchType(type);
+    })
 
-        // 图片懒加载
-        $("img.lazy").lazyload({effect: "fadeIn"});
+	$('.area_searching').on('click', 'a', function() {
+        $('#location').val($(this).text());
+        $('.area_searching').hide();
+    })
 
-        // 点击切换分类
-        $('.user_menu .menu').click(function(event){
-            var type = $(this).attr('type');
-
-            switchType(type);
-            $(this).parents('ul').find('a').removeClass('selected');
-            $(this).addClass('selected');
-        })
-
-        switchType(type);
+	$('#J-search-area, #J-area span').on('click', function(e){
+        var key = $('.search_input').val();
+        if(e.target.tagName == 'SPAN') key = $(this).text();
+        getGeo(key, function(geo){
+        	$('#user_list').html('');
+	        var params = {
+	            type: 4,
+	            limit: 10,
+	            latitude: geo[0],
+	            longitude: geo[1],
+	        };
+	        scroll.init({
+                container: '#user_list',
+                loading: '.user_container',
+                url: '/users',
+                params: params,
+                paramtype: 1
+            });
+            $('.search_input').val('');
+        });
     })
 
     $("#location").keyup(function(event){
         last = event.timeStamp;
         setTimeout(function(){
             if(last - event.timeStamp == 0){
-                location_search();
+                var val = $.trim($("#location").val());
+		        var box = $(".area_searching");
+		        if (val == "")  return false;
+	            $.ajax({
+	                type: "GET",
+	                url: '/api/v2/locations/search',
+	                data: { name: val },
+	                success: function(res) {
+	                    if (res.length > 0) {
+	                        $.each(res, function(key, value) {
+	                            if (key < 3) {
+	                                var text = tree(value.tree);
+	                                var html = '<a>' + text + '</a>';
+	                                box.html('');
+	                                box.append(html);
+	                            }
+	                        });
+	                        box.show();
+	                    }
+	                }
+	            });
             }
-        }, 500);
+        }, 100);
     })
-
-    $('.area_searching').on('click', 'a', function() {
-        $('#location').val($(this).text());
-        $('.area_searching').hide();
-    })
-
-    function location_search(event)
-    {
-        var val = $.trim($("#location").val());
-        var area_searching = $(".area_searching");
-        area_searching.html('').hide();
-
-        if (val != "") {
-            $.ajax({
-                type: "GET",
-                url: '/api/v2/locations/search',
-                data: {
-                    name: val
-                },
-                success: function(res) {
-                    if (res.length > 0) {
-                        $.each(res, function(key, value) {
-                            if (key < 3) {
-                                var text = tree(value.tree);
-                                var html = '<a>' + text + '</a>';
-                                area_searching.append(html);
-                            }
-                        });
-                        area_searching.show();
-                    }
-                }
-            });
-        }
-    }
 
     function tree(obj)
     {
@@ -134,26 +131,6 @@
         }
         return text;
     }
-
-    // 切换类型加载数据
-    var switchType = function(type){
-
-        $('#user_list').html('');
-        var params = {
-            type: type,
-            limit: 10
-        };
-        setTimeout(function() {
-            scroll.init({
-                container: '#user_list',
-                loading: '.user_container',
-                url: '/users',
-                params: params,
-                paramtype: 1
-            });
-        }, 100);
-    }
-
     // 关注回调
     var afterdata = function(target){
         if (target.attr('status') == 1) {
@@ -164,6 +141,24 @@
             target.text('已关注');
             target.attr('status', 1);
             target.addClass('followed');
+        }
+    }
+
+    var getGeo = function(key, callback){
+        if(key) {
+            $.ajax({
+                type: "GET",
+                url: '/api/v2/around-amap/geo',
+                data: { address: key },
+                success: function(res) {
+                    if(res.geocodes[0]){
+                        var geo = res.geocodes[0].location.split(',');
+                        callback(geo);
+                    } else {
+                        return false;
+                    }
+                }
+            });
         }
     }
 </script>
