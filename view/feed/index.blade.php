@@ -64,7 +64,7 @@
         {{-- 动态首页右侧广告位 --}}
         @include('pcview::widgets.ads', ['space' => 'pc:feeds:right', 'type' => 1])
 
-        {{-- 收入大人排行榜 --}}
+        {{-- 收入达人排行榜 --}}
         @include('pcview::widgets.incomerank')
     </div>
 @endsection

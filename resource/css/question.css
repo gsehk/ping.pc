@@ -316,6 +316,10 @@ button{
     border-radius: 0;
 }
 
+.button-plain svg {
+    vertical-align: -5px;
+}
+
 .button-more{
     margin-left: 4px;
     color: #5caac6;

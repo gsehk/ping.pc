@@ -47,9 +47,6 @@
                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jinqian"></use></svg>
                {{ $post->amount/100 }}
             </button>
-            {{-- <button class="button button-plain fr">
-                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
-            </button> --}}
         </div>
     </div>
 @endforeach
