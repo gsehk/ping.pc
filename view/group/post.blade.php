@@ -17,18 +17,21 @@
     <div class="left_container">
         <div class="feed_left">
 
-            <div class="post-title">{{$post->title}}</div>
-            <div class="detail_user">
-                <div class="detail_user_header">
-                    <a href="#">
-                        <img src="{{ $post['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt="">
+            {{-- <div class="post-title">{{$post->title}}</div> --}}
+            <dl class="user-box clearfix">
+                <dt class="fl">
+                    <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
+                    <img class="round" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60">
+                    @if($post->user->verified)
+                    <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                    @endif
                     </a>
-                </div>
-                <div class="detail_user_info">
-                    <div class="detail_user_name"><a href="#">{{ $post->user->name }}</a></div>
-                    <div class="detail_time">{{ getTime($post['created_at']) }}</div>
-                </div>
-            </div>
+                </dt>
+                <dd class="fl ml20 body-box">
+                    <span class="tcolor">{{ $post->user->name }}</span>
+                    <div class="gcolor mt10">{{ getTime($post->created_at) }}</div>
+                </dd>
+            </dl>
 
             @if($post->images)
                 <div class="detail_images" id="layer-photos-demo">

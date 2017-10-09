@@ -14,7 +14,7 @@
 
     <div class="group-cont">
         <div class="group-info">
-            <!-- 圈子信息 -->
+            {{-- 圈子信息 --}}
             <div class="info" id="group_box">
                 <div class="info-content">
                     <div class="content-left">
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <!-- 圈子动态发布 -->
+        {{-- 圈子动态发布 --}}
         @if(!empty($TS))
             <div class="feed_post">
                 <input class="post_text" type="text" placeholder="有标题更吸引人 （最多三十字）" id="post_title">
@@ -56,7 +56,7 @@
         @endif
     </div>
 
-    <!-- 动态列表 -->
+    {{-- 动态列表 --}}
     <div class="feed_content">
         <div class="feed_menu">
             <a href="javascript:;" data-type="new" class="font16 @if ($type == 'new')selected @endif">最新</a>
@@ -72,7 +72,7 @@
 </div>
 
 <div class="right_container">
-    <!-- 热门圈子 -->
+    {{-- 热门圈子 --}}
     @include('pcview::widgets.hotgroups')
 </div>
 @endsection

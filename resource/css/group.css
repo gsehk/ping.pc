@@ -77,13 +77,6 @@
 	color: #ccc;
 }
 
-/**************** 圈子详情 ********************/
-.group-cont {
-    float: left;
-    width: 815px;
-    margin-right: 30px;
-}
-
 /*动态发布*/
 .feed_post .post_textarea {
     width: 100% !important;

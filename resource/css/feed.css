@@ -361,51 +361,6 @@
     padding: 20px 40px;
 }
 
-.detail_user {
-    display: flex;
-    margin-bottom: 30px;
-    padding: 10px;
-    width: 100%;
-    height: 70px;
-
-    align-items: center;
-}
-
-.detail_user .detail_user_header{
-    float: left;
-    overflow: hidden;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    background-color: #f6f6f6;
-}
-
-
-.detail_user .detail_user_info{
-    float: left;
-    margin-left: 18px;
-}
-
-.detail_user .detail_user_info a,
-.detail_user .detail_user_header img,
-.detail_user .detail_user_header a{
-    display: block;
-    color: inherit;
-    cursor: pointer;
-}
-
-.detail_user .detail_user_info .detail_user_name{
-    margin-bottom: 11px;
-    font-size: 16px;
-    color: #333;
-}
-.detail_user .detail_user_info .detail_time{
-    font-size: 14px;
-    color: #b2b2b2;
-}
-
 .detail_images {
     background: #f3f6f7;
     position: relative;
