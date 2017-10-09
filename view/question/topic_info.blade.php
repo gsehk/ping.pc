@@ -71,7 +71,7 @@
                     @endforeach
                 </ul>
                 @if ($topic->experts->count() >= 9)
-                    <a class="recmore" href="JavaScript:;">更多相关专家</a>
+                    <a class="recmore" href="{{ route('pc:topicexpert', $topic->id) }}">更多相关专家</a>
                 @endif
             </div>
         @endif
