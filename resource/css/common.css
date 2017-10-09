@@ -1035,83 +1035,29 @@ a {
 }
 
 /*分享*/
-.del_share {
+.third_share {
     font-size: 14px;
     float: right;
     margin-top: 14px;
     color: #666;
 }
-.share_feedlist a{
-    display: inline-block;
-    width: 23px;
-    height: 23px;
-    vertical-align: text-bottom;
-    background-repeat: no-repeat;
+
+.third_share svg {
+    font-size: 1.8em;
 }
 
-.share_feedlist .bds_tsina {
-    background-image: url(../images/ico_detail_share_weibo_high.png) !important;
+.third_share .weibo {
+    fill: #f97d72 
 }
 
-.share_feedlist .bds_tqq {
-    background-image: url(../images/ico_detail_share_qq_high.png) !important;
+.third_share .qq {
+    fill: #5fbddf;
 }
 
-.share_feedlist .bds_weixin {
-    background-image: url(../images/ico_detail_share_wechat_high.png) !important;
+.third_share .weixin {
+    fill: #54c58c;
 }
 
-.their_right {
-    line-height: 54px;
-    float: right;
-    margin-right: 30px;
-}
-
-.their_right div {
-    line-height: 36px;
-    display: inline-block;
-    width: 100px;
-    height: 36px;
-    margin-left: 10px;
-    cursor: pointer;
-    text-align: center;
-    vertical-align: middle;
-    border: 1px solid #ccc;
-    border-radius: 18px;
-    background: #fff;
-}
-
-.their_right div:hover {
-    color: #59b6d7;
-    border-color: #59b6d7;
-}
-
-.their_right .their_followed {
-    color: #ccc;
-    border: 1px solid #ededed;
-}
-
-.their_right .their_followed:hover {
-    color: #ccc;
-    border: 1px solid #ededed;
-}
-
-#bdshare_weixin_qrcode_dialog {
-    height: 300px !important;
-    box-sizing: initial;
-}
-
-.bdshare-button-style0-16 a {
-    font-size: 14px !important;
-    display: inline-block;
-    float: none !important;
-    overflow: hidden;
-    width: 28px;
-    height: 20px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background-position: 0 0 !important;
-}
 
 /*图片裁剪*/
 .avatar-container {

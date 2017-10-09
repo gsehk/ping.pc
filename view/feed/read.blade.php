@@ -100,11 +100,21 @@
                     </a>
                     @endif
                 </span>
-                <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
+
+                {{-- 第三方分享 --}}
+                <div class="third_share clearfix">
                     分享至：
-                    <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                    <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
-                    <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
+                    <a href="javascript:;" onclick="thirdShare(1, '{{ route('pc:feedread', ['feed_id' => $feed->id]) }}', '{{ $feed->content }}')" title="分享到新浪微博">
+                        <svg class="icon weibo" aria-hidden="true"><use xlink:href="#icon-weibo"></use></svg>
+                    </a>
+                    <a href="javascript:;" onclick="thirdShare(2, '{{ route('pc:feedread', ['feed_id' => $feed->id]) }}', '{{ $feed->content }}')" title="分享到腾讯微博">
+                        <svg class="icon qq" aria-hidden="true"><use xlink:href="#icon-qq"></use></svg>
+                    </a>
+                    <a href="javascript:;" onclick="thirdShare(3, '{{ route('pc:feedread', ['feed_id' => $feed->id]) }}', '{{ $feed->content }}')" title="分享到朋友圈">
+                        <svg class="icon weixin" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg>
+                    </a>
+                    <div class="weixin_qrcode">
+                    </div>
                 </div>
 
                 {{-- 打賞 --}}

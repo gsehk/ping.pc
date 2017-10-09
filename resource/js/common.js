@@ -1215,6 +1215,40 @@ var moneyLimit = function(value) {
     return value;
 }
 
+// 第三方分享
+var thirdShare = function(type, url, title, image) {
+    type = type || 1;
+    url = url || SITE_URL;
+    title = title || '快来看看吧';
+    var tourl = '';
+    switch(type) {
+        case 1: // 微博
+            tourl = 'http://service.weibo.com/share/share.php?url=';
+            tourl += encodeURIComponent(url);
+            tourl += '&title=';
+            tourl += title;
+            tourl += '&searchPic=true';
+            window.open(tourl);
+          break;
+        case 2: // QQ
+            tourl = 'http://connect.qq.com/widget/shareqq/index.html?url=';
+            tourl += encodeURIComponent(url);
+            tourl += '&title=';
+            tourl += title;
+            tourl += '&desc=';
+            tourl += title;
+            window.open(tourl);
+          break;
+        case 3: // 微信
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                width : 96,//设置宽高
+                height : 96
+            });
+            qrcode.makeCode("http://www.baidu.com");
+          break;
+    }
+}
+
 $(function() {
     //获得用户时区与GMT时区的差值
     if (getCookie('customer_timezone') == '') {
