@@ -86,7 +86,6 @@
         // 切换加入状态
         $('.group-foot').on('click', '.group-join', function(){
             checkLogin()
-
             var _this = this;
             var status = $(this).attr('status');
             var group_id = $(this).attr('gid');
@@ -142,7 +141,7 @@
                 url: '/group/postLists',
                 params: params
             });
-        }, 300);
+        }, 200);
 
         // 图片删除事件
         $(".feed_post").on("click", ".imgdel", function() {
@@ -154,18 +153,6 @@
             if ($('#file_upload_1-queue').find('.uploadify-queue-item').length != 0  && $('.uploadify-queue-add').length == 0 ){
                 var add = '<a class="feed_picture_span uploadify-queue-add"></a>'
                 $('.uploadify-queue').append(add);
-            }
-        });
-
-        // 显示回复框
-        $('#feeds_list').on('click', '.J-comment-show', function() {
-            checkLogin()
-
-            var comment_box = $(this).parent().siblings('.comment_box');
-            if (comment_box.css('display') == 'none') {
-                comment_box.show();
-            } else {
-                comment_box.hide();
             }
         });
 
