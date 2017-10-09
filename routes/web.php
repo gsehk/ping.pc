@@ -47,6 +47,7 @@ Route::prefix('question')->group(function () {
     Route::get('/{question_id}', 'QuestionController@read')->where(['question_id' => '[0-9]+'])->name('pc:questionread');
 
     Route::get('topic', 'QuestionController@topic')->name('pc:topic');
+    Route::get('topic/{topic}', 'QuestionController@topicInfo')->name('pc:topicinfo');
 
     Route::get('answer/{answer}', 'QuestionController@answer')->name('pc:answeread');
 

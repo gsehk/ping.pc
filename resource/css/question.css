@@ -915,3 +915,128 @@ button{
     line-height: 36px;
     cursor: pointer;
 }
+
+/* 话题详情 */
+.question-topic{
+    margin-bottom: 30px;
+    padding: 35px 40px;
+    width: 100%;
+    min-height: 88px;
+    font-size: 0;
+    background-color: #fff;
+}
+
+.question-topic .topic-info{
+
+}
+
+.question-topic .info-left{
+    width: 120px;
+    height: 120px;
+    margin: 0 20px 0 0;
+    float: left;
+}
+
+.question-topic .info-right{
+    color: #9F9F9F;
+    margin-left: 140px;
+    min-height: 120px;
+    font-size:initial;
+}
+
+.question-topic .info-right .topic-title {
+    font-size: 20px;
+    height: 55px;
+    line-height: 55px;
+    font-weight: 600;
+    color: #484848;
+}
+
+.question-topic .info-right .topic-foot {
+    height: calc(100% - 50px);
+    line-height: 40px;
+    display: inline-block;
+    font-size: 18px;
+}
+
+.question-topic .info-right .topic-foot .count {
+    margin-right: 10px;
+    border-right: 1px solid #DADADA;
+    padding-right: 15px;
+}
+
+.question-topic .info-right .topic-foot .count:last-child {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+.question-topic .info-right .has-follow {
+    border: 1px solid #ccc;
+    padding: 5px 15px;
+    border-radius: 5px;
+    float: right;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: -20px;
+}
+
+.question-topic .info-right .add-follow {
+    color: #59b6d7;
+    border-color: #59b6d7;
+}
+
+.question-topic .topic-description {
+    font-size: initial;
+    color: #9B9B9B;
+    line-height: 25px;
+    margin-top: 10px;
+}
+
+.question-topic .topic-description >.intro {
+    font-size: 16px;
+    color: #707070;
+}
+
+.question-topic .topic-description .s-d {
+    display: none;
+}
+
+.question-topic .topic-description .show-description {
+    color: #59b6d7;
+}
+
+/* 相关专家 */
+.recusers .experts-users-title {
+    font-size: 18px;
+    text-align: center;
+    height: 70px;
+    line-height: 30px;
+    padding: 20px 0 15px;
+    color: #333;
+    border-bottom: 1px solid #ededed;
+}
+
+.hot-issues {
+    margin-top: 30px;
+}
+
+.hot-issues-list li{
+    width: 100%;
+    margin: 20px 0;
+}
+
+.hot-issues-list .hot-subject {
+    width: calc(100% - 1px);
+}
+
+.hot-issues-count {
+    color: #B3B3B3;
+    height: 40px;
+    line-height: 40px;
+}
+
+.hot-issues-count .count {
+    width: 45%;
+    float: left;
+}

@@ -69,6 +69,14 @@ class QuestionController extends BaseController
         return view('pcview::question.topic', [], $this->PlusData);
     }
 
+    public function topicInfo(Request $request, int $topic)
+    {
+        $data['topic'] = createRequest('GET', '/api/v2/question-topics/'.$topic );
+        //dd($data['topic']->toArray());
+
+        return view('pcview::question.topic_info', $data, $this->PlusData);
+    }
+
     /**
      * 问题详情.
      *
