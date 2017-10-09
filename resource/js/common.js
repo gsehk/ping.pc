@@ -291,7 +291,7 @@ scroll.loadMore = function() {
                     $('.loading').html('没有更多了');
                 }
             }
-            
+
             // 若隐藏则显示
             if ($(scroll.setting.container).css('display') == 'none') {
                 $(scroll.setting.container).show();
@@ -730,7 +730,6 @@ var rewarded = {
                     html += '</div>';
                     ly.loadHtml(html, '');
                     $("img.lazy").lazyload();
-                    layer.close(index);
                 }
             }
         });
