@@ -8,7 +8,8 @@
         @if ($post->answer)
             <div class="q-answer">
                 <div class="q_user">
-                @if ($post->anonymity)
+                @if ($post->answer->anonymity)
+                    <img src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}?s=24" >
                     <div class="q_user_info">匿名</div>
                 @else
                     <img src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=24" >

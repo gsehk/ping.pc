@@ -33,8 +33,8 @@
                     <!-- js增删  .questionrichtext--collapsed 改变content字数 -->
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
-                            <span class="hide show-body">{!! $body = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
-                            <span class="richtext" itemprop="text">{!! str_limit(strip_tags($body), 300, "...") !!}</span>
+                            <span class="hide show-body">{!! Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+                            <span class="richtext" itemprop="text">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body), 300, '...') !!}</span>
                             <button class="button button-plain button-more questionrichtext-more">显示全部</button>
                         </div>
                     </div>
@@ -256,6 +256,7 @@
         });
         // 关注/取消关注问题
         $('.question-button-group').on('click', '.watched', function () {
+            checkLogin();
             var _this = $(this);
             var watched = _this.data('watched');
             var type = '';

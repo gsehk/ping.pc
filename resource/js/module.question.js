@@ -58,6 +58,7 @@ var QA = {
         console.log(bdDesc);
     },
     look: function (answer_id, money, question_id) {
+        checkLogin();
         ly.confirm(formatConfirm('围观支付', '本次围观您需要支付' + money + '元，是否继续围观？'), '' , '', function(){
             var url ='/api/v2/question-answers/' + answer_id + '/onlookers';
 
@@ -69,7 +70,7 @@ var QA = {
                     noticebox('围观成功', 1, '/question/' + question_id);
                 },
                 error: function(xhr){
-                    showError(xhr.responseJSON);
+                    showError(xhr);
                 }
             });
         });

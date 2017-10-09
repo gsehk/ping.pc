@@ -406,6 +406,7 @@
 .question-answers-list .list-item .content-inner {
     margin-top: 15px;
     line-height: 1.67;
+    color: #666;
 }
 
 .question-answers-list .list-item .answer-footer {

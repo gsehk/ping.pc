@@ -11,6 +11,7 @@ class QuestionController extends BaseController
 
     public function question(Request $request)
     {
+        $this->PlusData['current'] = 'question';
         if ($request->ajax()){
             $params = [
                 'offset' => $request->query('offset', 0),

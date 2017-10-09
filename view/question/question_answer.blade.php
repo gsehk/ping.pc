@@ -26,15 +26,13 @@
             </div>
             <div class="list-item-content">
                 <div class="content-inner">
-                    {{--@if(isset($answer->invitation) && $answer->invitation == 1)--}}
-                        {{--{{ $answer->body }}--}}
-                    {{--@endif--}}
-                    {{$answer->body = Parsedown::instance()->setMarkupEscaped(true)->text($answer->body)}}
+                    @if(isset($answer->invitation) && $answer->invitation == 1)
+                        {{ $answer->body }}
+                    @endif
                     @if(isset($answer->invitation) && $answer->invitation == 1 && !$answer->cloud)
-                        <span class="answer-body fuzzy">{!! str_limit(strip_tags($answer->body), 250, "...") !!}</span>
+                        <span class="answer-body fuzzy">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
                     @else
-                        <span class="hide show-answer-body">{!! $answer->body !!}</span>
-                        <span class="answer-body">{!! str_limit(strip_tags($answer->body), 250, "...") !!}</span>
+                        <span class="answer-body">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
                         <button class="button button-plain button-more"><a href="{{ route('pc:answeread', $answer->id) }}">查看详情</a></button>
                     @endif
                 </div>
