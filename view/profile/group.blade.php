@@ -21,7 +21,7 @@
             <div class="profile_menu J-menu">
                 <a class="active" href="javascript:;" cid="1">@if ($TS->id == $user->id) 我加入的 @else TA加入的 @endif</a>
             </div>
-            <div id="content_list" class="profile_list clearfix"></div>
+            <div id="content_list" class="clearfix"></div>
         </div>
     </div>
 
@@ -42,12 +42,8 @@ scroll.init({
     params: {user: {{$user->id}} }
 });
 
-$('#feeds_list').on('click', '.J-join', function(){
-
-    if (MID == 0) {
-        window.location.href = '/passport/login';
-        return;
-    }
+$('#content_list').on('click', '.J-join', function(){
+    checkLogin();
     var _this = this;
     var status = $(this).attr('status');
     var group_id = $(this).attr('gid');

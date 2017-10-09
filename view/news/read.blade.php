@@ -22,13 +22,14 @@
                     {{ $news['title'] }}
                 </div>
 
-                <div class="detail_info feed_datas" id="news_toolbar">
+                <div class="detail_info relative" id="news_toolbar">
                     <a href="{{ route('pc:news', ['cate_id' => $news['category']['id']]) }}" class="cates_span">{{ $news['category']['name'] or '默认' }}</a>
                     <span>{{ $news['from'] != '原创' ? $news['from'] : $news['user']['name'] }}  ·  {{ $news['hits'] }}浏览  ·  {{ getTime($news['created_at']) }}</span>
-                    <span class="options">
+                    <span class="options" onclick="options(this)">
                         <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                     </span>
                     <div class="options_div">
+                    <div class="triangle"></div>
                     <ul>
                         @if(isset($TS->id) && $news->user->id == $TS->id)
                         <li>
@@ -38,7 +39,6 @@
                         </li>
                         @endif
                     </ul>
-                    <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
                     </div>
                 </div>
 

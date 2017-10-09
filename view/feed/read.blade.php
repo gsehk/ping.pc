@@ -29,27 +29,27 @@
                     <span class="tcolor">{{ $user['name'] }}</span>
                     <div class="gcolor mt10">{{ getTime($feed['created_at']) }}</div>
                 </dd>
-                <dd class="fr mt20 relative feed_datas">
-                    <span class="options">
+                <dd class="fr mt20 relative">
+                    <span class="options" onclick="options(this)">
                         <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                     </span>
                     <div class="options_div">
-                    <ul>
-                        @if(isset($TS->id) && $user->id == $TS->id)
-                        <li>
-                            <a href="javascript:;" onclick="weibo.pinneds({{$feed->id}});">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:;" onclick="weibo.delFeed({{$feed->id}}, 1);">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
-                            </a>
-                        </li>
-                        @endif
+                        <div class="triangle"></div>
+                        <ul>
+                            @if(isset($TS->id) && $user->id == $TS->id)
+                            <li>
+                                <a href="javascript:;" onclick="weibo.pinneds({{$feed->id}});">
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" onclick="weibo.delFeed({{$feed->id}}, 1);">
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                </a>
+                            </li>
+                            @endif
 
-                    </ul>
-                    <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
+                        </ul>
                     </div>
                 </dd>
             </dl>

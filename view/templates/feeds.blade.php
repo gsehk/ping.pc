@@ -23,7 +23,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
             <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
             <span class="feed_time font12 hide">查看详情</span>
         </a>
-        
+
         @if ($post->pinned == 1)
         <a class="pinned" href="javascript:;">
             <span class="font12">置顶</span>

@@ -1431,6 +1431,18 @@ $(function() {
         $(this).addClass('current');
     });
 
+    // 显示回复框
+    $('body').on('click', '.J-comment-show', function() {
+        checkLogin();
+
+        var comment_box = $(this).parent().siblings('.comment_box');
+        if (comment_box.css('display') == 'none') {
+            comment_box.show();
+        } else {
+            comment_box.hide();
+        }
+    });
+
     $('body').on('focus keyup change', '.reward_input input', function() {
         $('.reward_spans span').removeClass('current');
     });

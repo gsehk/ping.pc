@@ -1,34 +1,42 @@
-
+@php
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+@endphp
 {{-- 个人中心文章栏列表 --}}
 
 @if(!$data->isEmpty())
 @foreach($data as $key => $post)
-<div class="feed_box">
-<div class="feed_item" @if($loop->first) style="margin-top:20px;" @endif>
+<div class="news_item @if ($loop->iteration == 1)mt30 @endif">
 
-    <span class="feed_time">
-        @if(date('Y-m-d') == date('Y-m-d', strtotime($post->created_at)))
-            <span class="today">今天</span>
-        @else
-            <span class="profile_time">
-                <sup style="font-size:90%">{{ date('m', strtotime($post->created_at)) }}</sup>
-                <sub style="font-size:60%">{{ date('d', strtotime($post->created_at)) }}</sub>
-            </span>
-        @endif
-    </span>
+    <div class="news_title">
+        <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
+            <img class="avatar" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="50" />
+            @if($post->user->verified)
+            <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+            @endif
+        </a>
 
-    <div class="feed_body">
-        <div class="article_box">
-            <img data-original="{{$routes['storage']}}{{$post['storage']}}?w=584&h=400" class="lazy">
+        <a href="javascript:;">
+            <span class="uname font14">{{ $post->user->name }}</span>
+        </a>
+
+        <a class="date" href="{{ route('pc:newsread', $post->id) }}">
+            <span class="font12">{{ getTime($post->created_at) }}</span>
+            <span class="font12 hide">查看详情</span>
+        </a>
+    </div>
+
+    <div class="news_body">
+        <div class="article_box relative">
+            <img data-original="{{$routes['storage']}}{{$post['storage']}}?w=584&h=400" class="lazy img">
             <div class="article_desc">
                 <p class="title"><a @if ($post->audit_status == 0) href="{{ route('pc:newsread', $post->id) }}" @endif>{{ $post['title'] }}</a></p>
                 <p class="subject">{{ $post['subject'] or '' }}</p>
             </div>
         </div>
     </div>
-    <div class="feed_bottom">
+    <div class="news_bottom mt20">
         @if ($post->audit_status == 0)
-        <div class="feed_datas">
+        <div class="feed_datas relative">
             <span class="collect" id="J-collect{{$post->id}}" rel="{{$post->collection_count}}" status="{{(int) $post->has_collect}}">
                 @if($post->has_collect)
                 <a href="javascript:;" onclick="collected.init({{$post->id}}, 'news', 1);">
@@ -49,20 +57,20 @@
             <span class="view">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->hits}}
             </span>
-            <span class="options">
+            <span class="options" onclick="options(this)">
                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
             </span>
             <div class="options_div">
+                <div class="triangle"></div>
                 <ul>
                     @if($post->user_id == $TS['id'])
                     <li>
-                        <a href="javascript:;" onclick="profile.pinneds({{$post->id}}, 'news');">
+                        <a href="javascript:;" onclick="news.pinneds({{$post->id}}, 'news');">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
                         </a>
                     </li>
                     @endif
                 </ul>
-                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
             </div>
         </div>
         @endif
@@ -75,7 +83,7 @@
                     <textarea class="comment-editor" id="J-editor{{$post->id}}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                     <div class="comment_post">
                         <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                        <a class="btn btn-primary fr" id="J-button{{$post->id}}" onclick="profile.addComment({{$post->id}}, 1, 'news')"> 评 论 </a>
+                        <a class="btn btn-primary fr" id="J-button{{$post->id}}" onclick="news.addComment({{$post->id}}, 1)"> 评 论 </a>
                     </div>
                 </div>
                 <div id="J-commentbox{{ $post->id }}">
@@ -94,14 +102,13 @@
                     @endif
                 </div>
                 @if($post->comments->count() >= 5)
-                <div class="comit_all font12"><a href="{{Route('pc:feedread', $post->id)}}">查看全部评论</a></div>
+                <div class="comit_all font12"><a href="{{Route('pc:newsread', $post->id)}}">查看全部评论</a></div>
                 @endif
 
             </div>
         </div>
         <div class="feed_line"></div>
     </div>
-</div>
 </div>
 @endforeach
 @endif

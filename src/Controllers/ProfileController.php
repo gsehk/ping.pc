@@ -22,7 +22,9 @@ class ProfileController extends BaseController
                     $feeds = createRequest('GET', '/api/v2/feeds', $params);
                     $feed = clone $feeds['feeds'];
                     $after = $feed->pop()->id ?? 0;
-                    $html = view('pcview::templates.profile_feed', $feeds, $this->PlusData)->render();
+                    $feeds['conw'] = 735;
+                    $feeds['conh'] = 545;
+                    $html = view('pcview::templates.feeds', $feeds, $this->PlusData)->render();
                     break;
                 default:
                     # code...
@@ -66,7 +68,6 @@ class ProfileController extends BaseController
             $new = clone $news;
             $after = $new->pop()->id ?? 0;
             $data['data'] = $news;
-
             $html = view('pcview::templates.profile_news', $data, $this->PlusData)->render();
 
             return response()->json([
@@ -103,7 +104,9 @@ class ProfileController extends BaseController
                     $feeds = createRequest('GET', '/api/v2/feeds/collections', $params);
                     $data['feeds'] = $feeds;
                     $after = 0;
-                    $html = view('pcview::templates.collect_feeds', $data, $this->PlusData)->render();
+                    $data['conw'] = 735;
+                    $data['conh'] = 545;
+                    $html = view('pcview::templates.feeds', $data, $this->PlusData)->render();
                     break;
                 case 2:
                     $params = [

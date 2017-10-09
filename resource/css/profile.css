@@ -128,34 +128,6 @@
     color: inherit;
 }
 
-.profile_nav .profile_nav_btn {
-    font-size: 14px;
-    line-height: 36px;
-    display: block;
-    float: right;
-    width: 100px;
-    height: 36px;
-    margin-top: 22px;
-    text-align: center;
-    color: #fff;
-    border-radius: 18px;
-    background-color: #6eb5d3;
-}
-
-.profile_nav .profile_nav_btn:before {
-    display: inline-block;
-    overflow: hidden;
-    width: 16px;
-    height: 16px;
-    margin-right: 9px;
-    content: '';
-    vertical-align: middle;
-    background-image: url(./img/to_post_icon.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 16px;
-}
-
 .profile_top_info {
     position: absolute;
     bottom: 80px;
@@ -254,38 +226,15 @@
     margin-top: 30px;
 }
 
-.profile_body .left_box {
-    float: left;
-    width: 150px;
-    padding-top: 28px;
-}
-
-.profile_body .center_box {
-    float: left;
-    width: 721px;
-    margin-left: -56px;
-    padding-left: 85px;
-}
-
 .profile_body .right_box {
     float: right;
     width: 235px;
 }
 
-.profile_body .collect_box {
-    float: left;
-    width: 815px;
-}
-
 /*  列表  */
 .profile_content {
     background: #fff;
-    padding: 0px 40px;
-}
-
-.profile_menu {
-    padding: 30px 0px;
-    height: 81px;
+    padding: 30px 40px;
 }
 
 .profile_menu > a {
@@ -295,83 +244,6 @@
 
 .profile_menu > a.active {
     color: #333;
-}
-
-.profile_list {
-    display: none;
-    padding-bottom: 30px;
-}
-
-/*动态列表*/
-.feed_box {
-    margin-left: 53px;
-    padding-bottom: 10px;
-    padding-left: 90px;
-    border-left: 1px solid #ccc;
-}
-
-.feed_item {
-    position: relative;
-}
-
-.feed_item_time:before {
-    position: absolute;
-    left: -115px;
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    content: '';
-    color: #fff;
-    border-radius: 50%;
-    background: #ccc;
-}
-
-.feed_item .uname {
-    font-size: 14px;
-    margin-left: 15px;
-}
-
-.feed_time {
-    width: 50px;
-    line-height: 38px;
-    position: absolute;
-    top: 0;
-    left: -115px;
-    text-align: center;
-    color: #fff;
-    font-size: 14px;
-}
-
-.feed_time .today {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: inline-block;
-    padding-top: 5px;
-    background: #6eb5d3;
-}
-
-.feed_time .profile_time {
-    font-size: 18px;
-    color: #fff;
-    writing-mode: horizontal-tb;
-}
-
-.feed_text {
-    font-size: 14px;
-    line-height: 24px;
-    display: -webkit-box;
-    overflow: hidden;
-    margin-top: 0;
-    word-break: break-word;
-    color: #666;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-}
-
-/*圈子列表*/
-.group_item {
-    margin-top: 0px;
 }
 
 /*问答列表*/
@@ -426,85 +298,22 @@
     content: '';
 }
 
-.feed_bottom {
-    margin-top: 20px;
-}
-
-.feed_datas {
-    position: relative;
-    clear: both;
-}
-
-.feed_datas .digg,
-.feed_datas .comment,
-.feed_datas .collect,
-.feed_datas .view {
-    font-size: 14px;
-    display: inline-block;
-    margin-right: 50px;
-    cursor: pointer;
-    color: #ccc;
-}
-
-.feed_line {
-    width: 100%;
-    height: 6px;
-    margin: 30px auto;
-    background: #f3f6f7;
-}
-
-
 /*文章列表*/
-.artic_left {
-    line-height: 60px;
-    position: absolute;
-    top: -22px;
-    left: -40px;
+.news_item .uname {
     display: inline-block;
-    width: 332px;
-    height: 60px;
-    padding: 0 20px;
-    text-indent: 20px;
+    margin-left: 20px;
+    color: #333;
 }
 
-.artic_left > a {
-    margin-right: 15px;
+.news_item .date {
+    float: right;
+    margin-top: 17px;
+    color: #ccc;
+    text-align: right;
 }
 
-.dy_tab {
-    position: relative;
-    height: 38px;
-}
-
-.dy_tab_title {
-    width: 50%;
-    text-align: center;
-}
-
-.dy_tab_title_feed {
-    border-bottom: 1px solid #ededed;
-    border-left: 1px solid #ededed;
-}
-
-.dy_tab_title_article {
-    border-right: 1px solid #ededed;
-    border-bottom: 1px solid #ededed;
-}
-
-.border_left {
-    border-right: 1px solid #ededed;
-    border-bottom: 1px solid #ededed;
-}
-
-.border_left_no {
-    border: none !important;
-}
-
-.article_box{
-    position: relative;
-}
-
-.article_box img {
+.article_box .img {
+    margin-top: 20px;
     width: 100% !important;
     height: 100%;
     max-height: 400px;
