@@ -69,6 +69,13 @@ class QuestionController extends BaseController
         return view('pcview::question.topic', [], $this->PlusData);
     }
 
+    /**
+     * 话题详情.
+     * @param Request $request
+     * @param int $topic
+     * @author zuo
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     */
     public function topicInfo(Request $request, int $topic)
     {
         $data['topic'] = createRequest('GET', '/api/v2/question-topics/'.$topic );
@@ -218,6 +225,40 @@ class QuestionController extends BaseController
             'after' => $after,
             'data' => $html
         ]);
+    }
+
+    /**
+     * 话题-更多专家列表
+     * @param Request $request
+     * @param int $topic
+     * @author zuo
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View|\think\response\View
+     */
+    public function topicExpert(Request $request, int $topic)
+    {
+        if ($request->ajax()) {
+            $limit = $request->input('limit') ?: 18;
+            $offset = $request->input('offset') ?: 0;
+            $params = [
+                'limit' => $limit,
+                'offset' => $offset,
+            ];
+
+            $data['users'] = createRequest('GET', '/api/v2/question-topics/'.$topic.'/experts', $params);
+
+            $html =  view('pcview::templates.user', $data, $this->PlusData)->render();
+
+            return response()->json([
+                'status'  => true,
+                'data' => $html,
+                'count' => count($data['users'])
+            ]);
+        }
+
+        $this->PlusData['current'] = 'question';
+        $data['topic'] = $topic;
+
+        return view('pcview::question.topic_experts', $data, $this->PlusData);
     }
 
 }

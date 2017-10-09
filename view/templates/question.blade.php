@@ -29,7 +29,7 @@
                         </div>
                     </div> --}}
                     <div class="q_text">
-                        <span>{{ str_limit($post->answer->body, 250) }}</span>
+                        <span>{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $post->answer->body), 250, '...') !!}</span>
                         <button class="button button-plain Button--more">查看详情</button>
                     </div>
                 </div>

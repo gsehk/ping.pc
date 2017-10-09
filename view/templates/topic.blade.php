@@ -2,10 +2,14 @@
 	@foreach ($data as $post)
 		<div class="topic-item">
 		    <div class="topic_l">
-		        <img src="{{ $post->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png') }}" alt="话题封面" width="140">
+				<a href="{{ route('pc:topicinfo', $post->id) }}">
+					<img src="{{ $post->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png') }}" alt="话题封面" width="140">
+				</a>
 		    </div>
 		    <div class="topic_r">
-		        <p>{{ $post->name }}</p>
+				<a href="{{ route('pc:topicinfo', $post->id) }}">
+					<p>{{ $post->name }}</p>
+				</a>
 		        <div>关注 <span>{{ $post->follows_count }}</span> 问题 <span>{{ $post->questions_count }}</span>
 		        </div>
 		        <div class="follow">

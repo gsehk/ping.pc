@@ -56,7 +56,7 @@
         @if($topic->experts->count() > 1)
             <div class="recusers">
                 <div class="experts-users-title">
-                    相关专家
+                    <div>相关专家</div>
                 </div>
                 <ul>
                     @foreach ($topic->experts as $user)

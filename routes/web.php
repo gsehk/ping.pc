@@ -47,7 +47,12 @@ Route::prefix('question')->group(function () {
     Route::get('/{question_id}', 'QuestionController@read')->where(['question_id' => '[0-9]+'])->name('pc:questionread');
 
     Route::get('topic', 'QuestionController@topic')->name('pc:topic');
+
+    // 话题详情
     Route::get('topic/{topic}', 'QuestionController@topicInfo')->name('pc:topicinfo');
+
+    // 话题下的更多专家
+    Route::get('topic/{topic}/expert', 'QuestionController@topicExpert')->where(['topic' => '[0-9]+'])->name('pc:topicexpert');
 
     Route::get('answer/{answer}', 'QuestionController@answer')->name('pc:answeread');
 
