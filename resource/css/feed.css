@@ -530,7 +530,7 @@
 }
 .right_about .auth_fans li{
     display: inline-block;
-    border: 1px solid #ededed;
+    border-top: 1px solid #ededed;
     width: 50%;
     height: 49px;
     line-height: 47px;
@@ -539,12 +539,7 @@
 }
 
 .right_about .auth_fans li:nth-child(even){
-    border-left: 0;
-}
-
-.right_about .auth_fans li:nth-child(3),
-.right_about .auth_fans li:nth-child(4){
-    border-top: 0;
+    border-left: 1px solid #ededed;
 }
 
 .right_about .auth_fans li a{
