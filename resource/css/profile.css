@@ -266,38 +266,6 @@
     color: #ccc;
 }
 
-/*收藏列表*/
-.collect_time {
-    float: right;
-    font-size: 14px;
-    margin-top: 17px;
-    color: #ccc;
-}
-
-/* 多图片样式 */
-.image_box {
-    position: relative;
-    left: -1px;
-    overflow: hidden;
-    margin-bottom: 2px;
-    padding: 0 2px;
-}
-
-.image_box .per_image {
-    position: absolute;
-    top: 0;
-    left: 2px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.image_box:before {
-    display: block;
-    padding-top: 100%;
-    content: '';
-}
-
 /*文章列表*/
 .news_item .uname {
     display: inline-block;
