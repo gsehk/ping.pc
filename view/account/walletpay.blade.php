@@ -77,23 +77,16 @@ $('#J-pay-btn').on('click', function(){
             showError(xml.responseJSON);
         },
         success: function(res) {
-            var charge = JSON.stringify(res.charge);
-            var surl = 'http://'+window.location.host+'/account/gateway';
-            var popupwin = window.open(surl, "Map", "status=0,title=0,scrollbars=1");
-            //onload只能执行一次，也就是如果子窗口有onload事件，可能会覆盖。
-            popupwin.onload = function(e){
-                popupwin.postMessage(charge, "http://"+window.location.host);
-            }
-            payStatus(res.charge.id);
-            // $("#payurla").attr("href", surl);
-            // $("#payurlc").trigger("click");
-            // ping++ 创建支付宝支付
-            // pingpp.createPayment(res.charge);
+            var res = JSON.stringify(res.charge);
+            var surl = 'http://'+window.location.host+'/account/gateway?res='+res;
+            $("#payurla").attr("href", surl);
+            $("#payurlc").trigger("click");
+            checkStatus(res.id);
         }
     });
 });
 
-function payStatus(id) {
+function checkStatus(id){
     var html = '<div class="tip">'+
                     '<p>请您在新打开的支付页面完成付款</p>'+
                     '<p>付款前请不要关闭此窗口</p>'+
@@ -118,7 +111,7 @@ function payStatus(id) {
         });
     }, function(){
         // 跳转充值失败说明页面
-        window.location.href = '{{route('pc:feeds')}}';
+        window.location.href = '{{route('pc:success',['url'=>route('pc:wallet'),'time'=>'3'])}}';
     });
 }
 </script>

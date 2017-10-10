@@ -222,10 +222,10 @@ class AccountController extends BaseController
                 'success_url' => route('pc:wallet')
             ],
         ];
-        $res = newRequest('POST', '/api/v2/wallet/recharge', $params);
-        $data['charge'] = json_encode($res['charge']);*/
+        $res = newRequest('POST', '/api/v2/wallet/recharge', $params);*/
+        $data['charge'] = $request->query('res');
 
-        return view('pcview::account.gateway');
+        return view('pcview::account.gateway', $data, $this->PlusData);
     }
 
 
