@@ -39,6 +39,7 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/pingpp.js')}}"></script>
 <script type="text/javascript">
+var popInterval;
 $('.pay-sum label').on('click', function(){
     $('.pay-sum label').removeClass('active');
     $(this).addClass('active');
@@ -57,6 +58,7 @@ $('.pay-way label').on('click', function(){
 })
 
 $('#J-pay-btn').on('click', function(){
+    $(this).attr("disabled", true);
     var sum = $('[name="sum"]:checked').val();
     var payway = $('[name="payway"]:checked').val();
     var custom = $('[name="custom"]').val();
@@ -88,7 +90,7 @@ $('#J-pay-btn').on('click', function(){
 });
 
 function payPop(id){
-    setInterval("checkStatus("+id+")", 3000);
+    popInterval = setInterval("checkStatus("+id+")", 3000);
 
     var html = '<div class="tip">'+
                     '<p>请您在新打开的支付页面完成付款</p>'+
@@ -99,15 +101,19 @@ function payPop(id){
       id: 'pay_tip_pop',
       title: '充值提示',
       btn: ['支付成功','遇到问题'],
+      cancel: function(){
+        clearInterval(popInterval);
+      }
     }, function(){
-        checkStatus(id);
+        checkStatus(id, 1);
     }, function(){
-        // 跳转充值失败说明页面
-        window.location.href = SITE_URL + '/account/success?url={{route('pc:wallet')}}&time=3&message=充值成功';
+        return false;
     });
+    $('#J-pay-btn').attr("disabled", false);
 }
 
-function checkStatus(id) {
+function checkStatus(id, type) {
+    type = type || 0;
     if (id) {
         $.ajax({
             url: '/api/v2/wallet/charges/'+id+'?mode=retrieve',
@@ -115,7 +121,10 @@ function checkStatus(id) {
             dataType: 'json',
             success: function(res) {
                 if (res.status == 1) {
-                    window.location.href = SITE_URL + '/account/success?url={{route('pc:wallet')}}&time=3&message=充值成功';
+                    window.location.href = SITE_URL + '/account/success?status=1&url={{route('pc:wallet')}}&time=3&message=充值成功';
+                }
+                if (type == 1) {
+                    window.location.href = SITE_URL + '/account/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中';
                 }
             },
             error: function(xhr){
