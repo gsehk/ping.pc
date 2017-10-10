@@ -580,6 +580,11 @@
     outline: 0;
 }
 
+.account_form_row .input span {
+    height: 30px;
+    line-height: 30px;
+}
+
 .account_form_row .area_searching{
     position: absolute;
     display: none;
