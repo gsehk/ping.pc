@@ -50,7 +50,7 @@ setTimeout(function() {
         loading: '.question_body',
         url: '/question',
         paramtype: 1,
-        params: {type: 'new', limit: 10}
+        params: {type: 'hot', limit: 10}
     });
 }, 300);
 

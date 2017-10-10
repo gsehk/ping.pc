@@ -100,7 +100,7 @@
                 url: '/question/topic/' + topic_id + '/question',
                 paramtype:1,
                 loadtype: 1,
-                params: {type: 'new', limit: 10, topic_id : topic_id}
+                params: {type: 'hot', limit: 10, topic_id : topic_id}
             });
         }, 300);
 
