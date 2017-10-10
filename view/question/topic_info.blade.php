@@ -65,8 +65,8 @@
                                 <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50"/>
                             </a>
                             <span>
-                <a href="{{ route('pc:mine', $user['id']) }}">{{ $user['name'] }}</a>
-            </span>
+                                <a href="{{ route('pc:mine', $user['id']) }}">{{ $user['name'] }}</a>
+                            </span>
                         </li>
                     @endforeach
                 </ul>

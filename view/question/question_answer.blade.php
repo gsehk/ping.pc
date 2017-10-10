@@ -26,14 +26,14 @@
             </div>
             <div class="list-item-content">
                 <div class="content-inner">
-                    @if(isset($answer->invitation) && $answer->invitation == 1)
-                        {{ $answer->body }}
-                    @endif
-                    @if(isset($answer->invitation) && $answer->invitation == 1 && !$answer->cloud)
-                        <span class="answer-body fuzzy">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
-                    @else
+                    {{--@if(isset($answer->invitation) && $answer->invitation == 1)--}}
+                        {{--{{ $answer->body }}--}}
+                    {{--@endif--}}
+                    @if(isset($TS) && (!isset($answer->invitation) || ($answer->invitation == 1 && ($answer->could || $answer->question->user_id == $TS['id'] || $answer->user_id == $TS['id']))))
                         <span class="answer-body">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
                         <button class="button button-plain button-more"><a href="{{ route('pc:answeread', $answer->id) }}">查看详情</a></button>
+                    @else
+                        <span class="answer-body fuzzy">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
                     @endif
                 </div>
 
@@ -104,9 +104,14 @@
 
                         @if(isset($answer->invitation) && $answer->invitation == 1)
                             <div class="look-answer">
+
                                 <span class="look-user">{{ $answer['onlookers_count'] }}人正在围观</span>
-                                @if(!$answer->cloud)
-                                    <button class="button button-blue button-primary look-cloud" onclick="QA.look({{ $answer->id }}, 0.1, {{ $answer->question_id }})" type="button">围观</button>
+                                @if($answer->question->user_id != $TS['id'] && $answer->user_id != $TS['id'])
+                                    @if(isset($TS) && $answer->could)
+                                        <button class="button look-cloud" type="button">已围观</button>
+                                    @else
+                                        <button class="button button-blue button-primary look-cloud" onclick="QA.look({{ $answer->id }}, 0.1, {{ $answer->question_id }})" type="button">围观</button>
+                                    @endif
                                 @endif
                             </div>
                         @endif

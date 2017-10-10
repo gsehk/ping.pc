@@ -73,7 +73,7 @@
         <div class="questionheader-footer">
             <div class="questionheader-footer-inner">
                 <div class="questionheader-main questionheader-footer-main">
-                    @if($question['look'] == 1)
+                    @if($question['look'] == 1 && isset($TS) && $question['user_id'] == $TS['id'])
                         <span class="questionheader-onlook">￥0.1围观</span>
                     @endif
                     <div class="questionheaderactions">
