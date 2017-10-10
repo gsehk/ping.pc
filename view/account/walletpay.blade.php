@@ -72,6 +72,7 @@ $('#J-pay-btn').on('click', function(){
         url: '/api/v2/wallet/recharge',
         type: 'POST',
         data: params,
+        async: false,
         dataType: 'json',
         error: function(xml) {
             showError(xml.responseJSON);
