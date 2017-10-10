@@ -85,7 +85,7 @@
                     {{-- 第三方分享 --}}
                     <div class="detail_third_share">
                         分享至：
-                        @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:newsread', ['news_id' => $news->id]), 'share_title' => addslashes($news->subject), 'share_pic' => getenv('APP_URL') . '/api/v2/files/' . $news->storage ])
+                        @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:newsread', ['news_id' => $news->id]), 'share_title' => $news->subject, 'share_pic' => getenv('APP_URL') . '/api/v2/files/' . $news->storage ])
                     </div>
 
                     {{-- 打赏 --}}

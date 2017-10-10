@@ -4,9 +4,10 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Session;
 use Illuminate\Support\Facades\Cache;
-use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Contracts\Config\Repository;
+use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
+use Zhiyi\Plus\Models\JWTCache as JWTCacheModel;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -21,19 +22,13 @@ class BaseController extends Controller
             $this->PlusData['token'] = Session::get('token');
 
             $this->PlusData['TS'] = null;
-            if ($this->PlusData['token']) {
+            if ($this->PlusData['token']) { 
+                // TODO 设置当前token为有效，临时解决方案
+                JWTCacheModel::where('value', '"'. $this->PlusData['token'] . '"')->update([
+                    'status' => 0,
+                ]);
+
                 $this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
-                if (!isset($this->PlusData['TS']['id'])) { // 不成功跳至登录重新获取授权
-                    // 刷新授权
-                    $token = createRequest('PATCH', '/api/v2/tokens/' . $this->PlusData['token']);
-                    if (!isset($token['token'])) { // 刷新授权失败跳至登录页
-                        Session::flush();
-                        return redirect(route('pc:login'));
-                    } else { // 重新获取用户信息
-                        Session::put('token', $token['token']);
-                        $this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
-                    }
-                }
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
             }
             

@@ -116,7 +116,7 @@
                             $share_pic = '';
                         }
                     @endphp
-                    @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:feedread', ['feed_id' => $feed->id]), 'share_title' => addslashes($feed->feed_content), 'share_pic' => $share_pic])
+                    @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:feedread', ['feed_id' => $feed->id]), 'share_title' => $feed->feed_content, 'share_pic' => $share_pic])
                 </div>
 
                 {{-- 打賞 --}}
