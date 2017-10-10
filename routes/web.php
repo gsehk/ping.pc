@@ -56,7 +56,7 @@ Route::prefix('question')->group(function () {
 
     // 话题下的问题
     Route::get('topic/{topic}/question', 'QuestionController@topicQuestion')->name('pc:topicquestion');
-    
+
     Route::get('answer/{answer}', 'QuestionController@answer')->name('pc:answeread');
 
     Route::get('answer/{answer}/comments', 'QuestionController@answerComments');
@@ -125,7 +125,7 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
 
     Route::get('/success', 'AccountController@successCon')->name('pc:success');
 
-    Route::get('/payway', 'AccountController@payway')->name('pc:payway');
+    Route::get('/gateway', 'AccountController@gateway')->name('pc:gateway');
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {

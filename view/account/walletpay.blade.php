@@ -78,7 +78,7 @@ $('#J-pay-btn').on('click', function(){
         },
         success: function(res) {
             var charge = JSON.stringify(res.charge);
-            var surl = 'http://'+window.location.host+'/account/payway';
+            var surl = 'http://'+window.location.host+'/account/gateway';
             var popupwin = window.open(surl, "Map", "status=0,title=0,scrollbars=1");
             //onload只能执行一次，也就是如果子窗口有onload事件，可能会覆盖。
             popupwin.onload = function(e){
@@ -110,8 +110,7 @@ function payStatus(id) {
             type: 'GET',
             dataType: 'json',
             success: function(res) {
-                console.log(res)
-                layer.closeAll();
+                window.location.href = '{{route('pc:success',['url'=>route('pc:wallet'),'time'=>'3'])}}';
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
