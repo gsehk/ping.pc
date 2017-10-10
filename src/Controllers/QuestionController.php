@@ -94,7 +94,7 @@ class QuestionController extends BaseController
         $this->PlusData['current'] = 'question';
 
         $question = createRequest('GET', '/api/v2/questions/'.$question_id );
-        //$question->body = replaceImage($question->body);
+        $question->body = replaceImage($question->body);
         $data['question'] = $question;
 
         return view('pcview::question.read', $data, $this->PlusData);

@@ -33,7 +33,8 @@
                     <!-- js增删  .questionrichtext--collapsed 改变content字数 -->
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
-                            <span class="show-body">{!! Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+
+                            <span class="show-body">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
                             {{--<span class="richtext" itemprop="text">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body), 300, '...') !!}</span>--}}
                             {{--<button class="button button-plain button-more questionrichtext-more">显示全部</button>--}}
                         </div>
@@ -89,13 +90,18 @@
                                 分享
                             </button>
                             <div class="share-show">
-                                <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_questionlist">
-                                    分享至：
-                                    <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                                    <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
-                                    <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
-                                </div>
-                                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
+                                分享至：
+                                @php
+                                    // 设置第三方分享图片
+                                    preg_match('/<img src="(.*?)".*?/', $question->body_html, $imgs);
+                                    if (count($imgs) > 0) {
+                                        $share_pic = $imgs[1];
+                                    } else {
+                                        $share_pic = '';
+                                    }
+
+                                @endphp
+                                @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:questionread', ['question_id' => $question->id]), 'share_title' => addslashes(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body)), 'share_pic' => $share_pic])
                             </div>
                         </div>
                         @if($question['user_id'] == $TS['id'])
@@ -236,6 +242,7 @@
     <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js')}}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 
     <script>
         setTimeout(function() {
@@ -244,7 +251,7 @@
                 loading: '.question-main-l',
                 url: '/question/{{$question['id']}}/answers',
                 paramtype: 1,
-                params: {order_type: 'default', limit: 10}
+                params: {order_type: 'default', limit: 2}
             });
         }, 300);
         // 展示问题详情

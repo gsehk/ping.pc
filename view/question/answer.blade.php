@@ -52,13 +52,21 @@
                 </a>
                 @endif
             </span>
-            <div class="del_share bdsharebuttonbox share_feedlist clearfix bdshare-button-style0-16" data-tag="share_feedlist" data-bd-bind="1505717855934">
+            {{-- 第三方分享 --}}
+            <div class="detail_third_share">
                 分享至：
-                <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
-                <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
+                @php
+                    // 设置第三方分享图片
+                        preg_match('/<img src="(.*?)".*?/', $answer->body, $imgs);
+                        if (count($imgs) > 0) {
+                            $share_pic = $imgs[1];
+                        } else {
+                            $share_pic = '';
+                        }
+                @endphp
+                @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:answeread', ['answer' => $answer->id]), 'share_title' => addslashes($answer->body), 'share_pic' => $share_pic])
             </div>
-            <div class="reward-box">
+            <div class="reward_cont">
                 <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{$answer->id}}, 'answer')">打 赏</button></p>
                 <p class="reward-info tcolor">
                     <font color="#F76C6A">{{ $answer->rewarder_count }} </font>次打赏，共
@@ -114,6 +122,7 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 <script>
 $(function(){
     setTimeout(function() {
@@ -124,13 +133,6 @@ $(function(){
             canload: true
         });
     }, 200);
-
-    bdshare.addConfig('share', {
-        "tag" : "share_feedlist",
-        'bdText' : '{{$answer->body}}',
-        'bdDesc' : '',
-        'bdUrl' : window.location.href
-    });
 
     $("img.lazy").lazyload({effect: "fadeIn"});
 })

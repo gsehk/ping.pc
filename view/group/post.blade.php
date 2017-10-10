@@ -72,11 +72,19 @@
                     </a>
                     @endif
                 </span>
-                <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
+
+                {{-- 第三方分享 --}}
+                <div class="detail_third_share">
                     分享至：
-                    <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                    <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
-                    <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
+                    @php
+                        // 设置第三方分享图片，若未付费则为锁图。
+                        if (!empty($post->images)) {
+                            $share_pic = getenv('APP_URL') . '/api/v2/files/' . $post->images[0]['id'];
+                        } else {
+                            $share_pic = '';
+                        }
+                    @endphp
+                    @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:feedread', ['post_id' => $post->id]), 'share_title' => addslashes($post->content), 'share_pic' => $share_pic])
                 </div>
             </div>
             <div class="detail_comment">
@@ -135,6 +143,7 @@
 @section('scripts')
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
     <script type="text/javascript">
         layer.photos({
             photos: '#layer-photos-demo'
@@ -153,13 +162,6 @@
 
         $(document).ready(function(){
             $("img.lazy").lazyload({effect: "fadeIn"});
-            bdshare.addConfig('share', {
-                "tag" : "share_feedlist",
-                'bdText' : '{{$post['title']}}',
-                'bdDesc' : '{{$post['content']}}',
-                'bdUrl' : window.location.href,
-                'bdPic': "{{count($post['images']) > 0 ? $routes['storage'].$post['images'][0]['id'] : ''}}"
-            });
         });
 
 
