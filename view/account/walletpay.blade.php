@@ -124,7 +124,7 @@ function checkStatus(id, type) {
                     window.location.href = SITE_URL + '/account/success?status=1&url={{route('pc:wallet')}}&time=3&message=充值成功';
                 }
                 if (type == 1) {
-                    window.location.href = SITE_URL + '/account/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中';
+                    window.location.href = SITE_URL + '/account/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中&content=操作失败';
                 }
             },
             error: function(xhr){
