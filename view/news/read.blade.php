@@ -81,11 +81,11 @@
                         </a>
                         @endif
                     </span>
-                    <div class="del_share bdsharebuttonbox share_feedlist clearfix" data-tag="share_feedlist">
+
+                    {{-- 第三方分享 --}}
+                    <div class="detail_third_share">
                         分享至：
-                        <a href="javascript:;" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                        <a href="javascript:;" class="bds_tqq" data-cmd="sqq" title="分享到腾讯微博"></a>
-                        <a href="javascript:;" class="bds_weixin" data-cmd="weixin" title="分享到朋友圈"></a>
+                        @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:newsread', ['news_id' => $news->id]), 'share_title' => addslashes($news->subject), 'share_pic' => getenv('APP_URL') . '/api/v2/files/' . $news->storage ])
                     </div>
 
                     {{-- 打赏 --}}
@@ -173,17 +173,16 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.news.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/markdown/lib/marked.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 <script>
 $(function(){
     $("img.lazy").lazyload({effect: "fadeIn"});
 
-    setTimeout(function() {
-        scroll.init({
-            container: '.J-commentbox',
-            loading: '.detail_comment',
-            url: '/news/{{$news->id}}/comments'
-        });
-    }, 300);
+    scroll.init({
+        container: '.J-commentbox',
+        loading: '.detail_comment',
+        url: '/news/{{$news->id}}/comments'
+    });
 
     // 近期热点
     if($('.time_menu li a').length > 0) {
@@ -197,14 +196,6 @@ $(function(){
             $('#' + type).show();
         })
     }
-
-    bdshare.addConfig('share', {
-        "tag" : "share_feedlist",
-        'bdText' : '{{ $news['title'] }}',
-        'bdDesc' : '{{ $news['title'] }}',
-        'bdUrl' : window.location.href,
-        'bdPic': "{{count($news['image']) > 0 ? $routes['storage'].$news['image']['id'] : ''}}"
-    });
 });
 
 </script>

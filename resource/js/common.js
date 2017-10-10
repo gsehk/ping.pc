@@ -1216,10 +1216,11 @@ var moneyLimit = function(value) {
 }
 
 // 第三方分享
-var thirdShare = function(type, url, title, image) {
+var thirdShare = function(type, url, title, pic, obj) {
     type = type || 1;
     url = url || SITE_URL;
     title = title || '快来看看吧';
+    pic = pic || '';
     var tourl = '';
     switch(type) {
         case 1: // 微博
@@ -1227,6 +1228,10 @@ var thirdShare = function(type, url, title, image) {
             tourl += encodeURIComponent(url);
             tourl += '&title=';
             tourl += title;
+            if (pic != '') {
+                tourl += '&pic=';
+                tourl += pic;
+            }
             tourl += '&searchPic=true';
             window.open(tourl);
           break;
@@ -1237,14 +1242,20 @@ var thirdShare = function(type, url, title, image) {
             tourl += title;
             tourl += '&desc=';
             tourl += title;
+            if (pic != '') {
+                tourl += '&pics=';
+                tourl += pic;
+            }
             window.open(tourl);
           break;
         case 3: // 微信
-            // var qrcode = new QRCode(document.getElementById("qrcode"), {
-            //     width : 96,//设置宽高
-            //     height : 96
-            // });
-            // qrcode.makeCode("http://www.baidu.com");
+            $(obj).parent().find('.weixin_qrcode').html('');
+            $(obj).parent().find('.weixin_qrcode').qrcode({ 
+                width: 200,
+                height:200,
+                text: url //任意内容 
+            });
+            ly.loadHtml($('.weixin_qrcode'), '');
           break;
     }
 }

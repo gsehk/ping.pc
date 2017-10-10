@@ -102,19 +102,21 @@
                 </span>
 
                 {{-- 第三方分享 --}}
-                <div class="third_share clearfix">
+                <div class="detail_third_share">
                     分享至：
-                    <a href="javascript:;" onclick="thirdShare(1, '{{ route('pc:feedread', ['feed_id' => $feed->id]) }}', '{{ $feed->content }}')" title="分享到新浪微博">
-                        <svg class="icon weibo" aria-hidden="true"><use xlink:href="#icon-weibo"></use></svg>
-                    </a>
-                    <a href="javascript:;" onclick="thirdShare(2, '{{ route('pc:feedread', ['feed_id' => $feed->id]) }}', '{{ $feed->content }}')" title="分享到腾讯微博">
-                        <svg class="icon qq" aria-hidden="true"><use xlink:href="#icon-qq"></use></svg>
-                    </a>
-                    <a href="javascript:;" onclick="thirdShare(3, '{{ route('pc:feedread', ['feed_id' => $feed->id]) }}', '{{ $feed->content }}')" title="分享到朋友圈">
-                        <svg class="icon weixin" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg>
-                    </a>
-                    <div class="weixin_qrcode">
-                    </div>
+                    @php
+                        // 设置第三方分享图片，若未付费则为锁图。
+                        if ($feed->images) {
+                            if (isset($feed->images[0]['paid']) && $feed->images[0]['paid'] == false) {
+                                $share_pic = $routes['resource'] . '/images/pic_locked.png';
+                            } else {
+                                $share_pic = getenv('APP_URL') . '/api/v2/files/' . $feed->images[0]['file'];
+                            }
+                        } else {
+                            $share_pic = '';
+                        }
+                    @endphp
+                    @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:feedread', ['feed_id' => $feed->id]), 'share_title' => addslashes($feed->feed_content), 'share_pic' => $share_pic])
                 </div>
 
                 {{-- 打賞 --}}
@@ -179,6 +181,7 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 <script type="text/javascript">
     layer.photos({
       photos: '#layer-photos-demo'

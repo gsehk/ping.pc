@@ -1035,27 +1035,40 @@ a {
 }
 
 /*分享*/
-.third_share {
+.detail_third_share {
     font-size: 14px;
     float: right;
     margin-top: 14px;
     color: #666;
 }
 
-.third_share svg {
+.detail_third_share svg {
+    margin-bottom: 4px;
+}
+
+.detail_third_share span a {
+    border: none !important;
+}
+
+.third_share {
     font-size: 1.8em;
 }
 
-.third_share .weibo {
+.third_share_weibo {
     fill: #f97d72 
 }
 
-.third_share .qq {
+.third_share_qq {
     fill: #5fbddf;
 }
 
-.third_share .weixin {
+.third_share_weixin {
     fill: #54c58c;
+}
+
+.weixin_qrcode {
+    display: none;
+    padding: 40px;
 }
 
 
