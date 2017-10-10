@@ -101,7 +101,10 @@
                     </div>
                 </div>
             @endif
-            <div class="question-next"><button id="question-submit">@if(isset($question))完成@else发布问题@endif</button></div>
+            <div class="question-next">
+                <button id="question-last">上一步</button>
+                <button id="question-submit">@if(isset($question))完成@else发布问题@endif</button>
+            </div>
 
         </div>
     @endif
@@ -251,6 +254,10 @@
             ly.load('/question/users', '', '480px', '550px', 'GET',
                 {'topics' : args.topics
                 });
+        });
+        $('#question-last').on('click', function () {
+            step2.hide();
+            step1.show();
         });
         // 发布问题
         $('#question-submit').on('click', function () {

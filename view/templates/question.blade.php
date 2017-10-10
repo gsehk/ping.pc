@@ -4,6 +4,9 @@
     <div class="q_c">
         <h2 class="q_title">
             <a href="{{ route('pc:questionread', ['question_id' => $post['id']]) }}">{{ $post->subject }}</a>
+            @if($post['excellent'] == 1)
+                <span class="excellent">精</span>
+            @endif
         </h2>
         @if ($post->answer)
             <div class="q-answer">

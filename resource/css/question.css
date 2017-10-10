@@ -142,6 +142,15 @@
     color: #333;
 }
 
+.q_c .q_title>span.excellent{
+    font-size: 13px;
+    color: #FEAA0A;
+    border: 1px solid #FEAA0A;
+    border-radius: 2px;
+    padding: 0 2px;
+    margin-left: 10px;
+}
+
 .q_c .q_user{
     display: flex;
     height: 24px;
@@ -591,6 +600,11 @@ button{
     border: 0;
     border-radius: 3px;
     background: #59b6d7;
+}
+
+.question-next button#question-last{
+    margin-right: 30px;
+    background: #dedede;
 }
 
 .reward-row {
