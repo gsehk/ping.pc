@@ -215,14 +215,6 @@ class AccountController extends BaseController
 
     public function gateway(Request $request)
     {
-       /* $params = [
-            'type' => $request->input('payway'),
-            'amount' => $request->input('sum') ?: $request->input('custom')*100,
-            'extra' => [
-                'success_url' => route('pc:wallet')
-            ],
-        ];
-        $res = newRequest('POST', '/api/v2/wallet/recharge', $params);*/
         $data['charge'] = $request->query('res');
 
         return view('pcview::account.gateway', $data, $this->PlusData);

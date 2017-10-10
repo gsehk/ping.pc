@@ -78,7 +78,7 @@ $('#J-pay-btn').on('click', function(){
         },
         success: function(res) {
             var res = JSON.stringify(res.charge);
-            var surl = 'http://'+window.location.host+'/account/gateway?res='+res;
+            var surl = SITE_URL + '/account/gateway?res=' + window.encodeURIComponent(res);
             $("#payurla").attr("href", surl);
             $("#payurlc").trigger("click");
             checkStatus(res.id);
