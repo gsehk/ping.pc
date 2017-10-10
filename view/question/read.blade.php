@@ -33,9 +33,9 @@
                     <!-- js增删  .questionrichtext--collapsed 改变content字数 -->
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
-                            <span class="hide show-body">{!! Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
-                            <span class="richtext" itemprop="text">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body), 300, '...') !!}</span>
-                            <button class="button button-plain button-more questionrichtext-more">显示全部</button>
+                            <span class="show-body">{!! Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+                            {{--<span class="richtext" itemprop="text">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body), 300, '...') !!}</span>--}}
+                            {{--<button class="button button-plain button-more questionrichtext-more">显示全部</button>--}}
                         </div>
                     </div>
                 </div>
@@ -241,7 +241,7 @@
         setTimeout(function() {
             scroll.init({
                 container: '#question-answers-list',
-                loading: '.question-answers-list',
+                loading: '.question-main-l',
                 url: '/question/{{$question['id']}}/answers',
                 paramtype: 1,
                 params: {order_type: 'default', limit: 10}
@@ -291,7 +291,7 @@
             setTimeout(function() {
                 scroll.init({
                     container: '#question-answers-list',
-                    loading: '.question-answers-list',
+                    loading: '.question-main-l',
                     url: '/question/{{$question['id']}}/answers',
                     paramtype: 1,
                     params: {order_type: type, limit: 10}
@@ -325,7 +325,7 @@
                 data: args,
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
-                        noticebox(res.message, 1, '/question/{{$question['id']}}');
+                        noticebox(res.message, 1, '/question/{{ $question['id'] }}');
                     }
                 },
                 error:function (xml) {
@@ -355,7 +355,7 @@
             setTimeout(function() {
                 scroll.init({
                     container: '#question-answers-list',
-                    loading: '.question-answers-list',
+                    loading: '.question-main-l',
                     url: '/question/{{$question['id']}}/answers',
                     paramtype: 1,
                     params: {order_type: 'default', limit: 10}

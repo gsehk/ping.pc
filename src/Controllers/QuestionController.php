@@ -79,7 +79,6 @@ class QuestionController extends BaseController
     public function topicInfo(Request $request, int $topic)
     {
         $data['topic'] = createRequest('GET', '/api/v2/question-topics/'.$topic );
-        //dd($data['topic']->toArray());
 
         return view('pcview::question.topic_info', $data, $this->PlusData);
     }
@@ -95,7 +94,7 @@ class QuestionController extends BaseController
         $this->PlusData['current'] = 'question';
 
         $question = createRequest('GET', '/api/v2/questions/'.$question_id );
-        $question->body = replaceImage($question->body);
+        //$question->body = replaceImage($question->body);
         $data['question'] = $question;
 
         return view('pcview::question.read', $data, $this->PlusData);
@@ -181,17 +180,19 @@ class QuestionController extends BaseController
         $params['offset'] = $request->input('offset') ?: 0;
         $params['order_type'] = $request->input('order_type') ?: 'default';
         $data['answers'] = createRequest('GET', '/api/v2/questions/'.$question_id.'/answers', $params);
-        $question = createRequest('GET', '/api/v2/questions/'.$question_id );
-        if (!empty($question['adoption_answers'])) { // 采纳回答
-            $question['adoption_answers']->each(function ($item, $key) use ($data) {
-                $data['answers']->prepend($item);
-            });
-        }
-        if (!empty($question['invitation_answers'])) { // 悬赏人回答
-            $question['invitation_answers']->each(function ($item, $key) use ($data) {
-                $item->invitation = 1;
-                $data['answers']->prepend($item);
-            });
+        if ($params['offset'] == 0) {
+            $question = createRequest('GET', '/api/v2/questions/'.$question_id );
+            if (!empty($question['adoption_answers'])) { // 采纳回答
+                $question['adoption_answers']->each(function ($item, $key) use ($data) {
+                    $data['answers']->prepend($item);
+                });
+            }
+            if (!empty($question['invitation_answers'])) { // 悬赏人回答
+                $question['invitation_answers']->each(function ($item, $key) use ($data) {
+                    $item->invitation = 1;
+                    $data['answers']->prepend($item);
+                });
+            }
         }
         $return = view('pcview::question.question_answer', $data, $this->PlusData)
             ->render();
