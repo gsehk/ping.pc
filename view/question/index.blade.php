@@ -15,10 +15,10 @@
     {{-- 问答 --}}
     <div class="question_body">
         <div class="question_sub_nav">
-            <a class="active" href="#" data-type="new">最新</a>
+            <a href="#" data-type="hot">热门</a>
             <a href="#" data-type="excellent">精选</a>
             <a href="#" data-type="reward">悬赏</a>
-            <a href="#" data-type="hot">热门</a>
+            <a class="active" href="#" data-type="new">最新</a>
             <a href="#" data-type="all">全部</a>
         </div>
         <div id="question-list" class="question_list"></div>
