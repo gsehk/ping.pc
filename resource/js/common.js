@@ -1250,10 +1250,10 @@ var thirdShare = function(type, url, title, pic, obj) {
           break;
         case 3: // 微信
             $(obj).parent().find('.weixin_qrcode').html('');
-            $(obj).parent().find('.weixin_qrcode').qrcode({ 
+            $(obj).parent().find('.weixin_qrcode').qrcode({
                 width: 200,
                 height:200,
-                text: url //任意内容 
+                text: url //任意内容
             });
             ly.loadHtml($('.weixin_qrcode'), '');
           break;
@@ -1276,8 +1276,13 @@ $(function() {
     })
 
     // 个人中心展开
-    $('.nav_right').hover(function() {
-        $('.nav_menu').toggle();
+    $('.nav_right').hover(function(e) {
+        if (e.type == 'mouseleave' && $('.nav_menu').css('display') == 'block') {
+            $('.nav_menu').hide();
+        }
+        if (e.type == 'mouseenter' && $('.nav_menu').css('display') == 'none') {
+            $('.nav_menu').show();
+        }
     })
 
     // 跳至顶部
