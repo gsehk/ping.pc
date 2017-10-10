@@ -78,7 +78,7 @@
 
         {{-- 提问 --}}
         <div class="q_c_post_btn">
-            <a href="{{ route('pc:createquestion') }}">
+            <a href="{{ $routes['siteurl'] }}/question/create?topic_id={{$topic->id}}">
             <span>
                 <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>提问
             </span>

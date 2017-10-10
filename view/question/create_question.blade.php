@@ -13,12 +13,14 @@
             </div>
         </div>
         <div class="question-form-row question-topics">
-            <label for="J-select-topics" @if(isset($question)) style="display: none;" @endif>请选择话题</label>
+            <label for="J-select-topics" @if(isset($question) || isset($topic)) style="display: none;" @endif>请选择话题</label>
             <ul class="question-topics-selected" id="J-select-topics">
                 @if(isset($question))
                     @foreach($question['topics'] as $tc)
                         <li class="topic_{{ $tc['id'] }}" data-id="{{ $tc['id'] }}">{{ $tc['name'] }}</li>
                     @endforeach
+                @elseif(isset($topic))
+                    <li class="topic_{{ $topic['id'] }}" data-id="{{ $topic['id'] }}">{{ $topic['name'] }}</li>
                 @endif
             </ul>
             <div class="question-topics-list" id="J-topic-box" style="display: none;">

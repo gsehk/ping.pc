@@ -144,6 +144,10 @@ class QuestionController extends BaseController
 
     public function createQuestion(Request $request, int $question_id = 0)
     {
+        if ($topic_id = $request->query('topic_id')) {
+            $data['topic'] = createRequest('GET', '/api/v2/question-topics/'.$topic_id );
+        }
+
         if ($question_id > 0) {
             $data['question'] = createRequest('GET', '/api/v2/questions/'.$question_id );
         }
