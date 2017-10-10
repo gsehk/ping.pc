@@ -54,7 +54,7 @@
                 </dd>
             </dl>
 
-            @if($feed->images)
+            @if(!empty($feed->images))
             <div class="detail_images" id="layer-photos-demo">
             @foreach($feed->images as $store)
                 @if (isset($store['paid']) && $store['paid'] == false)
@@ -106,7 +106,7 @@
                     分享至：
                     @php
                         // 设置第三方分享图片，若未付费则为锁图。
-                        if ($feed->images) {
+                        if (empty($feed->images)) {
                             if (isset($feed->images[0]['paid']) && $feed->images[0]['paid'] == false) {
                                 $share_pic = $routes['resource'] . '/images/pic_locked.png';
                             } else {
