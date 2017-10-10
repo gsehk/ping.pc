@@ -10,7 +10,7 @@
         <div class="question-topic">
             <div class="topic-info">
                 <div class="info-left">
-                    <img src="{{ $topic->avatar }}" width="120px" height="120px">
+                    <img src="{{ $topic->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png') }}" width="120px" height="120px">
                 </div>
                 <div class="info-right">
                     <div class="topic-title">{{ $topic->name }}</div>

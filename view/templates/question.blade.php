@@ -1,4 +1,6 @@
-
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+@endphp
 @if (!$data->isEmpty())
 @foreach ($data as $post)
     <div class="q_c">
@@ -22,7 +24,7 @@
                              <div>{{$tag->name}}</div>
                          @endforeach
                     </div>
-                    <span class="q_time">{{ $post->answer->created_at }}</span>
+                    <span class="q_time">{{ getTime($post->answer->created_at) }}</span>
                 @endif
                 </div>
                 <div class="q_detail clearfix">
@@ -33,7 +35,7 @@
                     </div> --}}
                     <div class="q_text">
                         <span>{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $post->answer->body), 250, '...') !!}</span>
-                        <button class="button button-plain Button--more">查看详情</button>
+                        <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain Button--more">查看详情</a>
                     </div>
                 </div>
             </div>
