@@ -23,7 +23,7 @@
                         <img src="{{ $ad['image'] }}" width="100%" height="414">
                     </a>
                     @if ($ad['title'])
-                        <p class="title">{{ $ad['title'] }}</p>
+                        <a href="{{ $ad['link'] }}"><p class="title">{{ $ad['title'] }}</p></a>
                     @endif
                   </li>
                 @endforeach
