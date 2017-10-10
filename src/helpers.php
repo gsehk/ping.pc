@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use SlimKit\PlusSocialite\API\Requests\AccessTokenRequest;
 use Illuminate\Support\Facades\Route;
 use Zhiyi\Plus\Models\User;
+use GuzzleHttp\Client as GuzzleHttpClient;
 use function asset as plus_asset;
 use function view as plus_view;
 
@@ -153,6 +154,17 @@ function createRequest($method = 'POST', $url = '', $params = array())
     // }
 }
 
+function newRequest($method = 'POST', $url = '', $parameters = array())
+{
+    $url = getenv('APP_URL') . $url;
+    $client = new GuzzleHttpClient();
+    $params['headers'] = ['Accept' => 'application/json', 'Authorization' => 'Bearer '. Session::get('token')];
+    $params['form_params'] = $parameters;
+    $response = json_decode($client->request($method, $url, $params)->getBody(), true);
+
+    return $response;
+}
+
 function socialiteRequest($method = 'POST', $url = '', $params = array())
 {
     $request = AccessTokenRequest::create($url, $method, $params);
@@ -174,6 +186,7 @@ function socialiteRequest($method = 'POST', $url = '', $params = array())
     return $response;
 }
 
+
 function getTime($time, int $type = 1, int $format = 1)
 {
     // 本地化
@@ -192,7 +205,7 @@ function getImageUrl($image = array(), $width, $height, $cut = true)
     if (!$image) {
         return false;
     }
-    
+
     // 裁剪
     $file = $image['file'] ?? $image['id'];
     if ($cut) {

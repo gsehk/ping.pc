@@ -121,6 +121,8 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('/binds', 'AccountController@getMyBinds')->name('pc:binds');
 
     Route::get('/success', 'AccountController@successCon')->name('pc:success');
+
+    Route::get('/payway', 'AccountController@payway')->name('pc:payway');
 });
 
 Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {

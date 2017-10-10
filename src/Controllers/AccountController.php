@@ -5,6 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Session;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\newRequest;
 
 class AccountController extends BaseController
 {
@@ -212,4 +213,18 @@ class AccountController extends BaseController
         return view('pcview::templates.success', $data, $this->PlusData);
     }
 
+    public function payway(Request $request)
+    {
+        $params = [
+            'type' => $request->input('payway'),
+            'amount' => $request->input('sum') ?: $request->input('custom')*100,
+            'extra' => [
+                'success_url' => route('pc:wallet')
+            ],
+        ];
+        $res = newRequest('POST', '/api/v2/wallet/recharge', $params);
+        $data['charge'] = json_encode($res['charge']);
+
+        return view('pcview::account.payway', $data, $this->PlusData);
+    }
 }

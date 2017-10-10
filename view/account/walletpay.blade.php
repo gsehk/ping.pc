@@ -9,6 +9,7 @@
 @section('content')
 
 <div class="pay-box">
+<form action="/account/payway" method="get" target="_blank" accept-charset="utf-8">
     <h1 class="title"> 充值 </h1>
     <div class="pay-form">
 
@@ -28,10 +29,11 @@
             {{-- <label class="opt" for="wxpay">微信<input class="hide" id="wxpay" type="radio" name="payway" value="wx"></label> --}}
         </div>
 
-        <button class="pay-btn" id="J-pay-btn">充值</button>
+        <button type="submit" class="pay-btn" id="J-check-pup">充值</button>
     </div>
+</form>
 </div>
-
+<a id="payurla" href="" target="_blank"><b id="payurlc"></b></a>
 @endsection
 
 @section('scripts')
@@ -54,30 +56,22 @@ $('.pay-way label').on('click', function(){
     $(this).addClass('active');
 })
 
-$('#J-pay-btn').on('click', function(){
-    var sum = $('[name="sum"]:checked').val();
-    var payway = $('[name="payway"]:checked').val();
-    var custom = $('[name="custom"]').val();
-    var params = {
-        type: payway,
-        amount: sum ? sum : custom * 100,
-        extra: {
-            success_url: "{{ route('pc:wallet') }}"
-        }
-    }
-
-    $.ajax({
-        url: '/api/v2/wallet/recharge',
-        type: 'POST',
-        data: params,
-        dataType: 'json',
-        error: function(xml) {
-            showError(xml.responseJSON);
-        },
-        success: function(res) {
-            // ping++ 创建支付宝支付
-            pingpp.createPayment(res.charge);
-        }
+$('#J-check-pup').on('click', function(){
+    var html = '<div class="tip">'+
+                    '<p>请您在新打开的支付页面完成付款</p>'+
+                    '<p>付款前请不要关闭此窗口</p>'+
+                '</div><div class="msg">完成付款后请根据您的情况点击下面的按钮。</div>';
+    layer.confirm(html, {
+      move: false,
+      id: 'pay_tip_pup',
+      title: '充值提示',
+      btn: ['支付成功','遇到问题'],
+    }, function(){
+        // 查询订单状态
+        console.log(111)
+    }, function(){
+        // 跳转充值失败说明页面
+        window.location.href = '{{route('pc:feeds')}}';
     });
 });
 
