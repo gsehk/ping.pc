@@ -405,6 +405,7 @@
     width: 500px;
     padding-left: 10px;
     border-bottom: 1px solid #ededed;
+    min-height: 30px;
     max-height: 400px;
     _height: 120px;
     outline: 0;
@@ -926,7 +927,7 @@
     line-height: 30px;
 }
 
-#pay_tip_pup .tip {
+#pay_tip_pop .tip {
     background: url(./img/pay_pop_icon.png) no-repeat 82px 0;
     line-height: 24px;
     padding-top: 6px;
@@ -938,8 +939,8 @@
     margin: 20px auto;
     border-bottom: 1px solid #f5f5f5;
 }
-#pay_tip_pup .tip > p { margin: 0; }
-#pay_tip_pup .msg { text-align: center; }
+#pay_tip_pop .tip > p { margin: 0; }
+#pay_tip_pop .msg { text-align: center; }
 .layui-layer-btn .layui-layer-btn0,
 .layui-layer-btn .layui-layer-btn1 {
     width: 100px;

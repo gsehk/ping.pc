@@ -76,43 +76,52 @@ $('#J-pay-btn').on('click', function(){
         error: function(xml) {
             showError(xml.responseJSON);
         },
-        success: function(res) {
-            var res = JSON.stringify(res.charge);
+        success: function(response) {
+            var res = JSON.stringify(response.charge);
             var surl = SITE_URL + '/account/gateway?res=' + window.encodeURIComponent(res);
             $("#payurla").attr("href", surl);
             $("#payurlc").trigger("click");
-            checkStatus(res.id);
+            payPop(response.id);
         }
     });
 });
 
-function checkStatus(id){
+function payPop(id){
+    setInterval("checkStatus("+id+")", 3000);
+
     var html = '<div class="tip">'+
                     '<p>请您在新打开的支付页面完成付款</p>'+
                     '<p>付款前请不要关闭此窗口</p>'+
                 '</div><div class="msg">完成付款后请根据您的情况点击下面的按钮。</div>';
     layer.confirm(html, {
       move: false,
-      id: 'pay_tip_pup',
+      id: 'pay_tip_pop',
       title: '充值提示',
       btn: ['支付成功','遇到问题'],
     }, function(){
-        // 查询订单状态
+        checkStatus(id);
+    }, function(){
+        // 跳转充值失败说明页面
+        window.location.href = SITE_URL + '/account/success?url={{route('pc:wallet')}}&time=3&message=充值成功';
+    });
+}
+
+function checkStatus(id) {
+    if (id) {
         $.ajax({
-            url: '/api/v2/wallet/charges/'+id,
+            url: '/api/v2/wallet/charges/'+id+'?mode=retrieve',
             type: 'GET',
             dataType: 'json',
             success: function(res) {
-                window.location.href = '{{route('pc:success',['url'=>route('pc:wallet'),'time'=>'3'])}}';
+                if (res.status == 1) {
+                    window.location.href = SITE_URL + '/account/success?url={{route('pc:wallet')}}&time=3&message=充值成功';
+                }
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
             }
         });
-    }, function(){
-        // 跳转充值失败说明页面
-        window.location.href = '{{route('pc:success',['url'=>route('pc:wallet'),'time'=>'3'])}}';
-    });
+    }
 }
 </script>
 @endsection
