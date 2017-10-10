@@ -54,6 +54,9 @@ Route::prefix('question')->group(function () {
     // 话题下的更多专家
     Route::get('topic/{topic}/expert', 'QuestionController@topicExpert')->where(['topic' => '[0-9]+'])->name('pc:topicexpert');
 
+    // 话题下的问题
+    Route::get('topic/{topic}/question', 'QuestionController@topicQuestion')->name('pc:topicquestion');
+    
     Route::get('answer/{answer}', 'QuestionController@answer')->name('pc:answeread');
 
     Route::get('answer/{answer}/comments', 'QuestionController@answerComments');

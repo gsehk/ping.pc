@@ -261,4 +261,27 @@ class QuestionController extends BaseController
         return view('pcview::question.topic_experts', $data, $this->PlusData);
     }
 
+    /**
+     * 话题-问题列表
+     * @param Request $request
+     * @author zuo
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function topicQuestion(Request $request)
+    {
+        $this->PlusData['current'] = 'question';
+        $topic_id = $request->input('topic_id');
+        $params = [
+            'offset' => $request->input('offset', 0),
+            'limit' => $request->input('limit', 10),
+            'type' => $request->input('type', 'all'),
+        ];
+        $question['data'] = createRequest('GET', '/api/v2/question-topics/'.$topic_id.'/questions', $params);
+        $html = view('pcview::templates.question', $question, $this->PlusData)->render();
+
+        return response()->json([
+            'status' => true,
+            'data' => $html
+        ]);
+    }
 }

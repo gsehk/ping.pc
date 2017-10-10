@@ -92,13 +92,15 @@
 
 @section('scripts')
     <script>
+        var topic_id = "{{ $topic->id }}";
         setTimeout(function() {
             scroll.init({
                 container: '#question-list',
                 loading: '.question_body',
-                url: '/question',
-                paramtype: 1,
-                params: {type: 'new', limit: 10}
+                url: '/question/topic/' + topic_id + '/question',
+                paramtype:1,
+                loadtype: 1,
+                params: {type: 'new', limit: 10, topic_id : topic_id}
             });
         }, 300);
 
@@ -112,9 +114,10 @@
                 scroll.init({
                     container: '#question-list',
                     loading: '.question_body',
-                    url: '/question',
-                    paramtype: 1,
-                    params: {type: type, limit: 10}
+                    url: '/question/topic/' + topic_id + '/question',
+                    paramtype:1,
+                    loadtype: 1,
+                    params: {type: type, limit: 10, topic_id : topic_id}
                 });
             }, 300);
 
