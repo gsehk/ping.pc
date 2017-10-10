@@ -215,7 +215,7 @@ class AccountController extends BaseController
 
     public function payway(Request $request)
     {
-        $params = [
+       /* $params = [
             'type' => $request->input('payway'),
             'amount' => $request->input('sum') ?: $request->input('custom')*100,
             'extra' => [
@@ -223,8 +223,8 @@ class AccountController extends BaseController
             ],
         ];
         $res = newRequest('POST', '/api/v2/wallet/recharge', $params);
-        $data['charge'] = json_encode($res['charge']);
+        $data['charge'] = json_encode($res['charge']);*/
 
-        return view('pcview::account.payway', $data, $this->PlusData);
+        return view('pcview::account.payway');
     }
 }

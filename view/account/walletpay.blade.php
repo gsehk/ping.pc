@@ -9,7 +9,7 @@
 @section('content')
 
 <div class="pay-box">
-<form action="/account/payway" method="get" target="_blank" accept-charset="utf-8">
+{{-- <form action="/account/payway" method="get" target="_blank" accept-charset="utf-8"> --}}
     <h1 class="title"> 充值 </h1>
     <div class="pay-form">
 
@@ -29,9 +29,9 @@
             {{-- <label class="opt" for="wxpay">微信<input class="hide" id="wxpay" type="radio" name="payway" value="wx"></label> --}}
         </div>
 
-        <button type="submit" class="pay-btn" id="J-check-pup">充值</button>
+        <button type="submit" class="pay-btn" id="J-pay-btn">充值</button>
     </div>
-</form>
+{{-- </form> --}}
 </div>
 <a id="payurla" href="" target="_blank"><b id="payurlc"></b></a>
 @endsection
@@ -56,7 +56,44 @@ $('.pay-way label').on('click', function(){
     $(this).addClass('active');
 })
 
-$('#J-check-pup').on('click', function(){
+$('#J-pay-btn').on('click', function(){
+    var sum = $('[name="sum"]:checked').val();
+    var payway = $('[name="payway"]:checked').val();
+    var custom = $('[name="custom"]').val();
+    var params = {
+        type: payway,
+        amount: sum ? sum : custom * 100,
+        extra: {
+            success_url: "{{ route('pc:wallet') }}"
+        }
+    }
+
+    $.ajax({
+        url: '/api/v2/wallet/recharge',
+        type: 'POST',
+        data: params,
+        dataType: 'json',
+        error: function(xml) {
+            showError(xml.responseJSON);
+        },
+        success: function(res) {
+            var charge = JSON.stringify(res.charge);
+            var surl = 'http://'+window.location.host+'/account/payway';
+            var popupwin = window.open(surl, "Map", "status=0,title=0,scrollbars=1");
+            //onload只能执行一次，也就是如果子窗口有onload事件，可能会覆盖。
+            popupwin.onload = function(e){
+                popupwin.postMessage(charge, "http://"+window.location.host);
+            }
+            payStatus(res.charge.id);
+            // $("#payurla").attr("href", surl);
+            // $("#payurlc").trigger("click");
+            // ping++ 创建支付宝支付
+            // pingpp.createPayment(res.charge);
+        }
+    });
+});
+
+function payStatus(id) {
     var html = '<div class="tip">'+
                     '<p>请您在新打开的支付页面完成付款</p>'+
                     '<p>付款前请不要关闭此窗口</p>'+
@@ -68,13 +105,22 @@ $('#J-check-pup').on('click', function(){
       btn: ['支付成功','遇到问题'],
     }, function(){
         // 查询订单状态
-        console.log(111)
+        $.ajax({
+            url: '/api/v2/wallet/charges/'+id,
+            type: 'GET',
+            dataType: 'json',
+            success: function(res) {
+                console.log(res)
+                layer.closeAll();
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        });
     }, function(){
         // 跳转充值失败说明页面
         window.location.href = '{{route('pc:feeds')}}';
     });
-});
-
-
+}
 </script>
 @endsection
