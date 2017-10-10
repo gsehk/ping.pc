@@ -1240,11 +1240,11 @@ var thirdShare = function(type, url, title, image) {
             window.open(tourl);
           break;
         case 3: // 微信
-            var qrcode = new QRCode(document.getElementById("qrcode"), {
-                width : 96,//设置宽高
-                height : 96
-            });
-            qrcode.makeCode("http://www.baidu.com");
+            // var qrcode = new QRCode(document.getElementById("qrcode"), {
+            //     width : 96,//设置宽高
+            //     height : 96
+            // });
+            // qrcode.makeCode("http://www.baidu.com");
           break;
     }
 }

@@ -187,24 +187,15 @@
       ,img: '.per_image'
     });
 
-    setTimeout(function() {
-        scroll.init({
-            container: '.J-commentbox',
-            loading: '.feed_left',
-            url: '/feeds/{{$feed->id}}/comments' ,
-            canload: true
-        });
-    }, 300);
+    scroll.init({
+        container: '.J-commentbox',
+        loading: '.feed_left',
+        url: '/feeds/{{$feed->id}}/comments' ,
+        canload: true
+    });
 
     $(document).ready(function(){
         $("img.lazy").lazyload({effect: "fadeIn"});
-        bdshare.addConfig('share', {
-            "tag" : "share_feedlist",
-            'bdText' : '{{$feed['feed_content']}}',
-            'bdDesc' : '{{$feed['feed_content']}}',
-            'bdUrl' : window.location.href,
-            'bdPic': "{{count($feed['images']) > 0 ? $routes['storage'].$feed['images'][0]['file'] : ''}}"
-        });
     });
 </script>
 @endsection
