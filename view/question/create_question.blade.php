@@ -263,7 +263,7 @@
         });
         // 发布问题
         $('#question-submit').on('click', function () {
-            args.amount = parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0;
+            args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) * 100;
             args.look = $("input[type='radio'][name='look']:checked").val();
             var topic = [];
             for (var key in args.topics) {
@@ -278,7 +278,7 @@
             }
             args.invitations = invitations;
             args.automaticity = 0;
-            if (args.look == 1) {
+            if (args.look == 1 || $("input[type='radio'][name='reward']:checked").val() == 1) {
                 if (args.amount <= 0) {
                     noticebox('请设置悬赏金额', 0);
 

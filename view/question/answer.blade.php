@@ -10,9 +10,9 @@
 <div class="question_left_container">
     <div class="answer-detail-box bgwhite">
         <dl class="user-box clearfix">
-            <dt class="fl"><img src="http://tss.io/api/v2/users/2/avatar" width="60"></dt>
+            <dt class="fl"><img src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="60"></dt>
             <dd class="fl body-box">
-                <span class="tcolor">root</span>
+                <span class="tcolor">{{ $answer->user->name }}</span>
                 <div class="user-tags">
                 @if ($answer->user->tags)
                     @foreach ($answer->user->tags as $tag)

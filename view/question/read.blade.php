@@ -14,7 +14,9 @@
     <div class="questionheader">
         <div class="questionheader-content">
             <div class="questionheader-main">
-                <span class="questionheader-price">￥{{ $question->amount/100 }}</span>
+                @if($question->amount > 0)
+                    <span class="questionheader-price">￥{{ sprintf("%.2f", $question->amount/100) }}</span>
+                @endif
                 <div class="questionheader-tags">
                     <div class="questionheader-topics">
                         @if (!$question->topics->isEmpty())
@@ -109,6 +111,9 @@
                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>
                                 编辑
                             </a>
+                            @if($question->amount <= 0)
+                                <a href="javascript:;" class="button set-amount" onclick="question.amount({{ $question['id'] }})">设置公开悬赏</a>
+                            @endif
 
                             <button class="button button-plain options" onclick="options(this)" type="button" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
@@ -150,7 +155,11 @@
                         @else
                             <button class="button button-primary button-blue watched" type="button" data-watched="0">关注</button>
                         @endif
-                        <button class="button button-blue button-primary" id="write-answer" type="button">写回答</button>
+                            @if($question->my_answer == null)
+                                <button class="button button-blue button-primary" id="write-answer" type="button">写回答</button>
+                            @else
+                                <a class="button button-blue button-primary"  href="{{ route('pc:answeread', $question->my_answer['id']) }}" type="button">查看回答</a>
+                            @endif
                     </div>
                 </div>
             </div>
@@ -159,7 +168,7 @@
     <!-- /question-header -->
     <!-- quesition-main -->
     <div class="question-main">
-        <div class="detail_comment hide">
+        <div class="detail_comment question_coment hide">
             <span id="answer-button" class="answer-button"><img src="{{asset('zhiyicx/plus-component-pc/images/arrow_news_up.png')}}" alt=""></span>
             <div class="comment_title"><span class="comment_count cs{{$question->id}}">{{$question['comments_count']}}</span>人评论</div>
             <div class="comment_box">
