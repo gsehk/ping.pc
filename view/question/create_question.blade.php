@@ -369,9 +369,8 @@
                 url: '/api/v2/questions/' + question_id,
                 data: args,
                 success: function(res, data, xml) {
-                    console.log(res)
                     if (xml.status == 204) {
-                        noticebox('修改成功', 1);
+                        noticebox('修改成功', 1, '/question/'+question_id);
                     } else {
                         noticebox(res.message, 0);
                     }
