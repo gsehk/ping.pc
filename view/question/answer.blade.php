@@ -23,7 +23,9 @@
             </dd>
         </dl>
 
-        <div class="answer-body">{{ $answer->body }}</div>
+        <div class="answer-body">
+            {!! Parsedown::instance()->setMarkupEscaped(true)->text($answer->body) !!}
+        </div>
 
         <div class="detail_share">
             <span id="J-collect{{ $answer->id }}" rel="{{ $answer->collect_count }}" status="{{(int) $answer->collected}}">

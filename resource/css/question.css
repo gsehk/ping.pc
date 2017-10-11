@@ -407,8 +407,9 @@ button{
 }
 
 .answer-detail-box .answer-body {
-    margin-top: 40px;
+    margin: 20px 0;
     min-height: 300px;
+    color: #666;
 }
 
 /* 提问 */

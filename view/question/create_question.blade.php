@@ -239,6 +239,10 @@
         // 是否开启悬赏邀请
         $('#rewardno').on('click', function () {
             $('.invitation-con').hide('fast');
+            $("input[type='radio'][name='look']:checked").val('0');
+            $('#invitation-add').text('添加');
+            args.invitations = [];
+
         });
         $('#rewardyes').on('click', function () {
             $('.invitation-con').show('fast');
