@@ -113,7 +113,11 @@
                                 编辑
                             </a>
                             @if($question->amount <= 0)
-                                <a href="javascript:;" class="button set-amount" onclick="question.amount({{ $question['id'] }})">设置公开悬赏</a>
+                                <a href="javascript:;" class="button set-amount" onclick="question.amount({{ $question['id'] }})">未设置悬赏</a>
+                            @elseif($question->invitations->isempty())
+                                <a href="javascript:;" class="button set-amount">已邀请悬赏</a>
+                            @else
+                                <a href="javascript:;" class="button set-amount">已设置悬赏</a>
                             @endif
 
                             <button class="button button-plain options" onclick="options(this)" type="button" aria-haspopup="true" aria-expanded="false">
