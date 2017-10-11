@@ -563,9 +563,10 @@
 .fuzzy {
     -webkit-transform: scale(0.95);
     box-shadow: 0 0 10px 4px white;
-    text-shadow: 0 0 10px #999;
+    text-shadow: 0 0 10px #666;
     opacity: 0.8;
-    color: rgba(200,200,200,0.1);
+    color: rgba(0,0,0,-0.1);
+    word-break: break-all;
 }
 
 
