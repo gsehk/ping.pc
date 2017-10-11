@@ -229,7 +229,7 @@
                 </div>
             </div>
             <div class="answer-send">
-                @include('pcview::widgets.markdown', ['height'=>'400px', 'width' => '99%', 'content'=>'1'])
+                @include('pcview::widgets.markdown', ['height'=>'400px', 'width' => '99%', 'content'=>''])
             </div>
             <div class="answer-anonymity">
                 <input id="anonymity" name="anonymity" type="checkbox" class="input-checkbox"/>
@@ -317,6 +317,7 @@
 
         $('#write-answer').on('click', function () {
             $('.question-main-r').slideDown();
+            window.editor.resize();
             var _targetTop = $('.question-main-r').offset().top;//获取位置
             jQuery("html,body").animate({scrollTop:_targetTop},300);//跳转
         });
