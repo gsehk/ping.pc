@@ -15,8 +15,9 @@
     var invitation = $('.invitation-a');
     var lists = $('.lists');
 
-    input.on('keyup', function () {
-        getUsers();
+    input.on('keypress', function (event) {
+        event.keyCode == 13 ?
+        getUsers() : "";
     });
 
     function getUsers() {
