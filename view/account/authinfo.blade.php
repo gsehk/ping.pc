@@ -60,14 +60,10 @@
                     </div>
                     <div class="account_form_row">
                         <label class="w80 required" for="desc">认证资料</label>
-                        @if (isset($info['data']['files'][1]))
-                            <img class="image" src="{{ $routes['storage'].$info['data']['files'][1] }}?w=232&h=163">
-                            {{-- @foreach ($info['data']['files'] as $img)
+                        @if ($info['data']['files'])
+                            @foreach ($info['data']['files'] as $img)
                                 <img class="image" src="{{ $routes['storage'].$img }}?w=232&h=163">
-                            @endforeach --}}
-                        @endif
-                        @if (isset($info['data']['files'][0]))
-                            <img class="image" src="{{ $routes['storage'].$info['data']['files'][0] }}?w=232&h=163">
+                            @endforeach
                         @endif
                     </div>
                 </div>

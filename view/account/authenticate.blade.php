@@ -159,11 +159,11 @@ $('.J-authenticate-btn').on('click', function(e) {
         return args.get();
     };
     if (authType == 'user') {
-        var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
         if(reg.test(getArgs().number) === false)
         {
-           alert("身份证输入不合法");
-           return  false;
+            noticebox('身份证输入不合法', 0);
+            return;
         }
         getArgs().files = [getArgs().front_id, getArgs().behind_id];
     }
