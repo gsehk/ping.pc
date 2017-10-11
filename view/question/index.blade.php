@@ -28,7 +28,7 @@
 
 <div class="right_container">
     <div class="q_c_post_btn">
-        <a href="{{ route('pc:createquestion') }}">
+        <a href="javascript:;" onclick="question.create()">
             <span>
                 <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>提问
             </span>
@@ -43,37 +43,38 @@
 @endsection
 
 @section('scripts')
-<script>
-setTimeout(function() {
-    scroll.init({
-        container: '#question-list',
-        loading: '.question_body',
-        url: '/question',
-        paramtype: 1,
-        params: {type: 'hot', limit: 10}
-    });
-}, 300);
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js') }}"></script>
+    <script>
+        setTimeout(function() {
+            scroll.init({
+                container: '#question-list',
+                loading: '.question_body',
+                url: '/question',
+                paramtype: 1,
+                params: {type: 'hot', limit: 10}
+            });
+        }, 300);
 
-// 切换分类
-$('.question_sub_nav a').on('click', function() {
-    var type = $(this).data('type');
-    // 清空数据
-    $('#question-list').html('');
+        // 切换分类
+        $('.question_sub_nav a').on('click', function() {
+            var type = $(this).data('type');
+            // 清空数据
+            $('#question-list').html('');
 
-    setTimeout(function() {
-        scroll.init({
-            container: '#question-list',
-            loading: '.question_body',
-            url: '/question',
-            paramtype: 1,
-            params: {type: type, limit: 10}
+            setTimeout(function() {
+                scroll.init({
+                    container: '#question-list',
+                    loading: '.question_body',
+                    url: '/question',
+                    paramtype: 1,
+                    params: {type: type, limit: 10}
+                });
+            }, 300);
+
+            // 修改样式
+            $('.question_sub_nav a').removeClass('active');
+            $(this).addClass('active');
         });
-    }, 300);
 
-    // 修改样式
-    $('.question_sub_nav a').removeClass('active');
-    $(this).addClass('active');
-});
-
-</script>
+    </script>
 @endsection

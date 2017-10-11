@@ -78,6 +78,14 @@ var QA = {
 };
 
 var question = {
+    create:function (topic_id) {
+        checkLogin();
+        var url = '/question/create';
+        if (topic_id) {
+            url = '/question/create?topic_id=' + topic_id;
+        }
+        window.location.href = url;
+    },
     addComment: function (row_id, type) {
         var url = '/api/v2/questions/' + row_id + '/comments';
         comment.support.row_id = row_id;

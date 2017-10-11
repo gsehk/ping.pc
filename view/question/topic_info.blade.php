@@ -78,7 +78,7 @@
 
         {{-- 提问 --}}
         <div class="q_c_post_btn">
-            <a href="{{ $routes['siteurl'] }}/question/create?topic_id={{$topic->id}}">
+            <a href="javascript:;" onclick="question.create({{ $topic->id }})">
             <span>
                 <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>提问
             </span>
@@ -91,6 +91,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js') }}"></script>
     <script>
         var topic_id = "{{ $topic->id }}";
         setTimeout(function() {

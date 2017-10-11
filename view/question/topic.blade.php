@@ -25,7 +25,7 @@
 
 <div class="right_container">
     <div class="q_c_post_btn">
-        <a href="{{ route('pc:createquestion') }}">
+        <a href="javascript:;" onclick="question.create()">
             <span>
                 <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>提问
             </span>
@@ -40,54 +40,55 @@
 @endsection
 
 @section('scripts')
-<script>
-setTimeout(function() {
-    scroll.init({
-        container: '#topic-list',
-        loading: '.question_body',
-        url: '/question/topic',
-        paramtype: 1,
-        params: {cate: 1, limit: 10}
-    });
-}, 300);
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js') }}"></script>
+    <script>
+        setTimeout(function() {
+            scroll.init({
+                container: '#topic-list',
+                loading: '.question_body',
+                url: '/question/topic',
+                paramtype: 1,
+                params: {cate: 1, limit: 10}
+            });
+        }, 300);
 
-// 切换分类
-$('.question_sub_nav a').on('click', function() {
-    var type = $(this).data('type');
-    // 清空数据
-    $('#topic-list').html('');
+        // 切换分类
+        $('.question_sub_nav a').on('click', function() {
+            var type = $(this).data('type');
+            // 清空数据
+            $('#topic-list').html('');
 
-    scroll.init({
-        container: '#topic-list',
-        loading: '.question_body',
-        url: '/question/topic',
-        paramtype: 1,
-        params: {cate: type, limit: 10}
-    });
+            scroll.init({
+                container: '#topic-list',
+                loading: '.question_body',
+                url: '/question/topic',
+                paramtype: 1,
+                params: {cate: type, limit: 10}
+            });
 
-    // 修改样式
-    $('.question_sub_nav a').removeClass('active');
-    $(this).addClass('active');
-});
+            // 修改样式
+            $('.question_sub_nav a').removeClass('active');
+            $(this).addClass('active');
+        });
 
-$('#topic-list').on('click', '.J-follow', function(){
-    checkLogin();
+        $('#topic-list').on('click', '.J-follow', function(){
+            checkLogin();
 
-    var _this = this;
-    var status = $(this).attr('status');
-    var topic_id = $(this).attr('tid');
-    topic(status, topic_id, function(){
-        if (status == 1) {
-            $(_this).text('+关注');
-            $(_this).attr('status', 0);
-            $(_this).removeClass('followed');
-        } else {
-            $(_this).text('已关注');
-            $(_this).attr('status', 1);
-            $(_this).addClass('followed');
-        }
-    });
-});
+            var _this = this;
+            var status = $(this).attr('status');
+            var topic_id = $(this).attr('tid');
+            topic(status, topic_id, function(){
+                if (status == 1) {
+                    $(_this).text('+关注');
+                    $(_this).attr('status', 0);
+                    $(_this).removeClass('followed');
+                } else {
+                    $(_this).text('已关注');
+                    $(_this).attr('status', 1);
+                    $(_this).addClass('followed');
+                }
+            });
+        });
 
-</script>
+    </script>
 @endsection
