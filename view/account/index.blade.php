@@ -33,7 +33,7 @@
                     <form action="#">
                         <div class="account_form_row">
                             <label for="name">昵称</label>
-                            <input id="name" name="name" type="text" value="{{$user['name'] }}" />
+                            <input id="name" name="name" type="text" value="{{$user['name'] }}" maxlength="8" />
                         </div>
                         <div class="account_form_row">
                             <label for="bio">简介</label>
