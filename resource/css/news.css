@@ -158,6 +158,10 @@
     padding: 50px;
 }
 
+.detail_body p {
+    line-height: 30px;
+}
+
 .detail_title {
     font-size: 30px;
     padding-bottom: 40px;
