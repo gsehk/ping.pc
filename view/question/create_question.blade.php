@@ -6,7 +6,7 @@
         <div class="question-tw">提问</div>
         <div class="question-form-row" style="position:relative">
             <input type="hidden" id="question_id" name="id" value="{{ $id or 0 }}" />
-            <input id="subject" name="subject" type="text" value="{{ $question['subject'] or '' }}" placeholder="请输入问题并已问号结束" autocomplete="off"/>
+            <input id="subject" name="subject" type="text" value="{{ $question['subject'] or '' }}" placeholder="请输入问题并已问号结束" autocomplete="off" maxlength="50"/>
             <div class="subject-error"></div>
             <div class="question-searching">
                 <div class="searching-existing"></div>
@@ -339,6 +339,12 @@
 
             if (args.topics.length < 1) {
                 noticebox('请选择话题', 0);
+
+                return false;
+            }
+
+            if (args.body.length < 1) {
+                noticebox('请填写问题描述', 0);
 
                 return false;
             }

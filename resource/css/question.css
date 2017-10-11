@@ -602,6 +602,10 @@ button{
     background: #59b6d7;
 }
 
+.question-next button.question-next-btn{
+    background: #dedede;
+}
+
 .question-next button#question-last{
     margin-right: 30px;
     background: #dedede;

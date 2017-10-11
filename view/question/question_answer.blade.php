@@ -33,8 +33,7 @@
                         <span class="answer-body">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
                         <button class="button button-plain button-more"><a href="{{ route('pc:answeread', $answer->id) }}">查看详情</a></button>
                     @else
-{{--                        <span class="answer-body fuzzy">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>--}}
-                        <p class="answer-body fuzzy">@php for ($i = 0; $i < 260; $i ++) {echo 'T';} @endphp</p>
+                        <span class="answer-body fuzzy">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
                     @endif
                 </div>
 
