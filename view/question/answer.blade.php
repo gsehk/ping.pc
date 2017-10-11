@@ -10,7 +10,12 @@
 <div class="question_left_container">
     <div class="answer-detail-box bgwhite">
         <dl class="user-box clearfix">
-            <dt class="fl"><img src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="60"></dt>
+            <dt class="fl relative">
+                <img class="round" src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="60">
+                @if ($answer->user->verified)
+                <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                @endif
+            </dt>
             <dd class="fl body-box">
                 <span class="tcolor">{{ $answer->user->name }}</span>
                 <div class="user-tags">
