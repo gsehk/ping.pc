@@ -304,6 +304,11 @@
     }
 }
 
+.questionheaderactions .sharemenu .share-show .triangle{
+    top: 0px;
+    left: calc(50% - 58px);
+}
+
 .questionheaderactions .options_div {
     width: 178px;
     right: -74px;

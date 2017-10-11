@@ -104,6 +104,7 @@
 
                                 @endphp
                                 @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:questionread', ['question_id' => $question->id]), 'share_title' => addslashes(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body)), 'share_pic' => $share_pic])
+                                <div class="triangle"></div>
                             </div>
                         </div>
                         @if($question['user_id'] == $TS['id'])
@@ -352,9 +353,9 @@
         });
 
         $('#comment-button').on('click', function(){
-            $('.detail_comment').fadeIn();
-            $('.question-main-l').fadeOut();
-            $('.question-main-r').fadeOut();
+            $('.detail_comment').show();
+            $('.question-main-l').hide();
+            $('.question-main-r').hide();
             setTimeout(function() {
                 scroll.init({
                     container: '.J-commentbox',
@@ -366,9 +367,9 @@
         });
 
         $('#answer-button').on('click', function () {
-            $('.question-main-l').fadeIn();
-            $('.detail_comment').fadeOut();
-            $('.question-main-r').fadeOut();
+            $('.question-main-l').show();
+            $('.detail_comment').hide();
+            $('.question-main-r').hide();
             setTimeout(function() {
                 scroll.init({
                     container: '#question-answers-list',
