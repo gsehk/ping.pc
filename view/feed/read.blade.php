@@ -5,6 +5,7 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -70,7 +71,7 @@
             @endif
 
             <div class="detail_body">
-                {!!$feed->feed_content!!}
+                {!! formatContent($post->feed_content) !!}
             </div>
 
             <div class="detail_share">
