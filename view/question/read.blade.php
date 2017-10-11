@@ -114,7 +114,7 @@
                             </a>
                         @endif
                         @if($question->amount <= 0)
-                            <a href="javascript:;" class="button set-amount" onclick="question.amount({{ $question['id'] }})">未设置悬赏</a>
+                            <a href="javascript:;" class="button set-amount" @if($question['user_id'] == $TS['id']) onclick="question.amount({{ $question['id'] }})" @endif >未设置悬赏</a>
                         @elseif($question->invitations->isempty())
                             <a href="javascript:;" class="button set-amount">已邀请悬赏</a>
                         @else
