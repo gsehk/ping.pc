@@ -10,9 +10,9 @@
     <div class="reward_user">
         @foreach ($rewards_data as $reward)
         <div class="user_item">
-            <img class="lazy round" data-original="{{ $reward['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="42" />
-            @if ($reward['user']['verified'])
-                <img class="verified_icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+            <img class="lazy round" data-original="{{ $reward->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="42" />
+            @if ($reward->user->verified)
+                <img class="verified_icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
             @endif
         </div>
         @endforeach

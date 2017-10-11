@@ -1,6 +1,6 @@
 var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/three-dots.svg' class='load'></div>";
 var clickHtml = "<div class='click_loading'><a href='javascript:;'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
-var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
+var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg> ';
 var initNums = 255;
 
 // ajax 设置 headers
@@ -104,18 +104,20 @@ var ly = {
             content: html
         });
     },
-    confirm: function (html, cancelBtn, confirmBtn, callback) {
-        cancelBtn = cancelBtn || '取消';
+    confirm: function (html, confirmBtn, cancelBtn, callback) {
         confirmBtn = confirmBtn || '确认';
+        cancelBtn = cancelBtn || '取消';
         layer.confirm(html, {
-            btn: [cancelBtn, confirmBtn], //按钮
+            btn: [confirmBtn, cancelBtn], //按钮
             title: '',
             shadeClose: true,
             shade:0.5,
             scrollbar: false
         }, function(){
+            callback();
+        }, function(){
             layer.closeAll();
-        }, callback);
+        });
     },
     alert: function (html, btn) {
         btn = btn || '知道了';
@@ -660,7 +662,7 @@ var rewarded = {
                         + '</div>'
                     + '</div>';
 
-        ly.confirm(html, '', '打赏', function(){
+        ly.confirm(html, '打赏', '', function(){
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
             var amount = $('.reward_input input').val() * 100;
 
