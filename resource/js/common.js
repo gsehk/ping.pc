@@ -535,7 +535,7 @@ var no_data = function(selector, type, txt) {
 // 退出登录提示
 var logout = function() {
     $('.nav_menu').hide();
-    ly.confirm(formatConfirm('提示', '感谢您对ThinkSNS的信任，是否退出当前账号？'), '' , '退出', function(){
+    ly.confirm(formatConfirm('提示', '感谢您对ThinkSNS的信任，是否退出当前账号？'), '' ,'', function(){
         window.location.href = '/passport/logout';
     });
 }
