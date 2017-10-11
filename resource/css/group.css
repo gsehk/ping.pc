@@ -124,7 +124,9 @@
 
 .group-info .group-intro {
     min-height: 55px;
-    line-height: 20px;
+    line-height: 22px;
+    font-size: 14px;
+    word-break: break-all;
 }
 
 /* 创建圈子动态 */
