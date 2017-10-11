@@ -37,6 +37,13 @@
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
                             </a>
                         </li>
+                        @if (!$news['audit_status'])
+                            <li>
+                                <a href="javascript:;" onclick="news.delete({{$news->id}}, {{$news->cate_id}});">
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                </a>
+                            </li>
+                        @endif
                         @endif
                     </ul>
                     </div>
@@ -53,7 +60,7 @@
                 <div class="detail_content markdown-body editormd-preview-container">
                 {!! Parsedown::instance()->setMarkupEscaped(true)->text($news->content) !!}
                 </div>
-
+                @if (!$news['audit_status'])
                 <div class="detail_share">
                     <span id="J-collect{{ $news->id }}" rel="{{ $news->collect_count }}" status="{{(int) $news->has_collect}}">
                         @if($news->has_collect)
@@ -124,8 +131,6 @@
                 </div>
                 @endif
 
-
-
                 {{-- 评论  --}}
                 <div class="detail_comment">
                     <div class="comment_title"><span class="comment_count cs{{$news->id}}">{{$news->comment_count}}</span>人评论</div>
@@ -149,6 +154,7 @@
 
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

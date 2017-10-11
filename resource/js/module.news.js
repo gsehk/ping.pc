@@ -91,7 +91,7 @@ $('.subject-submit').on('click', function() {
         type: 'POST',
         data: args,
         dataType: 'json',
-        error: function(xml) {},
+        error: function(error) {showError(error.responseJSON);},
         success: function(res, data, xml) {
             if (xml.status == 201) {
                 noticebox(res.message, 1, '/news');
@@ -103,6 +103,20 @@ $('.subject-submit').on('click', function() {
 });
 
 var news = {
+    delete: function (news_id, cate_id) {
+        var url = '/api/v2/news/categories/'+cate_id+'/news/'+news_id;
+        layer.confirm(confirmTxt + '确定删除这篇文章？', function() {
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                dataType: 'json',
+                error: function(error) {showError(error.responseJSON);},
+                success: function(res) {
+                    noticebox('删除成功', 1, '/news');
+                }
+            });
+        });
+    },
     pinneds: function (news_id) {
         var url = '/api/v2/news/'+news_id+'/pinneds';
         pinneds(url);
