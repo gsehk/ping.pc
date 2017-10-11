@@ -38,8 +38,21 @@ class SearchController extends BaseController
                 $after = $feed->pop()->id ?? 0;
 
                 $data['conw'] = 735;
-                $data['conh'] = 545; 
+                $data['conh'] = 545;
                 $html = view('pcview::templates.feeds', $data, $this->PlusData)->render();
+                break;
+            case '2':
+                $params = [
+                    'type' => 'all',
+                    'limit' => $limit,
+                    'offset' => $offset,
+                    'subject' => $keywords
+                ];
+
+                $datas = createRequest('GET', '/api/v2/questions', $params);
+                $data['data'] = $datas;
+                $after = $datas->pop()->id ?? 0;
+                $html = view('pcview::templates.question', $data, $this->PlusData)->render();
                 break;
             case '3':
                 $params = [

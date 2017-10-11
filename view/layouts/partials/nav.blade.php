@@ -104,7 +104,7 @@
                 <div class="search_types">
                     <ul>
                         <li type="1"><span>与<span class="keywords"></span>相关的动态</span></li>
-                        <!-- <li type="2"><span>与<span class="keywords"></span>相关的问答</span></li> -->
+                        <li type="2"><span>与<span class="keywords"></span>相关的问答</span></li>
                         <li type="3"><span>与<span class="keywords"></span>相关的文章</span></li>
                         <li type="4"><span>与<span class="keywords"></span>相关的用户</span></li>
                         <li type="5"><span>与<span class="keywords"></span>相关的圈子</span></li>

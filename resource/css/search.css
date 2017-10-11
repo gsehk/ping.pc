@@ -88,3 +88,10 @@
 .news_word {
 	width: 455px;
 }
+
+.search_container .q_c {
+    overflow: hidden;
+    border-bottom: 1px solid #ededed;
+    padding: 30px 0 16px 0;
+    width: 100%;
+}
