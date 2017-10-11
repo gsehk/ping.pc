@@ -100,7 +100,7 @@
                 noticebox('已无更多啦', 0);
 
                 return false;
-            } else if (postArgs.offset <= 0) {
+            } else if (postArgs.offset < 0) {
 
                 return false;
             }

@@ -33,8 +33,6 @@ $('#oauth_btn').click(function() {
         title = '注册';
     }
 
-    console.log(oauthtype);
-
     $('#auth_form').ajaxSubmit({
         type: type,
         url: '/api/v2/socialite/' + othertype,
@@ -43,11 +41,13 @@ $('#oauth_btn').click(function() {
             _this.css('cursor', 'no-drop');
         },
         success: function(res) {
-            console.log(res);
             noticebox(title + '成功，跳转中...', 1, '/passport/token/' + res.token + '/0');
         },
         error: function(xhr) {
-            showError(xhr.responseJSON);
+
+            if (xhr.responseJSON.errors.name == 'name 已存在') {
+                noticebox('用户名已经存在', 0);
+            }
         },
         complete: function() {
             _this.text(title + '账号');

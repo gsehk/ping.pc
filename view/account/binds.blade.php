@@ -35,8 +35,8 @@
                             <form class="bind-content" autocomplete="off">
                                 <div class="bind_form_row">
                                     <label for="phone">手机号</label>
-                                    <input id="phone" name="phone" type="text" value="" autocomplete="off">
-                                    <a data-type="phone" class="send_code" href="javascript:">获取验证码</a>
+                                    <input id="phone" name="phone" type="text" value="{{ $TS['phone'] }}" autocomplete="off">
+                                    <a data-type="phone" class="send_code @if($TS['phone']) blue-color @endif" href="javascript:">获取验证码</a>
                                 </div>
                                 <div class="bind_form_row">
                                     <label for="verifiable_code">验证码</label>
@@ -62,8 +62,8 @@
                             <form class="bind-content" autocomplete="off">
                                 <div class="bind_form_row">
                                     <label for="email">邮箱账号</label>
-                                    <input id="email" name="email" type="text" value="" autocomplete="off">
-                                    <a data-type="email" class="send_code" href="javascript:">获取验证码</a>
+                                    <input id="email" name="email" type="text" value="{{ $TS['email'] }}" autocomplete="off">
+                                    <a data-type="email" class="send_code @if($TS['email']) blue-color @endif" href="javascript:">获取验证码</a>
                                 </div>
                                 <div class="bind_form_row">
                                     <label for="verifiable_code">验证码</label>
