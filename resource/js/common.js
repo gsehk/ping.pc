@@ -765,14 +765,16 @@ var comment = {
         var _this = this;
         var formData = { body: this.support.editor.val() };
         if (!formData.body) {
-            noticebox('评论内容不能为空', 0);
-            return false;
+            noticebox('评论内容不能为空', 0); return;
         }
 
         // 保留原始回复内容
         var original_body = formData.body;
         // 去除回复@
         if (this.support.to_uid > 0) {
+            if (formData.body == '回复@'+this.support.to_uname+'：') {
+                noticebox('回复内容不能为空', 0); return;
+            }
             formData.body = formData.body.split('：')[1];
             formData.reply_user = this.support.to_uid;
         }
