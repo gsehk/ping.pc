@@ -52,10 +52,11 @@
             <span class="view">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>{{$post->views}}
             </span>
-            <span class="options">
+            <span class="options" onclick="options(this)">
                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
             </span>
             <div class="options_div">
+                <div class="triangle"></div>
                 <ul>
                     <li id="J-collect{{$post->id}}" rel="0" status="{{(int) $post->has_collection}}">
                         @if($post->has_collection)
@@ -76,7 +77,6 @@
                         </li>
                     @endif
                 </ul>
-                <img src="{{ asset('zhiyicx/plus-component-pc/images/triangle.png') }}" class="triangle" />
             </div>
         </div>
 
