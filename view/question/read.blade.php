@@ -112,14 +112,15 @@
                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>
                                 编辑
                             </a>
-                            @if($question->amount <= 0)
-                                <a href="javascript:;" class="button set-amount" onclick="question.amount({{ $question['id'] }})">未设置悬赏</a>
-                            @elseif($question->invitations->isempty())
-                                <a href="javascript:;" class="button set-amount">已邀请悬赏</a>
-                            @else
-                                <a href="javascript:;" class="button set-amount">已设置悬赏</a>
-                            @endif
-
+                        @endif
+                        @if($question->amount <= 0)
+                            <a href="javascript:;" class="button set-amount" onclick="question.amount({{ $question['id'] }})">未设置悬赏</a>
+                        @elseif($question->invitations->isempty())
+                            <a href="javascript:;" class="button set-amount">已邀请悬赏</a>
+                        @else
+                            <a href="javascript:;" class="button set-amount">已设置悬赏</a>
+                        @endif
+                        @if($question['user_id'] == $TS['id'])
                             <button class="button button-plain options" onclick="options(this)" type="button" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                             </button>
