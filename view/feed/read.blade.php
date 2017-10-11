@@ -55,23 +55,9 @@
                 </dd>
             </dl>
 
-            @if(!empty($feed->images))
-            <div class="detail_images" id="layer-photos-demo">
-            @foreach($feed->images as $store)
-                @if (isset($store['paid']) && $store['paid'] == false)
-                    <div class="locked_image" style="position:relative">
-                        <img src="{{ $routes['resource'] }}/images/pic_locked.png" class="feed_image_pay" data-node="{{ $store['paid_node'] }}" data-amount="{{ $store['amount'] }}" data-file="{{ $store['file'] }}" data-original="{{ getImageUrl($store, '', '', false) }}"/>
-                        <svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>
-                    </div>
-                @else
-                <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy"/>
-                @endif
-            @endforeach
-            </div>
-            @endif
 
             <div class="detail_body">
-                {!! formatContent($post->feed_content) !!}
+                {!! formatContent($feed->feed_content) !!}
             </div>
 
             <div class="detail_share">
