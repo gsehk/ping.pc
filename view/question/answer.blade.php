@@ -66,26 +66,13 @@
                 @endphp
                 @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:answeread', ['answer' => $answer->id]), 'share_title' => addslashes($answer->body), 'share_pic' => $share_pic])
             </div>
-            <div class="reward_cont">
-                <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{$answer->id}}, 'answer')">打 赏</button></p>
-                <p class="reward-info tcolor">
-                    <font color="#F76C6A">{{ $answer->rewarder_count }} </font>次打赏，共
-                    <font color="#F76C6A">{{ $answer->rewards_amount }} </font>元
-                </p>
-                <div class="reward-user">
-                    @if (!$answer->rewarders->isEmpty())
-                        @foreach ($answer->rewarders as $reward)
-                            <div class="user-item">
-                                <img class="lazy round" data-original="{{ $reward->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" alt="avatar" width="42" />
-                                @if ($reward->user->sex)
-                                    <img class="sex-icon" src="{{ asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                                @endif
-                            </div>
-                        @endforeach
-                        <span class="more-user" onclick="rewarded.list({{$answer->id}}, 'answer');"></span>
-                    @endif
-                </div>
-            </div>
+
+            {{-- 打賞 --}}
+            @php
+                $rewards_info['count'] = $answer->rewarder_count;
+                $rewards_info['amount'] = $answer->rewards_amount;
+            @endphp
+            @include('pcview::widgets.rewards' , ['rewards_data' => $answer->rewarders, 'rewards_type' => 'answer', 'rewards_id' => $answer->id, 'rewards_info' => $answer])
         </div>
         <div class="detail_comment">
                 <div class="comment_title"><span class="comment_count cs{{$answer->id}}"">{{$answer->comments_count}} </span>人评论</div>
