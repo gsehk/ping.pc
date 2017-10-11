@@ -72,7 +72,7 @@
                 $rewards_info['count'] = $answer->rewarder_count;
                 $rewards_info['amount'] = $answer->rewards_amount;
             @endphp
-            @include('pcview::widgets.rewards' , ['rewards_data' => $answer->rewarders, 'rewards_type' => 'answer', 'rewards_id' => $answer->id, 'rewards_info' => $answer])
+            @include('pcview::widgets.rewards' , ['rewards_data' => $answer->rewarders, 'rewards_type' => 'answer', 'rewards_id' => $answer->id, 'rewards_info' => $rewards_info])
         </div>
         <div class="detail_comment">
                 <div class="comment_title"><span class="comment_count cs{{$answer->id}}"">{{$answer->comments_count}} </span>人评论</div>
