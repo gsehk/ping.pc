@@ -152,7 +152,7 @@ function(e, t) {
         closeBtn: 1,
         time: 0,
         zIndex: 19891014,
-        // maxWidth: 360,
+        maxWidth: 360,
         anim: 0,
         isOutAnim: !0,
         icon: -1,
@@ -287,9 +287,7 @@ function(e, t) {
         i.attr("minLeft") && (e.offsetTop = n.height() - (i.find(l[1]).outerHeight() || 0), e.offsetLeft = i.css("left")),
         i.css({
             top: e.offsetTop,
-            left: e.offsetLeft,
-            height: '100%',
-            overflow: 'auto',
+            left: e.offsetLeft
         })
     },
     s.pt.tips = function() {
@@ -819,7 +817,7 @@ function(e, t) {
                 s.index = r.open(i.extend({
                     type: 1,
                     id: "layui-layer-photos",
-                    /*area: function() {
+                    area: function() {
                         var a = [n.width, n.height],
                         o = [i(e).width() - 100, i(e).height() - 100];
                         if (!t.full && (a[0] > o[0] || a[1] > o[1])) {
@@ -827,7 +825,7 @@ function(e, t) {
                             r[0] > r[1] ? (a[0] = a[0] / r[0], a[1] = a[1] / r[0]) : r[0] < r[1] && (a[0] = a[0] / r[1], a[1] = a[1] / r[1])
                         }
                         return [a[0] + "px", a[1] + "px"]
-                    } (),*/
+                    } (),
                     title: !1,
                     shade: .9,
                     shadeClose: !0,
