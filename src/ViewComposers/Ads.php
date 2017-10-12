@@ -2,17 +2,17 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\ViewComposers;
 
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Cache;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class Ads
 {
     public function compose(View $view)
     {
-    	// 获取所有广告位
-        $spaces = createRequest('GET', '/api/v2/advertisingspace')->keyBy('space');
+        $config = Cache::get('config');
 
         // 获取具体广告位内容
-        $ads = createRequest('GET', '/api/v2/advertisingspace/' . $spaces[$view['space']]['id'] . '/advertising')->pluck('data');
+        $ads = createRequest('GET', '/api/v2/advertisingspace/' . $config['ads_space'][$view['space']]['id'] . '/advertising')->pluck('data');
 
         $view->with('ads', $ads);
     }

@@ -16,7 +16,7 @@ class PcTableSeeder extends Seeder
     }
 
     /**
-     * create example data.
+     * create ads data.
      *
      * @return void
      */
@@ -50,6 +50,19 @@ class PcTableSeeder extends Seeder
 
         AdvertisingSpace::create([
             'channel' => 'pc',
+            'space' => 'pc:news:list',
+            'alias' => 'PC端资讯列表广告',
+            'allow_type' => 'image',
+            'format' => [
+                'image' => [
+                    'image' => '图片|string',
+                    'link' => '链接|string',
+                ],
+            ],
+        ]);
+
+        AdvertisingSpace::create([
+            'channel' => 'pc',
             'space' => 'pc:feeds:right',
             'alias' => 'PC端动态右侧广告',
             'allow_type' => 'image',
@@ -57,6 +70,23 @@ class PcTableSeeder extends Seeder
                 'image' => [
                     'image' => '图片|string',
                     'link' => '链接|string',
+                ],
+            ],
+        ]);
+
+        AdvertisingSpace::create([
+            'channel' => 'pc',
+            'space' => 'pc:feeds:list',
+            'alias' => 'PC端动态列表广告',
+            'allow_type' => 'image',
+            'format' => [
+                'image' => [
+                    "avatar" => "头像图|string",
+                    "name" => "用户名|string",
+                    "content" => "内容|string",
+                    "image" => "图片|string",
+                    "time" => "时间|date",
+                    "link" => "link"
                 ],
             ],
         ]);

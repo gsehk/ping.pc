@@ -6,6 +6,7 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+use Zhiyi\Plus\Models\AdvertisingSpace;
 
 class FeedController extends BaseController
 {
@@ -34,6 +35,8 @@ class FeedController extends BaseController
                         $feeds['feeds']->prepend($item);
                     });
                 }
+
+                $feeds['space'] =  $this->PlusData['config']['ads_space']['pc:feeds:list'] ?? [];
 
                 $feed = clone $feeds['feeds'];
                 $after = $feed->pop()->id ?? 0;

@@ -22,7 +22,7 @@ class BaseController extends Controller
             $this->PlusData['token'] = Session::get('token');
 
             $this->PlusData['TS'] = null;
-            if ($this->PlusData['token']) { 
+            if ($this->PlusData['token']) {
                 // TODO 设置当前token为有效，临时解决方案
                 JWTCacheModel::where('value', '"'. $this->PlusData['token'] . '"')->update([
                     'status' => 0,
@@ -31,7 +31,7 @@ class BaseController extends Controller
                 $this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
             }
-            
+
             // 站点配置
             $config = Cache::get('config');
 
@@ -50,6 +50,9 @@ class BaseController extends Controller
 
                 // 底部导航
                 $config['nav_bottom'] = Navigation::byPid(0)->byPos(1)->get();
+
+                // 获取所有广告位
+                $config['ads_space'] = createRequest('GET', '/api/v2/advertisingspace')->keyBy('space');
 
                 // 缓存配置信息
                 Cache::forever('config', $config);

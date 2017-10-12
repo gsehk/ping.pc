@@ -23,10 +23,10 @@
     }
   },
   "require": {
-    "slimkit/around-amap": "^0.0.1",
     "overtrue/easy-sms": "^0.0.9",
     "overtrue/socialite": "^1.3",
     "zhiyicx/plus-installer": "^1.0",
     "gregwar/captcha": "1.*"
-  }
+  },
+  "version": "2.0.1"
 }

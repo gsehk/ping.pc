@@ -4,13 +4,27 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc;
 
 use Zhiyi\Plus\Models\Comment;
 use Zhiyi\Plus\Support\PackageHandler;
+use Zhiyi\Plus\Models\Advertising;
+use Zhiyi\Plus\Models\AdvertisingSpace;
 
 class PcPackageHandler extends PackageHandler
 {
     public function removeHandle($command)
     {
         if ($command->confirm('This will delete your datas for pc, continue?')) {
-            Comment::where('component', 'pc')->delete();
+
+            // delete ads datas
+            $space = [
+                'pc:news:top',
+                'pc:news:right',
+                'pc:news:list',
+                'pc:feeds:right',
+                'pc:feeds:list',
+            ];
+            $ads = AdvertisingSpace::whereIn('space', $space)->pluck('id');
+            AdvertisingSpace::whereIn('space', $space)->delete();
+            Advertising::whereIn('space_id', $ads)->delete();
+
             $command->info('The Pc Component has been removed');
         }
     }
