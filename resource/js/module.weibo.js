@@ -326,6 +326,7 @@ $(function() {
                     var img = '<img class="lazy per_image" data-original="' + image + '"/>';
                     _this.replaceWith(img);
                     $("img.lazy").lazyload({ effect: "fadeIn" });
+                    layer.closeAll();
                     noticebox('支付成功', 1);
                 },
                 error: function(xhr) {
