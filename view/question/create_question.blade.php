@@ -40,7 +40,7 @@
             <input id="anonymity" name="anonymity" type="checkbox" @if(isset($question) && $question['anonymity'] == 1) checked="checked" @endif class="input-checkbox"/>
             <label for="anonymity">启动匿名</label>
         </div>
-        @if(isset($question) && ($question['amount'] > 0 || empty($question['invitations'])))
+        @if(isset($question) && ($question['amount'] > 0 || empty($question['invitations']) || $question['status'] == 1))
             <div class="question-next"><button id="question-submit">完成</button></div>
         @else
             <div class="question-next"><button id="question-next">下一步</button></div>
