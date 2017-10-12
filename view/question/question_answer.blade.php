@@ -6,12 +6,18 @@
                     @if($answer->anonymity == 1)
                         <img class="avatar avatar--round" width="44" height="44" src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}" alt="">
                     @else
-                        <img class="avatar avatar--round" width="44" height="44" src="{{$answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                        <a href="{{ route('pc:mine', $answer->user->id) }}">
+                            <img class="avatar avatar--round" width="44" height="44" src="{{$answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                        </a>
                     @endif
                 </span>
                 <div class="authorinfo-content">
                     <div class="authorinfo-head">
-                        <span class="userlink authorinfo-name">{{ $answer->anonymity == 1 ? '匿名用户' : $answer->user->name }}</span>
+                        @if($answer->anonymity == 1)
+                            <span class="userlink authorinfo-name">匿名用户</span>
+                        @else
+                            <a href="{{ route('pc:mine', $answer->user->id) }}" class="userlink authorinfo-name">{{ $answer->user->name }}</a>
+                        @endif
                         @if(isset($answer->invitation) && $answer->invitation == 1)
                             <span class="blue-tag">邀请回答</span>
                         @endif

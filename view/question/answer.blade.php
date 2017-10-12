@@ -11,13 +11,15 @@
     <div class="answer-detail-box bgwhite">
         <dl class="user-box clearfix">
             <dt class="fl relative">
-                <img class="round" src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="60">
-                @if ($answer->user->verified)
-                <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                @endif
+                <a href="{{ route('pc:mine', $answer->user->id) }}">
+                    <img class="round" src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="60">
+                    @if ($answer->user->verified)
+                        <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                    @endif
+                </a>
             </dt>
             <dd class="fl body-box">
-                <span class="tcolor">{{ $answer->user->name }}</span>
+                <a href="{{ route('pc:mine', $answer->user->id) }}" class="tcolor">{{ $answer->user->name }}</a>
                 <div class="user-tags">
                 @if ($answer->user->tags)
                     @foreach ($answer->user->tags as $tag)

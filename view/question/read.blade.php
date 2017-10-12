@@ -47,7 +47,7 @@
                     <div class="questionfollowstatus">
                         <div class="numberboard questionfollowstatus-counts">
                             <button class="button numberboard-item button-plain" type="button">
-                                <div class="numberboard-value">{{ $question->watchers_count }}</div>
+                                <div class="numberboard-value" id="watchers_count_value">{{ $question->watchers_count }}</div>
                                 <div class="numberboard-name">关注</div>
                             </button>
                             <div class="numberboard-divider"></div>
@@ -294,9 +294,11 @@
                     if (watched == '1') {
                         _this.removeClass('button-grey').addClass('button-primary button-blue').text('关注');
                         _this.data('watched', '0');
+                        $('#watchers_count_value').text(parseInt($('#watchers_count_value').text())-1);
                     } else {
                         _this.removeClass('button-primary button-blue').addClass('button-grey').text('已关注');
                         _this.data('watched', '1');
+                        $('#watchers_count_value').text(parseInt($('#watchers_count_value').text())+1);
                     }
                 },
                 error: function(xhr){
