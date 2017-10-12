@@ -165,7 +165,13 @@ class QuestionController extends BaseController
         $params['keyword'] = $request->input('keyword') ?: '';
         $data['topics'] = $params['topics'];
         if ($ajax == 1) {
-            $data['users'] = createRequest('GET', '/api/v2/question-experts', $params);
+            $search = $request->input('search');
+            if ($search == 1) {
+                $url = '/api/v2/user/search';
+            } else {
+                $url = '/api/v2/question-experts';
+            }
+            $data['users'] = createRequest('GET', $url, $params);
             $return = view('pcview::question.user_list', $data)
                 ->render();
 

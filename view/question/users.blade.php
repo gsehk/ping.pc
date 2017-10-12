@@ -14,8 +14,10 @@
     var input = $('#input-name');
     var invitation = $('.invitation-a');
     var lists = $('.lists');
+    var search = 0;
 
     input.on('keypress', function (event) {
+        search = 1;
         event.keyCode == 13 ?
         getUsers() : "";
     });
@@ -30,7 +32,9 @@
                 limit: 10,
                 ajax: 1,
                 keyword: keyword,
-                topics: "{{$topics}}",
+                {{--topics: "{{$topics}}",--}}
+                topics: [1],
+                search: search,
                 paramtype: 1
             }
         });
