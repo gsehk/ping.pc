@@ -206,6 +206,8 @@
 
         // 下一步
         $('#question-next').on('click', function () {
+            checkLogin();
+
             if (!stepOne()) {
 
                 return false;

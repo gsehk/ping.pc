@@ -20,7 +20,7 @@ post.showImg = function(){
 };
 
 post.createPost = function (group_id) {
-    checkLogin()
+    checkLogin();
 
     var images = [];
     $('.feed_picture').find('img').each(function() {

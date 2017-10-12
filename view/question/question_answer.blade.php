@@ -26,9 +26,6 @@
             </div>
             <div class="list-item-content">
                 <div class="content-inner">
-                    {{--@if(isset($answer->invitation) && $answer->invitation == 1)--}}
-                        {{--{{ $answer->body }}--}}
-                    {{--@endif--}}
                     @if(!isset($answer->invitation) || (isset($TS) && $answer->invitation == 1 && ($answer->could || $answer->question->user_id == $TS['id'] || $answer->user_id == $TS['id'])))
                         <span class="answer-body">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
                         <button class="button button-plain button-more"><a href="{{ route('pc:answeread', $answer->id) }}">查看详情</a></button>

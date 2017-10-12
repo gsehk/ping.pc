@@ -13,19 +13,19 @@
         @if ($post->answer)
             <div class="q-answer">
                 <div class="q_user">
-                @if ($post->answer->anonymity)
-                    <img src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}?s=24" >
-                    <div class="q_user_info">匿名用户</div>
-                @else
-                    <img src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=24" >
-                    <div class="q_user_info">
-                        <span>{{ $post->user->name }}</span>
-                        @foreach ($post->user->tags as $tag)
-                             <div>{{$tag->name}}</div>
-                         @endforeach
-                    </div>
+                    @if ($post->answer->anonymity)
+                        <img src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}?s=24" >
+                        <div class="q_user_info">匿名用户</div>
+                    @else
+                        <img src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=24" >
+                        <div class="q_user_info">
+                            <span>{{ $post->user->name }}</span>
+                            @foreach ($post->user->tags as $tag)
+                                 <div>{{$tag->name}}</div>
+                             @endforeach
+                        </div>
+                    @endif
                     <span class="q_time">{{ getTime($post->answer->created_at) }}</span>
-                @endif
                 </div>
                 <div class="q_detail clearfix">
                     {{-- <div class="q_img">
@@ -34,8 +34,13 @@
                         </div>
                     </div> --}}
                     <div class="q_text">
-                        <span>{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $post->answer->body), 250, '...') !!}</span>
-                        <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain Button--more">查看详情</a>
+
+                        @if(!$post->answer->invited || (isset($TS) && $post->answer->invited == 1 && ($post->answer->could || $post->user_id == $TS['id'] || $post->answer->user_id == $TS['id'])))
+                            <span>{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $post->answer->body), 250, '...') !!}</span>
+                            <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain Button--more">查看详情</a>
+                        @else
+                            <span class="answer-body fuzzy">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
+                        @endif
                     </div>
                 </div>
             </div>
