@@ -257,8 +257,9 @@
 
         // 添加邀请人
         $('#invitation-add').on('click', function () {
+            console.log(args.topics_);
             ly.load('/question/users', '', '480px', '550px', 'GET',
-                {'topics' : args.topics
+                {'topics' : args.topics_
                 });
         });
         $('#question-last').on('click', function () {
@@ -270,9 +271,9 @@
             args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) * 100;
             args.look = $("input[type='radio'][name='look']:checked").val();
             var topic = [];
-            for (var key in args.topics) {
+            for (var key in args.topics_) {
                 topic[key] = {};
-                topic[key].id = args.topics[key];
+                topic[key].id = args.topics_[key];
             }
             args.topics = topic;
             var invitations = [];
@@ -320,9 +321,9 @@
             args.subject = $('#subject').val().replace(/(\s*$)/g, "");
             args.body = editor.getMarkdown();
             args.anonymity = $("input[type='checkbox'][name='anonymity']:checked").val() == 'on' ? 1 : 0;
-            args.topics = [];
+            args.topics_ = [];
             $('#J-select-topics li').each(function(index){
-                args.topics.push($(this).data('id'));
+                args.topics_.push($(this).data('id'));
             });
             if (args.subject.length < 1) {
                 $('#subject').focus();
@@ -341,7 +342,7 @@
                 return false;
             }
 
-            if (args.topics.length < 1) {
+            if (args.topics_.length < 1) {
                 noticebox('请选择话题', 0);
 
                 return false;
@@ -357,7 +358,7 @@
         }
 
         function update() {
-            if (!args.subject || !args.body || !args.topics) {
+            if (!args.subject || !args.body || !args.topics_) {
                 if (!stepOne()) {
 
                     return false;
