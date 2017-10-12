@@ -241,9 +241,11 @@
         // 是否开启悬赏邀请
         $('#rewardno').on('click', function () {
             $('.invitation-con').hide('fast');
-            $("input[type='radio'][name='look']:checked").val('0');
             $('#invitation-add').text('添加');
-            args.invitations = [];
+            $("#lookyes").removeAttr("checked");
+            args.invitations_ = [];
+            args.look = 0;
+            args.automaticity = 0;
 
         });
         $('#rewardyes').on('click', function () {
@@ -279,9 +281,9 @@
             }
             args.topics = topic;
             var invitations = [];
-            for (var key in args.invitations) {
+            for (var key in args.invitations_) {
                 invitations[key] = {};
-                invitations[key].user = args.invitations[key];
+                invitations[key].user = args.invitations_[key];
             }
             args.invitations = invitations;
             args.automaticity = 0;
@@ -293,6 +295,12 @@
                 }
                 if (args.invitations.length != 1) {
                     noticebox('请邀请回答人', 0);
+
+                    return false;
+                }
+
+                if ($.inArray({{ $TS['id'] }}, args.invitations_) > -1) {
+                    noticebox('不能邀请自己', 0);
 
                     return false;
                 }

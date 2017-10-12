@@ -35,7 +35,6 @@
                     <!-- js增删  .questionrichtext--collapsed 改变content字数 -->
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
-
                             <span class="show-body">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
                             {{--<span class="richtext" itemprop="text">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body), 300, '...') !!}</span>--}}
                             {{--<button class="button button-plain button-more questionrichtext-more">显示全部</button>--}}
@@ -77,7 +76,7 @@
             <div class="questionheader-footer-inner">
                 <div class="questionheader-main questionheader-footer-main">
                     @if($question['look'] == 1 && isset($TS) && $question['user_id'] == $TS['id'])
-                        <span class="questionheader-onlook">￥0.1围观</span>
+                        <span class="questionheader-onlook">￥1.00围观</span>
                     @endif
                     <div class="questionheaderactions">
                         <div class="questionheader-comment">
@@ -115,7 +114,7 @@
                         @endif
                         @if($question->amount <= 0)
                             <a href="javascript:;" class="button set-amount" @if($question['user_id'] == $TS['id']) onclick="question.amount({{ $question['id'] }})" @endif >未设置悬赏</a>
-                        @elseif($question->invitations->isempty())
+                        @elseif(!$question->invitations->isempty())
                             <a href="javascript:;" class="button set-amount">已邀请悬赏</a>
                         @else
                             <a href="javascript:;" class="button set-amount">已设置悬赏</a>

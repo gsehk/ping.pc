@@ -863,6 +863,9 @@ var comment = {
             case 'question-answers':
                 url = '/api/v2/question-answers/' + source_id + '/comments/' + id;
                 break;
+            case 'questions':
+                url = '/api/v2/questions/' + source_id + '/comments/' + id;
+                break;
         }
         $.ajax({
             url: url,

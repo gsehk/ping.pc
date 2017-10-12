@@ -47,7 +47,7 @@
         var id = $(this).data('id');
         var name = $(this).data('name');
         $('#invitation-add').text('已邀请：'+name);
-        args.invitations = [id];
+        args.invitations_ = [id];
         ly.close();
     })
 </script>
