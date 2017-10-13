@@ -235,6 +235,7 @@
 
         });
         $('#amount').focus(function () {
+            $("#amount-hide").val('');
             $('.select-amount').removeClass('select-amount');
         });
 
