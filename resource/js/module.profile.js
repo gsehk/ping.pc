@@ -73,7 +73,7 @@ $(function() {
                 processData: false,
                 success: function(res) {
                     noticebox('更换背景图成功', 1);
-                    $('.user_bg').attr('src', window.URL.createObjectURL(file));
+                    $('.profile_top_cover').css("background-image","url("+window.URL.createObjectURL(file)+")");
                 }
             });
     });
