@@ -197,7 +197,6 @@
 
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 <script>
 $(function(){

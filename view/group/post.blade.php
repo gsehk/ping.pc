@@ -142,7 +142,6 @@
 
 @section('scripts')
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
-    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
     <script type="text/javascript">
         layer.photos({

@@ -21,12 +21,9 @@ var weibo = {
             });
         });
     },
-    pinneds: function (id, type) {
-        type = type ? type : 'feeds';
-        if (type == 'feeds') {
-            var url = '/api/v2/feeds/'+id+'/pinneds';
-            pinneds(url);
-        }
+    pinneds: function (id) {
+        var url = '/api/v2/feeds/'+id+'/pinneds';
+        pinneds(url);
     },
     addComment: function (row_id, type) {
         var url = '/api/v2/feeds/' + row_id + '/comments';
@@ -79,7 +76,7 @@ $(function() {
     });
 
     // 显示跳转详情文字
-    $('body').on("mouseover mouseout", '.date', function(event){
+    $('#content_list').on("mouseover mouseout", '.date', function(event){
         if(event.type == "mouseover"){
           var width = $(this).find('span').first().width();
             width = width < 60 ? 60 : width;

@@ -177,7 +177,6 @@
 
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.news.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/markdown/lib/marked.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 <script>

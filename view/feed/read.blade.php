@@ -54,7 +54,7 @@
                     </div>
                 </dd>
             </dl>
-            
+
             @if(!empty($feed->images))
             <div class="detail_images" id="layer-photos-demo">
             @foreach($feed->images as $store)
@@ -181,7 +181,6 @@
 
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/module.bdshare.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 <script type="text/javascript">
     layer.photos({
