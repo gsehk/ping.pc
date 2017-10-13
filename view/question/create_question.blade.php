@@ -276,6 +276,8 @@
         $('#question-submit').on('click', function () {
             if (checkSubmitFlg) {
                 noticebox('请勿重复提交', 0);
+
+                return false;
             }
             checkSubmitFlg = true;
             args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) * 100;
