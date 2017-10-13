@@ -256,6 +256,7 @@
     <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 
     <script>
+        var checkSubmitFlg = false;
         setTimeout(function() {
             scroll.init({
                 container: '#question-answers-list',
@@ -332,6 +333,12 @@
         });
         // 回答问题
         $('#answer-send').on('click', function () {
+            if (checkSubmitFlg) {
+                noticebox('请勿重复提交', 0);
+
+                return false;
+            }
+            checkSubmitFlg = true;
             var args = {
                 'body': editor.getMarkdown(),
                 'anonymity': $("input[type='checkbox'][name='anonymity']:checked").val() == 'on' ? 1 : 0
@@ -352,6 +359,7 @@
                 },
                 error:function (xml) {
                     showError(xml);
+                    checkSubmitFlg = false;
                 }
             });
         });

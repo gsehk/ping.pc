@@ -226,6 +226,7 @@
         // 选择悬赏金额
         $('.reward-example').on('click', 'li', function () {
             if ($(this).hasClass('select-amount')) {
+                $("#amount").val('');
                 $(this).removeClass('select-amount');
             }else{
                 $(this).siblings().removeClass('select-amount');
@@ -327,10 +328,12 @@
                         noticebox(res.message, 1, '/question/'+res.question.id);
                     } else {
                         noticebox(res.message, 0);
+                        checkSubmitFlg = false;
                     }
                 },
                 error: function (xml) {
                     showError(xml.responseJSON);
+                    checkSubmitFlg = false;
                 }
             });
         });
