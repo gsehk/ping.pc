@@ -116,7 +116,7 @@
                                     @if(isset($TS) && $answer->could)
                                         <button class="button look-cloud" type="button">已围观</button>
                                     @else
-                                        <button class="button button-blue button-primary look-cloud" onclick="QA.look({{ $answer->id }}, '1.00' , {{ $answer->question_id }})" type="button">围观</button>
+                                        <button class="button button-blue button-primary look-cloud" onclick="QA.look({{ $answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount']/100) }}' , {{ $answer->question_id }})" type="button">围观</button>
                                     @endif
                                 @endif
                             </div>
