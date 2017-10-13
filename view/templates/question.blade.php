@@ -21,14 +21,14 @@
                         <div class="q_user_info">匿名用户</div>
                     @else
                         <div class="post-user-avatar">
-                            <img src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=24" class="avatar">
-                            @if ($post->user->verified)
-                                <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                            <img src="{{ $post->answer->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=24" class="avatar">
+                            @if ($post->answer->user->verified)
+                                <img class="role-icon" src="{{ $post->answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                             @endif
                         </div>
                         <div class="q_user_info">
-                            <span>{{ $post->user->name }} {{ isset($TS) && $post->answer->anonymity == 1 && $post->answer->user_id == $TS['id'] ? '（匿名）' : ''}}</span>
-                            @foreach ($post->user->tags as $tag)
+                            <span>{{ $post->answer->user->name }} {{ isset($TS) && $post->answer->anonymity == 1 && $post->answer->user_id == $TS['id'] ? '（匿名）' : ''}}</span>
+                            @foreach ($post->answer->user->tags as $tag)
                                  <div>{{$tag->name}}</div>
                              @endforeach
                         </div>

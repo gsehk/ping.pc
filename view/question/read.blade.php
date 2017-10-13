@@ -263,7 +263,7 @@
                 loading: '.question-main-l',
                 url: '/question/{{$question['id']}}/answers',
                 paramtype: 1,
-                params: {order_type: 'default', limit: 2}
+                params: {order_type: 'default', limit: 10}
             });
         }, 300);
         // 展示问题详情

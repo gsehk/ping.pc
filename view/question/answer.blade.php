@@ -42,11 +42,13 @@
                     <div class="options_div">
                         <div class="triangle"></div>
                         <ul>
-                            <li>
-                                <a href="{{ route('pc:answeredit', $answer->id) }}">
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
-                                </a>
-                            </li>
+                            @if ($answer->adoption != 1 && $answer->invited != 1)
+                                <li>
+                                    <a href="{{ route('pc:answeredit', $answer->id) }}">
+                                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
+                                    </a>
+                                </li>
+                            @endif
                             <li>
                                 <a href="javascript:;" onclick="QA.delAnswer({{ $answer->question_id }}, {{ $answer->id }}, '{{ route('pc:questionread', $answer->question_id) }}')">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
