@@ -138,12 +138,7 @@
                                     </li>
                                 </ul>
                             </div>
-
                         @else
-                            <button class="button button-plain" type="button">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
-                                收藏
-                            </button>
                             {{--<button class="button button-plain" type="button">--}}
                                 {{--<svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>--}}
                                 {{--举报--}}

@@ -109,6 +109,26 @@
 </div>
 
 <div class="right_container">
+    <div class="answer-author">
+        <div class="author-con">
+            <div class="author-avatar"><img src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt=""></div>
+            <div class="author-right">
+                <div class="author-name">{{ $answer->user->name }}</div>
+                <div class="author-intro">{{ $answer->user->bio or '暂无简介~~'}}</div>
+            </div>
+        </div>
+        <div class="author-count">
+            <div>提问 <span>{{ $answer->user->extra->questions_count }}</span></div>
+            <div>回答 <span>{{ $answer->user->extra->answers_count }}</span></div>
+        </div>
+        <div class="author-collect">
+            @if($answer->user->hasFollower)
+                <a href="javascript:;" id="follow" status="1">已关注</a>
+            @else
+                <a href="javascript:;" id="follow" class="followed" status="0">+关注</a>
+            @endif
+        </div>
+    </div>
 
     {{-- 热门问题 --}}
     @include('pcview::widgets.hotquestions')
@@ -131,6 +151,27 @@ $(function(){
     }, 200);
 
     $("img.lazy").lazyload({effect: "fadeIn"});
+
+    // 关注
+    $('#follow').click(function(){
+        var _this = $(this);
+        var status = $(this).attr('status');
+        var user_id = "{{ $answer->user->id }}";
+        follow(status, user_id, _this, afterdata);
+    });
+
+    // 关注回调
+    var afterdata = function(target){
+        if (target.attr('status') == 1) {
+            target.text('+关注');
+            target.attr('status', 0);
+            target.addClass('followed');
+        } else {
+            target.text('已关注');
+            target.attr('status', 1);
+            target.removeClass('followed');
+        }
+    }
 })
 
 </script>

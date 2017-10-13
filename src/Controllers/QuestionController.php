@@ -113,7 +113,7 @@ class QuestionController extends BaseController
         $answer = createRequest('GET', '/api/v2/question-answers/'.$answer );
         $answer->collect_count =  $answer->collectors->count();
         $data['answer'] = $answer;
-
+        $data['answer']->user->hasFollower = $data['answer']['user']->hasFollower($this->PlusData['TS']['id']);
         return view('pcview::question.answer', $data, $this->PlusData);
     }
 

@@ -321,7 +321,7 @@
 .questionheaderactions .set-amount {
     border: 0;
     padding: 0;
-    line-height: inherit;
+    line-height: 22px;
     color: #59b6d7;
 }
 

@@ -1099,3 +1099,70 @@ button{
     margin-right: 20px;
     width: 333px;
 }
+
+/* 回答详情-回答者信息 */
+.answer-author {
+    background-color: #fff;
+    padding: 20px 15px;
+}
+.answer-author .author-con {
+    width: 100%;
+}
+.answer-author .author-con .author-avatar {
+    width: 75px;
+    float: left;
+}
+.answer-author .author-con .author-right {
+    width: calc(100% - 90px);
+    margin-left: 90px;
+    min-height: 95px;
+}
+.answer-author .author-con .author-right .author-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+    height: 30px;
+}
+.answer-author .author-con .author-right .author-intro {
+    color: #666;
+    line-height: 25px;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+.answer-author .author-count {
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+.answer-author .author-count>div{
+    display: inline-block;
+    text-align: center;
+    width: calc((100% - 31px)/2);
+}
+.answer-author .author-count>div:last-child{
+    border-left: 1px solid #eee;
+}
+.answer-author .author-count>div>span{
+    font-size: 19px;
+}
+.answer-author .author-collect {
+    margin-top: 20px;
+    height: 30px;
+}
+.answer-author .author-collect a{
+    margin: auto;
+    width: 85px;
+    display: block;
+    line-height: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    text-align: center;
+    border-radius: 3px;
+    color: #ccc;
+}
+
+.answer-author .author-collect .followed{
+    border: 1px solid #59b6d7;
+    color: #59b6d7;
+}
