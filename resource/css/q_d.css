@@ -410,6 +410,7 @@
     margin-top: 15px;
     line-height: 1.67;
     color: #666;
+    word-wrap: break-word;
 }
 
 .question-answers-list .list-item .answer-footer {

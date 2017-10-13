@@ -16,7 +16,7 @@
         @if ($post->answer)
             <div class="q-answer">
                 <div class="q_user">
-                    @if ($post->answer->anonymity)
+                    @if ($post->answer->anonymity && !(isset($TS) && $post->answer->user_id == $TS['id']))
                         <img src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}?s=24" width="24px" height="24px" />
                         <div class="q_user_info">匿名用户</div>
                     @else
@@ -27,7 +27,7 @@
                             @endif
                         </div>
                         <div class="q_user_info">
-                            <span>{{ $post->user->name }}</span>
+                            <span>{{ $post->user->name }} {{ isset($TS) && $post->answer->anonymity == 1 && $post->answer->user_id == $TS['id'] ? '（匿名）' : ''}}</span>
                             @foreach ($post->user->tags as $tag)
                                  <div>{{$tag->name}}</div>
                              @endforeach

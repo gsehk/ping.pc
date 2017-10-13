@@ -26,7 +26,7 @@
                 @if($answer->anonymity == 1 && !(isset($TS) && $TS['id'] == $answer->user_id))
                     <span href="javascript:;" class="anonymity">匿名用户</span>
                 @else
-                    <a href="{{ route('pc:mine', $answer->user->id) }}" class="tcolor">{{ $answer->user->name }} {{ (isset($TS) && $TS['id'] == $answer->user_id) ? '（匿名）' : '' }}</a>
+                    <a href="{{ route('pc:mine', $answer->user->id) }}" class="tcolor">{{ $answer->user->name }} {{ (isset($TS) && $answer->anonymity == 1 && $TS['id'] == $answer->user_id) ? '（匿名）' : '' }}</a>
                     <div class="user-tags">
                         @if ($answer->user->tags)
                             @foreach ($answer->user->tags as $tag)

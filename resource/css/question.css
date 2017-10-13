@@ -446,6 +446,7 @@ button{
     margin: 20px 0;
     min-height: 300px;
     color: #666;
+    word-wrap: break-word;
 }
 
 /* 提问 */

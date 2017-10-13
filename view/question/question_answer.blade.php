@@ -3,7 +3,7 @@
         <div class="list-item" id="answer{{$answer->id}}">
             <div class="list-item-header">
                 <span class="userlink authorinfo-avatarwrapper">
-                    @if($answer->anonymity == 1)
+                    @if($answer->anonymity == 1 && !(isset($TS) && $answer->user_id == $TS['id']))
                         <img class="avatar avatar--round" width="50" height="50" src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}" alt="">
                     @else
                         <a href="{{ route('pc:mine', $answer->user->id) }}" class="avatar_box">
@@ -16,10 +16,10 @@
                 </span>
                 <div class="authorinfo-content">
                     <div class="authorinfo-head">
-                        @if($answer->anonymity == 1)
+                        @if($answer->anonymity == 1 && !(isset($TS) && $answer->user_id == $TS['id']))
                             <span class="userlink authorinfo-name">匿名用户</span>
                         @else
-                            <a href="{{ route('pc:mine', $answer->user->id) }}" class="userlink authorinfo-name">{{ $answer->user->name }}</a>
+                            <a href="{{ route('pc:mine', $answer->user->id) }}" class="userlink authorinfo-name">{{ $answer->user->name }} {{ isset($TS) && $answer->anonymity == 1 && $answer->user_id == $TS['id'] ? '（匿名）' : ''}}</a>
                         @endif
                         @if(isset($answer->invitation) && $answer->invitation == 1)
                             <span class="blue-tag">邀请回答</span>
