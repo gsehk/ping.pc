@@ -323,6 +323,7 @@
         $('#write-answer').on('click', function () {
             $('.question-main-r').slideDown();
             window.editor.resize();
+            window.editor.setCursor({line:1, ch:2});
             var _targetTop = $('.question-main-r').offset().top;//获取位置
             jQuery("html,body").animate({scrollTop:_targetTop},300);//跳转
         });
