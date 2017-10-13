@@ -295,4 +295,12 @@ class QuestionController extends BaseController
             'data' => $html
         ]);
     }
+
+    public function editAnswer(Request $request, int $answer)
+    {
+        $answer = createRequest('GET', '/api/v2/question-answers/'.$answer );
+        $data['answer'] = $answer;
+
+        return view('pcview::question.answer_edit', $data, $this->PlusData);
+    }
 }

@@ -72,6 +72,8 @@ Route::prefix('question')->group(function () {
     // 问题评论列表
     Route::get('{question_id}/comments', 'QuestionController@questionComments')->name('pc:questioncomments');
 
+    // 修改回答
+    Route::get('answer/{answer}/edit', 'QuestionController@editAnswer')->where(['answer' => '[0-9]+'])->name('pc:answeredit');
 
 });
 

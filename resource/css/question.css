@@ -1210,3 +1210,22 @@ button{
     border: 1px solid #59b6d7;
     color: #59b6d7;
 }
+
+/* 修改回答 */
+.create-question .answer-from-row {
+    margin-top: 25px;
+}
+.create-question .answer-from-row .edit-answer-btn{
+    font-size: 16px;
+    line-height: 36px;
+    display: inline-block;
+    width: 100px;
+    height: 36px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    background: #59b6d7;
+    float: right;
+}

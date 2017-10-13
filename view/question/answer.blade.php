@@ -11,7 +11,7 @@
     <div class="answer-detail-box bgwhite">
         <dl class="user-box clearfix">
             <dt class="fl relative">
-                @if($answer->anonymity == 1)
+                @if($answer->anonymity == 1 && !(isset($TS) && $TS['id'] == $answer->user_id))
                     <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}" width="60">
                 @else
                     <a href="{{ route('pc:mine', $answer->user->id) }}">
@@ -23,10 +23,10 @@
                 @endif
             </dt>
             <dd class="fl body-box">
-                @if($answer->anonymity == 1)
+                @if($answer->anonymity == 1 && !(isset($TS) && $TS['id'] == $answer->user_id))
                     <span href="javascript:;" class="anonymity">匿名用户</span>
                 @else
-                    <a href="{{ route('pc:mine', $answer->user->id) }}" class="tcolor">{{ $answer->user->name }}</a>
+                    <a href="{{ route('pc:mine', $answer->user->id) }}" class="tcolor">{{ $answer->user->name }} {{ (isset($TS) && $TS['id'] == $answer->user_id) ? '（匿名）' : '' }}</a>
                     <div class="user-tags">
                         @if ($answer->user->tags)
                             @foreach ($answer->user->tags as $tag)
@@ -43,7 +43,7 @@
                         <div class="triangle"></div>
                         <ul>
                             <li>
-                                <a href="">
+                                <a href="{{ route('pc:answeredit', $answer->id) }}">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
                                 </a>
                             </li>
@@ -54,6 +54,26 @@
                             </li>
                         </ul>
                     </div>
+                    @elseif(isset($TS) && $answer->question->user_id == $TS['id'])
+                        <a href="javascript:;" class="options button-more" onclick="options(this)">
+                            <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                        </a>
+                        <div class="options_div">
+                            <div class="triangle"></div>
+                            <ul>
+                                <li>
+                                    @if($answer->adoption == 1)
+                                        <a href="javascript:;">
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-caina"></use></svg>已采纳
+                                        </a>
+                                    @else
+                                        <a href="javascript:;" onclick="QA.adoptions('{{$answer['question_id']}}', '{{$answer['id']}}')">
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-caina"></use></svg>采纳
+                                        </a>
+                                    @endif
+                                </li>
+                            </ul>
+                        </div>
                 @endif
             </dd>
         </dl>
