@@ -25,7 +25,8 @@ var QA = {
             }
         });
     },
-    delAnswer: function (question_id, answer_id) {
+    delAnswer: function (question_id, answer_id, callUrl) {
+        callUrl = callUrl ? callUrl : '';
         url = '/api/v2/question-answers/' + answer_id;
          $.ajax({
              url: url,
@@ -33,8 +34,12 @@ var QA = {
              dataType: 'json',
              success: function(res, data, xml) {
                  if (xml.status == 204) {
-                     $('#answer' + answer_id).fadeOut();
-                     $('.qs' + question_id).text(parseInt($('.qs' + question_id).text())-1);
+                     if (callUrl == '') {
+                         $('#answer' + answer_id).fadeOut();
+                         $('.qs' + question_id).text(parseInt($('.qs' + question_id).text())-1);
+                     } else {
+                         noticebox('删除成功', 1, callUrl);
+                     }
                  }
              },
              error: function(xhr){

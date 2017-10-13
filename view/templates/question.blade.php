@@ -9,6 +9,7 @@
             @if($post['excellent'] == 1)
                 <span class="excellent">精</span>
             @endif
+            <span class="q_time">{{ getTime($post->answer->created_at) }}</span>
         </h2>
         @if ($post->answer)
             <div class="q-answer">
@@ -25,7 +26,6 @@
                              @endforeach
                         </div>
                     @endif
-                    <span class="q_time">{{ getTime($post->answer->created_at) }}</span>
                 </div>
                 <div class="q_detail clearfix">
                     {{-- <div class="q_img">

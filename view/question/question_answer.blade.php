@@ -69,11 +69,11 @@
                                     <li>
                                         @if($answer->adoption == 1)
                                             <a href="javascript:;">
-                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>已采纳
+                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-caina"></use></svg>已采纳
                                             </a>
                                         @else
                                             <a href="javascript:;" onclick="QA.adoptions('{{$answer['question_id']}}', '{{$answer['id']}}')">
-                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>采纳
+                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-caina"></use></svg>采纳
                                             </a>
                                         @endif
                                     </li>

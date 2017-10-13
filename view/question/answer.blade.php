@@ -11,22 +11,48 @@
     <div class="answer-detail-box bgwhite">
         <dl class="user-box clearfix">
             <dt class="fl relative">
-                <a href="{{ route('pc:mine', $answer->user->id) }}">
-                    <img class="round" src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="60">
-                    @if ($answer->user->verified)
-                        <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
-                    @endif
-                </a>
+                @if($answer->anonymity == 1)
+                    <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}" width="60">
+                @else
+                    <a href="{{ route('pc:mine', $answer->user->id) }}">
+                        <img class="round" src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="60">
+                        @if ($answer->user->verified)
+                            <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                        @endif
+                    </a>
+                @endif
             </dt>
             <dd class="fl body-box">
-                <a href="{{ route('pc:mine', $answer->user->id) }}" class="tcolor">{{ $answer->user->name }}</a>
-                <div class="user-tags">
-                @if ($answer->user->tags)
-                    @foreach ($answer->user->tags as $tag)
-                        <span class="tag ucolor">{{ $tag->name }}</span>
-                    @endforeach
+                @if($answer->anonymity == 1)
+                    <span href="javascript:;" class="anonymity">匿名用户</span>
+                @else
+                    <a href="{{ route('pc:mine', $answer->user->id) }}" class="tcolor">{{ $answer->user->name }}</a>
+                    <div class="user-tags">
+                        @if ($answer->user->tags)
+                            @foreach ($answer->user->tags as $tag)
+                                <span class="tag ucolor">{{ $tag->name }}</span>
+                            @endforeach
+                        @endif
+                    </div>
                 @endif
-                </div>
+                @if(isset($TS) && $answer->user->id == $TS['id'])
+                    <a href="javascript:;" class="options button-more" onclick="options(this)">
+                        <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                    </a>
+                    <div class="options_div">
+                        <div class="triangle"></div>
+                        <ul>
+                            <li>
+                                <a href="">
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
+                                </a>
+                            </li>
+                            <li onclick="QA.delAnswer({{ $answer->question_id }}, {{ $answer->id }}, '{{ route('pc:questionread', $answer->question_id) }}')">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                            </li>
+                        </ul>
+                    </div>
+                @endif
             </dd>
         </dl>
 
@@ -109,26 +135,29 @@
 </div>
 
 <div class="right_container">
-    <div class="answer-author">
-        <div class="author-con">
-            <div class="author-avatar"><a href="{{ route('pc:mine', $answer->user->id) }}"><img src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt=""></a></div>
-            <div class="author-right">
-                <div class="author-name"><a href="{{ route('pc:mine', $answer->user->id) }}">{{ $answer->user->name }}</a></div>
-                <div class="author-intro">{{ $answer->user->bio or '暂无简介~~'}}</div>
+    {{-- 回答者信息 --}}
+    @if($answer->anonymity != 1)
+        <div class="answer-author">
+            <div class="author-con">
+                <div class="author-avatar"><a href="{{ route('pc:mine', $answer->user->id) }}"><img src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt=""></a></div>
+                <div class="author-right">
+                    <div class="author-name"><a href="{{ route('pc:mine', $answer->user->id) }}">{{ $answer->user->name }}</a></div>
+                    <div class="author-intro">{{ $answer->user->bio or '暂无简介~~'}}</div>
+                </div>
+            </div>
+            <div class="author-count">
+                <div>提问 <span>{{ $answer->user->extra->questions_count }}</span></div>
+                <div>回答 <span>{{ $answer->user->extra->answers_count }}</span></div>
+            </div>
+            <div class="author-collect">
+                @if($answer->user->hasFollower)
+                    <a href="javascript:;" id="follow" status="1">已关注</a>
+                @else
+                    <a href="javascript:;" id="follow" class="followed" status="0">+关注</a>
+                @endif
             </div>
         </div>
-        <div class="author-count">
-            <div>提问 <span>{{ $answer->user->extra->questions_count }}</span></div>
-            <div>回答 <span>{{ $answer->user->extra->answers_count }}</span></div>
-        </div>
-        <div class="author-collect">
-            @if($answer->user->hasFollower)
-                <a href="javascript:;" id="follow" status="1">已关注</a>
-            @else
-                <a href="javascript:;" id="follow" class="followed" status="0">+关注</a>
-            @endif
-        </div>
-    </div>
+    @endif
 
     {{-- 热门问题 --}}
     @include('pcview::widgets.hotquestions')

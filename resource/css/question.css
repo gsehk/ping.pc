@@ -199,9 +199,11 @@
     content: "\002F";
 }
 
-.q_c .q_user .q_time{
+.q_c .q_title .q_time{
     font-size: 14px;
     color: #999;
+    float: right;
+    line-height: 23px;
 }
 
 .q_c .q_detail{
@@ -400,6 +402,16 @@ button{
 .user-box .body-box {
     margin-left: 20px;
     line-height: 24px;
+    width: calc(100% - 80px);
+    position: relative;
+}
+
+.user-box .body-box .anonymity {
+    line-height: 30px;
+}
+
+.user-box .body-box .button-more {
+    margin-top: -56px;
 }
 
 .answer-detail-box .user-tags {
@@ -1051,7 +1063,7 @@ button{
 
 /* 热门话题 */
 .hot-issues {
-    margin-top: 30px;
+
 }
 
 .hot-issues-list li{
@@ -1104,6 +1116,7 @@ button{
 .answer-author {
     background-color: #fff;
     padding: 20px 15px;
+    margin-bottom: 30px;
 }
 .answer-author .author-con {
     width: 100%;
@@ -1112,7 +1125,7 @@ button{
     width: 75px;
     float: left;
 }
-.answer-author .author-con .author-avatar>img {
+.answer-author .author-con .author-avatar img {
     border-radius: 50%;
 }
 .answer-author .author-con .author-right {
