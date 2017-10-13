@@ -58,9 +58,6 @@
                     "<label>" + imageLang.alt + "</label>" +
                     "<input type=\"text\" value=\"" + selection + "\" data-alt />" +
                     "<br/>" +
-                    "<label>" + imageLang.link + "</label>" +
-                    "<input type=\"text\" value=\"http://\" data-link />" +
-                    "<br/>" +
                     ( (settings.imageUpload) ? "</form>" : "</div>");
 
                 //var imageFooterHTML = "<button class=\"" + classPrefix + "btn " + classPrefix + "image-manager-btn\" style=\"float:left;\">" + imageLang.managerButton + "</button>";
@@ -82,7 +79,6 @@
                         enter : [lang.buttons.enter, function() {
                             var url  = this.find("[data-url]").val();
                             var alt  = this.find("[data-alt]").val();
-                            var link = this.find("[data-link]").val();
 
                             if (url === "")
                             {
@@ -94,19 +90,9 @@
 
 							var altAttr = (alt !== "") ? " \"" + alt + "\"" : "";
 
-                            if (link === "" || link === "http://")
-                            {   
-                                typeof url === "number" ?
-                                cm.replaceSelection("@![" + alt + "](" + url + altAttr + ")"):
-                                cm.replaceSelection("![" + alt + "](" + url + altAttr + ")");
-                            }
-
-                            else
-                            {
-                                typeof url === "number" ?
-                                cm.replaceSelection("[@![" + alt + "](" + url + altAttr + ")](" + link + altAttr + ")"):
-                                cm.replaceSelection("[![" + alt + "](" + url + altAttr + ")](" + link + altAttr + ")");
-                            }
+                            typeof url === "number" ?
+                            cm.replaceSelection("@![" + alt + "](" + url + ")"):
+                            cm.replaceSelection("![" + alt + "](" + url + ")");
 
                             if (alt === "") {
                                 cm.setCursor(cursor.line, cursor.ch + 2);

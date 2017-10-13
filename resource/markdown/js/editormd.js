@@ -288,9 +288,9 @@
                 },
                 image : {
                     title    : "添加图片",
+                    alt    : "图片标题",
                     url      : "图片地址",
                     link     : "图片链接",
-                    alt      : "图片描述",
                     uploadButton     : "本地上传",
                     imageURLEmpty    : "错误：图片地址不能为空。",
                     uploadFileEmpty  : "错误：上传的图片不能为空。",
