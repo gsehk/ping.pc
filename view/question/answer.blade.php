@@ -141,7 +141,14 @@
     @if($answer->anonymity != 1)
         <div class="answer-author">
             <div class="author-con">
-                <div class="author-avatar"><a href="{{ route('pc:mine', $answer->user->id) }}"><img src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" alt=""></a></div>
+                <div class="author-avatar">
+                    <a href="{{ route('pc:mine', $answer->user->id) }}">
+                        <img src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" class="avatar">
+                        @if ($answer->user->verified)
+                            <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                        @endif
+                    </a>
+                </div>
                 <div class="author-right">
                     <div class="author-name"><a href="{{ route('pc:mine', $answer->user->id) }}">{{ $answer->user->name }}</a></div>
                     <div class="author-intro">{{ $answer->user->bio or '暂无简介~~'}}</div>

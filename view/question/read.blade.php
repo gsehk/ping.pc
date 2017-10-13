@@ -61,7 +61,10 @@
                                 <button class="button questionfollowstatus-people button-plain" type="button">
                                      <span class="questionfollowstatus-people-tip">已邀请悬赏:
                                          <span class="userlink">
-                                             <img class="avatar avatar--round" width="30px" height="30px" src="{{$invitation['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                                             <img class="avatar" width="30px" height="30px" src="{{$invitation['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                                             @if ($invitation['verified'])
+                                                 <img class="role-icon" src="{{ $invitation['verified']->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                                             @endif
                                          </span>
                                          {{$invitation['name']}}
                                      </span>

@@ -178,13 +178,25 @@
     justify-content: space-between;
 }
 
-.q_c .q_user img{
+.q_c .q_user .post-user-avatar {
+    position: relative;
+}
+
+.q_c .q_user .post-user-avatar img.avatar{
     border-radius: 50%;
     width: 24px;
     height: 24px;
     line-height: 24px;
     text-align: center;
     background-color: #efefef;
+}
+
+.q_c .q_user .post-user-avatar img.role-icon{
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    bottom: -3px;
+    left: 15px;
 }
 
 .q_c .q_user .q_user_info{
@@ -1129,8 +1141,17 @@ button{
     width: 75px;
     float: left;
 }
-.answer-author .author-con .author-avatar img {
-    border-radius: 50%;
+.answer-author .author-con .author-avatar>a {
+    position: relative;
+    height: 75px;
+    display: flex;
+}
+.answer-author .author-con .author-avatar>a>img.role-icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 25px;
+    height: 25px;
 }
 .answer-author .author-con .author-right {
     width: calc(100% - 90px);

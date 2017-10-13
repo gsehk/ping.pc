@@ -11,10 +11,6 @@
     border-radius: 4px;
 }
 
-.avatar--round {
-    border-radius: 50%;
-}
-
 .questionpage {
     position: relative;
 }
@@ -230,10 +226,19 @@
 .questionfollowstatus-people .userlink {
     display: inline-block;
     vertical-align: middle;
+    position: relative;
 }
 
 .questionfollowstatus-people .userlink + .userlink {
     margin-left: -8px;
+}
+
+.questionfollowstatus-people .userlink .role-icon {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    bottom: -3px;
+    left: 20px;
 }
 
 .questionfollowstatus-people .avatar {
@@ -375,32 +380,18 @@
     align-items: center;
 }
 
-.question-answers-list .list-item .list-item-header .authorinfo-avatarwrapper {
-    overflow: hidden;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-}
-
 .question-answers-list .list-item .list-item-header .authorinfo-content {
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
     margin-left: 20px;
     overflow: hidden;
+    margin-top: 10px;
 }
 
 .question-answers-list .list-item .list-item-header .authorinfo-content .authorinfo-head {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    font-size: 15px;
     line-height: 1.1;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
 }
 
 .question-answers-list .list-item .list-item-header .authorinfo-content .authorinfo-head .authorinfo-name {

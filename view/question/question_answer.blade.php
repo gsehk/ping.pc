@@ -4,10 +4,13 @@
             <div class="list-item-header">
                 <span class="userlink authorinfo-avatarwrapper">
                     @if($answer->anonymity == 1)
-                        <img class="avatar avatar--round" width="44" height="44" src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}" alt="">
+                        <img class="avatar avatar--round" width="50" height="50" src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}" alt="">
                     @else
-                        <a href="{{ route('pc:mine', $answer->user->id) }}">
-                            <img class="avatar avatar--round" width="44" height="44" src="{{$answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                        <a href="{{ route('pc:mine', $answer->user->id) }}" class="avatar_box">
+                            <img class="avatar" width="50" height="50" src="{{$answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                            @if ($answer->user->verified)
+                                <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                            @endif
                         </a>
                     @endif
                 </span>
