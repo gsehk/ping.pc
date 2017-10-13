@@ -1112,6 +1112,9 @@ button{
     width: 75px;
     float: left;
 }
+.answer-author .author-con .author-avatar>img {
+    border-radius: 50%;
+}
 .answer-author .author-con .author-right {
     width: calc(100% - 90px);
     margin-left: 90px;
@@ -1120,14 +1123,17 @@ button{
 .answer-author .author-con .author-right .author-name {
     font-size: 16px;
     font-weight: 600;
-    margin-top: 20px;
-    height: 30px;
+    margin-top: 5px;
+    min-height: 30px;
 }
 .answer-author .author-con .author-right .author-intro {
     color: #666;
     line-height: 25px;
-    margin-bottom: 12px;
     font-size: 13px;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
 }
 .answer-author .author-count {
     height: 40px;
