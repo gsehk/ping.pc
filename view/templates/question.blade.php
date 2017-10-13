@@ -4,13 +4,15 @@
 @if (!$data->isEmpty())
 @foreach ($data as $post)
     <div class="q_c">
-        <h2 class="q_title">
-            <a href="{{ route('pc:questionread', ['question_id' => $post['id']]) }}">{{ $post->subject }}</a>
-            @if($post['excellent'] == 1)
-                <span class="excellent">精</span>
-            @endif
+        <div class="q_c_t">
+            <h2 class="q_title">
+                <a href="{{ route('pc:questionread', ['question_id' => $post['id']]) }}">{{ $post->subject }}</a>
+                @if($post['excellent'] == 1)
+                    <span class="excellent">精</span>
+                @endif
+            </h2>
             <span class="q_time">{{ getTime($post->answer->created_at) }}</span>
-        </h2>
+        </div>
         @if ($post->answer)
             <div class="q-answer">
                 <div class="q_user">

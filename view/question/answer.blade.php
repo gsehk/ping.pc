@@ -47,8 +47,10 @@
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
                                 </a>
                             </li>
-                            <li onclick="QA.delAnswer({{ $answer->question_id }}, {{ $answer->id }}, '{{ route('pc:questionread', $answer->question_id) }}')">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                            <li>
+                                <a href="javascript:;" onclick="QA.delAnswer({{ $answer->question_id }}, {{ $answer->id }}, '{{ route('pc:questionread', $answer->question_id) }}')">
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                </a>
                             </li>
                         </ul>
                     </div>
