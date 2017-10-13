@@ -1055,7 +1055,7 @@ a {
 }
 
 .third_share_weibo {
-    fill: #f97d72 
+    fill: #f97d72
 }
 
 .third_share_qq {
@@ -2267,4 +2267,16 @@ img.load {
     opacity: 0.8;
     color: rgba(0,0,0,-0.1);
     word-break: break-all;
+}
+
+.ads_item .body {
+    width: 85%;
+    line-height: 60px;
+}
+.ads_item .tag {
+    color: #777;
+    padding: 3px 6px;
+    font-size: 12px;
+    border-radius: 2px;
+    border:1px solid #ededed;
 }

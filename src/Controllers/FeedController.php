@@ -37,6 +37,7 @@ class FeedController extends BaseController
                 }
 
                 $feeds['space'] =  $this->PlusData['config']['ads_space']['pc:feeds:list'] ?? [];
+                $feeds['page'] = $request->loadcount;
 
                 $feed = clone $feeds['feeds'];
                 $after = $feed->pop()->id ?? 0;
