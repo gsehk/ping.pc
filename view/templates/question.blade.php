@@ -11,7 +11,7 @@
                     <span class="excellent">精</span>
                 @endif
             </h2>
-            <span class="q_time">{{ getTime($post->answer->created_at) }}</span>
+            <span class="q_time">{{ getTime($post->created_at) }}</span>
         </div>
         @if ($post->answer)
             <div class="q-answer">
