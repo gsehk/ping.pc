@@ -49,6 +49,10 @@ class NewsController extends BaseController
         $new = clone $news['news'];
         $after = $new->pop()->id ?? 0;
         $news['cate_id'] = $params['cate_id'];
+
+        $news['space'] =  $this->PlusData['config']['ads_space']['pc:news:list'] ?? [];
+        $news['page'] = $request->loadcount;
+
         $newsData = view('pcview::templates.news', $news, $this->PlusData)->render();
 
         return response()->json([

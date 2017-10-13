@@ -56,5 +56,20 @@
         </p>
         <div class="feed_line"></div>
     </div>
-
+@elseif($type == 4 && isset($ads[$page-1]))
+    <div class="news_item">
+        <div class="news_img">
+            <a href="{{ route('pc:newsread', ['news_id' => $item['id']]) }}">
+                <img class="lazy" width="230" height="163" data-original="{{ $ads[$page-1]['image'] }}"/>
+            </a>
+        </div>
+        <div class="news_word">
+            <div class="news_title"> {{ $ads[$page-1]['title'] }} </div>
+                <p>{{ $ads[$page-1]['content'] }}</p>
+                <div class="news_bm">
+                   <span>{{ $ads[$page-1]['name'] }}  ·  {{ $ads[$page-1]['time'] }}</span>
+                   <span class="tag ml10">广告</span>
+                </div>
+         </div>
+    </div>
 @endif
