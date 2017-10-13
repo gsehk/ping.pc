@@ -125,6 +125,7 @@
         var step2 = $('.step2');
         var question_id = {{ $question['id'] or 0}};
         var selBox = $('#J-select-topics');
+        var checkSubmitFlg = false;
         subject.keyup(function (event) {
             //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值
             last = event.timeStamp;
@@ -273,6 +274,10 @@
         });
         // 发布问题
         $('#question-submit').on('click', function () {
+            if (checkSubmitFlg) {
+                noticebox('请勿重复提交', 0);
+            }
+            checkSubmitFlg = true;
             args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) * 100;
             args.look = $("input[type='radio'][name='look']:checked").val();
             var topic = [];
