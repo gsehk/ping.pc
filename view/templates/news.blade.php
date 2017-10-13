@@ -24,6 +24,6 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 </div>
 @endforeach
 
-@if ($space)
+@if (isset($space) && $space)
     @include('pcview::widgets.ads', ['space' => 'pc:news:list', 'type' => 4])
 @endif
