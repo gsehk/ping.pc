@@ -701,11 +701,14 @@ var rewarded = {
     },
     list: function(id, type){
         var url = '/api/v2/feeds/'+id+'/rewards';
+        var app = '动态';
         if (type == 'answer') {
             url = '/api/v2/question-answers/'+id+'/rewarders';
+            app = '问答';
         }
         if (type == 'news') {
             url = '/api/v2/news/'+id+'/rewards';
+            app = '资讯';
         }
         $.ajax({
             url: url,
@@ -725,7 +728,7 @@ var rewarded = {
                         '<li>'+
                             '<img class="lazy round" data-original="' + (res[i].user.avatar ? res[i].user.avatar : DEFAULT_AVATAR) + '" width="40"/>'+
                             '<span class="uname">'+res[i].user.name+'</span>'+
-                            '<font color="#aaa">打赏了 回答</font>'+
+                            '<font color="#aaa">打赏了 '+app+'</font>'+
                         '</li>';
                     }
                     html += '</ul>';
