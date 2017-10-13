@@ -142,27 +142,27 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
     </div>
 </div>
 <script type="text/javascript">
-    var images = JSON.parse('{!!$post->images!!}'), data = new Array();
-    /*layer.photos({
+    // var images = JSON.parse('{!!$post->images!!}'), data = new Array();
+    layer.photos({
       photos: '#layer-photos-demo{{$post->id}}'
       ,anim: 0
       ,move: false
       ,img: '.per_image'
-    });*/
-    if(images){
-        for (var i in images) {
-            var img = {
-                id: 'img'+i,
-                img: SITE_URL+'/api/v2/files/'+images[i].file+'?w=50&h=50',
-                bigimg: SITE_URL+'/api/v2/files/'+images[i].file,
-                middleimg: SITE_URL+'/api/v2/files/'+images[i].file,
-            };
-            data.push(img);
-        }
-    }
-    $('#layer-photos-demo{{$post->id}}').actizPicShow({
-        data: data,
     });
+    // if(images){
+    //     for (var i in images) {
+    //         var img = {
+    //             id: 'img'+i,
+    //             img: SITE_URL+'/api/v2/files/'+images[i].file+'?w=50&h=50',
+    //             bigimg: SITE_URL+'/api/v2/files/'+images[i].file,
+    //             middleimg: SITE_URL+'/api/v2/files/'+images[i].file,
+    //         };
+    //         data.push(img);
+    //     }
+    // }
+    // $('#layer-photos-demo{{$post->id}}').actizPicShow({
+    //     data: data,
+    // });
 </script>
 @endforeach
 @endif

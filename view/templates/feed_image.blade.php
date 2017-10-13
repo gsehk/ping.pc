@@ -28,9 +28,11 @@ if (isset($count) && $count == 'one') {
     </div>
 @else
     {{-- 单张图片设置固定宽高 --}}
-	@if (isset($count) && $count == 'one')
-    <img style="{{$style}}" class="bigcursor lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}" curloc="0"/>
+	@if (isset($count) && $count == 'one'){{-- 
+    <img style="{{$style}}" class="bigcursor lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}" curloc="0"/> --}}
+    <img style="{{ $style }}" class="lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}"/>
     @else
-    <img class="bigcursor lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}"  curloc="{{$curloc}}"/>
+    {{-- <img class="bigcursor lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}"  curloc="{{$curloc}}"/> --}}
+    <img class="lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}"/>
 	@endif
 @endif
