@@ -35,20 +35,18 @@
                         @endif
                     </div>
                 @endif
-                @if(isset($TS) && $answer->user->id == $TS['id'])
+                @if(isset($TS) && $answer->user->id == $TS['id'] && $answer->adoption != 1 && $answer->invited != 1)
                     <a href="javascript:;" class="options button-more" onclick="options(this)">
                         <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                     </a>
                     <div class="options_div">
                         <div class="triangle"></div>
                         <ul>
-                            @if ($answer->adoption != 1 && $answer->invited != 1)
-                                <li>
-                                    <a href="{{ route('pc:answeredit', $answer->id) }}">
-                                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
-                                    </a>
-                                </li>
-                            @endif
+                            <li>
+                                <a href="{{ route('pc:answeredit', $answer->id) }}">
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
+                                </a>
+                            </li>
                             <li>
                                 <a href="javascript:;" onclick="QA.delAnswer({{ $answer->question_id }}, {{ $answer->id }}, '{{ route('pc:questionread', $answer->question_id) }}')">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
@@ -56,7 +54,7 @@
                             </li>
                         </ul>
                     </div>
-                    @elseif(isset($TS) && $answer->question->user_id == $TS['id'])
+                @elseif(isset($TS) && $answer->question->user_id == $TS['id'])
                         <a href="javascript:;" class="options button-more" onclick="options(this)">
                             <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                         </a>
