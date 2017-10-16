@@ -272,12 +272,12 @@
             var show = _this.data('show');
             if (show == '0') {
                 _this.siblings('.richtext').hide();
-                _this.siblings('.show-body').slideDown();
+                _this.siblings('.show-body').show();
                 _this.text('收起');
                 _this.data('show', '1');
             } else {
                 _this.siblings('.show-body').hide();
-                _this.siblings('.richtext').slideDown();
+                _this.siblings('.richtext').show();
                 _this.text('显示全部');
                 _this.data('show', '0');
             }
