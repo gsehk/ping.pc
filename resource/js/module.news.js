@@ -51,38 +51,36 @@ $('.subject-submit').on('click', function() {
         return false;
     }
 
-    if (notice.contribute.length > 0) {
-        var isVerified = notice.contribute.verified;
-        var isPay = notice.contribute.pay;
-        var pay_conyribute = (parseInt(notice.pay_conyribute)/10).toFixed(1);
+    var isVerified = notice.contribute.verified;
+    var isPay = notice.contribute.pay;
+    var pay_conyribute = (parseInt(notice.pay_conyribute)/10).toFixed(1);
 
-        if (isVerified > -1 && notice.verified == null) {
-            ly.confirm(formatConfirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？'), '去认证' , '', function(){
-                window.location.href = '/account/authenticate';
-            });
-            return false;
-        } else if (isPay > -1 && pay_conyribute > 0) {
-            var html = formatConfirm('投稿提示', '<div class="confirm_money">￥' + pay_conyribute + '</div>本次投稿您需要支付￥' + pay_conyribute + '元，是否继续投稿？');
-            ly.confirm(html, '投稿' , '', function(){
-                var url = '/api/v2/news/categories/'+args.cate_id+'/news';
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: args,
-                    dataType: 'json',
-                    error: function(xml) {},
-                    success: function(res, data, xml) {
-                        if (xml.status == 201) {
-                            noticebox(res.message, 1, '/news');
-                        } else {
-                            noticebox(res.message, 0);
-                        }
+    if (isVerified > -1 && notice.verified == null) {
+        ly.confirm(formatConfirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？'), '去认证' , '', function(){
+            window.location.href = '/account/authenticate';
+        });
+        return false;
+    } else if (isPay > -1 && pay_conyribute > 0) {
+        var html = formatConfirm('投稿提示', '<div class="confirm_money">￥' + pay_conyribute + '</div>本次投稿您需要支付￥' + pay_conyribute + '元，是否继续投稿？');
+        ly.confirm(html, '投稿' , '', function(){
+            var url = '/api/v2/news/categories/'+args.cate_id+'/news';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: args,
+                dataType: 'json',
+                error: function(xml) {},
+                success: function(res, data, xml) {
+                    if (xml.status == 201) {
+                        noticebox(res.message, 1, '/news');
+                    } else {
+                        noticebox(res.message, 0);
                     }
-                });
+                }
             });
+        });
 
-            return false;
-        }
+        return false;
     }
 
     var url = '/api/v2/news/categories/'+args.cate_id+'/news';
