@@ -52,8 +52,8 @@ $('.subject-submit').on('click', function() {
     }
 
     if (notice.contribute.length > 0) {
-        var isVerified = $.inArray("verified", notice.contribute);
-        var isPay = $.inArray("pay", notice.contribute);
+        var isVerified = notice.contribute.verified;
+        var isPay = notice.contribute.pay;
         var pay_conyribute = (parseInt(notice.pay_conyribute)/10).toFixed(1);
 
         if (isVerified > -1 && notice.verified == null) {
