@@ -35,9 +35,9 @@
                     <!-- js增删  .questionrichtext--collapsed 改变content字数 -->
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
-                            <span class="show-body">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
-                            {{--<span class="richtext" itemprop="text">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body), 300, '...') !!}</span>--}}
-                            {{--<button class="button button-plain button-more questionrichtext-more">显示全部</button>--}}
+                            <span class="show-body hide">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+                            <span class="richtext" itemprop="text">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body), 300, '...') !!}</span>
+                            <button class="button button-plain button-more questionrichtext-more" data-show="0">显示全部</button>
                         </div>
                     </div>
                 </div>
@@ -269,9 +269,18 @@
         // 展示问题详情
         $('.questionrichtext-more').on('click', function () {
             var _this = $(this);
-            _this.siblings('.richtext').slideUp();
-            _this.siblings('.hide').slideDown();
-            _this.remove();
+            var show = _this.data('show');
+            if (show == '0') {
+                _this.siblings('.richtext').hide();
+                _this.siblings('.show-body').slideDown();
+                _this.text('收起');
+                _this.data('show', '1');
+            } else {
+                _this.siblings('.show-body').hide();
+                _this.siblings('.richtext').slideDown();
+                _this.text('显示全部');
+                _this.data('show', '0');
+            }
         });
         // 关注/取消关注问题
         $('.question-button-group').on('click', '.watched', function () {

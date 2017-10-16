@@ -93,7 +93,7 @@ class QuestionController extends BaseController
     {
         $this->PlusData['current'] = 'question';
 
-        $question = createRequest('GET', '/api/v2/questions/'.$question_id );
+        $question = createRequest('GET', '/api/v2/questions/'.$question_id);
         $question->body = replaceImage($question->body);
         $data['question'] = $question;
 
@@ -102,7 +102,7 @@ class QuestionController extends BaseController
     }
 
     /**
-     * 回答详情.
+     * 回答详情
      *
      * @param  Request $request
      * @param  int     $answer  回答id
