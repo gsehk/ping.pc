@@ -246,10 +246,9 @@
             $('.invitation-con').hide('fast');
             $('#invitation-add').text('添加');
             $("#lookyes").removeAttr("checked");
+            $("input[type='radio'][name='look']").get(1).checked=true;
             args.invitations_ = [];
-            args.look = 0;
             args.automaticity = 0;
-
         });
         $('#rewardyes').on('click', function () {
             $('.invitation-con').show('fast');
@@ -264,7 +263,6 @@
 
         // 添加邀请人
         $('#invitation-add').on('click', function () {
-            console.log(args.topics_);
             ly.load('/question/users', '', '480px', '550px', 'GET',
                 {'topics' : args.topics_
                 });

@@ -167,7 +167,7 @@ var question = {
             + '</div>'
             + '</div>';
 
-        ly.confirm(html, '', '公开悬赏', function(){
+        ly.confirm(html, '公开悬赏', '', function(){
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
             var amount = $('.reward_input input').val() * 100;
 
