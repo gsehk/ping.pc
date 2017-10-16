@@ -37,7 +37,7 @@
                 <div class="content-inner">
                     @if(!isset($answer->invitation) || (isset($TS) && $answer->invitation == 1 && ($answer->could || $answer->question->user_id == $TS['id'] || $answer->user_id == $TS['id'])))
                         <span class="answer-body">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
-                        <button class="button button-plain button-more"><a href="{{ route('pc:answeread', $answer->id) }}">查看详情</a></button>
+                        <a class="button button-plain button-more" href="{{ route('pc:answeread', $answer->id) }}">查看详情</a>
                     @else
                         <span class="answer-body fuzzy">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
                     @endif

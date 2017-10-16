@@ -78,7 +78,7 @@
         <div class="questionheader-footer">
             <div class="questionheader-footer-inner">
                 <div class="questionheader-main questionheader-footer-main">
-                    @if($question['look'] == 1 && isset($TS) && $question['user_id'] == $TS['id'] && isset($question['invitation_answers']))
+                    @if($question['look'] == 1 && isset($TS) && $question['user_id'] == $TS['id'] && isset($question['invitation_answers']) && !$question['invitation_answers']->isEmpty())
                         <span class="questionheader-onlook">￥{{ sprintf("%.2f", $question['invitation_answers'][0]['onlookers_count']*$config['bootstrappers']['question:onlookers_amount']/100) }}围观</span>
                     @endif
                     <div class="questionheaderactions">
