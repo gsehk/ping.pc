@@ -37,9 +37,9 @@
     cursor: pointer;
 }
 
-.account_menu li .iconfont{
-    font-size: 22px;
-    margin-right: 20px;
+.account_menu li .icon{
+    font-size: 25px;
+    margin-right: 15px;
     vertical-align: middle;
 }
 .account_menu li:hover,
