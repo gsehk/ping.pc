@@ -19,7 +19,7 @@ $('.subject-submit').on('click', function() {
     args.tags = tags;
 
     if (!args.title || getLength(args.title) > 20) {
-        noticebox('文章标题不合法', 0);
+        noticebox('文章标题不能为空', 0);
         return false;
     }
     if (args.cate_id == '') {
@@ -31,7 +31,7 @@ $('.subject-submit').on('click', function() {
         return false;
     }
     if (!args.content || getLength(args.content) > 5000) {
-        noticebox('文章内容不合法', 0);
+        noticebox('文章内容不能超过5000字', 0);
         return false;
     }
     if (!args.subject) { // 如果没有摘要，则截取内容前200字作为摘要
