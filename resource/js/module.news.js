@@ -91,7 +91,9 @@ $('.subject-submit').on('click', function() {
         type: 'POST',
         data: args,
         dataType: 'json',
-        error: function(error) {showError(error.responseJSON);},
+        error: function(error) {
+            noticebox(error.responseJSON.message, 0);
+        },
         success: function(res, data, xml) {
             if (xml.status == 201) {
                 noticebox(res.message, 1, '/news');

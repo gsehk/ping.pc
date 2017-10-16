@@ -36,7 +36,7 @@
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
                             <span class="show-body hide">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
-                            <span class="richtext" itemprop="text">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body), 300, '...') !!}</span>
+                            <span class="richtext" itemprop="text">{!! str_limit(preg_replace('@\!\[\]\([https]+\:\/\/[\w\/\.]+\)@', '', $question->body), 300, '...') !!}</span>
                             <button class="button button-plain button-more questionrichtext-more" data-show="0">显示全部</button>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                                     }
 
                                 @endphp
-                                @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:questionread', ['question_id' => $question->id]), 'share_title' => addslashes(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $question->body)), 'share_pic' => $share_pic])
+                                @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:questionread', ['question_id' => $question->id]), 'share_title' => addslashes(preg_replace('@\!\[\]\([https]+\:\/\/[\w\/\.]+\)@', '', $question->body)), 'share_pic' => $share_pic])
                                 <div class="triangle"></div>
                             </div>
                         </div>
