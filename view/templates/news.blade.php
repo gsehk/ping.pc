@@ -15,7 +15,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
           </a>
           <p>{{ $item['subject'] }}</p>
           <div class="news_bm">
-               @if ($cate_id == 0)
+               @if (!isset($cate_id) || $cate_id == 0)
                     <a href="javascript:;" class="cates_span">{{ $item['category']['name'] }}</a>
                @endif
                <span>{{ $item['from'] }}  ·  {{ $item['hits'] }}浏览  ·  {{ getTime($item['created_at'], 1) }}</span>

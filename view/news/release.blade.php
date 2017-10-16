@@ -62,10 +62,10 @@
             </span>
         </div>
         <div class="release_word">
-            <input type="text" id="subject-author" name="subject-author" value="{{$author or ''}}" placeholder="文章作者（选填）" />
+            <input type="text" id="subject-author" name="subject-author" value="{{$author or ''}}" placeholder="文章作者（选填）" maxlength="8"/>
         </div>
         <div class="release_word">
-            <input type="text" id="subject-from" name="subject-from" value="{{$from or ''}}" placeholder="文章转载至何处（非转载可不填）" />
+            <input type="text" id="subject-from" name="subject-from" value="{{$from or ''}}" placeholder="文章转载至何处（非转载可不填）"  maxlength="8"/>
         </div>
         <div class="release_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
         <div class="release_btn">
@@ -113,6 +113,7 @@
         });
 
         $('#J-tag-box dd').on('click', function(e){
+            e.stopPropagation();
             e.stopPropagation();
             var selBox = $('#J-select-tags');
             var tag_id = $(this).data('id');
