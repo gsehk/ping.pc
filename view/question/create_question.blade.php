@@ -227,12 +227,12 @@
         $('.reward-example').on('click', 'li', function () {
             if ($(this).hasClass('select-amount')) {
                 $("#amount").val('');
+                $("#amount-hide").val('');
                 $(this).removeClass('select-amount');
             }else{
                 $(this).siblings().removeClass('select-amount');
                 $(this).addClass('select-amount');
                 $("#amount-hide").val($(this).text());
-                $('#amount').val('');
             }
 
         });
