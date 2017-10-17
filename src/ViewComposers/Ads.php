@@ -12,7 +12,7 @@ class Ads
         $config = Cache::get('config');
 
         // 获取具体广告位内容
-        $ads = createRequest('GET', '/api/v2/advertisingspace/' . $config['ads_space'][$view['space']]['id'] . '/advertising')->pluck('data');
+        $ads = createRequest('GET', '/api/v2/advertisingspace/' . $config['ads_space'][$view['space']]['id'] . '/advertising');
 
         $view->with('ads', $ads);
     }
