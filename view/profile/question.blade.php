@@ -40,7 +40,7 @@
                 <a class="qa_opt ucolor" href="javascript:;" data-value="3">关注的问题</a>
                 <a class="qa_opt ucolor" href="javascript:;" data-value="4">关注的话题</a>
             </div>
-            <div id="content_list" class="profile_list follow_topic clearfix">
+            <div id="content_list" class="profile_list follow_topic clearfix question_list">
             </div>
         </div>
     </div>
@@ -110,6 +110,36 @@ $('#content_list').on('click', '.J-follow', function(){
             $(_this).text('已关注');
             $(_this).attr('status', 1);
             $(_this).addClass('followed');
+        }
+    });
+});
+$('#content_list').on('click', '.J-watched', function(){
+    checkLogin();
+    var _this = this;
+    var status = $(this).attr('status');
+    var id = $(this).data('id');
+    var type = '';
+
+    if (status == 1) {
+        type = 'DELETE';
+    } else {
+        type = 'PUT';
+    }
+    $.ajax({
+        url: '/api/v2/user/question-watches/' + id,
+        type: type,
+        data: {},
+        success: function(res) {
+            if (status == '1') {
+                _this.attr('status', 0);
+                _this.find('span.watched').text('关注');
+            } else {
+                _this.attr('status', 1);
+                _this.find('span.watched').text('已关注');
+            }
+        },
+        error: function(xhr){
+            showError(xhr.responseJSON);
         }
     });
 });

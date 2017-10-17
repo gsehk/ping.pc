@@ -35,16 +35,20 @@
                     @endif
                 </div>
                 <div class="q_detail clearfix">
-                    {{-- <div class="q_img">
-                        <div class="img_wrap">
-                            <img src="http://blog.jsonleex.com/icon/LX.png" >
+                    @php
+                        preg_match('/\@\!\[.*\]\((\d+)\)/i', $post->answer->body, $imgs);
+                    @endphp
+                    @if (count($imgs) > 0)
+                        <div class="q_img">
+                            <div class="img_wrap">
+                                <img src="{{ $routes['storage'].$imgs[1] }}" height="100">
+                            </div>
                         </div>
-                    </div> --}}
+                    @endif
                     <div class="q_text">
-
                         @if(!$post->answer->invited || (isset($TS) && $post->answer->invited == 1 && ($post->answer->could || $post->user_id == $TS['id'] || $post->answer->user_id == $TS['id'])))
-                            <span>{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $post->answer->body), 250, '...') !!}</span>
-                            <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain Button--more">查看详情</a>
+                            <span>{!! str_limit(preg_replace('/\@*\!\[\w*\]\([0-9]+\)/', '', $post->answer->body), 250, '...') !!}</span>
+                            <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain button-more">查看详情</a>
                         @else
                             <span class="answer-body fuzzy">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
                         @endif
@@ -61,10 +65,12 @@
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-huida"></use></svg>
                 {{ $post->answers_count }} 条回答
             </button>
-            <button class="button button-plain">
-               <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jinqian"></use></svg>
-               {{ $post->amount/100 }}
-            </button>
+            @if($post->amount >= 100)
+                <button class="button button-plain">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jinqian"></use></svg>
+                    {{ $post->amount/100 }}
+                </button>
+            @endif
         </div>
     </div>
 @endforeach

@@ -196,8 +196,8 @@ class ProfileController extends BaseController
                     $questions = createRequest('GET', '/api/v2/user/questions', $params);
                     $question = clone $questions;
                     $after = $question->pop()->id ?? 0;
-                    $data['datas'] = $questions;
-                    $html = view('pcview::templates.qa_list', $data, $this->PlusData)->render();
+                    $data['data'] = $questions;
+                    $html = view('pcview::templates.question', $data, $this->PlusData)->render();
 
                     break;
                 case 2:
@@ -217,9 +217,9 @@ class ProfileController extends BaseController
                         'limit' => $request->query('limit'),
                     ];
                     $watches = createRequest('GET', '/api/v2/user/question-watches', $params);
-                    $data['datas'] = $watches;
+                    $data['data'] = $watches;
                     $after = 0;
-                    $html = view('pcview::templates.qa_list', $data, $this->PlusData)->render();
+                    $html = view('pcview::templates.question', $data, $this->PlusData)->render();
                     break;
                 case 4:
                     $params = [

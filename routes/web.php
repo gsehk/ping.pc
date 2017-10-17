@@ -144,6 +144,7 @@ Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(func
     //圈子
     Route::get('group/{user?}', 'ProfileController@group')->name('pc:profilegroup');
 
+    // 问答
     Route::get('question/{user?}', 'ProfileController@question')->name('pc:profilequestion');
 });
 
