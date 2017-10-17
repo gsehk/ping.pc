@@ -297,17 +297,20 @@
             if (args.look == 1 || $("input[type='radio'][name='reward']:checked").val() == 1) {
                 if (args.amount <= 0) {
                     noticebox('请设置悬赏金额', 0);
+                    checkSubmitFlg = false;
 
                     return false;
                 }
                 if (args.invitations.length != 1) {
                     noticebox('请邀请回答人', 0);
+                    checkSubmitFlg = false;
 
                     return false;
                 }
 
                 if ($.inArray({{ $TS['id'] }}, args.invitations_) > -1) {
                     noticebox('不能邀请自己', 0);
+                    checkSubmitFlg = false;
 
                     return false;
                 }
@@ -326,8 +329,8 @@
                         noticebox(res.message, 1, '/question/'+res.question.id);
                     } else {
                         noticebox(res.message, 0);
-                        checkSubmitFlg = false;
                     }
+                    checkSubmitFlg = false;
                 },
                 error: function (xml) {
                     showError(xml.responseJSON);
@@ -379,6 +382,7 @@
         function update() {
             if (!args.subject || !args.body || !args.topics_) {
                 if (!stepOne()) {
+                    checkSubmitFlg = false;
 
                     return false;
                 }
@@ -394,9 +398,11 @@
                     } else {
                         noticebox(res.message, 0);
                     }
+                    checkSubmitFlg = false;
                 },
                 error: function (xml) {
                     showError(xml.responseJSON);
+                    checkSubmitFlg = false;
                 }
             });
         }
