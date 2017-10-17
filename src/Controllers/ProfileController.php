@@ -123,6 +123,22 @@ class ProfileController extends BaseController
                     $data['data'] = $news;
                     $html = view('pcview::templates.profile_news', $data, $this->PlusData)->render();
                     break;
+                case 3:
+                    $params = [
+                        'after' => $request->query('after', 0),
+                        'limit' => $request->query('limit', 10),
+                    ];
+                    $answers = createRequest('GET', '/api/v2/user/question-answer/collections', $params);
+
+                    $answer = clone $answers;
+                    $after = $answer->pop()->id ?? 0;
+                    foreach ($answers as $k => $v) {
+                        $v->collectible->liked = $v->collectible->liked($this->PlusData['TS']['id']);
+                        $answers[$k] = $v->collectible;
+                    }
+                    $data['datas'] = $answers;
+                    $html = view('pcview::templates.answer', $data, $this->PlusData)->render();
+                    break;
                 default:
                     # code...
                     break;

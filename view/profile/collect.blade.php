@@ -5,6 +5,7 @@
 @section('styles')
 <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
 <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/profile.css') }}"/>
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/question.css') }}"/>
 @endsection
 
 @section('content')
@@ -19,6 +20,7 @@
             <div class="profile_menu J-menu">
                 <a class="active" href="javascript:;" cid="1">动态</a>
                 <a href="javascript:;" cid="2">文章</a>
+                <a href="javascript:;" cid="3">回答</a>
             </div>
             <div id="content_list" class="profile_list"></div>
         </div>
