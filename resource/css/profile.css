@@ -260,13 +260,17 @@
 }
 
 .qa-item .qa-toolbar .follow,
-.qa-item .qa-toolbar .answer,
-.qa-item .qa-toolbar .mony{
+.qa-item .qa-toolbar .liked,
+.qa-item .qa-toolbar .comment{
     font-size: 14px;
     display: inline-block;
     margin-right: 50px;
     cursor: pointer;
     color: #ccc;
+}
+
+.comment_line_answer>.tr2{
+    left: 150px;
 }
 
 /*文章列表*/

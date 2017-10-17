@@ -13,7 +13,6 @@
 @include('pcview::profile.navbar')
 
 <div class="profile_body">
-
     <div class="left_container">
         <div class="profile_content">
             <div class="profile_menu J-menu">
@@ -21,9 +20,9 @@
                     <span class="qa_opt">全部问题</span>
                     <ul>
                         <li data-value="all" class="active">全部提问</li>
-                        <li data-value="invitation">邀请提问</a></li>
-                        <li data-value="reward">悬赏提问</a></li>
-                        <li data-value="other">其他提问</a></li>
+                        <li data-value="invitation">邀请提问</li>
+                        <li data-value="reward">悬赏提问</li>
+                        <li data-value="other">其他提问</li>
                     </ul>
                     <i></i>
                 </div>
@@ -31,9 +30,9 @@
                     <span class="qa_opt">我的回答</span>
                     <ul>
                         <li data-value="all" class="active">全部</li>
-                        <li data-value="adoption">被采纳</a></li>
-                        <li data-value="invitation">被邀请</a></li>
-                        <li data-value="other">其他</a></li>
+                        <li data-value="adoption">被采纳</li>
+                        <li data-value="invitation">被邀请</li>
+                        <li data-value="other">其他</li>
                     </ul>
                     <i></i>
                 </div>
@@ -53,96 +52,97 @@
 @endsection
 
 @section('scripts')
-<script>
-scroll.init({
-    container: '#content_list',
-    loading: '.profile_content',
-    url: '/profile/question',
-    params: {type: 'all' }
-});
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js') }}"></script>
+    <script>
+        scroll.init({
+            container: '#content_list',
+            loading: '.profile_content',
+            url: '/profile/question',
+            params: {type: 'all' }
+        });
 
-$('#J-question li').on('click', function(){
-    var type = $(this).data('value');
-    $('#content_list').html('');
-    scroll.init({
-        container: '#content_list',
-        loading: '.profile_content',
-        url: '/profile/question',
-        params: {type: type, cate: 1 }
-    });
-});
-$('#J-answer li').on('click', function(){
-    var type = $(this).data('value');
-    $('#content_list').html('');
-    scroll.init({
-        container: '#content_list',
-        loading: '.profile_content',
-        url: '/profile/question',
-        params: {type: type, cate: 2 }
-    });
-});
+        $('#J-question li').on('click', function(){
+            var type = $(this).data('value');
+            $('#content_list').html('');
+            scroll.init({
+                container: '#content_list',
+                loading: '.profile_content',
+                url: '/profile/question',
+                params: {type: type, cate: 1 }
+            });
+        });
+        $('#J-answer li').on('click', function(){
+            var type = $(this).data('value');
+            $('#content_list').html('');
+            scroll.init({
+                container: '#content_list',
+                loading: '.profile_content',
+                url: '/profile/question',
+                params: {type: type, cate: 2 }
+            });
+        });
 
-$('.J-menu a').on('click', function(){
-    var type = $(this).data('value');
-    $('#content_list').html('');
-    scroll.init({
-        container: '#content_list',
-        loading: '.profile_content',
-        url: '/profile/question',
-        params: {cate: type }
-    });
+        $('.J-menu a').on('click', function(){
+            var type = $(this).data('value');
+            $('#content_list').html('');
+            scroll.init({
+                container: '#content_list',
+                loading: '.profile_content',
+                url: '/profile/question',
+                params: {cate: type }
+            });
 
-    $('.qa_opt').removeClass('active');
-    $(this).addClass('active');
-});
+            $('.qa_opt').removeClass('active');
+            $(this).addClass('active');
+        });
 
-$('#content_list').on('click', '.J-follow', function(){
-    checkLogin();
-    var _this = this;
-    var status = $(this).attr('status');
-    var topic_id = $(this).attr('tid');
-    topic(status, topic_id, function(){
-        if (status == 1) {
-            $(_this).text('+关注');
-            $(_this).attr('status', 0);
-            $(_this).removeClass('followed');
-        } else {
-            $(_this).text('已关注');
-            $(_this).attr('status', 1);
-            $(_this).addClass('followed');
-        }
-    });
-});
-$('#content_list').on('click', '.J-watched', function(){
-    checkLogin();
-    var _this = this;
-    var status = $(this).attr('status');
-    var id = $(this).data('id');
-    var type = '';
+        $('#content_list').on('click', '.J-follow', function(){
+            checkLogin();
+            var _this = this;
+            var status = $(this).attr('status');
+            var topic_id = $(this).attr('tid');
+            topic(status, topic_id, function(){
+                if (status == 1) {
+                    $(_this).text('+关注');
+                    $(_this).attr('status', 0);
+                    $(_this).removeClass('followed');
+                } else {
+                    $(_this).text('已关注');
+                    $(_this).attr('status', 1);
+                    $(_this).addClass('followed');
+                }
+            });
+        });
+        $('#content_list').on('click', '.J-watched', function(){
+            checkLogin();
+            var _this = this;
+            var status = $(this).attr('status');
+            var id = $(this).data('id');
+            var type = '';
 
-    if (status == 1) {
-        type = 'DELETE';
-    } else {
-        type = 'PUT';
-    }
-    $.ajax({
-        url: '/api/v2/user/question-watches/' + id,
-        type: type,
-        data: {},
-        success: function(res) {
-            if (status == '1') {
-                _this.attr('status', 0);
-                _this.find('span.watched').text('关注');
+            if (status == 1) {
+                type = 'DELETE';
             } else {
-                _this.attr('status', 1);
-                _this.find('span.watched').text('已关注');
+                type = 'PUT';
             }
-        },
-        error: function(xhr){
-            showError(xhr.responseJSON);
-        }
-    });
-});
+            $.ajax({
+                url: '/api/v2/user/question-watches/' + id,
+                type: type,
+                data: {},
+                success: function(res) {
+                    if (status == '1') {
+                        _this.attr('status', 0);
+                        _this.find('span.watched').text('关注');
+                    } else {
+                        _this.attr('status', 1);
+                        _this.find('span.watched').text('已关注');
+                    }
+                },
+                error: function(xhr){
+                    showError(xhr.responseJSON);
+                }
+            });
+        });
 
-</script>
+    </script>
 @endsection

@@ -214,7 +214,7 @@ class ProfileController extends BaseController
                 case 3:
                     $params = [
                         'offset' => $request->query('offset', 0),
-                        'limit' => $request->query('limit'),
+                        'limit' => $request->query('limit', 10),
                     ];
                     $watches = createRequest('GET', '/api/v2/user/question-watches', $params);
                     $data['data'] = $watches;

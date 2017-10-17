@@ -45,9 +45,9 @@
 
                 <div class="answer-footer">
                     <div class="answer-footer-inner">
-                        <a href="{{ route('pc:answeread', $answer->id) }}" class="button button-plain">
+                        <a href="javascript:;" class="button button-plain comment J-comment-show">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
-                            {{ $answer->comments_count }} 评论
+                            <font class="cs{{$answer->id}}">{{$answer->comments_count}}</font> 评论
                         </a>
                         <a href="{{ route('pc:answeread', $answer->id) }}" class="button button-plain">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-fenxiang1"></use></svg>
@@ -125,6 +125,47 @@
                             </div>
                         @endif
 
+                    </div>
+                    <div class="comment_box" style="display: none;">
+                        <div class="comment_line comment_line_answer">
+                            <div class="tr2"></div>
+                        </div>
+                        <div class="comment_body" id="comment_box{{$answer->id}}">
+                            <div class="comment_textarea">
+                                <textarea class="comment-editor" id="J-editor{{$answer->id}}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
+                                <div class="comment_post">
+                                    <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
+                                    <a class="btn btn-primary fr" id="J-button{{$answer->id}}" onclick="QA.addComment({{$answer->id}}, 1)"> 评 论 </a>
+                                </div>
+                            </div>
+                            <div id="J-commentbox{{ $answer->id }}">
+                                @if($answer->comments->count())
+                                    @foreach($answer->comments as $cv)
+                                        <p class="comment_con" id="comment{{$cv->id}}">
+                                            <span class="tcolor">{{ $cv->user['name'] }}：</span>
+                                            @if ($cv->reply_user != 0)
+                                                @php
+                                                    $user = getUserInfo($cv->reply_user);
+                                                @endphp
+                                                回复{{ '@'.$user->name }}：
+                                            @endif
+
+                                            {{$cv->body}}
+                                            @if($cv->user_id != $TS['id'])
+                                                <a onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
+                                            @else
+                                                <a class="comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
+                                                <a class="comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
+                                            @endif
+                                        </p>
+                                    @endforeach
+                                @endif
+                            </div>
+                            @if($answer->comments->count() >= 5)
+                                <div class="comit_all font12"><a href="{{Route('pc:answeread', $answer->id)}}">查看全部评论</a></div>
+                            @endif
+
+                        </div>
                     </div>
                 </div>
             </div>
