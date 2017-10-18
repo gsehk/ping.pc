@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
+@endphp
 @if(!$answers->isEmpty())
     @foreach ($answers as $answer)
         <div class="list-item" id="answer{{$answer->id}}">
