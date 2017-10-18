@@ -23,7 +23,7 @@ $('.subject-submit').on('click', function() {
         return false;
     }
     if (args.cate_id == '') {
-        noticebox('请选择分类', 0);
+        noticebox('请选择栏目', 0);
         return false;
     }
     if (getLength(args.subject) > 200) {
@@ -72,7 +72,7 @@ $('.subject-submit').on('click', function() {
                 error: function(xml) {},
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
-                        noticebox(res.message, 1, '/news');
+                        noticebox('投稿成功，请等待审核', 1, '/news');
                     } else {
                         noticebox(res.message, 0);
                     }
@@ -94,7 +94,7 @@ $('.subject-submit').on('click', function() {
         },
         success: function(res, data, xml) {
             if (xml.status == 201) {
-                noticebox(res.message, 1, '/news');
+                noticebox('投稿成功，请等待审核', 1, '/news');
             } else {
                 noticebox(res.message, 0);
             }
