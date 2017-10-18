@@ -36,7 +36,10 @@ class UserController extends BaseController
             }
 
             $users = createRequest('GET', $api, $params);
-            // dd($users);
+            if ($offset == 0 && $type == 3) {
+                $recommends = createRequest('GET', '/api/v2/user/recommends');
+                $users =  $recommends->merge($users);
+            }
             $data['users'] = $users;
 
             $html =  view('pcview::templates.user', $data, $this->PlusData)->render();
