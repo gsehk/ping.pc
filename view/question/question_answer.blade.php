@@ -38,7 +38,7 @@
             </div>
             <div class="list-item-content">
                 <div class="content-inner">
-                    @if(!isset($answer->invitation) || (isset($TS) && $answer->invitation == 1 && ($answer->could || $answer->question->user_id == $TS['id'] || $answer->user_id == $TS['id'])))
+                    @if(!isset($answer->invitation) || $answer->question->look == 0 || (isset($TS) && $answer->invitation == 1 && ($answer->could || $answer->question->user_id == $TS['id'] || $answer->user_id == $TS['id'])))
                         <span class="answer-body">{!! str_limit(preg_replace('/\@\!\[\]\([0-9]+\)/', '', $answer->body), 250, '...') !!}</span>
                         <a class="button button-plain button-more" href="{{ route('pc:answeread', $answer->id) }}">查看详情</a>
                     @else
