@@ -142,6 +142,11 @@
     background: #fff;
 }
 
+.news_bm .span_green {
+    color: #51BA96 !important;
+    border-color: #51BA96;
+}
+
 .news_bm .tag {
     color: #777;
     padding: 3px 6px;
