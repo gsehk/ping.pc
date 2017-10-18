@@ -105,8 +105,8 @@ class NewsController extends BaseController
         $notice['verified'] = json_encode($this->PlusData['TS']['verified']);
         $notice['balance'] = $this->PlusData['TS']['wallet']['balance'];
         $notice['contribute'] = json_encode($this->PlusData['config']['bootstrappers']['news:contribute']);
-        $notice['pay_conyribute'] = $this->PlusData['config']['bootstrappers']['news:pay_conyribute'];
-
+        $notice['pay_contribute'] = $this->PlusData['config']['bootstrappers']['news:pay_conyribute'];
+        
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
         $data['news_id'] = $news_id;

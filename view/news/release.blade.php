@@ -103,7 +103,7 @@
             balance : "{{$notice['balance']}}",
             verified: JSON.parse("{{$notice['verified']}}".replace(/&quot;/g, '"')),
             contribute: JSON.parse("{{$notice['contribute']}}".replace(/&quot;/g, '"')),
-            pay_conyribute: "{{$notice['pay_conyribute']}}"
+            pay_contribute: "{{$notice['pay_contribute']}}"
         };
 
 
