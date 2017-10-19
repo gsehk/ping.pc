@@ -281,7 +281,8 @@
     overflow: hidden;
     margin-top: 16px;
     margin-bottom: -4px;
-    max-height: 90px;
+    max-height: 92px;
+    line-height: 23px;
 }
 
 .q_c .q_detail .q_text *{
