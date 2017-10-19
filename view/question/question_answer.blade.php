@@ -39,10 +39,10 @@
             <div class="list-item-content">
                 <div class="content-inner">
                     @if(!isset($answer->invitation) || $answer->question->look == 0 || (isset($TS) && $answer->invitation == 1 && ($answer->could || $answer->question->user_id == $TS['id'] || $answer->user_id == $TS['id'])))
-                        <span class="answer-body">{!! str_limit(preg_replace('@\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)@', '', $answer->body), 250, '...') !!}</span>
+                        <span class="answer-body">{!! str_limit(preg_replace('@\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)@', '[图片]', $answer->body), 250, '...') !!}</span>
                         <a class="button button-plain button-more" href="{{ route('pc:answeread', $answer->id) }}">查看详情</a>
                     @else
-                        <span class="answer-body fuzzy">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
+                        <span class="answer-body fuzzy" onclick="QA.look({{ $answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount']/100) }}' , {{ $answer->question_id }})">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
                     @endif
                 </div>
 

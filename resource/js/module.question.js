@@ -62,8 +62,9 @@ var QA = {
 
         console.log(bdDesc);
     },
-    look: function (answer_id, money, question_id) {
+    look: function (answer_id, money, question_id, obj) {
         checkLogin();
+        obj = obj ? obj : false;
         ly.confirm(formatConfirm('围观支付', '本次围观您需要支付' + money + '元，是否继续围观？'), '' , '', function(){
             var url ='/api/v2/question-answers/' + answer_id + '/onlookers';
 
@@ -71,8 +72,18 @@ var QA = {
                 url: url,
                 type: 'POST',
                 dataType: 'json',
-                success: function(res) {
-                    noticebox('围观成功', 1, '/question/' + question_id);
+                success: function(res, data, xml) {
+                    if (!obj) {
+                        noticebox('围观成功', 1, '/question/' + question_id);
+                    } else {
+                        var txt = res.answer.body.replace(/\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)/g, "[图片]");
+                        var body = txt.length > 130 ? txt.substr(0, 130) + '...' : txt;
+                        $(obj).removeClass('fuzzy');
+                        $(obj).removeAttr('onclick');
+                        $(obj).text(body);
+                        $(obj).after('<a href="/question/answer/' + answer_id + '" class="button button-plain button-more">查看详情</a>');
+                        layer.closeAll();
+                    }
                 },
                 error: function(xhr){
                     showError(xhr);

@@ -34,7 +34,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
     <div class="feed_body">
         {{-- 文字付费 --}}
         @if ($post->paid_node && $post->paid_node['paid'] == false)
-        <p class="feed_text feed_pay_text" onclick="weibo.payText(this)">{!! formatContent($post->feed_content) !!}</p>
+        <p class="feed_text fuzzy" onclick="weibo.payText(this)">@php for ($i = 0; $i < 200; $i ++) {echo 'T';} @endphp</p>
         @else
         <p class="feed_text">{!! formatContent($post->feed_content) !!}</p>
         @endif
