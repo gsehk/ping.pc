@@ -6,7 +6,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
 
 @if(!$feeds->isEmpty())
 @foreach($feeds as $key => $post)
-<div class="feed_item" id="{{$post->id}}" data-amount="{{ $post->paid_node['amount'] }}" data-node="{{ $post->paid_node['node'] }}">
+<div class="feed_item" id="feed_{{$post->id}}" data-amount="{{ $post->paid_node['amount'] }}" data-node="{{ $post->paid_node['node'] }}">
     <div class="feed_title">
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="avatar" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="50" />
@@ -145,27 +145,23 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
     </div>
 </div>
 <script type="text/javascript">
-    // var images = JSON.parse('{!!$post->images!!}'), data = new Array();
-    layer.photos({
-      photos: '#layer-photos-demo{{$post->id}}'
-      ,anim: 0
-      ,move: false
-      ,img: '.per_image'
+    var images = JSON.parse('{!!$post->images!!}'), data = new Array();
+    if(images){
+        for (var i in images) {
+            var size = images[i].size.split('x');
+            var img = {
+                id: 'img' + i,
+                img: SITE_URL + '/api/v2/files/'+images[i].file,
+                tinyimg: SITE_URL + '/api/v2/files/'+images[i].file+'?w=58&h=58',
+                width: size[0],
+                height: size[1]
+            };
+            data.push(img);
+        }
+    }
+    $('#feed_photos_{{$post->id}}').actizPicShow({
+        data: data,
     });
-    // if(images){
-    //     for (var i in images) {
-    //         var img = {
-    //             id: 'img'+i,
-    //             img: SITE_URL+'/api/v2/files/'+images[i].file+'?w=50&h=50',
-    //             bigimg: SITE_URL+'/api/v2/files/'+images[i].file,
-    //             middleimg: SITE_URL+'/api/v2/files/'+images[i].file,
-    //         };
-    //         data.push(img);
-    //     }
-    // }
-    // $('#layer-photos-demo{{$post->id}}').actizPicShow({
-    //     data: data,
-    // });
 </script>
 @endforeach
 @if (isset($space) && $space)

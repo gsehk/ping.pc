@@ -3,6 +3,17 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @endphp
 
 @php
+$style = $lockstr = '';
+
+// 付费免费
+if (isset($image['paid']) && !$image['paid']) {
+    $class = 'locked_image';
+    $lockstr =  'data-node="' . $image['paid_node'] . '" data-amount="' . $image['amount'] / 100 . '" data-file="' . $image['file'] .'"';
+} else {
+    $class = 'bigcursor';
+}
+
+// 计算展示宽高
 if (isset($count) && $count == 'one') {
     $size = explode('x', $image['size']);
     if ($size[0] < $width && $size[1] < $height) { // 若宽高都小于展示高度，则保留原尺寸
@@ -21,18 +32,4 @@ if (isset($count) && $count == 'one') {
 }
 @endphp
 
-@if (isset($image['paid']) && !$image['paid'])
-    <div class="locked_image" @if (isset($count) && $count == 'one') style="position:relative;{{ $style }}" @endif data-node="{{ $image['paid_node'] }}" data-amount="{{ $image['amount'] / 100 }}" data-file="{{ $image['file'] }}" data-original="{{ getImageUrl($image, $width, $height) }}">
-	    <img src="{{ $routes['resource'] }}/images/pic_locked.png" class="feed_image_pay"/>
-	    <svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>
-    </div>
-@else
-    {{-- 单张图片设置固定宽高 --}}
-	@if (isset($count) && $count == 'one'){{-- 
-    <img style="{{$style}}" class="bigcursor lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}" curloc="0"/> --}}
-    <img style="{{ $style }}" class="lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}"/>
-    @else
-    {{-- <img class="bigcursor lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}"  curloc="{{$curloc}}"/> --}}
-    <img class="lazy per_image" data-original="{{ getImageUrl($image, $width, $height) }}"/>
-	@endif
-@endif
+<img style="{{$style}}" class="lazy per_image {{ $class }}" data-original="{{ getImageUrl($image, $width, $height) }}" curloc="{{$curloc}}" {{ $lockstr }}/>

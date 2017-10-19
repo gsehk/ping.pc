@@ -31,14 +31,14 @@
 		option.id=option.id || $(this).attr("id") ;
 		option.width=option.width || 80;//多图片显示宽度
 		option.height=option.height || 80;//多图片显示高度
-		option.smallWidth=option.smallWidth || 52;
-		option.smallHeight=option.smallHeight || 52;
+		option.smallWidth=option.smallWidth || 58;
+		option.smallHeight=option.smallHeight || 58;
 		option.oneWidth=option.oneWidth || 120;//单个图片显示宽度
 		option.oneHeight=option.oneHeight || 120;//单个图片显示高度
-		option.bigWidth=option.bigWidth || 480; //大图片显示宽度
-		option.bigHeight=option.bigHeight || 550;//大图片显示高度
+		option.bigWidth=option.bigWidth || 635; //大图片显示宽度
+		option.bigHeight=option.bigHeight || 400;//大图片显示高度
 		option.rowSize=option.rowSize || 4;//每行显示多少个
-		option.data=option.data || {};//图片数组   id img bigimg middleimg
+		option.data=option.data || {};//图片数组   id img bigimg img
 		if(option.id==null || option.id==''){
 			$(this).attr("id",new Date().getTime());
 			option.id=$(this).attr("id");
@@ -53,11 +53,7 @@
 		}else if(option.data.length==0){
 			return;
 		}
-		// if(morePic){
-		// 	narrowMorePicShow();
-		// }else{
-		// 	narrowOnePicShow();
-		// }
+
 		function narrowMorePicShow(){//多图片 小图片显示
 			var _picshow_narrow_exist=me.find("#"+option.id+"_picshow_narrow");
 			if(_picshow_narrow_exist.size()>0){
@@ -91,7 +87,7 @@
 			var b=new Array();
 			b.push('<div id="'+option.id+'_picshow_expand" class="actizPicShowExpand">');
 			b.push(expandTop());
-			b.push(expandCenterImgHtml(option.data[current_i].id,option.data[current_i].middleimg));
+			b.push(expandCenterImgHtml(option.data[current_i].id,option.data[current_i].img,option.data[current_i].width,option.data[current_i].height));
 			b.push(expandFootMoreHtml());
 			b.push('</div>');
 			$("#" +option.id).append(b.join(""));
@@ -123,7 +119,7 @@
 			var b=new Array();
 			b.push('<div id="'+option.id+'_picshow_expand" class="actizPicShowExpand">');
 			b.push(expandTop());
-			b.push(expandCenterImgHtml(option.data[0].id,option.data[0].middleimg));
+			b.push(expandCenterImgHtml(option.data[current_i].id,option.data[current_i].img,option.data[current_i].width,option.data[current_i].height));
 			b.push('</div>');
 			$("#" +option.id).append(b.join(""));
 			$("#" +option.id+"_picshow_expand").css("width",option.bigWidth+"px");
@@ -133,42 +129,45 @@
 		function expandTop(){
 			var a=new Array();
 			a.push('<p class="expand_top">');
-			a.push('<a  href="javascript:void(0);" class="retract" ><em class="W_ico12 ico_retract" style="float: inherit;"></em>收起</a>');
+			a.push('<a  href="javascript:void(0);" class="retract"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_top_grey"></use></svg>收起</a>');
 			a.push('<i class="W_vline">|</i>');
-			a.push('<a href="javascript:;" class="showbig"><em class="W_ico12 ico_showbig" style="float: inherit;"></em> 查看原图</a>');
+			a.push('<a href="javascript:;" class="showbig"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_largest_grey"></use></svg>查看原图</a>');
 			a.push('<i class="W_vline">|</i>');
-			a.push('<a  href="javascript:void(0);" class="turn_left" ><em class="W_ico12 ico_turnleft" style="float: inherit;"></em> 向左转</a>');
+			a.push('<a  href="javascript:void(0);" class="turn_left"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_xzz_grey"></use></svg>向左转</a>');
 			a.push('<i class="W_vline">|</i>');
-			a.push('<a href="javascript:void(0);" class="turn_right"><em class="W_ico12 ico_turnright" style="float: inherit;"></em> 向右转</a>');
-			a.push('<i class="W_vline">|</i>');
-			//a.push('<a href="javascript:void(0);" class="collect"><em class="W_ico12 ico_collect"></em> 收藏</a>');
+			a.push('<a href="javascript:void(0);" class="turn_right"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_xyz_grey"></use></svg>向右转</a>');
 			a.push('</p>');
 			return a.join("");
 		}
-		function expandCenterImgHtml(id , img){
+		function expandCenterImgHtml(id , img, width, height){
+			if (width > 555) {
+				var w = 555;
+				var h = height * (555 / width);
+			} else {
+				var w = width;
+				var h = height;
+			}
 			var c=new Array();
 			c.push('<div id="expandCenterImg">');
-			c.push('<img  src="'+img+'" id="'+id+'" class="centerImg">');
+			c.push('<img src="'+img+'" id="'+id+'" class="centerImg" height='+h+' width='+w+'>');
 			c.push('</div>');
 			return c.join("");
 		}
 		function expandFootMoreHtml(){
 			var d=new Array();
 			d.push('<div id="pic_choose_box" class="pic_choose_box">');
-			d.push('<a href="javascript:;"  class="arrow_left_small" title="上一页"><em class="ico_pic_prev">&lt;</em></a>');
 			d.push('<div class="stage_box">');
 			d.push('<ul>');
 			for(var i=0;i<option.data.length;i++){
 				d.push('<li>');
 				d.push('<a href="javascript:;" curLoc="'+i+'">');
 				d.push('<img id="'+option.data[i].id+'" height="'+option.smallWidth+'px" width="'+option.smallHeight+'px" class="cursor" ');
-				d.push('src="'+option.data[i].img+'" alt="">');
+				d.push('src="'+option.data[i].tinyimg+'" alt="">');
 				d.push('</a>');
 				d.push('</li>');
 			}
 			d.push('</ul>');
 			d.push('</div>');
-			d.push('<a href="javascript:;"  class="arrow_right_small" title="下一页"><em class="ico_pic_next">&gt;</em></a>');
 			d.push('</div>');
 			return d.join("");
 		}
@@ -176,10 +175,19 @@
 		 * 多图片中间图片改变时的方法
 		 */
 		function expandCenterUpdate(){
+			var width = option.data[current_i]['width'];
+			var height = option.data[current_i]['height'];
+			if (width > 555) {
+				var w = 555;
+				var h = height * (555 / width);
+			} else {
+				var w = width;
+				var h = height;
+			}
 			expandAddDavFile();
 			var expandCenterImg=me.find("#expandCenterImg");
 			var c=new Array();
-			c.push('<img  src="'+option.data[current_i].middleimg+'" id="'+option.data[current_i].id+'" class="centerImg">');
+			c.push('<img src="'+option.data[current_i].img+'" id="'+option.data[current_i].id+'" class="centerImg" height='+h+' width='+w+'>');
 			expandCenterImg.children().remove();
 			expandCenterImg.append(c.join(""));
 			expandCenterImg.css("height","auto");
@@ -238,52 +246,43 @@
 			me.find(".feed_images").show();
 			me.find("#"+option.id+"_picshow_expand").hide();
 		});
+
 		//当最大化的时候事件绑定----原图
 		me.delegate(".showbig","click",function(){
-			window.open(option.data[current_i].bigimg);
+			window.open(option.data[current_i].img);
 		});
+
 		//当最大化的时候事件绑定----向左旋转
 		me.delegate(".turn_left","click",function(){
-			me.find("#expandCenterImg .centerImg").rotateLeft(option.bigWidth-44);
+			me.find("#expandCenterImg .centerImg").rotateLeft(option.bigWidth-80);
 		});
+
 		//当最大化的时候事件绑定----向右旋转
 		me.delegate(".turn_right","click",function(){
-			me.find("#expandCenterImg .centerImg").rotateRight(option.bigWidth-44);
+			me.find("#expandCenterImg .centerImg").rotateRight(option.bigWidth-80);
 		});
-		//当最大化的时候事件绑定----起
+
+		//当最大化的时候事件绑定----收起
 		me.delegate(".smallcursor","click",function(){
 			me.find("#"+option.id+"_picshow_expand").hide();
 			me.find(".feed_images").show();
 			// me.find("#"+option.id+"_picshow_narrow").show();
 		});
-		//当最大化的时候事件绑定----收藏
-		//me.delegate(".collect","click",function(){
-		//	console.log("this pic id is :"+option.data[current_i].id);
-		//});
+
 		//当最大化的时候事件绑定----上一个
 		me.delegate(".leftcursor","click",function(){
 			if(current_i==0)return;
 			current_i-=1;
 			expandMorePicShow();
 		});
+
 		//当最大化的时候事件绑定----下一个
 		me.delegate(".rightcursor","click",function(){
 			if(current_i==option.data.length-1)return;
 			current_i+=1;
 			expandMorePicShow();
 		});
-		//当最大化的时候事件绑定----上一页
-		me.delegate(".arrow_left_small","click",function(){
-			if(currentPage==1)return;
-			currentPage=currentPage-1;
-			changeCurrentPage();
-		});
-		//当最大化的时候事件绑定----下一页
-		me.delegate(".arrow_right_small","click",function(){
-			if(currentPage>=currentPageSize)return;
-			currentPage=currentPage+1;
-			changeCurrentPage();
-		});
+
 		//大图时 绑定 移动事件
 		me.delegate("#expandCenterImg","mousemove",function(e){
 			if(morePic==false){
@@ -295,9 +294,9 @@
 			var switchWidth=x-left;
 			if(switchWidth<120 && current_i!=0){
 				$(this).removeClass("smallcursor").removeClass("rightcursor").addClass("leftcursor");
-			}else if(switchWidth<=440 && switchWidth>=320 && current_i!=option.data.length-1){
+			}else if(switchWidth<=555 && switchWidth>=435 && current_i!=option.data.length-1){
 				$(this).removeClass("leftcursor").removeClass("smallcursor").addClass("rightcursor");
-			}else if(switchWidth<=440){
+			}else if(switchWidth<=555){
 				$(this).removeClass("leftcursor").removeClass("rightcursor").addClass("smallcursor");
 			}else{
 				$(this).removeClass("leftcursor").removeClass("rightcursor").removeClass("smallcursor");
@@ -312,6 +311,7 @@
 			me.find(".stage_box a").removeClass("current");
 			$(this).addClass("current");
 		});
+
 		//小图片放大事件
 		me.delegate(".bigcursor","click",function(e){
 			$(this).parents('.feed_images').hide();
@@ -322,20 +322,7 @@
 			}else{
 				expandOnePicShow();
 			}
-
 		});
-		//绑定图片收藏事件....
-		me.delegate(".bigcursor","mouseover",function(e){
-			var curLoc=parseInt($(this).attr("curLoc"));
-			me.find(".addFavFile").remove();
-			var addFav=$('<a href="javascript:" class="addFavFile archivebtn" id="addFavFile_'+option.data[curLoc].id+'"></a>');
-			if(morePic){
-				addFav.css("left","1px");
-				addFav.css("position","absolute");
-			}
-			$(this).after(addFav);
-		});
-
 	};
 
 })($);

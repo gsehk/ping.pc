@@ -1,5 +1,5 @@
 @if($post->images)
-    <div id="layer-photos-demo{{$post->id}}">
+    <div id="feed_photos_{{$post->id}}">
     <div class="feed_images">
     @if($post->images->count() == 1)
         @php
@@ -7,7 +7,7 @@
             $conw = isset($conw) ? $conw : 555;
             $conh = isset($conh) ? $conh : 400;
         @endphp
-        @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => $conw, 'height' => $conh, 'count' => 'one'])
+        @include('pcview::templates.feed_image', ['image' => $post->images[0], 'width' => $conw, 'height' => $conh, 'count' => 'one', 'curloc' => 0])
     @elseif($post->images->count() == 2)
         <div style="width: 100%; display: flex;">
             <div style="width: 50%;" class="image_box">
