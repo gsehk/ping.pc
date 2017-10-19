@@ -42,7 +42,7 @@
 
         {{-- 圈子动态发布 --}}
         @if(!empty($TS))
-            <div class="feed_post">
+            <div class="feed_post group_post @if(!$group->is_member) hide @endif">
                 <input class="post_text" type="text" placeholder="有标题更吸引人 （最多三十字）" id="post_title">
                 <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content"></textarea>
                 <div class="post_extra">
@@ -96,11 +96,13 @@
                     $(_this).attr('status', 0);
                     $(_this).addClass('add-join');
                     $('#join-count').text(joinCount - 1);
+                    $('.group_post').slideUp();
                 } else {
                     $(_this).text('已加入');
                     $(_this).attr('status', 1);
                     $(_this).removeClass('add-join');
                     $('#join-count').text(joinCount + 1);
+                    $('.group_post').slideDown();
                 }
             });
         });

@@ -78,8 +78,8 @@
 }
 
 /*动态发布*/
-.feed_post .post_textarea {
-    width: 100% !important;
+.group_post .post_textarea {
+    width: 100%;
 }
 
 .group-info .info {
