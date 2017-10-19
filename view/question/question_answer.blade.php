@@ -154,13 +154,9 @@
                                             @endif
 
                                             {{$cv->body}}
-                                            @if(isset($cv->pinned) && $cv->pinned == 1)
-                                                <span class="green">置顶</span>
-                                            @endif
                                             @if($cv->user_id != $TS['id'])
                                                 <a onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
                                             @else
-                                                <a class="comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
                                                 <a class="comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
                                             @endif
                                         </p>

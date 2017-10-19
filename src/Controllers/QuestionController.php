@@ -133,6 +133,7 @@ class QuestionController extends BaseController
         $comment = clone $comments;
         $after = $comment->pop()->id ?? 0;
         $data['comments'] = $comments;
+        $data['top'] = false;
         $html = view('pcview::templates.comment', $data, $this->PlusData)->render();
 
         return response()->json([
@@ -229,6 +230,7 @@ class QuestionController extends BaseController
         $comment = clone $comments;
         $after = $comment->pop()->id ?? 0;
         $data['comments'] = $comments;
+        $data['top'] = false;
         $html = view('pcview::templates.comment', $data, $this->PlusData)->render();
 
         return response()->json([

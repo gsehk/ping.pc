@@ -163,7 +163,7 @@ class MessageController extends BaseController
         $limit = $request->input('limit') ?: 20;
         $data['comments'] = createRequest('GET', '/api/v2/news/comments/pinneds', ['after' => $after, 'limit' => $limit]);
 
-        $return = view('pcview::message.feedcomment_top', $data, $this->PlusData)->render();
+        $return = view('pcview::message.newscomment_top', $data, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,
