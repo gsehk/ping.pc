@@ -78,7 +78,7 @@
                     分享至：
                     @php
                         // 设置第三方分享图片，若未付费则为锁图。
-                        if (!empty($post->images)) {
+                        if ($post->images->count() > 0) {
                             $share_pic = getenv('APP_URL') . '/api/v2/files/' . $post->images[0]['id'];
                         } else {
                             $share_pic = '';
