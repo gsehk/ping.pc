@@ -2280,3 +2280,17 @@ img.load {
     border-radius: 2px;
     border:1px solid #ededed;
 }
+
+/* 评论置顶标识 */
+.green {
+    color: #4CB994;
+}
+
+.comment-top-span {
+    float: right;
+    color: #4CB994;
+}
+
+.mt-3 {
+    margin-top: -3px;
+}

@@ -1124,6 +1124,7 @@ var pinneds = function (url) {
             type: 'POST',
             data: data,
             success: function(res) {
+                layer.closeAll();
                 noticebox(res.message, 1);
             },
             error: function(error) {
@@ -1132,7 +1133,7 @@ var pinneds = function (url) {
             }
         });
     });
-}
+};
 
 // 更多操作
 var options = function(obj) {

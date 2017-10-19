@@ -17,7 +17,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
             <div class="reply_tool feed_datas">
                 <span class="reply_time">{{ getTime($comment['created_at']) }}</span>
                 @if ($comment['user']['id'] == $TS['id'])
-                <span class="reply_action" onclick="options(this)">
+                <span class="reply_action ml10 mt-3" onclick="options(this)">
                     <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                 </span>
                 <div class="options_div">
@@ -37,6 +37,9 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
                         </li>
                     </ul>
                 </div>
+                @endif
+                @if(isset($comment->top) && $comment->top == 1)
+                    <span class="green fr">置顶</span>
                 @endif
             </div>
             <div class="reply_body">

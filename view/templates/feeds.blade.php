@@ -119,6 +119,9 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
                                 @endif
 
                                 {{$cv->body}}
+                                @if(isset($cv->pinned) && $cv->pinned == 1)
+                                    <span class="green">置顶</span>
+                                @endif
                                 @if($cv->user_id != $TS['id'])
                                     <a onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
                                 @else
