@@ -3,12 +3,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @endphp
 
 @php
-$style = $lockstr = '';
+$style = $lockstr = $onclick = $class = '';
 
 // 付费免费
 if (isset($image['paid']) && !$image['paid']) {
-    $class = '';
-    $lockstr =  'data-node="' . $image['paid_node'] . '" data-amount=' . $image['amount'] . ' data-file="' . $image['file'] .'"';
+    // 付费数据
+    $lockstr =  'data-node=' . $image['paid_node'] . ' data-amount=' . $image['amount'] . ' data-file=' . $image['file'];
+    $onclick = 'onclick=weibo.payImage(this)';
 } else {
     $class = 'bigcursor';
 }
@@ -32,4 +33,4 @@ if (isset($count) && $count == 'one') {
 }
 @endphp
 
-<img style="{{$style}}" class="lazy per_image {{ $class }}" data-original="{{ getImageUrl($image, $width, $height) }}" curloc="{{$curloc}}" {{ $lockstr }}/>
+<img style="{{$style}}" class="lazy per_image {{ $class }}"  data-original="{{ getImageUrl($image, $width, $height) }}" curloc="{{$curloc}}" {{ $onclick }} {{ $lockstr }} />

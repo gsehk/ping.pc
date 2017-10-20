@@ -285,6 +285,36 @@ weibo.payText = function(obj, tourl){
         });
     })
 };
+weibo.payImage = function(obj){
+        checkLogin();
+
+        var _this = $(obj);
+        var amount = parseFloat(_this.data('amount')) * wallet_ratio;
+        var node = _this.data('node');
+        var file = _this.data('file');
+        var image = _this.data('original');
+
+        var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + gold_name.name + '即可查看高清大图，是否确认支付？');
+        ly.confirm(html, '', '', function(){
+            var url = '/api/v2/purchases/' + node;
+            // 确认支付
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                success: function(res) {
+                    _this.attr('src', image);
+                    _this.removeAttr('onclick');
+                    _this.addClass('bigcursor');
+                    layer.closeAll();
+                    noticebox('支付成功', 1);
+                },
+                error: function(xhr) {
+                    showError(xhr.responseJSON);
+                }
+            });
+        })
+};
 
 $(function() {
 

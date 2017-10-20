@@ -151,8 +151,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
             var size = images[i].size.split('x');
             var img = {
                 id: 'img' + i,
-                img: SITE_URL + '/api/v2/files/'+images[i].file,
-                tinyimg: SITE_URL + '/api/v2/files/'+images[i].file+'?w=58&h=58',
+                img: SITE_URL + '/api/v2/files/' + images[i].file + '?token=' + TOKEN,
+                tinyimg: SITE_URL + '/api/v2/files/' + images[i].file + '?w=58&h=58&token=' + TOKEN,
                 width: size[0],
                 height: size[1]
             };
