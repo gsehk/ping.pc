@@ -40,6 +40,7 @@ class BaseController extends Controller
 
                 // 启动信息
                 $config['bootstrappers'] = createRequest('GET', '/api/v2/bootstrappers/');
+                $config['bootstrappers']['site']['reward']['amounts'] = $config['bootstrappers']['site']['reward']['amounts'] ?: '5,10,15';
 
                 // 基本配置
                 $repository = app(\Illuminate\Contracts\Config\Repository::class);
