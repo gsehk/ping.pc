@@ -209,12 +209,6 @@ function getImageUrl($image = array(), $width, $height, $cut = true)
     // 裁剪
     $file = $image['file'] ?? $image['id'];
     if ($cut) {
-        $size = explode('x', $image['size']);
-        if ($size[0] > $size[1]) {
-            $width = number_format($height / $size[1] * $size[0], 2, '.', '');
-        } else {
-            $height = number_format($width / $size[0] * $size[1], 2, '.', '');
-        }
         return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height . '&token=' . Session::get('token');
     } else {
         return getenv('APP_URL') . '/api/v2/files/' . $file . '?&token=' . Session::get('token');
