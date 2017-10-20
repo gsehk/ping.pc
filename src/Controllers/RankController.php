@@ -18,9 +18,11 @@ class RankController extends BaseController
             $data['follower'] = $this->rankCache('follower', '/api/v2/ranks/followers');
             $data['balance'] = $this->rankCache('balance', '/api/v2/ranks/balance');
             $data['income'] = $this->rankCache('income', '/api/v2/ranks/income');
-            $data['check'] = $this->rankCache('check', '/api/v2/checkin-ranks');
-            foreach ($data['check'] as &$v) {
-                $v['extra']['count'] = $v['extra']['last_checkin_count'];
+            if ($this->PlusData['config']['bootstrappers']['checkin']) {
+                $data['check'] = $this->rankCache('check', '/api/v2/checkin-ranks');
+                foreach ($data['check'] as &$v) {
+                    $v['extra']['count'] = $v['extra']['last_checkin_count'];
+                }
             }
             $data['experts'] = $this->rankCache('experts', '/api/v2/question-ranks/experts');
             $data['likes'] = $this->rankCache('experts', '/api/v2/question-ranks/likes');

@@ -1,4 +1,4 @@
-@if (!empty($data))
+@if ($config['bootstrappers']['checkin'] && !empty($data) )
 <div class="checkin_cont">
     <div class="checkin_user">
         <span>
