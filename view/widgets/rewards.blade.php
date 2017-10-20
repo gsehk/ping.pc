@@ -3,7 +3,7 @@
         <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{ $rewards_id }}, '{{ $rewards_type }}')">打 赏</button></p>
         <p class="reward_info tcolor">
             <font color="#F76C6A">{{ $rewards_info['count'] }} </font>次打赏，共
-            <font color="#F76C6A">{{ $rewards_info['amount'] * ($config['bootstrappers']['wallet:ratio'] / 100 / 100) }} </font>{{ $config['bootstrappers']['site']['gold_name']['name'] or '金币' }}
+            <font color="#F76C6A">{{ $rewards_info['amount'] * ($config['bootstrappers']['wallet:ratio']/100/100) }} </font>{{ $config['bootstrappers']['site']['gold_name']['name'] or '金币' }}
         </p>
 
         {{-- 打賞 --}}

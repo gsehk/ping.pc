@@ -50,7 +50,7 @@
                             <span>{!! str_limit(preg_replace('@\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)@', '[图片]', $post->answer->body), 250, '...') !!}</span>
                             <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain button-more">查看详情</a>
                         @else
-                            <span class="answer-body fuzzy" onclick="QA.look({{ $post->answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount']/100) }}' , {{ $post->id }}, this)">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
+                            <span class="answer-body fuzzy" onclick="QA.look({{ $post->answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio']/100/100)) }}' , {{ $post->id }}, this)">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
                         @endif
                     </div>
                 </div>
@@ -65,10 +65,10 @@
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-huida"></use></svg>
                 {{ $post->answers_count }} 条回答
             </button>
-            @if($post->amount >= 100)
+            @if($post->amount > 0)
                 <button class="button button-plain">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jinqian"></use></svg>
-                    {{ $post->amount/100 }}
+                    {{ $post->amount * ($config['bootstrappers']['wallet:ratio']/100/100) }}
                 </button>
             @endif
         </div>
