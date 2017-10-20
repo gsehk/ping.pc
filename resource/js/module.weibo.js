@@ -247,7 +247,7 @@ weibo.payText = function(obj, tourl){
 
     var _this = $(obj);
     tourl = tourl || '';
-    var feed_item = $(obj).parents('.feed_item');
+    var feed_item = _this.parents('.feed_item');
     var id = feed_item.attr('id');
     var amount = feed_item.data('amount') * wallet_ratio;
     var node = feed_item.data('node');
@@ -266,12 +266,12 @@ weibo.payText = function(obj, tourl){
 
                     // 获取动态完整内容
                     $.ajax({
-                        url: '/api/v2/feeds/' + id,
+                        url: '/api/v2/feeds/' + id.replace('feed_', ''),
                         type: 'GET',
                         dataType: 'json',
                         success: function(res) {
-                            $(obj).text(res.feed_content);
-                            $(obj).removeClass('fuzzy');
+                            _this.text(res.feed_content);
+                            _this.removeClass('fuzzy');
                         }
                     });
                 } else {
