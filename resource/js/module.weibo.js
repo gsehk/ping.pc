@@ -194,7 +194,7 @@ weibo.delFeed = function(feed_id, type) {
                 if (type) {
                     noticebox('删除成功', 1, '/feeds');
                 }
-                $('#feed' + feed_id).fadeOut();
+                $('#feed_' + feed_id).fadeOut();
                 layer.closeAll();
             },
             error: function(xhr){
