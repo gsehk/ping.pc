@@ -26,7 +26,7 @@
         </form>
 
         <div class="login_right_bottom">
-            @if($config['bootstrappers']['registerSettings']['open'])
+            @if(isset($config['bootstrappers']['registerSettings']['open']) && $config['bootstrappers']['registerSettings']['open'])
                 <span class="no_account">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
             @endif
             <div class="login_share" >
