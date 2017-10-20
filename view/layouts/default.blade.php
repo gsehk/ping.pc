@@ -17,7 +17,8 @@
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
         var wallet_ratio = parseFloat("{{ $config['bootstrappers']['wallet:ratio'] }}")/100/100;
-        var reward = JSON.parse("{{ json_encode($config['bootstrappers']['site']['reward']) }}".replace(/&quot;/g, '"'));
+        var reward = JSON.parse("{{ json_encode($config['bootstrappers']['site']['reward']) }}".replace(/&quot;/g, '"')) || {status: false, amounts: '1,10,15'};
+        var gold_name = JSON.parse('{{ json_encode($config['bootstrappers']['site']['gold_name']) }}'.replace(/&quot;/g, '"')) || {name: '金币'};
 
     </script>
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/common.css') }}">

@@ -42,7 +42,7 @@
                                 <a href="javascript:;" data-url="{{ route('pc:walletpay') }}" onclick="checkWallet(this)"><button>充值</button></a>
                                 <a href="javascript:;" data-url="{{ route('pc:walletdraw') }}" onclick="checkWallet(this)"><button class="gray">提现</button></a>
                             </div>
-                            <p class="gcolor">账户余额（元）</p>
+                            <p class="gcolor">账户余额（{{ $config['bootstrappers']['site']['gold_name']['name'] or '金币' }}）</p>
                         </div>
                         <p>使用规则</p>
                         {{ $wallet['rule'] }}
