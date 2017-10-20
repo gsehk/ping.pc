@@ -226,7 +226,7 @@
                             this.$img = $('<img src="' + this.url + '">');
                             this.$avatarWrapper.empty().html(this.$img);
                             this.$img.cropper({
-                                aspectRatio: 0, //设置剪裁容器的比例
+                                aspectRatio: 4/3, //设置剪裁容器的比例
                                 viewMode: 1,
                                 preview: this.$avatarPreview.selector, //添加额外的元素（容器）的预览
                             });
