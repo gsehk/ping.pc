@@ -37,10 +37,10 @@
                     </div>
                     <div class="wallet-body" id="wallet-info">
                         <div class="wallet-info clearfix">
-                            <div class="remaining-sum">{{ $TS['wallet']['balance']/100 }}</div>
+                            <div class="remaining-sum">{{ $TS['wallet']['balance']*($config['bootstrappers']['wallet:ratio']/100/100) }}</div>
                             <div class="operate">
-                                <a href="{{ route('pc:walletpay') }}"><button>充值</button></a>
-                                <a href="{{ route('pc:walletdraw') }}"><button class="gray">提现</button></a>
+                                <a href="javascript:;" data-url="{{ route('pc:walletpay') }}" onclick="checkWallet(this)"><button>充值</button></a>
+                                <a href="javascript:;" data-url="{{ route('pc:walletdraw') }}" onclick="checkWallet(this)"><button class="gray">提现</button></a>
                             </div>
                             <p class="gcolor">账户余额（元）</p>
                         </div>
@@ -107,6 +107,18 @@
                 });
             }, 300);
         }
-    }
+    };
+
+    var checkWallet = function (obj) {
+        if ("{{ in_array('alipay_pc_direct', $config['bootstrappers']['wallet:recharge-type']) ? 1 : 0 }}" == "0") {
+
+            noticebox('未配置支付环境', 0);
+
+            return false;
+        }
+
+        var url = $(obj).data('url');
+        window.location.href = url;
+    };
 </script>
 @endsection

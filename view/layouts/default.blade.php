@@ -16,6 +16,9 @@
         var SITE_URL = "{{ $routes['siteurl'] }}";
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
+        var wallet_ratio = parseFloat("{{ $config['bootstrappers']['wallet:ratio'] }}");
+        var reward = JSON.parse("{{ json_encode($config['bootstrappers']['site']['reward']) }}".replace(/&quot;/g, '"'));
+
     </script>
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/common.css') }}">
     <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.min.js') }}"></script>

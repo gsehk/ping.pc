@@ -27,6 +27,8 @@ weibo.postFeed = function() {
     // 付费免费
     var select = $('#feed_select').data('value');
 
+    var reward_amounts = reward.amounts.split(',');
+
     if (select == 'pay') {
         if ($('.feed_picture').find('img').length > 0) { // 图片付费弹窗
             var pay_box = '<div class="feed_pay_box"><p class="pay_title">付费设置</p>';
@@ -45,15 +47,15 @@ weibo.postFeed = function() {
                                     + '<span class="pay_text">设置图片收费金额</span>'
                                     + '<span class="pay_btn pay_btn_yes">确定</span>'
                                     + '<span class="pay_btn pay_btn_reset">重置</span>'
-                                + '</div>';
-
-                    info_box +=  '<div class="pay_body">'
-                                    + '<span' + (amount == '1' ? ' class="current"' : '') + ' amount="1">￥1</span>'
-                                    + '<span' + (amount == '5' ? ' class="current"' : '') + ' amount="5">￥5</span>'
-                                    + '<span' + (amount == '10' ? ' class="current"' : '') + ' amount="10">￥10</span>'
-                                    + '<input min="1" oninput="value=moneyLimit(value)"  type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
-                                +'</div>';
-
+                                + '</div>'
+                                + '<div class="pay_body">';
+                    $.each(reward_amounts, function (index, value) {
+                        if (value > 0) {
+                            info_box += '<span' + (amount == value ? ' class="current"' : '') + ' amount="' + value + '">' + value + '</span>';
+                        }
+                    });
+                    info_box += '<input min="1" oninput="value=moneyLimit(value)"  type="number" placeholder="自定义金额，必须为整数" value="' + ($.inArray(amount, reward_amounts) ? '' : amount) + '">'
+                             +'</div>';
                 }
             });
             images_box += '<div class="triangle"></div></div>';
@@ -76,13 +78,15 @@ weibo.postFeed = function() {
                             + '<span class="pay_text">设置文字收费金额</span>'
                         + '</div>';
 
-            info_box +=  '<div class="pay_body">'
-                            + '<span' + (amount == '1' ? ' class="current"' : '') + ' amount="1">￥1</span>'
-                            + '<span' + (amount == '5' ? ' class="current"' : '') + ' amount="5">￥5</span>'
-                            + '<span' + (amount == '10' ? ' class="current"' : '') + ' amount="10">￥10</span>'
-                            + '<input min="1" oninput="value=moneyLimit(value)"  type="number" placeholder="自定义金额，必须为整数" value="' + (amount != '1' && amount != '5' && amount != '10' ? amount : '') + '">'
-                        +'</div>';
-            info_box += '</div>'
+            info_box +=  '<div class="pay_body">';
+            $.each(reward_amounts, function (index, value) {
+                if (value > 0) {
+                    info_box += '<span' + (amount == value ? ' class="current"' : '') + ' amount="' + value + '">' + value + '</span>';
+                }
+            });
+            info_box += '<input min="1" oninput="value=moneyLimit(value)"  type="number" placeholder="自定义金额，必须为整数" value="' + ($.inArray(amount, reward_amounts) ? '' : amount) + '">'
+                +'</div>';
+            info_box += '</div>';
 
             var html = pay_box + info_box + '</div>';
         }
@@ -112,7 +116,7 @@ weibo.doPostFeed = function(type) {
         feed_content: $('#feed_content').val(),
         feed_from: 1,
         feed_mark: MID + new Date().getTime(),
-    }
+    };
     var images = [];
     if (type == 'free') { // 免费
         $('.feed_picture').find('img').each(function() {
@@ -129,7 +133,7 @@ weibo.doPostFeed = function(type) {
                     images.push({'id':$(this).attr('tid')});
                 } else {
                     has_amount = 1;
-                    images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount * 100});
+                    images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount / (wallet_ratio / 100 / 100) });
                 }
             });
             // 判断是否有图片添加付费信息
@@ -142,7 +146,7 @@ weibo.doPostFeed = function(type) {
         } else {
             // 文字付费
             var amount = $('#feed_content').attr('amount');
-            if (amount != '') data.amount = amount;
+            if (amount != '') data.amount = amount / (wallet_ratio / 100 / 100);
         }
     }
 
@@ -151,16 +155,17 @@ weibo.doPostFeed = function(type) {
         type: 'post',
         data: data,
         success: function(res) {
-            noticebox('发布成功', 1);
             $('.feed_picture').html('').hide();
             $('#feed_content').val('');
             weibo.afterPostFeed(res.id);
+            noticebox('发布成功', 1);
+            layer.closeAll();
         },
         error: function(xhr){
             showError(xhr.responseJSON);
         }
     });
-}
+};
 
 weibo.afterPostFeed = function(feed_id) {
     var url = '/feeds';
@@ -244,7 +249,7 @@ weibo.payText = function(obj, tourl){
     tourl = tourl || '';
     var feed_item = $(obj).parents('.feed_item');
     var id = feed_item.attr('id');
-    var amount = feed_item.data('amount');
+    var amount = feed_item.data('amount') * (wallet_ratio/100/100);
     var node = feed_item.data('node');
 
     var html = formatConfirm('购买支付', '<div class="confirm_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看完整内容，是否确认支付？');
@@ -266,19 +271,20 @@ weibo.payText = function(obj, tourl){
                         dataType: 'json',
                         success: function(res) {
                             $(obj).text(res.feed_content);
-                            $(obj).removeClass('feed_pay_text');
+                            $(obj).removeClass('fuzzy');
                         }
                     });
                 } else {
                     noticebox('支付成功', 1, tourl);
                 }
+                layer.closeAll();
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
             }
         });
     })
-}
+};
 
 $(function() {
 

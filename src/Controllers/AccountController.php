@@ -137,7 +137,7 @@ class AccountController extends BaseController
         $data['type'] = $type;
         $data['loadcount'] = $request->query('loadcount');
 
-        $html = view('pcview::account.walletrecords', $data)->render();
+        $html = view('pcview::account.walletrecords', $data, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,

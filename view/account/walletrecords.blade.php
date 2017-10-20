@@ -22,7 +22,7 @@
                     <td width="20%">{{ getTime($item->created_at, 0, 0) }}</td>
                     <td width="60%"><p class="ptext">{{ $item->subject }}</p></td>
                     <td width="20%">
-                        <font color="#FF9400">{{ $item->action==1 ? '+'.$item->amount/100 : '-'.$item->amount/100 }}</font>
+                        <font color="#FF9400">{{ $item->action==1 ? '+'.($item->amount*($config['bootstrappers']['wallet:ratio']/100/100)) : '-'.($item->amount*($config['bootstrappers']['wallet:ratio']/100/100)) }}</font>
                     </td>
                 </tr>
                 @endforeach

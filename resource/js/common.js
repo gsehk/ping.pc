@@ -652,19 +652,21 @@ var rewarded = {
         var html = '<div class="reward_box">'
                         + '<div class="reward_title">打赏</div>'
                         + '<div class="reward_text">选择打赏金额</div>'
-                        + '<div class="reward_spans">'
-                            + '<span num="100">¥1</span>'
-                            + '<span num="500">¥5</span>'
-                            + '<span num="1000">¥10</span>'
-                        + '</div>'
-                        + '<div class="reward_input">'
-                            + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义打赏金额，必须为整数">'
-                        + '</div>'
-                    + '</div>';
+                        + '<div class="reward_spans">';
+                        $.each(reward.amounts.split(','), function (index, value) {
+                            if (value > 0) {
+                                html += '<span num="' + value / (wallet_ratio / 100 / 100) + '">' + value + '</span>';
+                            }
+                        });
+                    html += '</div>'
+                    + '<div class="reward_input">'
+                        + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义打赏金额，必须为整数">'
+                    + '</div>'
+                + '</div>';
 
         ly.confirm(html, '打赏', '', function(){
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
-            var amount = $('.reward_input input').val() * 100;
+            var amount = $('.reward_input input').val() / (wallet_ratio / 100 / 100);
 
             if (!num && !amount) {
                 return false;
