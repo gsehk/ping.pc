@@ -56,7 +56,9 @@
     @else
     {{-- 未登录 --}}
     <div class="nav_right">
-        <a class="nava" href="{{ route('pc:register') }}">注册</a>
+        @if($config['bootstrappers']['registerSettings']['open'])
+            <a class="nava" href="{{ route('pc:register') }}">注册</a>
+        @endif
         <a class="nava" href="{{ route('pc:login') }}">登录</a>
     </div>
     @endif

@@ -9,7 +9,9 @@
                 </div>
                 <div class="login_top">
                     @if (route::currentrouteName() == 'pc:login')
-                    <a href="{{ route('pc:register') }}" class="font16 ">注册</a>
+                        @if($config['bootstrappers']['registerSettings']['open'])
+                            <a href="{{ route('pc:register') }}" class="font16 ">注册</a>
+                        @endif
                     @else
                     <a href="{{ route('pc:login') }}" class="font16 ">登录</a>
                     @endif

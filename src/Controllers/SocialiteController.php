@@ -102,6 +102,10 @@ class SocialiteController extends BaseController
                 ];
 
             } else { // 绑定、注册
+                if (!$this->PlusData['config']['bootstrappers']['registerSettings']['open']) {
+
+                    $this->error(Route('pc:login'), '您尚未绑定账号', $res['message']);
+                }
                 $return = [
                     'status' => -1,
                     'message' => '正在前往绑定窗口...',

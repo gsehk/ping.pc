@@ -26,7 +26,9 @@
         </form>
 
         <div class="login_right_bottom">
-            <span class="no_account">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
+            @if($config['bootstrappers']['registerSettings']['open'])
+                <span class="no_account">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
+            @endif
             <div class="login_share" >
                 三方登录：
                 <a href="javascript:" data-type="weibo" class="bind">

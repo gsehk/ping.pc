@@ -9,11 +9,18 @@
 @section('content')
 <div class="reg_cont" style="height:640px;">
     <ul class="reg_menu">
-        <li><a href="{{ route('pc:register') }}" @if($type == 0) class="current" @endif>手机注册</a></li>
-        <li><a href="{{ route('pc:register', ['type'=>1]) }}" @if($type == 1) class="current" @endif>邮箱注册</a></li>
+        @if($config['bootstrappers']['registerSettings']['method'] == 'mobile-only' || $config['bootstrappers']['registerSettings']['method'] == 'all')
+            <li><a href="{{ route('pc:register') }}" @if($type == 0) class="current" @endif>手机注册</a></li>
+        @endif
+        @if($config['bootstrappers']['registerSettings']['method'] == 'mail-only' || $config['bootstrappers']['registerSettings']['method'] == 'all')
+            <li><a href="{{ route('pc:register', ['type'=>1]) }}" @if($type == 1) class="current" @endif>邮箱注册</a></li>
+        @endif
+        @if($config['bootstrappers']['registerSettings']['method'] != 'all' && $config['bootstrappers']['registerSettings']['method'] != 'mobile-only' && $config['bootstrappers']['registerSettings']['method'] != 'mail-only')
+            暂未配置注册方式，请联系管理员
+        @endif
     </ul>
     
-    @if($type == 0)
+    @if($type == 0 && ($config['bootstrappers']['registerSettings']['method'] == 'mobile-only' || $config['bootstrappers']['registerSettings']['method'] == 'all'))
     <div class="reg_form">
         <form method="POST" id="reg_form">
             <div class="reg_input">
@@ -57,7 +64,7 @@
             <a id="reg_btn" class="reg_btn">注册</a>
         </form>
     </div>
-    @else
+    @elseif($config['bootstrappers']['registerSettings']['method'] == 'mail-only' || $config['bootstrappers']['registerSettings']['method'] == 'all')
     <div class="reg_form">
         <form method="POST" id="reg_form">
             <div class="reg_input">
