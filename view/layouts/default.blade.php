@@ -16,7 +16,7 @@
         var SITE_URL = "{{ $routes['siteurl'] }}";
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
-        var wallet_ratio = parseFloat("{{ $config['bootstrappers']['wallet:ratio'] }}");
+        var wallet_ratio = parseFloat("{{ $config['bootstrappers']['wallet:ratio'] }}")/100/100;
         var reward = JSON.parse("{{ json_encode($config['bootstrappers']['site']['reward']) }}".replace(/&quot;/g, '"'));
 
     </script>

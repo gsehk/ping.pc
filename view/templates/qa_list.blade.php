@@ -45,7 +45,7 @@
 	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg> {{ $data->answers_count }}条 回答
 	        </span>
 	        <span class="mony gcolor">
-	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg> ￥{{ $data->amount/100 }}
+	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg> {{ $data->amount * ($config['bootstrappers']['wallet:ratio'] / 100 / 100) }}
 	        </span>
 	        <span class="options">
 	            <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>

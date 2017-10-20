@@ -8,7 +8,7 @@ $style = $lockstr = '';
 // 付费免费
 if (isset($image['paid']) && !$image['paid']) {
     $class = 'locked_image';
-    $lockstr =  'data-node="' . $image['paid_node'] . '" data-amount="' . $image['amount'] / 100 . '" data-file="' . $image['file'] .'"';
+    $lockstr =  'data-node="' . $image['paid_node'] . '" data-amount=' . $image['amount'] . ' data-file="' . $image['file'] .'"';
 } else {
     $class = 'bigcursor';
 }
@@ -31,5 +31,6 @@ if (isset($count) && $count == 'one') {
     $style = 'width:' . $w . 'px;height:' . $h . 'px';
 }
 @endphp
+{{ $lockstr }}
 
 <img style="{{$style}}" class="lazy per_image {{ $class }}" data-original="{{ getImageUrl($image, $width, $height) }}" curloc="{{$curloc}}" {{ $lockstr }}/>

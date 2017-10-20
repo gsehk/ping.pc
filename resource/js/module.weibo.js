@@ -133,7 +133,7 @@ weibo.doPostFeed = function(type) {
                     images.push({'id':$(this).attr('tid')});
                 } else {
                     has_amount = 1;
-                    images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount / (wallet_ratio / 100 / 100) });
+                    images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount / wallet_ratio });
                 }
             });
             // 判断是否有图片添加付费信息
@@ -146,7 +146,7 @@ weibo.doPostFeed = function(type) {
         } else {
             // 文字付费
             var amount = $('#feed_content').attr('amount');
-            if (amount != '') data.amount = amount / (wallet_ratio / 100 / 100);
+            if (amount != '') data.amount = amount / wallet_ratio;
         }
     }
 
@@ -249,10 +249,10 @@ weibo.payText = function(obj, tourl){
     tourl = tourl || '';
     var feed_item = $(obj).parents('.feed_item');
     var id = feed_item.attr('id');
-    var amount = feed_item.data('amount') * (wallet_ratio/100/100);
+    var amount = feed_item.data('amount') * wallet_ratio;
     var node = feed_item.data('node');
 
-    var html = formatConfirm('购买支付', '<div class="confirm_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看完整内容，是否确认支付？');
+    var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + '元即可查看完整内容，是否确认支付？');
     ly.confirm(html, '', '', function(){
         var url = '/api/v2/purchases/' + node;
         // 确认支付
@@ -315,12 +315,12 @@ $(function() {
         checkLogin();
 
         var _this = $(this);
-        var amount = _this.data('amount');
+        var amount = parseFloat(_this.data('amount')) * wallet_ratio;
         var node = _this.data('node');
         var file = _this.data('file');
         var image = _this.data('original');
 
-        var html = formatConfirm('购买支付', '<div class="confirm_money">￥' + amount + '</div>您只需要支付￥' + amount + '元即可查看高清大图，是否确认支付？');
+        var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付￥' + amount + '元即可查看高清大图，是否确认支付？');
         ly.confirm(html, '', '', function(){
             var url = '/api/v2/purchases/' + node;
             // 确认支付

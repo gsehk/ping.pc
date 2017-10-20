@@ -55,9 +55,9 @@
             <div class="reward-row">
                 <div class="reward-notice">设置悬赏金额</div>
                 <ul class="reward-example">
-                    <li>1.00</li>
-                    <li>5.00</li>
-                    <li>10.00</li>
+                    @foreach(explode(',', $config['bootstrappers']['site']['reward']['amounts']) as $amount)
+                        <li>{{ sprintf("%.2f", $amount) }}</li>
+                    @endforeach
                 </ul>
                 <input type="text" min="1" oninput="value=moneyLimit(value)" class="custom-money" id="amount" placeholder="自定义悬赏金额">
                 <input type="hidden" id="amount-hide" name="amount">
@@ -279,7 +279,7 @@
                 return false;
             }
             checkSubmitFlg = true;
-            args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) * 100;
+            args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) / wallet_ratio;
             args.look = $("input[type='radio'][name='look']:checked").val();
             var topic = [];
             for (var key in args.topics_) {

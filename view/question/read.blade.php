@@ -14,7 +14,7 @@
         <div class="questionheader-content">
             <div class="questionheader-main">
                 @if($question->amount > 0)
-                    <span class="questionheader-price">￥{{ sprintf("%.2f", $question->amount/100) }}</span>
+                    <span class="questionheader-price">{{ sprintf("%.2f", $question->amount*($config['bootstrappers']['wallet:ratio'] / 100 / 100)) }}</span>
                 @endif
                 <div class="questionheader-tags">
                     <div class="questionheader-topics">
@@ -78,7 +78,7 @@
             <div class="questionheader-footer-inner">
                 <div class="questionheader-main questionheader-footer-main">
                     @if($question['look'] == 1 && isset($question['invitation_answers']) && !$question['invitation_answers']->isEmpty() && $question['invitation_answers'][0]['onlookers_count'] > 0)
-                        <span class="questionheader-onlook">￥{{ sprintf("%.2f", $question['invitation_answers'][0]['onlookers_count']*$config['bootstrappers']['question:onlookers_amount']/100) }}围观</span>
+                        <span class="questionheader-onlook">{{ sprintf("%.2f", $question['invitation_answers'][0]['onlookers_count']*$config['bootstrappers']['question:onlookers_amount']/100) }}围观</span>
                     @endif
                     <div class="questionheaderactions">
                         <div class="questionheader-comment">

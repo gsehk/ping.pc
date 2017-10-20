@@ -655,7 +655,7 @@ var rewarded = {
                         + '<div class="reward_spans">';
                         $.each(reward.amounts.split(','), function (index, value) {
                             if (value > 0) {
-                                html += '<span num="' + value / (wallet_ratio / 100 / 100) + '">' + value + '</span>';
+                                html += '<span num="' + value / wallet_ratio + '">' + value + '</span>';
                             }
                         });
                     html += '</div>'
@@ -666,7 +666,7 @@ var rewarded = {
 
         ly.confirm(html, '打赏', '', function(){
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
-            var amount = $('.reward_input input').val() / (wallet_ratio / 100 / 100);
+            var amount = $('.reward_input input').val() / wallet_ratio;
 
             if (!num && !amount) {
                 return false;
@@ -1105,13 +1105,13 @@ var pinneds = function (url) {
                     + '</div>'
                     + '<div class="pinned_text">当前平均置顶金额为¥200/天，钱包余额为¥' + BALANCE + '</div>'
                     + '<div class="pinned_text">需要支付总金额：</div>'
-                    + '<div class="pinned_total">¥<span>0</span></div>'
+                    + '<div class="pinned_total"><span>0</span></div>'
                 + '</div>';
 
     ly.confirm(html, '', '', function(){
         var data = {
             day: $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '',
-            amount: $('.pinned_input input').val() * 100
+            amount: $('.pinned_input input').val() / wallet_ratio
         };
         if (!data.day) {
             // layer.msg('请选择置顶天数');

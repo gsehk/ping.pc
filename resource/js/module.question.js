@@ -168,11 +168,14 @@ var question = {
         var html = '<div class="reward_box">'
             + '<div class="reward_title">公开悬赏</div>'
             + '<div class="reward_text">选择公开悬赏金额</div>'
-            + '<div class="reward_spans">'
-            + '<span num="100">¥1</span>'
-            + '<span num="500">¥5</span>'
-            + '<span num="1000">¥10</span>'
-            + '</div>'
+            + '<div class="reward_spans">';
+
+        $.each(reward.amounts.split(','), function (index, value) {
+            if (value > 0) {
+                html += '<span num="' + value / wallet_ratio + '">' + value + '</span>';
+            }
+        });
+        html += '</div>'
             + '<div class="reward_input">'
             + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义金额，必须为整数">'
             + '</div>'
@@ -180,7 +183,7 @@ var question = {
 
         ly.confirm(html, '公开悬赏', '', function(){
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
-            var amount = $('.reward_input input').val() * 100;
+            var amount = $('.reward_input input').val() / wallet_ratio;
 
             if (!num && !amount) {
                 return false;
