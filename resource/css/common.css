@@ -2261,7 +2261,6 @@ img.load {
     border: 1px solid #d9d9d9;
 }
 .fuzzy {
-    -webkit-transform: scale(0.95);
     box-shadow: 0 0 10px 4px white;
     text-shadow: 0 0 10px #666;
     opacity: 0.8;
