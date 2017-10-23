@@ -179,7 +179,7 @@
         }
 
         // 选择话题
-        $('.question-topics').on('click', '>*', function(e){
+        $('.question-topics').on('click', '#J-select-topics, >label', function(e){
             e.stopPropagation();
             $('#J-topic-box').toggle();
         });
@@ -188,13 +188,17 @@
             var topic_id = $(this).data('id');
             var topic_name = $(this).text();
             if (selBox.find('li').hasClass('topic_'+topic_id)) {
-                noticebox('话题已存在', 0); return;
+                noticebox('话题已存在', 0);
+
+                return false;
+            }
+            if (selBox.find('li').length > 4) {
+                noticebox('话题最多五个', 0);
+
+                return false;
             }
             selBox.append('<li class="topic_'+topic_id+'" data-id="'+topic_id+'">'+topic_name+'</li>');
-            if (selBox.find('li').length >= 5) {
-                noticebox('话题最多五个', 0);
-                return;
-            } else if (selBox.find('li').length > 0) {
+            if (selBox.find('li').length > 0) {
                 $('.question-topics label').hide();
             }
         });
@@ -387,7 +391,12 @@
                     return false;
                 }
             }
-
+            var topic = [];
+            for (var key in args.topics_) {
+                topic[key] = {};
+                topic[key].id = args.topics_[key];
+            }
+            args.topics = topic;
             $.ajax({
                 type: 'PATCH',
                 url: '/api/v2/questions/' + question_id,

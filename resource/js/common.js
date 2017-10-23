@@ -1338,7 +1338,7 @@ $(function() {
 
         // 问题话题
         if(!target.is('div.question-topics-list') && !target.is('dl,dt,dd,li')) {
-            $('.question-topics-list').fadeOut();
+            $('.question-topics-list').hide();
         }
     });
 
