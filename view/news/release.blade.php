@@ -15,7 +15,7 @@
     <div class="release_cont">
         <div class="release_title">
             <input type="hidden" id="news_id" name="id" value="{{$id or 0}}" />
-            <input type="text" id="subject-title" name="title" value="{{$title or ''}}" placeholder="请在此输入20字以内的标题"/>
+            <input type="text" id="subject-title" name="title" value="{{$title or ''}}" placeholder="请在此输入20字以内的标题" maxlength="20"/>
         </div>
         <div class="release_title p_30">
             <input type="text" id="subject-abstract" name="abstract" value="{{$subject or ''}}" placeholder="请在此输入200字以内的文章摘要,不填写默认为文章内容前60字"/>

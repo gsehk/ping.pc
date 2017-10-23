@@ -18,8 +18,12 @@ $('.subject-submit').on('click', function() {
     });
     args.tags = tags;
 
-    if (!args.title || getLength(args.title) > 20) {
+    if (!args.title) {
         noticebox('文章标题不能为空', 0);
+        return false;
+    }
+    if (getLength(args.title) > 20) {
+        noticebox('文章标题字数不能超过20字', 0);
         return false;
     }
     if (args.cate_id == '') {

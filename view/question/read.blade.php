@@ -22,7 +22,7 @@
                             @foreach ($question->topics as $topic)
                                 <div class="tag questiontopic">
                                     <span class="tag-content">
-                                        <a class="topiclink" href="#">{{ $topic->name }}</a>
+                                        <a class="topiclink" href="{{ route('pc:topicinfo', $topic->id) }}">{{ $topic->name }}</a>
                                     </span>
                                 </div>
                             @endforeach
@@ -34,9 +34,16 @@
                     <!-- js增删  .questionrichtext--collapsed 改变content字数 -->
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
-                            <span class="show-body hide">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
-                            <span class="richtext" itemprop="text">{!! str_limit(preg_replace('@\@*\!\[\w*\]\([https]+\:\/\/[\w\/\.]+\)@', '[图片]', $question->body), 300, '...') !!}</span>
-                            <button class="button button-plain button-more questionrichtext-more" data-show="0">显示全部</button>
+                            @php
+                                $body_text = preg_replace('@\@*\!\[\w*\]\([https]+\:\/\/[\w\/\.]+\)@', '[图片]', $question->body);
+                            @endphp
+                            @if(!strpos($body_text, '[图片]') && strlen($body_text) <= 300)
+                                <span class="show-body">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+                            @else
+                                <span class="show-body hide">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+                                <span class="richtext" itemprop="text">{{ str_limit($body_text, 300, '...') }}</span>
+                                <button class="button button-plain button-more questionrichtext-more" data-show="0">显示全部</button>
+                            @endif
                         </div>
                     </div>
                 </div>

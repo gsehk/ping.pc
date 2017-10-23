@@ -7,7 +7,7 @@
         <div class="q_c_t">
             <h2 class="q_title">
                 <a href="{{ route('pc:questionread', ['question_id' => $post['id']]) }}">{{ $post->subject }}</a>
-                @if($post['excellent'] == 1)
+                @if($post['excellent'] == 1 && !isset($post['excellent_show']))
                     <span class="excellent">精</span>
                 @endif
             </h2>
