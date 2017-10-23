@@ -76,6 +76,7 @@ var QA = {
                     if (!obj) {
                         noticebox('围观成功', 1, '/question/' + question_id);
                     } else {
+                        noticebox('围观成功', 1);
                         var txt = res.answer.body.replace(/\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)/g, "[图片]");
                         var body = txt.length > 130 ? txt.substr(0, 130) + '...' : txt;
                         $(obj).removeClass('fuzzy');

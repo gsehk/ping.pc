@@ -792,6 +792,7 @@ var comment = {
             success: function(res) {
                 _this.support.button.text('评论');
                 _this.support.editor.val('');
+                _this.support.to_uid = 0;
 
                 var info = {
                     id: res.comment.id,
