@@ -12,7 +12,10 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">评论的</span>
-                        <div>{{isset($message['comment']) ? $message['comment'].'评论了我' : ''}}</div>
+                        <div>{{ $comments->count() > 0 ? $comments[0]->user->name.'评论了我' : '无人评论我' }}</div>
+                        @if($counts['unread_comments_count'] > 0)
+                            <span class="chat_num">{{ $counts['unread_comments_count'] }}</span>
+                        @endif
                     </div>
                 </li>
                 <li @if($type=='zan')class="current_room"@endif data-type="zan">
@@ -23,7 +26,10 @@
                     </div>
                     <div class="left_class">
                         <span class="chat_span">赞过的</span>
-                        <div>{{isset($message['like']) ? $message['like'].'赞了我' : ''}}</div>
+                        <div>{{ $likes->count() > 0 ? $likes[0]->user->name.'赞了我' : '无人赞我' }}</div>
+                        @if($counts['unread_likes_count'] > 0)
+                            <span class="chat_num">{{ $counts['unread_likes_count'] }}</span>
+                        @endif
                     </div>
                 </li>
                 <li @if($type=='tz')class="current_room"@endif data-type="tz">

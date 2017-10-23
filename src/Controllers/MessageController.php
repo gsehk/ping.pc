@@ -9,15 +9,8 @@ class MessageController extends BaseController
 {
 	public function index(Request $request)
 	{
-		$data['type'] = 'pl';
-
-		// 获取最新评论
-        $comment = createRequest('GET', '/api/v2/user/comments', ['after' => 0, 'limit' => 1]);
-        !$comment->isEmpty() && $data['message']['comment'] = $comment[0]['user']['name'];
-
-        // 获取最新点赞
-        $like = createRequest('GET', '/api/v2/user/likes', ['after' => 0, 'limit' => 1]);
-        !$like->isEmpty() && $data['message']['like'] = $like[0]['user']['name'];
+        $data = createRequest('GET', '/api/v2/user/unread-count');
+        $data['type'] = 'pl';
 
         // 获取通知
         $notifications = createRequest('GET', '/api/v2/user/notifications', ['offset' => 0, 'limit' => 1]);
