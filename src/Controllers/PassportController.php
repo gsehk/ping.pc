@@ -15,6 +15,12 @@ class PassportController extends BaseController
     {
         Session::put('token', $token);
         Session::put('initial_password', true);
+
+        // 若设置history
+        if (Session::get('history')) {
+            return redirect(Session::get('history'));
+        }
+
         if ($type) {
             return redirect(route('pc:perfect'));
         } else {

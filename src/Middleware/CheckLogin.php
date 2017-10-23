@@ -13,6 +13,9 @@ class CheckLogin
     {   
         // 跳转登录
         if ( !Session::get('token') ) {
+            // 设置当前页面
+            $history = getenv('APP_URL') . '/' . $request->getRequestUri();
+            Session::put('history', $history);
             return redirect(route('pc:login'));
         }
         
