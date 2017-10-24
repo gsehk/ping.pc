@@ -783,6 +783,10 @@ var comment = {
             formData.body = formData.body.split('：')[1];
             formData.reply_user = this.support.to_uid;
         }
+        if (getLength(formData.body) > 255) {
+            noticebox('内容超出长度限制', 0); return;
+        }
+
         this.support.button.text('评论中..');
         $.ajax({
             url: url,
@@ -1115,11 +1119,11 @@ var pinneds = function (url) {
             amount: $('.pinned_input input').val() / wallet_ratio
         };
         if (!data.day) {
-            // layer.msg('请选择置顶天数');
+            noticebox('请选择置顶天数', 0);
             return false;
         }
         if (!data.amount) {
-            // layer.msg('请输入置顶金额');
+            noticebox('请输入置顶金额', 0);
             return false;
         }
         $.ajax({

@@ -1934,6 +1934,10 @@ img.load {
     padding: 0px 0px 30px 0px !important;
 }
 
+.layui-layer-btn- .layui-layer-btn-notice {
+    background-color: #59b6d7;
+}
+
 /*  申请置顶 */
 .apply-pinneds .day,
 .apply-pinneds .amount{
