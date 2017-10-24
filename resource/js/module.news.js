@@ -38,9 +38,9 @@ $('.subject-submit').on('click', function() {
         noticebox('文章内容不能超过5000字', 0);
         return false;
     }
-    if (!args.subject) { // 如果没有摘要，则截取内容前200字作为摘要
+    /*if (!args.subject) { // 如果没有摘要，则截取内容前200字作为摘要
         args.subject = subString(editor.getHTML().replace(/<.*?>/ig,""), 200)
-    }
+    }*/
     if (args.tags.length < 1) {
         noticebox('请选择标签', 0);
         return false;

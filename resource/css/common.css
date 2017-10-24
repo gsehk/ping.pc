@@ -1349,7 +1349,7 @@ img.load {
     left: 50%;
     margin-top: 12px;
     padding: 15px 0 5px;
-    width: 111px;
+    min-width: 111px;
     border-radius: 2px;
     box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
     transform: translateX(-50%);
