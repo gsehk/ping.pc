@@ -342,7 +342,7 @@ $(function() {
     });
 
     // 付费图片弹窗
-    $('body').on('click', '.locked_image', function() {
+    $(document).on('click', '.locked_image', function() {
         checkLogin();
 
         var _this = $(this);
@@ -374,7 +374,7 @@ $(function() {
     });
 
     // 显示跳转详情文字
-    $('body').on("mouseover mouseout", '.date', function(event){
+    $(document).on("mouseover mouseout", '.date', function(event){
         if(event.type == "mouseover"){
           var width = $(this).find('span').first().width();
             width = width < 60 ? 60 : width;
@@ -387,7 +387,7 @@ $(function() {
     });
 
     // 付费设置确认
-    $('body').on('click', '.pay_btn_yes', function() {
+    $(document).on('click', '.pay_btn_yes', function() {
         // 输入框输入值
         var amount = $('.pay_body input').val();
         // 选择值
@@ -410,7 +410,7 @@ $(function() {
         }
     });
 
-    $('body').on('click', '.pay_btn_reset', function() {
+    $(document).on('click', '.pay_btn_reset', function() {
         // 选择图片索引
         var index = $('.pay_image .current').parent().index();
 
@@ -426,7 +426,7 @@ $(function() {
     });
 
     // 付费图片点击
-    $('body').on('click', '.pay_images img', function() {
+    $(document).on('click', '.pay_images img', function() {
         $(this).parents('.pay_images').find('img').removeClass('current');
         $(this).addClass('current');
 
@@ -452,7 +452,7 @@ $(function() {
     });
 
     // 收费金额选择
-    $('body').on('click', '.pay_body span', function() {
+    $(document).on('click', '.pay_body span', function() {
         $(this).siblings().removeClass('current');
         $(this).addClass('current');
         $(this).parent().find('input').val('');
@@ -464,7 +464,7 @@ $(function() {
     });
 
     // 收费金额输入
-    $('body').on('focus change', '.pay_body input', function() {
+    $(document).on('focus change', '.pay_body input', function() {
         $(this).parent().find('span').removeClass('current');
 
         // 若为文字付费
