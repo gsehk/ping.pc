@@ -1,24 +1,26 @@
 @if(!$users->isEmpty())
     @foreach($users as $user)
-        <dl>
-            <dt><img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=30" class="fans_img" /></dt>
-            <dd>
-                <div class="user-info">
-                    <p>{{$user['name']}}</p>
-                    <div class="extra-count">
-                        <span>{{$user['extra']['answers_count'] or 0}}&nbsp;回答</span>
-                        <span>{{$user['extra']['likes_count'] or 0}}&nbsp;点赞</span>
-                    </div>
-                    @if (count($user['tags']) > 0)
-                        <ul>
-                            @foreach($user['tags'] as $tag)
-                                <li>{{$tag['name']}}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-                <div class="invitation-a" data-id="{{$user['id']}}" data-name="{{$user['name']}}">邀请回答</div>
-            </dd>
-        </dl>
+        <div class="user">
+        	<div class="user-header">
+        		<img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=30" class="fans_img" alt="{{$user['name']}}">
+        	</div>
+        	<div class="user-info">
+        		<p class="info-name">{{$user['name']}}</p>
+        		<p class="info-num">
+        			<span>{{$user['extra']['answers_count'] or 0}}</span>回答	
+        			<span>{{$user['extra']['likes_count'] or 0}}</span>点赞	
+        		</p>
+        		@if (count($user['tags']) > 0)
+	                <ul class="user-tags">
+	                    @foreach($user['tags'] as $tag)
+	                        <li>{{$tag['name']}}</li>
+	                    @endforeach
+	                </ul>
+                @endif
+        	</div>
+        	<div class="user-action">
+        		<button class="btn btn-primary invitation-a" data-id="{{$user['id']}}" data-name="{{$user['name']}}">邀请回答</button>
+        	</div>
+        </div>
     @endforeach
 @endif
