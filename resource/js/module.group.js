@@ -28,16 +28,16 @@ post.createPost = function (group_id) {
     });
 
     var data = {
-        title: $('#post_title').val(),
+        //title: $('#post_title').val(),
         content: $('#feed_content').val(),
         images: images,
         group_post_mark: MID + new Date().getTime(),
     };
 
-    if (!data.title || getLength(data.title) > 30) {
+    /*if (!data.title || getLength(data.title) > 30) {
         noticebox('标题的字数为1 - 30个字符', 0);
         return false;
-    }
+    }*/
 
     var strlen = getLength(data.content);
     var leftnums = initNums - strlen;
