@@ -26,7 +26,7 @@
                     </ul>
                     <i></i>
                 </div>
-                <div data-value="1" class="zy_select t_c gap12 mr20" id="J-answer">
+                <div data-value="1" class="zy_select t_c gap12 mr20 select-gray" id="J-answer">
                     <span class="qa_opt">我的回答</span>
                     <ul>
                         <li data-value="all" class="active">全部</li>

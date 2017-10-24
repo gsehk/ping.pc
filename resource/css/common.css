@@ -1389,6 +1389,13 @@ img.load {
     display: block;
 }
 
+.select-gray span{
+    color: #999;
+}
+.select-gray >i:after{
+    border-top-color: #999;
+}
+
 /*收入达人排行榜*/
 .income-rank {
     width: 100%;

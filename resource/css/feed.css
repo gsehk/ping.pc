@@ -494,7 +494,7 @@
     border-left: 1px solid #ededed;
 }
 
-.right_about .auth_fans li a{
+.right_about .auth_fans li a>span{
     color: #000;
     margin-left: 3px;
     font-size: 18px;

@@ -104,7 +104,7 @@ class FeedController extends BaseController
         $comment = clone $comments['comments'];
         $after = $comment->pop()->id ?? 0;
 
-        if (!$comments['pinneds']->isEmpty()) {
+        if ($comments['pinneds'] == null) {
 
             $comments['pinneds']->each(function ($item, $key) use ($comments) {
                 $item->top = 1;

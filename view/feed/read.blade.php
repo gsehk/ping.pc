@@ -167,8 +167,8 @@
                 </div>
             </div>
             <ul class="auth_fans">
-                <li>粉丝<a href="javascript:;">{{ $user['followers'] }}</a></li>
-                <li>关注<a href="javascript:;">{{ $user['followers'] }}</a></li>
+                <li><a href="{{ route('pc:follows', ['user_id' => $user['id'], 'type' => 1]) }}">粉丝<span>{{ $user['followers'] }}</span></a></li>
+                <li><a href="{{ route('pc:follows', ['user_id' => $user['id'], 'type' => 2]) }}">关注<span>{{ $user['followings'] }}</span></a></li>
             </ul>
         </div>
         <!-- 推荐用户 -->

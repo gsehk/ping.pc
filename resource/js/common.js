@@ -1453,7 +1453,17 @@ $(function() {
     if (select.length > 0) {
         select.on("click", function(e){
             e.stopPropagation();
-            return !($(this).hasClass("open")) ? $(this).addClass("open") : $(this).removeClass("open");
+            if ($(this).hasClass("select-gray")) {
+                $(this).removeClass("select-gray");
+                $(this).siblings('.zy_select').addClass('select-gray');
+            }
+            if (!$(this).hasClass("open")) {
+                $(this).siblings('.zy_select').removeClass('open');
+                $(this).addClass("open");
+            } else {
+                $(this).removeClass("open")
+            }
+            return;
         });
 
         select.on("click", "li", function(e){
