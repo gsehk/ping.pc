@@ -11,9 +11,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\socialiteRequest;
 class SocialiteController extends BaseController
 {
     /**
-     * 三方登录/绑定（未登录时）.
+     * 三方登录/绑定（未登录）
+     * @author ZsyD
      * @param Request $request
-     * @param $service
+     * @param [string]  $service [三方类型]
+     * @return mixed
      */
     public function redirectToProvider(Request $request, $service)
     {
@@ -31,19 +33,19 @@ class SocialiteController extends BaseController
 
         $response->send();
     }
-
+    
     /**
-     * 三方登录/绑定（已登录时）.
-     * @param Request $request
-     * @param $service
-     * @author zuo
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\think\response\Redirect
+     * 三方登录/绑定（已登录）
+     * @author ZsyD
+     * @param  Request $request
+     * @param  [string]  $service [三方类型]
+     * @return mixed
      */
     public function redirectToProviderByBind(Request $request, $service)
     {
         if ($this->PlusData['TS']->phone == null) {
 
-            return $this->error(Route('pc:binds'), '绑定失败', '绑定第三方账号必须绑定手机号码');
+            return $this->notice(0, Route('pc:binds'), '绑定失败', '绑定第三方账号必须绑定手机号码');
         }
         $config[$service] = $this->PlusData['config']['common'][$service];
         $config[$service]['redirect'] = $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback?type=bind';
@@ -61,12 +63,12 @@ class SocialiteController extends BaseController
     }
 
     /**
-     * 第三方回调页.
-     * @param Request $request
-     * @param $service
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * 第三方回调页
+     * @author ZsyD
+     * @param  Request $request
+     * @param  [type]  $service [三方类型]
+     * @return mixed
      */
-
     public function handleProviderCallback(Request $request, $service)
     {
         $config[$service] = $this->PlusData['config']['common'][$service];
@@ -82,8 +84,8 @@ class SocialiteController extends BaseController
             $res = socialiteRequest('PATCH', '/api/v2/user/socialite/'.$service, ['access_token' => $access_token]);
 
             return isset($res['message'])
-                ? $this->error(Route('pc:binds'), '绑定失败', $res['message'])
-                : $this->success(Route('pc:binds'), '绑定成功', '您的账号已成功绑定');
+                ? $this->notice(0, Route('pc:binds'), '绑定失败', $res['message'])
+                : $this->notice(1, Route('pc:binds'), '绑定成功', '您的账号已成功绑定');
 
         } else {
         // 未登录时账号注册/绑定
@@ -104,7 +106,7 @@ class SocialiteController extends BaseController
             } else { // 绑定、注册
                 if (!$this->PlusData['config']['bootstrappers']['registerSettings']['open']) {
 
-                    $this->error(Route('pc:login'), '您尚未绑定账号', $res['message']);
+                    $this->notice(0, Route('pc:login'), '您尚未绑定账号', $res['message']);
                 }
                 $return = [
                     'status' => -1,
@@ -123,10 +125,12 @@ class SocialiteController extends BaseController
 
         return;
     }
-
+    
     /**
-     * 三方用户注册/绑定账号（未登录时）.
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 三方用户注册/绑定账号（未登录时）
+     * @author ZsyD
+     * @param  Request $request
+     * @return mixed
      */
     public function bind(Request $request)
     {

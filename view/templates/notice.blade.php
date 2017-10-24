@@ -1,7 +1,3 @@
-{{--@section('title')--}}
-    {{--资讯--}}
-{{--@endsection--}}
-
 @extends('pcview::layouts.default')
 
 @section('content')

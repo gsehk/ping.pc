@@ -38,7 +38,7 @@ class BaseController extends Controller
             if (!$config) {
                 $config = [];
 
-                // 启动信息
+                // 启动信息接口
                 $config['bootstrappers'] = createRequest('GET', '/api/v2/bootstrappers/');
                 $config['bootstrappers']['site']['reward']['amounts'] = $config['bootstrappers']['site']['reward']['amounts'] ?: '5,10,15';
 
@@ -72,16 +72,26 @@ class BaseController extends Controller
         });
     }
 
-    public function success($url, $message = '', $content = '', $time = 10)
+
+    /**
+     * 操作提示
+     * @author ZsyD
+     * @param  int    $status  [状态]
+     * @param  string $url     [跳转链接]
+     * @param  string $message [信息]
+     * @param  string $content [内容]
+     * @param  int    $time    [跳转时间]
+     * @return mixed
+     */
+    public function notice(int $status, string $url, string $message, string $content, int $time)
     {
+        $data['status'] = $status;
+        $data['message'] = $message;
+        $data['content'] = $content;
+        $data['url'] = $url;
+        $data['time'] = $time;
 
-        return redirect(route('pc:success', ['status' => 1, 'message' => $message, 'content' => $content, 'url' => $url, 'time' => $time]));
-    }
-
-    public function error($url, $message = '', $content = '', $time = 10)
-    {
-
-        return redirect(route('pc:success', ['status' => 0, 'message' => $message, 'content' => $content, 'url' => $url, 'time' => $time]));
+        return view('pcview::templates.notice', $data, $this->PlusData);
     }
 }
 

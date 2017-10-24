@@ -53,6 +53,7 @@
 
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/picshow/picShow.js') }}"></script>
 <script type="text/javascript">
 $(function() {
     var type = '{{ $type }}';

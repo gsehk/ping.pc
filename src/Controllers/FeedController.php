@@ -10,6 +10,12 @@ use Zhiyi\Plus\Models\AdvertisingSpace;
 
 class FeedController extends BaseController
 {
+    /**
+     * 动态首页/列表
+     * @author Foreach
+     * @param  Request $request
+     * @return mixed
+     */
     public function feeds(Request $request)
     {
         if($request->ajax()){
@@ -58,6 +64,13 @@ class FeedController extends BaseController
         return view('pcview::feed.index', $data, $this->PlusData);
     }
 
+    /**
+     * 动态详情
+     * @author Foreach
+     * @param  Request $request
+     * @param  int     $feed_id [动态id]
+     * @return mixed
+     */
     public function read(Request $request, int $feed_id)
     {
         $feed = createRequest('GET', '/api/v2/feeds/'.$feed_id);
@@ -74,6 +87,13 @@ class FeedController extends BaseController
         return view('pcview::feed.read', $data, $this->PlusData);
     }
 
+    /**
+     * 动态评论列表
+     * @author Foreach
+     * @param  Request $request
+     * @param  int     $feed_id [动态id]
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function comments(Request $request, int $feed_id)
     {
         $params = [

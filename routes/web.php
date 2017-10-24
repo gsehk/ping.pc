@@ -125,8 +125,6 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     // 获取我绑定信息
     Route::get('/binds', 'AccountController@getMyBinds')->name('pc:binds');
 
-    Route::get('/success', 'AccountController@successCon')->name('pc:success');
-
     Route::get('/gateway', 'AccountController@gateway')->name('pc:gateway');
 });
 
@@ -233,4 +231,5 @@ Route::prefix('socialite')->group(function () {
     Route::post('/', 'SocialiteController@bind')->name('pc:socialitebind');
 });
 
-
+// 成功提示
+Route::get('/success', 'BaseController@success')->name('pc:success');

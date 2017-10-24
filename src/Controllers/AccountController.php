@@ -11,9 +11,9 @@ class AccountController extends BaseController
 {
 
     /**
-     * 基本资料.
-     *
-     * @param  Illuminate\Http\Request $request
+     * 基本设置
+     * @author Foreach
+     * @param  Request $request
      * @return mixed
      */
     public function index(Request $request)
@@ -29,8 +29,8 @@ class AccountController extends BaseController
     }
 
     /**
-     * 认证管理.
-     *
+     * 认证
+     * @author 28youth
      * @return mixed
      */
     public function authenticate()
@@ -46,8 +46,8 @@ class AccountController extends BaseController
     }
 
     /**
-     * 更新认证信息.
-     *
+     * 更新认证
+     * @author 28youth
      * @return mixed
      */
     public function updateAuthenticate()
@@ -62,8 +62,8 @@ class AccountController extends BaseController
     }
 
     /**
-     * 标签管理.
-     *
+     * 标签管理
+     * @author 28youth
      * @return mixed
      */
     public function tags()
@@ -77,7 +77,8 @@ class AccountController extends BaseController
     }
 
     /**
-     * 安全设置.
+     * 密码修改
+     * @author 28youth
      * @return mixed
      */
     public function security()
@@ -91,8 +92,10 @@ class AccountController extends BaseController
     }
 
     /**
-     * 我的钱包.
-     *
+     * 我的钱包
+     * @author Foreach
+     * @param  Request     $request 
+     * @param  int|integer $type    [类型]
      * @return mixed
      */
     public function wallet(Request $request, int $type = 1)
@@ -107,10 +110,10 @@ class AccountController extends BaseController
     }
 
     /**
-     * 订单记录.
-     *
-     * @param  Illuminate\Http\Request $request
-     * @return mixed
+     * 钱包记录列表
+     * @author Foreach
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function records(Request $request)
     {
@@ -146,6 +149,13 @@ class AccountController extends BaseController
         ]);
     }
 
+    /**
+     * 钱包记录详情
+     * @author Foreach
+     * @param  Request $request   
+     * @param  int     $record_id [记录id]
+     * @return mixed
+     */
     public function record(Request $request, int $record_id)
     {
         $order = createRequest('GET', '/api/v2/wallet/charges/'.$record_id);
@@ -157,6 +167,11 @@ class AccountController extends BaseController
         return view('pcview::account.detail', $data, $this->PlusData);
     }
 
+    /**
+     * 充值
+     * @author Foreach
+     * @return mixed
+     */
     public function pay()
     {
         $this->PlusData['account_cur'] = 'wallet';
@@ -164,6 +179,24 @@ class AccountController extends BaseController
         return view('pcview::account.walletpay', $this->PlusData);
     }
 
+    /**
+     * ping++充值调起
+     * @author Foreach
+     * @param  Request $request
+     * @return mixed
+     */
+    public function gateway(Request $request)
+    {
+        $data['charge'] = $request->query('res');
+
+        return view('pcview::account.gateway', $data, $this->PlusData);
+    }
+
+    /**
+     * 提现
+     * @author Foreach
+     * @return mixed
+     */
     public function draw()
     {
         $this->PlusData['account_cur'] = 'wallet';
@@ -173,8 +206,8 @@ class AccountController extends BaseController
 
     /**
      * 获取绑定信息
-     * @author zuo
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     * @author ZsyD
+     * @return mixed
      */
     public function getMyBinds()
     {
@@ -201,24 +234,4 @@ class AccountController extends BaseController
 
         return view('pcview::account.binds', $data, $this->PlusData);
     }
-
-    public function successCon(Request $request)
-    {
-        $data['status'] = $request->query('status');
-        $data['message'] = $request->query('message');
-        $data['content'] = $request->query('content');
-        $data['url'] = $request->query('url');
-        $data['time'] = $request->query('time');
-
-        return view('pcview::templates.success', $data, $this->PlusData);
-    }
-
-    public function gateway(Request $request)
-    {
-        $data['charge'] = $request->query('res');
-
-        return view('pcview::account.gateway', $data, $this->PlusData);
-    }
-
-
 }
