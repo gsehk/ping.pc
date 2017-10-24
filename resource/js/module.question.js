@@ -11,14 +11,14 @@ var QA = {
             $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);
         });
     },
-    adoptions: function (question_id, answer_id) {
+    adoptions: function (question_id, answer_id, back_url) {
         var url = '/api/v2/questions/' + question_id + '/adoptions/' + answer_id;
         $.ajax({
             url: url,
             type: 'PUT',
             dataType: 'json',
             success: function(res) {
-                noticebox(res.message, 1, '/question/' + question_id);
+                noticebox(res.message, 1, back_url);
             },
             error: function(xhr){
                 showError(xhr.responseJSON);

@@ -37,7 +37,7 @@
                             @php
                                 $body_text = preg_replace('@\@*\!\[\w*\]\([https]+\:\/\/[\w\/\.]+\)@', '[图片]', $question->body);
                             @endphp
-                            @if(strpos($body_text, '[图片]') < 0 && strlen($body_text) <= 300)
+                            @if(strpos($body_text, '[图片]') === false && strlen($body_text) <= 300)
                                 <span class="show-body">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
                             @else
                                 <span class="show-body hide">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
@@ -123,7 +123,7 @@
                             </a>
                         @endif
                         @if($question->amount <= 0)
-                            <a href="javascript:;" class="button set-amount" @if($question['user_id'] == $TS['id']) onclick="question.amount({{ $question['id'] }})" @endif >未设置悬赏</a>
+                            <a href="javascript:;" class="button set-amount" @if($question['user_id'] == $TS['id'] && $question['status'] == 0) onclick="question.amount({{ $question['id'] }})" @endif >未设置悬赏</a>
                         @elseif(!$question->invitations->isempty())
                             <a href="javascript:;" class="button set-amount">已邀请悬赏</a>
                         @else
