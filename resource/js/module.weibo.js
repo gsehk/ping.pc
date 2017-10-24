@@ -303,7 +303,8 @@ weibo.payImage = function(obj){
                 type: 'POST',
                 dataType: 'json',
                 success: function(res) {
-                    _this.attr('src', image);
+                    // 刷新图片
+                    _this.attr('src', image + '&t=paid');
                     _this.removeAttr('onclick');
                     _this.addClass('bigcursor');
                     layer.closeAll();
