@@ -38,6 +38,13 @@
                                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
                                     </a>
                                 </li>
+                                @if($news->audit_status == 3)
+                                    <li>
+                                        <a href="{{ route('pc:newsrelease', $news->id) }}">
+                                           <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑 
+                                        </a>
+                                    </li>
+                                @endif
                                 @if (!$news['audit_status'])
                                     <li>
                                         <a href="javascript:;" onclick="news.delete({{$news->id}}, {{$news->cate_id}});">

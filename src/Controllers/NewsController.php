@@ -109,11 +109,15 @@ class NewsController extends BaseController
         
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
+        if ($news_id > 0) {
+            $data = createRequest('GET', '/api/v2/news/' . $news_id)->toArray();
+        }
         $data['news_id'] = $news_id;
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
         // 标签
-        $data['tags'] = createRequest('GET', '/api/v2/tags');
+        $data['release_tags'] = createRequest('GET', '/api/v2/tags');
         $data['notice'] = $notice;
+        // dd($data);
 
         return view('pcview::news.release', $data, $this->PlusData);
     }

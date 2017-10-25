@@ -24,25 +24,31 @@
             @if(isset($cates))
                 @foreach($cates as $k=>$cate)
                     <span data-cid="{{$cate['id']}}"
-                        @if(isset($cate_id))
-                            @if($cate['id'] == $cate_id) class="current" @endif
+                        @if(isset($category) && count($category) > 0)
+                            @if($cate['id'] == $category['id']) class="current" @endif
                         @endif
                     >{{$cate['name']}}</span>
                 @endforeach
             @endif
-            <input type="hidden" name="cate_id" id="cate_id">
+            <input type="hidden" name="cate_id" id="cate_id" value="{{ $category['id'] or 0 }}">
         </div>
         <div class="release_place">
             @include('pcview::widgets.markdown', ['height'=>'530px', 'width' => '100%', 'content'=>$content ?? ''])
         </div>
         <div class="release_tags">
-            <label for="J-select-tags">请选择标签</label for="J-select-tags">
-            <ul class="release_tags_selected" id="J-select-tags"></ul>
+            <label for="J-select-tags" @if(isset($id) || isset($tags)) style="display: none;" @endif>请选择标签</label for="J-select-tags">
+            <ul class="release_tags_selected" id="J-select-tags">
+                @if(isset($tags))
+                    @foreach($tags as $tag)
+                        <li class="tag_{{ $tag['id'] }}" data-id="{{ $tag['id'] }}">{{ $tag['name'] }}</li>
+                    @endforeach
+                @endif
+            </ul>
             <div class="release_tags_list" id="J-tag-box" style="display: none;">
-                @foreach ($tags as $tag)
+                @foreach ($release_tags as $release_tag)
                     <dl>
-                        <dt>{{ $tag->name }}</dt>
-                        @foreach ($tag->tags as $item)
+                        <dt>{{ $release_tag->name }}</dt>
+                        @foreach ($release_tag->tags as $item)
                             <dd data-id="{{$item->id}}">{{ $item->name }}</dd>
                         @endforeach
                     </dl>
@@ -55,17 +61,17 @@
                 <img src="{{ asset('zhiyicx/plus-component-pc/images/pro.png') }}" /><input placeholder="添加标签，多个标签用逗号分开" />
             </span>
             <span class="ai_face_box">
-                <img src="@if (!empty($storage)) {{ $routes['storage'] }}{{$storage}}?w=230&h=163 @else {{ asset('zhiyicx/plus-component-pc/images/pic_upload.png') }} @endif" id="J-image-preview" />
+                <img src="@if (!empty($image)) {{ $routes['storage'] }}{{$image['id']}}?w=230&h=163 @else {{ asset('zhiyicx/plus-component-pc/images/pic_upload.png') }} @endif" id="J-image-preview" />
                 <div class="ai_upload">
-                    <input name="subject-image" id="subject-image" type="hidden" value="{{$storage or 0}}" />
+                    <input name="subject-image" id="subject-image" type="hidden" value="{{$image['id'] or 0}}" />
                 </div>
             </span>
         </div>
         <div class="release_word">
-            <input type="text" id="subject-author" name="subject-author" value="{{$author or ''}}" placeholder="文章作者（选填）" maxlength="8"/>
+            <input type="text" id="subject-author" name="subject-author" value="{{(isset($author) && isset($TS) && $author != $TS['name']) ? $author : ''}}" placeholder="文章作者（选填）" maxlength="8"/>
         </div>
         <div class="release_word">
-            <input type="text" id="subject-from" name="subject-from" value="{{$from or ''}}" placeholder="文章转载至何处（非转载可不填）"  maxlength="8"/>
+            <input type="text" id="subject-from" name="subject-from" value="{{(isset($from) && $from != '原创') ? $from : ''}}" placeholder="文章转载至何处（非转载可不填）"  maxlength="8"/>
         </div>
         <div class="release_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
         <div class="release_btn">
@@ -105,7 +111,7 @@
             contribute: JSON.parse("{{$notice['contribute']}}".replace(/&quot;/g, '"')),
             pay_contribute: "{{$notice['pay_contribute']}}"
         };
-
+        var selBox = $('#J-select-tags');
 
         $('.release_tags').on('click', '>*', function(e){
             e.stopPropagation();
@@ -114,8 +120,6 @@
 
         $('#J-tag-box dd').on('click', function(e){
             e.stopPropagation();
-            e.stopPropagation();
-            var selBox = $('#J-select-tags');
             var tag_id = $(this).data('id');
             var tag_name = $(this).text();
             if (selBox.find('li').hasClass('tag_'+tag_id)) {
@@ -127,14 +131,19 @@
             }
 
             selBox.append('<li class="tag_'+tag_id+'" data-id="'+tag_id+'">'+tag_name+'</li>');
-            selBox.on('click', 'li', function(){
-                $(this).remove();
-                if (selBox.find('li').length == 0) {
-                    $('.release_tags label').show();
-                }
-            });
-            $('.release_tags label').hide();
+            if (selBox.find('li').length > 0) {
+                $('.release_tags label').hide();
+            }
         });
+
+        selBox.on('click', 'li', function(){
+            $(this).remove();
+            if (selBox.find('li').length == 0) {
+                $('.release_tags label').show();
+            }
+        });
+
+
         $('#J-image-preview').on('click',function(){
             var html = '<div id="model">'
                 + '<div class="avatar-container" id="crop-avatar">'

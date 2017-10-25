@@ -60,6 +60,10 @@ $('.subject-submit').on('click', function() {
         return false;
     }
 
+    if (args.news_id > 0) {
+        return news.update(args);
+    }
+
     var isVerified = notice.contribute.verified;
     var isPay = notice.contribute.pay;
     var pay_contribute = (parseInt(notice.pay_contribute) * wallet_ratio).toFixed(1);
@@ -72,9 +76,24 @@ $('.subject-submit').on('click', function() {
     } else if (isPay > -1 && pay_contribute > 0) {
         var html = formatConfirm('投稿提示', '<div class="confirm_money">' + pay_contribute + '</div>本次投稿您需要支付' + pay_contribute + gold_name.name +'，是否继续投稿？');
         ly.confirm(html, '投稿' , '', function(){
-            _this.lockStatus = 1;
-            var url = '/api/v2/news/categories/'+args.cate_id+'/news';
-            $.ajax({
+           return news.create(args);
+        });
+
+        return false;
+    }
+
+    return news.create(args);
+});
+
+var news = {
+    create: function (args) {
+        var _this = this;
+        if ( _this.lockStatus == 1) {
+            return;
+        }
+         _this.lockStatus = 1;
+        var url = '/api/v2/news/categories/'+args.cate_id+'/news';
+        $.ajax({
                 url: url,
                 type: 'POST',
                 data: args,
@@ -84,41 +103,40 @@ $('.subject-submit').on('click', function() {
                 },
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
-                        noticebox('投稿成功，请等待审核', 1, '/news');
+                        noticebox('投稿成功，请等待审核', 1);
                     } else {
                         noticebox(res.message, 0);
                         _this.lockStatus = 0;
                     }
                 }
             });
-        });
-
-        return false;
-    }
-
-    _this.lockStatus = 1;
-    var url = '/api/v2/news/categories/'+args.cate_id+'/news';
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: args,
-        dataType: 'json',
-        error: function(error) {
-            noticebox(error.responseJSON.message, 0);
-            _this.lockStatus = 0;
-        },
-        success: function(res, data, xml) {
-            if (xml.status == 201) {
-                noticebox('投稿成功，请等待审核', 1, '/news');
-            } else {
-                noticebox(res.message, 0);
-                _this.lockStatus = 0;
-            }
+    },
+    update: function (args) {
+        var _this = this;
+        if ( _this.lockStatus == 1) {
+            return;
         }
-    });
-});
-
-var news = {
+         _this.lockStatus = 1;
+        var url = '/api/v2/news/categories/'+args.cate_id+'/news/'+args.news_id;
+        $.ajax({
+                url: url,
+                type: 'PATCH',
+                data: args,
+                dataType: 'json',
+                error: function(xml) {
+                    noticebox(xml.responseJSON.message, 0);
+                    _this.lockStatus = 0;
+                },
+                success: function(res, data, xml) {
+                    if (xml.status == 204) {
+                        noticebox('修改成功，请等待审核', 1, '/news');
+                    } else {
+                        noticebox(res.message, 0);
+                        _this.lockStatus = 0;
+                    }
+                }
+            });
+    },
     delete: function (news_id, cate_id) {
         var url = '/api/v2/news/categories/'+cate_id+'/news/'+news_id;
         layer.confirm(confirmTxt + '确定删除这篇文章？', function() {
