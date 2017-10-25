@@ -297,6 +297,11 @@ class QuestionController extends BaseController
             'type' => $request->input('type', 'all'),
         ];
         $question['data'] = createRequest('GET', '/api/v2/question-topics/'.$topic_id.'/questions', $params);
+        if ($params['type'] == 'excellent') {
+            $question['data']->map(function ($item) {
+                $item->excellent_show = false;
+            });
+        }
         $html = view('pcview::templates.question', $question, $this->PlusData)->render();
 
         return response()->json([

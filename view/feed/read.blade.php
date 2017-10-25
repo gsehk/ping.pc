@@ -58,14 +58,7 @@
             @if(!empty($feed->images))
             <div class="detail_images" id="layer-photos-demo">
             @foreach($feed->images as $store)
-                @if (isset($store['paid']) && $store['paid'] == false)
-                    <div class="locked_image" style="position:relative">
-                        <img src="{{ $routes['resource'] }}/images/pic_locked.png" class="feed_image_pay" data-node="{{ $store['paid_node'] }}" data-amount="{{ $store['amount'] }}" data-file="{{ $store['file'] }}" data-original="{{ getImageUrl($store, '', '', false) }}"/>
-                        <svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>
-                    </div>
-                @else
                 <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy"/>
-                @endif
             @endforeach
             </div>
             @endif
@@ -106,13 +99,9 @@
                 <div class="detail_third_share">
                     分享至：
                     @php
-                        // 设置第三方分享图片，若未付费则为锁图。
+                        //设置第三方分享图片，若未付费则为锁图。
                         if ($feed->images->count() > 0) {
-                            if (isset($feed->images[0]['paid']) && $feed->images[0]['paid'] == false) {
-                                $share_pic = $routes['resource'] . '/images/pic_locked.png';
-                            } else {
-                                $share_pic = getenv('APP_URL') . '/api/v2/files/' . $feed->images[0]['file'];
-                            }
+                            $share_pic = getenv('APP_URL') . '/api/v2/files/' . $feed->images[0]['file'];
                         } else {
                             $share_pic = '';
                         }

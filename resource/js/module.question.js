@@ -153,7 +153,7 @@ var question = {
         });
     },
     selected: function (question_id, money) {
-        var html = formatConfirm('精选问答支付', '<div class="confirm_money">￥' + money + '</div>本次申请精选您需要支付' + money + gold_name.name + '，是否继续申请？');
+        var html = formatConfirm('精选问答支付', '<div class="confirm_money">' + money + '</div>本次申请精选您需要支付' + money + gold_name.name + '，是否继续申请？');
 
         ly.confirm(html, '' , '', function(){
             var _this = this;

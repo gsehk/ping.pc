@@ -257,7 +257,7 @@ weibo.payText = function(obj, tourl){
     tourl = tourl || '';
     var feed_item = _this.parents('.feed_item');
     var id = feed_item.attr('id');
-    var amount = feed_item.data('amount') * wallet_ratio;
+    var amount = (feed_item.data('amount') * wallet_ratio).toFixed(2);
     var node = feed_item.data('node');
 
     var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + gold_name.name + '即可查看完整内容，是否确认支付？');
@@ -297,7 +297,7 @@ weibo.payImage = function(obj){
         checkLogin();
 
         var _this = $(obj);
-        var amount = parseFloat(_this.data('amount')) * wallet_ratio;
+        var amount = (parseFloat(_this.data('amount')) * wallet_ratio).toFixed(2);
         var node = _this.data('node');
         var file = _this.data('file');
         var image = _this.data('original');
