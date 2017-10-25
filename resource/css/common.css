@@ -265,7 +265,7 @@ a {
 }
 
 .nav_list .nav_input {
-    width: 100%;
+    width: calc(100% - 35px);
     height: 100%;
     font-size: 14px;
     color: #333;

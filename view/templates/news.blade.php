@@ -21,7 +21,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
                @if (!isset($cate_id) || $cate_id == 0)
                     <a href="javascript:;" class="cates_span">{{ $item['category']['name'] }}</a>
                @endif
-               <span>{{ $item['from'] }}  ·  {{ $item['hits'] }}浏览  ·  {{ getTime($item['created_at'], 1) }}</span>
+               <span>{{ $item['from'] != '原创' ? $item['from'] : $item['user']['name'] }}  ·  {{ $item['hits'] }}浏览  ·  {{ getTime($item['created_at'], 1) }}</span>
           </div>
      </div>
 </div>

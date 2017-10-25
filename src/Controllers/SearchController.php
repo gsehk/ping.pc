@@ -51,7 +51,8 @@ class SearchController extends BaseController
 
                 $datas = createRequest('GET', '/api/v2/questions', $params);
                 $data['data'] = $datas;
-                $after = $datas->pop()->id ?? 0;
+                $question = clone $data['data'];
+                $after = $question->pop()->id ?? 0;
                 $html = view('pcview::templates.question', $data, $this->PlusData)->render();
                 break;
             case '3':
