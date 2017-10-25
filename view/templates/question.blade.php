@@ -46,7 +46,7 @@
                         </div>
                     @endif
                     <div class="q_text">
-                        @if(!$post->answer->invited || (isset($TS) && $post->answer->invited == 1 && ($post->answer->could || $post->user_id == $TS['id'] || $post->answer->user_id == $TS['id'])))
+                        @if($post->answer->invited == 0 || $post->look == 0 || (isset($TS) && $post->answer->invited == 1 && ($post->answer->could || $post->user_id == $TS['id'] || $post->answer->user_id == $TS['id'])))
                             <span>{!! str_limit(preg_replace('@\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)@', '[图片]', $post->answer->body), 250, '...') !!}</span>
                             <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain button-more">查看详情</a>
                         @else

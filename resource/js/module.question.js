@@ -6,6 +6,7 @@ var QA = {
         comment.support.position = type;
         comment.support.editor = $('#J-editor'+row_id);
         comment.support.button = $('#J-button'+row_id);
+        comment.support.top = false;
         comment.publish(url, function(res){
             $('.nums').text(comment.support.wordcount);
             $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);

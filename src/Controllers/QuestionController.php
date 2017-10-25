@@ -208,7 +208,6 @@ class QuestionController extends BaseController
             }
             if (!empty($question['invitation_answers'])) { // 悬赏人回答
                 $question['invitation_answers']->each(function ($item, $key) use ($data) {
-                    $item->invitation = 1;
                     $data['answers']->prepend($item);
                 });
             }
