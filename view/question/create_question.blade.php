@@ -125,7 +125,7 @@
         var step2 = $('.step2');
         var question_id = {{ $question['id'] or 0}};
         var selBox = $('#J-select-topics');
-        var checkSubmitFlg = false;
+        var lockStatus = false;
         subject.keyup(function (event) {
             //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值
             last = event.timeStamp;
@@ -277,12 +277,11 @@
         });
         // 发布问题
         $('#question-submit').on('click', function () {
-            if (checkSubmitFlg) {
+            if (lockStatus) {
                 noticebox('请勿重复提交', 0);
 
                 return false;
             }
-            checkSubmitFlg = true;
             args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) / wallet_ratio;
             args.look = $("input[type='radio'][name='look']:checked").val();
             var topic = [];
@@ -301,20 +300,17 @@
             if (args.look == 1 || $("input[type='radio'][name='reward']:checked").val() == 1) {
                 if (args.amount <= 0) {
                     noticebox('请设置悬赏金额', 0);
-                    checkSubmitFlg = false;
 
                     return false;
                 }
                 if (args.invitations.length != 1) {
                     noticebox('请邀请回答人', 0);
-                    checkSubmitFlg = false;
 
                     return false;
                 }
 
                 if ($.inArray({{ $TS['id'] }}, args.invitations_) > -1) {
                     noticebox('不能邀请自己', 0);
-                    checkSubmitFlg = false;
 
                     return false;
                 }
@@ -324,6 +320,7 @@
 
                 return update();
             }
+            lockStatus = true;
             $.ajax({
                 type: 'POST',
                 url: '/api/v2/questions',
@@ -333,12 +330,12 @@
                         noticebox(res.message, 1, '/question/'+res.question.id);
                     } else {
                         noticebox(res.message, 0);
+                        lockStatus = false;
                     }
-                    checkSubmitFlg = false;
                 },
                 error: function (xml) {
                     showError(xml.responseJSON);
-                    checkSubmitFlg = false;
+                    lockStatus = false;
                 }
             });
         });
@@ -386,7 +383,6 @@
         function update() {
             if (!args.subject || !args.body || !args.topics_) {
                 if (!stepOne()) {
-                    checkSubmitFlg = false;
 
                     return false;
                 }
@@ -397,6 +393,7 @@
                 topic[key].id = args.topics_[key];
             }
             args.topics = topic;
+            lockStatus = true;
             $.ajax({
                 type: 'PATCH',
                 url: '/api/v2/questions/' + question_id,
@@ -406,12 +403,12 @@
                         noticebox('修改成功', 1, '/question/'+question_id);
                     } else {
                         noticebox(res.message, 0);
+                        lockStatus = false;
                     }
-                    checkSubmitFlg = false;
                 },
                 error: function (xml) {
                     showError(xml.responseJSON);
-                    checkSubmitFlg = false;
+                    lockStatus = false;
                 }
             });
         }

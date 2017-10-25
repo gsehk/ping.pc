@@ -99,7 +99,11 @@ weibo.postFeed = function() {
 };
 
 weibo.doPostFeed = function(type) {
-
+    var _this = this;
+    if (_this.lockStatus == 1) {
+        noticebox('请勿重复提交', 0);
+        return;
+    }
     // 分享字数限制
     var strlen = getLength($('#feed_content').val());
     var leftnums = initNums - strlen;
@@ -150,6 +154,8 @@ weibo.doPostFeed = function(type) {
         }
     }
 
+    _this.lockStatus = 1;
+
     $.ajax({
         url: '/api/v2/feeds',
         type: 'post',
@@ -160,8 +166,10 @@ weibo.doPostFeed = function(type) {
             weibo.afterPostFeed(res.id);
             noticebox('发布成功', 1);
             layer.closeAll();
+            _this.lockStatus = 0;
         },
         error: function(xhr){
+            _this.lockStatus = 0;
             showError(xhr.responseJSON);
         }
     });

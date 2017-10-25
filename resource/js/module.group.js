@@ -21,6 +21,11 @@ post.showImg = function(){
 
 post.createPost = function (group_id) {
     checkLogin();
+    var _this = this;
+    if (_this.lockStatus == 1) {
+        noticebox('请勿重复提交', 0);
+        return;
+    }
 
     var images = [];
     $('.feed_picture').find('img').each(function() {
@@ -45,6 +50,7 @@ post.createPost = function (group_id) {
         noticebox('分享内容长度为1-' + initNums + '字', 0);
         return false;
     }
+    _this.lockStatus = 1;
     $.ajax({
         url: '/api/v2/groups/' + group_id + '/posts',
         type: 'post',
@@ -55,9 +61,11 @@ post.createPost = function (group_id) {
             $('#post_title').val('');
             $('#feed_content').val('');
             post.afterCreatePost(group_id, res.id);
+            _this.lockStatus = 0;
         },
         error: function(xhr){
             showError(xhr.responseJSON);
+            _this.lockStatus = 0;
         }
     })
 };

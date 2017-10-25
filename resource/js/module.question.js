@@ -67,6 +67,11 @@ var QA = {
         checkLogin();
         obj = obj ? obj : false;
         ly.confirm(formatConfirm('围观支付', '本次围观您需要支付' + money + gold_name.name + '，是否继续围观？'), '' , '', function(){
+            var _this = this;
+            if (_this.lockStatus == 1) {
+                return;
+            }
+            _this.lockStatus = 1;
             var url ='/api/v2/question-answers/' + answer_id + '/onlookers';
 
             $.ajax({
@@ -85,9 +90,11 @@ var QA = {
                         $(obj).text(body);
                         $(obj).after('<a href="/question/answer/' + answer_id + '" class="button button-plain button-more">查看详情</a>');
                         layer.closeAll();
+                        _this.lockStatus = 0;
                     }
                 },
                 error: function(xhr){
+                    _this.lockStatus = 0;
                     showError(xhr);
                 }
             });
@@ -149,6 +156,11 @@ var question = {
         var html = formatConfirm('精选问答支付', '<div class="confirm_money">￥' + money + '</div>本次申请精选您需要支付' + money + gold_name.name + '，是否继续申请？');
 
         ly.confirm(html, '' , '', function(){
+            var _this = this;
+            if (_this.lockStatus == 1) {
+                return;
+            }
+            _this.lockStatus = 1;
             var url ='/api/v2/user/question-application/' + question_id;
             $.ajax({
                 url: url,
@@ -157,9 +169,12 @@ var question = {
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
                         noticebox('申请成功', 1);
+                    } else {
+                        _this.lockStatus = 0;
                     }
                 },
                 error: function(xhr){
+                    _this.lockStatus = 0;
                     showError(xhr.responseJSON);
                 }
             });
@@ -184,6 +199,11 @@ var question = {
             + '</div>';
 
         ly.confirm(html, '公开悬赏', '', function(){
+            var _this = this;
+            if (_this.lockStatus == 1) {
+                return;
+            }
+            _this.lockStatus = 1;
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
             var amount = $('.reward_input input').val() / wallet_ratio;
 
@@ -197,12 +217,14 @@ var question = {
                 data: {amount: num ? num : amount},
                 dataType: 'json',
                 error: function(xml) {
-                    console.log(xml)
+                    _this.lockStatus = 0;
                     showError(xml);
                 },
                 success: function(res, data, xml) {
                     if (xml.status == 204) {
                         noticebox('操作成功', 1, 'refresh');
+                    } else {
+                        _this.lockStatus = 0;
                     }
                 }
             });

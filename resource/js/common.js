@@ -768,6 +768,10 @@ var comment = {
     publish: function(url, callback) {
         checkLogin()
         var _this = this;
+        if (_this.lockStatus == 1) {
+            noticebox('请勿重复提交', 0);
+            return;
+        }
         var formData = { body: this.support.editor.val() };
         if (!formData.body) {
             noticebox('评论内容不能为空', 0); return;
@@ -788,6 +792,7 @@ var comment = {
         }
 
         this.support.button.text('评论中..');
+        _this.lockStatus = 1;
         $.ajax({
             url: url,
             type: 'POST',
@@ -849,11 +854,14 @@ var comment = {
 
                 $('#J-commentbox'+_this.support.row_id).prepend(html);
 
+                _this.lockStatus = 0;
+
                 callback(res);
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
                 _this.support.button.text('评论');
+                _this.lockStatus =0;
             }
         });
     },

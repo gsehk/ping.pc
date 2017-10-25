@@ -2,6 +2,11 @@
  * 文章投稿。
  */
 $('.subject-submit').on('click', function() {
+    var _this = this;
+    if (_this.lockStatus == 1) {
+        noticebox('请勿重复提交', 0);
+        return;
+    }
     var args = {
         'author': $('#subject-author').val(),
         'title': $('#subject-title').val(),
@@ -67,18 +72,22 @@ $('.subject-submit').on('click', function() {
     } else if (isPay > -1 && pay_contribute > 0) {
         var html = formatConfirm('投稿提示', '<div class="confirm_money">' + pay_contribute + '</div>本次投稿您需要支付' + pay_contribute + gold_name.name +'，是否继续投稿？');
         ly.confirm(html, '投稿' , '', function(){
+            _this.lockStatus = 1;
             var url = '/api/v2/news/categories/'+args.cate_id+'/news';
             $.ajax({
                 url: url,
                 type: 'POST',
                 data: args,
                 dataType: 'json',
-                error: function(xml) {},
+                error: function(xml) {
+                    _this.lockStatus = 0;
+                },
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
                         noticebox('投稿成功，请等待审核', 1, '/news');
                     } else {
                         noticebox(res.message, 0);
+                        _this.lockStatus = 0;
                     }
                 }
             });
@@ -87,6 +96,7 @@ $('.subject-submit').on('click', function() {
         return false;
     }
 
+    _this.lockStatus = 1;
     var url = '/api/v2/news/categories/'+args.cate_id+'/news';
     $.ajax({
         url: url,
@@ -95,12 +105,14 @@ $('.subject-submit').on('click', function() {
         dataType: 'json',
         error: function(error) {
             noticebox(error.responseJSON.message, 0);
+            _this.lockStatus = 0;
         },
         success: function(res, data, xml) {
             if (xml.status == 201) {
                 noticebox('投稿成功，请等待审核', 1, '/news');
             } else {
                 noticebox(res.message, 0);
+                _this.lockStatus = 0;
             }
         }
     });
