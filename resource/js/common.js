@@ -604,7 +604,7 @@ var setCookie = function(c_name,value,expiredays) {
     var exdate=new Date()
     exdate.setDate(exdate.getDate()+expiredays)
     document.cookie=c_name+ "=" +escape(value)+
-    ((expiredays==null) ? "" : "; expires="+exdate.toGMTString())
+    ((expiredays==null) ? "" : "; expires="+exdate.toGMTString()+"; path=/")
 }
 
 // 获取cookie
@@ -1204,9 +1204,10 @@ var delHistory = function(str) {
 //验证登录
 var checkLogin = function() {
     if (MID == 0) {
+        // 记录url
+        setCookie('referer_url', window.location.href, 1);
         window.location.href = SITE_URL+'/passport/login';
-
-        throw new FatalError("请登录");
+        throw new Error("请登录");
     }
 }
 

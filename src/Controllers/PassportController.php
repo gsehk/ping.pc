@@ -3,6 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Session;
+use Cookie;
 use Illuminate\Http\Request;
 use Gregwar\Captcha\CaptchaBuilder;
 use Zhiyi\Plus\Http\Controllers\Controller;
@@ -24,7 +25,14 @@ class PassportController extends BaseController
 
         // 若设置history
         if (Session::get('history')) {
-            return redirect(Session::get('history'));
+            $history = Session::get('history');
+            Session::forget('history');
+            return redirect($history);
+        }
+
+        // 若设置referer_url
+        if (isset($_COOKIE['referer_url']) && $_COOKIE['referer_url'] != '') {
+            return redirect($_COOKIE['referer_url']);
         }
 
         if ($type) {

@@ -7,6 +7,15 @@ $(function() {
         var _this = $(this);
 
         var login = $('input[name="login"]').val();
+        var password = $('input[name="password"]').val();
+        if (login == '') {
+            $('input[name="login"]').focus();
+            return false;
+        }
+        if (password == '') {
+            $('input[name="password"]').focus();
+            return false;
+        }
         if (!passlod) {
             var url = '/api/v2/tokens';
             passlod = true;
