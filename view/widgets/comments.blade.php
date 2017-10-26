@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
+@endphp
 @if($position == 1)
     <div class="comment_box" style="display: none;">
         <div class="comment_line">
