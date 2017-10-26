@@ -58,8 +58,15 @@
             @if(!empty($feed->images))
             <div class="detail_images" id="layer-photos-demo">
             @foreach($feed->images as $store)
+                {{-- 计算图片高度 --}}
+                @php
+                    $size = explode('x', $store['size']);
+                    $store_height = $size[0] > 675 ? 675 / $size[0] * $size[1] : $size[1];
+                @endphp
+                <img style="height:{{ $store_height }}px" data-original="{{ getImageUrl($store, '', '', false) }}111" class="per_image lazy"/>
+
                 @if(isset($store['paid']) && !$store['paid'])
-                    <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy" onclick="weibo.payImage(this)" data-node="{{ $store['paid_node'] }}" data-amount="{{ $store['amount'] }}" data-file="{{ $store['file'] }}" />
+                    <img style="height:{{ $store_height }}px" data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy" onclick="weibo.payImage(this)" data-node="{{ $store['paid_node'] }}" data-amount="{{ $store['amount'] }}" data-file="{{ $store['file'] }}" />
                 @else
                     <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy"/>
                 @endif

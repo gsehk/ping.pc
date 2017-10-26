@@ -369,8 +369,7 @@
 .detail_images img {
     display: block;
     max-width: 675px;
-    height: auto;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 
