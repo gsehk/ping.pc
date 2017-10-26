@@ -172,13 +172,6 @@
       ,img: '.per_image'
     });
 
-    // scroll.init({
-    //     container: '.J-commentbox',
-    //     loading: '.feed_left',
-    //     url: '/feeds/{{$feed->id}}/comments' ,
-    //     canload: true
-    // });
-
     $(document).ready(function(){
         $("img.lazy").lazyload({effect: "fadeIn"});
     });
