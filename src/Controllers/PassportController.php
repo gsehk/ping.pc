@@ -10,7 +10,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class PassportController extends BaseController
 {
-
+    /**
+     * 凭据存储
+     * @author Foreach
+     * @param  string $token [凭据]
+     * @param  int    $type  [跳转类型]
+     * @return mixed
+     */
     public function token(string $token, int $type)
     {
         Session::put('token', $token);
@@ -28,6 +34,11 @@ class PassportController extends BaseController
         }
     }
 
+    /**
+     * 登录
+     * @author Foreach
+     * @return mixed
+     */
     public function index()
     {
         if ($this->PlusData['TS'] != null) {
@@ -37,12 +48,23 @@ class PassportController extends BaseController
     	return view('pcview::passport.login', [], $this->PlusData);
     }
 
+    /**
+     * 登出
+     * @author Foreach
+     * @return mixed
+     */
     public function logout()
     {
         Session::flush();
         return redirect(route('pc:feeds'));
     }
 
+    /**
+     * 注册
+     * @author Foreach
+     * @param  int $type [注册类型]
+     * @return mixed
+     */
     public function register(int $type = 0)
     {
         if ($this->PlusData['TS'] != null) {
@@ -52,6 +74,12 @@ class PassportController extends BaseController
         return view('pcview::passport.register', ['type' => $type], $this->PlusData);
     }
 
+    /**
+     * 找回密码
+     * @author Foreach
+     * @param  int $type [找回类型]
+     * @return mixed
+     */
     public function findPassword(int $type = 0)
     {
         if ($this->PlusData['TS'] != null) {
@@ -61,6 +89,11 @@ class PassportController extends BaseController
         return view('pcview::passport.findpwd', ['type' => $type], $this->PlusData);
     }
 
+    /**
+     * 完善资料
+     * @author Foreach
+     * @return mixed
+     */
     public function perfect()
     {
         $data['tags'] = createRequest('GET', '/api/v2/tags');
@@ -68,7 +101,12 @@ class PassportController extends BaseController
         return view('pcview::passport.perfect', $data, $this->PlusData);
     }
 
-    public function captcha($tmp)
+    /**
+     * 图形验证码生成
+     * @author Foreach
+     * @return mixed
+     */
+    public function captcha()
     {
         // 生成验证码图片的Builder对象，配置相应属性
         $builder = new CaptchaBuilder;
@@ -89,6 +127,12 @@ class PassportController extends BaseController
         $builder->output();
     }
 
+    /**
+     * 图形验证码验证
+     * @author Foreach
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function checkCaptcha(Request $request)
     {
         $input = $request->input('captcha');

@@ -7,7 +7,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class GroupController extends BaseController
 {
-
+    /**
+     * 圈子首页
+     * @author 28youth
+     * @param  Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $this->PlusData['current'] = 'group';
@@ -17,6 +22,7 @@ class GroupController extends BaseController
 
     /**
      * 圈子列表
+     * @author 28youth
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -51,10 +57,10 @@ class GroupController extends BaseController
 
     /**
      * 圈子详情
+     * @author ZsyD
      * @param Request $request
-     * @param $group_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @author zsy
+     * @param int $group_id [圈子id]
+     * @return mixed
      */
     public function read(Request $request, $group_id)
     {
@@ -71,9 +77,9 @@ class GroupController extends BaseController
 
     /**
      * 获取指定圈子动态
+     * @author ZsyD
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
-     * @author zsy
      */
     public function postLists(Request $request)
     {
@@ -108,9 +114,9 @@ class GroupController extends BaseController
 
     /**
      * 创建圈子动态后获取动态信息
+     * @author ZsyD
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
-     * @author zsy
      */
     public function getPost(Request $request)
     {
@@ -125,6 +131,14 @@ class GroupController extends BaseController
         ]);
     }
 
+    /**
+     * 圈子动态详情
+     * @author ZsyD
+     * @param  Request $request
+     * @param  [type]  $group_id [圈子id]
+     * @param  [type]  $post_id  [圈子动态id]
+     * @return mixed
+     */
     public function postDetail(Request $request, $group_id, $post_id)
     {
         $this->PlusData['current'] = 'group';
@@ -134,6 +148,14 @@ class GroupController extends BaseController
         return view('pcview::group.post', $data, $this->PlusData);
     }
 
+    /**
+     * 圈子动态评论列表
+     * @author ZsyD
+     * @param  Request $request
+     * @param  [type]  $group_id [圈子id]
+     * @param  [type]  $post_id  [圈子动态id]
+     * @return mixed
+     */
     public function comments(Request $request, $group_id, $post_id)
     {
         $params = [

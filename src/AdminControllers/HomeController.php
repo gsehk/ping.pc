@@ -14,6 +14,12 @@ class HomeController extends Controller
         login as traitLogin;
     }
 
+    /**
+     * pc后台首页
+     * @author 28youth
+     * @param  Request $request
+     * @return mixed
+     */
     public function show(Request $request)
     {
         if (! $request->user()) {
@@ -36,6 +42,11 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * 菜单
+     * @author 28youth
+     * @return array
+     */
     protected function menus()
     {
         $components = config('component');

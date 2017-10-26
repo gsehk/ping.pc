@@ -9,7 +9,14 @@ use Zhiyi\Plus\Http\Controllers\Controller;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class RankController extends BaseController
-{
+{   
+    /**
+     * 排行榜
+     * @author ZysD
+     * @param  Request     $request
+     * @param  int|integer $mold [排行榜类型]
+     * @return mixed
+     */
     public function index(Request $request, int $mold = 1)
     {
         $data['mold'] = $mold;
@@ -47,6 +54,12 @@ class RankController extends BaseController
         return view('pcview::rank.index', $data, $this->PlusData);
     }
 
+    /**
+     * 排行榜列表
+     * @author ZysD
+     * @param  Request $request
+     * @return mixed
+     */
     public function _getRankList(Request $request)
     {
         $genre = $request->input('genre') ?: '';
@@ -135,7 +148,17 @@ class RankController extends BaseController
         ]);
     }
 
-    public function rankCache($key, $url, $params = [], $time = 5, $type = 'GET')
+    /**
+     * 排行榜缓存
+     * @author ZysD
+     * @param  string  $key    [键名]
+     * @param  string  $url    [api地址]
+     * @param  array   $params [参数]
+     * @param  integer $time   [时间]
+     * @param  string  $type   [请求类型]
+     * @return mixed
+     */
+    public function rankCache(string $key, string $url, array $params = [], int $time = 5, string $type = 'GET')
     {
         $offset = isset($params['offset']) ? $params['offset'] : 0;
         Cache::has('rank_by_'.$key.'_offset_'.$offset)

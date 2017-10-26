@@ -14,7 +14,7 @@ class SocialiteController extends BaseController
      * 三方登录/绑定（未登录）
      * @author ZsyD
      * @param Request $request
-     * @param [string]  $service [三方类型]
+     * @param string  $service [三方类型]
      * @return mixed
      */
     public function redirectToProvider(Request $request, $service)
@@ -38,7 +38,7 @@ class SocialiteController extends BaseController
      * 三方登录/绑定（已登录）
      * @author ZsyD
      * @param  Request $request
-     * @param  [string]  $service [三方类型]
+     * @param  string  $service [三方类型]
      * @return mixed
      */
     public function redirectToProviderByBind(Request $request, $service)
@@ -66,7 +66,7 @@ class SocialiteController extends BaseController
      * 第三方回调页
      * @author ZsyD
      * @param  Request $request
-     * @param  [type]  $service [三方类型]
+     * @param  string  $service [三方类型]
      * @return mixed
      */
     public function handleProviderCallback(Request $request, $service)

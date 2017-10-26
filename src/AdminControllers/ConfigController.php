@@ -14,7 +14,7 @@ class ConfigController extends Controller
 
     /**
      * 导航配置列表.
-     *
+     * @author 28youth
      * @param  Request     $request
      * @param  int|integer $pos  0-顶部 1-底部
      * @return mixed
@@ -49,7 +49,7 @@ class ConfigController extends Controller
 
     /**
      * 添加编辑导航.
-     *
+     * @author 28youth
      * @param  Request $request
      * @return mixed
      */
@@ -100,7 +100,7 @@ class ConfigController extends Controller
 
     /**
      * 获取一条导航记录.
-     *
+     * @author 28youth
      * @param  Request $request
      * @param  int     $nid  记录id
      * @return mixed
@@ -116,7 +116,7 @@ class ConfigController extends Controller
 
     /**
      * 删除导航记录.
-     *
+     * @author 28youth
      * @param  Request $request
      * @param  int     $nid   记录id
      * @return mixed
@@ -133,7 +133,7 @@ class ConfigController extends Controller
 
     /**
      * 获取pc基础配置信息.
-     *
+     * @author 28youth
      * @param Repository $config
      * @param Configuration $configuration
      * @return \Illuminate\Http\JsonResponse
@@ -151,7 +151,7 @@ class ConfigController extends Controller
 
     /**
      * 初始化站点设置.
-     *
+     * @author 28youth
      * @param Repository $config
      * @param Configuration $configuration
      * @return mixed
@@ -177,7 +177,9 @@ class ConfigController extends Controller
 
     /**
      * 更新pc站基本配置信息.
-     *
+     * @author 28youth
+     * @param  Request $request
+     * @param Configuration $configuration
      * @return mixed
      */
     public function updateSiteInfo(Request $request, Configuration $configuration)

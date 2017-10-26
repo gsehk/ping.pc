@@ -8,7 +8,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceImage;
 
 class QuestionController extends BaseController
 {
-
+    /**
+     * 问答
+     * @author 28youth
+     * @param  Request $request
+     * @return mixed
+     */
     public function question(Request $request)
     {
         $this->PlusData['current'] = 'question';
@@ -35,6 +40,12 @@ class QuestionController extends BaseController
         return view('pcview::question.index', [], $this->PlusData);
     }
 
+    /**
+     * 话题
+     * @author 28youth
+     * @param  Request $request
+     * @return mixed
+     */
     public function topic(Request $request)
     {
         if ($request->ajax()){
@@ -77,10 +88,10 @@ class QuestionController extends BaseController
 
     /**
      * 话题详情.
+     * @author ZsyD
      * @param Request $request
-     * @param int $topic
-     * @author zuo
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     * @param int $topic [话题id]
+     * @return mixed
      */
     public function topicInfo(Request $request, int $topic)
     {
@@ -90,9 +101,9 @@ class QuestionController extends BaseController
     }
 
     /**
-     * 问题详情.
-     *
-     * @param  int    $question_id
+     * 问题详情
+     * @author ZsyD
+     * @param  int    $question_id [问题id]
      * @return mixed
      */
     public function read(int $question_id)
@@ -109,9 +120,8 @@ class QuestionController extends BaseController
 
     /**
      * 回答详情
-     *
-     * @param  Request $request
-     * @param  int     $answer  回答id
+     * @author ZsyD
+     * @param  int    $answer [回答id]
      * @return mixed
      */
     public function answer(int $answer)
@@ -125,10 +135,11 @@ class QuestionController extends BaseController
     }
 
     /**
-     * 回答评论列表.
-     *
-     * @param  int    $answer 回答id
-     * @return mixed
+     * [回答评论列表]
+     * @author ZsyD
+     * @param  Request $request
+     * @param  int     $answer  [回答id]
+     * @return \Illuminate\Http\JsonResponse
      */
     public function answerComments(Request $request, int $answer)
     {
@@ -151,6 +162,13 @@ class QuestionController extends BaseController
         ]);
     }
 
+    /**
+     * 创建/修改问题
+     * @author ZsyD
+     * @param  Request     $request
+     * @param  int|integer $question_id [问题id]
+     * @return [type]                   [description]
+     */
     public function createQuestion(Request $request, int $question_id = 0)
     {
         if ($topic_id = $request->query('topic_id')) {
@@ -166,6 +184,12 @@ class QuestionController extends BaseController
         return view('pcview::question.create_question', $data, $this->PlusData);
     }
 
+    /**
+     * 邀请用户
+     * @author ZsyD
+     * @param  Request $request
+     * @return mixed
+     */
     public function getUsers(Request $request)
     {
         $ajax = $request->input('ajax');
@@ -193,6 +217,13 @@ class QuestionController extends BaseController
         }
     }
 
+    /**
+     * 回答列表
+     * @author ZsyD
+     * @param  Request $request
+     * @param  int     $question_id [问题id]
+     * @return mixed
+     */
     public function getAnswers(Request $request, int $question_id)
     {
         $params['limit'] = $request->input('limit') ?: 10;
@@ -222,10 +253,11 @@ class QuestionController extends BaseController
     }
 
     /**
-     * 问题评论列表.
-     *
-     * @param  int    $question 问题id
-     * @return mixed
+     * 问题评论列表
+     * @author ZsyD
+     * @param  Request $request
+     * @param  int     $question [问题id]
+     * @return \Illuminate\Http\JsonResponse
      */
     public function questionComments(Request $request, int $question)
     {
@@ -249,10 +281,10 @@ class QuestionController extends BaseController
 
     /**
      * 话题-更多专家列表
+     * @author ZsyD
      * @param Request $request
-     * @param int $topic
-     * @author zuo
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View|\think\response\View
+     * @param int $topic [话题id]
+     * @return mixed
      */
     public function topicExpert(Request $request, int $topic)
     {
@@ -283,8 +315,8 @@ class QuestionController extends BaseController
 
     /**
      * 话题-问题列表
+     * @author ZsyD
      * @param Request $request
-     * @author zuo
      * @return \Illuminate\Http\JsonResponse
      */
     public function topicQuestion(Request $request)
@@ -310,6 +342,13 @@ class QuestionController extends BaseController
         ]);
     }
 
+    /**
+     * 答案编辑
+     * @author ZsyD
+     * @param  Request $request
+     * @param  int     $answer  [答案id]
+     * @return mixed
+     */
     public function editAnswer(Request $request, int $answer)
     {
         $answer = createRequest('GET', '/api/v2/question-answers/'.$answer );

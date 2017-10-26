@@ -7,6 +7,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class UserController extends BaseController
 {
+    /**
+     * 找伙伴
+     * @author Foreach
+     * @param  Request     $request
+     * @param  int|integer $type    [类型]
+     * @return mixed
+     */
     public function users(Request $request, int $type = 1)
     {
         if ($request->ajax()){
@@ -58,8 +65,8 @@ class UserController extends BaseController
     }
 
     /**
-     * 根据地区搜索.
-     *
+     * 地区搜索
+     * @author 28youth
      * @param  Request $request
      * @return mixed
      */
@@ -72,6 +79,14 @@ class UserController extends BaseController
         return view('pcview::user.area', $data, $this->PlusData);
     }
 
+    /**
+     * 用户粉丝/关注
+     * @author Foreach
+     * @param  Request     $request
+     * @param  int|integer $type    [类型]
+     * @param  int|integer $user_id [用户id]
+     * @return mixed
+     */
     public function follows(Request $request, int $type = 1, int $user_id = 0)
     {
         if ($request->ajax()) {

@@ -17,6 +17,7 @@ class BaseController extends Controller
 
     public function __construct()
     {
+        // 初始化
         $this->middleware(function($request, $next){
             // 用户信息
             $this->PlusData['token'] = Session::get('token');

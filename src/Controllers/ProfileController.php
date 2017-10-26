@@ -8,6 +8,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class ProfileController extends BaseController
 {
+    /**
+     * 动态
+     * @author Foreach
+     * @param  Request     $request 
+     * @param  int|integer $user_id [用户id]
+     * @return mixed
+     */
     public function feeds(Request $request, int $user_id = 0)
     {
         if ($request->ajax()) {
@@ -46,8 +53,8 @@ class ProfileController extends BaseController
     }
 
     /**
-     * 投稿文章.
-     *
+     * 文章.
+     * @author 28youth
      * @param  Request $request
      * @return mixed
      */
@@ -86,8 +93,8 @@ class ProfileController extends BaseController
     }
 
     /**
-     * 个人收藏.
-     *
+     * 收藏
+     * @author 28youth
      * @param  Request $request
      * @return mixed
      */
@@ -159,10 +166,10 @@ class ProfileController extends BaseController
     }
 
     /**
-     * 加入的圈子.
-     *
+     * 圈子
+     * @author 28youth
      * @param  Request     $request
-     * @param  int|integer $user_id
+     * @param  int $user_id [用户id]
      * @return mixed
      */
     public function group(Request $request, int $user_id = 0)
@@ -194,9 +201,9 @@ class ProfileController extends BaseController
 
     /**
      * 问答信息.
-     *
+     * @author 28youth
      * @param  Request     $request
-     * @param  int|integer $user_id
+     * @param  int $user_id [用户id]
      * @return mixed
      */
     public function question(Request $request, int $user_id = 0)

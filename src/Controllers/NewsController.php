@@ -13,10 +13,10 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceImage;
 class NewsController extends BaseController
 {
     /**
-     * 文章首页
-     *
-     * @param  Request $request [description]
-     * @return [type]           [description]
+     * 资讯首页
+     * @author Foreach
+     * @param  Request $request
+     * @return mixed
      */
     public function index(Request $request)
     {
@@ -32,10 +32,10 @@ class NewsController extends BaseController
     }
 
     /**
-     * 资讯列表.
-     *
-     * @param  $cate_id [分类ID]
-     * @return mixed 返回结果
+     * 资讯列表
+     * @author Foreach
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function list(Request $request)
     {
@@ -71,8 +71,12 @@ class NewsController extends BaseController
         ]);
     }
 
+
     /**
-     * 文章详情页
+     * 资讯详情
+     * @author Foreach
+     * @param  int    $news_id [资讯id]
+     * @return mixed
      */
     public function read(int $news_id)
     {
@@ -96,7 +100,11 @@ class NewsController extends BaseController
     }
 
     /**
-     * 文章投稿页面
+     * 资讯投稿
+     * @author ZsyD
+     * @param  Request     $request
+     * @param  int $news_id [资讯id]
+     * @return mixed
      */
     public function release(Request $request, int $news_id = 0)
     {
@@ -123,11 +131,11 @@ class NewsController extends BaseController
     }
 
     /**
-     * 文章详情评论列表.
-     *
-     * @param  Illuminate\Http\Request $request
-     * @param  int     $news_id
-     * @return mixed
+     * 文章评论列表
+     * @author ZsyD
+     * @param  Request $request
+     * @param  int     $news_id [资讯id]
+     * @return \Illuminate\Http\JsonResponse
      */
     public function comments(Request $request, int $news_id)
     {

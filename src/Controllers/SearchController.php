@@ -7,6 +7,14 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class SearchController extends BaseController
 {
+    /**
+     * 搜索
+     * @author Foreach
+     * @param  Request     $request
+     * @param  int|integer $type     [搜索类型]
+     * @param  string      $keywords [关键字]
+     * @return mixed
+     */
     public function index(Request $request, int $type = 1, string $keywords = '')
     {
         $data['type'] = $type;
@@ -15,6 +23,12 @@ class SearchController extends BaseController
         return view('pcview::search.index', $data, $this->PlusData);
     }
 
+    /**
+     * 搜索获取数据
+     * @author Foreach
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getData(Request $request)
     {
         $type = $request->query('type');
