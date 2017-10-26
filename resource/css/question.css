@@ -1236,34 +1236,8 @@ button{
 }
 
 /* 回答评论 */
-.comment_line_answer {
-    margin-top: 19px;
-    border-top: 1px solid #efefef;
-    margin-bottom: 19px;
-    height: 1px;
-    position: relative;
-}
-
 .comment_line_answer>.tr2 {
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    top: -15px;
     left: 30px;
-}
-.comment_line_answer>.tr2:before,.comment_line_answer>.tr2:after{
-    content: '';
-    display: block;
-    position: absolute;
-    border: 8px solid transparent;
-    left: 0;
-}
-.comment_line_answer>.tr2:before{
-    border-bottom: 7px solid #efefef;
-    top: -1px;
-}
-.comment_line_answer>.tr2:after{
-    border-bottom: 7px solid #fff;
 }
 
 /** 问答详情 read **/

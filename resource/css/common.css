@@ -1687,8 +1687,35 @@ img.load {
 /*分享列表评论*/
 
 .comment_line {
-    margin-top: 5px;
+    margin-top: 18px;
+    border-top: 1px solid #efefef;
+    margin-bottom: 20px;
+    height: 1px;
+    position: relative;
 }
+
+.comment_line>.tr2 {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -15px;
+    left: 98px;
+}
+.comment_line>.tr2:before,.comment_line>.tr2:after{
+    content: '';
+    display: block;
+    position: absolute;
+    border: 8px solid transparent;
+    left: 0;
+}
+.comment_line>.tr2:before{
+    border-bottom: 7px solid #efefef;
+    top: -1px;
+}
+.comment_line>.tr2:after{
+    border-bottom: 7px solid #fff;
+}
+
 
 .comment_body {
     font-size: 12px;

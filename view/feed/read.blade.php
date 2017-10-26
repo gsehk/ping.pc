@@ -123,28 +123,10 @@
                 {{-- 打賞 --}}
                 @include('pcview::widgets.rewards' , ['rewards_data' => $feed->rewards, 'rewards_type' => 'feeds', 'rewards_id' => $feed->id, 'rewards_info' => $feed->reward])
             </div>
-            <div class="detail_comment">
-                <div class="comment_title"><span class="comment_count cs{{$feed->id}}">{{$feed['feed_comment_count']}}</span>人评论</div>
-                <div class="comment_box">
-                    <textarea
-                        class="comment_editor"
-                        id="J-editor{{$feed->id}}"
-                        placeholder="说点什么吧"
-                        onkeyup="checkNums(this, 255, 'nums');"
-                    ></textarea>
-                    <div class="comment_tool">
-                        <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
-                        <button
-                            class="btn btn-primary"
-                            id="J-button{{$feed->id}}"
-                            onclick="weibo.addComment({{$feed->id}}, 0)"
-                        > 评 论 </button>
-                    </div>
-                </div>
-                <div class="comment_list J-commentbox" id="J-commentbox{{$feed->id}}">
 
-                </div>
-            </div>
+            {{-- 评论 --}}
+            @include('pcview::widgets.comments', ['id' => $feed->id, 'comments_count' => $feed->feed_comment_count, 'comments_type' => 'feed', 'loading' => '.feed_left', 'position' => 0])
+
         </div>
     </div>
 
@@ -190,12 +172,12 @@
       ,img: '.per_image'
     });
 
-    scroll.init({
-        container: '.J-commentbox',
-        loading: '.feed_left',
-        url: '/feeds/{{$feed->id}}/comments' ,
-        canload: true
-    });
+    // scroll.init({
+    //     container: '.J-commentbox',
+    //     loading: '.feed_left',
+    //     url: '/feeds/{{$feed->id}}/comments' ,
+    //     canload: true
+    // });
 
     $(document).ready(function(){
         $("img.lazy").lazyload({effect: "fadeIn"});

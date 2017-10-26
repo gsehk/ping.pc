@@ -180,28 +180,10 @@
     <!-- /question-header -->
     <!-- quesition-main -->
     <div class="question-main">
-        <div class="detail_comment question_coment hide">
-            <span id="answer-button" class="answer-button"><img src="{{asset('zhiyicx/plus-component-pc/images/arrow_news_up.png')}}" alt=""></span>
-            <div class="comment_title"><span class="comment_count cs{{$question->id}}">{{$question['comments_count']}}</span>人评论</div>
-            <div class="comment_box">
-                    <textarea
-                            class="comment_editor"
-                            id="J-editor{{$question->id}}"
-                            placeholder="说点什么吧"
-                            onkeyup="checkNums(this, 255, 'nums');"
-                    ></textarea>
-                <div class="comment_tool">
-                    <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
-                    <button
-                            class="btn btn-primary"
-                            id="J-button{{$question->id}}"
-                            onclick="question.addComment({{$question->id}}, 0)"
-                    > 评 论 </button>
-                </div>
-            </div>
-            <div class="comment_list J-commentbox" id="J-commentbox{{$question->id}}">
-            </div>
-        </div>
+
+        {{-- 评论 --}}
+        @include('pcview::widgets.comments', ['id' => $question->id, 'comments_count' => $question->comments_count, 'comments_type' => 'question', 'loading' => '.detail_comment', 'add_class' => 'question_coment hide', 'position' => 0])
+
         <div class="question-main-l">
             <div class="question-answers">
                 <div class="question-answers-list">

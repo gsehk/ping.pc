@@ -87,28 +87,10 @@
                     @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:feedread', ['post_id' => $post->id]), 'share_title' => addslashes($post->content), 'share_pic' => $share_pic])
                 </div>
             </div>
-            <div class="detail_comment">
-                <div class="comment_title"><span class="comment_count cs{{$post->id}}"">{{$post['comments_count']}} </span>人评论</div>
-                <div class="comment_box">
-                    <textarea
-                            class="comment_editor"
-                            id="J-editor{{$post->id}}"
-                            placeholder="说点什么吧"
-                            onkeyup="checkNums(this, 255, 'nums');"
-                    ></textarea>
-                    <div class="comment_tool">
-                        <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
-                        <button
-                            class="btn btn-primary"
-                            id="J-button{{$post->id}}"
-                            onclick="post.addComment({{$post->id}}, {{$post->group_id}}, 0)"
-                        > 评 论 </button>
-                    </div>
-                </div>
-                <div class="comment_list J-commentbox" id="J-commentbox{{$post->id}}">
 
-                </div>
-            </div>
+            {{-- 评论 --}}
+            @include('pcview::widgets.comments', ['id' => $post->id, 'group_id' => $post->group_id , 'comments_count' => $post->comments_count, 'comments_type' => 'group', 'loading' => '.feed_left', 'position' => 0])
+            
         </div>
     </div>
 
@@ -149,15 +131,6 @@
             ,anim: 5
             ,move: false
         });
-
-        setTimeout(function() {
-            scroll.init({
-                container: '.J-commentbox',
-                loading: '.feed_left',
-                url: '/group/{{$post['group_id']}}/post/{{$post['id']}}/comments' ,
-                canload: true
-            });
-        }, 300);
 
         $(document).ready(function(){
             $("img.lazy").lazyload({effect: "fadeIn"});

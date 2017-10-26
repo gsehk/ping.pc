@@ -33,15 +33,16 @@
                         <div class="triangle"></div>
                         <ul>
                             @if(isset($TS->id) && $news->user->id == $TS->id)
-                                <li>
-                                    <a href="javascript:;" onclick="news.pinneds({{$news->id}});">
-                                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
-                                    </a>
-                                </li>
                                 @if($news->audit_status == 3)
                                     <li>
                                         <a href="{{ route('pc:newsrelease', $news->id) }}">
                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑 
+                                        </a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="javascript:;" onclick="news.pinneds({{$news->id}});">
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
                                         </a>
                                     </li>
                                 @endif
@@ -141,28 +142,8 @@
                 @endif
 
                 {{-- 评论  --}}
-                <div class="detail_comment">
-                    <div class="comment_title"><span class="comment_count cs{{$news->id}}">{{$news->comment_count}}</span>人评论</div>
-                    <div class="comment_box">
-                        <textarea
-                            class="comment_editor"
-                            id="J-editor{{$news->id}}"
-                            placeholder="说点什么吧"
-                            onkeyup="checkNums(this, 255, 'nums');"
-                        ></textarea>
-                        <div class="comment_tool">
-                            <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
-                            <button
-                                class="btn btn-primary"
-                                id="J-button{{$news->id}}"
-                                onclick="news.addComment({{$news->id}}, 0)"
-                            > 评 论 </button>
-                        </div>
-                    </div>
-                    <div class="comment_list J-commentbox" id="J-commentbox{{$news->id}}">
+                @include('pcview::widgets.comments', ['id' => $news->id, 'comments_count' => $news->comment_count, 'comments_type' => 'news', 'loading' => '.detail_comment', 'position' => 0])
 
-                    </div>
-                </div>
                 @endif
             </div>
         </div>
@@ -191,12 +172,6 @@
 <script>
 $(function(){
     $("img.lazy").lazyload({effect: "fadeIn"});
-
-    scroll.init({
-        container: '.J-commentbox',
-        loading: '.detail_comment',
-        url: '/news/{{$news->id}}/comments'
-    });
 
     // 近期热点
     if($('.time_menu li a').length > 0) {

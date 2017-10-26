@@ -131,28 +131,10 @@
             @endphp
             @include('pcview::widgets.rewards' , ['rewards_data' => $answer->rewarders, 'rewards_type' => 'answer', 'rewards_id' => $answer->id, 'rewards_info' => $rewards_info])
         </div>
-        <div class="detail_comment">
-                <div class="comment_title"><span class="comment_count cs{{$answer->id}}"">{{$answer->comments_count}} </span>人评论</div>
-                <div class="comment_box">
-                    <textarea
-                            class="comment_editor"
-                            id="J-editor{{$answer->id}}"
-                            placeholder="说点什么吧"
-                            onkeyup="checkNums(this, 255, 'nums');"
-                    ></textarea>
-                    <div class="comment_tool">
-                        <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
-                        <button
-                            class="btn btn-primary"
-                            id="J-button{{$answer->id}}"
-                            onclick="QA.addComment({{$answer->id}}, 0)"
-                        > 评 论 </button>
-                    </div>
-                </div>
-                <div class="comment_list J-commentbox" id="J-commentbox{{$answer->id}}">
 
-                </div>
-            </div>
+        {{-- 评论 --}}
+        @include('pcview::widgets.comments', ['id' => $answer->id, 'comments_count' => $answer->comments_count, 'comments_type' => 'answer', 'loading' => '.answer-detail-box', 'position' => 0])
+
     </div>
 </div>
 
@@ -198,15 +180,6 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 <script>
 $(function(){
-    setTimeout(function() {
-        scroll.init({
-            container: '.J-commentbox',
-            loading: '.answer-detail-box',
-            url: '/question/answer/{{$answer->id}}/comments',
-            canload: true
-        });
-    }, 200);
-
     $("img.lazy").lazyload({effect: "fadeIn"});
 
     // 关注

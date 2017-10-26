@@ -24,7 +24,7 @@
                         @else
                             <a href="{{ route('pc:mine', $answer->user->id) }}" class="userlink authorinfo-name">{{ $answer->user->name }} {{ isset($TS) && $answer->anonymity == 1 && $answer->user_id == $TS['id'] ? '（匿名）' : ''}}</a>
                         @endif
-                        @if(isset($answer->invitation) && $answer->invitation == 1)
+                        @if(isset($answer->invited) && $answer->invited == 1)
                             <span class="blue-tag">邀请回答</span>
                         @endif
                         @if($answer->adoption == 1)
@@ -97,7 +97,7 @@
                                         @endif
                                     </a>
                                 </li>
-                                @if(isset($TS) && $answer->user_id == $TS['id'] && !isset($answer->invitation) && $answer->adoption != 1)
+                                @if(isset($TS) && $answer->user_id == $TS['id'] && !isset($answer->invited) && $answer->adoption != 1)
                                     <li>
                                         <a href="javascript:;" onclick="QA.delAnswer({{$answer->question_id}}, {{$answer->id}}, '{{ route('pc:questionread', $answer->question_id) }}')">
                                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>
@@ -114,7 +114,7 @@
                             </ul>
                         </div>
 
-                        @if(isset($answer->invitation) && $answer->invitation == 1)
+                        @if(isset($answer->invited) && $answer->invited == 1)
                             <div class="look-answer">
 
                                 <span class="look-user">{{ $answer['onlookers_count'] }}人正在围观</span>
@@ -129,46 +129,10 @@
                         @endif
 
                     </div>
-                    <div class="comment_box" style="display: none;">
-                        <div class="comment_line comment_line_answer">
-                            <div class="tr2"></div>
-                        </div>
-                        <div class="comment_body" id="comment_box{{$answer->id}}">
-                            <div class="comment_textarea">
-                                <textarea class="comment-editor" id="J-editor{{$answer->id}}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
-                                <div class="comment_post">
-                                    <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                                    <a class="btn btn-primary fr" id="J-button{{$answer->id}}" onclick="QA.addComment({{$answer->id}}, 1)"> 评 论 </a>
-                                </div>
-                            </div>
-                            <div id="J-commentbox{{ $answer->id }}">
-                                @if($answer->comments->count())
-                                    @foreach($answer->comments as $cv)
-                                        <p class="comment_con" id="comment{{$cv->id}}">
-                                            <span class="tcolor">{{ $cv->user['name'] }}：</span>
-                                            @if ($cv->reply_user != 0)
-                                                @php
-                                                    $user = getUserInfo($cv->reply_user);
-                                                @endphp
-                                                回复{{ '@'.$user->name }}：
-                                            @endif
 
-                                            {{$cv->body}}
-                                            @if($cv->user_id != $TS['id'])
-                                                <a onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
-                                            @else
-                                                <a class="comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
-                                            @endif
-                                        </p>
-                                    @endforeach
-                                @endif
-                            </div>
-                            @if($answer->comments->count() >= 5)
-                                <div class="comit_all font12"><a href="{{Route('pc:answeread', $answer->id)}}">查看全部评论</a></div>
-                            @endif
+                    {{-- 评论 --}}
+                    @include('pcview::widgets.comments', ['id' => $answer->id, 'comments_count' => $answer->comments->count(), 'comments_type' => 'answer', 'url' => Route('pc:answeread', $answer->id), 'position' => 1, 'comments_data' => $answer->comments])
 
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
