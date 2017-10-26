@@ -2278,6 +2278,10 @@ img.load {
     color: rgba(0,0,0,-0.1) !important;
     word-break: break-all;
     cursor: pointer;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
 }
 
 .ads_item .body {

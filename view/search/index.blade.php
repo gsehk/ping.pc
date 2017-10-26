@@ -27,6 +27,7 @@
                     <li><a href="javascript:;" @if($type == 3) class="selected" @endif type="3">文章</a></li>
                     <li><a href="javascript:;" @if($type == 4) class="selected" @endif type="4">用户</a></li>
                     <li><a href="javascript:;" @if($type == 5) class="selected" @endif type="5">圈子</a></li>
+                    <li><a href="javascript:;" @if($type == 6) class="selected" @endif type="6">话题</a></li>
                 </ul>
 
                 <div class="search_box">
@@ -156,6 +157,21 @@ $(function() {
                     params: params,
                 });
                 break;
+
+            case '6': // 圈子加载
+                var params = {
+                    type: type,
+                    limit: 10,
+                    keywords: keywords
+                };
+                scroll.init({
+                    container: '#content_list',
+                    loading: '.search_container',
+                    url: '/search/data',
+                    params: params,
+                });
+                break;    
+
         };
     }
 

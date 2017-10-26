@@ -108,6 +108,19 @@ class SearchController extends BaseController
                 $after = $group->pop()->id ?? 0;
                 $html = view('pcview::templates.group', $data, $this->PlusData)->render();
                 break;
+            case '6':
+                $params = [
+                    'limit' => 10,
+                    'offset' => $offset,
+                    'follow' => 1,
+                    'name' => $keywords
+                ];
+                $datas = createRequest('GET', '/api/v2/question-topics', $params);
+                $data['data'] = $datas;
+                $topic = clone $data['data'];
+                $after = $topic->pop()->id ?? 0;
+                $html = view('pcview::templates.topic', $data, $this->PlusData)->render();
+                break;    
 
         }
 

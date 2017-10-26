@@ -298,17 +298,16 @@
             args.invitations = invitations;
             args.automaticity = 0;
             if (args.look == 1 || $("input[type='radio'][name='reward']:checked").val() == 1) {
+                if (args.invitations.length != 1) {
+                    noticebox('邀请的专家呢？', 0);
+
+                    return false;
+                }
                 if (args.amount <= 0) {
                     noticebox('请设置悬赏金额', 0);
 
                     return false;
                 }
-                if (args.invitations.length != 1) {
-                    noticebox('请邀请回答人', 0);
-
-                    return false;
-                }
-
                 if ($.inArray({{ $TS['id'] }}, args.invitations_) > -1) {
                     noticebox('不能邀请自己', 0);
 

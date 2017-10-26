@@ -58,7 +58,11 @@
             @if(!empty($feed->images))
             <div class="detail_images" id="layer-photos-demo">
             @foreach($feed->images as $store)
-                <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy"/>
+                @if(isset($store['paid']) && !$store['paid'])
+                    <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy" onclick="weibo.payImage(this)" data-node="{{ $store['paid_node'] }}" data-amount="{{ $store['amount'] }}" data-file="{{ $store['file'] }}" />
+                @else
+                    <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy"/>
+                @endif
             @endforeach
             </div>
             @endif
