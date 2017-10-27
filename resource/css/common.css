@@ -1765,7 +1765,7 @@ img.load {
     margin-bottom: 16px;
 }
 
-.comment_box .comment_con a {
+.comment_box .comment_con a.mouse {
     cursor: pointer;
     display: none;
     margin-left: 5px;
@@ -1854,7 +1854,7 @@ img.load {
     width: 645px;
 }
 
-.reply_body a {
+.reply_body a.mouse {
     color: #59b6d7;
     display: none;
 }
@@ -2340,7 +2340,7 @@ img.load {
 .ly-error {
     color: red;
     margin-left: 20px;
-    font-size: 14px;
+    font-size: 12px;
     position: absolute;
     top: 40px;
     right: 30px;

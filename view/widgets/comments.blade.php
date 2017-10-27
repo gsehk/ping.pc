@@ -1,5 +1,6 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 @endphp
 @if($position == 1)
     <div class="comment_box" style="display: none;">
@@ -27,15 +28,16 @@
                                 回复{{ '@'.$user->name }}：
                             @endif
 
-                            {{$cv->body}}
+                            {!! formatContent($cv->body) !!}
+
                             @if(isset($cv->pinned) && $cv->pinned == 1)
-                                <span class="green">置顶</span>
+                                <span class="mouse green">置顶</span>
                             @endif
                             @if($cv->user_id != $TS['id'])
-                                <a onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
+                                <a class="mouse" onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
                             @else
-                                <a class="comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
-                                <a class="comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
+                                <a class="mouse comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
+                                <a class="mouse comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
                             @endif
                         </p>
                     @endforeach

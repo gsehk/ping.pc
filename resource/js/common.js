@@ -1374,9 +1374,9 @@ $(function() {
     // 显示隐藏评论操作
     $(document).on("mouseover mouseout",".comment_con, .reply_body",function(event){
         if(event.type == "mouseover"){
-            $(this).find("a").show();
+            $(this).find("a.mouse").show();
         }else if(event.type == "mouseout"){
-            $(this).find("a").hide();
+            $(this).find("a.mouse").hide();
         }
     });
 

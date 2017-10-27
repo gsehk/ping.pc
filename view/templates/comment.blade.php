@@ -1,6 +1,7 @@
 @php
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 @endphp
 
 @if (!$comments->isEmpty())
@@ -25,13 +26,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
                     <ul>
                         @if(isset($top) ? $top : true)
                         <li>
-                            <a href="javascript:;" onclick="comment.pinneds('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
+                            <a href="javascript:;" class="mouse" onclick="comment.pinneds('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
                             </a>
                         </li>
                         @endif
                         <li>
-                            <a href="javascript:;" onclick="comment.delete('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
+                            <a href="javascript:;" class="mouse" onclick="comment.delete('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
                                 <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
                             </a>
                         </li>
@@ -50,9 +51,9 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
                     回复{{ '@'.$user->name }}：
                 @endif
                 
-                {{$comment['body']}}
+                {!! formatContent($comment['body']) !!}
                 @if ($comment['user']['id'] != $TS['id'])
-                    <a href="javascript:;" onclick="comment.reply('{{$comment['user']['id']}}', {{$comment['commentable_id']}}, '{{$comment['user']['name']}}')">回复</a>
+                    <a href="javascript:;" class="mouse" onclick="comment.reply('{{$comment['user']['id']}}', {{$comment['commentable_id']}}, '{{$comment['user']['name']}}')">回复</a>
                 @endif
             </div>
         </dd>
