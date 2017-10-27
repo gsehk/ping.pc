@@ -489,6 +489,21 @@ var topic = function(status, topic_id, callback) {
     }
 }
 
+// 弹窗消息提示
+var lyNotice = function(msg) {
+    var _this = $('.layui-layer-content');
+    var lr = $('.ly-error');
+
+    if(typeof lr =='undefined' || lr.length < 1){
+        _this.append('<span class="ly-error"></span>');
+        lr = $('.ly-error');
+    }
+    lr.text(msg);
+
+    return false;
+}
+
+
 // 消息提示
 var noticebox = function(msg, status, tourl) {
     tourl = tourl || '';
@@ -650,7 +665,7 @@ var rewarded = {
     show: function(id, type) {
         checkLogin();
         var html = '<div class="reward_box">'
-                        + '<div class="reward_title">打赏</div>'
+                        + '<p class="reward_title">打赏</p>'
                         + '<div class="reward_text">选择打赏金额</div>'
                         + '<div class="reward_spans">';
                         $.each(reward.amounts.split(','), function (index, value) {
@@ -688,7 +703,7 @@ var rewarded = {
                 data: {amount: num ? num : amount},
                 dataType: 'json',
                 error: function(xml) {
-                    showError(xml.responseJSON);
+                    lyNotice(xml.responseJSON.message);
                 },
                 success: function(res) {
                     noticebox(res.message, 1, 'refresh');

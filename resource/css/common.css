@@ -2336,3 +2336,12 @@ img.load {
 .mt-3 {
     margin-top: -3px;
 }
+
+.ly-error {
+    color: red;
+    margin-left: 20px;
+    font-size: 14px;
+    position: absolute;
+    top: 40px;
+    right: 30px;
+}

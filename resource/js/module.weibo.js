@@ -101,7 +101,6 @@ weibo.postFeed = function() {
 weibo.doPostFeed = function(type) {
     var _this = this;
     if (_this.lockStatus == 1) {
-        noticebox('请勿重复提交', 0);
         return;
     }
     // 分享字数限制
@@ -142,7 +141,8 @@ weibo.doPostFeed = function(type) {
             });
             // 判断是否有图片添加付费信息
             if (!has_amount) {
-                noticebox('应配置至少一张图片费用' , 0);
+                lyNotice('应配置至少一张图片费用');
+                
                 return false;
             }
 
