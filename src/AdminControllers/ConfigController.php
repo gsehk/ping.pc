@@ -3,6 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\AdminControllers;
 
 use Illuminate\Http\Request;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\cacheClear;
 use Zhiyi\Plus\Support\Configuration;
 use Illuminate\Contracts\Config\Repository;
 use Zhiyi\Plus\Http\Controllers\Controller;
@@ -80,6 +81,7 @@ class ConfigController extends Controller
             $nav->save();
         }
 
+        cacheClear();
         /*Navigation::firstOrCreate([
             'id' => $nid,
             ], [

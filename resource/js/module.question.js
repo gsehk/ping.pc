@@ -172,10 +172,13 @@ var question = {
                     } else {
                         _this.lockStatus = 0;
                     }
+
+                    layer.closeAll();
                 },
                 error: function(xhr){
                     _this.lockStatus = 0;
                     showError(xhr.responseJSON);
+                    layer.closeAll();
                 }
             });
         });

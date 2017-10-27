@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use SlimKit\PlusSocialite\API\Requests\AccessTokenRequest;
 use Illuminate\Support\Facades\Route;
 use Zhiyi\Plus\Models\User;
@@ -240,4 +241,16 @@ function replaceContent($content)
     $content = preg_replace('/\<((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)\>/u', '网页链接+', $content);
 
     return $content;
+}
+
+/**
+ * 清除缓存
+ * @author ZsyD
+ * @return void
+ */
+function cacheClear()
+{
+    Artisan::call('cache:clear');
+
+    return;
 }
