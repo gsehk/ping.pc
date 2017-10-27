@@ -170,10 +170,12 @@
 									arr.push(f);
 								}
 								else{
+									uploadManager._getInputBtn().val('');
 									noticebox('文件 "'+f.name+'" 类型不允许！', 0);
 								}
 							}
 							else{
+								uploadManager._getInputBtn().val('');
 								noticebox('文件 "'+f.name+'" 大小超出限制！', 0);
 								continue;
 							}
