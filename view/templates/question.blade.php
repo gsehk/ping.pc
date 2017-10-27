@@ -1,5 +1,6 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
 @endphp
 @if (!$data->isEmpty())
 @foreach ($data as $post)
@@ -47,7 +48,7 @@
                     @endif
                     <div class="q_text">
                         @if($post->answer->invited == 0 || $post->look == 0 || (isset($TS) && $post->answer->invited == 1 && ($post->answer->could || $post->user_id == $TS['id'] || $post->answer->user_id == $TS['id'])))
-                            <span>{!! str_limit(preg_replace('@\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)@', '[图片]', $post->answer->body), 250, '...') !!}</span>
+                            <span>{!! str_limit(replaceContent($post->answer->body), 250, '...') !!}</span>
                             <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain button-more">查看详情</a>
                         @else
                             <span class="answer-body fuzzy" onclick="QA.look({{ $post->answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio']/100/100)) }}' , {{ $post->id }}, this)">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
