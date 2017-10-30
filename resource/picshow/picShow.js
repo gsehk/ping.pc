@@ -294,9 +294,9 @@
 			var switchWidth=x-left;
 			if(switchWidth<120 && current_i!=0){
 				$(this).removeClass("smallcursor").removeClass("rightcursor").addClass("leftcursor");
-			}else if(switchWidth<=555 && switchWidth>=435 && current_i!=option.data.length-1){
+			}else if(switchWidth<=option.bigWidth-80 && switchWidth>=option.bigWidth-200 && current_i!=option.data.length-1){
 				$(this).removeClass("leftcursor").removeClass("smallcursor").addClass("rightcursor");
-			}else if(switchWidth<=555){
+			}else if(switchWidth<=option.bigWidth-80){
 				$(this).removeClass("leftcursor").removeClass("rightcursor").addClass("smallcursor");
 			}else{
 				$(this).removeClass("leftcursor").removeClass("rightcursor").removeClass("smallcursor");
