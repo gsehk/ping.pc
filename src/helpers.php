@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use SlimKit\PlusSocialite\API\Requests\AccessTokenRequest;
 use Illuminate\Support\Facades\Route;
@@ -230,7 +231,12 @@ function replaceImage($content)
 
 function getUserInfo($id)
 {
-    $user = User::where('id', '=', $id)->first();
+    $user = Cache::get('user_' . $id);
+    if (!$user) {
+        $user = User::where('id', '=', $id)->first();
+        Cache::forever('user_' . $id, $user);
+    }
+
     return $user;
 }
 

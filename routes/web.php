@@ -174,8 +174,8 @@ Route::prefix('news')->group(function () {
     Route::middleware(PcMiddleware\CheckLogin::class)->get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
 });
 
-Route::prefix('webmessage')->group(function () {
-    Route::get('/', 'MessageController@index')->name('pc:webmessage');
+Route::prefix('message')->group(function () {
+    Route::get('/{type}/{user_id?}', 'MessageController@index')->where(['type' => '[0-5]', 'user_id' => '[0-9]+'])->name('pc:webmessage');
     // 评论我的列表
     Route::get('/comments', 'MessageController@comments')->name('pc:webmessagecomments');
     // 点赞我的列表

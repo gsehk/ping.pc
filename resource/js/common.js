@@ -2,6 +2,7 @@ var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/three
 var clickHtml = "<div class='click_loading'><a href='javascript:;'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg> ';
 var initNums = 255;
+window.TS_WEB = {};
 
 // ajax 设置 headers
 $.ajaxSetup({
@@ -550,6 +551,7 @@ var no_data = function(selector, type, txt) {
 // 退出登录提示
 var logout = function() {
     $('.nav_menu').hide();
+    storeLocal.clear();
     ly.confirm(formatConfirm('提示', '感谢您对ThinkSNS的信任，是否退出当前账号？'), '' ,'', function(){
         window.location.href = '/passport/logout';
     });
@@ -1179,7 +1181,7 @@ var options = function(obj) {
 var setHistory = function(str) {
     if (localStorage.history) {
         hisArr = JSON.parse(localStorage.history);
-        if ($.inArray(str, hisArr)) {
+        if ($.inArray(str, hisArr) == -1) {
             hisArr.push(str);
         }
     } else {
@@ -1299,6 +1301,45 @@ var thirdShare = function(type, url, title, pic, obj) {
             });
             ly.loadHtml($('.weixin_qrcode'), '');
           break;
+    }
+}
+
+// 获取用户信息
+var getUserInfo = function(uid) {
+    var url = API + '/users/' + uid;
+    var user = {};
+    $.ajax({
+        url: url,
+        type: 'GET',
+        async: false,
+        success:function(res){
+            user = res;
+        }
+    }, 'json');
+    return user;
+}
+
+// 本地存储
+var storeLocal = {
+    set: function(key, value){
+        window.localStorage.setItem(key, JSON.stringify(value));
+    },
+
+    get: function(key){
+        var data = window.localStorage.getItem(key);
+        if (!data) {
+            return false;
+        } else {
+            return JSON.parse(data);
+        }
+    },
+
+    remove: function(key){
+        window.localStorage.removeItem(key);
+    },
+
+    clear: function(){
+        window.localStorage.clear();
     }
 }
 
@@ -1509,7 +1550,7 @@ $(function() {
     }
 
     // 置顶弹窗
-    $('body').on('click', '.pinned_spans span', function() {
+    $(document).on('click', '.pinned_spans span', function() {
         $(this).siblings().removeClass('current');
         $(this).addClass('current');
 
@@ -1519,7 +1560,7 @@ $(function() {
         if (amount != '') $('.pinned_total span').html(days*amount);
     });
 
-    $('body').on('focus keyup change', '.pinned_input input', function() {
+    $(document).on('focus keyup change', '.pinned_input input', function() {
         var days = $('.pinned_spans span.current').length > 0 ? $('.pinned_spans span.current').attr('days') : '';
         var amount = $(this).val();
 
@@ -1527,14 +1568,14 @@ $(function() {
     });
 
     // 打赏弹窗
-    $('body').on('click', '.reward_spans span', function() {
+    $(document).on('click', '.reward_spans span', function() {
         $('.reward_input input').val('');
         $(this).siblings().removeClass('current');
         $(this).addClass('current');
     });
 
     // 显示回复框
-    $('body').on('click', '.J-comment-show', function() {
+    $(document).on('click', '.J-comment-show', function() {
         checkLogin();
 
         var comment_box = $(this).parent().siblings('.comment_box');
@@ -1545,11 +1586,11 @@ $(function() {
         }
     });
 
-    $('body').on('focus keyup change', '.reward_input input', function() {
+    $(document).on('focus keyup change', '.reward_input input', function() {
         $('.reward_spans span').removeClass('current');
     });
 
-    $('body').on('click', '.click_loading a', function() {
+    $(document).on('click', '.click_loading a', function() {
         scroll.clickMore(this);
     });
 });

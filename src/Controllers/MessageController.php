@@ -4,17 +4,45 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
 
 class MessageController extends BaseController
 {
-	public function index(Request $request)
+	public function index(Request $request, int $type = 0, int $user_id = 0)
 	{
+        // 未读消息
         $data = createRequest('GET', '/api/v2/user/unread-count');
-        $data['type'] = 'pl';
 
-        // 获取通知
-        $notifications = createRequest('GET', '/api/v2/user/notifications', ['offset' => 0, 'limit' => 1]);
-        !$notifications->isEmpty() && $data['message']['notification'] = $notifications[0]['data']['content'];
+        // 会话列表
+        $chat_list = createRequest('GET', '/api/v2/im/conversations/list/all');
+        $data['chat_list'] = array_column($chat_list, null, 'cid');
+
+        // 若私聊并且会话不存在，则创建会话
+        if ($user_id != 0 && !isset($data['chat_list'][$user_id])) {
+            $params['type'] = 0;
+            $params['name'] = '';
+            $params['uids'] = [$user_id, $this->PlusData['TS']['id']];
+            $new = createRequest('POST', '/api/v2/im/conversations', $params);
+            array_unshift($data['chat_list'], $new);
+        }
+
+        $data['list'] = array_values($data['chat_list']);
+        // 获取用户信息
+        foreach ($data['chat_list'] as $key => &$value) {
+            // 他人user_id
+            $uids = explode(',', $value['uids']);
+            $other_uids = array_values(array_diff($uids, [$this->PlusData['TS']['id']]));
+
+            // 获取房间号
+            if ($other_uids[0] == $user_id) {
+                $data['cid'] = $value['cid'];
+            }
+
+            $value['user'] = getUserInfo($other_uids[0]);
+        }
+
+        $data['type'] = $type;
+        $data['user_id'] = $user_id;
 
 		return view('pcview::message.message', $data, $this->PlusData);
 	}
