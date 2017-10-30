@@ -109,11 +109,6 @@ class NewsController extends BaseController
     public function release(Request $request, int $news_id = 0)
     {
         $this->PlusData['current'] = 'news';
-        // 发稿提示
-        $notice['verified'] = json_encode($this->PlusData['TS']['verified']);
-        $notice['balance'] = $this->PlusData['TS']['wallet']['balance'];
-        $notice['contribute'] = json_encode($this->PlusData['config']['bootstrappers']['news:contribute']);
-        $notice['pay_contribute'] = $this->PlusData['config']['bootstrappers']['news:pay_conyribute'];
         
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
@@ -124,7 +119,6 @@ class NewsController extends BaseController
         $data['cates'] = array_merge($cates['my_cates'], $cates['more_cates']);
         // 标签
         $data['release_tags'] = createRequest('GET', '/api/v2/tags');
-        $data['notice'] = $notice;
         // dd($data);
 
         return view('pcview::news.release', $data, $this->PlusData);

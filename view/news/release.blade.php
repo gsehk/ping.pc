@@ -104,12 +104,12 @@
     <script src="{{ asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.news.js')}}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
-    <script type="text/javascript">
+    <script type="text/javascript">       
         var notice = {
-            balance : "{{$notice['balance']}}",
-            verified: JSON.parse("{{$notice['verified']}}".replace(/&quot;/g, '"')),
-            contribute: JSON.parse("{{$notice['contribute']}}".replace(/&quot;/g, '"')),
-            pay_contribute: "{{$notice['pay_contribute']}}"
+            balance : "{{ $TS['wallet']['balance'] or 0 }}",
+            verified: {!! json_encode($TS['verified']) !!},
+            contribute: BOOT['news:contribute'],
+            pay_contribute: BOOT['news:pay_conyribute']
         };
         var selBox = $('#J-select-tags');
 

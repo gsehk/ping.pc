@@ -103,6 +103,7 @@ var news = {
                 },
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
+                        layer.closeAll();
                         noticebox('投稿成功，请等待审核', 1, '/news');
                     } else {
                         noticebox(res.message, 0);

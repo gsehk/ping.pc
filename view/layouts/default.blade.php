@@ -17,10 +17,10 @@
         var RESOURCE_URL = '{{ $routes["resource"] }}';
         var SOCKET_URL = 'tsplus.zhibocloud.cn:9900';
         var BOOT = {!! json_encode($config['bootstrappers']) !!};
-
-        var wallet_ratio = parseFloat("{{ $config['bootstrappers']['wallet:ratio'] }}")/100/100;
-        var reward = JSON.parse("{{ json_encode($config['bootstrappers']['site']['reward']) }}".replace(/&quot;/g, '"')) || {status: false, amounts: '1,10,15'};
-        var gold_name = JSON.parse('{{ isset($config['bootstrappers']['site']['gold_name']) ? json_encode($config['bootstrappers']['site']['gold_name']) : '{"name":"金币"}' }}'.replace(/&quot;/g, '"'));
+        
+        var wallet_ratio = parseFloat(BOOT['wallet:ratio']/100/100);
+        var reward = BOOT.site.reward || {status: false, amounts: '1,10,15'};
+        var gold_name = BOOT.site.gold_name || {name: '金币'};
     </script>
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/common.css') }}">
     <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.min.js') }}"></script>
