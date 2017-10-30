@@ -6,7 +6,7 @@
     <div class="comment_box" style="display: none;">
         <div class="comment_line">
             <div class="tr2"></div>
-            <!-- <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" /> -->
+{{--            <!-- <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" /> -->--}}
         </div>
         <div class="comment_body" id="comment_box{{ $id }}">
             <div class="comment_textarea">
@@ -51,6 +51,9 @@
     </div>
 @else
     <div class="detail_comment @if(isset($add_class)) {{ $add_class }} @endif">
+        @if($comments_type == 'question')
+            <span id="answer-button" class="answer-button"><img src="{{asset('zhiyicx/plus-component-pc/images/arrow_news_up.png')}}" alt=""></span>
+        @endif
         <div class="comment_title"><span class="comment_count cs{{ $id }}">{{ $comments_count }} </span>人评论</div>
         <div class="comment_box">
             <textarea class="comment_editor" id="J-editor{{ $id }}" placeholder="说点什么吧" onkeyup="checkNums(this, 255, 'nums');"></textarea>
