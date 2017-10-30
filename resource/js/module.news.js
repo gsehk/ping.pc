@@ -2,6 +2,7 @@
  * 文章投稿。
  */
 $('.subject-submit').on('click', function() {
+
     var _this = this;
     if (_this.lockStatus == 1) {
         noticebox('请勿重复提交', 0);
@@ -31,7 +32,7 @@ $('.subject-submit').on('click', function() {
         noticebox('文章标题字数不能超过20字', 0);
         return false;
     }
-    if (args.cate_id == '') {
+    if (args.cate_id == '0') {
         noticebox('请选择栏目', 0);
         return false;
     }
@@ -39,7 +40,11 @@ $('.subject-submit').on('click', function() {
         noticebox('摘要内容不能超过200字', 0);
         return false;
     }
-    if (!args.content || getLength(args.content) > 5000) {
+    if (!args.content) {
+        noticebox('文章内容不能为空', 0);
+        return false;
+    }
+    if (getLength(args.content) > 5000) {
         noticebox('文章内容不能超过5000字', 0);
         return false;
     }
@@ -66,14 +71,14 @@ $('.subject-submit').on('click', function() {
 
     var isVerified = notice.contribute.verified;
     var isPay = notice.contribute.pay;
-    var pay_contribute = (parseInt(notice.pay_contribute) * wallet_ratio).toFixed(1);
+    var pay_contribute = (notice.pay_contribute * wallet_ratio).toFixed(2);
 
-    if (isVerified > -1 && notice.verified == null) {
+    if (isVerified && notice.verified == null) {
         ly.confirm(formatConfirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？'), '去认证' , '', function(){
             window.location.href = '/account/authenticate';
         });
         return false;
-    } else if (isPay > -1 && pay_contribute > 0) {
+    } else if (isPay && pay_contribute > 0) {
         var html = formatConfirm('投稿提示', '<div class="confirm_money">' + pay_contribute + '</div>本次投稿您需要支付' + pay_contribute + gold_name.name +'，是否继续投稿？');
         ly.confirm(html, '投稿' , '', function(){
            return news.create(args);
@@ -100,6 +105,8 @@ var news = {
                 dataType: 'json',
                 error: function(xml) {
                     _this.lockStatus = 0;
+                    layer.closeAll();
+                    noticebox(xml.responseJSON.message, 0);
                 },
                 success: function(res, data, xml) {
                     if (xml.status == 201) {

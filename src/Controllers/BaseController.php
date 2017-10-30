@@ -48,7 +48,7 @@ class BaseController extends Controller
                 $config['common'] = $repository->get('pc');
 
                 // 顶部导航
-                $config['nav'] = Navigation::byPid(0)->byPos(0)->get();
+                $config['nav'] = Navigation::byPid(0)->byPos(0)->orderBy('order_sort')->get();
 
                 // 底部导航
                 $config['nav_bottom'] = Navigation::byPid(0)->byPos(1)->get();

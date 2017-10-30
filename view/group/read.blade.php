@@ -18,7 +18,7 @@
             <div class="info" id="group_box">
                 <div class="info-content">
                     <div class="content-left">
-                        <img src="{{ $routes['storage'].$group->avatar->id }}" width="120px" height="120px"/>
+                        <img src="@if(isset($group->avatar->id))  {{ $routes['storage'].$group->avatar->id }} @else {{ asset('zhiyicx/plus-component-pc/images/default_picture.png') }} @endif" width="120px" height="120px"/>
                     </div>
                     <div class="content-right">
                         <div class="group-title">{{$group->title}}</div>

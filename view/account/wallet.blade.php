@@ -37,7 +37,13 @@
                     </div>
                     <div class="wallet-body" id="wallet-info">
                         <div class="wallet-info clearfix">
-                            <div class="remaining-sum">{{ $TS['wallet']['balance']*($config['bootstrappers']['wallet:ratio']/100/100) }}</div>
+                            <div class="remaining-sum">
+                                @php
+                                    if (!isset($config['bootstrappers']['wallet:ratio'])) {
+                                        $config['bootstrappers']['wallet:ratio'] = 100;
+                                    }
+                                @endphp
+                                {{ $TS['wallet']['balance']*($config['bootstrappers']['wallet:ratio']/100/100) }}</div>
                             <div class="operate">
                                 <a href="javascript:;" data-url="{{ route('pc:walletpay') }}" onclick="checkWallet(this)"><button>充值</button></a>
                                 <a href="javascript:;" data-url="{{ route('pc:walletdraw') }}" onclick="checkWallet(this)"><button class="gray">提现</button></a>
@@ -110,7 +116,8 @@
     };
 
     var checkWallet = function (obj) {
-        if ("{{ in_array('alipay_pc_direct', $config['bootstrappers']['wallet:recharge-type']) ? 1 : 0 }}" == "0") {
+
+        if (typeof(BOOT['wallet:recharge-type']) != "undefined" && $.inArray('alipay_pc_direct', BOOT['wallet:recharge-type'])) {
 
             noticebox('未配置支付环境', 0);
 
