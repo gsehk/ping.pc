@@ -292,11 +292,11 @@
 			var x= e.clientX;
 			var left=$(this).offset().left;
 			var switchWidth=x-left;
-			if(switchWidth<120 && current_i!=0){
+			if(switchWidth<150 && current_i!=0){
 				$(this).removeClass("smallcursor").removeClass("rightcursor").addClass("leftcursor");
-			}else if(switchWidth<=option.bigWidth-80 && switchWidth>=option.bigWidth-200 && current_i!=option.data.length-1){
+			}else if(switchWidth>=option.bigWidth-230 && current_i!=option.data.length-1){
 				$(this).removeClass("leftcursor").removeClass("smallcursor").addClass("rightcursor");
-			}else if(switchWidth<=option.bigWidth-80){
+			}else if(switchWidth<=option.bigWidth-230){
 				$(this).removeClass("leftcursor").removeClass("rightcursor").addClass("smallcursor");
 			}else{
 				$(this).removeClass("leftcursor").removeClass("rightcursor").removeClass("smallcursor");
