@@ -15,9 +15,8 @@
         var TOKEN = "{{ $token or '' }}";
         var SITE_URL = "{{ $routes['siteurl'] }}";
         var RESOURCE_URL = '{{ $routes["resource"] }}';
-        var SOCKET_URL = 'ws://tsplus.zhibocloud.cn:9900';
         var BOOT = {!! json_encode($config['bootstrappers']) !!};
-        
+        var SOCKET_URL = BOOT['im:serve'];
         var wallet_ratio = parseFloat(BOOT['wallet:ratio']/100/100);
         var reward = BOOT.site.reward || {status: false, amounts: '1,10,15'};
         var gold_name = BOOT.site.gold_name || {name: '金币'};
