@@ -53,7 +53,7 @@ $('#J-pay-btn').on('click', function(){
 
     var params = {
         type: payway,
-        value: custom * 100,
+        value: custom * wallet_ratio,
         account: account
     };
 
