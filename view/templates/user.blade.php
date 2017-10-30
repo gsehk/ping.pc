@@ -19,8 +19,8 @@
                 @endif
             <div class="user_subtitle">{{ $data['bio'] or '这家伙很懒，什么都没留下'}}</div>
             <div class="user_number">
-                <span class="user_num">粉丝<span>{{ $data['extra']['followers_count'] or 0}}</span></span>
-                <span class="user_num right">关注<span>{{ $data['extra']['followings_count'] or 0}}</span></span>
+                <a href="{{ route('pc:follows', ['user_id' => $data['id'], 'type' => 1]) }}" class="user_num">粉丝<span>{{ $data['extra']['followers_count'] or 0 }}</span></a>
+                <a href="{{ route('pc:follows', ['user_id' => $data['id'], 'type' => 2]) }}" class="user_num right">关注<span>{{ $data['extra']['followings_count'] or 0 }}</span></a>
             </div>
         </div>
     </div>
