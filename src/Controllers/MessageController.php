@@ -13,20 +13,16 @@ class MessageController extends BaseController
         // 未读消息
         $data = createRequest('GET', '/api/v2/user/unread-count');
 
-        // 会话列表
-        $chat_list = createRequest('GET', '/api/v2/im/conversations/list/all');
-        $data['chat_list'] = array_column($chat_list, null, 'cid');
-
         // 若私聊并且会话不存在，则创建会话
-        if ($user_id != 0 && !isset($data['chat_list'][$user_id])) {
+        if ($user_id != 0) {
             $params['type'] = 0;
             $params['name'] = '';
             $params['uids'] = [$user_id, $this->PlusData['TS']['id']];
-            $new = createRequest('POST', '/api/v2/im/conversations', $params);
-            array_unshift($data['chat_list'], $new);
+            $res = createRequest('POST', '/api/v2/im/conversations', $params);
         }
 
-        $data['list'] = array_values($data['chat_list']);
+        // 获取会话列表
+        $data['chat_list'] = createRequest('GET', '/api/v2/im/conversations/list/all');
         // 获取用户信息
         foreach ($data['chat_list'] as $key => &$value) {
             // 他人user_id
@@ -35,14 +31,18 @@ class MessageController extends BaseController
 
             // 获取房间号
             if ($other_uids[0] == $user_id) {
-                $data['cid'] = $value['cid'];
+                $cid = $value['cid'];
             }
 
             $value['user'] = getUserInfo($other_uids[0]);
+
+            $data['users'][$value['cid']] = $value['user'];
         }
 
+        $data['cid'] = isset($cid) ? $cid : 0;
         $data['type'] = $type;
         $data['user_id'] = $user_id;
+        $data['users'] = isset($data['users']) ? $data['users'] : array();
 
 		return view('pcview::message.message', $data, $this->PlusData);
 	}

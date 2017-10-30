@@ -74,6 +74,7 @@
         this.close = function(){
             messageevent.onClose();
         }
+
         return this;
     };
 })(jQuery);

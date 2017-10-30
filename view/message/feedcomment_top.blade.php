@@ -4,15 +4,15 @@
 
 @if (!$comments->isEmpty())
     @foreach($comments as $comment)
-        <dl class="message-one">
+        <dl class="message_one">
             <dt><img src="{{$comment['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=40}}"></dt>
             <dd>
-                <div class="one-title"><a href="/profile/{{$comment['user']['id']}}">{{$comment['user']['name']}}</a></div>
-                <div class="one-date">{{ getTime($comment['created_at']) }}</div>
+                <div class="one_title"><a href="/profile/{{$comment['user']['id']}}">{{$comment['user']['name']}}</a></div>
+                <div class="one_date">{{ getTime($comment['created_at']) }}</div>
 
-                <div class="top-comment">对你的动态进行了“<sapn>{{$comment['comment']['body']}}</sapn>”评论并申请置顶，请及时审核。</div>
+                <div class="top_comment">对你的动态进行了“<sapn>{{$comment['comment']['body']}}</sapn>”评论并申请置顶，请及时审核。</div>
 
-                <div class="comment-audit">
+                <div class="comment_audit">
                     @if($comment['expires_at'] == null)
                         <a href="javascript:" class="green" data-args="type=1&feed_id={{$comment['feed']['id']}}&comment_id={{$comment['comment']['id']}}&pinned_id={{$comment['id']}}">同意置顶</a>
                         <a href="javascript:" class="green" data-args="type=-1&feed_id={{$comment['feed']['id']}}&comment_id={{$comment['comment']['id']}}&pinned_id={{$comment['id']}}">拒绝置顶</a>
@@ -32,7 +32,7 @@
                 'Accept': 'application/json'
             }
         });
-        $('.comment-audit').on('click', 'a', function () {
+        $('.comment_audit').on('click', 'a', function () {
             var _this = this;
             var data = urlToObject($(this).data('args'));
             var url = '';
@@ -53,10 +53,10 @@
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
                         noticebox(res.message, 1);
-                        $(_this).parent('.comment-audit').html('<a href="javascript:">同意置顶</a>');
+                        $(_this).parent('.comment_audit').html('<a href="javascript:">同意置顶</a>');
                     } else if (xml.status == 204) {
                         noticebox('拒绝置顶成功', 1);
-                        $(_this).parent('.comment-audit').html('<a href="javascript:">拒绝置顶</a>');
+                        $(_this).parent('.comment_audit').html('<a href="javascript:">拒绝置顶</a>');
                     } else {
                         noticebox(res.message, 0);
                     }

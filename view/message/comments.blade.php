@@ -4,13 +4,13 @@
 
 @if (!$comments->isEmpty())
     @foreach($comments as $comment)
-        <dl class="message-one">
+        <dl class="message_one">
             <dt><img src="{{$comment['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=40}}"></dt>
             <dd>
-                <div class="one-title"><a href="/profile/{{$comment['user']['id']}}">{{$comment['user']['name']}}</a>{{$comment['source_type']}}</div>
-                <div class="one-date">{{ getTime($comment['created_at']) }}</div>
+                <div class="one_title"><a href="/profile/{{$comment['user']['id']}}">{{$comment['user']['name']}}</a>{{$comment['source_type']}}</div>
+                <div class="one_date">{{ getTime($comment['created_at']) }}</div>
 
-                <a href="{{$comment['source_url']}}" class="one-cotent">
+                <a href="{{$comment['source_url']}}" class="one_cotent">
                     <div class="content-comment">{{$comment['body']}}</div>
                     <div class="feed-content">
                         @if(isset($comment['source_img']))

@@ -4,13 +4,13 @@
 
 @if (!$likes->isEmpty())
     @foreach($likes as $like)
-        <dl class="message-one">
+        <dl class="message_one">
             <dt><img src="{{$like['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=40}}"></dt>
             <dd>
-                <div class="one-title"><a href="/profile/{{$like['user']['id']}}">{{$like['user']['name']}}</a>{{$like['source_type']}}</div>
-                <div class="one-date">{{ getTime($like['created_at']) }}</div>
+                <div class="one_title"><a href="/profile/{{$like['user']['id']}}">{{$like['user']['name']}}</a>{{$like['source_type']}}</div>
+                <div class="one_date">{{ getTime($like['created_at']) }}</div>
 
-                <a href="{{$like['source_url']}}" class="one-cotent">
+                <a href="{{$like['source_url']}}" class="one_cotent">
                     <div class="feed-content">
                         @if(isset($like['source_img']))
                             <div class="con-img">
