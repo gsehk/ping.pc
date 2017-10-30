@@ -28,6 +28,7 @@
 	padding: 0px 40px 20px;
 	margin: 0px -40px;
 	clear: both;
+	overflow: hidden;
 }
 .actizPicShowExpand #expandCenterImg{
 	clear: both;

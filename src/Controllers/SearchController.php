@@ -51,7 +51,7 @@ class SearchController extends BaseController
                 $feed = clone $data['feeds'];
                 $after = $feed->pop()->id ?? 0;
 
-                $data['conw'] = 735;
+                $data['conw'] = 815;
                 $data['conh'] = 545;
                 $html = view('pcview::templates.feeds', $data, $this->PlusData)->render();
                 break;

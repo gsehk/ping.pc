@@ -117,6 +117,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
     }
     $('#feed_photos_{{$post->id}}').actizPicShow({
         data: data,
+        bigWidth: {{ $conw or 635}},
+        bigHeight: {{ $conh or 400}}        
     });
 </script>
 @endforeach

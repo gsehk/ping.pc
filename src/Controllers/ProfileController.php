@@ -29,7 +29,7 @@ class ProfileController extends BaseController
                     $feeds = createRequest('GET', '/api/v2/feeds', $params);
                     $feed = clone $feeds['feeds'];
                     $after = $feed->pop()->id ?? 0;
-                    $feeds['conw'] = 735;
+                    $feeds['conw'] = 815;
                     $feeds['conh'] = 545;
                     $html = view('pcview::templates.feeds', $feeds, $this->PlusData)->render();
                     break;
