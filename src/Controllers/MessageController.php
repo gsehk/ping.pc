@@ -80,6 +80,18 @@ class MessageController extends BaseController
                         $v['source_content'] = $v['commentable']['subject'];
                         $v['commentable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['commentable']['image']['id'].'?w=35&h=35';
                         break;
+                    case 'questions':
+                        $v['source_type'] = '评论了你的问题';
+                        $v['source_url'] = Route('pc:questionread', $v['commentable']['id']);
+                        $v['source_content'] = $v['commentable']['subject'];
+                        $v['commentable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['commentable']['image']['id'].'?w=35&h=35';
+                        break;
+                    case 'question-answers':
+                        $v['source_type'] = '评论了你的回答';
+                        $v['source_url'] = Route('pc:questionanswers', $v['commentable']['id']);
+                        $v['source_content'] = $v['commentable']['body'];
+                        $v['commentable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['commentable']['image']['id'].'?w=35&h=35';
+                        break;
                 }
             }
 
@@ -124,6 +136,18 @@ class MessageController extends BaseController
                         $v['source_type'] = '赞了你的文章';
                         $v['source_url'] = Route('pc:newsread', $v['likeable']['id']);
                         $v['source_content'] = $v['likeable']['subject'];
+                        $v['likeable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['image']['id'].'?w=35&h=35';
+                        break;
+                    case 'questions':
+                        $v['source_type'] = '赞了你的问题';
+                        $v['source_url'] = Route('pc:questionread', $v['likeable']['id']);
+                        $v['source_content'] = $v['likeable']['subject'];
+                        $v['likeable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['image']['id'].'?w=35&h=35';
+                        break;
+                    case 'question-answers':
+                        $v['source_type'] = '赞了你的回答';
+                        $v['source_url'] = Route('pc:questionanswers', $v['likeable']['id']);
+                        $v['source_content'] = $v['likeable']['body'];
                         $v['likeable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['image']['id'].'?w=35&h=35';
                         break;
                 }
