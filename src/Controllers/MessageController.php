@@ -88,7 +88,7 @@ class MessageController extends BaseController
                         break;
                     case 'question-answers':
                         $v['source_type'] = '评论了你的回答';
-                        $v['source_url'] = Route('pc:questionanswers', $v['commentable']['id']);
+                        $v['source_url'] = Route('pc:answeread', $v['commentable']['id']);
                         $v['source_content'] = $v['commentable']['body'];
                         $v['commentable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['commentable']['image']['id'].'?w=35&h=35';
                         break;
@@ -146,7 +146,7 @@ class MessageController extends BaseController
                         break;
                     case 'question-answers':
                         $v['source_type'] = '赞了你的回答';
-                        $v['source_url'] = Route('pc:questionanswers', $v['likeable']['id']);
+                        $v['source_url'] = Route('pc:answeread', $v['likeable']['id']);
                         $v['source_content'] = $v['likeable']['body'];
                         $v['likeable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['image']['id'].'?w=35&h=35';
                         break;

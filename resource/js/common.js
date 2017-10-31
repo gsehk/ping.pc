@@ -771,7 +771,7 @@ var comment = {
         editor: {},
         button: {},
         wordcount: 255,
-        top: true
+        top: false
     },
     // 初始化回复操作
     reply: function(id, source_id, name) {
@@ -828,8 +828,8 @@ var comment = {
                     var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
                         html +=     '<span class="tcolor">' + NAME + '：</span>' + original_body + '';
                         if (_this.support.top)
-                        html +=     '<a class="comment_del" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
-                        html +=     '<a class="comment_del" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
+                        html +=     '<a class="mouse comment_del" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
+                        html +=     '<a class="mouse comment_del" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
                         html += '</p>';
                 } else {
                     var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';

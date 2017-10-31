@@ -36,7 +36,9 @@
                             @if($cv->user_id != $TS['id'])
                                 <a class="mouse" onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
                             @else
-                                <a class="mouse comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
+                                @if(isset($top) && $top == 1)
+                                    <a class="mouse comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
+                                @endif
                                 <a class="mouse comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
                             @endif
                         </p>
@@ -136,7 +138,8 @@
         comment.support.position = position == '1' ? 1 : 0;
         comment.support.editor = $('#J-editor' + id);
         comment.support.button = $('#J-button' + id);
-        comment.support.top = false;
+        comment.support.top = {{ isset($top) ? $top : 0 }};
+
 
         comment.publish(url, function(res){
             $('.nums').text(comment.support.wordcount);
