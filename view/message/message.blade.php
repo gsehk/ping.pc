@@ -13,9 +13,9 @@
                     </div>
                     <div class="chat_item">
                         <span class="chat_span">评论的</span>
-                        <div>{{ $comments->count() > 0 ? $comments[0]->user->name.'评论了我' : '无人评论我' }}</div>
+                        <div>{{ $comments->count() > 0 ? $comments[0]->user->name : '没有人' }}评论了我</div>
                         @if($counts['unread_comments_count'] > 0)
-                            <span class="chat_num">{{ $counts['unread_comments_count'] }}</span>
+                            <span class="chat_num unread_comments_count">{{ $counts['unread_comments_count'] }}</span>
                         @endif
                     </div>
                 </li>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="chat_item">
                         <span class="chat_span">赞过的</span>
-                        <div>{{ $likes->count() > 0 ? $likes[0]->user->name.'赞了我' : '无人赞我' }}</div>
+                        <div>{{ $likes->count() > 0 ? $likes[0]->user->name : '没有人' }}赞了我</div>
                         @if($counts['unread_likes_count'] > 0)
                             <span class="chat_num">{{ $counts['unread_likes_count'] }}</span>
                         @endif
@@ -50,7 +50,8 @@
                         </svg>
                     </div>
                     <div class="chat_item">
-                        <span class="chat_span chat_span_noinfo">审核通知</span>
+                        <span class="chat_span">审核通知</span>
+                        <div>未审核的信息请及时处理</div>
                     </div>
                 </li>
 
@@ -246,6 +247,8 @@
                     audit_top.removeClass('hide');
                     break;
             }
+            // 清空未读消息数量
+            $('.current_room').find('.chat_num').remove();
         }
 
         var datas = {};
