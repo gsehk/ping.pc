@@ -5,6 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
 
 class MessageController extends BaseController
 {
@@ -84,13 +85,15 @@ class MessageController extends BaseController
                         $v['source_type'] = '评论了你的问题';
                         $v['source_url'] = Route('pc:questionread', $v['commentable']['id']);
                         $v['source_content'] = $v['commentable']['subject'];
-                        $v['commentable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['commentable']['image']['id'].'?w=35&h=35';
+                        preg_match('/\@\!\[.*\]\((\d+)\)/i', $v['commentable']['body'], $imgs);
+                        count($imgs) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$imgs[1];
                         break;
                     case 'question-answers':
                         $v['source_type'] = '评论了你的回答';
                         $v['source_url'] = Route('pc:answeread', $v['commentable']['id']);
-                        $v['source_content'] = $v['commentable']['body'];
-                        $v['commentable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['commentable']['image']['id'].'?w=35&h=35';
+                        $v['source_content'] = replaceContent($v['commentable']['body']);
+                        preg_match('/\@\!\[.*\]\((\d+)\)/i', $v['commentable']['body'], $imgs);
+                        count($imgs) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$imgs[1];
                         break;
                 }
             }

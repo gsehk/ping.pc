@@ -366,8 +366,7 @@
     display: block;
 }
 
-.message-content .content-comment {
-    line-height: 25px;
+.content-comment {
     height: 25px;
     overflow: hidden;
     white-space: nowrap;
