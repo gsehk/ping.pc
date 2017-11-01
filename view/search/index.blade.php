@@ -85,6 +85,7 @@ $(function() {
         $(this).parents('ul').find('a').removeClass('selected');
         !$('#J-question').hasClass('select-gray') && $('#J-question').addClass('select-gray');
         $(this).addClass('selected');
+        keywords = $('#search_input').val();
         switchType(type);
     });
 
