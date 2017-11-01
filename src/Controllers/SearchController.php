@@ -65,6 +65,7 @@ class SearchController extends BaseController
 
                 $datas = createRequest('GET', '/api/v2/questions', $params);
                 $data['data'] = $datas;
+                $data['search'] = true;
                 $question = clone $data['data'];
                 $after = $question->pop()->id ?? 0;
                 $html = view('pcview::templates.question', $data, $this->PlusData)->render();
@@ -117,6 +118,7 @@ class SearchController extends BaseController
                 ];
                 $datas = createRequest('GET', '/api/v2/question-topics', $params);
                 $data['data'] = $datas;
+                $data['search'] = true;
                 $topic = clone $data['data'];
                 $after = $topic->pop()->id ?? 0;
                 $html = view('pcview::templates.topic', $data, $this->PlusData)->render();

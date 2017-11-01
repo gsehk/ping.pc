@@ -23,11 +23,21 @@
             <div class="search_nav clearfix">
                 <ul class="search_menu">
                     <li><a href="javascript:;" @if($type == 1) class="selected" @endif type="1">动态</a></li>
-                    <li><a href="javascript:;" @if($type == 2) class="selected" @endif type="2">问答</a></li>
                     <li><a href="javascript:;" @if($type == 3) class="selected" @endif type="3">文章</a></li>
+                    {{--<li><a href="javascript:;" @if($type == 2) class="selected" @endif type="2">问答</a></li>--}}
                     <li><a href="javascript:;" @if($type == 4) class="selected" @endif type="4">用户</a></li>
                     <li><a href="javascript:;" @if($type == 5) class="selected" @endif type="5">圈子</a></li>
-                    <li><a href="javascript:;" @if($type == 6) class="selected" @endif type="6">话题</a></li>
+                    {{--<li><a href="javascript:;" @if($type == 6) class="selected" @endif type="6">话题</a></li>--}}
+                    <li>
+                        <div type="2" class="zy_select t_c gap12 select-gray" id="J-question">
+                            <span>问答</span>
+                            <ul>
+                                <li type="2" class="active">问答</li>
+                                <li type="6">话题</li>
+                            </ul>
+                            <i></i>
+                        </div>
+                    </li>
                 </ul>
 
                 <div class="search_box">
@@ -73,9 +83,10 @@ $(function() {
     $('.search_menu a').click(function(){
         type = $(this).attr('type');
         $(this).parents('ul').find('a').removeClass('selected');
+        !$('#J-question').hasClass('select-gray') && $('#J-question').addClass('select-gray');
         $(this).addClass('selected');
         switchType(type);
-    })
+    });
 
     // 搜索点击
     $('.search_icon').click(function(){
@@ -174,6 +185,13 @@ $(function() {
 
         };
     }
+
+    $('#J-question li').on('click', function(){
+        $(this).parents('ul').find('a').removeClass('selected');
+        $(this).removeClass('select-gray');
+        type = $(this).attr('type');
+        switchType(type);
+    });
 
     // 关注回调
     var afterdata = function(target){
