@@ -9,7 +9,9 @@
 @section('content')
     <div class="reg_cont" style="height:640px;">
         <ul class="reg_menu">
+            @if(isset($config['bootstrappers']['registerSettings']['type']) && ($config['bootstrappers']['registerSettings']['type'] == 'all' || $config['bootstrappers']['registerSettings']['type'] == 'thirdPart'))
             <li><a href="javascript:" class="current" data-type="register" id="menu_register">新用户注册</a></li>
+            @endif
             <li><a href="javascript:" data-type="bind" id="menu_bind">绑定账号</a></li>
         </ul>
 

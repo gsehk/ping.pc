@@ -26,9 +26,11 @@
         </form>
 
         <div class="login_right_bottom">
-            @if(isset($config['bootstrappers']['registerSettings']['open']) && $config['bootstrappers']['registerSettings']['open'])
+            @if(isset($config['bootstrappers']['registerSettings']['type']) && $config['bootstrappers']['registerSettings']['type'] == 'all')
                 <span class="no_account">没有账号？<a href="{{ route('pc:register') }}"><span>注册</span></a></span>
             @endif
+
+            @if(isset($config['bootstrappers']['registerSettings']['type']) && ($config['bootstrappers']['registerSettings']['type'] == 'all' || $config['bootstrappers']['registerSettings']['type'] == 'thirdPart'))
             <div class="login_share" >
                 三方登录：
                 <a href="javascript:" data-type="weibo" class="bind">
@@ -47,6 +49,7 @@
                     </svg>
                 </a>
             </div>
+            @endif
         </div>
     </div>
 </div>
