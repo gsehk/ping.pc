@@ -88,10 +88,24 @@
     </div>
 </div>
 <script type="text/javascript">
-    layer.photos({
-        photos: '#layer-photos-demo{{$post->id}}'
-        ,anim: 0
-        ,move: false
+    var images = JSON.parse('{!!$post->images!!}'), data = new Array();
+    if(images){
+        for (var i in images) {
+            var size = images[i].size.split('x');
+            var img = {
+                id: 'img' + i,
+                img: SITE_URL + '/api/v2/files/' + images[i].file + '?token=' + TOKEN,
+                tinyimg: SITE_URL + '/api/v2/files/' + images[i].file + '?w=58&h=58&token=' + TOKEN,
+                width: size[0],
+                height: size[1]
+            };
+            data.push(img);
+        }
+    }
+    $('#feed_photos_{{$post->id}}').actizPicShow({
+        data: data,
+        bigWidth: {{ $conw or 635}},
+        bigHeight: {{ $conh or 400}}        
     });
 </script>
 @endforeach

@@ -81,6 +81,8 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.uploadify.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/picshow/jquery.rotate.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/picshow/picShow.js') }}"></script>
 <script>
     $(function () {
         // 切换加入状态

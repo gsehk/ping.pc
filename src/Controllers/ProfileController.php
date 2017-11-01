@@ -111,7 +111,7 @@ class ProfileController extends BaseController
                     $feeds = createRequest('GET', '/api/v2/feeds/collections', $params);
                     $data['feeds'] = $feeds;
                     $after = 0;
-                    $data['conw'] = 735;
+                    $data['conw'] = 815;
                     $data['conh'] = 545;
                     $html = view('pcview::templates.feeds', $data, $this->PlusData)->render();
                     break;

@@ -103,6 +103,9 @@ class GroupController extends BaseController
 
         $post = clone $posts['posts'];
         $after = $post->pop()->id ?? 0;
+        
+        $posts['conw'] = 815;
+        $posts['conh'] = 545;
         $feedData = view('pcview::templates.group_posts', $posts, $this->PlusData)->render();
 
         return response()->json([

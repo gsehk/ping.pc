@@ -33,7 +33,8 @@
 
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>v
+<script src="{{ asset('zhiyicx/plus-component-pc/picshow/jquery.rotate.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/picshow/picShow.js') }}"></script>
 <script>
 // 加载微博
