@@ -1455,7 +1455,7 @@ $(function() {
                 var ul = $('.history ul');
                 var lis = '';
 
-                for (var i = 0, len = hisArr.length; i < len; i++) {
+                for (var i = 0, len = 4; i < len; i++) {
                     lis += '<li type="1"><span class="keywords">' + hisArr[i] + '</span><i></i></li>';
                 }
 
