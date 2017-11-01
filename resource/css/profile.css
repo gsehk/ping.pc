@@ -253,6 +253,7 @@
 
 .qa-item .qa-body>span{
     line-height: 25px;
+    word-wrap: break-word;
 }
 
 .qa-item .qa-toolbar .ctime {

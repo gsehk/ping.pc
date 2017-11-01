@@ -10,7 +10,7 @@
 				<a href="{{ route('pc:topicinfo', $post->id) }}">
 					<p>{{ $post->name }}</p>
 				</a>
-		        <div>关注 <span>{{ $post->follows_count }}</span> 问题 <span>{{ $post->questions_count }}</span>
+		        <div>关注 <span id="tf-count-{{ $post->id }}">{{ $post->follows_count }}</span> 问题 <span>{{ $post->questions_count }}</span>
 		        </div>
 		        <div class="follow">
                     @if ($post->has_follow)

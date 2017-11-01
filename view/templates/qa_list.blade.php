@@ -14,7 +14,10 @@
 			<a href="{{ route('pc:mine', $data->user->id) }}">
             	<img class="round mr10" src="{{ getAvatar($data->user, 30) }}" width="30">
             </a>
-	        <span class="tcolor mr10">{{ $data->user->name }}</span>·&nbsp;&nbsp;
+	        <span class="tcolor mr10">{{ $data->user->name }}</span>
+			@if($data->user->tags->count() > 0)
+	        	·&nbsp;&nbsp;
+	        @endif
 	        @if ($data->user->tags)
 		        <span class="gcolor">
 		        	@foreach ($data->user->tags as $k=>$tag)

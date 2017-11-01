@@ -16,7 +16,9 @@
     <div class="question_body">
         <div class="question_sub_nav">
             <a class="active" href="javascript:;" data-type="1">全部话题</a>
-            <a href="javascript:;" data-type="2">我关注的</a>
+            @if(!empty($TS))
+                <a href="javascript:;" data-type="2">我关注的</a>
+            @endif
         </div>
         <div id="topic-list" class="topic_list"></div>
     </div>
@@ -77,15 +79,18 @@
             var _this = this;
             var status = $(this).attr('status');
             var topic_id = $(this).attr('tid');
+            var followCount = parseInt($('#tf-count-'+topic_id).text());
             topic(status, topic_id, function(){
                 if (status == 1) {
                     $(_this).text('+关注');
                     $(_this).attr('status', 0);
                     $(_this).removeClass('followed');
+                    $('#tf-count-'+topic_id).text(followCount - 1);
                 } else {
                     $(_this).text('已关注');
                     $(_this).attr('status', 1);
                     $(_this).addClass('followed');
+                    $('#tf-count-'+topic_id).text(followCount + 1);
                 }
             });
         });

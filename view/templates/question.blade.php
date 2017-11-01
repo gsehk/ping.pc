@@ -30,6 +30,9 @@
                             </div>
                             <div class="q_user_info">
                                 <span>{{ $post->answer->user->name }} {{ isset($TS) && $post->answer->anonymity == 1 && $post->answer->user_id == $TS['id'] ? '（匿名）' : ''}}</span>
+                                @if($post->answer->user->tags->count() > 0)
+                                    &nbsp;&nbsp;·&nbsp;&nbsp;
+                                @endif
                                 @foreach ($post->answer->user->tags as $tag)
                                     <div>{{$tag->name}}</div>
                                 @endforeach

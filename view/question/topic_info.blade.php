@@ -21,7 +21,7 @@
                     <div class="topic-title">{{ $topic->name }}</div>
                     <div class="topic-foot">
                         <div class="foot-count">
-                            <span class="count">关注 <font class="mcolor">{{ $topic->follows_count }}</font></span>
+                            <span class="count">关注 <font class="mcolor" id="tf-count-{{ $topic->id }}">{{ $topic->follows_count }}</font></span>
                             <span class="count">问题 <font class="mcolor">{{ $topic->questions_count }}</font></span>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                 <span class="intro">话题简介：</span>
                 <span class="h-d">{!! str_limit($topic->description, 250, '...') !!}</span>
                 <span class="s-d">{{ $topic->description }}</span>
-                @if(mb_strlen($topic->description,'UTF8') > 250)
+                @if(strlen($topic->description) > 250)
                     &nbsp; &nbsp; <a href="javascript:;" class="show-description" data-show="0">查看详情</a>
                 @endif
             </div>
@@ -156,6 +156,7 @@
             var topic_id = _this.data('id');
             var status = _this.data('status');
             var url = API + '/user/question-topics/' + topic_id;
+            var followCount = parseInt($('#tf-count-' + topic_id).text());
             if (status == 0) {
                 $.ajax({
                     url: url,
@@ -166,6 +167,7 @@
                             _this.removeClass('add-follow');
                             _this.data('status', 1);
                             _this.text('已关注');
+                            $('#tf-count-' + topic_id).text(followCount + 1);
                         }
                     },
                     error: function(xhr){
@@ -182,6 +184,7 @@
                             _this.addClass('add-follow');
                             _this.data('status', 0);
                             _this.text('+ 关注');
+                            $('#tf-count-' + topic_id).text(followCount - 1);
                         }
                     },
                     error: function(xhr){
