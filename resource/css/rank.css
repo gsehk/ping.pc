@@ -151,6 +151,7 @@
 
 .fans_span2 a {
     color: #333;
+    position: relative;
 }
 
 .fans_span2 a:hover {
@@ -215,4 +216,12 @@
 }
 .right {
     float: right;
+}
+
+.fans_span2 .role-icon {
+     position: absolute;
+    width: 14px;
+    height: 14px;
+    bottom: -9px;
+    left: 19px;
 }

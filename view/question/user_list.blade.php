@@ -5,7 +5,7 @@
     @foreach($users as $user)
         <div class="user">
         	<div class="user-header">
-        		<img src="{{ getAvatar($user, 30) }}" class="fans_img" alt="{{$user['name']}}">
+        		<img src="{{ getAvatar($user, 40) }}" class="fans_img" alt="{{$user['name']}}">
         	</div>
         	<div class="user-info">
         		<p class="info-name">{{$user['name']}}</p>

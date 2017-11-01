@@ -130,6 +130,8 @@ class ConfigController extends Controller
             $nav->delete();
         }
 
+        cacheClear();
+
         return response()->json(['message' => '删除成功']);
     }
 
@@ -191,6 +193,8 @@ class ConfigController extends Controller
         $config->set('pc', $request->input('site'));
 
         $configuration->save($config);
+
+        cacheClear();
 
         return response()->json(['message' => ['更新站点配置成功']], 201);
     }

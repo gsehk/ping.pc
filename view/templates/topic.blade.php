@@ -53,11 +53,9 @@
 		                data: data,
 		                dataType: 'json',
 		                error: function(xml) {
-		                	layer.closeAll();
 		                    noticebox(xml.responseJSON.message, 0);
 		                },
 		                success: function(res, data, xml) {
-		                	layer.closeAll();
 		                	if (xml.status == 201) {
 		                		noticebox('申请成功', 1);
 		                	} else {

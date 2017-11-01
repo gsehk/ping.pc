@@ -129,7 +129,8 @@ var ly = {
             scrollbar: false,
             area: ['auto', 'auto']
         }, function(){
-            callback();
+            layer.closeAll();
+            return callback ? callback() : false;
         });
     }
 };
@@ -748,8 +749,8 @@ var rewarded = {
                     for (var i in res) {
                         html +=
                         '<li>'+
-                            '<img class="lazy round" data-original="' + (res[i].user.avatar ? res[i].user.avatar : DEFAULT_AVATAR) + '" width="40"/>'+
-                            '<span class="uname">'+res[i].user.name+'</span>'+
+                            '<a href="/profile/' + res[i].user.id + '"><img class="lazy round" data-original="' + (res[i].user.avatar ? res[i].user.avatar : DEFAULT_AVATAR) + '" width="40"/></a>'+
+                            '<a href="/profile/' + res[i].user.id + '" class="uname">'+res[i].user.name+'</a>'+
                             '<font color="#aaa">打赏了 '+app+'</font>'+
                         '</li>';
                     }

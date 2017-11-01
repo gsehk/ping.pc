@@ -111,8 +111,8 @@
                 </div>
             </div>
             <ul class="auth_fans">
-                <li>粉丝<a href="javascript:;">{{ $post->user->extra->followers_count }}</a></li>
-                <li>关注<a href="javascript:;">{{ $post->user->extra->followings_count }}</a></li>
+                <li><a href="{{ route('pc:follows', ['user_id' => $post->user->id, 'type' => 1]) }}">粉丝<span>{{ $post->user->extra->followers_count }}</span></a></li>
+                <li><a href="{{ route('pc:follows', ['user_id' => $post->user->id, 'type' => 2]) }}">关注<span>{{ $post->user->extra->followings_count }}</span></a></li>
             </ul>
         </div>
         <!-- 推荐用户 -->

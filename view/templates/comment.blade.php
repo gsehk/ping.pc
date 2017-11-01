@@ -12,6 +12,9 @@
         <dt>
             <a href="{{ route('pc:mine', $comment['user']['id']) }}">
                 <img src="{{ getAvatar($comment['user'], 50) }}" width="50">
+                @if($comment->user->verified)
+                    <img class="role-icon" src="{{ $comment->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+                @endif
             </a>
         </dt>
         <dd>

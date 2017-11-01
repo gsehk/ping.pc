@@ -1820,6 +1820,7 @@ img.load {
 }
 .comment_list .comment_item dt{
     float: left;
+    position: relative;
 }
 
 .comment_list .comment_item dt img{

@@ -526,11 +526,12 @@
     font-size: 14px;
     display: flex;
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     padding: 0 20px;
     text-align: center;
     border: 1px solid #ededed;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .release_tags .release_tags_selected::before {
@@ -549,7 +550,7 @@
     line-height: 36px;
     display: inline-block;
     height: 36px;
-    margin-left: 10px;
+    margin: 5px 0 5px 10px;
     padding: 0 10px;
     cursor: pointer;
     color: #59b6b7 !important;
