@@ -64,8 +64,6 @@
                     $size = explode('x', $store['size']);
                     $store_height = $size[0] > 675 ? 675 / $size[0] * $size[1] : $size[1];
                 @endphp
-                <img style="height:{{ $store_height }}px" data-original="{{ getImageUrl($store, '', '', false) }}111" class="per_image lazy"/>
-
                 @if(isset($store['paid']) && !$store['paid'])
                     <img style="height:{{ $store_height }}px" data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy" onclick="weibo.payImage(this)" data-node="{{ $store['paid_node'] }}" data-amount="{{ $store['amount'] }}" data-file="{{ $store['file'] }}" />
                 @else
