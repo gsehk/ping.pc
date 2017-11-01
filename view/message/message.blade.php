@@ -50,8 +50,12 @@
                         </svg>
                     </div>
                     <div class="chat_item">
-                        <span class="chat_span">审核通知</span>
-                        <div>未审核的信息请及时处理</div>
+                        @if((isset($pinneds->news) && $pinneds->news->count > 0) || (isset($pinneds->feeds) && $pinneds->feeds->count > 0))
+                            <span class="chat_span">审核通知</span>
+                            <div>未审核的信息请及时处理</div>
+                        @else
+                            <span class="chat_span chat_span_noinfo">审核通知</span>
+                        @endif
                     </div>
                 </li>
 
@@ -167,7 +171,7 @@
                 $('#message_wrap').hide();
                 $('#chat_wrap').show();
                 var cid = $(this).data('cid');
-                $('#chat_send').attr('onclick', 'message.sendMessage(' + cid + ')')
+                $('#chat_send').attr('onclick', 'message.sendMessage(' + cid + ')');
                 message.listMessage(cid);
             } else {
                 $('#message_wrap').show();
