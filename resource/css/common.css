@@ -1827,6 +1827,14 @@ img.load {
     border-radius: 50%;
 }
 
+.comment_list .comment_item dt img.role-icon{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+}
+
 .comment_list .comment_item dd{
     font-size: 14px;
     margin-left:20px;
