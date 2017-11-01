@@ -1039,7 +1039,7 @@ button{
     float: right;
     cursor: pointer;
     font-size: 16px;
-    margin-top: -20px;
+    margin-top: -45px;
 }
 
 .question-topic .info-right .add-follow {
@@ -1806,3 +1806,23 @@ button{
     float: right;
     margin-top: -4px;
 }
+
+/* 话题分享 */
+.topic-share {
+    position: relative;
+}
+.topic-share .show-share {
+    position: absolute;
+    right: 0;
+    top: -30px;
+}
+.topic-share .share-show {
+    position: absolute;
+    right: -40px;
+    left: auto;
+    top: 15px;
+}
+.topic-share .share-show .triangle {
+    top: 0;
+}
+

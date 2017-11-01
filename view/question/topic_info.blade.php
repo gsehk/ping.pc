@@ -25,6 +25,24 @@
                     @else
                         <div class="has-follow add-follow" data-id="{{ $topic->id }}" data-status="0">+ 关注</div>
                     @endif
+                        
+                    {{-- 第三方分享 --}}
+                    <div class="topic-share">
+                        <button class="button button-plain show-share" type="button">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-fenxiang1"></use></svg>
+                            分享
+                        </button>
+                        <div class="share-show">
+                            分享至：
+                            @php
+                                // 设置第三方分享图片
+                               $share_pic = $topic->avatar ? $topic->avatar : asset('zhiyicx/plus-component-pc/images/default_picture.png');
+                            @endphp
+                            @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:topicinfo', ['topic' => $topic->id]), 'share_title' => $topic->name, 'share_pic' => $share_pic])
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="topic-description">
@@ -181,6 +199,11 @@
                 $(this).data('show', 0);
                 $(this).text('查看详情');
             }
+        });
+
+        $('.show-share').on('click', function () {
+            var _this = $(this);
+            _this.siblings('.share-show').stop().fadeToggle();
         });
 
     </script>
