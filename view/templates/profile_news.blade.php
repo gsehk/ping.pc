@@ -1,5 +1,6 @@
 @php
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 {{-- 个人中心文章栏列表 --}}
 
@@ -9,7 +10,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 
     <div class="news_title">
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
-            <img class="avatar" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="50" />
+            <img class="avatar" src="{{ getAvatar($post->user, 50) }}" width="50" />
             @if($post->user->verified)
             <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
             @endif

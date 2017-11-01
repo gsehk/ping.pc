@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 <div class="infR_top">
     <div class="itop_autor">热门作者</div>
     <div id="j-author-hot-wrapp">
@@ -6,7 +9,7 @@
             @foreach ($author as $user)
                 <div class="fl">
                     <a href="{{ Route('pc:mine',['user_id'=>$user->user['id']]) }}">
-                        <img src="{{ $user->user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" />
+                        <img src="{{ getAvatar($user->$user) }}" />
                     </a>
                 </div>
                 <div class="i_right">

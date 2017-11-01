@@ -259,3 +259,30 @@ function cacheClear()
 
     return;
 }
+
+function getAvatar($user, $width = 0)
+{
+    if ($user['avatar']) {
+        $avatar = $user['avatar'];
+    } else {
+        if(isset($user['sex'])) {
+            switch ($user['sex']) {
+                case 1:
+                    $avatar = asset('images/pic_default_man.png');
+                    break;
+                case 2:
+                    $avatar = asset('images/pic_default_woman.png');
+                    break;
+                default:
+                    $avatar = asset('images/pic_default_secret.png');
+                    break;
+            }
+        } else {
+            $avatar = asset('images/avatar.png');
+        }
+    }
+
+    $width && $avatar .= '?s='.$width;
+
+    return $avatar;
+}

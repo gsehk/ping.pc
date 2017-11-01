@@ -1,6 +1,7 @@
 @php
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 
 @if(!$feeds->isEmpty())
@@ -9,7 +10,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
 
     <div class="feed_title mb10">
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
-            <img class="round" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="50" />
+            <img class="round" src="{{ getAvatar($post->user, 50) }}" width="50" />
             @if($post->user->verified)
             <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
             @endif

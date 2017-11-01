@@ -1,5 +1,9 @@
 @section('title') 问答详情 @endsection
 
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
+
 @extends('pcview::layouts.default')
 
 @section('styles')
@@ -68,7 +72,7 @@
                                      <span class="questionfollowstatus-people-tip">已邀请悬赏:
                                          <a href="{{ route('pc:mine', $invitation['id']) }}">
                                              <span class="userlink">
-                                                 <img class="avatar" width="30px" height="30px" src="{{$invitation['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                                                 <img class="avatar" width="30px" height="30px" src="{{ getAvatar($invitation, 30) }}" alt="">
                                                  @if ($invitation['verified'])
                                                      <img class="role-icon" src="{{ $invitation['verified']->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                                                  @endif
@@ -207,7 +211,7 @@
         <div class="question-main-r hide">
             <div class="user-mine">
             <span class="user-link">
-                <img class="avatar avatar--round" width="55" height="55" src="{{$TS['avatar']  or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                <img class="avatar avatar--round" width="55" height="55" src="{{ getAvatar($TS, 55) }}" alt="">
             </span>
                 <div class="author-info-content">
                     <div class="author-info-head">

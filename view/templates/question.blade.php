@@ -1,6 +1,7 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 @if (!$data->isEmpty())
     @foreach ($data as $post)
@@ -22,7 +23,7 @@
                             <div class="q_user_info">匿名用户</div>
                         @else
                             <div class="post-user-avatar">
-                                <img src="{{ $post->answer->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=24" class="avatar">
+                                <img src="{{ getAvatar($post->answer->user, 24) }}" class="avatar">
                                 @if ($post->answer->user->verified)
                                     <img class="role-icon" src="{{ $post->answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                                 @endif

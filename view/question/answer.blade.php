@@ -1,4 +1,9 @@
 @section('title') 回答详情 @endsection
+
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
+
 @extends('pcview::layouts.default')
 
 @section('styles')
@@ -15,7 +20,7 @@
                     <img class="round" src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}" width="60">
                 @else
                     <a href="{{ route('pc:mine', $answer->user->id) }}">
-                        <img class="round" src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="60">
+                        <img class="round" src="{{ getAvatar($answer->user, 60) }}" width="60">
                         @if ($answer->user->verified)
                             <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                         @endif
@@ -145,7 +150,7 @@
             <div class="author-con">
                 <div class="author-avatar">
                     <a href="{{ route('pc:mine', $answer->user->id) }}">
-                        <img src="{{ $answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" class="avatar">
+                        <img src="{{ getAvatar($answer->user) }}" class="avatar">
                         @if ($answer->user->verified)
                             <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                         @endif

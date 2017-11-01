@@ -1,8 +1,11 @@
+@php
+	use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 @if(!$users->isEmpty())
     @foreach($users as $user)
         <div class="user">
         	<div class="user-header">
-        		<img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=30" class="fans_img" alt="{{$user['name']}}">
+        		<img src="{{ getAvatar($user, 30) }}" class="fans_img" alt="{{$user['name']}}">
         	</div>
         	<div class="user-info">
         		<p class="info-name">{{$user['name']}}</p>

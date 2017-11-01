@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 <link rel="stylesheet" href="{{ URL::asset('zhiyicx/plus-component-pc/css/message.css')}}"/>
 
 <div class="chat_dialog">
@@ -63,7 +66,7 @@
                 @foreach ($chat_list as $chat)
                 <li @if($cid == $chat['cid'])class="current_room"@endif class="room_item" data-type="5" data-cid="{{ $chat['cid'] }}">
                     <div class="chat_left_icon">
-                    <img src="{{ $chat['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" class="chat_svg">
+                    <img src="{{ getAvatar($chat['user'], 40) }}" class="chat_svg">
                     </div>
                     <div class="chat_item">
                         <span class="chat_span">{{ $chat['user']['name'] }}</span>

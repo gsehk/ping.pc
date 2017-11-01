@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 <div class="hot_users clearfix">
     <div class="hot_users_title">
         热门用户
@@ -7,7 +10,7 @@
         <li>
             <div class="hot_user_avatar avatar_box">
                 <a href="{{ route('pc:mine', $user['id']) }}">
-                    <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60">
+                    <img src="{{ getAvatar($user, 60) }}">
                 @if($user->verified)
                     <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                 @endif

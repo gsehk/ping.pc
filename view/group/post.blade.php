@@ -4,6 +4,7 @@
 
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -21,7 +22,7 @@
             <dl class="user-box clearfix">
                 <dt class="fl">
                     <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
-                    <img class="round" src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" width="60">
+                    <img class="round" src="{{ getAvatar($post->user, 60) }}" width="60">
                     @if($post->user->verified)
                     <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                     @endif
@@ -99,7 +100,7 @@
             <div class="info clearfix">
                 <div class="auth_header">
                     <a href="#">
-                        <img src="{{ $post->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" />
+                        <img src="{{ getAvatar($post->user, 60) }}" />
                     </a>
                 </div>
                 <div class="auth_info">

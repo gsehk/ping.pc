@@ -2,6 +2,7 @@
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 
 @if (!$comments->isEmpty())
@@ -10,7 +11,7 @@
     <dl class="clearfix">
         <dt>
             <a href="{{ route('pc:mine', $comment['user']['id']) }}">
-                <img src="{{ $comment['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="50">
+                <img src="{{ getAvatar($comment['user'], 50) }}" width="50">
             </a>
         </dt>
         <dd>

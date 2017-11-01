@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 @if(isset($config['bootstrappers']['site']['reward']) && $config['bootstrappers']['site']['reward']['status'])
     <div class="reward_cont">
         <p><button class="btn btn-warning btn-lg" onclick="rewarded.show({{ $rewards_id }}, '{{ $rewards_type }}')">打 赏</button></p>
@@ -11,7 +14,7 @@
             <div class="reward_user">
                 @foreach ($rewards_data as $reward)
                     <div class="user_item">
-                        <img class="lazy round" data-original="{{ $reward->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50" width="42" />
+                        <img class="lazy round" data-original="{{ getAvatar($reward->user, 42) }}" width="42" />
                         @if ($reward->user->verified)
                             <img class="verified_icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                         @endif

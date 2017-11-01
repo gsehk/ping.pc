@@ -1,4 +1,6 @@
-
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 @foreach ($datas as $data)
 	<div class="qa-item">
 	    <h3 class="qa-title tcolor"><a href="{{ route('pc:questionread', $data->id) }}">{{ $data->subject }}</a></h3>
@@ -10,7 +12,7 @@
 	    	<span class="tcolor mr10">匿名</span>
 	    @else
 			<a href="{{ route('pc:mine', $data->user->id) }}">
-            	<img class="round mr10" src="{{ $data->user->avatar or asset('zhiyicx/plus-component-pc/images/avatar.png') }}" width="30">
+            	<img class="round mr10" src="{{ getAvatar($data->user, 30) }}" width="30">
             </a>
 	        <span class="tcolor mr10">{{ $data->user->name }}</span>·&nbsp;&nbsp;
 	        @if ($data->user->tags)

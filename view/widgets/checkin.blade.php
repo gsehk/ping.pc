@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 @if ($config['bootstrappers']['checkin'] && !empty($data) )
 <div class="checkin_cont">
     <div class="checkin_user">
@@ -5,7 +8,7 @@
             {{$TS['name']}}
         </span>
         <a class="avatar" href="{{ route('pc:mine') }}">
-            <img class="round" src="{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=100"/>
+            <img class="round" src="{{ getAvatar($TS, 100) }}"/>
             @if($TS->verified)
                 <img class="role-icon" src="{{ $TS->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
             @endif

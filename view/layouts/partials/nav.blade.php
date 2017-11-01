@@ -1,3 +1,7 @@
+
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 <div class="nav nav_border">
     <div class="nav_left">
         <a href="{{ route('pc:feeds') }}">
@@ -8,7 +12,7 @@
     {{-- 已登录 --}}
     @if (!empty($TS))
     <div class="nav_right relative">
-        <img src="{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=30" id="menu_toggle" alt="{{ $TS['name'] }}"/>
+        <img src="{{ getAvatar($TS, 30) }}" id="menu_toggle" alt="{{ $TS['name'] }}"/>
         @if($TS->verified)
             <img class="role-icon" src="{{ $TS->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
         @endif

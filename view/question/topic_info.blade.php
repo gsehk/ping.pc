@@ -1,4 +1,9 @@
 @section('title') 问答 @endsection
+
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
+
 @extends('pcview::layouts.default')
 
 @section('styles')
@@ -80,7 +85,7 @@
                     @foreach ($topic->experts as $user)
                         <li>
                             <a href="{{ route('pc:mine', $user['id']) }}">
-                                <img src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=50"/>
+                                <img src="{{ getAvatar($user, 50) }}/>
                             </a>
                             <span>
                                 <a href="{{ route('pc:mine', $user['id']) }}">{{ $user['name'] }}</a>

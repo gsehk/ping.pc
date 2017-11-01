@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 @if(!$incomes->isEmpty())
 <div class="income-rank">
     <div class="title">收入达人排行榜</div>
@@ -6,7 +9,7 @@
                 <li>
                     <div class="fans-span">{{$loop->iteration}}</div>
                     <div class="income-avatar">
-                        <img src="{{ $income['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=60" alt="{{$income['name']}}">
+                        <img src="{{ getAvatar($income, 60) }}" alt="{{$income['name']}}">
                     </div>
                     <div class="income-name">
                         <a class="name" href="javascript:;">{{$income['name']}}</a>

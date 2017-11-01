@@ -1,6 +1,7 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 @if(!$answers->isEmpty())
     @foreach ($answers as $answer)
@@ -11,7 +12,7 @@
                         <img class="avatar avatar--round" width="50" height="50" src="{{ asset('zhiyicx/plus-component-pc/images/ico_anonymity_60.png') }}" alt="">
                     @else
                         <a href="{{ route('pc:mine', $answer->user->id) }}" class="avatar_box">
-                            <img class="avatar" width="50" height="50" src="{{$answer->user->avatar  or asset('zhiyicx/plus-component-pc/images/avatar.png')}}" alt="">
+                            <img class="avatar" width="50" height="50" src="{{ getAvatar($answer->user, 50) }}" alt="">
                             @if ($answer->user->verified)
                                 <img class="role-icon" src="{{ $answer->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                             @endif

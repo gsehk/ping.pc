@@ -1,11 +1,12 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 
 @if (!$likes->isEmpty())
     @foreach($likes as $like)
         <dl class="message_one">
-            <dt><img src="{{$like['user']['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}?s=40}}"></dt>
+            <dt><img src="{{ getAvatar($like['user'], 40) }}"></dt>
             <dd>
                 <div class="one_title"><a href="/profile/{{$like['user']['id']}}">{{$like['user']['name']}}</a>{{$like['source_type']}}</div>
                 <div class="one_date">{{ getTime($like['created_at']) }}</div>

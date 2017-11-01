@@ -2,6 +2,10 @@
 基本资料
 @endsection
 
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
+
 @extends('pcview::layouts.default')
 
 @section('styles')
@@ -23,7 +27,7 @@
                 <div class="perfect_row mb30">
                     <div class="account_heder">
                         <div class="header">
-                            <img id="J-image-preview" src="{{ $user['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png')}}?s=100">
+                            <img id="J-image-preview" src="{{ getAvatar($user, 100) }}">
                             <input id="task_id" name="storage_task_id" type="hidden"/>
                         </div>
                         <a class="perfect_btn" id="J-file-upload-btn" href="javascript:;">更改头像</a>
