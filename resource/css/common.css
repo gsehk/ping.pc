@@ -604,7 +604,7 @@ a {
 
 /*弹出提示*/
 .noticebox {
-    position: fixed;
+    position: ms_fixed;
     z-index: 555;
     top: 62px;
     display: none;
@@ -634,7 +634,7 @@ a {
 
 /*右侧浮动*/
 .right_extras {
-    position: fixed;
+    position: ms_fixed;
     z-index: 99;
     right: 80px;
     bottom: 80px;
@@ -2326,4 +2326,53 @@ img.load {
     position: absolute;
     top: 40px;
     right: 30px;
+}
+
+/* 右侧消息 */
+#ms_fixed {
+    background-color: #fff;
+    width: 54px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 99999;
+    box-shadow: 0 1px 3px 0 rgba(0, 37, 55, 0.1)
+}
+#ms_fixed dl {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    width: 54px;
+    position: absolute;
+    left: 0;
+    top: 0%;
+    bottom: 0;
+    vertical-align: middle;
+}
+#ms_fixed dd {
+    margin: 0px;
+    position: relative;
+}
+#ms_fixed dd svg {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 9px 9px;
+}
+#ms_fixed .unread_div {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+#ms_fixed .unread_div span {
+    display: block;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+    background: #f24343;
+    width: 16px;
+    height: 16px;
 }

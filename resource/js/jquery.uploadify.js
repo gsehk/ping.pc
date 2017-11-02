@@ -1,5 +1,5 @@
 (function($){
-    var loadgif = RESOURCE_URL + '/images/loading.png';
+    var loadgif = TS.RESOURCE_URL + '/images/loading.png';
 	$.fn.Huploadify = function(opts){
 		var itemTemp = '<a class="feed_picture_span uploadify-queue-item" id="${fileID}"><img class="imgload" src=" '+loadgif+' "/></a>';
 		var defaults = {

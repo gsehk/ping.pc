@@ -71,7 +71,7 @@ $('.subject-submit').on('click', function() {
 
     var isVerified = notice.contribute.verified;
     var isPay = notice.contribute.pay;
-    var pay_contribute = (notice.pay_contribute * wallet_ratio).toFixed(2);
+    var pay_contribute = (notice.pay_contribute * TS.BOOT['wallet:ratio']).toFixed(2);
 
     if (isVerified && notice.verified == null) {
         ly.confirm(formatConfirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？'), '去认证' , '', function(){
@@ -79,7 +79,7 @@ $('.subject-submit').on('click', function() {
         });
         return false;
     } else if (isPay && pay_contribute > 0) {
-        var html = formatConfirm('投稿提示', '<div class="confirm_money">' + pay_contribute + '</div>本次投稿您需要支付' + pay_contribute + gold_name.name +'，是否继续投稿？');
+        var html = formatConfirm('投稿提示', '<div class="confirm_money">' + pay_contribute + '</div>本次投稿您需要支付' + pay_contribute + TS.BOOT.site.gold_name.name +'，是否继续投稿？');
         ly.confirm(html, '投稿' , '', function(){
            return news.create(args);
         });

@@ -109,7 +109,7 @@
             postArgs.genre = genre;
             if ( last != undefined ) {
                 $.ajax({
-                    url: SITE_URL + '/rank/rankList',
+                    url: TS.SITE_URL + '/rank/rankList',
                     type: 'GET',
                     data: postArgs,
                     dataType: 'json',

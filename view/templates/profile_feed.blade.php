@@ -126,8 +126,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
             var size = images[i].size.split('x');
             var img = {
                 id: 'img' + i,
-                img: SITE_URL + '/api/v2/files/' + images[i].file + '?token=' + TOKEN,
-                tinyimg: SITE_URL + '/api/v2/files/' + images[i].file + '?w=58&h=58&token=' + TOKEN,
+                img: TS.SITE_URL + '/api/v2/files/' + images[i].file + '?token=' + TS.TOKEN,
+                tinyimg: TS.SITE_URL + '/api/v2/files/' + images[i].file + '?w=58&h=58&token=' + TS.TOKEN,
                 width: size[0],
                 height: size[1]
             };

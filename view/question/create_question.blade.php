@@ -282,7 +282,7 @@
 
                 return false;
             }
-            args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) / wallet_ratio;
+            args.amount = (parseInt($('#amount').val()) || parseInt($("#amount-hide").val()) || 0) / TS.BOOT['wallet:ratio'];
             args.look = $("input[type='radio'][name='look']:checked").val();
             var topic = [];
             for (var key in args.topics_) {

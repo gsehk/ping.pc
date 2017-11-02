@@ -29,7 +29,7 @@
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-                'Authorization': 'Bearer ' + TOKEN,
+                'Authorization': 'Bearer ' + TS.TOKEN,
                 'Accept': 'application/json'
             }
         });

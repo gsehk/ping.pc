@@ -898,7 +898,7 @@ Renderer.prototype.image = function(href, title, text) {
 
 // ts_img node
 Renderer.prototype.ts_img = function(href, title, text) {
-  var out = '<img src="' + window.API + '/files/' + href + '" alt="' + text + '"';
+  var out = '<img src="' + TS.API + '/files/' + href + '" alt="' + text + '"';
   if (title) {
     out += ' title="' + title + '"';
   }

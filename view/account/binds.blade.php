@@ -326,7 +326,7 @@
             if (_this.data('bind') == 1) {
                 var url = '/api/v2/user/socialite/'+type;
                 $.ajax({
-                    url: SITE_URL + url,
+                    url: TS.SITE_URL + url,
                     type: 'DELETE',
                     data: {},
                     dataType: 'json',
@@ -337,7 +337,7 @@
                         if (xml.status == 204) {
                             _this.removeClass('remove').addClass('blue').text('去绑定');
                             _this.removeAttr('data-type').removeAttr('data-bind');
-                            _this.attr('href', SITE_URL + '/socialite/'+type+'/bind');
+                            _this.attr('href', TS.SITE_URL + '/socialite/'+type+'/bind');
 
                             noticebox('操作成功', 1);
                         }

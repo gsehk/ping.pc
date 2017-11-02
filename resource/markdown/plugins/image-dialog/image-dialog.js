@@ -84,8 +84,8 @@
                             {
                                 alert(imageLang.imageURLEmpty);
                                 return false;
-                            }else if(url.indexOf(window.API + "/files/") !== -1){
-                                url = +(url.replace(window.API + "/files/", ''));
+                            }else if(url.indexOf(TS.API + "/files/") !== -1){
+                                url = +(url.replace(TS.API + "/files/", ''));
                             }
 
 							var altAttr = (alt !== "") ? " \"" + alt + "\"" : "";
@@ -149,7 +149,7 @@
                         
                         typeof window.fileUpload.init === 'function' && window.fileUpload.init(file, function(image, f, storage_id){
 
-                            dialog.find("[data-url]").val( window.API + '/files/'+ storage_id );
+                            dialog.find("[data-url]").val( TS.API + '/files/'+ storage_id );
                             settings.uploadSuccess(storage_id);
                         });
 

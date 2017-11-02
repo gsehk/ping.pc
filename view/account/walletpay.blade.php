@@ -81,7 +81,7 @@ $('#J-pay-btn').on('click', function(){
         },
         success: function(response) {
             var res = JSON.stringify(response.charge);
-            var surl = SITE_URL + '/account/gateway?res=' + window.encodeURIComponent(res);
+            var surl = TS.SITE_URL + '/account/gateway?res=' + window.encodeURIComponent(res);
             $("#payurla").attr("href", surl);
             $("#payurlc").trigger("click");
             payPop(response.id);
@@ -121,10 +121,10 @@ function checkStatus(id, type) {
             dataType: 'json',
             success: function(res) {
                 if (res.status == 1) {
-                    window.location.href = SITE_URL + '/account/success?status=1&url={{route('pc:wallet')}}&time=3&message=充值成功';
+                    window.location.href = TS.SITE_URL + '/account/success?status=1&url={{route('pc:wallet')}}&time=3&message=充值成功';
                 }
                 if (type == 1) {
-                    window.location.href = SITE_URL + '/account/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中&content=操作失败';
+                    window.location.href = TS.SITE_URL + '/account/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中&content=操作失败';
                 }
             },
             error: function(xhr){

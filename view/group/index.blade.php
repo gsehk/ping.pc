@@ -41,10 +41,7 @@ setTimeout(function() {
 
 $('#group_box').on('click', '.J-join', function(){
 
-    if (MID == 0) {
-        window.location.href = '/passport/login';
-        return;
-    }
+    checkLogin();
     var _this = this;
     var status = $(this).attr('status');
     var group_id = $(this).attr('gid');

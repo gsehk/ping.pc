@@ -1,14 +1,13 @@
-var loadHtml = "<div class='loading'><img src='" + RESOURCE_URL + "/images/three-dots.svg' class='load'></div>";
+var loadHtml = "<div class='loading'><img src='" + TS.RESOURCE_URL + "/images/three-dots.svg' class='load'></div>";
 var clickHtml = "<div class='click_loading'><a href='javascript:;'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
-var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg> ';
+var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
 var initNums = 255;
-window.TS_WEB = {};
 
 // ajax 设置 headers
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-        'Authorization': 'Bearer ' + TOKEN,
+        'Authorization': 'Bearer ' + TS.TOKEN,
         'Accept': 'application/json'
     }
 })
@@ -311,7 +310,7 @@ scroll.clickMore = function(obj) {
     // 将能加载参数关闭
     scroll.setting.canload = false;
     scroll.setting.loadcount++;
-    $(obj).parent().html("<img src='" + RESOURCE_URL + "/images/three-dots.svg' class='load'>");
+    $(obj).parent().html("<img src='" + TS.RESOURCE_URL + "/images/three-dots.svg' class='load'>");
 
     $.ajax({
         url: scroll.setting.url,
@@ -407,7 +406,7 @@ var checkNums = function(obj, len, show) {
 var follow = function(status, user_id, target, callback) {
     checkLogin();
 
-    var url = API + '/user/followings/' + user_id;
+    var url = TS.API + '/user/followings/' + user_id;
     if (status == 0) {
         $.ajax({
             url: url,
@@ -438,7 +437,7 @@ var follow = function(status, user_id, target, callback) {
 var group = function(status, group_id, callback) {
     checkLogin();
 
-    var url = API + '/groups/' + group_id + '/join';
+    var url = TS.API + '/groups/' + group_id + '/join';
     if (status == 0) {
         $.ajax({
             url: url,
@@ -468,7 +467,7 @@ var group = function(status, group_id, callback) {
 var topic = function(status, topic_id, callback) {
     checkLogin();
 
-    var url = API + '/user/question-topics/' + topic_id;
+    var url = TS.API + '/user/question-topics/' + topic_id;
     if (status == 0) {
         $.ajax({
             url: url,
@@ -547,7 +546,7 @@ var noticebox_cb = function(tourl) {
 
 // 无数据提示dom
 var no_data = function(selector, type, txt) {
-    var image = type == 0 ? RESOURCE_URL + '/images/pic_default_content.png' : RESOURCE_URL + '/images/pic_default_people.png';
+    var image = type == 0 ? TS.RESOURCE_URL + '/images/pic_default_content.png' : TS.RESOURCE_URL + '/images/pic_default_people.png';
     var html = '<div class="no_data_div"><div class="no_data"><img src="' + image + '" /><p>' + txt + '</p></div></div>';
     $(selector).html(html);
 }
@@ -619,31 +618,6 @@ var checkEmail = function(string) {
     return false;
 }
 
-
-// 设置Cookie
-var setCookie = function(c_name,value,expiredays) {
-    var exdate=new Date()
-    exdate.setDate(exdate.getDate()+expiredays)
-    document.cookie=c_name+ "=" +escape(value)+
-    ((expiredays==null) ? "" : "; expires="+exdate.toGMTString()+"; path=/")
-}
-
-// 获取cookie
-var getCookie = function(c_name) {
-    if (document.cookie.length>0)
-    {
-        var c_start=document.cookie.indexOf(c_name + "=");
-        if (c_start!=-1)
-        {
-            c_start=c_start + c_name.length+1 ;
-            var c_end=document.cookie.indexOf(";",c_start);
-            if (c_end==-1) c_end=document.cookie.length;
-            return unescape(document.cookie.substring(c_start,c_end));
-        }
-   }
-   return "";
-}
-
 // 签到
 var checkIn = function(is_check, nums) {
     var url = '/api/v2/user/checkin';
@@ -674,9 +648,9 @@ var rewarded = {
                         + '<p class="reward_title">打赏</p>'
                         + '<div class="reward_text">选择打赏金额</div>'
                         + '<div class="reward_spans">';
-                        $.each(reward.amounts.split(','), function (index, value) {
+                        $.each(TS.BOOT.site.reward.split(','), function (index, value) {
                             if (value > 0) {
-                                html += '<span num="' + value / wallet_ratio + '">' + value + '</span>';
+                                html += '<span num="' + value / TS.BOOT['wallet:ratio'] + '">' + value + '</span>';
                             }
                         });
                     html += '</div>'
@@ -687,7 +661,7 @@ var rewarded = {
 
         ly.confirm(html, '打赏', '', function(){
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
-            var amount = $('.reward_input input').val() / wallet_ratio;
+            var amount = $('.reward_input input').val() / TS.BOOT['wallet:ratio'];
 
             if (!num && !amount) {
                 return false;
@@ -1145,7 +1119,7 @@ var pinneds = function (url) {
     ly.confirm(html, '', '', function(){
         var data = {
             day: $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '',
-            amount: $('.pinned_input input').val() / wallet_ratio
+            amount: $('.pinned_input input').val() / TS.BOOT['wallet:ratio']
         };
         if (!data.day) {
             noticebox('请选择置顶天数', 0);
@@ -1224,10 +1198,10 @@ var delHistory = function(str) {
 
 //验证登录
 var checkLogin = function() {
-    if (MID == 0) {
+    if (TS.MID == 0) {
         // 记录url
-        setCookie('referer_url', window.location.href, 1);
-        window.location.href = SITE_URL+'/passport/login';
+        $.cookie('referer_url', window.location.href, 1);
+        window.location.href = TS.SITE_URL + '/passport/login';
         throw new Error("请登录");
     }
 }
@@ -1266,7 +1240,7 @@ var moneyLimit = function(value) {
 // 第三方分享
 var thirdShare = function(type, url, title, pic, obj) {
     type = type || 1;
-    url = url || SITE_URL;
+    url = url || TS.SITE_URL;
     title = title || '快来看看吧';
     pic = pic || '';
     var tourl = '';
@@ -1310,7 +1284,7 @@ var thirdShare = function(type, url, title, pic, obj) {
 
 // 获取用户信息
 var getUserInfo = function(uid) {
-    var url = API + '/users/' + uid;
+    var url = TS.API + '/users/' + uid;
     var user = {};
     $.ajax({
         url: url,
@@ -1347,12 +1321,94 @@ var storeLocal = {
     }
 }
 
+// 获取浏览器信息
+var browser={
+    versions:function(){
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {    //移动终端浏览器版本信息
+            trident: u.indexOf('Trident') > -1, //IE内核
+            presto: u.indexOf('Presto') > -1, //opera内核
+            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+            iPad: u.indexOf('iPad') > -1, //是否iPad
+            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+        };
+    }(),
+    language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+
+
 $(function() {
+    // Jquery fixed拓展
+    jQuery.fn.fixed = function(options) {
+        var defaults = {
+            x:0,
+            y:0
+        };
+        var o = jQuery.extend(defaults, options);
+        var isIe6 = !window.XMLHttpRequest;
+        var html= $('html');
+        if (isIe6 && html.css('backgroundAttachment') !== 'fixed') {
+            html.css('backgroundAttachment','fixed').css('backgroundImage','url(about:blank)');
+        };
+        return this.each(function() {
+            var domThis=$(this)[0];
+            var objThis=$(this);
+            if(isIe6){
+                objThis.css('position' , 'absolute');
+                domThis.style.setExpression('right', 'eval((document.documentElement).scrollRight + ' + o.x + ') + "px"');
+                domThis.style.setExpression('top', 'eval((document.documentElement).scrollTop + ' + o.y + ') + "px"');
+            } else {
+                objThis.css('position' , 'fixed').css('top',o.y).css('right',o.x);
+            }
+        });
+    };
+
+
+    // 右侧边栏
+    if(!browser.versions.mobile){
+        var _st = $.cookie("ms_fixed");
+        if (!_st) _st=0;
+        var _code = '<div id="ms_fixed">'
+                  +      '<dl>'
+                  +          '<dd><div class="unread_div"><span>99</span></div><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
+                  +          '<dd><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
+                  +          '<dd><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
+                  +          '<dd><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
+                  +     '</dl>'
+                  + '</div>';
+        if (_st == 1) {
+            $(_code).hide().appendTo("body").fixed({x:-44,y:0}).fadeIn(500);
+            $("#ms_fixed dt a.close").width('68px');
+        } else {
+            $(_code).hide().appendTo("body").fixed({x:0,y:0}).fadeIn(500);
+        }
+        $("#ms_fixed dt").click(function(){
+            var _right = $("#ms_fixed").offset().right;
+            if (_right>=0) {
+                $.cookie("fixed",1,{path:'/'});
+                $("#ms_fixed").animate({right:-44},300,'swing',function(){
+                    $("#ms_fixed dt a.close").hide().width('68px').fadeIn(500);
+                });
+            } else {
+                $.cookie("fixed",0,{path:'/'});
+                $("#ms_fixed dt a.close").width('44px');
+                $("#ms_fixed").animate({right:0}, 300, 'swing', function(){
+                });
+            }
+        });
+    }
+
+
     //获得用户时区与GMT时区的差值
-    if (getCookie('customer_timezone') == '') {
+    if ($.cookie('customer_timezone') == '') {
         var exp = new Date();
         var gmtHours = -(exp.getTimezoneOffset()/60);
-        setCookie('customer_timezone', gmtHours, 1);
+        $.cookie('customer_timezone', gmtHours, 1);
     }
 
     // 二级导航

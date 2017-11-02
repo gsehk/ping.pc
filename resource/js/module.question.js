@@ -57,7 +57,7 @@ var QA = {
             "tag" : "share_answerlist",
             'bdText' : bdDesc,
             'bdDesc' : '',
-            'bdUrl' : SITE_URL + '/question/answer/' + answer_id,
+            'bdUrl' : TS.SITE_URL + '/question/answer/' + answer_id,
             'bdPic': img
         });
 
@@ -66,7 +66,7 @@ var QA = {
     look: function (answer_id, money, question_id, obj) {
         checkLogin();
         obj = obj ? obj : false;
-        ly.confirm(formatConfirm('围观支付', '本次围观您需要支付' + money + gold_name.name + '，是否继续围观？'), '' , '', function(){
+        ly.confirm(formatConfirm('围观支付', '本次围观您需要支付' + money + TS.BOOT.site.gold_name.name + '，是否继续围观？'), '' , '', function(){
             var _this = this;
             if (_this.lockStatus == 1) {
                 return;
@@ -148,12 +148,12 @@ var question = {
             "tag" : "share_questionlist",
             'bdText' : bdDesc,
             'bdDesc' : "",
-            'bdUrl' : SITE_URL + '/question/' + question_id,
+            'bdUrl' : TS.SITE_URL + '/question/' + question_id,
             'bdPic': img
         });
     },
     selected: function (question_id, money) {
-        var html = formatConfirm('精选问答支付', '<div class="confirm_money">' + money + '</div>本次申请精选您需要支付' + money + gold_name.name + '，是否继续申请？');
+        var html = formatConfirm('精选问答支付', '<div class="confirm_money">' + money + '</div>本次申请精选您需要支付' + money + TS.BOOT.site.gold_name.name + '，是否继续申请？');
 
         ly.confirm(html, '' , '', function(){
             var _this = this;
@@ -190,9 +190,9 @@ var question = {
             + '<div class="reward_text">选择公开悬赏金额</div>'
             + '<div class="reward_spans">';
 
-        $.each(reward.amounts.split(','), function (index, value) {
+        $.each(TS.BOOT.site.reward.split(','), function (index, value) {
             if (value > 0) {
-                html += '<span num="' + value / wallet_ratio + '">' + value + '</span>';
+                html += '<span num="' + value / TS.BOOT['wallet:ratio'] + '">' + value + '</span>';
             }
         });
         html += '</div>'
@@ -208,7 +208,7 @@ var question = {
             }
             _this.lockStatus = 1;
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
-            var amount = $('.reward_input input').val() / wallet_ratio;
+            var amount = $('.reward_input input').val() / TS.BOOT['wallet:ratio'];
 
             if (!num && !amount) {
                 return false;

@@ -5,7 +5,7 @@ var weibo = {};
  * @return void
  */
 weibo.afterUpload = function(image, f, task_id) {
-    var img = '<img class="imgloaded" onclick="weibo.showImg();" src="' + SITE_URL + '/api/v2/files/' + task_id + '"/ tid="' + task_id + '" amount="">';
+    var img = '<img class="imgloaded" onclick="weibo.showImg();" src="' + TS.SITE_URL + '/api/v2/files/' + task_id + '"/ tid="' + task_id + '" amount="">';
     var del = '<span class="imgdel"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></span>'
     $('#' + 'fileupload_1_' + f.index).css('border', 'none').html(img + del);
 };
@@ -27,7 +27,7 @@ weibo.postFeed = function() {
     // 付费免费
     var select = $('#feed_select').data('value');
 
-    var reward_amounts = reward.amounts.split(',');
+    var reward_amounts = TS.BOOT.site.reward.split(',');
 
     if (select == 'pay') {
         if ($('.feed_picture').find('img').length > 0) { // 图片付费弹窗
@@ -118,7 +118,7 @@ weibo.doPostFeed = function(type) {
     var data = {
         feed_content: $('#feed_content').val(),
         feed_from: 1,
-        feed_mark: MID + new Date().getTime(),
+        feed_mark: TS.MID + new Date().getTime(),
     };
     var images = [];
     if (type == 'free') { // 免费
@@ -136,7 +136,7 @@ weibo.doPostFeed = function(type) {
                     images.push({'id':$(this).attr('tid')});
                 } else {
                     has_amount = 1;
-                    images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount / wallet_ratio });
+                    images.push({'id':$(this).attr('tid'), 'type': 'read', 'amount': amount / TS.BOOT['wallet:ratio'] });
                 }
             });
             // 判断是否有图片添加付费信息
@@ -150,7 +150,7 @@ weibo.doPostFeed = function(type) {
         } else {
             // 文字付费
             var amount = $('#feed_content').attr('amount');
-            if (amount != '') data.amount = amount / wallet_ratio;
+            if (amount != '') data.amount = amount / TS.BOOT['wallet:ratio'];
         }
     }
 
@@ -257,10 +257,10 @@ weibo.payText = function(obj, tourl){
     tourl = tourl || '';
     var feed_item = _this.parents('.feed_item');
     var id = feed_item.attr('id');
-    var amount = (feed_item.data('amount') * wallet_ratio).toFixed(2);
+    var amount = (feed_item.data('amount') * TS.BOOT['wallet:ratio']).toFixed(2);
     var node = feed_item.data('node');
 
-    var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + gold_name.name + '即可查看完整内容，是否确认支付？');
+    var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + TS.BOOT.site.gold_name.name + '即可查看完整内容，是否确认支付？');
     ly.confirm(html, '', '', function(){
         var url = '/api/v2/purchases/' + node;
         // 确认支付
@@ -298,12 +298,12 @@ weibo.payImage = function(obj){
         checkLogin();
 
         var _this = $(obj);
-        var amount = (parseFloat(_this.data('amount')) * wallet_ratio).toFixed(2);
+        var amount = (parseFloat(_this.data('amount')) * TS.BOOT['wallet:ratio']).toFixed(2);
         var node = _this.data('node');
         var file = _this.data('file');
         var image = _this.data('original');
 
-        var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + gold_name.name + '即可查看高清大图，是否确认支付？');
+        var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + TS.BOOT.site.gold_name.name + '即可查看高清大图，是否确认支付？');
         ly.confirm(html, '', '', function(){
             var url = '/api/v2/purchases/' + node;
             // 确认支付
@@ -355,12 +355,12 @@ $(function() {
         checkLogin();
 
         var _this = $(this);
-        var amount = parseFloat(_this.data('amount')) * wallet_ratio;
+        var amount = parseFloat(_this.data('amount')) * TS.BOOT['wallet:ratio'];
         var node = _this.data('node');
         var file = _this.data('file');
         var image = _this.data('original');
 
-        var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + gold_name.name + '即可查看高清大图，是否确认支付？');
+        var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + TS.BOOT.site.gold_name.name + '即可查看高清大图，是否确认支付？');
         ly.confirm(html, '', '', function(){
             var url = '/api/v2/purchases/' + node;
             // 确认支付

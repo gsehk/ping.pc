@@ -155,7 +155,7 @@
             var _this = $(this);
             var topic_id = _this.data('id');
             var status = _this.data('status');
-            var url = API + '/user/question-topics/' + topic_id;
+            var url = TS.API + '/user/question-topics/' + topic_id;
             var followCount = parseInt($('#tf-count-' + topic_id).text());
             if (status == 0) {
                 $.ajax({

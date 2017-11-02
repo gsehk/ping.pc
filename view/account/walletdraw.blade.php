@@ -53,7 +53,7 @@ $('#J-pay-btn').on('click', function(){
 
     var params = {
         type: payway,
-        value: custom * wallet_ratio,
+        value: custom * TS.BOOT['wallet:ratio'],
         account: account
     };
 

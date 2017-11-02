@@ -7,7 +7,7 @@ var post = {};
  * @return void
  */
 post.afterUpload = function(image, f, task_id) {
-    var img = '<img class="imgloaded" onclick="post.showImg();" src="' + SITE_URL + '/api/v2/files/' + task_id + '"/ tid="' + task_id + '" amount="">';
+    var img = '<img class="imgloaded" onclick="post.showImg();" src="' + TS.SITE_URL + '/api/v2/files/' + task_id + '"/ tid="' + task_id + '" amount="">';
     var del = '<span class="imgdel"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></span>'
     $('#' + 'fileupload_1_' + f.index).css('border', 'none').html(img + del);
 };
@@ -36,7 +36,7 @@ post.createPost = function (group_id) {
         //title: $('#post_title').val(),
         content: $('#feed_content').val(),
         images: images,
-        group_post_mark: MID + new Date().getTime(),
+        group_post_mark: TS.MID + new Date().getTime(),
     };
 
     /*if (!data.title || getLength(data.title) > 30) {
