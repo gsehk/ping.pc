@@ -27,7 +27,7 @@ weibo.postFeed = function() {
     // 付费免费
     var select = $('#feed_select').data('value');
 
-    var reward_amounts = TS.BOOT.site.reward.split(',');
+    var reward_amounts = TS.BOOT.site.reward.amounts.split(',');
 
     if (select == 'pay') {
         if ($('.feed_picture').find('img').length > 0) { // 图片付费弹窗

@@ -190,7 +190,7 @@ var question = {
             + '<div class="reward_text">选择公开悬赏金额</div>'
             + '<div class="reward_spans">';
 
-        $.each(TS.BOOT.site.reward.split(','), function (index, value) {
+        $.each(TS.BOOT.site.reward.amounts.split(','), function (index, value) {
             if (value > 0) {
                 html += '<span num="' + value / TS.BOOT['wallet:ratio'] + '">' + value + '</span>';
             }

@@ -604,7 +604,7 @@ a {
 
 /*弹出提示*/
 .noticebox {
-    position: ms_fixed;
+    position: fixed;
     z-index: 555;
     top: 62px;
     display: none;
@@ -634,7 +634,7 @@ a {
 
 /*右侧浮动*/
 .right_extras {
-    position: ms_fixed;
+    position: fixed;
     z-index: 99;
     right: 80px;
     bottom: 80px;
