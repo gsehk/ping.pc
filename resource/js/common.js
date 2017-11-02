@@ -1111,16 +1111,15 @@ var pinneds = function (url) {
                     + '<div class="pinned_input">'
                         + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义置顶金额，必须为整数">'
                     + '</div>'
-                    + '<div class="pinned_text">当前平均置顶金额为' + TS.BOOT.site.gold_name.name + '200/天，钱包余额为' + BALANCE + '</div>'
+                    + '<div class="pinned_text">当前平均置顶金额为' + TS.BOOT.site.gold_name.name + '200/天，钱包余额为' + TS.USER.wallet.balance*TS.BOOT['wallet:ratio'] + '</div>'
                     + '<div class="pinned_text">需要支付总金额：</div>'
                     + '<div class="pinned_total"><span>0</span></div>'
                 + '</div>';
 
     ly.confirm(html, '', '', function(){
-        var data = {
-            day: $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '',
-            amount: $('.pinned_input input').val() / TS.BOOT['wallet:ratio']
-        };
+        var data = {};
+        data.day = $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '';
+        data.amount = $('.pinned_input input').val() / TS.BOOT['wallet:ratio'] * data.day;
         if (!data.day) {
             noticebox('请选择置顶天数', 0);
             return false;

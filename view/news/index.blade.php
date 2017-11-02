@@ -125,7 +125,7 @@ $(function(){
     $('#news-release').on('click', function () {
         checkLogin();
         var url = '';
-        if (TS.BOOT['news:contribute'].verified && (typeof(TS.USER.verified) == 'undefined' || TS.USER.verified == null)) {
+        if (TS.BOOT['news:contribute'].verified && TS.USER.verified == null) {
             url = "{{ route('pc:authenticate') }}";
         } else {
             url = "{{ route('pc:newsrelease') }}";

@@ -69,11 +69,11 @@ $('.subject-submit').on('click', function() {
         return news.update(args);
     }
 
-    var isVerified = notice.contribute.verified;
-    var isPay = notice.contribute.pay;
-    var pay_contribute = (notice.pay_contribute * TS.BOOT['wallet:ratio']).toFixed(2);
+    var isVerified = TS.BOOT['news:contribute'].verified;
+    var isPay = TS.BOOT['news:contribute'].pay;
+    var pay_contribute = (TS.BOOT['news:pay_conyribute'] * TS.BOOT['wallet:ratio']).toFixed(2);
 
-    if (isVerified && notice.verified == null) {
+    if (isVerified && TS.USER.verified == null) {
         ly.confirm(formatConfirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？'), '去认证' , '', function(){
             window.location.href = '/account/authenticate';
         });

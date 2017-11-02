@@ -104,13 +104,7 @@
     <script src="{{ asset('zhiyicx/plus-component-pc/cropper/cropper.min.js')}}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.news.js')}}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
-    <script type="text/javascript">       
-        var notice = {
-            balance : {{ $TS['wallet']['balance'] or 0 }},
-            verified: {!! json_encode($TS['verified']) !!},
-            contribute: BOOT['news:contribute'],
-            pay_contribute: BOOT['news:pay_conyribute']
-        };
+    <script type="text/javascript">
         var selBox = $('#J-select-tags');
 
         $('.release_tags').on('click', '>*', function(e){
