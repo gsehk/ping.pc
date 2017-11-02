@@ -128,8 +128,8 @@
 
 
 .chat_right .chat_content {
-    padding: 0 0 0 15px;
-    width: 492px;
+    padding: 0 15px;
+    width: 525px;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
