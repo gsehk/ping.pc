@@ -136,9 +136,9 @@
                             <a href="javascript:;" class="button set-amount">已设置悬赏</a>
                         @endif
                         @if($question['user_id'] == $TS['id'])
-                            <button class="button button-plain options" onclick="options(this)" type="button" aria-haspopup="true" aria-expanded="false">
+                            <a class="button button-plain options" onclick="options(this)" type="button" aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
-                            </button>
+                            </a>
                             <div class="options_div">
                                 <div class="triangle"></div>
                                 <ul>
