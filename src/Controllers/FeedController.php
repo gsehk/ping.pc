@@ -75,7 +75,7 @@ class FeedController extends BaseController
     {
         $feed = createRequest('GET', '/api/v2/feeds/'.$feed_id);
         $feed->collect_count = $feed->collection->count();
-        $feed->rewards = $feed->rewards->shuffle()->filter(function ($value, $key) {
+        $feed->rewards = $feed->rewards->filter(function ($value, $key) {
             return $key < 10;
         });
         $data['feed'] = $feed;
