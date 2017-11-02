@@ -6,14 +6,20 @@
     <title>@yield('title')</title>
 
     <script>
-        var API = '{{ $routes["api"] }}';
-        var MID = "{{ $TS['id'] or 0 }}";
-        var NAME = "{{ $TS['name'] or '' }}";
-        var AVATAR = "{{ $TS['avatar'] }}";
-        var TOKEN = "{{ $token or '' }}";
-        var SITE_URL = "{{ $routes['siteurl'] }}";
-        var RESOURCE_URL = '{{ $routes["resource"] }}';
-        var SOCKET_URL = "{{ $routes['socket_url'] or ''}}";
+        var TS = {};
+        // 公共配置
+        TS.API = '{{ $routes["api"] }}';
+        TS.TOKEN = "{{ $token or '' }}";
+        TS.SITE_URL = "{{ $routes['siteurl'] }}";
+        TS.RESOURCE_URL = '{{ $routes["resource"] }}';
+
+        // 登录用户对象
+        TS.USER = {!! json_encode($TS) !!};
+        TS.MID = TS.USER ? TS.USER['id'] : 0;
+        TS.BOOT = {!! json_encode($config['bootstrappers']) !!};
+        
+        // 转换比例处理
+        TS.BOOT['wallet:ratio'] = parseFloat(TS.BOOT['wallet:ratio'] / 100 / 100);
     </script>
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/passport.css') }}">
@@ -41,6 +47,7 @@
 
     <script src="{{ asset('zhiyicx/plus-component-pc/js/common.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/font/iconfont.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.cookie.js') }}"></script>
 
     <!-- js -->
     @yield('scripts')

@@ -6,20 +6,20 @@
     <title>@yield('title')</title>
     
     <script>
-        var API = '{{ $routes["api"] }}';
-        var MID = "{{ $TS['id'] or 0 }}";
-        var NAME = "{{ $TS['name'] or '' }}";
-        var BALANCE = "{{ $TS['wallet']['balance'] / 100 }}";
-        var AVATAR = "{{ $TS['avatar'] or asset('zhiyicx/plus-component-pc/images/avatar.png') }}";
-        var DEFAULT_AVATAR = "{{ asset('zhiyicx/plus-component-pc/images/avatar.png') }}";
-        var TOKEN = "{{ $token or '' }}";
-        var SITE_URL = "{{ $routes['siteurl'] }}";
-        var RESOURCE_URL = '{{ $routes["resource"] }}';
-        var BOOT = {!! json_encode($config['bootstrappers']) !!};
-        var SOCKET_URL = BOOT['im:serve'];
-        var wallet_ratio = parseFloat(BOOT['wallet:ratio']/100/100);
-        var reward = BOOT.site.reward || {status: false, amounts: '1,10,15'};
-        var gold_name = BOOT.site.gold_name || {name: '金币'};
+        var TS = {};
+        // 公共配置
+        TS.API = '{{ $routes["api"] }}';
+        TS.TOKEN = "{{ $token or '' }}";
+        TS.SITE_URL = "{{ $routes['siteurl'] }}";
+        TS.RESOURCE_URL = '{{ $routes["resource"] }}';
+
+        // 登录用户对象
+        TS.USER = {!! json_encode($TS) !!};
+        TS.MID = TS.USER ? TS.USER['id'] : 0;
+        TS.BOOT = {!! json_encode($config['bootstrappers']) !!};
+        
+        // 转换比例处理
+        TS.BOOT['wallet:ratio'] = parseFloat(TS.BOOT['wallet:ratio'] / 100 / 100);
     </script>
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/common.css') }}">
     <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.min.js') }}"></script>
@@ -54,6 +54,7 @@
     <script src="{{ asset('zhiyicx/plus-component-pc/js/common.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/font/iconfont.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.lazyload.min.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.cookie.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/layer/layer.js') }}"></script>
 
     @yield('scripts')
