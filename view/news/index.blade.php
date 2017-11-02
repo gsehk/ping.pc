@@ -33,7 +33,7 @@
 
         <div class="right_container">
             <div class="news_release_btn">
-                <a href="{{ route('pc:newsrelease') }}">
+                <a href="javascript:;" id="news-release">
                     <span>
                         <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>投稿
                     </span>
@@ -121,6 +121,19 @@ $(function(){
 
     // 图片懒加载
     $("img.lazy").lazyload({effect: "fadeIn"});
+
+    $('#news-release').on('click', function () {
+        checkLogin();
+        var url = '';
+        if (TS.BOOT['news:contribute'].verified && (typeof(TS.USER.verified) == 'undefined' || TS.USER.verified == null)) {
+            url = "{{ route('pc:authenticate') }}";
+        } else {
+            url = "{{ route('pc:newsrelease') }}";
+        }
+        window.location.href = url;
+
+        return false;
+    });
 });
 </script>
 @endsection

@@ -804,10 +804,10 @@ var comment = {
                 };
                 if (_this.support.position) {
                     var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
-                        html +=     '<span class="tcolor">' + NAME + '：</span>' + original_body + '';
+                        html +=     '<span class="tcolor">' + TS.USER.name + '：</span>' + original_body + '';
                         if (_this.support.top)
-                        html +=     '<a class="comment_del" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
-                        html +=     '<a class="comment_del" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
+                        html +=     '<a class="comment_del mouse" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
+                        html +=     '<a class="comment_del mouse" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
                         html += '</p>';
                 } else {
                     var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
@@ -816,7 +816,7 @@ var comment = {
                         html += '            <img src="'+AVATAR+'" width="50">';
                         html += '        </dt>';
                         html += '        <dd>';
-                        html += '            <span class="reply_name">'+NAME+'</span>';
+                        html += '            <span class="reply_name">' + TS.USER.name + '</span>';
                         html += '            <div class="reply_tool feed_datas">';
                         html += '                <span class="reply_time">刚刚</span>';
                         html += '                <span class="reply_action options" onclick="options(this)"><svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg></span>';
