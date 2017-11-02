@@ -3,9 +3,7 @@
 @endphp
 {{-- 个人中心头部个人信息 --}}
 <div class="profile_top">
-    <div
-        class="profile_top_cover" style="background-image: url({{ $user->bg or asset('zhiyicx/plus-component-pc/images/default_cover.png') }});background-repeat: no-repeat;background-size: cover;">
-        {{-- <img class="user_bg" src="{{ $user->bg or asset('zhiyicx/plus-component-pc/images/default_cover.png') }}"/> --}}
+    <div class="profile_top_cover" style="background-image: url({{ $user->bg or asset('zhiyicx/plus-component-pc/images/default_cover.png') }});background-repeat: no-repeat;background-size: cover;">
     </div>
 
     @if ($user->id == $TS->id)
@@ -16,7 +14,7 @@
     <div class="profile_top_info">
         <div class="profile_top_img relative fl">
             <a href="{{ route('pc:mine', $user->id) }}">
-                <img class="round" src="{{ getAvatar($user, 160) }}/>
+                <img class="round" src="{{ getAvatar($user, 160) }}"/>
                 @if($user->verified)
                     <img class="role-icon" src="{{ $user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                 @endif
