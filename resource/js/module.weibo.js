@@ -294,7 +294,8 @@ weibo.payText = function(obj, tourl){
     })
 };
 weibo.payImage = function(obj){
-        event.stopPropagation();  
+        // 阻止冒泡
+        cancelBubble();
         checkLogin();
 
         var _this = $(obj);

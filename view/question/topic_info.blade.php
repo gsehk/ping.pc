@@ -85,7 +85,7 @@
                     @foreach ($topic->experts as $user)
                         <li>
                             <a href="{{ route('pc:mine', $user['id']) }}">
-                                <img src="{{ getAvatar($user, 50) }}/>
+                                <img src="{{ getAvatar($user, 50) }}"/>
                             </a>
                             <span>
                                 <a href="{{ route('pc:mine', $user['id']) }}">{{ $user['name'] }}</a>

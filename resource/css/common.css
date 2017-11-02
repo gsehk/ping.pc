@@ -2282,9 +2282,9 @@ img.load {
 }
 .fuzzy {
     box-shadow: 0 0 10px 4px white;
-    text-shadow: 0 0 10px #666;
+    text-shadow: 0 0 10px #222;
     opacity: 0.8;
-    color: rgba(0,0,0,-0.1) !important;
+    color: rgba(220, 220, 220, 0.8) !important;
     word-break: break-all;
     cursor: pointer;
     overflow: hidden;

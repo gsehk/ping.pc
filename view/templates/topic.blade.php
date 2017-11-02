@@ -14,9 +14,9 @@
 		        </div>
 		        <div class="follow">
                     @if ($post->has_follow)
-                        <a class="J-follow followed" tid="{{ $post->id }}"  status="1">已关注</a>
+                        <a class="followed" tid="{{ $post->id }}"  status="1" onclick="QT.follow(this)">已关注</a>
                     @else
-                        <a class="J-follow" tid="{{ $post->id }}"  status="0">+关注</a>
+                        <a tid="{{ $post->id }}"  status="0" onclick="QT.follow(this)">+关注</a>
                     @endif
                 </div>
 		    </div>
@@ -28,43 +28,8 @@
 			<img src="http://plus.cn/zhiyicx/plus-component-pc/images/pic_default_content.png">
 			<p> 没有找到相关话题~</p>
 			<div class="search-button">
-				<a href="javascript:;" onclick="topic.show()">向官方建议创建新话题</a>
+				<a href="javascript:;" onclick="QT.show()">向官方建议创建新话题</a>
 			</div>
 		</div>
 	</div>
-	<script>
-		var topic = {
-		    show : function () {
-		    	checkLogin();
-                var html = '<form class="topic-show" id="topic-create">'
-								+ '<p class="topic-title">建议创建话题</p>'
-								+ '<div class="topic-from-row">'
-									+ '<input type="text" name="name" placeholder="请输入话题名称">'
-								+ '</div>'
-								+ '<div class="topic-from-row">'
-									+ '<textarea name="description" placeholder="请输入话题相关描述信息"></textarea>'
-								+ '</div>'
-					        + '</form>';
-                ly.alert(html, '提交', function(){
-		            var data = $('#topic-create').serializeArray();
-		            $.ajax({
-		                url: '/api/v2/user/question-topics/application',
-		                type: 'POST',
-		                data: data,
-		                dataType: 'json',
-		                error: function(xml) {
-		                    noticebox(xml.responseJSON.message, 0);
-		                },
-		                success: function(res, data, xml) {
-		                	if (xml.status == 201) {
-		                		noticebox('申请成功', 1);
-		                	} else {
-		                		noticebox(res.message, 0);
-		                	}
-		                }
-		            });
-	        	});    
-            }
-		};
-	</script>
 @endif

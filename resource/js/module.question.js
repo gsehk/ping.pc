@@ -234,3 +234,57 @@ var question = {
         });
     }
 };
+
+var QT = {
+    show : function () {
+        checkLogin();
+        var html = '<form class="topic-show" id="topic-create">'
+            + '<p class="topic-title">建议创建话题</p>'
+            + '<div class="topic-from-row">'
+            + '<input type="text" name="name" placeholder="请输入话题名称">'
+            + '</div>'
+            + '<div class="topic-from-row">'
+            + '<textarea name="description" placeholder="请输入话题相关描述信息"></textarea>'
+            + '</div>'
+            + '</form>';
+        ly.alert(html, '提交', function(){
+            var data = $('#topic-create').serializeArray();
+            $.ajax({
+                url: '/api/v2/user/question-topics/application',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                error: function(xml) {
+                    noticebox(xml.responseJSON.message, 0);
+                },
+                success: function(res, data, xml) {
+                    if (xml.status == 201) {
+                        noticebox('申请成功', 1);
+                    } else {
+                        noticebox(res.message, 0);
+                    }
+                }
+            });
+        });
+    },
+    follow: function (obj) {
+        checkLogin();
+        var _this = obj;
+        var status = $(_this).attr('status');
+        var topic_id = $(_this).attr('tid');
+        var followCount = parseInt($('#tf-count-'+topic_id).text());
+        topic(status, topic_id, function(){
+            if (status == 1) {
+                $(_this).text('+关注');
+                $(_this).attr('status', 0);
+                $(_this).removeClass('followed');
+                $('#tf-count-'+topic_id).text(followCount - 1);
+            } else {
+                $(_this).text('已关注');
+                $(_this).attr('status', 1);
+                $(_this).addClass('followed');
+                $('#tf-count-'+topic_id).text(followCount + 1);
+            }
+        });
+    }
+};

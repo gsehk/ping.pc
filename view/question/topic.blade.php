@@ -73,27 +73,5 @@
             $(this).addClass('active');
         });
 
-        $('#topic-list').on('click', '.J-follow', function(){
-            checkLogin();
-
-            var _this = this;
-            var status = $(this).attr('status');
-            var topic_id = $(this).attr('tid');
-            var followCount = parseInt($('#tf-count-'+topic_id).text());
-            topic(status, topic_id, function(){
-                if (status == 1) {
-                    $(_this).text('+关注');
-                    $(_this).attr('status', 0);
-                    $(_this).removeClass('followed');
-                    $('#tf-count-'+topic_id).text(followCount - 1);
-                } else {
-                    $(_this).text('已关注');
-                    $(_this).attr('status', 1);
-                    $(_this).addClass('followed');
-                    $('#tf-count-'+topic_id).text(followCount + 1);
-                }
-            });
-        });
-
     </script>
 @endsection
