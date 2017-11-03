@@ -25,7 +25,7 @@
                 <div class="detail_info relative" id="news_toolbar">
                     <a href="{{ route('pc:news', ['cate_id' => $news['category']['id']]) }}" class="cates_span">{{ $news['category']['name'] or '默认' }}</a>
                     <span>{{ $news['from'] != '原创' ? $news['from'] : $news['user']['name'] }}  ·  {{ $news['hits'] }}浏览  ·  {{ getTime($news['created_at']) }}</span>
-                    @if($news['user_id'] == $TS['id'])
+                    @if($news['user_id'] == $TS['id'] && ($news->audit_status == 3 || $news->audit_status == 0))
                     <span class="options" onclick="options(this)">
                         <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
                     </span>
@@ -39,7 +39,7 @@
                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑 
                                         </a>
                                     </li>
-                                @else
+                                @elseif($news->audit_status == 0)
                                     <li>
                                         <a href="javascript:;" onclick="news.pinneds({{$news->id}});">
                                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶

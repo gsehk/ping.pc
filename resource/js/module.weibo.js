@@ -150,7 +150,12 @@ weibo.doPostFeed = function(type) {
         } else {
             // 文字付费
             var amount = $('#feed_content').attr('amount');
-            if (amount != '') data.amount = amount / TS.BOOT['wallet:ratio'];
+            if (amount == '') {
+                lyNotice('请配置付费金额');
+
+                return false;
+            }
+            data.amount = amount / TS.BOOT['wallet:ratio'];
         }
     }
 
