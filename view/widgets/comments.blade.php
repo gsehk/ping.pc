@@ -25,7 +25,7 @@
                                 @php
                                     $user = getUserInfo($cv->reply_user);
                                 @endphp
-                                回复{{ '@'.$user->name }}：
+                                回复<a href="{{ route('pc:mine', $user->id) }}">{{ '@'.$user->name }}</a>：
                             @endif
 
                             {!! formatContent($cv->body) !!}
