@@ -19,18 +19,29 @@ textarea {
     outline: none;
 }
 
-::-webkit-input-placeholder { /* WebKit browsers */
+input::-webkit-input-placeholder , /* WebKit browsers */
+textarea::-webkit-input-placeholder { /* WebKit browsers */
     color: rgb(204, 204, 204);
-　　}
-　　:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+}
+
+input:-moz-placeholder , /* Mozilla Firefox 4 to 18 */
+textarea:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     color: rgb(204, 204, 204);
-　　}
-　　::-moz-placeholder { /* Mozilla Firefox 19+ */
+}
+
+input::-moz-placeholder , /* Mozilla Firefox 19+ */
+textarea::-moz-placeholder { /* Mozilla Firefox 19+ */
     color: rgb(204, 204, 204);
-　　}
-　　:-ms-input-placeholder { /* Internet Explorer 10+ */
-    color: rgb(204, 204, 204);
-　　}
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder{
+    /* important 增加权重*/
+    color: rgb(204, 204, 204) !important;
+}
+
+input::-ms-clear{display: none;}
+input::-ms-reveal{display: none;}
 
 
 /* 底部置地*/

@@ -1154,6 +1154,9 @@ button{
     height: 75px;
     display: flex;
 }
+.answer-author .author-con .author-avatar>a>img {
+    width: 75px;
+}
 .answer-author .author-con .author-avatar>a>img.role-icon {
     position: absolute;
     right: 0;
