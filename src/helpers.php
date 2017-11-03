@@ -243,7 +243,7 @@ function getUserInfo($id)
 function replaceContent($content)
 {
     $content = preg_replace('@\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)@', '[图片]', $content);
-    $content = preg_replace('/\<((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)\>/u', '网页链接+', $content);
+    $content = preg_replace('/\<*((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)\>*/u', '网页链接+', $content);
 
     return $content;
 }

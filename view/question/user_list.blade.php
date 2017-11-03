@@ -6,6 +6,9 @@
         <div class="user">
         	<div class="user-header">
         		<img src="{{ getAvatar($user, 40) }}" class="fans_img" alt="{{$user['name']}}">
+				@if ($user->verified)
+					<img class="verified_icon" src="{{ $user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
+				@endif
         	</div>
         	<div class="user-info">
         		<p class="info-name">{{$user['name']}}</p>

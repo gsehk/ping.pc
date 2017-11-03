@@ -453,7 +453,7 @@ button{
     padding: 40px;
     margin: auto;
 }
-.create-question .step2 {
+.create-question .step1 {
     display: none;
 }
 
@@ -773,8 +773,16 @@ button{
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    overflow: hidden;
     background-color: #ededed;
+    position: relative;
+}
+
+.search-user .lists .user .user-header .verified_icon{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 15px;
+    height: 15px;
 }
 
 .search-user .lists .user .user-info{
