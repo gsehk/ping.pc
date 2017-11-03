@@ -8,7 +8,6 @@ socket = {
     },
     onMessage : function(datas) {
         var msg = datas;
-        console.log(msg);
         var messagetype = msg.data.substr(0, 1); // 获取消息第一位判断消息类型
         var data = JSON.parse(msg.data.substr(1)); // 数据转换
 
@@ -18,17 +17,17 @@ socket = {
             delete dbMsg.type;
             dbMsg.time = dbMsg.mid / 8388608 + 1451577600000;
             dbMsg.hash = '';
-            dbMsg.owner = window.TS.currentUserId;
+            dbMsg.owner = window.TS.MID;
             dbMsg.addCount = true;
-            window.TS.dataBase.transaction('rw?', window.TS.dataBase.messagebase, window.TS.dataBase.chatroom, () => {
+            window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
                 // 消息放入本地
-                window.TS.dataBase.messagebase.put(dbMsg);
+                window.TS.dataBase.message.put(dbMsg);
                 // 修改房间最后消息时间
-                window.TS.dataBase.chatroom.where('[cid+owner]').equals([dbMsg.cid, dbMsg.owner]).modify({
+                window.TS.dataBase.room.where('[cid+owner]').equals([dbMsg.cid, dbMsg.owner]).modify({
                     last_message_time: dbMsg.time
                 })
             });
-            message.setMessage(dbMsg.txt, dbMsg.cid, dbMsg.uid);
+            message.setMessage(dbMsg.txt, dbMsg.uid);
         }
 
         // 应答消息
@@ -37,49 +36,19 @@ socket = {
             if (data[0] === 'convr.msg.sync' && data[1].length) {
                 data[1].forEach((value, index) => {
                     value.time = value.mid / 8388608 + 1451577600000;
-                    value.owner = window.TS.currentUserId;
+                    value.owner = window.TS.MID;
                     // 对比本地存储的会话，写入新会话
-                    window.TS.dataBase.transaction('rw?', window.TS.dataBase.messagebase, window.TS.dataBase.chatroom, () => {
+                    window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
                         // 查找我的最后一条消息
-                        window.TS.dataBase.messagebase.where('[cid+owner]').equals([value.cid, window.TS.currentUserId]).last(item => {
-                            if (item !== undefined) {
-                                if (value.seq > item.seq) {
-                                    // 写入数据库
-                                    window.TS.dataBase.messagebase.put(value);
-                                    // 修改房间最后通话时间
-                                    window.TS.dataBase.chatroom.where('[cid+owner]').equals([value.cid, window.TS.currentUserId]).modify({
-                                        last_message_time: value.time
-                                    });
-                                    window.TS.dataBase.chatroom.where('[cid+owner]').equals([value.cid, window.TS.currentUserId]).first().then(items => {
-                                        if (items !== undefined) {
-                                            var uids = items.uids.split(',');
-                                            var user_id = 0;
-                                            if (uids[0] == window.TS.currentUserId) {
-                                                user_id = uids[1];
-                                            } else {
-                                                user_id = uids[0];
-                                            }
-                                        }
-                                    });
-                                }
-                            } else {
+                        window.TS.dataBase.message.where('[cid+owner]').equals([value.cid, window.TS.MID]).last(item => {
+                            if ((item !== undefined && value.seq > item.seq) || item === undefined) {
                                 // 写入数据库
-                                window.TS.dataBase.messagebase.put(value);
-                                // 更新时间
-                                window.TS.dataBase.chatroom.where('[cid+owner]').equals([value.cid, window.TS.currentUserId]).modify({
-                                    last_message_time: value.time
+                                window.TS.dataBase.message.put(value);
+                                // 修改房间最后通话时间
+                                window.TS.dataBase.room.where('[cid+owner]').equals([value.cid, window.TS.MID]).modify({
+                                    last_message_time: value.time,
+                                    last_message: value.txt
                                 });
-                                window.TS.dataBase.chatroom.where('[cid+owner]').equals([value.cid, window.TS.currentUserId]).first().then(items => {
-                                    if (items !== undefined) {
-                                        var uids = items.uids.split(',');
-                                        var user_id = 0;
-                                        if (uids[0] == window.TS.currentUserId) {
-                                            user_id = uids[1];
-                                        } else {
-                                            user_id = uids[0];
-                                        }
-                                    }
-                                })
                             }
                         });
                     })
@@ -91,10 +60,9 @@ socket = {
 
             // 登录后同步消息
             if (data[0] === 'auth' && data[1].seqs) {
-                data[1].seqs.forEach(seq => {
-                    // 设置会话列表
-                    message.listConversations(seq);
+                var _message = message;
 
+                data[1].seqs.forEach(seq => {
                     var msg = '2';
                     var message = [
                         'convr.msg.sync', {
@@ -115,15 +83,16 @@ socket = {
                     seq: data[1].seq,
                     mid: data[1].mid,
                     time: data[1].mid / 8388608 + 1451577600000,
-                    owner: window.TS.currentUserId
+                    owner: window.TS.MID
                 };
-                window.TS.dataBase.transaction('rw?', window.TS.dataBase.messagebase, window.TS.dataBase.chatroom, () => {
+                window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
                     // 修改本地消息
-                    window.TS.dataBase.messagebase.where('hash').equals(data[2]).modify(dbData);
-                    window.TS.dataBase.messagebase.where('hash').equals(data[2]).first().then(results => {
+                    window.TS.dataBase.message.where('hash').equals(data[2]).modify(dbData);
+                    window.TS.dataBase.message.where('hash').equals(data[2]).first().then(results => {
                         // 更改房间的最后消息时间
-                        window.TS.dataBase.chatroom.where('[cid+owner]').equals([results.cid, window.TS.currentUserId]).modify({
-                            last_message_time: results.time
+                        window.TS.dataBase.room.where('[cid+owner]').equals([results.cid, window.TS.MID]).modify({
+                            last_message_time: results.time,
+                            last_message: results.txt
                         });
                     });
                 })
@@ -150,6 +119,7 @@ message = {
     datas: {},
 
     init: function(datas) {
+        return false;
         this.datas.list = datas.list;
         this.datas.users = datas.users;
         this.datas.cid = datas.cid;
@@ -157,9 +127,6 @@ message = {
         // 链接socket
         if(TS.BOOT['im:serve'] && TS.MID != 0) { //判断是否配置im聊天服务器
             message.connect();
-
-            // 若有cid，创建对话信息
-            if (this.datas.cid != 0) message.listMessage(this.datas.cid);
         } else {
             console.log('未配置Socket地址或未登录');
         }
@@ -169,31 +136,41 @@ message = {
         if (!TS.BOOT['im:serve']) return false;
 
         // 创建本地存储
-        var db = new Dexie('ThinkSNS');
+        var db = new Dexie('TS');
         db.version(2).stores({
-            // ImMessage
-            messagebase: "++, txt, cid, uid, hash, mid, seq, time, owner, [cid+mid], [cid+owner]",
+            // message
+            message: "++, owner, cid, txt, uid, hash, mid, seq, time, read, [cid+mid], [cid+owner]",
 
-            // chatroom
-            chatroom: "++, cid, user_id, name, pwd, type, uids, last_message_time, owner, [cid+owner], newMessage",
+            // room
+            room: "++, owner, cid, user_id, name, pwd, type, uids, last_message, last_message_time, [cid+owner]",
         });
 
         window.TS.dataBase = db;
-        window.TS.currentUserId = TS.MID;
 
         // 存储会话列表
-        window.TS.dataBase.transaction('rw?', window.TS.dataBase.chatroom, () => {
-            $.each(this.datas.list, function(key, val){
-                window.TS.dataBase.chatroom.where('[cid+owner]').equals([val.cid, window.TS.currentUserId ]).count( number => {
-                    if(!number > 0) {
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
+
+            this.datas.list.forEach(val => {
+                window.TS.dataBase.room.where('[cid+owner]').equals([val.cid, window.TS.MID]).first(function(item){
+                    if (item === undefined) {
                         val.last_message_time = 0;
-                        val.owner = window.TS.currentUserId;
-                        // 将对话列表写入到本地数据库
-                        delete(val.user);
-                        window.TS.dataBase.chatroom.put(val);
+                        val.last_message = '';
+                        val.owner = window.TS.MID;
+                        window.TS.dataBase.room.put(val);
+                    } else {
+                        val.last_message = item.last_message;
                     }
                 });
-            })
+
+                // 设置对话列表
+                message.setConversation(val);
+            });
+
+            var div = document.getElementById('chat_left_scroll');
+            console.log($(".current_room").position().top);
+            div.scrollTop = $(".current_room").offset().top;
+
+            return false;
 
         });
 
@@ -242,107 +219,53 @@ message = {
         }
     },
 
-    listConversations: function(cid) {
-        return false;
-        // TODO
-        normal_html = '<li class="current_room"class="room_item" data-type="5" data-cid="' + value['cid'] + '">'
+    // 设置会话
+    setConversation: function(room) {
+        var css = '';
+        if (room.cid == this.datas.cid) {
+            css = 'class="current_room"';
+            message.listMessage(room.cid, this.datas.cid);
+        }
+
+        var last_message = room.last_message == undefined ? '' : room.last_message;
+
+        var html = '<li ' + css + ' class="room_item" data-type="5" data-cid="' + room['cid'] + '">'
                     +      '<div class="chat_left_icon">'
-                    +          '<img src="' + other_avatar + '" class="chat_svg">'
+                    +          '<img src="' + getAvatar(this.datas.users[room.other_uid]) + '" class="chat_svg">'
                     +       '</div>'
                     +      '<div class="chat_item">'
-                    +          '<span class="chat_span"></span>'
-                    +          '<div></div>'
+                    +          '<span class="chat_span">' + this.datas.users[room.other_uid]['name'] + '</span>'
+                    +          '<div>' + last_message + '</div>'
                     +      '</div>'
                     +  '</li>';
-
-
-        var _this = this;
-        window.TS.dataBase.transaction('rw?', window.TS.dataBase.chatroom, () => {
-            // 查询当前用户的本地对话
-            window.TS.dataBase.chatroom
-              .orderBy('last_message_time')
-              .filter( (item) => {
-                return (item.owner === window.TS.currentUserId);
-              })
-              .reverse()
-              .toArray( results => {
-                if(results.length) {
-                    $.each(results, function(key, value){
-                        var normal_html = '';
-                        if (_this.datas.cid != 0 && _this.datas.cid == value['cid']) {
-                            var other_avatar = _this.datas.users[value['cid']]['avatar'] != null ? this.datas.users[cid]['avatar'] : DEFAULT_AVATAR;
-                            var top_html = '<li class="current_room"class="room_item" data-type="5" data-cid="' + value['cid'] + '">'
-                                         +      '<div class="chat_left_icon">'
-                                         +          '<img src="' + other_avatar + '" class="chat_svg">'
-                                         +       '</div>'
-                                         +      '<div class="chat_item">'
-                                         +          '<span class="chat_span"></span>'
-                                         +          '<div></div>'
-                                         +      '</div>'
-                                         +  '</li>';
-                        } else {
-                            var other_avatar = _this.datas.users[value['cid']]['avatar'] != null ? this.datas.users[cid]['avatar'] : DEFAULT_AVATAR;
-                            normal_html += '<li class="current_room"class="room_item" data-type="5" data-cid="' + value['cid'] + '">'
-                                         +      '<div class="chat_left_icon">'
-                                         +          '<img src="' + other_avatar + '" class="chat_svg">'
-                                         +       '</div>'
-                                         +      '<div class="chat_item">'
-                                         +          '<span class="chat_span"></span>'
-                                         +          '<div></div>'
-                                         +      '</div>'
-                                         +  '</li>';
-                        }
-
-                    });
-
-                    var html = top_html + normal_html;
-                    $('#root_list').append(html);
-                }
-            })
-        })
-        .catch( e => {
-            console.log(e);
-        })
+        $('#root_list').append(html);
     },
-
-    setConversation: function(chat, user) {
-        // 设置侧边栏聊天对话
-        var sidehtml = '<dd id="ms_chat_' + chat['cid'] + '"><a href="javascript:;" onclick="openChatDialog(4,'+ user.id +')"><img src="' + getAvatar(user) + '"/></a></dd>';
-
-        $('#ms_fixed').append(sidehtml);
-
-        if ($('.chat_dialog').length > 0) {
-        }
-    },
-
 
     listMessage: function(cid) {
         var _this = this;
-
         // 设置房间名
-        $('#chat_wrap .body_title').html(_this.datas.users[cid]['name']);
+        $('#chat_wrap .body_title').html();
         $('#chat_wrap .clickMore').remove();
+        $('#chat_cont').html('');
 
-        var div = document.getElementById('chat_scroll');
         // 查询消息
-        window.TS.dataBase.transaction('rw?', window.TS.dataBase.messagebase, () => {
-            window.TS.dataBase.messagebase
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
+            window.TS.dataBase.message
                 .orderBy('seq')
                 .filter( (item) => {
-                  return (item.seq != -1 && item.cid === cid);
+                    return (item.seq != -1 && item.cid === cid);
                 })
                 .limit(15)
                 .reverse()
                 .toArray( array => {
-                  var messageList = [];
-                  var messageBody = {};
-                  if(array.length) {
-                    array = array.reverse();
-                    $('#chat_cont').html('');
-                    $.each(array, function(key, value){
-                        message.setMessage(value.txt, cid, value.uid);
-                    })
-                  }
+                    var messageList = [];
+                    var messageBody = {};
+                    if(array.length) {
+                        array = array.reverse();
+                        array.forEach((value) => {
+                            message.setMessage(value.txt, value.uid);
+                        });
+                    }
                 });
         });
     },
@@ -350,7 +273,7 @@ message = {
     sendMessage: function(cid) {
         var msg = '2';
         var time = (new Date()).getTime();
-        var hash = time + '_'  + this.datas.users[cid]['id'];
+        var hash = time + '_'  + TS.MID;
         var txt = $('#chat_text').val();
         var message_one = [
             'convr.msg',
@@ -381,41 +304,40 @@ message = {
             window.TS.webSocket.send(msg);
             var dbMsg = {
                     cid: cid,
-                    uid: window.TS.currentUserId,
+                    uid: window.TS.MID,
                     txt: txt,
                     hash: hash,
                     mid: 0,
                     seq: -1,
                     time: 0,
-                    owner: window.TS.currentUserId
+                    owner: window.TS.MID
                 };
-            window.TS.dataBase.transaction('rw?', window.TS.dataBase.messagebase, () => {
-                window.TS.dataBase.messagebase.put(dbMsg);
+            window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
+                window.TS.dataBase.message.put(dbMsg);
             })
             .catch (function (e) {
                 console.error(e);
             });
 
-            message.setMessage(txt, cid, window.TS.currentUserId);
+            message.setMessage(txt, window.TS.MID);
         }
 
     },
 
     // 设置消息
-    setMessage: function(txt, cid, user_id){
+    setMessage: function(txt, user_id){
         $('#chat_text').val('');
 
-        if (user_id != window.TS.currentUserId) {
-            var other_avatar = this.datas.users[cid]['avatar'] != null ? this.datas.users[cid]['avatar'] : DEFAULT_AVATAR;
+        if (user_id != window.TS.MID) {
             html = '<div class="chatC_left">'
-                 +      '<img src="' + other_avatar + '" class="chat_avatar">'
+                 +      '<img src="' + getAvatar(this.datas.users[user_id]) + '" class="chat_avatar">'
                  +      '<span class="chat_left_body">' + txt + '</span>'
                  + '</div>';
         } else {
             html = '<div class="chatC_right">'
-                 +       '<img src="' + AVATAR + '" class="chat_avatar fr">'
-                 +       '<span class="chat_right_body">' + txt + '</span>'
-                 +  '</div>';
+                 +      '<img src="' + getAvatar(TS.USER) + '" class="chat_avatar fr">'
+                 +      '<span class="chat_right_body">' + txt + '</span>'
+                 + '</div>';
         }
         $('#chat_cont').append(html);
         var div = document.getElementById('chat_scroll');

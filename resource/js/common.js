@@ -778,7 +778,7 @@ var rewarded = {
                     for (var i in res) {
                         html +=
                         '<li>'+
-                            '<a href="/profile/' + res[i].user.id + '"><img class="lazy round" data-original="' + getAvatar(res[i].user) + '" width="40"/></a>'+
+                            '<a href="/profile/' + res[i].user.id + '"><img class="lazy round" data-original="' + getAvatar(res[i].user, 40) + '" width="40"/></a>'+
                             '<a href="/profile/' + res[i].user.id + '" class="uname">'+res[i].user.name+'</a>'+
                             '<font color="#aaa">打赏了 '+app+'</font>'+
                         '</li>';
@@ -868,7 +868,7 @@ var comment = {
                     var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
                         html += '    <dl class="clearfix">';
                         html += '        <dt>';
-                        html += '            <img src="' + getAvatar(TS.USER) + '" width="50">';
+                        html += '            <img src="' + getAvatar(TS.USER, 50) + '" width="50">';
                         html += '        </dt>';
                         html += '        <dd>';
                         html += '            <span class="reply_name">' + TS.USER.name + '</span>';
@@ -1367,7 +1367,8 @@ var getUserInfo = function(uid) {
 }
 
 // 获取用户头像
-var getAvatar = function(user) {
+var getAvatar = function(user, width) {
+    width = width || 0;
     var avatar = '';
     if (user['avatar']) {
         avatar = user['avatar'];
@@ -1384,6 +1385,10 @@ var getAvatar = function(user) {
                 break;
         }
     }
+    if (width > 0) {
+        avatar += '?s=' + width;
+    }
+
     return avatar;
 }
 
@@ -1458,7 +1463,7 @@ var getConversations = function() {
                 for (var j in _uids) {
                     if (_uids[j] != TS.MID) {
                         uids.push(_uids[j]);
-                        res[i]['other_uid'] = _uids[j];
+                        res[i]['other_uid'] = parseInt(_uids[j]);
                     }
                 }
             }
@@ -1472,7 +1477,7 @@ var getConversations = function() {
 
             // 设置聊天对话
             for (var k in res) {
-                message.setConversation(res[k], _users[res[k]['other_uid']]);
+                setConversation(res[k], _users[res[k]['other_uid']]);
             }
 
             // 存储对话信息
@@ -1483,11 +1488,25 @@ var getConversations = function() {
     }, 'json');
 }
 
-var openChatDiaglog = function(type, uid) {
-    if (type == 4) { // 聊天消息
+// 打开消息对话框
+var openChatDialog = function(type, uid) {
+    if (type == 5) { // 聊天消息
         ly.load(TS.SITE_URL + '/message/' + type + '/' + uid, '', '720px', '572px');
     } else {
         ly.load(TS.SITE_URL + '/message/' + type, '', '720px', '572px');
+    }
+}
+
+// 设置侧边栏消息
+var setConversation = function(chat, user) {
+    // 设置侧边栏聊天对话
+    var sidehtml = '<dd id="ms_chat_' + user.id + '"><a href="javascript:;" onclick="openChatDialog(5, '+ chat.cid +')"><img src="' + getAvatar(user, 50) + '"/></a></dd>';
+
+    $('#ms_fixed').append(sidehtml);
+
+    // 如果消息对话框存在
+    if ($('.chat_dialog').length > 0) {
+
     }
 }
 
@@ -1524,10 +1543,10 @@ $(function() {
         if (!_st) _st=0;
         var _code = '<div id="ms_fixed_wrap">'
                   +      '<dl id="ms_fixed">'
-                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="openChatDiaglog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
-                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="openChatDiaglog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
-                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="openChatDiaglog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
-                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="openChatDiaglog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
+                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="openChatDialog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
+                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
+                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="openChatDialog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
+                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="openChatDialog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
                   +     '</dl>'
                   + '</div>';
         if (_st == 1) {
@@ -1803,9 +1822,10 @@ $(function() {
     });
 
     if (TS.MID > 0) {
+        return false;
         // 获取消息未读数计时器
         getUnreadCounts();
-        var unread_timeout = window.setInterval(getUnreadCounts, 10000);
+        var unread_timeout = window.setInterval(getUnreadCounts, 60000);
 
         // 获取对话列表
         getConversations();

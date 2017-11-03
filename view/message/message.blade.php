@@ -6,7 +6,7 @@
 <div class="chat_dialog">
     {{-- 左侧导航 --}}
     <div class="chat_left_wrap">
-        <div class="chat_left">
+        <div class="chat_left" id="chat_left_scroll">
             <ul id="root_list">
                 <li @if($type == 0)class="current_room"@endif data-type="0">
                     <div class="chat_left_icon">
@@ -16,10 +16,7 @@
                     </div>
                     <div class="chat_item">
                         <span class="chat_span">评论的</span>
-                        <div>{{ $comments->count() > 0 ? $comments[0]->user->name : '没有人' }}评论了我</div>
-                        @if($counts['unread_comments_count'] > 0)
-                            <span class="chat_num unread_comments_count">{{ $counts['unread_comments_count'] }}</span>
-                        @endif
+                        <div></div>
                     </div>
                 </li>
                 <li @if($type == 1)class="current_room"@endif data-type="1">
@@ -30,10 +27,7 @@
                     </div>
                     <div class="chat_item">
                         <span class="chat_span">赞过的</span>
-                        <div>{{ $likes->count() > 0 ? $likes[0]->user->name : '没有人' }}赞了我</div>
-                        @if($counts['unread_likes_count'] > 0)
-                            <span class="chat_num">{{ $counts['unread_likes_count'] }}</span>
-                        @endif
+                        <div>赞了我</div>
                     </div>
                 </li>
                 <li @if($type == 2)class="current_room"@endif data-type="2">
@@ -113,6 +107,7 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/dexie.js') }}"></script>
 
 <script type="text/javascript">
+    var type = {{ $type }};
     $(function () {
         $.ajaxSetup({
             headers: {
@@ -148,7 +143,7 @@
         });
 
 
-        getData(0);
+        getData(type);
 
         // 切换消息类型
         $('#root_list').on('click', 'li', function () {

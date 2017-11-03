@@ -9,41 +9,10 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
 
 class MessageController extends BaseController
 {
-	public function index(Request $request, int $type = 0, int $user_id = 0)
+	public function index(Request $request, int $type = 0, int $cid = 0)
 	{
-        // 未读消息
-        $data = createRequest('GET', '/api/v2/user/unread-count');
-
-        // 若私聊并且会话不存在，则创建会话
-        if ($user_id != 0) {
-            $params['type'] = 0;
-            $params['name'] = '';
-            $params['uids'] = [$user_id, $this->PlusData['TS']['id']];
-            $res = createRequest('POST', '/api/v2/im/conversations', $params);
-        }
-
-        // 获取会话列表
-        $data['chat_list'] = createRequest('GET', '/api/v2/im/conversations/list/all');
-        // 获取用户信息
-        foreach ($data['chat_list'] as $key => &$value) {
-            // 他人user_id
-            $uids = explode(',', $value['uids']);
-            $other_uids = array_values(array_diff($uids, [$this->PlusData['TS']['id']]));
-
-            // 获取房间号
-            if ($other_uids[0] == $user_id) {
-                $cid = $value['cid'];
-            }
-
-            $value['user'] = getUserInfo($other_uids[0]);
-
-            $data['users'][$value['cid']] = $value['user'];
-        }
-
-        $data['cid'] = isset($cid) ? $cid : 0;
+        $data['cid'] = $cid;
         $data['type'] = $type;
-        $data['user_id'] = $user_id;
-        $data['users'] = isset($data['users']) ? $data['users'] : array();
 
 		return view('pcview::message.message', $data, $this->PlusData);
 	}
@@ -177,6 +146,10 @@ class MessageController extends BaseController
         $offset = $request->input('offset') ?: 0;
         $limit = $request->input('limit') ?: 20;
         $data['notifications'] = createRequest('GET', '/api/v2/user/notifications', ['offset' => $offset, 'limit' => $limit]);
+
+        // 设置已读
+        $read = createRequest('PUT', '/api/v2/user/notifications/all');
+
         $return = '';
         if (!$data['notifications']->isEmpty()) {
             $return = view('pcview::message.notifications', $data, $this->PlusData)->render();
