@@ -36,6 +36,10 @@ class PcServiceProvider extends ServiceProvider
             dirname(__DIR__).'/database/migrations',
         ]);
 
+        $this->publishes([
+            dirname(__DIR__).'/config/pc.php' => $this->app->configPath('pc.php'),
+        ], 'config');
+
         // load handle
         PackageHandler::loadHandleFrom('pc', PcPackageHandler::class);
 
