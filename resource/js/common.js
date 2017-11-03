@@ -12,6 +12,61 @@ $.ajaxSetup({
     }
 })
 
+// 获取浏览器信息
+var browser = {
+    versions:function(){
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {    //移动终端浏览器版本信息
+            trident: u.indexOf('Trident') > -1, //IE内核
+            presto: u.indexOf('Presto') > -1, //opera内核
+            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+            iPad: u.indexOf('iPad') > -1, //是否iPad
+            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+        };
+    }(),
+    language:(navigator.browserLanguage || navigator.language).toLowerCase()
+}
+
+// 本地存储
+var storeLocal = {
+    set: function(key, value){
+        window.localStorage.setItem(key, JSON.stringify(value));
+    },
+
+    get: function(key){
+        var data = window.localStorage.getItem(key);
+        if (!data) {
+            return false;
+        } else {
+            return JSON.parse(data);
+        }
+    },
+
+    remove: function(key){
+        window.localStorage.removeItem(key);
+    },
+
+    clear: function(){
+        window.localStorage.clear();
+    }
+}
+
+// 数组去重
+var unique = function(array) { 
+    var r = []; 
+    for(var i = 0, l = array.length; i < l; i++) { 
+        for(var j = i + 1; j < l; j++) 
+            if (array[i] === array[j]) j = ++i; 
+            r.push(array[i]); 
+    } 
+    return r; 
+}
+
 // layer 弹窗
 var load = 0;
 var ly = {
@@ -723,7 +778,7 @@ var rewarded = {
                     for (var i in res) {
                         html +=
                         '<li>'+
-                            '<a href="/profile/' + res[i].user.id + '"><img class="lazy round" data-original="' + (res[i].user.avatar ? res[i].user.avatar : DEFAULT_AVATAR) + '" width="40"/></a>'+
+                            '<a href="/profile/' + res[i].user.id + '"><img class="lazy round" data-original="' + getAvatar(res[i].user) + '" width="40"/></a>'+
                             '<a href="/profile/' + res[i].user.id + '" class="uname">'+res[i].user.name+'</a>'+
                             '<font color="#aaa">打赏了 '+app+'</font>'+
                         '</li>';
@@ -806,14 +861,14 @@ var comment = {
                     var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
                         html +=     '<span class="tcolor">' + TS.USER.name + '：</span>' + original_body + '';
                         if (_this.support.top)
-                        html +=     '<a class="comment_del mouse" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
-                        html +=     '<a class="comment_del mouse" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
+                        html +=     '<a class="comment_del" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
+                        html +=     '<a class="comment_del" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
                         html += '</p>';
                 } else {
                     var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
                         html += '    <dl class="clearfix">';
                         html += '        <dt>';
-                        html += '            <img src="'+AVATAR+'" width="50">';
+                        html += '            <img src="' + getAvatar(TS.USER) + '" width="50">';
                         html += '        </dt>';
                         html += '        <dd>';
                         html += '            <span class="reply_name">' + TS.USER.name + '</span>';
@@ -1111,7 +1166,7 @@ var pinneds = function (url) {
                     + '<div class="pinned_input">'
                         + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义置顶金额，必须为整数">'
                     + '</div>'
-                    + '<div class="pinned_text">当前平均置顶金额为' + TS.BOOT.site.gold_name.name + '200/天，钱包余额为' + TS.USER.wallet.balance*TS.BOOT['wallet:ratio'] + '</div>'
+                    + '<div class="pinned_text">当前平均置顶金额为' + TS.BOOT.site.gold_name.name + '200/天，钱包余额为' + TS.USER.wallet.balance * TS.BOOT['wallet:ratio'] + '</div>'
                     + '<div class="pinned_text">需要支付总金额：</div>'
                     + '<div class="pinned_total"><span>0</span></div>'
                 + '</div>';
@@ -1119,7 +1174,7 @@ var pinneds = function (url) {
     ly.confirm(html, '', '', function(){
         var data = {};
         data.day = $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '';
-        data.amount = $('.pinned_input input').val() / TS.BOOT['wallet:ratio'] * data.day;
+        data.amount = $('.pinned_input input').val() / TS.BOOT['walleat:ratio'] * data.day;
         if (!data.day) {
             noticebox('请选择置顶天数', 0);
             return false;
@@ -1283,63 +1338,158 @@ var thirdShare = function(type, url, title, pic, obj) {
 
 // 获取用户信息
 var getUserInfo = function(uid) {
-    var url = TS.API + '/users/' + uid;
-    var user = {};
-    $.ajax({
-        url: url,
-        type: 'GET',
-        async: false,
-        success:function(res){
-            user = res;
-        }
-    }, 'json');
+    var type = typeof(uid);
+    if (type == 'string') {
+        var url = TS.API + '/users/';
+        var user = {};
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {id: uid, limit: 50},
+            async: false,
+            success:function(res){
+                user = res;
+            }
+        }, 'json');
+    } else {
+        var url = TS.API + '/users/' + uid;
+        var user = {};
+        $.ajax({
+            url: url,
+            type: 'GET',
+            async: false,
+            success:function(res){
+                user = res;
+            }
+        }, 'json');
+    }
     return user;
 }
 
-// 本地存储
-var storeLocal = {
-    set: function(key, value){
-        window.localStorage.setItem(key, JSON.stringify(value));
-    },
-
-    get: function(key){
-        var data = window.localStorage.getItem(key);
-        if (!data) {
-            return false;
-        } else {
-            return JSON.parse(data);
+// 获取用户头像
+var getAvatar = function(user) {
+    var avatar = '';
+    if (user['avatar']) {
+        avatar = user['avatar'];
+    } else {
+        switch (user['sex']) {
+            case 1:
+                avatar = TS.RESOURCE_URL + '/images/pic_default_man.png';
+                break;
+            case 2:
+                avatar = TS.RESOURCE_URL + '/images/pic_default_woman.png';
+                break;
+            default:
+                avatar = TS.RESOURCE_URL + '/images/pic_default_secret.png';
+                break;
         }
-    },
+    }
+    return avatar;
+}
 
-    remove: function(key){
-        window.localStorage.removeItem(key);
-    },
+// 获取未读消息数量
+var getUnreadCounts = function() {
+    // 获取未读通知数量
+    $.ajax({
+        url: TS.API + '/user/notifications',
+        type: 'HEAD',
+        success: function(data, status, request) {
+            TS.UNREAD.notifications = request.getResponseHeader('unread-notification-limit');
 
-    clear: function(){
-        window.localStorage.clear();
+            // 设置未读通知
+            if (TS.UNREAD.notifications != 0) {
+                var html = '<div class="unread_div"><span>' + (TS.UNREAD.notifications > 99 ? 99 : TS.UNREAD.notifications) + '</span></div>';
+                $('#ms_notifications .unread_div').remove();
+                $('#ms_notifications').remove('.unread_div').prepend(html);
+            }
+        }
+    }, 'json');
+
+    // 获取未读点赞，评论，审核通知数量
+    $.ajax({
+        url: TS.API + '/user/unread-count',
+        type: 'GET',
+        success: function(res) {
+            TS.UNREAD.comments = res.counts.unread_comments_count ? res.counts.unread_comments_count : 0;
+            TS.UNREAD.likes = res.counts.unread_likes_count ? res.counts.unread_likes_count : 0;
+
+            // 审核通知数量
+            var pinneds_count = 0;
+            for(var i in res.pinneds){
+                pinneds_count += res.pinneds[i]['count'];
+            }
+            TS.UNREAD.pinneds = pinneds_count;
+
+            // 设置未读评论
+            if (TS.UNREAD.comments != 0) {
+                var html = '<div class="unread_div"><span>' + (TS.UNREAD.comments > 99 ? 99 : TS.UNREAD.comments) + '</span></div>';
+                $('#ms_comments .unread_div').remove();
+                $('#ms_comments').prepend(html);
+            }
+            // 设置未读点赞
+            if (TS.UNREAD.likes != 0) {
+                var html = '<div class="unread_div"><span>' + (TS.UNREAD.likes > 99 ? 99 : TS.UNREAD.likes) + '</span></div>';
+                $('#ms_likes .unread_div').remove();
+                $('#ms_likes').prepend(html);
+            }
+            // 设置未读审核
+            if (TS.UNREAD.pinneds != 0) {
+                var html = '<div class="unread_div"><span>' + (TS.UNREAD.pinneds > 99 ? 99 : TS.UNREAD.pinneds)+ '</span></div>';
+                $('#ms_pinneds .unread_div').remove();
+                $('#ms_pinneds').prepend(html);
+            }
+        }
+    }, 'json');
+
+    // 获取未读消息数量
+}
+
+// 获取聊天对话列表
+var getConversations = function() {
+    $.ajax({
+        url: TS.API + '/im/conversations/list/all',
+        type: 'GET',
+        success: function(res) {
+            var uids = [];
+            for(var i in res) {
+                // 最多50个会话
+                if (i > 49) break;
+                var _uids = res[i]['uids'].split(',');
+                for (var j in _uids) {
+                    if (_uids[j] != TS.MID) {
+                        uids.push(_uids[j]);
+                        res[i]['other_uid'] = _uids[j];
+                    }
+                }
+            }
+
+            // 获取对话中其他用户用户信息
+            var users = getUserInfo(uids.join(','));
+            var _users = [];
+            for (var l in users) {
+                _users[users[l]['id']] = users[l];
+            }
+
+            // 设置聊天对话
+            for (var k in res) {
+                message.setConversation(res[k], _users[res[k]['other_uid']]);
+            }
+
+            // 存储对话信息
+            TS.chat = {};
+            TS.chat.list =  res;
+            TS.chat.users = _users;
+        }
+    }, 'json');
+}
+
+var openChatDiaglog = function(type, uid) {
+    if (type == 4) { // 聊天消息
+        ly.load(TS.SITE_URL + '/message/' + type + '/' + uid, '', '720px', '572px');
+    } else {
+        ly.load(TS.SITE_URL + '/message/' + type, '', '720px', '572px');
     }
 }
-
-// 获取浏览器信息
-var browser={
-    versions:function(){
-        var u = navigator.userAgent, app = navigator.appVersion;
-        return {    //移动终端浏览器版本信息
-            trident: u.indexOf('Trident') > -1, //IE内核
-            presto: u.indexOf('Presto') > -1, //opera内核
-            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-            iPad: u.indexOf('iPad') > -1, //是否iPad
-            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-        };
-    }(),
-    language:(navigator.browserLanguage || navigator.language).toLowerCase()
-}
-
 
 $(function() {
     // Jquery fixed拓展
@@ -1369,15 +1519,15 @@ $(function() {
 
 
     // 右侧边栏
-    if(!browser.versions.mobile){
+    if (TS.MID != 0 && !browser.versions.mobile) {
         var _st = $.cookie("ms_fixed");
         if (!_st) _st=0;
-        var _code = '<div id="ms_fixed">'
-                  +      '<dl>'
-                  +          '<dd><div class="unread_div"><span>99</span></div><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
-                  +          '<dd><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
-                  +          '<dd><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
-                  +          '<dd><a href="javascript:;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
+        var _code = '<div id="ms_fixed_wrap">'
+                  +      '<dl id="ms_fixed">'
+                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="openChatDiaglog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
+                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="openChatDiaglog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
+                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="openChatDiaglog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
+                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="openChatDiaglog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
                   +     '</dl>'
                   + '</div>';
         if (_st == 1) {
@@ -1402,8 +1552,7 @@ $(function() {
         });
     }
 
-
-    //获得用户时区与GMT时区的差值
+    // 获得用户时区与GMT时区的差值
     if ($.cookie('customer_timezone') == '') {
         var exp = new Date();
         var gmtHours = -(exp.getTimezoneOffset()/60);
@@ -1652,36 +1801,13 @@ $(function() {
     $(document).on('click', '.click_loading a', function() {
         scroll.clickMore(this);
     });
+
+    if (TS.MID > 0) {
+        // 获取消息未读数计时器
+        getUnreadCounts();
+        var unread_timeout = window.setInterval(getUnreadCounts, 10000);
+
+        // 获取对话列表
+        getConversations();
+    }
 });
-
-// 获取事件
-function getEvent(){
-    if(window.event)    {return window.event;}
-    func=getEvent.caller;
-    while(func!=null){
-        var arg0=func.arguments[0];
-        if(arg0){
-            if((arg0.constructor==Event || arg0.constructor ==MouseEvent
-                || arg0.constructor==KeyboardEvent)
-                ||(typeof(arg0)=="object" && arg0.preventDefault
-                && arg0.stopPropagation)){
-                return arg0;
-            }
-        }
-        func=func.caller;
-    }
-    return null;
-}
-
-// 阻止冒泡
-function cancelBubble()
-{
-    var e=getEvent();
-    if(window.event){
-        //e.returnValue=false;//阻止自身行为
-        e.cancelBubble=true;//阻止冒泡
-    }else if(e.preventDefault){
-        //e.preventDefault();//阻止自身行为
-        e.stopPropagation();//阻止冒泡
-    }
-}

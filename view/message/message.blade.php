@@ -11,7 +11,7 @@
                 <li @if($type == 0)class="current_room"@endif data-type="0">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
-                            <use xlink:href="#icon-xuanzedui-copy-copy-copy"></use>
+                            <use xlink:href="#icon-ico_pinglun"></use>
                         </svg>
                     </div>
                     <div class="chat_item">
@@ -25,7 +25,7 @@
                 <li @if($type == 1)class="current_room"@endif data-type="1">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
-                            <use xlink:href="#icon-xihuande-copy"></use>
+                            <use xlink:href="#icon-ico_zan"></use>
                         </svg>
                     </div>
                     <div class="chat_item">
@@ -39,7 +39,7 @@
                 <li @if($type == 2)class="current_room"@endif data-type="2">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
-                            <use xlink:href="#icon-tongzhi2"></use>
+                            <use xlink:href="#icon-ico_tongzhi"></use>
                         </svg>
                     </div>
                     <div class="chat_item">
@@ -49,7 +49,7 @@
                 <li @if($type == 3)class="current_room"@endif data-type="3">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
-                            <use xlink:href="#icon-shenhetongzhi"></use>
+                            <use xlink:href="#icon-ico_shenghe"></use>
                         </svg>
                     </div>
                     <div class="chat_item">
@@ -61,20 +61,6 @@
                         @endif
                     </div>
                 </li>
-
-                @if (!empty($chat_list))
-                @foreach ($chat_list as $chat)
-                <li @if($cid == $chat['cid'])class="current_room"@endif class="room_item" data-type="5" data-cid="{{ $chat['cid'] }}">
-                    <div class="chat_left_icon">
-                    <img src="{{ getAvatar($chat['user'], 40) }}" class="chat_svg">
-                    </div>
-                    <div class="chat_item">
-                        <span class="chat_span">{{ $chat['user']['name'] }}</span>
-                        <div></div>
-                    </div>
-                </li>
-                @endforeach
-                @endif
             </ul>
         </div>
     </div>
@@ -128,7 +114,6 @@
 
 <script type="text/javascript">
     $(function () {
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
@@ -259,9 +244,9 @@
         }
 
         var datas = {};
-        datas.list =  {!! json_encode($chat_list) !!};
+        datas.list =  window.TS.chat.list;
         // 用户信息
-        datas.users = {!! json_encode($users) !!};
+        datas.users = window.TS.chat.users;
         // 会话id
         datas.cid = {{ $cid or 0 }};
 

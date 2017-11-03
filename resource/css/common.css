@@ -2329,28 +2329,27 @@ img.load {
 }
 
 /* 右侧消息 */
-#ms_fixed {
-    background-color: #fff;
+#ms_fixed_wrap {
     width: 54px;
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 99999;
-    box-shadow: 0 1px 3px 0 rgba(0, 37, 55, 0.1)
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 37, 55, 0.1);
 }
-#ms_fixed dl {
+#ms_fixed {
+    background-color: #fff;
+    width: 74px;
+    height: 100%;
+    z-index: 99999;
+    overflow-y: auto;  
+    overflow-x: hidden;
+    margin: 0;
     list-style: none;
-    padding: 0px;
-    margin: 0px;
-    width: 54px;
-    position: absolute;
-    left: 0;
-    top: 0%;
-    bottom: 0;
-    vertical-align: middle;
 }
 #ms_fixed dd {
     margin: 0px;
+    width: 64px;
     position: relative;
 }
 #ms_fixed dd svg {
@@ -2359,10 +2358,16 @@ img.load {
     border-radius: 50%;
     margin: 9px 9px;
 }
+#ms_fixed dd img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 9px 9px;
+}
 #ms_fixed .unread_div {
     position: absolute;
     top: 10px;
-    right: 5px;
+    right: 10px;
     border: 1px solid #fff;
     border-radius: 50%;
 }

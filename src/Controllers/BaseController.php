@@ -29,7 +29,7 @@ class BaseController extends Controller
                     'status' => 0,
                 ]);
 
-                $this->PlusData['TS'] = createRequest('GET', '/api/v2/user/');
+                $this->PlusData['TS'] = createRequest('GET', '/api/v2/user/', [], 0);
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
             }
 
@@ -40,7 +40,7 @@ class BaseController extends Controller
                 $config = [];
 
                 // 启动信息接口
-                $config['bootstrappers'] = createRequest('GET', '/api/v2/bootstrappers/');
+                $config['bootstrappers'] = createRequest('GET', '/api/v2/bootstrappers/', [], 0);
                 $config['bootstrappers']['site']['reward']['amounts'] = '5,10,15';
 
                 // 基本配置
@@ -54,7 +54,7 @@ class BaseController extends Controller
                 $config['nav_bottom'] = Navigation::byPid(0)->byPos(1)->get();
 
                 // 获取所有广告位
-                $config['ads_space'] = createRequest('GET', '/api/v2/advertisingspace')->keyBy('space');
+                $config['ads_space'] = createRequest('GET', '/api/v2/advertisingspace', [], 0)->keyBy('space');
 
                 // 缓存配置信息
                 Cache::forever('config', $config);
