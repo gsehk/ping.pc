@@ -2,7 +2,7 @@
     <div class="rank-tit">
         <span>{{$title}}</span>
         <span class="right">
-            <i class="arrow-rank-l" id="{{$genre}}last" onclick="gorank({{isset($nowPage) ? $nowPage : 1}},'{{$genre}}',10)"></i>
+            <i class="arrow-rank-l-l" id="{{$genre}}last" onclick="gorank({{isset($nowPage) ? $nowPage : 1}},'{{$genre}}',10)"></i>
               {{--<font id="postnum">1</font>/{{ceil($count/10)}}--}}
             <font id="{{$genre}}num" style="display:none">1</font>
             <i class="arrow-rank-r" id="{{$genre}}next" onclick="gorank({{(isset($nowPage) ? $nowPage : 1) + 1}},'{{$genre}}',10)"></i>
@@ -20,3 +20,8 @@
         @endcomponent
     </ul>
 </div>
+<script>
+    if ($('div[rel="{{$genre}}div"][current="1"]').length < 1) {
+        $('#{{$genre}}next').removeClass('arrow-rank-r').addClass('arrow-rank-r-l');
+    }
+</script>

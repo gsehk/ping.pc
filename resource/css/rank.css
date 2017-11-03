@@ -199,7 +199,9 @@
 }
 
 .rank-tit .arrow-rank-l,
-.rank-tit .arrow-rank-r {
+.rank-tit .arrow-rank-l-l,
+.rank-tit .arrow-rank-r,
+.rank-tit .arrow-rank-r-l {
     display: inline-block;
     width: 12px;
     height: 12px;
@@ -211,9 +213,18 @@
     background-image: url('../images/ic_lastpage.png');
 }
 
+.rank-tit .arrow-rank-l-l {
+    background-image: url('../images/ic_lastpage_light.png');
+}
+
 .rank-tit .arrow-rank-r {
     background-image: url('../images/ic_nextpage.png');
 }
+
+.rank-tit .arrow-rank-r-l {
+    background-image: url('../images/ic_nextpag_light.png');
+}
+
 .right {
     float: right;
 }
