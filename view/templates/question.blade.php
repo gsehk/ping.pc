@@ -82,7 +82,7 @@
 @elseif(isset($search) && $search)
     <div class="no_data_div">
         <div class="no_data">
-            <img src="http://plus.cn/zhiyicx/plus-component-pc/images/pic_default_content.png">
+            <img src="{{ asset('zhiyicx/plus-component-pc/images/pic_default_content.png') }}">
             <p> 没有找到相关问题，去提问？</p>
             <div class="search-button">
                 <a href="{{ route('pc:createquestion') }}">去提问</a>

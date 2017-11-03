@@ -117,7 +117,7 @@
 
     var checkWallet = function (obj) {
 
-        if (typeof(BOOT['wallet:recharge-type']) != "undefined" && $.inArray('alipay_pc_direct', BOOT['wallet:recharge-type'])) {
+        if (typeof(TS.BOOT['wallet:recharge-type']) != "undefined" && $.inArray('alipay_pc_direct', TS.BOOT['wallet:recharge-type'])) {
 
             noticebox('未配置支付环境', 0);
 

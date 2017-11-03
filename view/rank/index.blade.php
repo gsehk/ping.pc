@@ -81,6 +81,7 @@
 @section('scripts')
     <script>
         function gorank(action,genre,num) {
+            var _this = $('div[rel="'+genre+'div"').first();
             var current = $('div[rel="'+genre+'div"][current="1"]');
             //当前页数
             var curnum = $('#'+genre+'num').text();
@@ -92,19 +93,13 @@
                 //向后翻页
                 curnum = parseInt(curnum) + 1;
             }
-            var last = $('div[rel="'+genre+'div"][current="1"]').prev();
+            var last = $('div[rel="' + genre + 'div"][current="1"]').prev();
             var postArgs = {};
             postArgs.offset = (curnum - 1) * num;
-            if (postArgs.offset >= 100) {
-
-                noticebox('已无更多啦', 0);
-
-                return false;
-            } else if (postArgs.offset < 0) {
+            if (postArgs.offset >= 100 || postArgs.offset < 0) {
 
                 return false;
             }
-
             postArgs.limit = num;
             postArgs.genre = genre;
             if ( last != undefined ) {
@@ -117,11 +112,22 @@
                     },
                     success: function (res) {
                         if (res.status) {
-                            if (res.data.count == 0) {
+                            if (res.data.count <= 0) {
                                 //noticebox('已无更多啦', 0);
                             } else {
                                 $('#'+genre+'-rank-list').html(res.data.html);
                                 $('#'+genre+'num').text(curnum);
+                                var old = _this.find('.fans_span1').children('span').text();
+                                if (old < postArgs.offset) {
+                                    $('#' + genre + 'last').hasClass('arrow-rank-l-l') ? $('#' + genre + 'last').removeClass('arrow-rank-l-l').addClass('arrow-rank-l') : '';
+                                } else if (old > postArgs.offset) {
+                                    $('#' + genre + 'next').hasClass('arrow-rank-r-l') ? $('#' + genre + 'next').removeClass('arrow-rank-r-l').addClass('arrow-rank-r') : '';
+                                }
+                                if (postArgs.offset <= 0) {
+                                    $('#' + genre + 'last').hasClass('arrow-rank-l') ? $('#' + genre + 'last').removeClass('arrow-rank-l').addClass('arrow-rank-l-l') : '';
+                                } else if(res.data.count < postArgs.limit || postArgs.offset >= 90) {
+                                    $('#' + genre + 'next').hasClass('arrow-rank-r') ? $('#' + genre + 'next').removeClass('arrow-rank-r').addClass('arrow-rank-r-l') : '';
+                                }
                             }
                         }
                         return false;

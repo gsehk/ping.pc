@@ -25,7 +25,7 @@
 @elseif(isset($search) && $search)
 	<div class="no_data_div">
 		<div class="no_data">
-			<img src="http://plus.cn/zhiyicx/plus-component-pc/images/pic_default_content.png">
+			<img src="{{ asset('zhiyicx/plus-component-pc/images/pic_default_content.png') }}">
 			<p> 没有找到相关话题~</p>
 			<div class="search-button">
 				<a href="javascript:;" onclick="QT.show()">向官方建议创建新话题</a>
