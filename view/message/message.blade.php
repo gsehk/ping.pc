@@ -238,14 +238,14 @@
             $('.current_room').find('.chat_num').remove();
         }
 
-        var datas = {};
-        datas.list =  window.TS.chat.list;
-        // 用户信息
-        datas.users = window.TS.chat.users;
-        // 会话id
-        datas.cid = {{ $cid or 0 }};
+        // var datas = {};
+        // datas.list =  window.TS.chat.list;
+        // // 用户信息
+        // datas.users = window.TS.chat.users;
+        // // 会话id
+        // datas.cid = {{ $cid or 0 }};
 
-        // 初始化message
-        message.init(datas);
+        // // 初始化message
+        // message.init(datas);
     });
 </script>
