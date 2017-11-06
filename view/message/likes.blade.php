@@ -11,14 +11,20 @@
                 <div class="one_title"><a href="/profile/{{$like['user']['id']}}">{{$like['user']['name']}}</a>{{$like['source_type']}}</div>
                 <div class="one_date">{{ getTime($like['created_at']) }}</div>
 
-                <a href="{{$like['source_url']}}" class="one_cotent">
+                <a href="{{ $like['likeable'] ? $like['source_url'] : 'javascript:;'}}" class="one_cotent">
                     <div class="feed-content">
                         @if(isset($like['source_img']))
                             <div class="con-img">
                                 <img src="{{$like['source_img']}}">
                             </div>
                         @endif
-                        <div class="con-con">{{$like['source_content']}}</div>
+                        <div class="con-con">
+                            @if($like['likeable'])
+                                {{$like['source_content']}}
+                            @else
+                                内容已被删除
+                            @endif
+                        </div>
                     </div>
                 </a>
             </dd>

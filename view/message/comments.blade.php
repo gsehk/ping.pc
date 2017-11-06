@@ -11,18 +11,25 @@
                 <div class="one_title"><a href="/profile/{{$comment['user']['id']}}">{{$comment['user']['name']}}</a>{{$comment['source_type']}}</div>
                 <div class="one_date">{{ getTime($comment['created_at']) }}</div>
 
-                <a href="{{$comment['source_url']}}" class="one_cotent">
+                <a href="{{ $comment['commentable'] ? $comment['source_url'] : 'javascript:;' }}" class="one_cotent">
                     <div class="content-comment">{{$comment['body']}}</div>
-                    @if($comment['commentable'] || isset($comment['source_img']))
-                        <div class="feed-content">
-                            @if(isset($comment['source_img']))
-                                <div class="con-img">
-                                    <img src="{{$comment['source_img']}}">
-                                </div>
+                    
+                    <div class="feed-content">
+                        @if(isset($comment['source_img']))
+                            <div class="con-img">
+                                <img src="{{$comment['source_img']}}">
+                            </div>
+                        @endif
+                        <div class="con-con">
+                            @if($comment['commentable'])
+                                {{$comment['source_content']}}
+                            @else
+                                <div class="con-con">内容已被删除</div>
                             @endif
-                            <div class="con-con">{{$comment['source_content']}}</div>
                         </div>
-                    @endif
+                        
+                    </div>
+                    
                 </a>
             </dd>
         </dl>
