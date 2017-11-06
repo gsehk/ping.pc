@@ -1,5 +1,5 @@
 
-<!-- 右侧广告位 -->
+{{-- 右侧广告位 --}}
 @if ($type == 1)
 
     @if(!$ads->isEmpty())
@@ -12,7 +12,7 @@
         @endforeach
     @endif
 
-<!-- 资讯顶部广告 -->
+{{-- 资讯顶部广告 --}}
 @elseif ($type == 2)
 
     @if(!$ads->isEmpty())

@@ -55,13 +55,6 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.news.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/unslider.min.js') }}"></script>
 <script type="text/javascript">
-
-setTimeout(function() {
-    scroll.init({
-        container: '#news_list',
-        cid: 0
-    });
-}, 300);
 //加载资讯列表
 var params = {
     cate_id: '{{ $cate_id }}'
