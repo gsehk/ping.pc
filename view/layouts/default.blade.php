@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="_token" content="{{ csrf_token() }}"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
     <title>@yield('title')</title>
-    
     <script>
         var TS = {};
         // 公共配置
@@ -22,7 +23,9 @@
         TS.UNREAD = {};
     </script>
     <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/common.css') }}">
+    <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/objectfit/polyfill.object-fit.min.css') }}">
     <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/objectfit/polyfill.object-fit.min.js') }}"></script>
     @yield('styles')
 </head>
 
