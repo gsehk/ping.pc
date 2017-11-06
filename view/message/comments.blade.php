@@ -13,14 +13,16 @@
 
                 <a href="{{$comment['source_url']}}" class="one_cotent">
                     <div class="content-comment">{{$comment['body']}}</div>
-                    <div class="feed-content">
-                        @if(isset($comment['source_img']))
-                            <div class="con-img">
-                                <img src="{{$comment['source_img']}}">
-                            </div>
-                        @endif
-                        <div class="con-con">{{$comment['source_content']}}</div>
-                    </div>
+                    @if($comment['commentable'] || isset($comment['source_img']))
+                        <div class="feed-content">
+                            @if(isset($comment['source_img']))
+                                <div class="con-img">
+                                    <img src="{{$comment['source_img']}}">
+                                </div>
+                            @endif
+                            <div class="con-con">{{$comment['source_content']}}</div>
+                        </div>
+                    @endif
                 </a>
             </dd>
         </dl>

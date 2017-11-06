@@ -96,7 +96,7 @@ class MessageController extends BaseController
                         $v['source_type'] = '赞了你的动态';
                         $v['source_url'] = Route('pc:feedread', $v['likeable']['id']);
                         $v['source_content'] = $v['likeable']['feed_content'];
-                        count($v['commentable']['images']) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['images'][0]['id'].'?w=35&h=35';
+                        count($v['likeable']['images']) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['images'][0]['id'].'?w=35&h=35';
                         break;
                     case 'group-posts':
                         $v['source_type'] = '赞了你的圈子';
