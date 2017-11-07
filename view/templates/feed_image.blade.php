@@ -3,16 +3,21 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @endphp
 
 @php
-$style = $lockstr = $onclick = $class = '';
+$style = $lockstr = $onclick = $class = $blur = '';
 
 // 付费免费
 if (isset($image['paid']) && !$image['paid']) {
     // 付费数据
     $lockstr =  'data-node=' . $image['paid_node'] . ' data-amount=' . $image['amount'] . ' data-file=' . $image['file'];
     $onclick = 'onclick=weibo.payImage(this)';
+
+    // 下载付费设置为高斯模糊
+    $blur = $image['type'] == 'download' ? 96 : 0;
 } else {
     $class = 'bigcursor';
 }
+
+
 
 // 计算展示宽高
 if (isset($count) && $count == 'one') {
@@ -33,4 +38,4 @@ if (isset($count) && $count == 'one') {
 }
 @endphp
 
-<img style="{{$style}}" class="lazy per_image {{ $class }}"  data-original="{{ getImageUrl($image, $width, $height) }}" curloc="{{$curloc}}" {{ $onclick }} {{ $lockstr }} />
+<img style="{{$style}}" class="lazy per_image {{ $class }}"  data-original="{{ getImageUrl($image, $width, $height, $blur) }}" curloc="{{$curloc}}" {{ $onclick }} {{ $lockstr }} />

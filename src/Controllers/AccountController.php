@@ -5,7 +5,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Session;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\newRequest;
 
 class AccountController extends BaseController
 {

@@ -156,17 +156,6 @@ function createRequest($method = 'POST', $url = '', $params = array(), $instance
     // }
 }
 
-function newRequest($method = 'POST', $url = '', $parameters = array())
-{
-    $url = getenv('APP_URL') . $url;
-    $client = new GuzzleHttpClient();
-    $params['headers'] = ['Accept' => 'application/json', 'Authorization' => 'Bearer '. Session::get('token')];
-    $params['form_params'] = $parameters;
-    $response = json_decode($client->request($method, $url, $params)->getBody(), true);
-
-    return $response;
-}
-
 function socialiteRequest($method = 'POST', $url = '', $params = array())
 {
     $request = AccessTokenRequest::create($url, $method, $params);
@@ -202,11 +191,14 @@ function getTime($time, int $type = 1, int $format = 1)
     return $type ? $time->addHours($timezone)->toDateString() : $time->addHours($timezone);
 }
 
-function getImageUrl($image = array(), $width, $height, $cut = true)
+function getImageUrl($image = array(), $width, $height, $cut = true, $blur = 0)
 {
     if (!$image) {
         return false;
     }
+
+    // 高斯模糊参数
+    $b = $blur != 0 ? '&b=' . $blur : '';
 
     // 裁剪
     $file = $image['file'] ?? $image['id'];
@@ -217,9 +209,9 @@ function getImageUrl($image = array(), $width, $height, $cut = true)
         } else {
             $height = number_format($width / $size[0] * $size[1], 2, '.', '');
         }
-        return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height . '&token=' . Session::get('token');
+        return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height . $b . '&token=' . Session::get('token');
     } else {
-        return getenv('APP_URL') . '/api/v2/files/' . $file . '?&token=' . Session::get('token');
+        return getenv('APP_URL') . '/api/v2/files/' . $file . '?token=' . Session::get('token') . $b;
     }
 
 }
