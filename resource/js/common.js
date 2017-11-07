@@ -1155,7 +1155,7 @@ var collected = {
 // 申请置顶
 var pinneds = function (url) {
     var html = '<div class="pinned_box">'
-                    + '<div class="pinned_title">申请置顶</div>'
+                    + '<p class="pinned_title">申请置顶</p>'
                     + '<div class="pinned_text">选择置顶天数</div>'
                     + '<div class="pinned_spans">'
                         + '<span days="1">1d</span>'
@@ -1176,11 +1176,11 @@ var pinneds = function (url) {
         data.day = $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '';
         data.amount = $('.pinned_input input').val() / TS.BOOT['walleat:ratio'] * data.day;
         if (!data.day) {
-            noticebox('请选择置顶天数', 0);
+            lyNotice('请选择置顶天数');
             return false;
         }
         if (!data.amount) {
-            noticebox('请输入置顶金额', 0);
+            lyNotice('请输入置顶金额');
             return false;
         }
         $.ajax({
