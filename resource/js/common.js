@@ -861,8 +861,8 @@ var comment = {
                     var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
                         html +=     '<span class="tcolor">' + TS.USER.name + '：</span>' + original_body + '';
                         if (_this.support.top)
-                        html +=     '<a class="comment_del" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
-                        html +=     '<a class="comment_del" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
+                        html +=     '<a class="comment_del mouse" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
+                        html +=     '<a class="comment_del mouse" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
                         html += '</p>';
                 } else {
                     var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
