@@ -46,7 +46,7 @@
                                 {{ $TS['wallet']['balance']*($config['bootstrappers']['wallet:ratio']/100/100) }}</div>
                             <div class="operate">
                                 <a href="javascript:;" data-url="{{ route('pc:walletpay') }}" onclick="checkWallet(this)"><button>充值</button></a>
-                                <a href="javascript:;" data-url="{{ route('pc:walletdraw') }}" onclick="checkWallet(this)"><button class="gray">提现</button></a>
+                                <a href="{{ route('pc:walletdraw') }}"><button class="gray">提现</button></a>
                             </div>
                             <p class="gcolor">账户余额（{{ $config['bootstrappers']['site']['gold_name']['name'] }}）</p>
                         </div>

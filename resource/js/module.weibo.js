@@ -31,7 +31,7 @@ weibo.postFeed = function() {
 
     if (select == 'pay') {
         if ($('.feed_picture').find('img').length > 0) { // 图片付费弹窗
-            var pay_box = '<div class="feed_pay_box"><p class="pay_title">付费设置</p>';
+            var pay_box = '<div class="feed_pay_box"><p class="confirm_title">付费设置</p>';
             var images_box = '<div class="pay_images">';
             var info_box = '';
             $('.feed_picture').find('img').each(function(index) {

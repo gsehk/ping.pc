@@ -700,7 +700,7 @@ var rewarded = {
     show: function(id, type) {
         checkLogin();
         var html = '<div class="reward_box">'
-                        + '<p class="reward_title">打赏</p>'
+                        + '<p class="confirm_title">打赏</p>'
                         + '<div class="reward_text">选择打赏金额</div>'
                         + '<div class="reward_spans">';
                         $.each(TS.BOOT.site.reward.amounts.split(','), function (index, value) {
@@ -1155,7 +1155,7 @@ var collected = {
 // 申请置顶
 var pinneds = function (url) {
     var html = '<div class="pinned_box">'
-                    + '<p class="pinned_title">申请置顶</p>'
+                    + '<p class="confirm_title">申请置顶</p>'
                     + '<div class="pinned_text">选择置顶天数</div>'
                     + '<div class="pinned_spans">'
                         + '<span days="1">1d</span>'
@@ -1263,7 +1263,7 @@ var checkLogin = function() {
 // 组装确认提示
 var formatConfirm = function(title, text) {
     var html = '<div class="confirm_body">'
-                + '<div class="confirm_title">' + title + '</div>'
+                + '<p class="confirm_title">' + title + '</p>'
                 + '<div class="confirm_text">' + text + '</div>'
                 + '</div>';
     return html;
@@ -1509,6 +1509,38 @@ var setConversation = function(chat, user) {
 
     }
 }
+
+// 获取事件
+var getEvent = function() {
+    if(window.event)    {return window.event;}
+    func=getEvent.caller;
+    while(func!=null){
+        var arg0=func.arguments[0];
+        if(arg0){
+            if((arg0.constructor==Event || arg0.constructor ==MouseEvent
+                || arg0.constructor==KeyboardEvent)
+                ||(typeof(arg0)=="object" && arg0.preventDefault
+                && arg0.stopPropagation)){
+                return arg0;
+            }
+        }
+        func=func.caller;
+    }
+    return null;
+}
+
+// 阻止冒泡
+var cancelBubble = function() {
+    var e=getEvent();
+    if(window.event){
+        //e.returnValue=false;//阻止自身行为
+        e.cancelBubble=true;//阻止冒泡
+    }else if(e.preventDefault){
+        //e.preventDefault();//阻止自身行为
+        e.stopPropagation();//阻止冒泡
+    }
+}
+
 
 $(function() {
     // Jquery fixed拓展
