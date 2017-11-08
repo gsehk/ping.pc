@@ -775,6 +775,7 @@ button{
     height: 40px;
     background-color: #ededed;
     position: relative;
+    overflow: hidden;
 }
 
 .search-user .lists .user .user-header .verified_icon{

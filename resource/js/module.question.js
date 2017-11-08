@@ -19,7 +19,7 @@ var QA = {
             type: 'PUT',
             dataType: 'json',
             success: function(res) {
-                noticebox(res.message, 1, back_url);
+                noticebox('采纳成功', 1, back_url);
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
