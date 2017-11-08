@@ -37,16 +37,16 @@
     <div class="ads_item">
         <dl class="user-box clearfix">
             <dt class="fl">
-                <img class="round" src="{{ $ads[$page-1]['data']['data']['avatar'] }}" width="50">
+                <img class="round" src="{{ $ads[$page-1]['data']['data']['avatar'] or ''}}" width="50">
             </dt>
             <dd class="fl ml20 body">
-                <span class="tcolor">{{ $ads[$page-1]['data']['name'] }}</span>
-                <div class="font12 gcolor fr">{{ $ads[$page-1]['data']['time'] }}</div>
+                <span class="tcolor">{{ $ads[$page-1]['data']['name'] or ''}}</span>
+                <div class="font12 gcolor fr">{{ $ads[$page-1]['data']['time'] or ''}}</div>
             </dd>
         </dl>
-        <a class="avatar_box" href="{{ $ads[$page-1]['data']['link'] }}">
+        <a class="avatar_box" href="{{ $ads[$page-1]['data']['link'] or ''}}">
             <p class="mt0">{{ $ads[$page-1]['data']['content'] or ''}}</p>
-            <div> <img src="{{ $ads[$page-1]['data']['image'] }}" alt="image"> </div>
+            <div> <img src="{{ $ads[$page-1]['data']['image'] or ''}}" alt="image"> </div>
         </a>
         <p>
             <span class="tag">广告</span>
@@ -60,14 +60,14 @@
     <div class="news_item">
         <div class="news_img">
             <a href="{{ route('pc:newsread', ['news_id' => $item['id']]) }}">
-                <img class="lazy" width="230" height="163" data-original="{{ $ads[$page-1]['data']['image'] }}"/>
+                <img class="lazy" width="230" height="163" data-original="{{ $ads[$page-1]['data']['image'] or ''}}"/>
             </a>
         </div>
         <div class="news_word">
-            <div class="news_title"> {{ $ads[$page-1]['data']['title'] }} </div>
+            <div class="news_title"> {{ $ads[$page-1]['data']['title'] or ''}} </div>
                 <p>{{ $ads[$page-1]['data']['content'] or ''}}</p>
                 <div class="news_bm">
-                   <span>{{ $ads[$page-1]['data']['name'] }}  ·  {{ $ads[$page-1]['data']['time'] }}</span>
+                   <span>{{ $ads[$page-1]['data']['name'] or ''}}  ·  {{ $ads[$page-1]['data']['time'] or ''}}</span>
                    <span class="tag ml10">广告</span>
                 </div>
          </div>
