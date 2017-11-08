@@ -18,12 +18,12 @@ socket = {
             dbMsg.time = dbMsg.mid / 8388608 + 1451577600000;
             dbMsg.hash = '';
             dbMsg.owner = window.TS.MID;
-            dbMsg.addCount = true;
+            dbMsg.read = 0;
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
                 // 消息放入本地
                 window.TS.dataBase.message.put(dbMsg);
                 // 修改房间最后消息时间
-                window.TS.dataBase.room.where('[cid+owner]').equals([dbMsg.cid, dbMsg.owner]).modify({
+                window.TS.dataBase.room.where({cid: dbMsg.cid,owner: dbMsg.owner}).modify({
                     last_message_time: dbMsg.time
                 })
             });
@@ -37,15 +37,16 @@ socket = {
                 data[1].forEach((value, index) => {
                     value.time = value.mid / 8388608 + 1451577600000;
                     value.owner = window.TS.MID;
+                    value.read = 1;
                     // 对比本地存储的会话，写入新会话
                     window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
                         // 查找我的最后一条消息
-                        window.TS.dataBase.message.where('[cid+owner]').equals([value.cid, window.TS.MID]).last(item => {
+                        window.TS.dataBase.message.where({cid: value.cid, owner: window.TS.MID}).last(item => {
                             if ((item !== undefined && value.seq > item.seq) || item === undefined) {
                                 // 写入数据库
                                 window.TS.dataBase.message.put(value);
                                 // 修改房间最后通话时间
-                                window.TS.dataBase.room.where('[cid+owner]').equals([value.cid, window.TS.MID]).modify({
+                                window.TS.dataBase.room.where({cid: value.cid,owner: window.TS.MID}).modify({
                                     last_message_time: value.time,
                                     last_message: value.txt
                                 });
@@ -90,7 +91,7 @@ socket = {
                     window.TS.dataBase.message.where('hash').equals(data[2]).modify(dbData);
                     window.TS.dataBase.message.where('hash').equals(data[2]).first().then(results => {
                         // 更改房间的最后消息时间
-                        window.TS.dataBase.room.where('[cid+owner]').equals([results.cid, window.TS.MID]).modify({
+                        window.TS.dataBase.room.where({cid: results.cid,owner: window.TS.MID}).modify({
                             last_message_time: results.time,
                             last_message: results.txt
                         });
@@ -119,39 +120,38 @@ message = {
     datas: {},
 
     init: function(datas) {
-        return false;
-        this.datas.list = datas.list;
-        this.datas.users = datas.users;
-        this.datas.cid = datas.cid;
+        // 获取对话列表
+        message.getConversations();
 
         // 链接socket
-        if(TS.BOOT['im:serve'] && TS.MID != 0) { //判断是否配置im聊天服务器
+        if(TS.BOOT['im:serve']) { //判断是否配置im聊天服务器
             message.connect();
         } else {
             console.log('未配置Socket地址或未登录');
         }
+
+        // 设置未读数
+        message.getUnreadCounts();
+        var unread_timeout = window.setInterval(message.getUnreadCounts, 60000);
     },
 
     connect: function() {
-        if (!TS.BOOT['im:serve']) return false;
-
         // 创建本地存储
         var db = new Dexie('TS');
-        db.version(2).stores({
+        db.version(1).stores({
             // message
-            message: "++, owner, cid, txt, uid, hash, mid, seq, time, read, [cid+mid], [cid+owner]",
+            message: "++, owner, cid, txt, uid, hash, mid, seq, time, read",
 
             // room
-            room: "++, owner, cid, user_id, name, pwd, type, uids, last_message, last_message_time, [cid+owner]",
+            room: "++, owner, cid, user_id, name, pwd, type, uids, last_message, last_message_time",
         });
 
         window.TS.dataBase = db;
 
         // 存储会话列表
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
-
             this.datas.list.forEach(val => {
-                window.TS.dataBase.room.where('[cid+owner]').equals([val.cid, window.TS.MID]).first(function(item){
+                window.TS.dataBase.room.where({cid: val.cid,owner: window.TS.MID}).first(function(item){
                     if (item === undefined) {
                         val.last_message_time = 0;
                         val.last_message = '';
@@ -161,17 +161,7 @@ message = {
                         val.last_message = item.last_message;
                     }
                 });
-
-                // 设置对话列表
-                message.setConversation(val);
             });
-
-            var div = document.getElementById('chat_left_scroll');
-            console.log($(".current_room").position().top);
-            div.scrollTop = $(".current_room").offset().top;
-
-            return false;
-
         });
 
         // 非连接状态及未连接状态 连接SOCKET
@@ -219,26 +209,75 @@ message = {
         }
     },
 
+    // 获取聊天对话列表
+    getConversations: function() {
+        var _this = this;
+        $.ajax({
+            url: TS.API + '/im/conversations/list/all',
+            async: false,
+            type: 'GET',
+            success: function(res) {
+                var uids = [];
+                for(var i in res) {
+                    // 最多50个会话
+                    if (i > 49) break;
+                    var _uids = res[i]['uids'].split(',');
+                    for (var j in _uids) {
+                        if (_uids[j] != TS.MID) {
+                            uids.push(_uids[j]);
+                            res[i]['other_uid'] = parseInt(_uids[j]);
+                        }
+                    }
+                }
+
+                // 获取对话中其他用户用户信息
+                var users = getUserInfo(uids.join(','));
+                var _users = [];
+                for (var l in users) {
+                    _users[users[l]['id']] = users[l];
+                }
+                _this.datas.list = res;
+                _this.datas.users = _users;
+
+                // 设置聊天对话
+                for (var k in res) {
+                    message.setConversation(0, res[k], _users[res[k]['other_uid']]);
+                }
+            }
+        }, 'json');
+    },
+
+
     // 设置会话
-    setConversation: function(room) {
-        var css = '';
-        if (room.cid == this.datas.cid) {
-            css = 'class="current_room"';
-            message.listMessage(room.cid, this.datas.cid);
+    setConversation: function(type, room) {
+        // 设置侧边栏
+        if (type != 1) {
+            var sidehtml = '<dd id="ms_chat_' + room.cid + '"><a href="javascript:;" onclick="openChatDialog(this, 5, '+ room.cid +')"><img src="' + getAvatar(this.datas.users[room.other_uid], 50) + '"/></a></dd>';
+
+            $('#ms_fixed').append(sidehtml);
+        } 
+
+        // 设置弹出框
+        if (type != 0) {
+            var css = '';
+            if (room.cid == this.datas.cid) {
+                css = 'class="current_room"';
+                message.listMessage(room.cid);
+            }
+
+            var last_message = room.last_message == undefined ? '' : room.last_message;
+
+            var html = '<li ' + css + ' class="room_item" data-type="5" data-cid="' + room['cid'] + '" id="chat_' + room['cid'] + '">'
+                        +      '<div class="chat_left_icon">'
+                        +          '<img src="' + getAvatar(this.datas.users[room.other_uid]) + '" class="chat_svg">'
+                        +       '</div>'
+                        +      '<div class="chat_item">'
+                        +          '<span class="chat_span">' + this.datas.users[room.other_uid]['name'] + '</span>'
+                        +          '<div>' + last_message + '</div>'
+                        +      '</div>'
+                        +  '</li>';
+            $('#root_list').append(html);
         }
-
-        var last_message = room.last_message == undefined ? '' : room.last_message;
-
-        var html = '<li ' + css + ' class="room_item" data-type="5" data-cid="' + room['cid'] + '">'
-                    +      '<div class="chat_left_icon">'
-                    +          '<img src="' + getAvatar(this.datas.users[room.other_uid]) + '" class="chat_svg">'
-                    +       '</div>'
-                    +      '<div class="chat_item">'
-                    +          '<span class="chat_span">' + this.datas.users[room.other_uid]['name'] + '</span>'
-                    +          '<div>' + last_message + '</div>'
-                    +      '</div>'
-                    +  '</li>';
-        $('#root_list').append(html);
     },
 
     listMessage: function(cid) {
@@ -342,5 +381,86 @@ message = {
         $('#chat_cont').append(html);
         var div = document.getElementById('chat_scroll');
         div.scrollTop = div.scrollHeight;
+    },
+
+    // 获取未读消息数量
+    getUnreadCounts: function() {
+        // 获取未读通知数量
+        $.ajax({
+            url: TS.API + '/user/notifications',
+            type: 'HEAD',
+            success: function(data, status, request) {
+                TS.UNREAD.notifications = request.getResponseHeader('unread-notification-limit');
+
+                message.setUnreadMessage();
+            }
+        }, 'json');
+
+        // 获取未读点赞，评论，审核通知数量
+        $.ajax({
+            url: TS.API + '/user/unread-count',
+            type: 'GET',
+            success: function(res) {
+                TS.UNREAD.comments = res.counts.unread_comments_count ? res.counts.unread_comments_count : 0;
+                TS.UNREAD.likes = res.counts.unread_likes_count ? res.counts.unread_likes_count : 0;
+
+                // 审核通知数量
+                var pinneds_count = 0;
+                for(var i in res.pinneds){
+                    pinneds_count += res.pinneds[i]['count'];
+                }
+                TS.UNREAD.pinneds = pinneds_count;
+
+                message.setUnreadMessage();
+            }
+        }, 'json');
+
+        // 获取未读消息数量
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
+            window.TS.dataBase.room.where({owner: window.TS.MID}).each( value => {
+                window.TS.dataBase.message.where({read: 0, cid: value.cid}).count( number => {
+                    if (number > 0) {
+                        setUnreadChat(value.cid, number);
+                    }
+                });
+            });
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    },
+
+    // 设置未读消息数量
+    setUnreadMessage: function(){
+        for (var i in TS.UNREAD) {
+            if (TS.UNREAD[i] > 0) {
+                $('#ms_' + i + ' .unread_div').remove();
+                $('#ms_' + i).prepend(message.formatUnreadHtml(0, TS.UNREAD[i]));
+                if ($('.chat_dialog').length > 0) {
+                    $('#chat_' + i + ' .chat_unread_div').remove();
+                    $('#chat_' + i + ' .chat_left_icon').prepend(message.formatUnreadHtml(1, TS.UNREAD[i]));
+                }
+            }
+        }
+    },
+
+    // 设置未读聊天消息数量
+    setUnreadChat: function(cid, value){
+        $('#ms_' + cid + ' .unread_div').remove();
+        $('#ms_' + cid).prepend(message.formatUnreadHtml(0, value));
+        if ($('.chat_dialog').length > 0) {
+            $('#chat_' + cid + ' .chat_unread_div').remove();
+            $('#chat_' + cid + ' .chat_left_icon').prepend(message.formatUnreadHtml(1, value));
+        }
+    },
+
+    // 获取未读消息数量html
+    formatUnreadHtml: function(type, value){
+        if (type == 0) {
+            var html = '<div class="unread_div"><span>' + (value > 99 ? 99 : value) + '</span></div>';
+        } else {
+            var html = '<div class="chat_unread_div"><span>' + (value > 99 ? 99 : value) + '</span></div>';
+        }
+        return html;
     }
 }

@@ -3,7 +3,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
 @endphp
 
 @php
-$style = $lockstr = $onclick = $class = $blur = '';
+$style = $lockstr = $onclick = $class = $blur = 0;
 
 // 付费免费
 if (isset($image['paid']) && !$image['paid']) {
@@ -38,4 +38,4 @@ if (isset($count) && $count == 'one') {
 }
 @endphp
 
-<img style="{{$style}}" class="lazy per_image {{ $class }}"  data-original="{{ getImageUrl($image, $width, $height, $blur) }}" curloc="{{$curloc}}" {{ $onclick }} {{ $lockstr }} />
+<img style="{{$style}}" class="lazy per_image {{ $class }}"  data-original="{{ getImageUrl($image, $width, $height, true, $blur) }}" curloc="{{$curloc}}" {{ $onclick }} {{ $lockstr }} />

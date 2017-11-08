@@ -8,7 +8,7 @@
     <div class="chat_left_wrap">
         <div class="chat_left" id="chat_left_scroll">
             <ul id="root_list">
-                <li @if($type == 0)class="current_room"@endif data-type="0">
+                <li @if($type == 0)class="current_room"@endif data-type="0" id="chat_comments">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
                             <use xlink:href="#icon-ico_pinglun"></use>
@@ -16,10 +16,10 @@
                     </div>
                     <div class="chat_item">
                         <span class="chat_span">评论的</span>
-                        <div></div>
+                        <div class="last_content"></div>
                     </div>
                 </li>
-                <li @if($type == 1)class="current_room"@endif data-type="1">
+                <li @if($type == 1)class="current_room"@endif data-type="1" id="chat_likes">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
                             <use xlink:href="#icon-ico_zan"></use>
@@ -27,10 +27,10 @@
                     </div>
                     <div class="chat_item">
                         <span class="chat_span">赞过的</span>
-                        <div>赞了我</div>
+                        <div class="last_content"></div>
                     </div>
                 </li>
-                <li @if($type == 2)class="current_room"@endif data-type="2">
+                <li @if($type == 2)class="current_room"@endif data-type="2" id="chat_notifications">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
                             <use xlink:href="#icon-ico_tongzhi"></use>
@@ -40,7 +40,7 @@
                         <span class="chat_span chat_span_noinfo">通知</span>
                     </div>
                 </li>
-                <li @if($type == 3)class="current_room"@endif data-type="3">
+                <li @if($type == 3)class="current_room"@endif data-type="3" id="chat_pinneds">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
                             <use xlink:href="#icon-ico_shenghe"></use>
@@ -102,9 +102,6 @@
         </div>
     </div>
 </div>
-
-<script src="{{ asset('zhiyicx/plus-component-pc/js/module.message.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/dexie.js') }}"></script>
 
 <script type="text/javascript">
     var type = {{ $type }};
@@ -235,17 +232,27 @@
                     break;
             }
             // 清空未读消息数量
-            $('.current_room').find('.chat_num').remove();
+            $('.current_room').find('.chat_unread_div').remove();
         }
 
-        // var datas = {};
-        // datas.list =  window.TS.chat.list;
-        // // 用户信息
-        // datas.users = window.TS.chat.users;
-        // // 会话id
-        // datas.cid = {{ $cid or 0 }};
+        // 设置未读数量
+        for (var i in TS.UNREAD) {
+            if (TS.UNREAD[i] > 0) {
+                $('#chat_' + i + ' .chat_unread_div').remove();
+                $('#chat_' + i + ' .chat_left_icon').prepend(message.formatUnreadHtml(1, TS.UNREAD[i]));
+            }
+        }
 
-        // // 初始化message
-        // message.init(datas);
+        // 设置房间
+        message.datas.cid = {{ $cid or 0 }};
+
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
+            window.TS.dataBase.room.where({owner: window.TS.MID}).each( value => {
+                message.setConversation(1, value);
+            });
+        })
+        .catch(e => {
+            console.log(e);
+        });
     });
 </script>

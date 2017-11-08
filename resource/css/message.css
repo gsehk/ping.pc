@@ -36,6 +36,26 @@
 .chat_left_icon {
     float: left;
     padding: 5px 0 0 10px;
+    position: relative;
+}
+
+.chat_left_icon .chat_unread_div {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+.chat_left_icon .chat_unread_div span{
+    display: block;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+    background: #f24343;
+    width: 16px;
+    height: 16px;
 }
 
 .chat_left ul {
@@ -88,7 +108,7 @@
     line-height: 30px;
 }
 
-.chat_left .chat_item div {
+.chat_left .chat_item .last_content {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

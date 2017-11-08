@@ -1392,121 +1392,32 @@ var getAvatar = function(user, width) {
     return avatar;
 }
 
-// 获取未读消息数量
-var getUnreadCounts = function() {
-    // 获取未读通知数量
-    $.ajax({
-        url: TS.API + '/user/notifications',
-        type: 'HEAD',
-        success: function(data, status, request) {
-            TS.UNREAD.notifications = request.getResponseHeader('unread-notification-limit');
-
-            // 设置未读通知
-            if (TS.UNREAD.notifications != 0) {
-                var html = '<div class="unread_div"><span>' + (TS.UNREAD.notifications > 99 ? 99 : TS.UNREAD.notifications) + '</span></div>';
-                $('#ms_notifications .unread_div').remove();
-                $('#ms_notifications').remove('.unread_div').prepend(html);
-            }
-        }
-    }, 'json');
-
-    // 获取未读点赞，评论，审核通知数量
-    $.ajax({
-        url: TS.API + '/user/unread-count',
-        type: 'GET',
-        success: function(res) {
-            TS.UNREAD.comments = res.counts.unread_comments_count ? res.counts.unread_comments_count : 0;
-            TS.UNREAD.likes = res.counts.unread_likes_count ? res.counts.unread_likes_count : 0;
-
-            // 审核通知数量
-            var pinneds_count = 0;
-            for(var i in res.pinneds){
-                pinneds_count += res.pinneds[i]['count'];
-            }
-            TS.UNREAD.pinneds = pinneds_count;
-
-            // 设置未读评论
-            if (TS.UNREAD.comments != 0) {
-                var html = '<div class="unread_div"><span>' + (TS.UNREAD.comments > 99 ? 99 : TS.UNREAD.comments) + '</span></div>';
-                $('#ms_comments .unread_div').remove();
-                $('#ms_comments').prepend(html);
-            }
-            // 设置未读点赞
-            if (TS.UNREAD.likes != 0) {
-                var html = '<div class="unread_div"><span>' + (TS.UNREAD.likes > 99 ? 99 : TS.UNREAD.likes) + '</span></div>';
-                $('#ms_likes .unread_div').remove();
-                $('#ms_likes').prepend(html);
-            }
-            // 设置未读审核
-            if (TS.UNREAD.pinneds != 0) {
-                var html = '<div class="unread_div"><span>' + (TS.UNREAD.pinneds > 99 ? 99 : TS.UNREAD.pinneds)+ '</span></div>';
-                $('#ms_pinneds .unread_div').remove();
-                $('#ms_pinneds').prepend(html);
-            }
-        }
-    }, 'json');
-
-    // 获取未读消息数量
-}
-
-// 获取聊天对话列表
-var getConversations = function() {
-    $.ajax({
-        url: TS.API + '/im/conversations/list/all',
-        type: 'GET',
-        success: function(res) {
-            var uids = [];
-            for(var i in res) {
-                // 最多50个会话
-                if (i > 49) break;
-                var _uids = res[i]['uids'].split(',');
-                for (var j in _uids) {
-                    if (_uids[j] != TS.MID) {
-                        uids.push(_uids[j]);
-                        res[i]['other_uid'] = parseInt(_uids[j]);
-                    }
-                }
-            }
-
-            // 获取对话中其他用户用户信息
-            var users = getUserInfo(uids.join(','));
-            var _users = [];
-            for (var l in users) {
-                _users[users[l]['id']] = users[l];
-            }
-
-            // 设置聊天对话
-            for (var k in res) {
-                setConversation(res[k], _users[res[k]['other_uid']]);
-            }
-
-            // 存储对话信息
-            TS.chat = {};
-            TS.chat.list =  res;
-            TS.chat.users = _users;
-        }
-    }, 'json');
-}
-
 // 打开消息对话框
-var openChatDialog = function(type, uid) {
+var openChatDialog = function(obj, type, cid) {
+    $(obj).parent().find('.unread_div').remove();
     if (type == 5) { // 聊天消息
-        ly.load(TS.SITE_URL + '/message/' + type + '/' + uid, '', '720px', '572px');
+        // 设置已读
+        window.TS.dataBase.message.where({cid: cid, owner: window.TS.MID}).modify({
+            read: 1
+        });
+
+        ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');
     } else {
+        switch (type) {
+            case 0:
+                TS.UNREAD.comments = 0;
+                break;
+            case 1:
+                TS.UNREAD.likes = 0;
+                break;
+            case 2:
+                TS.UNREAD.notifications = 0;
+                break;
+            case 3:
+                TS.UNREAD.pinneds = 0;
+                break;
+        }
         ly.load(TS.SITE_URL + '/message/' + type, '', '720px', '572px');
-    }
-}
-
-// 设置侧边栏消息
-var setConversation = function(chat, user) {
-    // 设置侧边栏聊天对话
-    var sidehtml = '<dd id="ms_chat_' + user.id + '"><a href="javascript:;" onclick="openChatDialog(5, '+ chat.cid +')"><img src="' + getAvatar(user, 50) + '"/></a></dd>';
-
-    $('#ms_fixed').append(sidehtml);
-
-    // 如果消息对话框存在
-    if ($('.chat_dialog').length > 0) {
-
     }
 }
 
@@ -1541,8 +1452,8 @@ var cancelBubble = function() {
     }
 }
 
-
 $(function() {
+
     // Jquery fixed拓展
     jQuery.fn.fixed = function(options) {
         var defaults = {
@@ -1575,10 +1486,10 @@ $(function() {
         if (!_st) _st=0;
         var _code = '<div id="ms_fixed_wrap">'
                   +      '<dl id="ms_fixed">'
-                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="openChatDialog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
-                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
-                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="openChatDialog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
-                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="openChatDialog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
+                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="openChatDialog(this, 0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
+                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="openChatDialog(this, 1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
+                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="openChatDialog(this, 2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
+                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="openChatDialog(this, 3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
                   +     '</dl>'
                   + '</div>';
         if (_st == 1) {
@@ -1854,12 +1765,7 @@ $(function() {
     });
 
     if (TS.MID > 0) {
-        return false;
-        // 获取消息未读数计时器
-        getUnreadCounts();
-        var unread_timeout = window.setInterval(getUnreadCounts, 60000);
-
-        // 获取对话列表
-        getConversations();
+        // 聊天初始化
+        message.init();
     }
 });
