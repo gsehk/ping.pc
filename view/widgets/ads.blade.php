@@ -59,7 +59,7 @@
 @elseif($type == 4 && isset($ads[$page-1]['data']))
     <div class="news_item">
         <div class="news_img">
-            <a href="{{ route('pc:newsread', ['news_id' => $item['id']]) }}">
+            <a href="{{ $ads[$page-1]['data']['link'] or ''}}">
                 <img class="lazy" width="230" height="163" data-original="{{ $ads[$page-1]['data']['image'] or ''}}"/>
             </a>
         </div>
