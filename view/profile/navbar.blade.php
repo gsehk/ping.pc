@@ -31,11 +31,6 @@
                     <span>{{$tag->name}}</span>
                 @endforeach
             </div>
-            @if ($user->verified)
-                <div class="profile_logo_icon">
-                    <span><i class="tag_icon"></i>已认证：TS团队成员</span>
-                </div>
-            @endif
         </div>
     </div>
 
