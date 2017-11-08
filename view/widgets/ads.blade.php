@@ -45,7 +45,7 @@
             </dd>
         </dl>
         <a class="avatar_box" href="{{ $ads[$page-1]['data']['link'] }}">
-            <p class="mt0">{{ $ads[$page-1]['data']['content'] }}</p>
+            <p class="mt0">{{ $ads[$page-1]['data']['content'] or ''}}</p>
             <div> <img src="{{ $ads[$page-1]['data']['image'] }}" alt="image"> </div>
         </a>
         <p>
@@ -65,7 +65,7 @@
         </div>
         <div class="news_word">
             <div class="news_title"> {{ $ads[$page-1]['data']['title'] }} </div>
-                <p>{{ $ads[$page-1]['data']['content'] }}</p>
+                <p>{{ $ads[$page-1]['data']['content'] or ''}}</p>
                 <div class="news_bm">
                    <span>{{ $ads[$page-1]['data']['name'] }}  ·  {{ $ads[$page-1]['data']['time'] }}</span>
                    <span class="tag ml10">广告</span>
