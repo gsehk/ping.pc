@@ -22,9 +22,7 @@
             <ul class="news_cates_tab">
             <a href="javascript:;" data-cid="0" @if($cate_id == 0) class="selected" @endif><li>全部</li></a>
             @foreach ($cates as $cate)
-                @if ($loop->iteration < 10)
                 <a href="javascript:;" data-cateid="{{ $cate['id'] }}" @if($cate_id == $cate['id']) class="selected" @endif><li>{{ $cate['name'] }}</li></a>
-                @endif
             @endforeach
             </ul>
             <div id="news_list">
