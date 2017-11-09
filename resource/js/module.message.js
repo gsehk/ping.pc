@@ -139,7 +139,7 @@ message = {
 
         // 设置未读数
         message.getUnreadMessage();
-        var unread_timeout = window.setInterval(message.getUnreadCounts, 5000);
+        var unread_timeout = window.setInterval(message.getUnreadMessage, 5000);
         message.getUnreadChats();
         var unread_timeout = window.setInterval(message.getUnreadChats, 1000);
     },
