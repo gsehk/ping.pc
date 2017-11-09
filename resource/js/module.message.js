@@ -426,7 +426,7 @@ message = {
             window.TS.dataBase.room.where({owner: window.TS.MID}).each( value => {
                 window.TS.dataBase.message.where({read: 0, cid: value.cid}).count( number => {
                     if (number > 0) {
-                        setUnreadChat(value.cid, number);
+                        message.setUnreadChat(value.cid, number);
                     }
                 });
             });
