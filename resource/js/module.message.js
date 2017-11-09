@@ -18,7 +18,7 @@ socket = {
             dbMsg.time = dbMsg.mid / 8388608 + 1451577600000;
             dbMsg.hash = '';
             dbMsg.owner = window.TS.MID;
-            dbMsg.read = 0;
+            dbMsg.read = message.datas.cid == dbMsg.cid ? 1 : 0;
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
                 // 消息放入本地
                 window.TS.dataBase.message.put(dbMsg);
@@ -452,8 +452,8 @@ message = {
 
     // 设置未读聊天消息数量
     setUnreadChat: function(cid, value){
-        $('#ms_' + cid + ' .unread_div').remove();
-        $('#ms_' + cid).prepend(message.formatUnreadHtml(0, value));
+        $('#ms_chat_' + cid + ' .unread_div').remove();
+        $('#ms_chat_' + cid).prepend(message.formatUnreadHtml(0, value));
         if ($('.chat_dialog').length > 0) {
             $('#chat_' + cid + ' .chat_unread_div').remove();
             $('#chat_' + cid + ' .chat_left_icon').prepend(message.formatUnreadHtml(1, value));
