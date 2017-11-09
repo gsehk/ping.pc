@@ -334,12 +334,8 @@ message = {
             hash
         ];
         msg += JSON.stringify(message_one);
-        if(!window.TS.webSocket) {
-            console.log('链接出错');
-            return false;
-        }
 
-        if(window.TS.webSocket.readyState != 1) {
+        if(!window.TS.webSocket || window.TS.webSocket.readyState != 1) {
             message.connect();
 
             connect = window.setTimeout(function(){
@@ -358,6 +354,7 @@ message = {
                     mid: 0,
                     seq: -1,
                     time: 0,
+                    read: 1,
                     owner: window.TS.MID
                 };
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
