@@ -1174,7 +1174,7 @@ var pinneds = function (url) {
     ly.confirm(html, '', '', function(){
         var data = {};
         data.day = $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '';
-        data.amount = $('.pinned_input input').val() / TS.BOOT['walleat:ratio'] * data.day;
+        data.amount = $('.pinned_input input').val() / TS.BOOT['wallet:ratio'] * data.day;
         if (!data.day) {
             lyNotice('请选择置顶天数');
             return false;
