@@ -444,7 +444,7 @@ message = {
     },
 
     // 设置未读消息数量
-    setUnreadMessage: function(){
+    setUnreadMessage: function() {
         for (var i in TS.UNREAD) {
             if (TS.UNREAD[i] > 0) {
                 $('#ms_' + i + ' .unread_div').remove();
@@ -458,7 +458,7 @@ message = {
     },
 
     // 设置未读聊天消息数量
-    setUnreadChat: function(cid, value){
+    setUnreadChat: function(cid, value) {
         $('#ms_chat_' + cid + ' .unread_div').remove();
         $('#ms_chat_' + cid).prepend(message.formatUnreadHtml(0, value));
         if ($('.chat_dialog').length > 0) {
@@ -467,8 +467,19 @@ message = {
         }
     },
 
+    // 设置已读
+    setRead: function(cid) {
+        $('#ms_chat_' + cid).find('.unread_div').remove();
+        $('#chat_' + cid).find('.chat_unread_div').remove();
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
+            window.TS.dataBase.message.where({owner: window.TS.MID, cid: cid}).modify({
+                read: 1
+            });
+        });
+    }
+
     // 获取未读消息数量html
-    formatUnreadHtml: function(type, value){
+    formatUnreadHtml: function(type, value) {
         if (type == 0) {
             var html = '<div class="unread_div"><span>' + (value > 99 ? 99 : value) + '</span></div>';
         } else {

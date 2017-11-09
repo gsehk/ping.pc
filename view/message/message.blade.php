@@ -154,13 +154,8 @@
                 $('#chat_send').attr('onclick', 'message.sendMessage(' + cid + ')');
 
                 // 设置为已读
-                $(this).find('.chat_unread_div').remove();
-                window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
-                    window.TS.dataBase.message.where({owner: window.TS.MID, cid: cid}).modify({
-                        read: 1
-                    });
-                });
                 message.datas.cid = cid;
+                message.setRead(cid);
                 message.listMessage(cid);
             } else {
                 $('#message_wrap').show();

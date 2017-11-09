@@ -1394,17 +1394,11 @@ var getAvatar = function(user, width) {
 
 // 打开消息对话框
 var openChatDialog = function(obj, type, cid) {
-    $(obj).parent().find('.unread_div').remove();
     if (type == 5) { // 聊天消息
-        // 设置已读
-        window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
-            window.TS.dataBase.message.where({owner: window.TS.MID, cid: cid}).modify({
-                read: 1
-            });
-        });
-
+        message.setRead(cid);
         ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');
     } else {
+        $(obj).parent().find('.unread_div').remove();
         switch (type) {
             case 0:
                 TS.UNREAD.comments = 0;
