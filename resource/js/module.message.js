@@ -147,6 +147,7 @@ message = {
     connect: function() {
         // 创建本地存储
         var db = new Dexie('TS');
+        db.debug = false;
         db.version(1).stores({
             // message
             message: "++, owner, cid, txt, uid, hash, mid, seq, time, read",
