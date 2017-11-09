@@ -6,17 +6,21 @@
     padding: 7px 23px;
 }
 
-.reward-btn {
+.profile-btn {
+    width: 71px;
+    height: 32px;
+    padding: 0;
     float: right;
     margin-top: 24px;
     border-radius: 18px;
-    padding: 7px 23px;
     border: 1px solid #59B6D7;
+    line-height: 32px;
+    margin-left: 10px;
 }
-
-.reward-btn > svg ,
+.profile-btn > svg ,
 .contribute-btn > svg {
-    margin-right: 6px;
+    width: 16px;
+    margin-right: 4px;
 }
 
 .follow-box {

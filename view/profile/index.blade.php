@@ -57,16 +57,18 @@ $('#follow').click(function(){
     var status = $(this).attr('status');
     var user_id = "{{ $user->id }}";
     follow(status, user_id, _this, afterdata);
-})
+});
 
 // 关注回调
 var afterdata = function(target){
     if (target.attr('status') == 1) {
-        target.text('+关注');
+        target.find('span').text('关注');
+        target.find('.icon').show();
         target.attr('status', 0);
         target.removeClass('followed');
     } else {
-        target.text('已关注');
+        target.find('.icon').hide();
+        target.find('span').text('已关注');
         target.attr('status', 1);
         target.addClass('followed');
     }

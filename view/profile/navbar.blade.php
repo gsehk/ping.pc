@@ -60,16 +60,31 @@
 
                 <li @if($current == 'news') class="active" @endif><a href="{{ route('pc:profilenews', $user->id) }}">TA的文章</a></li>
             </ul>
-            <div class="follow-box">
-                @if ($user->hasFollower == 0)
-                    <div id="follow" status="0" class="tcolor">+关注</div>
-                @else
-                    <div id="follow" status="1" class="followed">已关注</div>
-                @endif
-            </div>
+            <a class="btn profile-btn mcolor" href="javascript:;" onclick="openChatDialog(this, 0)">
+                <svg class="icon"><use xlink:href="#icon-gerenzhuye-chat"></use></svg>聊天
+            </a>
+            @if ($user->hasFollower == 0)
+                <a class="btn profile-btn mcolor" id="follow" status="0" href="javascript:;">
+                    <svg class="icon"><use xlink:href="#icon-gerenzhuye-attention"></use></svg><span>关注</span>
+                </a>
+            @else
+                <a class="btn profile-btn mcolor" id="follow" status="1" href="javascript:;">
+                    <svg class="icon hide"><use xlink:href="#icon-gerenzhuye-attention"></use></svg><span>已关注</span>
+                </a>
+            @endif
+            {{--<div class="follow-box">--}}
+                {{--@if ($user->hasFollower == 0)--}}
+                    {{--<div id="follow" status="0" class="tcolor">--}}
+                        {{--<svg class="icon"><use xlink:href="#icon-gerenzhuye-attention"></use></svg>--}}
+                        {{--关注--}}
+                    {{--</div>--}}
+                {{--@else--}}
+                    {{--<div id="follow" status="1" class="followed">已关注</div>--}}
+                {{--@endif--}}
+            {{--</div>--}}
 
-            <a class="btn reward-btn mcolor" href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
-                <svg class="icon"><use xlink:href="#icon-dashang"></use></svg>打赏
+            <a class="btn reward-btn profile-btn mcolor" href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
+                <svg class="icon"><use xlink:href="#icon-gerenzhuye-reward"></use></svg>打赏
             </a>
         @endif
     </div>
