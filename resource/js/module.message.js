@@ -27,7 +27,9 @@ socket = {
                     last_message_time: dbMsg.time
                 })
             });
-            message.setMessage(dbMsg.txt, dbMsg.uid);
+            if (message.datas.cid == dbMsg.cid) {
+                message.setMessage(dbMsg.txt, dbMsg.uid);
+            }
         }
 
         // 应答消息

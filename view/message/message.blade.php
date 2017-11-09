@@ -160,6 +160,7 @@
                         read: 1
                     });
                 });
+                message.datas.cid = cid;
                 message.listMessage(cid);
             } else {
                 $('#message_wrap').show();
