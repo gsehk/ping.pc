@@ -476,7 +476,7 @@ message = {
                 read: 1
             });
         });
-    }
+    },
 
     // 获取未读消息数量html
     formatUnreadHtml: function(type, value) {
