@@ -131,8 +131,10 @@ message = {
         }
 
         // 设置未读数
-        message.getUnreadCounts();
-        var unread_timeout = window.setInterval(message.getUnreadCounts, 60000);
+        message.getUnreadMessage();
+        var unread_timeout = window.setInterval(message.getUnreadCounts, 5000);
+        message.getUnreadChats();
+        var unread_timeout = window.setInterval(message.getUnreadChats, 1000);
     },
 
     connect: function() {
@@ -384,7 +386,7 @@ message = {
     },
 
     // 获取未读消息数量
-    getUnreadCounts: function() {
+    getUnreadMessage: function() {
         // 获取未读通知数量
         $.ajax({
             url: TS.API + '/user/notifications',
@@ -415,6 +417,10 @@ message = {
             }
         }, 'json');
 
+    },
+
+    // 获取未读聊天消息数量
+    getUnreadChats: function() {
         // 获取未读消息数量
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, window.TS.dataBase.message, () => {
             window.TS.dataBase.room.where({owner: window.TS.MID}).each( value => {
