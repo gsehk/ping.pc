@@ -31,9 +31,8 @@ socket = {
             if ($('.chat_dialog').length > 0) {
                 if (message.datas.cid == dbMsg.cid) {
                     message.setMessage(dbMsg.txt, dbMsg.uid);
-                } else {
-                    message.updateLastMessage(dbMsg.cid, dbMsg.txt);
                 }
+                message.updateLastMessage(dbMsg.cid, dbMsg.txt);
             }
         }
 
