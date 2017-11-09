@@ -32,7 +32,7 @@ socket = {
                 if (message.datas.cid == dbMsg.cid) {
                     message.setMessage(dbMsg.txt, dbMsg.uid);
                 } else {
-                    message.updateLastMessage(dbMsg.cid, db.txt);
+                    message.updateLastMessage(dbMsg.cid, dbMsg.txt);
                 }
             }
         }
