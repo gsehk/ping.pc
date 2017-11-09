@@ -1397,8 +1397,10 @@ var openChatDialog = function(obj, type, cid) {
     $(obj).parent().find('.unread_div').remove();
     if (type == 5) { // 聊天消息
         // 设置已读
-        window.TS.dataBase.message.where({cid: cid, owner: window.TS.MID}).modify({
-            read: 1
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
+            window.TS.dataBase.message.where({owner: window.TS.MID, cid: cid}).modify({
+                read: 1
+            });
         });
 
         ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');

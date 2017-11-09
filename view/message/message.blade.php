@@ -159,9 +159,6 @@
                     window.TS.dataBase.message.where({owner: window.TS.MID, cid: cid}).modify({
                         read: 1
                     });
-                })
-                .catch(e => {
-                    console.log(e);
                 });
                 message.listMessage(cid);
             } else {
