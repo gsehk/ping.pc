@@ -416,7 +416,7 @@ message = {
         }, 'json');
 
         // 获取未读消息数量
-        window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, window.TS.dataBase.message, () => {
             window.TS.dataBase.room.where({owner: window.TS.MID}).each( value => {
                 window.TS.dataBase.message.where({read: 0, cid: value.cid}).count( number => {
                     if (number > 0) {
