@@ -30,7 +30,7 @@ socket = {
             });
 
             if ($('.chat_dialog').length > 0) {
-                if (message.datas.cid == dbMsg.cid) {
+                if (message.datas.cid == dbMsg.cid && window.TS.MID != dbMsg.uid) {
                     message.setMessage(dbMsg.txt, dbMsg.uid);
                 }
                 message.updateLastMessage(dbMsg.cid, dbMsg.txt);
