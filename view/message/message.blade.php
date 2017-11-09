@@ -155,7 +155,7 @@
 
                 // 设置为已读
                 message.datas.cid = cid;
-                message.setRead(cid);
+                message.setRead(1, cid);
                 message.listMessage(cid);
             } else {
                 $('#message_wrap').show();
@@ -182,6 +182,7 @@
                     body_title.removeClass('hide');
                     audit_top.addClass('hide');
 
+                    message.setRead(0, 'comments');
                     break;
                 case 1: // 点赞
                     title = '点赞的';
@@ -196,6 +197,7 @@
                     body_title.removeClass('hide');
                     audit_top.addClass('hide');
 
+                    message.setRead(0, 'likes');
                     break;
                 case 2: // 通知
                     title = '通知';
@@ -210,6 +212,8 @@
                     body_title.html(title);
                     body_title.removeClass('hide');
                     audit_top.addClass('hide');
+
+                    message.setRead(0, 'notifications');
                     break;
                 case 3: // 动态审核
                     scroll.init({
@@ -235,8 +239,6 @@
                     audit_top.removeClass('hide');
                     break;
             }
-            // 清空未读消息数量
-            $('.current_room').find('.chat_unread_div').remove();
         }
 
         // 设置未读数量

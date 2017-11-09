@@ -467,15 +467,20 @@ message = {
         }
     },
 
-    // 设置已读
-    setRead: function(cid) {
-        $('#ms_chat_' + cid).find('.unread_div').remove();
-        $('#chat_' + cid).find('.chat_unread_div').remove();
-        window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
-            window.TS.dataBase.message.where({owner: window.TS.MID, cid: cid}).modify({
-                read: 1
+    // 设置消息已读
+    setRead: function(type, cid) {
+        if (type == 0) { // 消息
+            $('#ms_chat_' + cid).find('.unread_div').remove();
+            $('#chat_' + cid).find('.chat_unread_div').remove();
+        } else { // 聊天
+            $('#ms_chat_' + cid).find('.unread_div').remove();
+            $('#chat_' + cid).find('.chat_unread_div').remove();
+            window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
+                window.TS.dataBase.message.where({owner: window.TS.MID, cid: cid}).modify({
+                    read: 1
+                });
             });
-        });
+        }
     },
 
     // 获取未读消息数量html

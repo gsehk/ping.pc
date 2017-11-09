@@ -1395,7 +1395,7 @@ var getAvatar = function(user, width) {
 // 打开消息对话框
 var openChatDialog = function(obj, type, cid) {
     if (type == 5) { // 聊天消息
-        message.setRead(cid);
+        message.setRead(1, cid);
         ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');
     } else {
         if (type != 3) $(obj).parent().find('.unread_div').remove();
