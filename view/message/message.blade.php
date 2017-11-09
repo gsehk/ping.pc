@@ -251,7 +251,7 @@
         message.datas.cid = {{ $cid or 0 }};
 
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
-            window.TS.dataBase.room.where({owner: window.TS.MID}).each( value => {
+            window.TS.dataBase.room.orderBy('last_message_time').filter( (item) => { return (item.owner == window.TS.MID)} ).each( value => {
                 message.setConversation(1, value);
             });
         })

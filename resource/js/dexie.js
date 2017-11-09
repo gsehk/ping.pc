@@ -2402,8 +2402,8 @@ function Dexie(dbName, options) {
                     .where(compoundIndex.name)
                     .equals(compoundIndex.keyPath.map(function (kp) { return indexOrCrit[kp]; }));
             if (!compoundIndex)
-                console.warn("The query " + JSON.stringify(indexOrCrit) + " on " + this.name + " would benefit of a " +
-                    ("compound index [" + keyPaths.join('+') + "]"));
+                // console.warn("The query " + JSON.stringify(indexOrCrit) + " on " + this.name + " would benefit of a " +
+                //     ("compound index [" + keyPaths.join('+') + "]"));
             // Ok, now let's fallback to finding at least one matching index
             // and filter the rest.
             var idxByName = this.schema.idxByName;

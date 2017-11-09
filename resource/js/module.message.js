@@ -147,7 +147,6 @@ message = {
     connect: function() {
         // 创建本地存储
         var db = new Dexie('TS');
-        db.debug = false;
         db.version(1).stores({
             // message
             message: "++, owner, cid, txt, uid, hash, mid, seq, time, read",
@@ -251,7 +250,7 @@ message = {
 
                 // 设置聊天对话
                 for (var k in res) {
-                    message.setConversation(0, res[k], _users[res[k]['other_uid']]);
+                    message.setConversation(0, res[k]);
                 }
             }
         }, 'json');

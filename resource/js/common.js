@@ -1398,7 +1398,7 @@ var openChatDialog = function(obj, type, cid) {
         message.setRead(cid);
         ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');
     } else {
-        $(obj).parent().find('.unread_div').remove();
+        if (type != 3) $(obj).parent().find('.unread_div').remove();
         switch (type) {
             case 0:
                 TS.UNREAD.comments = 0;
@@ -1408,9 +1408,6 @@ var openChatDialog = function(obj, type, cid) {
                 break;
             case 2:
                 TS.UNREAD.notifications = 0;
-                break;
-            case 3:
-                TS.UNREAD.pinneds = 0;
                 break;
         }
         ly.load(TS.SITE_URL + '/message/' + type, '', '720px', '572px');

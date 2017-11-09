@@ -11,7 +11,7 @@
                 <div class="one_title"><a href="/profile/{{$comment['user']['id']}}">{{$comment['user']['name']}}</a></div>
                 <div class="one_date">{{ getTime($comment['created_at']) }}</div>
 
-                <div class="top_comment">对你的动态进行了“<sapn>{{$comment['comment']['body']}}</sapn>”评论并申请置顶，请及时审核。</div>
+                <div class="top_comment">对你的动态进行了"<sapn>{{$comment['comment']['body']}}</sapn>"评论并申请置顶，请及时审核。</div>
 
                 <div class="comment_audit">
                     @if($comment['expires_at'] == null)
@@ -53,13 +53,15 @@
                 error: function(xml) {},
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
-                        noticebox(res.message, 1);
                         $(_this).parent('.comment_audit').html('<a href="javascript:">同意置顶</a>');
                     } else if (xml.status == 204) {
-                        noticebox('拒绝置顶成功', 1);
                         $(_this).parent('.comment_audit').html('<a href="javascript:">拒绝置顶</a>');
+                    }
+                    TS.UNREAD.pinneds -= 1;
+                    if (TS.UNREAD.pinneds > 0) {
+                        $('#chat_pinneds .chat_unread_div span').html(TS.UNREAD.pinneds);
                     } else {
-                        noticebox(res.message, 0);
+                        $('#chat_pinneds .chat_unread_div').remove();
                     }
                 }
             });
