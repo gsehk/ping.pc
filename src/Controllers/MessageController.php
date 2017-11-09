@@ -114,13 +114,15 @@ class MessageController extends BaseController
                         $v['source_type'] = '赞了你的问题';
                         $v['source_url'] = Route('pc:questionread', $v['likeable']['id']);
                         $v['source_content'] = $v['likeable']['subject'];
-                        $v['likeable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['image']['id'].'?w=35&h=35';
+                        preg_match('/\@\!\[.*\]\((\d+)\)/i', $v['likeable']['body'], $imgs);
+                        count($imgs) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$imgs[1];
                         break;
                     case 'question-answers':
                         $v['source_type'] = '赞了你的回答';
                         $v['source_url'] = Route('pc:answeread', $v['likeable']['id']);
-                        $v['source_content'] = $v['likeable']['body'];
-                        $v['likeable']['image'] && $v['source_img'] = $this->PlusData['routes']['storage'].$v['likeable']['image']['id'].'?w=35&h=35';
+                        $v['source_content'] = replaceContent($v['likeable']['body']);
+                        preg_match('/\@\!\[.*\]\((\d+)\)/i', $v['likeable']['body'], $imgs);
+                        count($imgs) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$imgs[1];
                         break;
                 }
             }

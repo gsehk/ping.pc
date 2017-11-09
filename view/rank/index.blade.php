@@ -29,7 +29,7 @@
                         @include('pcview::templates.rank', ['title' => '收入达人排行榜', 'genre' => 'income', 'post' => $income])
                     @endif
                     @if(isset($check) && !$check->isEmpty())
-                        @include('pcview::templates.rank', ['title' => '社区签到排行榜', 'genre' => 'check', 'post' => $check, 'tabName' => '连续签到'])
+                        @include('pcview::templates.rank', ['title' => '社区签到排行榜', 'genre' => 'check', 'post' => $check, 'tabName' => '累计签到'])
                     @endif
                     @if(!$experts->isEmpty())
                         @include('pcview::templates.rank', ['title' => '社区专家排行榜', 'genre' => 'experts', 'post' => $experts])
