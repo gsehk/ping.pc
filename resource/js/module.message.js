@@ -24,7 +24,8 @@ socket = {
                 window.TS.dataBase.message.put(dbMsg);
                 // 修改房间最后消息时间
                 window.TS.dataBase.room.where({cid: dbMsg.cid,owner: dbMsg.owner}).modify({
-                    last_message_time: dbMsg.time
+                    last_message_time: dbMsg.time,
+                    last_message: dbMsg.txt
                 })
             });
 
