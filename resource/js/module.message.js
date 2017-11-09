@@ -27,8 +27,13 @@ socket = {
                     last_message_time: dbMsg.time
                 })
             });
-            if (message.datas.cid == dbMsg.cid) {
-                message.setMessage(dbMsg.txt, dbMsg.uid);
+
+            if ($('.chat_dialog').length > 0) {
+                if (message.datas.cid == dbMsg.cid) {
+                    message.setMessage(dbMsg.txt, dbMsg.uid);
+                } else {
+                    message.updateLastMessage(dbMsg.cid, db.txt);
+                }
             }
         }
 
@@ -470,5 +475,10 @@ message = {
             var html = '<div class="chat_unread_div"><span>' + (value > 99 ? 99 : value) + '</span></div>';
         }
         return html;
+    },
+
+    // 更新最后一条消息
+    updateLastMessage: function(cid, txt) {
+        $('#chat_' + cid + ' .chat_item').find('div').html(txt);
     }
 }
