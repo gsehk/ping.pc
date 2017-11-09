@@ -58,11 +58,7 @@
                         $(_this).parent('.comment_audit').html('<a href="javascript:">拒绝置顶</a>');
                     }
                     TS.UNREAD.pinneds -= 1;
-                    if (TS.UNREAD.pinneds > 0) {
-                        $('#chat_pinneds .chat_unread_div span').html(TS.UNREAD.pinneds);
-                    } else {
-                        $('#chat_pinneds .chat_unread_div').remove();
-                    }
+                    message.setUnreadMessage();
                 }
             });
         });

@@ -52,14 +52,12 @@
                 error: function(xml) {},
                 success: function(res, data, xml) {
                     if (xml.status == 201) {
-                        noticebox(res.message, 1);
                         $(_this).parent('.comment_audit').html('<a href="javascript:">同意置顶</a>');
                     } else if (xml.status == 204) {
-                        noticebox('拒绝置顶成功', 1);
                         $(_this).parent('.comment_audit').html('<a href="javascript:">拒绝置顶</a>');
-                    } else {
-                        noticebox(res.message, 0);
                     }
+                    TS.UNREAD.pinneds -= 1;
+                    message.setUnreadMessage();
                 }
             });
         });

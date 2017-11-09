@@ -450,6 +450,9 @@ message = {
                     $('#chat_' + i + ' .chat_unread_div').remove();
                     $('#chat_' + i + ' .chat_left_icon').prepend(message.formatUnreadHtml(1, TS.UNREAD[i]));
                 }
+            } else {
+                $('#ms_' + i + ' .unread_div').remove();
+                $('#chat_' + i + ' .chat_unread_div').remove();
             }
         }
     },
