@@ -370,8 +370,27 @@ message = {
     // 删除会话
     delConversation: function(cid) {
         cancelBubble();
+        var chat = $('#chat_' + cid);
+
+        // 查找下个会话
+        if (chat.next().length > 0) {
+            var next_cid = chat.next().eq(0).data('cid');
+        } else if (chat.prev('.room_item').length > 0) {
+            var next_cid = chat.prev().eq(0).data('cid');
+        } else {
+            var next_cid = 0;
+        }
+
         $('#ms_chat_' + cid).remove();
-        if ($('.chat_dialog').length > 0) $('#chat_' + cid).remove();
+        if ($('.chat_dialog').length > 0) chat.remove();
+
+        // 清空会话，或者展示下个会话的聊天列表
+        if (next_cid == 0) {
+            messageData(3);
+        } else {
+            message.listMessage(next_cid);
+        }
+
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
             window.TS.dataBase.room.where({cid: cid,owner: window.TS.MID}).modify({
                 del: 1

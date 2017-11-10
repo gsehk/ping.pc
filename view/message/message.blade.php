@@ -131,8 +131,7 @@
             $this.parent(".zy_select").removeClass("open");
             $this.parent(".zy_select").data("value", $(this).data("value"));
 
-
-            getData($(this).data("value"));
+            messageData($(this).data("value"));
         });
 
         $(document).click(function() {
@@ -140,7 +139,7 @@
         });
 
 
-        getData(type);
+        messageData(type);
 
         // 切换消息类型
         $('#root_list').on('click', 'li', function () {
@@ -160,12 +159,12 @@
             } else {
                 $('#message_wrap').show();
                 $('#chat_wrap').hide();
-                getData(type);
+                messageData(type);
             }
         });
 
         // 获取消息列表
-        function getData(type) {
+        function messageData(type) {
             $('#message_cont').html('');
             var title = '';
             switch(type) {
