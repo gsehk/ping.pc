@@ -21,6 +21,7 @@
 .contribute-btn > svg {
     width: 16px;
     margin-right: 4px;
+    margin-top: -2px;
 }
 
 .follow-box {

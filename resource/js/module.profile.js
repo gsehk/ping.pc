@@ -87,4 +87,25 @@ $(function() {
           $(this).find('span').last().hide();
         }
     });
-})
+
+    $('#create-message').on('click', function () {
+        checkLogin();
+        var uid = $(this).data('id');
+        $.ajax({
+            url: '/api/v2/im/conversations',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                type: 0,
+                uids: '"' + TS.USER.id + ',' + uid + '"'
+            },
+            success: function(res) {
+                console.log(res);
+            },
+            error: function(xhr){
+                console.log(xhr)
+                showError(xhr.responseJSON);
+            }
+        });
+    });
+});
