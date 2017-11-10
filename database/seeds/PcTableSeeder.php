@@ -98,9 +98,9 @@ class PcTableSeeder extends Seeder
             'channel' => 'pc',
             'space' => 'pc:news:list',
             'alias' => 'PC端资讯列表广告',
-            'allow_type' => 'pc:newslist',
+            'allow_type' => 'pc:news:list',
             'format' => [
-                'pc:newslist' => [
+                'pc:news:list' => [
                     "name" => "用户名|string|必填，用户名",
                     "content" => "内容|string|广告内容",
                     "image" => "图片|string|广告图片",
@@ -109,7 +109,7 @@ class PcTableSeeder extends Seeder
                 ],
             ],
             'rule' => [
-                'pc:newslist' => [
+                'pc:news:list' => [
                     "name" => "required",
                     "image" => "url",
                     "time" => "required|date",
@@ -118,7 +118,7 @@ class PcTableSeeder extends Seeder
                 ]
             ],
             'message' => [
-                'pc:newslist' => [
+                'pc:news:list' => [
                     'name.required' => '广告用户名不能为空',
                     'image.required' => '广告图片链接不能为空',
                     'time.required' => '时间必填',
@@ -136,7 +136,7 @@ class PcTableSeeder extends Seeder
             'alias' => 'PC端动态列表广告',
             'allow_type' => 'pc:feedlist',
             'format' => [
-                'pc:feedlist' => [
+                'pc:feeds:list' => [
                     "avatar" => "头像图|string|必填，头像",
                     "name" => "用户名|string|必填，用户名",
                     "content" => "内容|string|广告内容",
@@ -146,7 +146,7 @@ class PcTableSeeder extends Seeder
                 ],
             ],
             'rule' => [
-                'pc:feedlist' => [
+                'pc:feeds:list' => [
                     "name" => "required",
                     "image" => "url",
                     "avatar" => "required|url",
@@ -156,7 +156,7 @@ class PcTableSeeder extends Seeder
                 ]
             ],
             'message' => [
-                'pc:feedlist' => [
+                'pc:feeds:list' => [
                     'name.required' => '广告用户名不能为空',
                     'image.required' => '广告图片链接不能为空',
                     'avatar.required' => '头像图链接不能为空',
