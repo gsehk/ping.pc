@@ -39,41 +39,39 @@
 @elseif($type == 3 && isset($ads[$page-1]['data']))
 
     <div class="ads_item">
-        <dl class="user-box clearfix">
-            <dt class="fl">
-                <img class="round" src="{{ $ads[$page-1]['data']['avatar'] or ''}}" width="50">
-            </dt>
-            <dd class="fl ml20 body">
-                <span class="tcolor">{{ $ads[$page-1]['data']['name'] or ''}}</span>
-                <div class="font12 gcolor fr">{{ getTime(Carbon::createFromFormat('Y-m-d H:i:s', $ads[$page-1]['data']['time'])) }}</div>
-            </dd>
-        </dl>
-        <a class="avatar_box" href="{{ $ads[$page-1]['data']['link'] or ''}}">
+        <a target="_blank" href="{{ $ads[$page-1]['data']['link'] or ''}}">
+            <dl class="user-box mt30 clearfix">
+                <dt class="fl">
+                    <img class="round" src="{{ $ads[$page-1]['data']['avatar'] or ''}}" width="50">
+                </dt>
+                <dd class="fl ml20 body">
+                    <span class="tcolor">{{ $ads[$page-1]['data']['name'] or ''}}</span>
+                    <div class="font12 gcolor fr">{{ getTime(Carbon::createFromFormat('Y-m-d H:i:s', $ads[$page-1]['data']['time'])) }}</div>
+                </dd>
+            </dl>
             <p class="mt0">{{ $ads[$page-1]['data']['content'] or ''}}</p>
             <div> <img src="{{ $ads[$page-1]['data']['image'] or ''}}" alt="image"> </div>
         </a>
-        <p>
-            <span class="tag">广告</span>
-            {{-- <span class="options" onclick="options(this)">
-                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-gengduo-copy"></use></svg>
-            </span> --}}
-        </p>
+        <p><span class="tag">广告</span></p>
         <div class="feed_line"></div>
     </div>
-@elseif($type == 4 && isset($ads[$page-1]['data']))
+
+@elseif($type == 4 && isset($ads[$page-1]['data']) && isset($_GET['recommend']))
+
     <div class="news_item">
-        <div class="news_img">
-            <a href="{{ $ads[$page-1]['data']['link'] or ''}}">
-                <img class="lazy" width="230" height="163" data-original="{{ $ads[$page-1]['data']['image'] or ''}}"/>
-            </a>
-        </div>
-        <div class="news_word">
-            <div class="news_title"> {{ $ads[$page-1]['title'] or ''}} </div>
+        <a target="_blank" href="{{ $ads[$page-1]['data']['link'] or ''}}">
+            <div class="news_img">
+                    <img class="lazy" width="230" height="163" data-original="{{ $ads[$page-1]['data']['image'] or ''}}"/>
+            </div>
+            <div class="news_word">
+                <div class="news_title"> {{ $ads[$page-1]['title'] or ''}} </div>
                 <p>{{ $ads[$page-1]['data']['content'] or ''}}</p>
                 <div class="news_bm">
                    <span>{{ $ads[$page-1]['data']['name'] or ''}}  ·  {{ getTime(Carbon::createFromFormat('Y-m-d H:i:s', $ads[$page-1]['data']['time'])) }}</span>
                    <span class="tag ml10">广告</span>
                 </div>
-         </div>
+            </div>
+        </a>
     </div>
+
 @endif

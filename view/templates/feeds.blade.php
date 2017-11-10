@@ -119,11 +119,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
     $('#feed_photos_{{$post->id}}').actizPicShow({
         data: data,
         bigWidth: {{ $conw or 635}},
-        bigHeight: {{ $conh or 400}}        
+        bigHeight: {{ $conh or 400}}
     });
 </script>
 @endforeach
+@endif
 @if (isset($space) && $space)
     @include('pcview::widgets.ads', ['space' => 'pc:feeds:list', 'type' => 3])
-@endif
 @endif
