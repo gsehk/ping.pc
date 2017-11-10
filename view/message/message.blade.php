@@ -150,7 +150,6 @@
                 $('#message_wrap').hide();
                 $('#chat_wrap').show();
                 var cid = $(this).data('cid');
-                body_title.html(message.datas.users[message.datas.list[cid]['other_uid']].name);
                 $('#chat_send').attr('onclick', 'message.sendMessage(' + cid + ')');
 
                 // 设置为已读

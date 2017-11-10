@@ -87,25 +87,4 @@ $(function() {
           $(this).find('span').last().hide();
         }
     });
-
-    $('#create-message').on('click', function () {
-        checkLogin();
-        var uid = $(this).data('id');
-        console.log(uid)
-        $.ajax({
-            url: '/api/v2/im/conversations',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                type: 0,
-                uids: TS.USER.id + ',' + uid
-            },
-            success: function(res) {
-                openChatDialog(this, 5, res.cid);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
-    });
 });

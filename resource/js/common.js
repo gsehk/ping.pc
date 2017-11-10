@@ -1361,7 +1361,7 @@ var getUserInfo = function(uids) {
             }, 'json');
         })
     } else {
-        var url = TS.API + '/users/' + uid;
+        var url = TS.API + '/users/' + uids;
         $.ajax({
             url: url,
             type: 'GET',
@@ -1398,16 +1398,6 @@ var getAvatar = function(user, width) {
     }
 
     return avatar;
-}
-
-// 打开消息对话框
-var openChatDialog = function(obj, type, cid) {
-    if (type == 5) { // 聊天消息
-        message.setRead(1, cid);
-        ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');
-    } else {
-        ly.load(TS.SITE_URL + '/message/' + type, '', '720px', '572px');
-    }
 }
 
 // 获取事件
@@ -1771,7 +1761,7 @@ $(function() {
             $('#ms_chat_tips').remove();
         }
     });
-    
+
     if (TS.MID > 0 && TS.BOOT['im:serve']) {
         // 聊天初始化
         message.init();

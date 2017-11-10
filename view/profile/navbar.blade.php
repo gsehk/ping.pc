@@ -60,7 +60,7 @@
 
                 <li @if($current == 'news') class="active" @endif><a href="{{ route('pc:profilenews', $user->id) }}">TA的文章</a></li>
             </ul>
-            <a class="btn profile-btn mcolor" href="javascript:;" id="create-message" data-id="{{ $user->id }}">
+            <a class="btn profile-btn mcolor" href="javascript:;" onclick="message.createConversation({{ $user->id }})">
                 <svg class="icon"><use xlink:href="#icon-gerenzhuye-chat"></use></svg>聊天
             </a>
             @if ($user->hasFollower == 0)
@@ -72,16 +72,6 @@
                     <svg class="icon hide"><use xlink:href="#icon-gerenzhuye-attention"></use></svg><span>已关注</span>
                 </a>
             @endif
-            {{--<div class="follow-box">--}}
-                {{--@if ($user->hasFollower == 0)--}}
-                    {{--<div id="follow" status="0" class="tcolor">--}}
-                        {{--<svg class="icon"><use xlink:href="#icon-gerenzhuye-attention"></use></svg>--}}
-                        {{--关注--}}
-                    {{--</div>--}}
-                {{--@else--}}
-                    {{--<div id="follow" status="1" class="followed">已关注</div>--}}
-                {{--@endif--}}
-            {{--</div>--}}
 
             <a class="btn reward-btn profile-btn mcolor" href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
                 <svg class="icon"><use xlink:href="#icon-gerenzhuye-reward"></use></svg>打赏

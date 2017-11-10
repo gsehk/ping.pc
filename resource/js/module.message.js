@@ -44,18 +44,18 @@ socket = {
                     url: '/api/v2/im/conversations/' + dbMsg['cid'],
                     type: 'GET',
                     success:function(res){
-                        var _res = _.keyBy(res, 'cid');
+                        var _res = _.keyBy([res], 'cid');
                         message.datas.list = Object.assign({}, message.datas.list, _res);
 
                         // 获取用户信息
                         var _uids = _.split(res['uids'], ',');
                         _.forEach(_uids, function(v, k) {
                             if (v != window.TS.MID) {
-                                res['other_uid'] = parseInt(v);
+                                var user = getUserInfo(v);
+                                var _user = _.keyBy([user], 'id');
+                                message.datas.users = Object.assign({}, message.datas.users, _user);
 
-                                var user = getUserInfo(uids);
-                                var _users = _.keyBy(users, 'id');
-                                message.datas.users = Object.assign({}, message.datas.list, _users);
+                                res['other_uid'] = parseInt(v);
                             }
                         });
 
@@ -317,7 +317,7 @@ message = {
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
             window.TS.dataBase.room.where({cid: room.cid,owner: window.TS.MID}).first(function(item){
                 if (item.del == 0) {
-                    var sidehtml = '<dd class="ms_chat" id="ms_chat_' + room.cid + '" data-cid="' + room.cid + '" data-name="' + _this.datas.users[room.other_uid]['name'] + '"><a href="javascript:;" onclick="openChatDialog(this, 5, '+ room.cid +')"><img src="' + getAvatar(_this.datas.users[room.other_uid], 50) + '"/></a></dd>';
+                    var sidehtml = '<dd class="ms_chat" id="ms_chat_' + room.cid + '" data-cid="' + room.cid + '" data-name="' + _this.datas.users[room.other_uid]['name'] + '"><a href="javascript:;" onclick="message.openChatDialog(5, '+ room.cid +')"><img src="' + getAvatar(_this.datas.users[room.other_uid], 50) + '"/></a></dd>';
 
                     $('#ms_fixed').append(sidehtml);
                 }
@@ -328,7 +328,7 @@ message = {
     // 设置新会话
     setNewCon: function(room) {
         var _this = this;
-        var sidehtml = '<dd class="ms_chat" id="ms_chat_' + room.cid + '" data-cid="' + room.cid + '" data-name="' + _this.datas.users[room.other_uid]['name'] + '"><a href="javascript:;" onclick="openChatDialog(this, 5, '+ room.cid +')"><img src="' + getAvatar(_this.datas.users[room.other_uid], 50) + '"/></a></dd>';
+        var sidehtml = '<dd class="ms_chat" id="ms_chat_' + room.cid + '" data-cid="' + room.cid + '" data-name="' + _this.datas.users[room.other_uid]['name'] + '"><a href="javascript:;" onclick="message.openChatDialog(5, '+ room.cid +')"><img src="' + getAvatar(_this.datas.users[room.other_uid], 50) + '"/></a></dd>';
 
         $('#ms_pinneds').after(sidehtml);
 
@@ -398,11 +398,42 @@ message = {
         });
     },
 
+    createConversation: function(user_id) {
+        checkLogin();
+        $.ajax({
+            url: '/api/v2/im/conversations',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                type: 0,
+                uids: TS.USER.id + ',' + user_id
+            },
+            success: function(res) {
+                var _res = _.keyBy([res], 'cid');
+                message.datas.list = Object.assign({}, message.datas.list, _res);
+
+                // 获取用户信息
+                var user = getUserInfo(user_id);
+                var _user = _.keyBy([user], 'id');
+                message.datas.users = Object.assign({}, message.datas.users, _user);
+
+                res['other_uid'] = user_id;
+                message.storeConversation(res);
+                message.datas.seqs = _.union(message.datas.seqs, [res.cid]);
+                message.openChatDialog(5, res.cid);
+            },
+            error: function(xhr){
+                showError(xhr.responseJSON);
+            }
+        });
+    },
+
     // 查询消息列表
     listMessage: function(cid) {
         var _this = this;
         // 设置房间名
-        $('#chat_wrap .body_title').html();
+        console.log(message.datas.users[message.datas.list[cid]['other_uid']].name);
+        $('#chat_wrap .body_title').html(message.datas.users[message.datas.list[cid]['other_uid']].name);
         $('#chat_wrap .clickMore').remove();
         $('#chat_cont').html('');
 
@@ -614,5 +645,15 @@ message = {
     // 更新最后一条消息
     updateLastMessage: function(cid, txt) {
         $('#chat_' + cid + ' .chat_item').find('div').html(txt);
+    },
+
+    // 打开消息对话框
+    openChatDialog: function(type, cid) {
+        if (type == 5) { // 聊天消息
+            message.setRead(1, cid);
+            ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');
+        } else {
+            ly.load(TS.SITE_URL + '/message/' + type, '', '720px', '572px');
+        }
     }
 }
