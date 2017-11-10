@@ -37,7 +37,7 @@
     <div class="ads_item">
         <dl class="user-box clearfix">
             <dt class="fl">
-                <img class="round" src="{{ $ads[$page-1]['data']['data']['avatar'] or ''}}" width="50">
+                <img class="round" src="{{ $ads[$page-1]['data']['avatar'] or ''}}" width="50">
             </dt>
             <dd class="fl ml20 body">
                 <span class="tcolor">{{ $ads[$page-1]['data']['name'] or ''}}</span>
