@@ -1751,8 +1751,14 @@ img.load {
     line-height: 31px;
     height: 37px;
     margin-top: 10px;
+    position: relative;
 }
 
+.comment_post .dy_cs {
+    position: absolute;
+    right: 5px;
+    top: -40px;
+}
 .comment_post .post_button {
     line-height: 32px;
     float: right;
@@ -2339,7 +2345,7 @@ img.load {
     width: 74px;
     height: 100%;
     z-index: 99999;
-    overflow-y: auto;  
+    overflow-y: auto;
     overflow-x: hidden;
     margin: 0;
     list-style: none;
