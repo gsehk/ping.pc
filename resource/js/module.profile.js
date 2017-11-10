@@ -91,19 +91,19 @@ $(function() {
     $('#create-message').on('click', function () {
         checkLogin();
         var uid = $(this).data('id');
+        console.log(uid)
         $.ajax({
             url: '/api/v2/im/conversations',
             type: 'POST',
             dataType: 'json',
             data: {
                 type: 0,
-                uids: '"' + TS.USER.id + ',' + uid + '"'
+                uids: TS.USER.id + ',' + uid
             },
             success: function(res) {
-                console.log(res);
+                openChatDialog(this, 5, res.cid);
             },
             error: function(xhr){
-                console.log(xhr)
                 showError(xhr.responseJSON);
             }
         });
