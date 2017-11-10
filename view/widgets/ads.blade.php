@@ -36,7 +36,7 @@
         </div>
     @endif
 
-@elseif($type == 3 && isset($ads[$page-1]['data']) && $_GET['type'] == 'host')
+@elseif($type == 3 && isset($ads[$page-1]['data']) && $_GET['type'] == 'hot')
 
     <div class="ads_item">
         <a target="_blank" href="{{ $ads[$page-1]['data']['link'] or ''}}">
