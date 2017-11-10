@@ -646,7 +646,7 @@ a {
 /*右侧浮动*/
 .right_extras {
     position: fixed;
-    z-index: 99;
+    z-index: 2;
     right: 80px;
     bottom: 80px;
 }
@@ -2333,12 +2333,13 @@ img.load {
 
 /* 右侧消息 */
 #ms_fixed_wrap {
+    z-index: 3;
     width: 54px;
     right: 0;
     top: 0;
     bottom: 0;
     overflow: hidden;
-    box-shadow: 0 1px 3px 0 rgba(0, 37, 55, 0.1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 10, 0.1);
 }
 #ms_fixed {
     background-color: #fff;
@@ -2354,6 +2355,9 @@ img.load {
     margin: 0px;
     width: 64px;
     position: relative;
+}
+#ms_fixed dd.tips_current {
+    background-color: #f3f6f7;
 }
 #ms_fixed dd svg {
     width: 36px;
@@ -2383,4 +2387,32 @@ img.load {
     background: #f24343;
     width: 16px;
     height: 16px;
+}
+
+#ms_chat_tips {
+    z-index: 3;
+    font-size: 14px;
+    display: none;
+    position: absolute;
+    right: 68px;
+    top: -1px;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 15px;
+    text-align: center;
+    background-color: #fff;
+    color: #59b6d7;
+    box-shadow: 0 1px 22px #e2e0e0;
+    border-radius: 4px;
+}
+
+#ms_chat_tips .tips_triangle {
+    position: absolute;
+    top: 13px;
+    right: -6px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid #fff;
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
 }

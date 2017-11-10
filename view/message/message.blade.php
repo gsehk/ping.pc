@@ -176,13 +176,15 @@
                         loading: '.message_cont',
                         url: '/message/comments',
                         params: {limit: 20},
-                        loadtype: 2
+                        loadtype: 2,
+                        callback: function(){
+                            message.setRead(0, 'comments');
+                        }
                     });
                     body_title.html(title);
                     body_title.removeClass('hide');
                     audit_top.addClass('hide');
 
-                    message.setRead(0, 'comments');
                     break;
                 case 1: // 点赞
                     title = '点赞的';
@@ -191,13 +193,15 @@
                         loading: '.message_cont',
                         url: '/message/likes',
                         params: {limit: 20},
-                        loadtype: 2
+                        loadtype: 2,
+                        callback: function(){
+                            message.setRead(0, 'likes');
+                        }
                     });
                     body_title.html(title);
                     body_title.removeClass('hide');
                     audit_top.addClass('hide');
 
-                    message.setRead(0, 'likes');
                     break;
                 case 2: // 通知
                     title = '通知';
@@ -207,13 +211,15 @@
                         url: '/message/notifications',
                         paramtype: 1,
                         params: {limit: 20},
-                        loadtype: 2
+                        loadtype: 2,
+                        callback: function(){
+                            message.setRead(0, 'notifications');
+                        }
                     });
                     body_title.html(title);
                     body_title.removeClass('hide');
                     audit_top.addClass('hide');
 
-                    message.setRead(0, 'notifications');
                     break;
                 case 3: // 动态审核
                     scroll.init({
@@ -245,7 +251,7 @@
         for (var i in TS.UNREAD) {
             if (TS.UNREAD[i] > 0) {
                 $('#chat_' + i + ' .chat_unread_div').remove();
-                $('#chat_' + i + ' .chat_left_icon').prepend(message.formatUnreadHtml(1, TS.UNREAD[i]));
+                $('#chat_' + i).prepend(message.formatUnreadHtml(1, TS.UNREAD[i]));
             }
         }
 
@@ -253,12 +259,9 @@
         message.datas.cid = {{ $cid or 0 }};
 
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
-            window.TS.dataBase.room.orderBy('last_message_time').filter( (item) => { return (item.owner == window.TS.MID)} ).each( value => {
+            window.TS.dataBase.room.orderBy('last_message_time').filter( (item) => { return (item.owner == window.TS.MID)} ).reverse().each( value => {
                 message.setConversation(1, value);
             });
-        })
-        .catch(e => {
-            console.log(e);
         });
     });
 </script>

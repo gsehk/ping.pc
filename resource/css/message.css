@@ -39,15 +39,15 @@
     position: relative;
 }
 
-.chat_left_icon .chat_unread_div {
+.chat_unread_div {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 25px;
+    right: 15px;
     border: 1px solid #fff;
     border-radius: 50%;
 }
 
-.chat_left_icon .chat_unread_div span{
+.chat_unread_div span{
     display: block;
     font-size: 12px;
     text-align: center;
@@ -56,6 +56,23 @@
     background: #f24343;
     width: 16px;
     height: 16px;
+}
+
+.room_item .chat_delete {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 15px;
+}
+.room_item .chat_delete svg{
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.room_item:hover .chat_delete{
+    display: block;
 }
 
 .chat_left ul {

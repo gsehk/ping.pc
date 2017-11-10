@@ -51,6 +51,7 @@
     @include('pcview::layouts.partials.footer')
 
     <script src="{{ asset('zhiyicx/plus-component-pc/js/common.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/lodash.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/font/iconfont.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.lazyload.min.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.cookie.js') }}"></script>
@@ -59,6 +60,5 @@
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.message.js') }}"></script>
 
     @yield('scripts')
-
 </body>
 </html>

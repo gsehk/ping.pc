@@ -259,6 +259,7 @@ scroll.init = function(option) {
     this.setting.canload = option.canload || true; // 是否能加载
     this.setting.url = option.url;
     this.setting.nodata = option.nodata || 0; // 0显示，1不显示
+    this.setting.callback = option.callback || null;
 
     scroll.bindScroll();
 
@@ -356,6 +357,10 @@ scroll.loadMore = function() {
             // 若隐藏则显示
             if ($(scroll.setting.container).css('display') == 'none') {
                 $(scroll.setting.container).show();
+            }
+
+            if (scroll.setting.callback && typeof(scroll.setting.callback) == 'function') {
+                scroll.setting.callback();
             }
         }
     });
@@ -1337,23 +1342,26 @@ var thirdShare = function(type, url, title, pic, obj) {
 }
 
 // 获取用户信息
-var getUserInfo = function(uid) {
-    var type = typeof(uid);
-    if (type == 'string') {
+var getUserInfo = function(uids) {
+    var user = [];
+    var type = typeof(uids);
+    if (type == 'object') { // 多用户
         var url = TS.API + '/users/';
-        var user = {};
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {id: uid, limit: 50},
-            async: false,
-            success:function(res){
-                user = res;
-            }
-        }, 'json');
+
+        var _uids = _.chunk(uids, 20);
+        _.forEach(_uids, function(value, key) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {id: _.join(value, ',')},
+                async: false,
+                success:function(res){
+                    user = _.unionWith(user, res);
+                }
+            }, 'json');
+        })
     } else {
         var url = TS.API + '/users/' + uid;
-        var user = {};
         $.ajax({
             url: url,
             type: 'GET',
@@ -1398,18 +1406,6 @@ var openChatDialog = function(obj, type, cid) {
         message.setRead(1, cid);
         ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');
     } else {
-        if (type != 3) $(obj).parent().find('.unread_div').remove();
-        switch (type) {
-            case 0:
-                TS.UNREAD.comments = 0;
-                break;
-            case 1:
-                TS.UNREAD.likes = 0;
-                break;
-            case 2:
-                TS.UNREAD.notifications = 0;
-                break;
-        }
         ly.load(TS.SITE_URL + '/message/' + type, '', '720px', '572px');
     }
 }
@@ -1757,7 +1753,25 @@ $(function() {
         scroll.clickMore(this);
     });
 
-    if (TS.MID > 0) {
+    $(document).on('mouseover mouseout', '.ms_chat', function(event) {
+        var cid = $(this).data('cid');
+        var name = $(this).data('name');
+
+        var html = '<div id="ms_chat_tips">' + name + '<div class="tips_triangle"></div></div>';
+        var top = $(this).offset().top; 
+        if (event.type == 'mouseover') {
+            $(this).addClass('tips_current');
+
+            $('#ms_fixed_wrap').after(html);
+            $('#ms_chat_tips').css({"top": top + 9}).fadeIn('fast');
+        } else {
+            $(this).removeClass('tips_current');
+
+            $('#ms_chat_tips').remove();
+        }
+    });
+    
+    if (TS.MID > 0 && TS.BOOT['im:serve']) {
         // 聊天初始化
         message.init();
     }
