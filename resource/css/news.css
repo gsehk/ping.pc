@@ -330,16 +330,16 @@
 
 /*右侧广告*/
 
-.news_ad {
+/* .news_ad {
     width: 235px;
-    height: 135px;
+    max-height: 235px;
     margin: 20px 0;
 }
 
 .news_ad img {
     width: 100%;
     height: auto;
-}
+} */
 
 
 /*轮播图*/
