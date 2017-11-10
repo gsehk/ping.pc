@@ -13,7 +13,7 @@
     <div class="pay-form">
 
         <p class="tcolor">输入提现金额</p>
-        <p><input min="1" oninput="value=moneyLimit(value)" class="custom-sum" type="text" name="custom" placeholder="钱包余额{{ $TS['wallet']['balance'] / 100 }}"></p>
+        <p><input min="1" oninput="value=moneyLimit(value)" class="custom-sum" type="text" name="custom" placeholder="钱包余额{{ $TS['wallet']['balance'] * ($config['bootstrappers']['wallet:ratio']/100/100) }}"></p>
         <p><input class="custom-sum" type="text" name="account" placeholder="输入支付宝账号"></p>
         <p class="tcolor">选择提现方式</p>
         <div class="pay-way">

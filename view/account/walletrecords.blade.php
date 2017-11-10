@@ -50,7 +50,7 @@
                 <tr>
                     <td width="20%">{{ $item->created_at }}</td>
                     <td width="50%"><p class="ptext">{{ $item->remark }}</p></td>
-                    <td width="15%"><font color="#FF9400">{{ $item->value/100 }}</font></td>
+                    <td width="15%"><font color="#FF9400">{{ $item->value*($config['bootstrappers']['wallet:ratio']/100/100) }}</font></td>
                     <td width="15%">
                         @if ($item->status == 0) 待审批 @endif
                         @if ($item->status == 1) 已审批 @endif
