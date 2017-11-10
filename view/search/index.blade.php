@@ -30,10 +30,10 @@
                     {{--<li><a href="javascript:;" @if($type == 6) class="selected" @endif type="6">话题</a></li>--}}
                     <li>
                         <div type="2" class="zy_select t_c gap12 select-gray" id="J-question">
-                            <span>问答</span>
+                            <span @if($type == 2 || $type == 6) class="selected" @endif>{{ $type == 6 ? '话题' : '问答' }}</span>
                             <ul>
-                                <li type="2" class="active">问答</li>
-                                <li type="6">话题</li>
+                                <li type="2" @if($type == 2) class="active" @endif>问答</li>
+                                <li type="6" @if($type == 6) class="active" @endif>话题</li>
                             </ul>
                             <i></i>
                         </div>
