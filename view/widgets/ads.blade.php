@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+@endphp
 
 {{-- 右侧广告位 --}}
 @if ($type == 1)
@@ -41,7 +45,7 @@
             </dt>
             <dd class="fl ml20 body">
                 <span class="tcolor">{{ $ads[$page-1]['data']['name'] or ''}}</span>
-                <div class="font12 gcolor fr">{{ $ads[$page-1]['data']['time'] or ''}}</div>
+                <div class="font12 gcolor fr">{{ getTime(Carbon::createFromFormat('Y-m-d H:i:s', $ads[$page-1]['data']['time'])) }}</div>
             </dd>
         </dl>
         <a class="avatar_box" href="{{ $ads[$page-1]['data']['link'] or ''}}">
@@ -64,10 +68,10 @@
             </a>
         </div>
         <div class="news_word">
-            <div class="news_title"> {{ $ads[$page-1]['data']['title'] or ''}} </div>
+            <div class="news_title"> {{ $ads[$page-1]['title'] or ''}} </div>
                 <p>{{ $ads[$page-1]['data']['content'] or ''}}</p>
                 <div class="news_bm">
-                   <span>{{ $ads[$page-1]['data']['name'] or ''}}  ·  {{ $ads[$page-1]['data']['time'] or ''}}</span>
+                   <span>{{ $ads[$page-1]['data']['name'] or ''}}  ·  {{ getTime(Carbon::createFromFormat('Y-m-d H:i:s', $ads[$page-1]['data']['time'])) }}</span>
                    <span class="tag ml10">广告</span>
                 </div>
          </div>
