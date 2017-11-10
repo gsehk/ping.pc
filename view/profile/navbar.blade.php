@@ -60,7 +60,7 @@
 
                 <li @if($current == 'news') class="active" @endif><a href="{{ route('pc:profilenews', $user->id) }}">TA的文章</a></li>
             </ul>
-            <a class="btn profile-btn mcolor" href="javascript:;" id="create-message" data-uid="{{ $user->id }}">
+            <a class="btn profile-btn mcolor" href="javascript:;" id="create-message" data-id="{{ $user->id }}">
                 <svg class="icon"><use xlink:href="#icon-gerenzhuye-chat"></use></svg>聊天
             </a>
             @if ($user->hasFollower == 0)
