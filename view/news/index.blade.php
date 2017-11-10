@@ -116,13 +116,13 @@ $(function(){
 
     $('#news-release').on('click', function () {
         checkLogin();
-        var url = '';
         if (TS.BOOT['news:contribute'].verified && TS.USER.verified == null) {
-            url = "{{ route('pc:authenticate') }}";
+            ly.confirm(formatConfirm('投稿提示', '成功通过平台认证的用户才能投稿，是否去认证？'), '去认证' , '', function(){
+                window.location.href = "{{ route('pc:authenticate') }}";
+            });
         } else {
-            url = "{{ route('pc:newsrelease') }}";
+            window.location.href = "{{ route('pc:newsrelease') }}";
         }
-        window.location.href = url;
 
         return false;
     });

@@ -1611,7 +1611,7 @@ $(function() {
                 var ul = $('.history ul');
                 var lis = '';
 
-                for (var i = 0, len = 4; i < len; i++) {
+                for (var i = 0, len = (hisArr.length >= 4 ? 4 : hisArr.length); i < len; i++) {
                     lis += '<li type="1"><span class="keywords">' + hisArr[i] + '</span><i></i></li>';
                 }
 
@@ -1673,6 +1673,7 @@ $(function() {
     // 搜索图标点击
     $('.nav_search_icon').click(function(){
         var val = $('#head_search').val();
+        setHistory(val);
         window.location.href = '/search/1/' + val;
     })
 
