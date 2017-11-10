@@ -1,7 +1,7 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
-@if ($config['bootstrappers']['checkin'] && !empty($data) )
+@if (isset($config['bootstrappers']['checkin']) && !empty($data) )
 <div class="checkin_cont">
     <div class="checkin_user">
         <span>
