@@ -258,10 +258,8 @@
         // 设置房间
         message.datas.cid = {{ $cid or 0 }};
 
-        window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
-            window.TS.dataBase.room.orderBy('last_message_time').filter( (item) => { return (item.owner == window.TS.MID)} ).reverse().each( value => {
-                message.setConversation(1, value);
-            });
+        _.forEach(message.datas.seqs, function(value, key){
+            message.setInnerCon(message.datas.list[value]);
         });
     });
 </script>
