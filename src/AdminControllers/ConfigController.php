@@ -165,14 +165,14 @@ class ConfigController extends Controller
         $config = $configuration->getConfiguration();
 
         $config->set('pc.status', 1);
-        $config->set('pc.logo', '');
-        $config->set('pc.loginbg', '');
-        $config->set('pc.weibo.client_id', '');
-        $config->set('pc.weibo.client_secret', '');
-        $config->set('pc.wechat.client_id', '');
-        $config->set('pc.wechat.client_secret', '');
-        $config->set('pc.qq.client_id', '');
-        $config->set('pc.qq.client_secret', '');
+        $config->set('pc.logo', 0);
+        $config->set('pc.loginbg', 0);
+        $config->set('pc.weibo.client_id', '36901915631');
+        $config->set('pc.weibo.client_secret', '278b2212b43ce359ee27e19dfd2303132');
+        $config->set('pc.wechat.client_id', 'wx183dc69dabad5f293');
+        $config->set('pc.wechat.client_secret', '1aee4dd5b6708e67d5e4d2ffa5d37a134');
+        $config->set('pc.qq.client_id', '1014185575');
+        $config->set('pc.qq.client_secret', '67d647556551c8e2c53f4ba315f87c936');
 
         $configuration->save($config);
 
