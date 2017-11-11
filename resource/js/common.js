@@ -1465,10 +1465,10 @@ $(function() {
         if (!_st) _st=0;
         var _code = '<div id="ms_fixed_wrap">'
                   +      '<dl id="ms_fixed">'
-                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="openChatDialog(this, 0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
-                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="openChatDialog(this, 1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
-                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="openChatDialog(this, 2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
-                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="openChatDialog(this, 3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
+                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="message.openChatDialog(this, 0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
+                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="message.openChatDialog(this, 1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
+                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="message.openChatDialog(this, 2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
+                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="message.openChatDialog(this, 3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
                   +     '</dl>'
                   + '</div>';
         if (_st == 1) {
