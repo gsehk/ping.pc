@@ -549,9 +549,9 @@ message = {
             type: 'GET',
             success: function(res) {
                 TS.UNREAD.comments = res.counts.unread_comments_count ? res.counts.unread_comments_count : 0;
-                TS.UNREAD.last_comments = res.comments ? res.comments[0]['user']['name'] : '';
+                TS.UNREAD.last_comments = res.comments.length > 0 ? res.comments[0]['user']['name'] : '';
                 TS.UNREAD.likes = res.counts.unread_likes_count ? res.counts.unread_likes_count : 0;
-                TS.UNREAD.last_likes = res.likes ? res.likes[0]['user']['name'] : '';
+                TS.UNREAD.last_likes = res.likes.length > 0 ? res.likes[0]['user']['name'] : '';
 
                 // 审核通知数量
                 var pinneds_count = 0;
