@@ -24,8 +24,7 @@
         </a>
     </div>
 
-    <div class="post-title"><a href="{{ route('pc:grouppost', ['group_id' => $post->group_id, 'post_id' => $post->id]) }}">{{$post->title}}</a></div>
-
+    {{-- <div class="post-title"><a href="{{ route('pc:grouppost', ['group_id' => $post->group_id, 'post_id' => $post->id]) }}">{{$post->title}}</a></div> --}}
     <div class="feed_body">
         <p class="feed_text">{!! formatContent($post->content) !!}</p>
 
@@ -94,8 +93,8 @@
             var size = images[i].size.split('x');
             var img = {
                 id: 'img' + i,
-                img: TS.SITE_URL + '/api/v2/files/' + images[i].file + '?token=' + TS.TOKEN,
-                tinyimg: TS.SITE_URL + '/api/v2/files/' + images[i].file + '?w=58&h=58&token=' + TS.TOKEN,
+                img: TS.SITE_URL + '/api/v2/files/' + images[i].id + '?token=' + TS.TOKEN,
+                tinyimg: TS.SITE_URL + '/api/v2/files/' + images[i].id + '?w=58&h=58&token=' + TS.TOKEN,
                 width: size[0],
                 height: size[1]
             };
