@@ -388,6 +388,7 @@ message = {
         if (next_cid == 0) {
             messageData(3);
         } else {
+            $('#chat_' + cid).addClass('current_room');
             message.listMessage(next_cid);
         }
 
