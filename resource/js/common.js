@@ -715,7 +715,7 @@ var rewarded = {
                         });
                     html += '</div>'
                     + '<div class="reward_input">'
-                        + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义打赏金额，必须为整数">'
+                        + '<input min="1" oninput="value=moneyLimit(value)" onkeydown="if ( !isNumber(event.keyCode) ) return false; " type="number" placeholder="自定义打赏金额，必须为整数">'
                     + '</div>'
                 + '</div>';
 
@@ -1294,6 +1294,24 @@ var moneyLimit = function(value) {
         value = '';
     }
     return value;
+}
+
+// 仅能输入数字
+function isNumber(keyCode) {
+    $('.ly-error').remove();
+    // 数字
+    if (keyCode >= 48 && keyCode <= 57 )
+        return true;
+    // 小数字键盘
+    if (keyCode >= 96 && keyCode <= 105)
+        return true;
+    // Backspace, del, 左右方向键
+    if (keyCode == 8 || keyCode == 46 || keyCode == 37 || keyCode == 39)
+        return true;
+
+    lyNotice('打赏金额必须为整数');
+
+    return false;
 }
 
 // 第三方分享
