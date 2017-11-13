@@ -40,6 +40,7 @@ class NewsController extends BaseController
     public function list(Request $request)
     {
         $params = [
+            'recommend' => $request->query('recommend'),
             'cate_id' => $request->query('cate_id'),
             'after' => $request->query('after', 0)
         ];
@@ -109,7 +110,7 @@ class NewsController extends BaseController
     public function release(Request $request, int $news_id = 0)
     {
         $this->PlusData['current'] = 'news';
-        
+
         // 资讯分类
         $cates = createRequest('GET', '/api/v2/news/cates');
         if ($news_id > 0) {
