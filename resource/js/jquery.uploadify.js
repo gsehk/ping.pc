@@ -3,7 +3,7 @@
 	$.fn.Huploadify = function(opts){
 		var itemTemp = '<a class="feed_picture_span uploadify-queue-item" id="${fileID}"><img class="imgload" src=" '+loadgif+' "/></a>';
 		var defaults = {
-			fileTypeExts:'*.jpg;*.JPG;*.png;*.PNG',//允许上传的文件类型，格式'*.jpg;*.doc'
+			fileTypeExts:'*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG',//允许上传的文件类型，格式'*.jpg;*.doc'
 			auto:true,//是否开启自动上传
 			method:'post',//发送请求的方式，get或post
 			multi:true,//是否允许选择多个文件
