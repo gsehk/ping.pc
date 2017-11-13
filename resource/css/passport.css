@@ -109,10 +109,6 @@
     background: #f3f6f7;
 }
 
-.login_right .login_input input:focus {
-    color: #59b6d7;
-}
-
 .login_right .login_extra {
     font-size: 12px;
     color: #b3b3b3;
