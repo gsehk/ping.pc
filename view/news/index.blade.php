@@ -100,7 +100,7 @@ $(function(){
         var params = {
             cate_id: cate_id
         };
-        if (cate_id == 0) {
+        if (cate_id == undefined) {
             params = {
                 cate_id: cate_id,
                 recommend: 1,
