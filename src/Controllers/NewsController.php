@@ -55,12 +55,14 @@ class NewsController extends BaseController
         $news['page'] = $request->loadcount;
 
         // 加入置顶资讯
-        $topNews = createRequest('GET', '/api/v2/news/categories/pinneds', $params);
-        if (!empty($topNews) && $request->loadcount == 1) {
-            $topNews->each(function ($item, $key) use ($news) {
-                $item->top = 1;
-                $news['news']->prepend($item);
-            });
+        if ($params['cate_id']) {
+            $topNews = createRequest('GET', '/api/v2/news/categories/pinneds', $params);
+            if (!empty($topNews) && $request->loadcount == 1) {
+                $topNews->each(function ($item, $key) use ($news) {
+                    $item->top = 1;
+                    $news['news']->prepend($item);
+                });
+            }
         }
 
         $newsData = view('pcview::templates.news', $news, $this->PlusData)->render();
