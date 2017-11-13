@@ -100,6 +100,13 @@ $(function(){
         var params = {
             cate_id: cate_id
         };
+        if (cate_id == 0) {
+            params = {
+                cate_id: cate_id,
+                recommend: 1,
+            };
+        }
+
         scroll.init({
             container: '#news_list',
             loading: '#news_list',
