@@ -438,6 +438,11 @@ button{
     border: 1px solid #ccc;
 }
 
+.answer-detail-box .question-title {
+    color: #59b6d7;
+    font-size: 30px;
+}
+
 .answer-detail-box .answer-body {
     margin: 20px 0;
     min-height: 300px;

@@ -83,6 +83,10 @@
             </dd>
         </dl>
 
+        <div class="question-title">
+            <a href="{{ route('pc:questionread', $answer->question->id) }}">{{ $answer->question->subject }}</a>
+        </div>
+
         <div class="answer-body">
             {!! Parsedown::instance()->setMarkupEscaped(true)->text($answer->body) !!}
         </div>
