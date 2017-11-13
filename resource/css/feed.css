@@ -29,8 +29,16 @@
 
 
 .feed_post .post_extra {
+    position: relative;
     line-height: 31px;
     margin-top: 10px;
+}
+
+.feed_post .post_extra .dy_cs{
+    position: absolute;
+    right: 5px;
+    top: -47px;
+    font-size: 12px;
 }
 
 .feed_post .post_extra span {

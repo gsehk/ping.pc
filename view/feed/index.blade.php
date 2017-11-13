@@ -16,7 +16,7 @@
         @if (!empty($TS))
         {{-- 动态发布 --}}
         <div class="feed_post">
-            <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content" amount=""></textarea>
+            <textarea class="post_textarea" placeholder="说说新鲜事" id="feed_content" amount="" onkeyup="checkNums(this, 255, 'nums');"></textarea>
             <div class="post_extra">
                 <span class="font14" id="feed_pic">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tupian"></use></svg>
@@ -34,6 +34,7 @@
                     </ul>
                     <i></i>
                 </div>
+            <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
             </div>
         </div>
         @endif
