@@ -71,6 +71,14 @@ ul {
     padding-left: 0;
 }
 
+.markdown-body ul {
+    list-style: initial !important;
+}
+
+.markdown-body ul li{
+    display: list-item !important;
+}
+
 th {
     font-weight: normal;
 }
