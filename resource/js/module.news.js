@@ -152,9 +152,13 @@ var news = {
                 url: url,
                 type: 'DELETE',
                 dataType: 'json',
-                error: function(error) {showError(error.responseJSON);},
+                error: function(error) {
+                    layer.closeAll();
+                    showError(error.responseJSON);
+                },
                 success: function(res) {
-                    noticebox('删除成功', 1, '/news');
+                    layer.closeAll();
+                    noticebox(res.message, 1);
                 }
             });
         });

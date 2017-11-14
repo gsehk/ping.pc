@@ -35,9 +35,9 @@ class FeedController extends BaseController
                     'after' => $request->query('after') ?: 0
                 ];
                 $feeds = createRequest('GET', '/api/v2/feeds', $params);
-                if (!empty($feeds['pinned']) && $params['type'] != 'follow') { // 置顶动态
+                if (!$feeds['pinned']->isEmpty() && $params['type'] != 'follow') { // 置顶动态
                     $feeds['pinned']->each(function ($item, $key) use ($feeds) {
-                        $item->pinned = 1;
+                        $item->pinned = true;
                         $feeds['feeds']->prepend($item);
                     });
                 }

@@ -549,6 +549,7 @@ message = {
             url: TS.API + '/user/unread-count',
             type: 'GET',
             success: function(res) {
+                res.counts = res.counts ? res.counts : {};
                 TS.UNREAD.comments = res.counts.unread_comments_count ? res.counts.unread_comments_count : 0;
                 TS.UNREAD.last_comments = res.comments.length > 0 ? res.comments[0]['user']['name'] : '';
                 TS.UNREAD.likes = res.counts.unread_likes_count ? res.counts.unread_likes_count : 0;

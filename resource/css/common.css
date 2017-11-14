@@ -1767,6 +1767,7 @@ img.load {
     color: #333;
     outline: none;
     resize: none;
+    overflow: hidden;
 }
 
 .comment_post {
