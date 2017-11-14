@@ -33,6 +33,27 @@
               </label>
             </div>
         </div>
+
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="position">站点名称</label>
+          <div class="col-sm-4">
+              <input type="text" name="site_name" class="form-control" id="site_name" v-model="site.site_name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="position">版权信息</label>
+          <div class="col-sm-4">
+              <input type="text" name="site_copyright" class="form-control" id="site_copyright" v-model="site.site_copyright">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="position">技术支持</label>
+          <div class="col-sm-4">
+              <input type="text" name="site_technical" class="form-control" id="site_technical" v-model="site.site_technical">
+          </div>
+        </div>
+
         <!-- button -->
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-4">
@@ -78,6 +99,9 @@ const NavmanageComponent = {
       logo: '',
       loginbg: '',
       status: 1,
+      site_name: 'ThinkSNS',
+      site_copyright: 'Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.',
+      site_technical: 'ThinkSNS+',
     }
   }),
   methods: {

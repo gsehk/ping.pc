@@ -9,7 +9,7 @@
             @endforeach
         </ul>
         @endif
-        <div class="rights font12">Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.</div>
-        <div class="developer">本站/APP由 <span>ThinkSNS+</span> 提供技术和产品支持</div>
+        <div class="rights font12">{{ $config['common']['site_copyright'] or 'Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.' }}</div>
+        <div class="developer">本站/APP由 <span>{{ $config['common']['site_technical'] or 'ThinkSNS+' }}</span> 提供技术和产品支持</div>
     </div>
 </div>

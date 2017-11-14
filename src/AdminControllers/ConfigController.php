@@ -167,6 +167,9 @@ class ConfigController extends Controller
         $config->set('pc.status', 1);
         $config->set('pc.logo', 0);
         $config->set('pc.loginbg', 0);
+        $config->set('pc.site_name', 'ThinkSNS+');
+        $config->set('pc.site_copyright', 'Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.');
+        $config->set('pc.site_technical', 'ThinkSNS');
         $config->set('pc.weibo.client_id', '36901915631');
         $config->set('pc.weibo.client_secret', '278b2212b43ce359ee27e19dfd2303132');
         $config->set('pc.wechat.client_id', 'wx183dc69dabad5f293');
