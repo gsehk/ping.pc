@@ -1128,11 +1128,25 @@ a {
     background-color: #fff;
 }
 
-.avatar-upload label {
-    display: block;
-    float: left;
-    clear: left;
-    width: 100px;
+.avatar-upload .avatar-input {
+    display: none;
+}
+
+.avatar-upload label.avatar-file {
+    display: inline-block;
+    padding: 0 16px;
+    margin-top: -10px;
+    border-radius: 3px;
+    background-color: #efefef;
+    font-size: 14px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
+
+.avatar-upload label.avatar-file:hover {
+    background-color: #ddd;
 }
 
 .ai_face_box {
