@@ -7,14 +7,14 @@
 <div class="fan_cont">
     <ul class="fan_ul">
         @if($user_id && $user_id != $TS['id'])
-        <li><a href="javascript:void;" data-type="1" @if($type == 1) class="a_border" @endif>TA的粉丝</a></li>
-        <li><a href="javascript:void;" data-type="2" @if($type == 2) class="a_border" @endif>TA的关注</a></li>
+        <li><a href="javascript:;" data-type="1" @if($type == 1) class="a_border" @endif>TA的粉丝</a></li>
+        <li><a href="javascript:;" data-type="2" @if($type == 2) class="a_border" @endif>TA的关注</a></li>
         @else
-        <li><a href="javascript:void;" data-type="1" @if($type == 1) class="a_border" @endif>粉丝</a></li>
-        <li><a href="javascript:void;" data-type="2" @if($type == 2) class="a_border" @endif>关注</a></li>
+        <li><a href="javascript:;" data-type="1" @if($type == 1) class="a_border" @endif>粉丝</a></li>
+        <li><a href="javascript:;" data-type="2" @if($type == 2) class="a_border" @endif>关注</a></li>
         @endif
     </ul>
-    
+
     <div id="follow-list"></div>
 </div>
 @endsection
@@ -39,7 +39,7 @@
             weibo.init({container: '#follow-list',loading: '.fan_cont', user_id:"{{ $user_id }}",type: type});
             $('.fan_ul a').removeClass('a_border');
             $(this).addClass('a_border');
-        });    
+        });
     })
     // 加载关联用户列表
     setTimeout(function() {
@@ -49,7 +49,7 @@
             loading: '.fan_cont',
             type: "{{ $type }}"
         });
-    }, 300);    
+    }, 300);
 
 
     // 关注回调

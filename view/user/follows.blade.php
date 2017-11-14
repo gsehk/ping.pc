@@ -11,17 +11,17 @@
         <div class="user_container">
             <ul class="user_menu">
                 @if($user_id && $user_id != $TS['id'])
-                <li><a type="1" href="javascript:void;" @if($type == 1) class="selected" @endif>TA的粉丝</a></li>
-                <li><a type="2" href="javascript:void;" @if($type == 2) class="selected" @endif>TA的关注</a></li>
+                <li><a type="1" href="javascript:;" @if($type == 1) class="selected" @endif>TA的粉丝</a></li>
+                <li><a type="2" href="javascript:;" @if($type == 2) class="selected" @endif>TA的关注</a></li>
                 @else
-                <li><a type="1" href="javascript:void;" @if($type == 1) class="selected" @endif>粉丝</a></li>
-                <li><a type="2" href="javascript:void;" @if($type == 2) class="selected" @endif>关注</a></li>
+                <li><a type="1" href="javascript:;" @if($type == 1) class="selected" @endif>粉丝</a></li>
+                <li><a type="2" href="javascript:;" @if($type == 2) class="selected" @endif>关注</a></li>
                 @endif
             </ul>
             <div class="clearfix" id="user_list"></div>
         </div>
     </div>
-    
+
     <div class="right_container">
         @include('pcview::widgets.hotusers')
     </div>
