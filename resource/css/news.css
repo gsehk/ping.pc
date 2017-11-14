@@ -101,7 +101,7 @@
     margin-left: 50px;
 }
 
-.news_title {
+.news_word a.news_title {
     font-size: 20px;
     line-height: 28px;
     display: -webkit-box;
@@ -109,6 +109,10 @@
     color: #333;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+}
+
+.news_word a:visited {
+    color: #808080;
 }
 
 .news_word p {

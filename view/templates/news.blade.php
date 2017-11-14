@@ -12,8 +12,8 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
                </a>
           </div>
           <div class="news_word">
-               <a href="{{ route('pc:newsread', ['news_id' => $item['id']]) }}">
-                    <div class="news_title"> {{ $item['title'] }} </div>
+               <a class="news_title" href="{{ route('pc:newsread', ['news_id' => $item['id']]) }}">
+                    {{ $item['title'] }}
                </a>
                <p>{{ $item['subject'] }}</p>
                <div class="news_bm">
