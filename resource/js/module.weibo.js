@@ -31,6 +31,11 @@ weibo.postFeed = function() {
 
     if (select == 'pay') {
         if ($('.feed_picture').find('img').length > 0) { // 图片付费弹窗
+            // 分享文字内容不超过255字
+            if (getLength($('#feed_content').val()) > initNums) {
+                noticebox('分享内容长度不能超过' + initNums + '字', 0);
+                return false;
+            }
             var pay_box = '<div class="feed_pay_box"><p class="confirm_title">付费设置</p>';
             var images_box = '<div class="pay_images">';
             var info_box = '';
@@ -94,6 +99,15 @@ weibo.postFeed = function() {
             return weibo.doPostFeed('pay');
         });
     } else {
+        // 分享字数限制
+        var strlen = getLength($('#feed_content').val());
+        var leftnums = initNums - strlen;
+
+        // 免费并仅有文字时验证1-255个字，其余不超过255字即可
+        if ($('.feed_picture').find('img').length == 0  ? (leftnums < 0 || leftnums == initNums) : (leftnums < 0)) {
+            noticebox('分享内容长度为1-' + initNums + '字', 0);
+            return false;
+        }
         weibo.doPostFeed('free');
     }
 };
@@ -103,17 +117,6 @@ weibo.doPostFeed = function(type) {
     if (_this.lockStatus == 1) {
         return;
     }
-    // 分享字数限制
-    var strlen = getLength($('#feed_content').val());
-    var leftnums = initNums - strlen;
-
-    // 免费并仅有文字时验证1-255个字，其余不超过255字即可
-    var check = (type == 'free' && $('.feed_picture').find('img').length == 0)  ? (leftnums < 0 || leftnums == initNums) : (leftnums < 0);
-    if (check) {
-        noticebox('分享内容长度为1-' + initNums + '字', 0);
-        return false;
-    }
-
     // 组装数据
     var data = {
         feed_content: $('#feed_content').val(),
@@ -175,7 +178,7 @@ weibo.doPostFeed = function(type) {
         },
         error: function(xhr){
             _this.lockStatus = 0;
-            showError(xhr.responseJSON);
+            $('.pay_images').length > 0 && type == 'pay' ? lyShowError(xhr.responseJSON) : showError(xhr.responseJSON);
         }
     });
 };
@@ -204,13 +207,14 @@ weibo.delFeed = function(feed_id, type) {
             type: 'DELETE',
             dataType: 'json',
             success: function(res) {
+                layer.closeAll();
                 if (type) {
                     noticebox('删除成功', 1, '/feeds');
                 }
                 $('#feed_' + feed_id).fadeOut();
-                layer.closeAll();
             },
             error: function(xhr){
+                layer.closeAll();
                 showError(xhr.responseJSON);
             }
         });
@@ -274,6 +278,7 @@ weibo.payText = function(obj, tourl){
             type: 'POST',
             dataType: 'json',
             success: function(res) {
+                layer.closeAll();
                 if (tourl == '') {
                     noticebox('支付成功', 1);
 
@@ -290,9 +295,9 @@ weibo.payText = function(obj, tourl){
                 } else {
                     noticebox('支付成功', 1, tourl);
                 }
-                layer.closeAll();
             },
             error: function(xhr) {
+                layer.closeAll();
                 showError(xhr.responseJSON);
             }
         });
@@ -326,6 +331,7 @@ weibo.payImage = function(obj){
                     noticebox('支付成功', 1);
                 },
                 error: function(xhr) {
+                    layer.closeAll();
                     showError(xhr.responseJSON);
                 }
             });
@@ -382,6 +388,7 @@ $(function() {
                     noticebox('支付成功', 1);
                 },
                 error: function(xhr) {
+                    layer.closeAll();
                     showError(xhr.responseJSON);
                 }
             });

@@ -106,11 +106,11 @@ var news = {
                 error: function(xml) {
                     _this.lockStatus = 0;
                     layer.closeAll();
-                    noticebox(xml.responseJSON.message, 0);
+                    showError(xml.responseJSON);
                 },
                 success: function(res, data, xml) {
+                    layer.closeAll();
                     if (xml.status == 201) {
-                        layer.closeAll();
                         noticebox('投稿成功，请等待审核', 1, '/news');
                     } else {
                         noticebox(res.message, 0);

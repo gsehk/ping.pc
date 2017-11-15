@@ -16,6 +16,7 @@ var weibo = {
                     layer.close(index);
                 },
                 error: function(xhr){
+                    layer.closeAll();
                     showError(xhr.responseJSON);
                 }
             });

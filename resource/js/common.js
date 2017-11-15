@@ -661,6 +661,47 @@ var showError = function(message, defaultMessage) {
     return;
 }
 
+// ly.confirm 弹窗接口返回错误解析
+var lyShowError = function(message, defaultMessage) {
+    defaultMessage = defaultMessage || '操作失败';
+    if (message.errors && message.errors !== null) {
+        var message = message.errors;
+        for (var key in message) {
+            if (Array.isArray(message[key])) {
+
+                lyNotice(message[key]);
+                return;
+            }
+        }
+
+        lyNotice(defaultMessage);
+        return;
+    }
+    if (message.message && message.message !== null) {
+        var message = message.message;
+        for (var key in message) {
+            // if (Array.isArray(message[key])) {
+
+            lyNotice(message[key]);
+            return;
+            // }
+        }
+
+        lyNotice(defaultMessage);
+        return;
+    }
+
+    for (var key in message) {
+        if (Array.isArray(message[key])) {
+
+            lyNotice(message[key]);
+            return;
+        }
+    }
+    lyNotice(defaultMessage);
+    return;
+}
+
 // 验证手机号
 var checkPhone = function(string) {
     var pattern = /^1[34578]\d{9}$/;
@@ -743,9 +784,10 @@ var rewarded = {
                 data: {amount: num ? num : amount},
                 dataType: 'json',
                 error: function(xml) {
-                    lyNotice(xml.responseJSON.message);
+                    lyShowError(xml.responseJSON)
                 },
                 success: function(res) {
+                    ly.close();
                     noticebox(res.message, 1, 'refresh');
                 }
             });
@@ -1197,8 +1239,7 @@ var pinneds = function (url) {
                 noticebox(res.message, 1);
             },
             error: function(error) {
-                layer.closeAll();
-                showError(error.responseJSON);
+                lyShowError(error.responseJSON);
             }
         });
     });

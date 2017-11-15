@@ -102,6 +102,7 @@ post.delPost = function(group_id, post_id) {
                 layer.closeAll();
             },
             error: function(xhr){
+                layer.closeAll();
                 showError(xhr.responseJSON);
             }
         });

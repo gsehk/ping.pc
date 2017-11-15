@@ -780,6 +780,10 @@ button{
     height: 40px;
     background-color: #ededed;
     position: relative;
+}
+
+.search-user .lists .user .user-header .fans_img{
+    border-radius: 50%;
     overflow: hidden;
 }
 

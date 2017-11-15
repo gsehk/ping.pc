@@ -95,7 +95,8 @@ var QA = {
                 },
                 error: function(xhr){
                     _this.lockStatus = 0;
-                    showError(xhr);
+                    layer.closeAll();
+                    showError(xhr.responseJSON);
                 }
             });
         });
@@ -131,9 +132,11 @@ var question = {
                 type: 'DELETE',
                 dataType: 'json',
                 success: function(res) {
+                    layer.close(index);
                     noticebox('删除成功', 1, '/question');
                 },
                 error: function(xhr){
+                    layer.close(index);
                     showError(xhr.responseJSON);
                 }
             });
@@ -167,18 +170,17 @@ var question = {
                 type: 'POST',
                 dataType: 'json',
                 success: function(res, data, xml) {
+                    layer.closeAll();
                     if (xml.status == 201) {
                         noticebox('申请成功', 1);
                     } else {
                         _this.lockStatus = 0;
                     }
-
-                    layer.closeAll();
                 },
                 error: function(xhr){
                     _this.lockStatus = 0;
-                    showError(xhr.responseJSON);
                     layer.closeAll();
+                    showError(xhr.responseJSON);
                 }
             });
         });
@@ -221,9 +223,10 @@ var question = {
                 dataType: 'json',
                 error: function(xml) {
                     _this.lockStatus = 0;
-                    showError(xml);
+                    lyShowError(xml.responseJSON);
                 },
                 success: function(res, data, xml) {
+                    layer.closeAll();
                     if (xml.status == 204) {
                         noticebox('操作成功', 1, 'refresh');
                     } else {
