@@ -815,7 +815,7 @@ var rewarded = {
 
         }
 
-        ly.load(TS.SITE_URL + url, '', '270px');
+        ly.load(TS.SITE_URL + url, '', '300px');
     }
 }
 
