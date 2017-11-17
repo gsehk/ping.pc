@@ -43,12 +43,12 @@ class PcPackageHandler extends PackageHandler
         $this->config->set('pc.site_name', 'ThinkSNS+');
         $this->config->set('pc.site_copyright', 'Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.');
         $this->config->set('pc.site_technical', 'ThinkSNS');
-        $this->config->set('pc.weibo.client_id', '36901915631');
-        $this->config->set('pc.weibo.client_secret', '278b2212b43ce359ee27e19dfd2303132');
-        $this->config->set('pc.wechat.client_id', 'wx183dc69dabad5f293');
-        $this->config->set('pc.wechat.client_secret', '1aee4dd5b6708e67d5e4d2ffa5d37a134');
-        $this->config->set('pc.qq.client_id', '1014185575');
-        $this->config->set('pc.qq.client_secret', '67d647556551c8e2c53f4ba315f87c936');
+        $this->config->set('pc.weibo.client_id', '');
+        $this->config->set('pc.weibo.client_secret', '');
+        $this->config->set('pc.wechat.client_id', '');
+        $this->config->set('pc.wechat.client_secret', '');
+        $this->config->set('pc.qq.client_id', '');
+        $this->config->set('pc.qq.client_secret', '');
 
 
         // Run the database migrations
