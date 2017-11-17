@@ -38,6 +38,9 @@ Route::prefix('feeds')->group(function () {
 
     // 动态详情获取评论
     Route::get('/{feed}/comments', 'FeedController@comments')->where(['feed' => '[0-9]+']);
+
+    // 动态详情获取打赏列表
+    Route::get('/{feed}/rewards', 'FeedController@rewards')->where(['feed' => '[0-9]+']);
 });
 
 Route::prefix('question')->group(function () {
@@ -74,6 +77,9 @@ Route::prefix('question')->group(function () {
 
     // 修改回答
     Route::get('answer/{answer}/edit', 'QuestionController@editAnswer')->where(['answer' => '[0-9]+'])->name('pc:answeredit');
+
+    // 回答详情获取打赏列表
+    Route::get('answer/{answer}/rewards', 'QuestionController@answerRewards')->where(['answer' => '[0-9]+']);
 
 });
 
@@ -172,6 +178,9 @@ Route::prefix('news')->group(function () {
 
     // 投稿
     Route::middleware(PcMiddleware\CheckLogin::class)->get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
+
+    // 资讯详情获取打赏列表
+    Route::get('/{news_id}/rewards', 'NewsController@rewards')->where(['news_id' => '[0-9]+']);
 });
 
 Route::prefix('message')->group(function () {

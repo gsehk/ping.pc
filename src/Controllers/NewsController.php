@@ -159,4 +159,24 @@ class NewsController extends BaseController
             'after' => $after
         ]);
     }
+
+    /**
+     * 资讯打赏列表
+     * @author ZsyD
+     * @param  Request $request
+     * @param  int     $news_id [资讯id]
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function rewards(Request $request, int $news_id)
+    {
+        $params = [
+            'order' => $request->query('order') ?: 'desc',
+            'order_type' => $request->query('order_type') ?: 'date'
+        ];
+
+        $data['rewards'] = createRequest('GET', '/api/v2/news/'.$news_id.'/rewards', $params);
+        $data['app'] = '资讯';
+
+        return view('pcview::templates.rewards', $data, $this->PlusData)->render();
+    }
 }

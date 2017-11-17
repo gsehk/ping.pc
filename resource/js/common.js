@@ -799,44 +799,23 @@ var rewarded = {
         })
     },
     list: function(id, type){
-        var url = '/api/v2/feeds/'+id+'/rewards';
-        var app = '动态';
+        var url = '';
+
         if (type == 'answer') {
-            url = '/api/v2/question-answers/'+id+'/rewarders';
-            app = '问答';
+
+            url = '/question/answer/'+id+'/rewards';
+
+        } else if (type == 'news') {
+
+            url = '/news/'+id+'/rewards';
+
+        } else {
+
+            url = '/feeds/'+id+'/rewards';
+
         }
-        if (type == 'news') {
-            url = '/api/v2/news/'+id+'/rewards';
-            app = '资讯';
-        }
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'json',
-            error: function(xml) {
-                noticebox('打赏失败', 0);
-            },
-            success: function(res) {
-                if (res.length) {
-                    var html = '';
-                    html += '<div class="reward_popups">';
-                    html += '<p class="reward_title ucolor font14">打赏列表</p>';
-                    html += '<ul class="reward_list" id="J-reward-list">';
-                    for (var i in res) {
-                        html +=
-                        '<li>'+
-                            '<a href="/profile/' + res[i].user.id + '"><img class="lazy round" data-original="' + getAvatar(res[i].user, 40) + '" width="40"/></a>'+
-                            '<a href="/profile/' + res[i].user.id + '" class="uname">'+res[i].user.name+'</a>'+
-                            '<font color="#aaa">打赏了 '+app+'</font>'+
-                        '</li>';
-                    }
-                    html += '</ul>';
-                    html += '</div>';
-                    ly.loadHtml(html, '');
-                    $("img.lazy").lazyload();
-                }
-            }
-        });
+
+        ly.load(TS.SITE_URL + url, '', '270px');
     }
 }
 

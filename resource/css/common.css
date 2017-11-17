@@ -2217,6 +2217,16 @@ img.load {
 
 .reward_popups {
     padding: 40px;
+    width: 270px;
+    overflow: hidden;
+    height: 500px;
+}
+
+.reward_popups_con {
+    width: 270px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .reward_popups .reward_title {
