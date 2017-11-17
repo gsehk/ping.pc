@@ -3,7 +3,7 @@
             <div class="nav">
                 <div class="nav_left">
                     <a href="{{ route('pc:feeds') }}">
-                        <img src="@if(isset($config['common']['logo'])) {{ $routes['storage'] . $config['common']['logo'] }} @else {{ asset('zhiyicx/plus-component-pc/images/logo.png') }} @endif" class="nav_logo" />
+                        <img src="@if(isset($config['common']['logo']) && $config['common']['login']) {{ $routes['storage'] . $config['common']['logo'] }} @else {{ asset('zhiyicx/plus-component-pc/images/logo.png') }} @endif" class="nav_logo" />
                     </a>
                     <!-- <span class="nav_beta font16">beta</span> -->
                 </div>

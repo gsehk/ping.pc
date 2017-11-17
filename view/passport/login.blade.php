@@ -9,7 +9,7 @@
 @section('content')
 <div class="login_container">
     <div class="login_left">
-        <img src="@if(isset($config['common']['loginbg'])) {{ $routes['storage'] . $config['common']['loginbg'] }} @else {{ $routes['resource'] }}/images/login_bg.png @endif"/>
+        <img src="@if(isset($config['common']['loginbg']) && $config['common']['loginbg']) {{ $routes['storage'] . $config['common']['loginbg'] }} @else {{ $routes['resource'] }}/images/login_bg.png @endif"/>
     </div>
     <div class="login_right">
         <form method="POST" id="login_form">
