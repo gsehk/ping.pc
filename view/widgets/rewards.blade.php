@@ -14,7 +14,7 @@
             <div class="reward_user">
                 @foreach ($rewards_data as $reward)
                     <a href="{{ route('pc:mine', $reward->user->id) }}" class="user_item">
-                        <img class="lazy round" data-original="{{ getAvatar($reward->user, 42) }}" width="42" />
+                        <img class="lazy round" src="{{ getAvatar($reward->user, 42) }}" width="42" />
                         @if ($reward->user->verified)
                             <img class="verified_icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                         @endif
