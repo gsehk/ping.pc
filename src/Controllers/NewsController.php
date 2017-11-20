@@ -58,7 +58,7 @@ class NewsController extends BaseController
         if ($params['cate_id']) {
             $topNews = createRequest('GET', '/api/v2/news/categories/pinneds', $params);
             if (!empty($topNews) && $request->loadcount == 1) {
-                $topNews->each(function ($item, $key) use ($news) {
+                $topNews->reverse()->each(function ($item, $key) use ($news) {
                     $item->top = 1;
                     $news['news']->prepend($item);
                 });
