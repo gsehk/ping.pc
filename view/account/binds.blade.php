@@ -35,7 +35,7 @@
                             <form class="bind-content" autocomplete="off">
                                 <div class="bind_form_row">
                                     <label for="phone">手机号</label>
-                                    <input id="phone" name="phone" type="text" value="{{ $TS['phone'] }}" autocomplete="off">
+                                    <input id="phone" name="phone" type="text" value="{{ $TS['phone'] }}" autocomplete="off" maxlength="11">
                                     <a data-type="phone" class="send_code @if($TS['phone']) blue-color @endif" href="javascript:">获取验证码</a>
                                 </div>
                                 <div class="bind_form_row">
@@ -231,7 +231,7 @@
 
                 if (data.verifiable_code.length < 4 || data.verifiable_code.length > 6) {
 
-                    noticebox('验证码不正确', 0);
+                    noticebox('请输入4-6位验证码', 0);
                     return false;
                 }
                 if (data.password.length < 1) {
