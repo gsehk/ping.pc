@@ -43,11 +43,6 @@
                         <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qianbao"></use></svg>我的钱包
                     </a>
                 </li>
-                {{-- <li>
-                    <a href="javascript:;" onclick="ly.load('{{ route('pc:webmessage', ['type' => 0]) }}', '', '720px', '572px')" >
-                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-tongzhi"></use></svg>我的消息
-                    </a>
-                </li> --}}
                 <li style="border-top: 1px solid #ededed; padding-top: 20px;">
                     <a href="{{ route('pc:mine')}}">个人主页</a>
                 </li>
@@ -115,7 +110,6 @@
                         <li type="4"><span>与<span class="keywords"></span>相关的用户</span></li>
                         <li type="5"><span>与<span class="keywords"></span>相关的圈子</span></li>
                         <li type="6"><span>与<span class="keywords"></span>相关的话题</span></li>
-                        <!-- <li type="7"><span>与<span class="keywords"></span>相关的活动</span></li> -->
                     </ul>
                 </div>
             </div>
