@@ -141,6 +141,8 @@
                 ly.confirm(formatConfirm('绑定提示', '绑定手机号码前需先填写密码，是否去修改密码？'), '' , '去修改', function(){
                     window.location.href = '/account/security?showPassword=-1';
                 });
+
+                return false;
             }
 
             var _this = $(this);

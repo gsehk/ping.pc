@@ -21,7 +21,8 @@ class PassportController extends BaseController
     public function token(string $token, int $type)
     {
         Session::put('token', $token);
-        Session::put('initial_password', true);
+
+        Session::put('initial_password', Session::get('initial_password', true));
 
         // 若设置history
         if (Session::get('history')) {
