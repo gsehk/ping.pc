@@ -84,7 +84,7 @@ class BaseController extends Controller
      * @param  int    $time    [跳转时间]
      * @return mixed
      */
-    public function notice(int $status, string $url, string $message, string $content, int $time)
+    public function notice(int $status = 1, string $url = '', string $message = '', string $content = '', int $time = 5)
     {
         $data['status'] = $status;
         $data['message'] = $message;
