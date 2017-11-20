@@ -44,7 +44,7 @@
             <div class="reg_input">
                 <label>设置昵称</label>
                 <span class="input_span">
-                    <input type="text" placeholder="2-10个字符" name="name"  maxlength="8"/>
+                    <input type="text" placeholder="2-8个字符" name="name"  maxlength="8"/>
                 </span>
             </div>
             <div class="reg_input">

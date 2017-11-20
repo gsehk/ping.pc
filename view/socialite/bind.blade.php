@@ -22,7 +22,7 @@
                         <div class="reg_input">
                             <label>设置用户名</label>
                             <span class="input_span">
-                            <input type="text" placeholder="2-10个字符" name="name" value="{{$name}}" maxlength="8"/>
+                            <input type="text" placeholder="2-8个字符" name="name" value="{{ mb_substr($name, 0, 8) }}" maxlength="8"/>
                         </span>
                         </div>
                     </div>

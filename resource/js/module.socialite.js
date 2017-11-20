@@ -47,6 +47,8 @@ $('#oauth_btn').click(function() {
 
             if (xhr.responseJSON.errors.name == 'name 已存在') {
                 noticebox('用户名已经存在', 0);
+            } else {
+                showError(xml.responseJSON);
             }
         },
         complete: function() {
