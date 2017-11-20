@@ -45,11 +45,7 @@ $('#oauth_btn').click(function() {
         },
         error: function(xhr) {
 
-            if (xhr.responseJSON.errors.name == 'name 已存在') {
-                noticebox('用户名已经存在', 0);
-            } else {
-                showError(xml.responseJSON);
-            }
+            showError(xml.responseJSON);
         },
         complete: function() {
             _this.text(title + '账号');
