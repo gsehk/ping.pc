@@ -37,6 +37,8 @@ class PcPackageHandler extends PackageHandler
             '--force' => true,
         ]);
 
+        $this->config->set('pc.installed', true);
+        $this->config->set('pc.routeName', 'pc:feeds');
         $this->config->set('pc.status', 1);
         $this->config->set('pc.logo', 0);
         $this->config->set('pc.loginbg', 0);
