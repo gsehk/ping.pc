@@ -10,10 +10,8 @@ $('#oauth_btn').click(function() {
 
     // 类型[bind:绑定, register:注册]
     var oauthtype = $('input[name="verifiable_type"]').val();
-
     var type = 'PUT';
     var title = '';
-    console.log(oauthtype);
     if (oauthtype == 'bind') {
         if (login == '') {
             $('input[name="login"]').focus();
@@ -22,14 +20,19 @@ $('#oauth_btn').click(function() {
         if (password == '') {
             $('input[name="password"]').focus();
             return false;
-        }
         title = '绑定';
     } else {
-        if (name == '') {
+        if (strLen(name) < 2) {
+            noticebox('用户名不能低于2个中文或4个英文', 0);
+            $('input[name="name"]').focus();
+            return false;
+        } else if (name.length > 8) {
+            noticebox('用户名不能超过8个字符', 0);
             $('input[name="name"]').focus();
             return false;
         }
         type = 'PATCH';
+        }
         title = '注册';
     }
 
@@ -45,7 +48,7 @@ $('#oauth_btn').click(function() {
         },
         error: function(xhr) {
 
-            showError(xml.responseJSON);
+            showError(xhr.responseJSON);
         },
         complete: function() {
             _this.text(title + '账号');

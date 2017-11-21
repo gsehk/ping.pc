@@ -395,7 +395,10 @@ scroll.clickMore = function(obj) {
 
                 // 点击加载更多
                 if (scroll.setting.loadtype == 2) {
-                    $(scroll.setting.loading).after(clickHtml);
+                    res.count = res.count ? res.count : 0;
+                    if (scroll.params.limit <= res.count) {
+                        $(scroll.setting.loading).after(clickHtml);
+                    }
                 }
 
                 $("img.lazy").lazyload({ effect: "fadeIn" });
@@ -1805,3 +1808,18 @@ $(function() {
         message.init();
     }
 });
+
+var strlen = function (str){
+    var len = 0;
+    for (var i=0; i<str.length; i++) {
+        var c = str.charCodeAt(i);
+        //单字节加1
+        if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+            len++;
+        }
+        else {
+            len+=2;
+        }
+    }
+    return len;
+};
