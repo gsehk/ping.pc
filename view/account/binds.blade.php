@@ -253,7 +253,7 @@
                         }
                     },
                     error: function (xml) {
-                        showError(xml.responseJSON, 0);
+                        showError(xml.responseJSON);
                     }
                 }, 'json');
             })

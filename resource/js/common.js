@@ -640,16 +640,8 @@ var showError = function(message, defaultMessage) {
         return;
     }
     if (message.message && message.message !== null) {
-        var message = message.message;
-        for (var key in message) {
-            // if (Array.isArray(message[key])) {
 
-                noticebox(message[key], 0);
-                return;
-            // }
-        }
-
-        noticebox(defaultMessage, 0);
+        noticebox(message.message, 0);
         return;
     }
 
@@ -662,7 +654,7 @@ var showError = function(message, defaultMessage) {
     }
     noticebox(defaultMessage, 0);
     return;
-}
+};
 
 // ly.confirm 弹窗接口返回错误解析
 var lyShowError = function(message, defaultMessage) {

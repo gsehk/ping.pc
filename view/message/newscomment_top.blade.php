@@ -40,9 +40,9 @@
             var type = 'PATCH';
 
             if (data.type == 1) {
-                url = '/api/v2/news/'+data.news_id+'/comments/'+data.comment_id+'/pinneds/'+data.pinned_id;
+                url = '/api/v2/news/' + data.news_id + '/comments/' + data.comment_id + '/pinneds/' + data.pinned_id;
             } else {
-                url = '/api/v2/news/comments/'+data.comment_id+'/pinneds/'+data.pinned_id+'/reject';
+                url = '/api/v2/news/' + data.news_id + '/comments/' + data.comment_id + '/pinneds/' + data.pinned_id + '/reject';
             }
 
             $.ajax({
