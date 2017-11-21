@@ -64,11 +64,17 @@
     background-image: url(../images/arrow_news_up.png);
 }
 
-.news_left ul li {
+.news_left ul.news_cates_tab li {
     font-size: 18px;
     display: inline-block;
-    /*margin: 0 15px;*/
-    /*color: #999;*/
+    margin-right: 20px;
+    margin-bottom: 30px;
+    color: #999;
+    cursor: pointer;
+}
+
+.news_left ul.news_cates_tab li.selected {
+    color: #59b6d7 !important;
 }
 
 .news_left ul li:hover {
@@ -315,6 +321,10 @@
 
 .rel_news_word .news_title {
     height: 28px;
+}
+
+.rel_news_word a:visited {
+    color: #808080;
 }
 
 .rel_news_word p{

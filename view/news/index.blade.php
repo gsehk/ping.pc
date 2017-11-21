@@ -20,9 +20,9 @@
         <div class="news_left">
             <span class="more"></span>
             <ul class="news_cates_tab">
-            <a href="javascript:;" data-cid="0" @if($cate_id == 0) class="selected" @endif><li>推荐</li></a>
+            <li data-cid="0" @if($cate_id == 0) class="selected" @endif>推荐</li>
             @foreach ($cates as $cate)
-                <a href="javascript:;" data-cateid="{{ $cate['id'] }}" @if($cate_id == $cate['id']) class="selected" @endif><li>{{ $cate['name'] }}</li></a>
+                <li data-cateid="{{ $cate['id'] }}" @if($cate_id == $cate['id']) class="selected" @endif>{{ $cate['name'] }}</li>
             @endforeach
             </ul>
             <div id="news_list">
@@ -68,8 +68,7 @@ setTimeout(function() {
     });
 }, 300);
 
-
-$(function(){
+(function(){
     // 分类展开
     var cateH = $('.news_cates_tab').innerHeight();
                 $('.news_cates_tab').css('height', '86px');
@@ -93,7 +92,7 @@ $(function(){
     $('.unslider').unslider({delay:3000,dots: true});
 
     // 资讯分类操作菜单
-    $('.news_cates_tab a').on('click', function() {
+    $('.news_cates_tab').on('click','li', function() {
         var cate_id = $(this).data('cateid');
         $('#news_list').html('');
 
@@ -114,13 +113,14 @@ $(function(){
             params: params
         });
 
-        $('.news_cates_tab a').removeClass('selected');
+        $('.news_cates_tab li').removeClass('selected');
         $(this).addClass('selected');
     });
 
     // 图片懒加载
     $("img.lazy").lazyload({effect: "fadeIn"});
 
+    // 投稿权限判断
     $('#news-release').on('click', function () {
         checkLogin();
         if (TS.BOOT['news:contribute'].verified && TS.USER.verified == null) {
@@ -133,6 +133,6 @@ $(function(){
 
         return false;
     });
-});
+})()
 </script>
 @endsection

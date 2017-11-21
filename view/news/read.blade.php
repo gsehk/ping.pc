@@ -127,9 +127,7 @@
                               </a>
                          </div>
                          <div class="rel_news_word">
-                              <a href="{{ route('pc:newsread', ['news_id' => $rel['id']]) }}">
-                                   <div class="news_title"> {{ $rel['title'] }} </div>
-                              </a>
+                              <a href="{{ route('pc:newsread', ['news_id' => $rel['id']]) }}" class="news_title"> {{ $rel['title'] }} </a>
                               <p>{{ $rel['subject'] }}</p>
                               <div class="news_bm">
                                    <a href="{{ route('pc:news', ['cate_id' => $rel['category']['id']]) }}" class="cates_span">{{ $rel['category']['name'] or '默认'}}</a>
