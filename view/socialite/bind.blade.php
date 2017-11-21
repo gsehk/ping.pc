@@ -30,13 +30,13 @@
                         <div class="reg_input">
                             <label>账号</label>
                             <span class="input_span">
-                            <input type="text" placeholder="手机/邮箱/用户名" name="login" />
+                            <input type="text" placeholder="手机/邮箱/用户名" name="login" value=""/>
                         </span>
                         </div>
                         <div class="reg_input">
                             <label>密码</label>
                             <span class="input_span">
-                            <input type="password" placeholder="输入正确的密码" name="password" />
+                            <input type="password" placeholder="输入正确的密码" name="password" value=""/>
                         </span>
                         </div>
                     </div>

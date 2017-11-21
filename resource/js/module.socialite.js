@@ -43,7 +43,7 @@ $('#oauth_btn').click(function() {
             _this.css('cursor', 'no-drop');
         },
         success: function(res) {
-            noticebox(title + '成功，跳转中...', 1, '/passport/token/' + res.token + '/0');
+            noticebox(title + '成功，跳转中...', 1, '/passport/token/' + res.token + '/1');
         },
         error: function(xhr) {
 
