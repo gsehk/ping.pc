@@ -1809,7 +1809,7 @@ $(function() {
     }
 });
 
-var strlen = function (str){
+var strLen = function (str){
     var len = 0;
     for (var i=0; i<str.length; i++) {
         var c = str.charCodeAt(i);

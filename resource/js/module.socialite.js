@@ -20,9 +20,10 @@ $('#oauth_btn').click(function() {
         if (password == '') {
             $('input[name="password"]').focus();
             return false;
+        }
         title = '绑定';
     } else {
-        if (strLen(name) < 2) {
+        if (strLen(name) < 4) {
             noticebox('用户名不能低于2个中文或4个英文', 0);
             $('input[name="name"]').focus();
             return false;
@@ -32,10 +33,8 @@ $('#oauth_btn').click(function() {
             return false;
         }
         type = 'PATCH';
-        }
         title = '注册';
     }
-
     $('#auth_form').ajaxSubmit({
         type: type,
         url: '/api/v2/socialite/' + othertype,

@@ -72,7 +72,7 @@ $(function(){
 });
 
 function getToken(token) {
-    window.location.href = '/passport/token/' + token + '/0';
+    window.location.href = '/passport/token/' + token + '/1';
 }
 
 function toBind(other_type, access_token, name) {

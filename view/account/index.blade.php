@@ -156,11 +156,11 @@
             + '<div class="avatar-container" id="crop-avatar">'
             + '<div class="avatar-upload">'
             + '<input type="hidden" class="avatar-src" name="avatar_src">'
-            + '<label for="avatarInput">选择上传图片</label>'
             + '<input type="file" class="avatar-input" id="avatarInput" name="avatar_file">'
+            + '<label class="avatar-file" for="avatarInput">选择图片</label>'
             + '</div>'
-            + '<div class="avatar-wrapper upload-box"></div>'
-            + '<div class="save-btn"><span></span><button type="button" class="btn btn-primary avatar-save">保存</button></div>'
+            + '<div class="avatar-wrapper"></div>'
+            + '<div class="save-btn"><span>上传完成记得点击保存按钮</span><button type="button" class="btn btn-primary avatar-save">完成</button></div>'
             + '</div></div>';
         ly.loadHtml(html, '上传头像', '600px', '500px;');
         $(function () {
