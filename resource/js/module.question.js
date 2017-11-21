@@ -131,12 +131,16 @@ var question = {
                 url: url,
                 type: 'DELETE',
                 dataType: 'json',
-                success: function(res) {
-                    layer.close(index);
-                    noticebox('删除成功', 1, '/question');
+                success: function(res, data, xhr) {
+                    layer.closeAll();
+                    if (xhr.status == 204) {
+                        noticebox('删除成功', 1, '/question');
+                    } else {
+                        noticebox(res.message, 0);
+                    }
                 },
                 error: function(xhr){
-                    layer.close(index);
+                    layer.closeAll();
                     showError(xhr.responseJSON);
                 }
             });

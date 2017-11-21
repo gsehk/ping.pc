@@ -229,7 +229,7 @@ class QuestionController extends BaseController
     {
         $params['limit'] = $request->input('limit') ?: 10;
         $params['offset'] = $request->input('offset') ?: 0;
-        $params['order_type'] = $request->input('order_type') ?: 'default';
+        $params['order_type'] = $request->input('order_type') ?: 'time';
         $data['answers'] = createRequest('GET', '/api/v2/questions/'.$question_id.'/answers', $params);
         if ($params['offset'] == 0) {
             $question = createRequest('GET', '/api/v2/questions/'.$question_id );
