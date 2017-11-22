@@ -18,7 +18,7 @@
         <div class="account_c_c">
             <div class="account_tab" id="J-input">
                 <div class="perfect_title">
-                    <p>修改密码</p>
+                    <p>{{ $showPassword ? '修改密码' : '设置密码' }}</p>
                 </div>
                 @if($showPassword)
                     <div class="account_form_row">

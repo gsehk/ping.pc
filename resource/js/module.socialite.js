@@ -50,7 +50,7 @@ $('#oauth_btn').click(function() {
             showError(xhr.responseJSON);
         },
         complete: function() {
-            _this.text(title + '账号');
+            _this.text('确定');
             _this.css('cursor', 'pointer');
         }
     });

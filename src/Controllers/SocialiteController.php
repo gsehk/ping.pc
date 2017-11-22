@@ -104,6 +104,7 @@ class SocialiteController extends BaseController
                 ];
 
             } else { // 绑定、注册
+                Session::put('initial_password', false);
                 $return = [
                     'status' => -1,
                     'message' => '正在前往绑定窗口...',
