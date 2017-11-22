@@ -56,10 +56,27 @@ $('#J-user-security').on('click', function(){
         };
         return args.get();
     };
+     var data = getArgs();
+     if (({{ (boolean)$showPassword }} == 1) && data.old_password.length < 1) {
+         noticebox('请输入原密码', 0);
+         $('input[name="old_password"]').focus();
+         return false;
+     }
+    if (data.password.length < 6 || password.length > 15) {
+        noticebox('密码长度必须在6-15个字符', 0);
+        $('input[name="password"]').focus();
+        return false;
+    }
+    if (data.password != data.password_confirmation) {
+        noticebox('两次密码输入不一致', 0);
+        $('input[name="password_confirmation"]').focus();
+        return false;
+    }
+
     $.ajax({
         url: '/api/v2/user/password',
         type: 'PUT',
-        data: getArgs(),
+        data: data,
         dataType: 'json',
         error: function(xhr) {
             showError(xhr.responseJSON);
