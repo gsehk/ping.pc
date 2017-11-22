@@ -38,7 +38,7 @@ socket = {
             }
 
             // 若房间为新创建，新建房间
-            if (!message.datas[dbMsg['cid']]) {
+            if (!message.datas.list[dbMsg['cid']]) {
                 // 获取对话信息
                 $.ajax({
                     url: '/api/v2/im/conversations/' + dbMsg['cid'],
@@ -155,7 +155,7 @@ socket = {
     onClose : function(event) {
         if(!window.TS.webSocket) return;
         window.TS.webSocket = null;
-        console.log('WebSocket关闭：ws://' + TS.BOOT['im:serve']);
+        console.log('WebSocket关闭：' + TS.BOOT['im:serve']);
     }
 };
 
@@ -399,6 +399,7 @@ message = {
         });
     },
 
+    // 创建会话
     createConversation: function(user_id) {
         checkLogin();
         $.ajax({
@@ -410,6 +411,7 @@ message = {
                 uids: TS.USER.id + ',' + user_id
             },
             success: function(res) {
+
                 var _res = _.keyBy([res], 'cid');
                 message.datas.list = Object.assign({}, message.datas.list, _res);
 
@@ -421,6 +423,10 @@ message = {
                 res['other_uid'] = user_id;
                 message.storeConversation(res);
                 message.datas.seqs = _.union(message.datas.seqs, [res.cid]);
+                // 如果侧边栏没有该会话，则创建
+                if ($('#ms_chat_' + res.cid).length == 0) {
+                    message.setOuterCon(res);
+                }
                 message.openChatDialog(5, res.cid);
             },
             error: function(xhr){
@@ -461,10 +467,14 @@ message = {
     },
 
     sendMessage: function(cid) {
+        var txt = $('#chat_text').val();
+        if (txt == '') {
+            $('#chat_text').focus();
+            return false;
+        }
         var msg = '2';
         var time = (new Date()).getTime();
         var hash = time + '_'  + TS.MID;
-        var txt = $('#chat_text').val();
         var message_one = [
             'convr.msg',
             {
