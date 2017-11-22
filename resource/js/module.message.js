@@ -292,7 +292,7 @@ message = {
                 if (item.del == 0 || item.cid == _this.datas.cid) {
                     var css = room.cid == _this.datas.cid ? 'class="room_item current_room"' : 'class="room_item"';
 
-                    var last_message = room.last_message == undefined ? '' : room.last_message;
+                    var last_message = item.last_message == undefined ? '' : item.last_message;
 
                     var html = '<li ' + css + ' class="room_item" data-type="5" data-cid="' + room['cid'] + '" id="chat_' + room['cid'] + '">'
                                 +      '<div class="chat_delete"><a href="javascript:;" onclick="message.delConversation(' + room['cid'] + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu"></use></svg></a></div>'
