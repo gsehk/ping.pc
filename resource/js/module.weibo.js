@@ -290,6 +290,7 @@ weibo.payText = function(obj, tourl){
                         success: function(res) {
                             _this.text(res.feed_content);
                             _this.removeClass('fuzzy');
+                            _this.removeAttr('onclick');
                         }
                     });
                 } else {
