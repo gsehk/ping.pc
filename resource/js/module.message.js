@@ -22,7 +22,7 @@ socket = {
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
                 // 消息放入本地
                 window.TS.dataBase.message.put(dbMsg);
-                
+
                 // 修改房间最后消息时间
                 window.TS.dataBase.room.where({cid: dbMsg.cid,owner: dbMsg.owner}).modify({
                     last_message_time: dbMsg.time,
@@ -35,7 +35,7 @@ socket = {
                         window.TS.dataBase.room.where({cid: dbMsg.cid,owner: dbMsg.owner}).modify({
                             del: 0
                         });
-                        mesaage.setNewCon(message.datas.list[dbMsg.cid]);
+                        message.setNewCon(message.datas.list[dbMsg.cid]);
                     }
                 });
             });
