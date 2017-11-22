@@ -27,10 +27,21 @@ socket = {
                     last_message_time: dbMsg.time,
                     last_message: dbMsg.txt
                 })
+
+                // 若房间为删除状态
+                window.TS.dataBase.room.where({cid: dbMsg.cid,owner: dbMsg.owner}).first().then(results => {
+                    if (results.del == 1) {
+                        window.TS.dataBase.room.where({cid: dbMsg.cid,owner: dbMsg.owner}).modify({
+                            del: 0
+                        });
+                        mesaage.setNewCon(message.datas.list[dbMsg.cid]);
+                    }
+                });
             });
 
             // 若聊天窗口为打开状态
             if ($('.chat_dialog').length > 0) {
+                // 当前会话，添加消息
                 if (message.datas.cid == dbMsg.cid && window.TS.MID != dbMsg.uid) {
                     message.setMessage(dbMsg.txt, dbMsg.uid);
                 }
@@ -466,6 +477,7 @@ message = {
         });
     },
 
+    // 发送消息
     sendMessage: function(cid) {
         var txt = $('#chat_text').val();
         if (txt == '') {
