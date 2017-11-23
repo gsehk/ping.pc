@@ -62,7 +62,7 @@ $('#J-user-security').on('click', function(){
          $('input[name="old_password"]').focus();
          return false;
      }
-    if (data.password.length < 6 || password.length > 15) {
+    if (data.password.length < 6 || data.password.length > 15) {
         noticebox('密码长度必须在6-15个字符', 0);
         $('input[name="password"]').focus();
         return false;

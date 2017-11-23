@@ -2,6 +2,7 @@
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 @endphp
 @if(!$answers->isEmpty())
     @foreach ($answers as $answer)
@@ -34,7 +35,7 @@
                         @endif
                     </div>
                     <div class="authorinfo-time">
-                        <span>{{ $answer->created_at }}</span>
+                        <span>{{ getTime($answer->created_at) }}</span>
                     </div>
                 </div>
             </div>

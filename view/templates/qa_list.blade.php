@@ -1,5 +1,6 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 @endphp
 @foreach ($datas as $data)
 	<div class="qa-item">
@@ -25,7 +26,7 @@
 		        	@endforeach
 		        </span>
 	        @endif
-	        <span class="gcolor ctime fr">{{ $data->created_at }}</span>
+	        <span class="gcolor ctime fr">{{ getTime($data->created_at) }}</span>
 	    @endif
 	    </div>
 	    <div class="qa-body mt20 mb20 clearfix">

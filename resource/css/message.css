@@ -240,6 +240,10 @@
     margin-right: 20px;
 }
 
+.message_cont .comment_audit a.red {
+    color: red;
+}
+
 .message_cont .top_comment {
     line-height: 25px;
 }

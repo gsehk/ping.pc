@@ -14,11 +14,13 @@
                 <div class="top_comment">对你的动态进行了"<sapn>{{$comment['comment']['body']}}</sapn>"评论并申请置顶，请及时审核。</div>
 
                 <div class="comment_audit">
-                    @if($comment['expires_at'] == null)
+                    @if($comment['comment'] == null || $comment['feed'] == null)
+                        <a href="javascript:" class="red">该评论已被删除</a>
+                    @elseif($comment['expires_at'] == null)
                         <a href="javascript:" class="green" data-args="type=1&feed_id={{$comment['feed']['id']}}&comment_id={{$comment['comment']['id']}}&pinned_id={{$comment['id']}}">同意置顶</a>
                         <a href="javascript:" class="green" data-args="type=-1&feed_id={{$comment['feed']['id']}}&comment_id={{$comment['comment']['id']}}&pinned_id={{$comment['id']}}">拒绝置顶</a>
                     @else
-                        <a href="javascript:">同意置顶</a>
+                        <a href="javascript:">已审核</a>
                     @endif
                 </div>
             </dd>
