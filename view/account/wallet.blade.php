@@ -51,7 +51,7 @@
                             <p class="gcolor">账户余额（{{ $config['bootstrappers']['site']['gold_name']['name'] }}）</p>
                         </div>
                         <p>使用规则</p>
-                        {{ $wallet['rule'] }}
+                        {{ $wallet['rule'] or ''}}
                     </div>
 
                     <div class="wallet-body" id="wallet-records">

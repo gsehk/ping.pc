@@ -26,7 +26,6 @@
         <div class="pay-way">
             <img src="{{ asset('zhiyicx/plus-component-pc/images/pay_pic_zfb_on.png') }}"/>
             <input class="hide" id="alipay" type="radio" name="payway" value="alipay_pc_direct" checked>
-            {{-- <label class="opt" for="wxpay">微信<input class="hide" id="wxpay" type="radio" name="payway" value="wx"></label> --}}
         </div>
 
         <button type="submit" class="pay-btn" id="J-pay-btn">充值</button>
