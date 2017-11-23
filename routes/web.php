@@ -203,7 +203,7 @@ Route::prefix('group')->group(function () {
     Route::get('/', 'GroupController@index')->name('pc:group');
 
     // 圈子详情
-    Route::get('/{group_id?}', 'GroupController@read')->where(['group_id' => '[1-9]+'])->name('pc:groupread');
+    Route::get('/{group_id?}', 'GroupController@read')->where(['group_id' => '[0-9]+'])->name('pc:groupread');
 
     // 获取圈子列表
     Route::get('list', 'GroupController@list');
