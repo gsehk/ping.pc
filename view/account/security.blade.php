@@ -57,7 +57,7 @@ $('#J-user-security').on('click', function(){
         return args.get();
     };
      var data = getArgs();
-     if (({{ (boolean)$showPassword }} == 1) && data.old_password.length < 1) {
+     if (('{{ $showPassword }}' == '1') && data.old_password.length < 1) {
          noticebox('请输入原密码', 0);
          $('input[name="old_password"]').focus();
          return false;
