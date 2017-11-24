@@ -1,33 +1,6 @@
 (function($) {
 	// 获取路径
-	var path = (function (script) {
-		script = script[script.length-1].src.replace(/\\/g, '/');
-		return script.lastIndexOf('/') < 0 ? '.' : script.substring(0, script.lastIndexOf('/'));
-	})(document.getElementsByTagName('script'));
-
-	$(function () {
-		var cursorCss = ".actizPicShow .bigcursor{cursor:url('" + path + "/images/big.cur'), pointer;}\
-			.actizPicShowExpand .smallcursor{ cursor:url('" + path + "/images/small.cur'), pointer;}\
-			.actizPicShowExpand .leftcursor{ cursor:url('" + path + "/images/pic_prev.cur'), pointer;}\
-			.actizPicShowExpand .rightcursor{ cursor:url('" + path + "/images/pic_next.cur'), pointer;}\
-			}"; //IE cursor 路径相对于HTML
-
-		// link
-		$(document.createElement('link')).attr({
-			href: path + "/picShow.css",
-			rel: "stylesheet",
-			type: "text/css"
-		}).appendTo('head');
-
-		// style
-		var style = document.createElement('style');
-		style.setAttribute('type', 'text/css');
-		style.styleSheet && (style.styleSheet.cssText += cursorCss) || style.appendChild(document.createTextNode(cursorCss));
-		document.getElementsByTagName('head')[0].appendChild(style);
-		style = null;
-	});
-
-	jQuery.fn.actizPicShow=function(option){
+	jQuery.fn.PicShow=function(option){
 		option.id=option.id || $(this).attr("id") ;
 		option.width=option.width || 80;//多图片显示宽度
 		option.height=option.height || 80;//多图片显示高度
@@ -61,7 +34,7 @@
 				return;
 			}
 			var morepicArray= new Array();
-			morepicArray.push('<div id="'+option.id+'_picshow_narrow" class="actizPicShow">');
+			morepicArray.push('<div id="'+option.id+'_picshow_narrow" class="PicShow">');
 			morepicArray.push('<ul>');
 			for(var i=0;i<option.data.length;i++){
 				morepicArray.push('<li>');
@@ -85,7 +58,7 @@
 				return;
 			}
 			var b=new Array();
-			b.push('<div id="'+option.id+'_picshow_expand" class="actizPicShowExpand">');
+			b.push('<div id="'+option.id+'_picshow_expand" class="PicShowExpand">');
 			b.push(expandTop());
 			b.push(expandCenterImgHtml(option.data[current_i].id,option.data[current_i].img,option.data[current_i].width,option.data[current_i].height));
 			b.push(expandFootMoreHtml());
@@ -102,7 +75,7 @@
 				return;
 			}
 			var onepicArray= new Array();
-			onepicArray.push('<div id="'+option.id+'_picshow_narrow" class="actizPicShow">');
+			onepicArray.push('<div id="'+option.id+'_picshow_narrow" class="PicShow">');
 			onepicArray.push('<img id="'+option.data[0].id+'" class="bigcursor" curLoc="0" ');
 			onepicArray.push('src="'+option.data[0].img+'" alt="">');
 			onepicArray.push('</div>');
@@ -117,7 +90,7 @@
 				return;
 			}
 			var b=new Array();
-			b.push('<div id="'+option.id+'_picshow_expand" class="actizPicShowExpand">');
+			b.push('<div id="'+option.id+'_picshow_expand" class="PicShowExpand">');
 			b.push(expandTop());
 			b.push(expandCenterImgHtml(option.data[current_i].id,option.data[current_i].img,option.data[current_i].width,option.data[current_i].height));
 			b.push('</div>');
@@ -132,10 +105,6 @@
 			a.push('<a  href="javascript:void(0);" class="retract"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_top_grey"></use></svg>收起</a>');
 			a.push('<i class="W_vline">|</i>');
 			a.push('<a href="javascript:;" class="showbig"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_largest_grey"></use></svg>查看原图</a>');
-			a.push('<i class="W_vline">|</i>');
-			a.push('<a  href="javascript:void(0);" class="turn_left"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_xzz_grey"></use></svg>向左转</a>');
-			a.push('<i class="W_vline">|</i>');
-			a.push('<a href="javascript:void(0);" class="turn_right"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_xyz_grey"></use></svg>向右转</a>');
 			a.push('</p>');
 			return a.join("");
 		}

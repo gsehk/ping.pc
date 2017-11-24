@@ -2449,3 +2449,248 @@ img.load {
     border-bottom: 6px solid transparent;
     border-top: 6px solid transparent;
 }
+
+/*图片展开显示*/
+.PicShow{
+    height:auto;
+    float: left;
+    border: 1px solid #d9d9d9;
+    background-color: #f2f2f2;
+    border-radius: 3px;
+    padding: 10px 20px 10px;
+    margin: 5px 0 15px;
+    clear: both;
+}
+.PicShow ul{
+    list-style-type:none;
+    margin:0px;padding:0px;
+}
+.PicShow li{
+    float: left;
+    display: inline;
+    width: 80px;
+    height: 80px;
+    margin: 5px 0 0 5px;
+    overflow: hidden;
+    position: relative;
+    list-style-type:none;
+}
+.PicShowExpand{
+    color:#ccc;
+    background-color: #efefef;
+    padding: 0px 40px 20px;
+    margin: 0px -40px;
+    clear: both;
+    overflow: hidden;
+}
+.PicShowExpand #expandCenterImg{
+    clear: both;
+    text-align: center;
+    vertical-align:middle;
+    width:100%;
+}
+.PicShowExpand #expandCenterImg img{
+    vertical-align:middle;
+    margin:0;
+}
+.PicShowExpand .ico_retract{
+    background-position: -175px 0px;
+    vertical-align: -2px;
+}
+.PicShowExpand .expand_top{
+    color:#999;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    width:auto;
+    margin: 0;
+    line-height: 40px;
+}
+.PicShowExpand .expand_top a{
+    text-decoration: none;
+}
+.PicShowExpand .expand_top a:hover{
+    color: #59b6d7;
+}
+.PicShowExpand .expand_top .W_vline{
+    margin: 0 10px;
+    color: #ccc;
+}
+.PicShowExpand .expand_top svg{
+    margin-right: 5px;
+    margin-top: -2px;
+}
+.PicShowExpand .ico_retract{
+    background-position: -175px 0px;
+    vertical-align: -2px;
+}
+.PicShowExpand .ico_showbig{
+    background-position: -175px -24px;
+    vertical-align: -2px;
+}
+.PicShowExpand .ico_turnleft{
+    background-position: -175px -50px;
+    vertical-align: -2px;
+}
+.PicShowExpand .ico_turnright{
+    background-position: -175px -75px;
+    vertical-align: -2px;
+}
+.PicShowExpand .ico_collect{
+    background-position: -200px -500px;
+    vertical-align: -2px;
+}
+.PicShowExpand .pic_choose_box {
+    width: 440px;
+    height: 56px;
+    margin-top: 15px;
+}
+.PicShowExpand ul{
+    list-style-type:none;
+    margin:0px;padding:0px;
+    width: 8000px;
+
+}
+.PicShowExpand .arrow_left_small{
+    float: left;
+    display: inline-block;
+    cursor: default;
+    width: 12px;
+    height: 50px;
+    text-decoration: none;
+    line-height: 50px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    background-color: #b9dce6;
+    padding-top:2px;
+    margin-top: 3px;
+}
+.PicShowExpand .arrow_left_small .ico_pic_prev{
+    color: #333333;
+    cursor: default;
+    display: inline;
+    font-family: SimSun;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 600;
+    height: auto;
+    line-height: 50px;
+    margin-top: 20px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-align: center;
+    text-decoration: none;
+    width: auto;
+}
+.PicShowExpand ul a{
+    display: inline-block;
+    opacity: 0.6;
+    padding:2px;
+}
+.PicShowExpand ul li{
+    float: left;
+    _display: inline;
+    width: 58px;
+    height: 58px;
+    margin: 0 4px 0 0;
+}
+.PicShowExpand ul a{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.PicShowExpand ul a.current{
+    padding: 0;
+    border: 2px solid #f9b50f;
+    text-decoration: none;
+    opacity: 1.0;
+}
+.PicShowExpand ul a:hover{
+    padding: 0;
+    border: 2px solid #ffa306;
+    text-decoration: none;
+    opacity: 1.0;
+}
+.PicShowExpand ul img{
+    max-width: none;
+    border:0
+}
+.PicShowExpand .arrow_right_small{
+    color: #333333;
+    background-color: #14a0cd;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 4px;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 600;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 3px;
+    text-align: center;
+    text-decoration: none;
+    width: 12px;
+    padding-top:2px;
+
+}
+.PicShowExpand .arrow_right_small .ico_pic_next{
+    cursor: default;
+    display: inline;
+    font-family: SimSun;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 600;
+    height: auto;
+    line-height: 50px;
+    margin-top: 20px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-align: center;
+    width: auto;
+}
+.PicShowExpand .stage_box{
+    float: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 13px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.PicShowExpand .big1{
+    cursor:pointer;
+    background-color:#14a0cd;
+}
+.PicShowExpand .big2{
+    cursor:default;
+    background-color:#b9dce6;
+}
+.PicShowExpand .text1{
+    cursor:pointer;
+}
+.PicShowExpand .text2{
+    cursor:default;
+}
+.PicShow .bigcursor {
+    cursor:url("../images/big.cur"), pointer;
+}
+.PicShowExpand .smallcursor {
+    cursor:url("../images/small.cur"), pointer;
+}
+.PicShowExpand .leftcursor{ 
+    cursor:url("../images/pic_prev.cur"), pointer;
+}
+.PicShowExpand .rightcursor{ 
+    cursor:url("../images/pic_next.cur"), pointer;
+}

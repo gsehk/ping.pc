@@ -132,7 +132,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
             data.push(img);
         }
     }
-    $('#feed_photos_{{$post->id}}').actizPicShow({
+    $('#feed_photos_{{$post->id}}').PicShow({
         data: data,
         bigWidth: {{ $conw or 635}},
         bigHeight: {{ $conh or 400}}        
