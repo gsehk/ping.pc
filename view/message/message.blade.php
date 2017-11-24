@@ -147,6 +147,7 @@
             var type = $(this).data('type');
 
             if (type == 5) {
+                body_title.removeClass('hide');
                 $('#message_wrap').hide();
                 $('#chat_wrap').show();
                 var cid = $(this).data('cid');
