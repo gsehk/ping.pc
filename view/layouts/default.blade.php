@@ -28,14 +28,14 @@
 
 <body @yield('body_class')>
     <div class="wrap">
-        <!-- nav -->
+        {{-- 导航 --}}
         @include('pcview::layouts.partials.nav')
 
-        <!-- noticebox -->
+        {{-- 提示框 --}}
         <div class="noticebox">
         </div>
 
-        <!-- content -->
+        {{-- 内容 --}}
         <div class="main">
             <div class="container @yield('extra_class') clearfix">
             @yield('content')
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <!-- footer -->
+    {{-- 底部 --}}
     @include('pcview::layouts.partials.footer')
 
     <script src="{{ asset('zhiyicx/plus-component-pc/js/common.js') }}"></script>
@@ -59,7 +59,11 @@
     <script src="{{ asset('zhiyicx/plus-component-pc/layer/layer.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/dexie.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.message.js') }}"></script>
-
     @yield('scripts')
+
+    {{-- 统计代码 --}}
+    @if (isset($config['common']['stats_code']) && $config['common']['stats_code'] != '')
+    {!! $config['common']['stats_code'] !!}
+    @endif
 </body>
 </html>

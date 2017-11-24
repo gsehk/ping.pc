@@ -29,29 +29,31 @@
 <body @yield('body_class')>
 
     <div class="wrap">
-        <!-- nav -->
+        {{-- 导航 --}}
         @include('pcview::layouts.partials.authnav')
 
-        <!-- noticebox -->
+        {{-- 提示框 --}}
         <div class="noticebox authnoticebox">
         </div>
 
-        <!-- content -->
+        {{-- 内容 --}}
         <div class="main">
         @yield('content')
         </div>
     </div>
 
-    <!-- footer -->
+    {{-- 底部 --}}
     @include('pcview::layouts.partials.authfooter')
 
     <script src="{{ asset('zhiyicx/plus-component-pc/js/common.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/font/iconfont.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.cookie.js') }}"></script>
-
-    <!-- js -->
     @yield('scripts')
 
+    {{-- 统计代码 --}}
+    @if (isset($config['common']['stats_code']) && $config['common']['stats_code'] != '')
+    {!! $config['common']['stats_code'] !!}
+    @endif
 </body>
 
 </html>
