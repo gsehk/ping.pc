@@ -1464,6 +1464,22 @@ var cancelBubble = function() {
     }
 }
 
+// 字数计算
+var strLen = function (str){
+    var len = 0;
+    for (var i=0; i<str.length; i++) {
+        var c = str.charCodeAt(i);
+        //单字节加1
+        if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+            len++;
+        }
+        else {
+            len+=2;
+        }
+    }
+    return len;
+};
+
 $(function() {
 
     // Jquery fixed拓展
@@ -1795,23 +1811,29 @@ $(function() {
         }
     });
 
+    // IM聊天
     if (TS.MID > 0 && TS.BOOT['im:serve']) {
         // 聊天初始化
         message.init();
     }
-});
 
-var strLen = function (str){
-    var len = 0;
-    for (var i=0; i<str.length; i++) {
-        var c = str.charCodeAt(i);
-        //单字节加1
-        if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
-            len++;
+    // 回车事件绑定
+    document.onkeyup = function(e){
+        e = e || window.event;
+        if(e.keyCode == 13){
+            var target = e.target || e.srcElment;
+            if(target.id == 'head_search'){ // 搜索
+                var val = $('#head_search').val();
+                setHistory(val);
+                window.location.href = '/search/1/' + val;
+            }else if(target.id == 'feed_content'){ // 发布动态
+                weibo.postFeed();
+            }else if(target.id == 'chat_text'){ // 发送消息
+                $('#chat_send').click();
+            }else if(target.id == 'l_login' || target.id == 'l_password'){ // 登录
+                $('#login_btn').click();
+            }
         }
-        else {
-            len+=2;
-        }
-    }
-    return len;
-};
+    } 
+ 
+});

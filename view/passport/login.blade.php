@@ -14,10 +14,10 @@
     <div class="login_right">
         <form method="POST" id="login_form">
             <div class="login_input">
-                <input type="text" placeholder="输入手机号/邮箱/昵称" name="login" id="test"/>
+                <input type="text" placeholder="输入手机号/邮箱/昵称" name="login" id="l_login"/>
             </div>
             <div class="login_input">
-                <input type="password" placeholder="输入密码" name="password"/>
+                <input type="password" placeholder="输入密码" name="password" id="l_password"/>
             </div>
             <div class="login_extra">
                 <a class="forget_pwd" href="{{ route('pc:findpassword') }}">忘记密码</a>
@@ -59,15 +59,10 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.form.js') }} "></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.passport.js') }} "></script>
 <script type="text/javascript">
-$(function(){ 
-    $(document).keydown(function(event){
-        if(event.keyCode==13){
-            $("#login_btn").click();
-        }
-    });
+$(function(){
     $('.bind').click('on', function () {
         var type = $(this).data('type');
-        window.open("/socialite/"+type, "", "height=560, width=700");
+        window.open("/socialite/" + type, "", "height=560, width=700");
     });
 });
 
