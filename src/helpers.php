@@ -123,9 +123,15 @@ function getShort($str, $length = 40, $ext = '')
 
 function formatContent($content)
 {
+    // 链接替换
     $content = preg_replace_callback('/((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)/u', function($url){
         return '<a href="'.$url[0].'" target="_blank" style="color:#59b6d7;">访问链接+</a>';
     }, $content);
+
+    // 回车替换
+    $pattern = array("\r\n","\n","\r");
+    $replace = '<br>';
+    $content = str_replace($pattern, $replace, $content); 
 
     return $content;
 }

@@ -537,6 +537,8 @@ message = {
     // 设置消息
     setMessage: function(txt, user_id){
         $('#chat_text').val('');
+        txt = txt.replace(/\r\n/g, "<br>");
+        txt = txt.replace(/\n/g, "<br>");
 
         if (user_id != window.TS.MID) {
             html = '<div class="chatC_left">'
