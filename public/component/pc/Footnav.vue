@@ -111,7 +111,10 @@ const navComponent = {
             createRequestURI('nav/del/'+id),
             { validateStatus: status => status === 200 }
           ).then(({ message = '删除成功' }) => {
-            const index = this.list.indexOf({id: id});
+            let index;
+            this.list.find(function(v, k){
+              if (v.id == id) index = k;
+            });
             this.loadding = false;
             this.list.splice(index, 1);
           }).catch(({ response: { message = '删除失败' } = {} }) => {

@@ -53,6 +53,12 @@
               <input type="text" name="site_technical" class="form-control" id="site_technical" v-model="site.site_technical">
           </div>
         </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="position">统计代码</label>
+          <div class="col-sm-4">
+              <textarea class="form-control" id="stats_code" name="stats_code" v-model="site.stats_code"></textarea>
+          </div>
+        </div>
 
         <!-- button -->
         <div class="form-group">
@@ -99,6 +105,7 @@ const NavmanageComponent = {
       logo: '',
       loginbg: '',
       status: 1,
+      stats_code: '',
       site_name: 'ThinkSNS',
       site_copyright: 'Powered by ThinkSNS ©2017 ZhishiSoft All Rights Reserved.',
       site_technical: 'ThinkSNS+',
