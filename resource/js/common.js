@@ -1828,7 +1828,7 @@ $(function() {
                 window.location.href = '/search/1/' + val;
             }else if(target.id == 'feed_content'){ // 发布动态
                 weibo.postFeed();
-            }else if(target.id == 'chat_text'){ // 发送消息
+            }else if(target.id == 'chat_text' && $('#chat_text').val() != ''){ // 发送消息
                 $('#chat_send').click();
             }else if(target.id == 'l_login' || target.id == 'l_password'){ // 登录
                 $('#login_btn').click();
