@@ -97,7 +97,7 @@
         </div>
 
         <div class="chat_bottom">
-            <textarea placeholder="输入文字" class="chat_textarea" id="chat_text"></textarea>
+            <textarea placeholder="输入文字, ctrl+enter发送" class="chat_textarea" id="chat_text"></textarea>
             <span class="chat_send" onclick="message.sendMessage({{ $cid }})" id="chat_send">发送</span>
         </div>
     </div>

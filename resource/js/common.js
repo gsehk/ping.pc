@@ -1466,6 +1466,7 @@ var cancelBubble = function() {
 
 // 字数计算
 var strLen = function (str){
+    str = str.replace(/(\s+)|([\r\n])/g, '');
     var len = 0;
     for (var i=0; i<str.length; i++) {
         var c = str.charCodeAt(i);
@@ -1820,19 +1821,21 @@ $(function() {
     // 回车事件绑定
     document.onkeyup = function(e){
         e = e || window.event;
+        // 回车
         if(e.keyCode == 13){
             var target = e.target || e.srcElment;
             if(target.id == 'head_search'){ // 搜索
                 var val = $('#head_search').val();
                 setHistory(val);
                 window.location.href = '/search/1/' + val;
-            }else if(target.id == 'feed_content'){ // 发布动态
-                weibo.postFeed();
-            }else if(target.id == 'chat_text' && $('#chat_text').val() != ''){ // 发送消息
-                $('#chat_send').click();
             }else if(target.id == 'l_login' || target.id == 'l_password'){ // 登录
                 $('#login_btn').click();
             }
+        }
+
+        // ctrl + 回车发送消息
+        if(e.ctrlKey && e.keyCode == 13 && strLen($('#chat_text').val()) != 0) {
+            $('#chat_send').click();
         }
     } 
  
