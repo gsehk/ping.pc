@@ -29,6 +29,7 @@
                 <div class="m-ct f-cb">
                     <div class="ct-left">
                         <img src="{{ $group->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png') }}" height="100%">
+                        <span class="ct-cate">{{$group->category->name}}</span>
                     </div>
                     <div class="ct-right">
                         <div class="ct-tt">
@@ -56,8 +57,6 @@
                     @foreach ($group->tags as $tag)
                         <span class="u-tag">{{$tag->name}}</span>
                     @endforeach
-                    <span class="u-tag">猫奴</span>
-                    <span class="u-tag">宠物世界</span>
                 </div>
             </div>
         </div>

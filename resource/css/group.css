@@ -107,7 +107,9 @@
 .p-readgroup .g-hd .m-snav{padding-bottom:12px;border-bottom:1px solid #ededed;}
 .p-readgroup .m-crumb{font-size:14px;line-height:32px;}
 .p-readgroup .g-hd .m-ct{margin:20px auto;}
-.p-readgroup .m-ct .ct-left{float:left;width:140px;height:140px;}
+.p-readgroup .m-ct .ct-left{float:left;width:140px;height:140px;position: relative;}
+.p-readgroup .m-ct .ct-left span{display:inline-block;width:80px;padding:5px 15px;position:absolute;top:15px;left:-15px;background-color:#59B6D7;color:white;width:80px;padding-left:20px;border-radius:0 15px 15px 0;}
+
 .p-readgroup .m-ct .ct-right{padding-left:160px}
 .p-readgroup .m-ct .ct-tt{line-height:45px;font-size:20px;}
 .p-readgroup .m-ct .u-share{float:right;font-size:14px;color:#AAA;cursor:pointer;}
