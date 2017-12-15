@@ -19,9 +19,9 @@
 }
 .profile-btn > svg ,
 .contribute-btn > svg {
-    width: 16px;
-    margin-right: 4px;
-    margin-top: -2px;
+    width: 20px;
+    margin-right: 5px;
+    color:white;
 }
 
 .follow-box {
