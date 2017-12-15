@@ -9,9 +9,10 @@
 <script type="text/javascript">
     var editor = editormd("TS_edit",{
         id   : "editormd",
-        width: "{{ $width }}",
-        height: "{{ $height }}",
+        width: "{{ $width or '100%'}}",
+        height: "{{ $height or '530px'}}",
         watch : false,
+        placeholder: "{{ $place or ''}}",
         path : "{{ asset('zhiyicx/plus-component-pc/markdown/lib') }}/",
         saveHTMLToTextarea : true,
         imageUpload : true,
