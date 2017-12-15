@@ -1,6 +1,4 @@
-@section('title')
-    {{ $post->title }}
-@endsection
+@section('title') {{ $post->title }} @endsection
 
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
@@ -21,7 +19,7 @@
             {{-- <div class="post-title">{{$post->title}}</div> --}}
             <dl class="user-box clearfix">
                 <dt class="fl">
-                    <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
+                    <a class="avatar_box" href="{{ route('pc:mine', $post->user_id) }}">
                     <img class="round" src="{{ getAvatar($post->user, 60) }}" width="60">
                     @if($post->user->verified)
                     <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
@@ -43,33 +41,33 @@
             @endif
 
             <div class="detail_body">
-                {!!$post->content!!}
+                {!!$post->body!!}
             </div>
 
             <div class="detail_share">
-                <span id="J-collect{{ $post->id }}" rel="{{ $post->collections }}" status="{{(int) $post->has_collection}}">
-                    @if($post->has_collection)
+                <span id="J-collect{{ $post->id }}" rel="{{ $post->collectors->count() }}" status="{{(int) $post->collected}}">
+                    @if($post->collected)
                     <a class="act" href="javascript:;" onclick="collected.init({{$post->id}}, 'group', 0);">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
-                        <font class="cs">{{ $post->collections }}</font> 人收藏
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                        <font class="cs">{{ $post->collectors->count() }}</font> 人收藏
                     </a>
                     @else
                     <a href="javascript:;" onclick="collected.init({{$post->id}}, 'group', 0);">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
-                        <font class="cs">{{ $post->collections }}</font> 人收藏
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                        <font class="cs">{{ $post->collectors->count() }}</font> 人收藏
                     </a>
                     @endif
                 </span>
-                <span class="digg" id="J-likes{{$post->id}}" rel="{{$post->diggs}}" status="{{(int) $post->has_like}}">
-                    @if($post->has_like)
+                <span class="digg" id="J-likes{{$post->id}}" rel="{{$post->likes_count}}" status="{{(int) $post->liked}}">
+                    @if($post->liked)
                     <a class="act" href="javascript:void(0)" onclick="liked.init({{$post->id}}, 'group', 0)">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
-                        <font>{{$post->diggs}}</font> 人喜欢
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like-copy"></use></svg>
+                        <font>{{$post->likes_count}}</font> 人喜欢
                     </a>
                     @else
                     <a href="javascript:;" onclick="liked.init({{$post->id}}, 'group', 0)">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
-                        <font>{{$post->diggs}}</font> 人喜欢
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg>
+                        <font>{{$post->likes_count}}</font> 人喜欢
                     </a>
                     @endif
                 </span>
@@ -91,7 +89,7 @@
 
             {{-- 评论 --}}
             @include('pcview::widgets.comments', ['id' => $post->id, 'group_id' => $post->group_id , 'comments_count' => $post->comments_count, 'comments_type' => 'group', 'loading' => '.feed_left', 'position' => 0])
-            
+
         </div>
     </div>
 

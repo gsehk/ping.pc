@@ -39,7 +39,8 @@ scroll.init({
     container: '#content_list',
     loading: '.profile_content',
     url: '/profile/group',
-    params: {user: {{$user->id}} }
+    paramtype: 1,
+    params: {limit: 15, user: {{$user->id}} }
 });
 
 $('#content_list').on('click', '.J-join', function(){

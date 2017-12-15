@@ -8,7 +8,7 @@ class HotGroups
 {
     public function compose(View $view)
     {
-    	$api =  '/api/v2/groups';
+    	$api =  '/api/v2/plus-group/groups';
 
         $groups = createRequest('GET', $api, ['limit' => 10]);
 

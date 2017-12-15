@@ -199,6 +199,12 @@ Route::prefix('message')->group(function () {
 });
 
 Route::prefix('group')->group(function () {
+    //创建圈子
+    Route::get('/create', 'GroupController@create')->name('pc:groupcreate');
+
+    //发布帖子
+    Route::get('/publish/{group_id}', 'GroupController@publish')->name('pc:postcreate');
+
     // 圈子列表
     Route::get('/', 'GroupController@index')->name('pc:group');
 
@@ -218,7 +224,17 @@ Route::prefix('group')->group(function () {
     Route::get('/{group_id}/post/{post_id}', 'GroupController@postDetail')->where(['group_id' => '[0-9]+', 'post_id' => '[0-9]+'])->name('pc:grouppost');
 
     // 圈子动态获取评论列表
-    Route::get('/{group_id}/post/{post_id}/comments', 'GroupController@comments')->where(['group_id' => '[0-9]+', 'post_id' => '[0-9]+']);
+    Route::get('/{post_id}/comments', 'GroupController@comments')->where(['post_id' => '[0-9]+']);
+
+    // 圈子管理
+    Route::get('report', 'GroupController@reportList')->name('pc:reportList');
+    Route::get('member', 'GroupController@memberList')->name('pc:memberList');
+    Route::get('incomes', 'GroupController@incomes')->name('pc:incomes');
+    Route::get('manage/edit', 'GroupController@edit')->name('pc:groupedit');
+    Route::get('manage/member', 'GroupController@member')->name('pc:groupmember');
+    Route::get('manage/bankroll', 'GroupController@bankroll')->name('pc:groupbankroll');
+    Route::get('manage/report', 'GroupController@report')->name('pc:groupreport');
+    Route::get('manage/report_detail', 'GroupController@reportDetail')->name('pc:reportdetail');
 
 });
 

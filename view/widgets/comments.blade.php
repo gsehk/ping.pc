@@ -6,7 +6,7 @@
     <div class="comment_box" style="display: none;">
         <div class="comment_line">
             <div class="tr2"></div>
-{{--            <!-- <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" /> -->--}}
+            {{-- <img src="{{ asset('zhiyicx/plus-component-pc/images/line.png') }}" /> --}}
         </div>
         <div class="comment_body" id="comment_box{{ $id }}">
             <div class="comment_textarea">
@@ -54,7 +54,9 @@
 @else
     <div class="detail_comment @if(isset($add_class)) {{ $add_class }} @endif">
         @if($comments_type == 'question')
-            <span id="answer-button" class="answer-button"><img src="{{asset('zhiyicx/plus-component-pc/images/arrow_news_up.png')}}" alt=""></span>
+            <span id="answer-button" class="answer-button">
+                <img src="{{asset('zhiyicx/plus-component-pc/images/arrow_news_up.png')}}" alt="">
+            </span>
         @endif
         <div class="comment_title"><span class="comment_count cs{{ $id }}">{{ $comments_count }} </span>人评论</div>
         <div class="comment_box">
@@ -64,9 +66,7 @@
                 <button class="btn btn-primary" id="J-button{{ $id }}" onclick="doComment('{{ $id }}', '{{ $position or 0 }}', '{{ $comments_type }}', '{{ $group_id or 0 }}')"> 评 论 </button>
             </div>
         </div>
-        <div class="comment_list J-commentbox" id="J-commentbox{{ $id }}">
-
-        </div>
+        <div class="comment_list J-commentbox" id="J-commentbox{{ $id }}"></div>
     </div>
 @endif
 
@@ -95,7 +95,7 @@
 
             } else if (comments_type == 'group') {
 
-                url = '/group/' + group_id + '/post/' + id + '/comments' ;
+                url = '/group/' + id + '/comments' ;
 
             } else if (comments_type == 'news') {
 
@@ -127,7 +127,7 @@
 
         } else if (comments_type == 'group') {
 
-            url = '/api/v2/groups/' + group_id + '/posts/' + id + '/comments'
+            url = '/api/v2/plus-group/group-posts/' + id + '/comments'
 
         } else if (comments_type == 'news') {
 

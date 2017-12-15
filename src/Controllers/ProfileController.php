@@ -11,7 +11,7 @@ class ProfileController extends BaseController
     /**
      * 动态
      * @author Foreach
-     * @param  Request     $request 
+     * @param  Request     $request
      * @param  int|integer $user_id [用户id]
      * @return mixed
      */
@@ -176,10 +176,10 @@ class ProfileController extends BaseController
     {
         if ($request->ajax()) {
             $params = [
-                'after' => $request->query('after', 0),
-                'user' => $request->query('user', 0),
+                'offset' => $request->query('offset', 0),
+                'limit' => $request->query('limit', 15),
             ];
-            $groups = createRequest('GET', '/api/v2/groups', $params);
+            $groups = createRequest('GET', '/api/v2/plus-group/user-groups', $params);
             $group = clone $groups;
             $after = $group->pop()->id ?? 0;
             $data['group'] = $groups;

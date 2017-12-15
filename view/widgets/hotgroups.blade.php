@@ -9,10 +9,10 @@
                         </span>
                     </div>
                     <div class="hot-content">
-                        <a class="hot-group-title" href="{{ Route('pc:groupread', $group->id) }}">{{$group->title}}</a>
+                        <a class="hot-group-title" href="{{ Route('pc:groupread', $group->id) }}">{{$group->name}}</a>
                         <div class="hot-group-count">
                             <span class="count">分享  {{$group->posts_count}}</span>
-                            <span class="count">订阅  {{$group->members_count}}</span>
+                            <span class="count">订阅  {{$group->users_count}}</span>
                         </div>
                     </div>
                 </li>
