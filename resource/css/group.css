@@ -39,7 +39,7 @@
 /* 圈子动态详情 */
 .feed_left .post-title {font-size:30px;color:#333;line-height:30px;height:60px;cursor:pointer;}
 /* 热门圈子 */
-.hot-groups {width:100%;margin-bottom:30px;padding:0 15px 0;border:1px solid #ededed;background-color:#fff;}
+.hot-groups {width:100%;margin-bottom:30px;padding:0 15px 0;background-color:#fff;}
 .hot-groups .title {font-size:18px;padding:20px 0 15px;text-align:center;color:#333;border-bottom:1px solid #ededed;}
 .hot-groups .hot-groups-list {font-size:14px;overflow:hidden;padding:15px 0;}
 .hot-groups .hot-groups-list>li {height:65px;}
@@ -156,5 +156,5 @@
 .p-bankroll .m-ct .m-item{display:flex;align-items:center;margin-top:20px;}
 .p-bankroll .m-ct .m-item .u-lab{margin-right:40px;min-width:80px;color:#AAA;}
 .p-bankroll .t-filter{padding:2px 10px;width:152px;border-radius:2px;border:1px solid #999;color:#777;}
-.p-notice .g-mn,.p-member1 .g-mn{width:880px;margin:0 auto;padding:40px;background-color:white;}
-.p-notice .g-mn .g-hd, .p-member1 .g-mn .g-hd{padding-bottom:20px;border-bottom:1px solid #EDEDED;}
+.p-notice .g-mn{width:880px;margin:0 auto;padding:40px;background-color:white;}
+.p-notice .g-mn .g-hd{padding-bottom:20px;border-bottom:1px solid #EDEDED;}

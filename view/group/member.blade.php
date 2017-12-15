@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-<div class="p-member p-member1">
+<div class="p-member p-notice">
     <div class="g-mn">
         <div class="g-hd f-mb30">
             <span class="f-fs5">圈子公告</span>
@@ -18,8 +18,8 @@
 	        <div>
 	            <div class="f-mt20 f-fs4">圈主</div>
 	            <dl class="m-row">
-	                <dt><img src="{{$group->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
-	                <dd>{{$group->user->name}}</dd>
+	                <dt><img src="{{$group->founder->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+	                <dd>{{$group->founder->user->name}}</dd>
 	            </dl>
 	        </div>
 	        <div>
