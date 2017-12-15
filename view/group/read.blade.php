@@ -96,7 +96,7 @@
         <div class="g-sidec">
             <h3 class="u-tt">圈子成员</h3>
             <dl class="qz-box">
-                <dt><img class="avatar" src="{{asset('zhiyicx/plus-component-pc/images/default_picture.png')}}"></dt>
+                <dt><img class="avatar" src="{{$group->founder->user->avatar or asset('zhiyicx/plus-component-pc/images/pic_default_secret.png')}}"></dt>
                 <dd>圈主：{{$group->founder->user->name}}</dd>
                 <dd><span class="contact">联系圈主</span></dd>
             </dl>
@@ -104,8 +104,8 @@
                 @foreach ($members as $member)
                     <li>
                         <a href="{{ route('pc:mine', $member->user_id) }}">
-                            <img src="{{ $member->user->avatar }}" width="50">
-                            <p>王小二</p>
+                            <img src="{{ $member->user->avatar or asset('zhiyicx/plus-component-pc/images/pic_default_secret.png') }}" width="50">
+                            <p class="f-toe">{{$member->user->name}}</p>
                         </a>
                     </li>
                 @endforeach
