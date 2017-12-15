@@ -646,39 +646,3 @@
     vertical-align: bottom;
     border-radius: 5px;
 }
-
-
-/*分页*/
-/*.dy_pageCont {
-    margin: 0 auto;
-    text-align: center;
-}
-
-.page_arrow,
-.page_a,
-.page_cur {
-    font-size: 14px;
-    line-height: 40px;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin: 0 5px 0;
-    color: #666;
-    border: 1px solid #ededed;
-    background: #fff;
-}
-
-.page_a:hover {
-    color: #59b6d7;
-    border: 1px solid #59b6d7;
-}
-
-.page_cur {
-    color: #fff !important;
-    background: #59b6d7;
-}
-
-.page_cur:hover {
-    color: #fff;
-}
-*/
