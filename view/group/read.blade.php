@@ -84,7 +84,9 @@
             <h3 class="u-tt">圈子公告</h3>
             <p class="u-ct">{{$group->notice}}</p>
         </div>
-        <p class="u-more f-csp">查看详细公告</p>
+        <p class="u-more f-csp">
+            <a class="f-db" href="{{ route('pc:groupnotice', ['group_id'=>$group->id]) }}">查看详细公告</a>
+        </p>
         <div class="g-sidec f-csp f-mb30">
             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-setting"></use></svg>
             &nbsp;&nbsp;&nbsp;<a href="{{ route('pc:groupedit', ['group_id'=>$group->id]) }}">
@@ -108,7 +110,7 @@
                 @endforeach
             </ul>
         </div>
-        <p class="u-more f-csp">更多圈子成员</p>
+        <p class="u-more f-csp"><a class="f-db" href="">更多圈子成员</a></p>
         {{-- 热门圈子 --}}
         {{-- @include('pcview::widgets.hotgroups') --}}
     </div>

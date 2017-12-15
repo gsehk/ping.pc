@@ -227,6 +227,7 @@ Route::prefix('group')->group(function () {
     Route::get('/{post_id}/comments', 'GroupController@comments')->where(['post_id' => '[0-9]+']);
 
     // 圈子管理
+    Route::get('notice', 'GroupController@noticeRead')->name('pc:groupnotice');
     Route::get('report', 'GroupController@reportList')->name('pc:reportList');
     Route::get('member', 'GroupController@memberList')->name('pc:memberList');
     Route::get('incomes', 'GroupController@incomes')->name('pc:incomes');

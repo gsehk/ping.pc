@@ -110,7 +110,7 @@ class GroupController extends BaseController
      */
     public function reportDetail(Request $request)
     {
-        $group_id = $request->query('group_id', 2);
+        $group_id = $request->query('group_id');
         $params = [
             'limit' => $request->query('limit', 15),
             'offset' => $request->query('offset', 0),
@@ -134,6 +134,20 @@ class GroupController extends BaseController
         $data['group_id'] = $group_id;
 
         return view('pcview::group.publish', $data, $this->PlusData);
+    }
+
+    /**
+     * 阅读公告详情.
+     *
+     * @author 28youth
+     * @param  Request $request
+     */
+    public function noticeRead(Request $request)
+    {
+        $group_id = $request->query('group_id');
+        $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
+
+        return view('pcview::group.notice', $data, $this->PlusData);
     }
 
     /**
