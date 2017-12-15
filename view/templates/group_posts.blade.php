@@ -82,8 +82,9 @@
                             </li>
                         @else
                             <li>
-                                <a href="javascript:;" onclick="post.reportPost('{{$post->group_id}}', '{{$post->id}}');">
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>举报
+                                <a href="javascript:;" onclick="post.reportPost('{{$post->id}}');">
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
+                                    <span>举报</span>
                                 </a>
                             </li>
                         @endif

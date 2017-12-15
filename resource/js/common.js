@@ -1225,6 +1225,35 @@ var pinneds = function (url) {
     });
 };
 
+// 举报
+var reported = function (url) {
+    var html = '<div class="pinned_box">'
+                + '<p class="confirm_title">举报</p>'
+                + '<div class="pinned_input">'
+                    + '<input id="report-ct" type="text" placeholder="请输入举报原因">'
+                + '</div>'
+            + '</div>';
+    ly.confirm(html, '', '', function(){
+        var con = $('#report-ct').val();
+        if (!con) {
+            lyNotice('请输入举报原因');
+            return false;
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(res) {
+                layer.closeAll();
+                noticebox(res.message, 1);
+            },
+            error: function(error) {
+                lyShowError(error.responseJSON);
+            }
+        });
+    });
+};
+
 // 更多操作
 var options = function(obj) {
     if ($(obj).next('.options_div').css('display') == 'none') {

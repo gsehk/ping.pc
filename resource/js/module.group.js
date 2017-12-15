@@ -108,3 +108,8 @@ post.pinnedPost = function(post_id){
     var url = '/api/v2/plus-group/pinned/posts/'+post_id;
     pinneds(url);
 };
+
+post.reportPost = function(post_id){
+    var url ='/api/v2/plus-group/reports/posts/'+post_id;
+    reported(url);
+};
