@@ -39,11 +39,6 @@ post.createPost = function (group_id) {
         group_post_mark: TS.MID + new Date().getTime(),
     };
 
-    /*if (!data.title || getLength(data.title) > 30) {
-        noticebox('标题的字数为1 - 30个字符', 0);
-        return false;
-    }*/
-
     var strlen = getLength(data.content);
     var leftnums = initNums - strlen;
     if ((leftnums < 0 || leftnums == initNums) && data.images.length < 1) {
@@ -92,7 +87,7 @@ post.afterCreatePost = function (group_id, post_id) {
 
 post.delPost = function(group_id, post_id) {
     layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
-        var url ='/api/v2/groups/' + group_id + '/posts/' + post_id;
+        var url ='/api/v2/plus-group/groups/' + group_id + '/posts/' + post_id;
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -108,15 +103,8 @@ post.delPost = function(group_id, post_id) {
         });
     });
 };
-post.addComment = function (row_id, group_id, type) {
-    var url = '/api/v2/groups/' + group_id + '/posts/' + row_id + '/comments';
-    comment.support.row_id = row_id;
-    comment.support.position = type;
-    comment.support.editor = $('#J-editor'+row_id);
-    comment.support.button = $('#J-button'+row_id);
-    comment.support.top = false;
-    comment.publish(url, function(res){
-        $('.nums').text(comment.support.wordcount);
-        $('.cs'+row_id).text(parseInt($('.cs'+row_id).text())+1);
-    });
-}
+
+post.pinnedPost = function(post_id){
+    var url = '/api/v2/plus-group/pinned/posts/'+post_id;
+    pinneds(url);
+};

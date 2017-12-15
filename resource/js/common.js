@@ -1,6 +1,6 @@
 var loadHtml = "<div class='loading'><img src='" + TS.RESOURCE_URL + "/images/three-dots.svg' class='load'></div>";
 var clickHtml = "<div class='click_loading'><a href='javascript:;'>加载更多<svg class='icon mcolor' aria-hidden='true'><use xlink:href='#icon-icon07'></use></svg></a></div>";
-var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>';
+var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-warning"></use></svg> ';
 var initNums = 255;
 
 // ajax 设置 headers
@@ -500,11 +500,11 @@ var follow = function(status, user_id, target, callback) {
 var group = function(status, group_id, callback) {
     checkLogin();
 
-    var url = TS.API + '/groups/' + group_id + '/join';
+    var url = TS.API + '/plus-group/groups/' + group_id;
     if (status == 0) {
         $.ajax({
             url: url,
-            type: 'POST',
+            type: 'PUT',
             success: function(response) {
                 callback();
             },
@@ -585,9 +585,9 @@ var noticebox = function(msg, status, tourl) {
         }
     }
     if (status == 0) {
-        var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shibai-copy"></use></svg>' + msg + '</div>';
+        var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-warning"></use></svg> ' + msg + '</div>';
     } else {
-        var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xuanzedui-copy"></use></svg>' + msg + '</div>';
+        var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-choosed"></use></svg> ' + msg + '</div>';
     }
     _this.html(html);
     _this.slideDown(500);
@@ -724,7 +724,7 @@ var checkIn = function(is_check, nums) {
             success: function(response) {
                 noticebox('签到成功', 1);
                 $('#checkin').addClass('checked_div');
-                var html = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-qiandao1"></use></svg>'
+                var html = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-checkin"></use></svg>'
                 html += '已签到<span>连续签到<font class="colnum">' + (nums + 1) + '</font>天</span>';
                 $('#checkin').html(html);
                 $('#checkin').removeAttr('onclick');
@@ -895,20 +895,20 @@ var comment = {
                         html += '            <span class="reply_name">' + TS.USER.name + '</span>';
                         html += '            <div class="reply_tool feed_datas">';
                         html += '                <span class="reply_time">刚刚</span>';
-                        html += '                <span class="reply_action options" onclick="options(this)"><svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg></span>';
+                        html += '                <span class="reply_action options" onclick="options(this)"><svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg></span>';
                         html += '                <div class="options_div">'
                         html += '                    <div class="triangle"></div>'
                         html += '                    <ul>';
                     if (_this.support.top) {
                         html += '                        <li>'
                         html += '                            <a href="javascript:;" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
-                        html += '                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶'
+                        html += '                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶'
                         html += '                            </a>'
                         html += '                        </li>';
                     }
                         html += '                        <li>'
                         html += '                            <a href="javascript:;" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
-                        html += '                                <svg class="icon"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除'
+                        html += '                                <svg class="icon"><use xlink:href="#icon-delete"></use></svg>删除'
                         html += '                            </a>'
                         html += '                        </li>'
                         html += '                    </ul>'
@@ -938,6 +938,11 @@ var comment = {
     },
     delete: function(type, source_id, id) {
         var url = '';
+        var _this = this;
+        if (_this.lockStatus == 1) {
+            noticebox('请勿重复提交', 0);
+            return;
+        }
         switch (type) {
             case 'feeds':
                 url = '/api/v2/feeds/' + source_id + '/comments/' + id;
@@ -947,7 +952,7 @@ var comment = {
                 break;
             case 'group-posts':
                 var group_id = window.location.pathname.split("/")[2];
-                url = '/api/v2/groups/' + group_id + '/posts/' + source_id + '/comments/' + id;
+                url = '/api/v2/plus-group/group-posts/' + source_id + '/comments/' + id;
                 break;
             case 'question-answers':
                 url = '/api/v2/question-answers/' + source_id + '/comments/' + id;
@@ -956,6 +961,7 @@ var comment = {
                 url = '/api/v2/questions/' + source_id + '/comments/' + id;
                 break;
         }
+        _this.lockStatus = 1;
         $.ajax({
             url: url,
             type: 'DELETE',
@@ -963,9 +969,11 @@ var comment = {
             success: function(res) {
                 $('#comment' + id).fadeOut();
                 $('.cs' + source_id).text(parseInt($('.cs' + source_id).text())-1);
+                _this.lockStatus = 0;
             },
             error: function(xhr){
                 showError(xhr.responseJSON);
+                _this.lockStatus =0;
             }
         });
     },
@@ -1017,9 +1025,9 @@ var liked = {
                 _this.box.find('a').addClass('act');
                 _this.box.find('font').text(_this.num);
                 if (_this.type) {
-                    _this.box.find('svg').html('<use xlink:href="#icon-xihuan-red"></use>');
+                    _this.box.find('svg').html('<use xlink:href="#icon-likered"></use>');
                 } else {
-                    _this.box.find('svg').html('<use xlink:href="#icon-xihuan-white-copy"></use>');
+                    _this.box.find('svg').html('<use xlink:href="#icon-like"></use>');
                 }
 
             },
@@ -1046,7 +1054,7 @@ var liked = {
                 _this.box.attr('status', 0);
                 _this.box.find('a').removeClass('act');
                 _this.box.find('font').text(_this.num);
-                _this.box.find('svg').html('<use xlink:href="#icon-xihuan-white"></use>');
+                _this.box.find('svg').html('<use xlink:href="#icon-like"></use>');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
@@ -1066,7 +1074,7 @@ var liked = {
             break;
             case 'group':
                 var group_id = window.location.pathname.split("/")[2];
-                res.link = '/api/v2/groups/' + group_id + '/posts/' + this.row_id + '/like';
+                res.link = '/api/v2/plus-group/group-posts/' + this.row_id + '/likes';
                 res.unlink = res.link;
             break;
             case 'question':
@@ -1113,7 +1121,6 @@ var collected = {
                 _this.box.attr('status', 1);
                 _this.box.find('a').addClass('act');
                 _this.box.find('font').text(_this.num);
-                _this.box.find('svg').html('<use xlink:href="#icon-shoucang-copy"></use>');
                 _this.box.find('span.collect').text('已收藏');
             },
             error: function(xhr) {
@@ -1139,7 +1146,6 @@ var collected = {
                 _this.box.attr('status', 0);
                 _this.box.find('a').removeClass('act');
                 _this.box.find('font').text(_this.num);
-                _this.box.find('svg').html('<use xlink:href="#icon-shoucang-copy1"></use>');
                 _this.box.find('span.collect').text('收藏');
             },
             error: function(xhr) {
@@ -1160,8 +1166,8 @@ var collected = {
             break;
             case 'group':
                 var group_id = window.location.pathname.split("/")[2];
-                res.link = '/api/v2/groups/' + group_id + '/posts/' + this.row_id + '/collection';
-                res.unlink = res.link;
+                res.link = '/api/v2/plus-group/group-posts/' + this.row_id + '/collections';
+                res.unlink = '/api/v2/plus-group/group-posts/' + this.row_id + '/uncollect';
             break;
             case 'question':
                 res.link = '/api/v2/user/question-answer/collections/' + this.row_id;
@@ -1515,10 +1521,10 @@ $(function() {
         if (!_st) _st=0;
         var _code = '<div id="ms_fixed_wrap">'
                   +      '<dl id="ms_fixed">'
-                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="message.openChatDialog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_pinglun"></use></svg></a></dd>'
-                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="message.openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_zan"></use></svg></a></dd>'
-                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="message.openChatDialog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_tongzhi"></use></svg></a></dd>'
-                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="message.openChatDialog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_shenghe"></use></svg></a></dd>'
+                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="message.openChatDialog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-msg"></use></svg></a></dd>'
+                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="message.openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-like"></use></svg></a></dd>'
+                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="message.openChatDialog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-notice"></use></svg></a></dd>'
+                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="message.openChatDialog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-auth"></use></svg></a></dd>'
                   +     '</dl>'
                   + '</div>';
         if (_st == 1) {
@@ -1581,7 +1587,7 @@ $(function() {
         }
 
         // 更多按钮
-        if(!target.is('.icon-gengduo-copy') && target.parents('.options_div').length == 0) {
+        if(!target.is('.icon-more') && target.parents('.options_div').length == 0) {
            $('.options_div').hide();
         }
 
@@ -1609,6 +1615,11 @@ $(function() {
         if(!target.is('div.question-topics-list') && !target.is('dl,dt,dd,li')) {
             $('.question-topics-list').hide();
         }
+
+        // 圈子管理
+        if(!target.is('.u-menu li') && !target.is('.u-opt svg')) {
+            $('.u-menu').fadeOut();
+        }
     });
 
     // 显示隐藏评论操作
@@ -1627,6 +1638,7 @@ $(function() {
     $("#head_search").keyup(function(event){
         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值
         head_last = event.timeStamp;
+        console.log(head_last)
         setTimeout(function(){
             if(head_last - event.timeStamp == 0){
                 head_search();
@@ -1799,7 +1811,7 @@ $(function() {
         var name = $(this).data('name');
 
         var html = '<div id="ms_chat_tips">' + name + '<div class="tips_triangle"></div></div>';
-        var top = $(this).offset().top; 
+        var top = $(this).offset().top;
         if (event.type == 'mouseover') {
             $(this).addClass('tips_current');
 
@@ -1837,6 +1849,6 @@ $(function() {
         if(e.ctrlKey && e.keyCode == 13 && strLen($('#chat_text').val()) != 0) {
             $('#chat_send').click();
         }
-    } 
- 
+    }
+
 });

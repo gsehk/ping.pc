@@ -102,9 +102,9 @@
 		function expandTop(){
 			var a=new Array();
 			a.push('<p class="expand_top">');
-			a.push('<a  href="javascript:void(0);" class="retract"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_top_grey"></use></svg>收起</a>');
+			a.push('<a  href="javascript:void(0);" class="retract"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-top"></use></svg>收起</a>');
 			a.push('<i class="W_vline">|</i>');
-			a.push('<a href="javascript:;" class="showbig"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-ico_largest_grey"></use></svg>查看原图</a>');
+			a.push('<a href="javascript:;" class="showbig"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-enlarge"></use></svg>查看原图</a>');
 			a.push('</p>');
 			return a.join("");
 		}

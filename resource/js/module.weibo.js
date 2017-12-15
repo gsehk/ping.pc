@@ -42,7 +42,7 @@ weibo.postFeed = function() {
             $('.feed_picture').find('img').each(function(index) {
                 var amount = $(this).attr('amount') != '' ? $(this).attr('amount') : '';
 
-                var svg = amount == '' ? '' : '<svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>';
+                var svg = amount == '' ? '' : '<svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-lock"></use></svg>';
                 images_box += '<div class="pay_image"><img ' + (index == 0 ? 'class="current"' : '') + 'src="' + $(this).attr('src') + '" tid="' + $(this).attr('tid') + '" amount="' + amount + '"/>' + svg + '</div>';
 
                 // 如果为第一张图，添加付费信息
@@ -145,7 +145,7 @@ weibo.doPostFeed = function(type) {
             // 判断是否有图片添加付费信息
             if (!has_amount) {
                 lyNotice('应配置至少一张图片费用');
-                
+
                 return false;
             }
 
@@ -429,7 +429,7 @@ $(function() {
 
         // 添加标示
         if ($('.pay_images .pay_image').eq(index).find('svg').length == 0){
-            $('.pay_images .pay_image').eq(index).append('<svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-suo"></use></svg>');
+            $('.pay_images .pay_image').eq(index).append('<svg viewBox="0 0 18 18" class="lock" width="20%" height="20%" aria-hidden="true"><use xlink:href="#icon-lock"></use></svg>');
         }
     });
 

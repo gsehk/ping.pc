@@ -295,7 +295,7 @@ message = {
                     var last_message = item.last_message == undefined ? '' : item.last_message;
 
                     var html = '<li ' + css + ' class="room_item" data-type="5" data-cid="' + room['cid'] + '" id="chat_' + room['cid'] + '">'
-                                +      '<div class="chat_delete"><a href="javascript:;" onclick="message.delConversation(' + room['cid'] + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu"></use></svg></a></div>'
+                                +      '<div class="chat_delete"><a href="javascript:;" onclick="message.delConversation(' + room['cid'] + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
                                 +      '<div class="chat_left_icon">'
                                 +          '<img src="' + getAvatar(_this.datas.users[room.other_uid]) + '" class="chat_svg">'
                                 +       '</div>'
@@ -348,7 +348,7 @@ message = {
             var last_message = room.last_message == undefined ? '' : room.last_message;
 
             var html = '<li class="room_item" data-type="5" data-cid="' + room['cid'] + '" id="chat_' + room['cid'] + '">'
-                        +      '<div class="chat_delete"><a href="javascript:;" onclick="message.delConversation(' + room['cid'] + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu"></use></svg></a></div>'
+                        +      '<div class="chat_delete"><a href="javascript:;" onclick="message.delConversation(' + room['cid'] + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
                         +      '<div class="chat_left_icon">'
                         +          '<img src="' + getAvatar(this.datas.users[room.other_uid]) + '" class="chat_svg">'
                         +       '</div>'
