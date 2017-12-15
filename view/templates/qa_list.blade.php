@@ -40,21 +40,21 @@
 	    </div>
 	    <div class="qa-toolbar feed_datas font14">
 			<a class="follow gcolor J-watched" data-id="{{ $data->id }}" status="{{(int) (isset($TS) && $data->watched)}}">
-				<svg class="icon" aria-hidden="true"><use xlink:href="#icon-guanzhu"></use></svg>
+				<svg class="icon" aria-hidden="true"><use xlink:href="#icon-follow"></use></svg>
 				<span class="watched">{{ (isset($TS) && $data->watched) ? '已关注' : '关注' }}</span>
 			</a>
 			{{--<a class="follow gcolor" onclick="question.watched.init({{$data->id}});" id="J-watched{{$data->id}}" status="{{(int) (isset($TS) && $data->watched)}}">--}}
-				{{--<svg class="icon" aria-hidden="true"><use xlink:href="#icon-guanzhu"></use></svg>--}}
+				{{--<svg class="icon" aria-hidden="true"><use xlink:href="#icon-follow"></use></svg>--}}
 				{{--<span>{{ (isset($TS) && $data->watched) ? '已关注' : '关注' }}</span>--}}
 			{{--</a>--}}
 	        <span class="answer gcolor">
-	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg> {{ $data->answers_count }}条 回答
+	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg> {{ $data->answers_count }}条 回答
 	        </span>
 	        <span class="mony gcolor">
-	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg> {{ $data->amount * ($config['bootstrappers']['wallet:ratio']/100/100) }}
+	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg> {{ $data->amount * ($config['bootstrappers']['wallet:ratio']/100/100) }}
 	        </span>
 	        <span class="options">
-	            <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+	            <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
 	        </span>
 	    </div>
 	</div>

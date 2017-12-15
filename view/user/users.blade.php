@@ -22,7 +22,7 @@
                     <input class="font14 search_input" id="location" type="text" name="search_key" placeholder="输入关键字搜索">
                     <div class="area_searching font14 hide"></div>
                     <a class="search_icon" id="J-search-area">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-sousuo"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-search"></use></svg>
                     </a>
                     <div class="head_search">
                         <div class="history">

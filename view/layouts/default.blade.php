@@ -43,7 +43,7 @@
         </div>
 
         <div class="right_extras">
-            <a href="#" class="app">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shouji"></use></svg></a>
+            <a href="#" class="app">  <svg class="icon" aria-hidden="true"><use xlink:href="#icon-phone"></use></svg></a>
             <a href="javascript:;" class="gotop" id="gotop"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-uptop"></use></svg></a>
         </div>
     </div>

@@ -43,7 +43,7 @@
                 <div class="search_box">
                     <input class="search_input" type="text" placeholder="输入关键词搜索" value="{{ $keywords or ''}}" id="search_input"/>
                     <a class="search_icon">
-                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sousuo"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-search"></use></svg>
                     </a>
                 </div>
             </div>
@@ -183,7 +183,7 @@ $(function() {
                     url: '/search/data',
                     params: params,
                 });
-                break;    
+                break;
 
         };
     }

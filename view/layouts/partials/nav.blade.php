@@ -25,22 +25,22 @@
             <ul>
                 <li>
                     <a href="{{ route('pc:profilecollect') }}">
-                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-shoucang-copy1"></use></svg>我的收藏
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-collect"></use></svg>我的收藏
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('pc:authenticate') }}">
-                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-renzheng3-copy"></use></svg>去认证
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-auth"></use></svg>去认证
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('pc:account') }}">
-                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-shezhi-copy1"></use></svg>设置
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-setting"></use></svg>设置
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('pc:wallet') }}">
-                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-qianbao"></use></svg>我的钱包
+                        <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-wallet"></use></svg>我的钱包
                     </a>
                 </li>
                 <li style="border-top: 1px solid #ededed; padding-top: 20px;">
@@ -88,7 +88,7 @@
         <div class="nav_search">
             <input class="nav_input" type="text" placeholder="输入关键词搜索" value="{{ $keywords or ''}}" id="head_search"/>
             <a class="nav_search_icon">
-                <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sousuo"></use></svg>
+                <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-search"></use></svg>
             </a>
 
             <div class="head_search">

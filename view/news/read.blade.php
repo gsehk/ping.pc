@@ -27,7 +27,7 @@
                     <span>{{ $news['from'] != '原创' ? $news['from'] : $news['user']['name'] }}  ·  {{ $news['hits'] }}浏览  ·  {{ getTime($news['created_at']) }}</span>
                     @if($news['user_id'] == $TS['id'] && ($news->audit_status == 3 || $news->audit_status == 0))
                     <span class="options" onclick="options(this)">
-                        <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                        <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                     </span>
                     <div class="options_div">
                         <div class="triangle"></div>
@@ -36,20 +36,20 @@
                                 @if($news->audit_status == 3)
                                     <li>
                                         <a href="{{ route('pc:newsrelease', $news->id) }}">
-                                           <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑 
+                                           <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
                                         </a>
                                     </li>
                                 @elseif($news->audit_status == 0)
                                     <li>
                                         <a href="javascript:;" onclick="news.pinneds({{$news->id}});">
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
                                         </a>
                                     </li>
                                 @endif
                                 @if (!$news['audit_status'])
                                     <li>
                                         <a href="javascript:;" onclick="news.delete({{$news->id}}, {{$news->cate_id}});">
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>删除
                                         </a>
                                     </li>
                                 @endif
@@ -75,12 +75,12 @@
                     <span id="J-collect{{ $news->id }}" rel="{{ $news->collect_count }}" status="{{(int) $news->has_collect}}">
                         @if($news->has_collect)
                         <a class="act" href="javascript:;" onclick="collected.init({{$news->id}}, 'news', 0);" class="act">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
                             <font class="cs">{{ $news->collect_count }}</font> 人收藏
                         </a>
                         @else
                         <a href="javascript:;" onclick="collected.init({{$news->id}}, 'news', 0);">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
                             <font class="cs">{{ $news->collect_count }}</font> 人收藏
                         </a>
                         @endif
@@ -88,12 +88,12 @@
                     <span class="digg" id="J-likes{{$news->id}}" rel="{{$news->digg_count}}" status="{{(int) $news->has_like}}">
                         @if($news->has_like)
                         <a class="act" href="javascript:void(0)" onclick="liked.init({{$news->id}}, 'news', 0)">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like-copy"></use></svg>
                             <font>{{$news->digg_count}}</font> 人喜欢
                         </a>
                         @else
                         <a href="javascript:;" onclick="liked.init({{$news->id}}, 'news', 0)">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg>
                             <font>{{$news->digg_count}}</font> 人喜欢
                         </a>
                         @endif
@@ -151,7 +151,7 @@
         <div class="news_release_btn">
             <a href="{{ route('pc:newsrelease') }}">
                 <span>
-                    <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>投稿
+                    <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-publish"></use></svg>投稿
                 </span>
             </a>
         </div>

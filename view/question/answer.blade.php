@@ -42,7 +42,7 @@
                 @endif
                 @if(isset($TS) && $answer->user->id == $TS['id'] && $answer->adoption != 1 && $answer->invited != 1)
                     <a href="javascript:;" class="options button-more" onclick="options(this)">
-                        <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                        <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                     </a>
                     <div class="options_div">
                         <div class="triangle"></div>
@@ -54,14 +54,14 @@
                             </li>
                             <li>
                                 <a href="javascript:;" onclick="QA.delAnswer({{ $answer->question_id }}, {{ $answer->id }}, '{{ route('pc:questionread', $answer->question_id) }}')">
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>删除
                                 </a>
                             </li>
                         </ul>
                     </div>
                 @elseif(isset($TS) && $answer->question->user_id == $TS['id'])
                         <a href="javascript:;" class="options button-more" onclick="options(this)">
-                            <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                            <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                         </a>
                         <div class="options_div">
                             <div class="triangle"></div>
@@ -95,12 +95,12 @@
             <span id="J-collect{{ $answer->id }}" rel="{{ $answer->collect_count }}" status="{{(int) $answer->collected}}">
                 @if($answer->collected)
                 <a class="act" href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
                     <font class="cs">{{ $answer->collect_count }}</font> 人收藏
                 </a>
                 @else
                 <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
                     <font class="cs">{{ $answer->collect_count }}</font> 人收藏
                 </a>
                 @endif
@@ -108,12 +108,12 @@
             <span id="J-likes{{$answer->id}}" rel="{{ $answer->likes_count }}" status="{{(int) $answer->liked}}">
                 @if($answer->liked)
                 <a class="act" href="javascript:;" onclick="liked.init({{$answer->id}}, 'question', 0);">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like-copy"></use></svg>
                     <font>{{ $answer->likes_count }}</font> 人喜欢
                 </a>
                 @else
                 <a href="javascript:;" onclick="liked.init({{$answer->id}}, 'question', 0);">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg>
                     <font>{{ $answer->likes_count }}</font> 人喜欢
                 </a>
                 @endif

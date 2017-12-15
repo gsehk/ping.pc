@@ -41,12 +41,12 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
             <span class="collect" id="J-collect{{$post->id}}" rel="{{$post->collection_count}}" status="{{(int) $post->has_collect}}">
                 @if($post->has_collect)
                 <a href="javascript:;" onclick="collected.init({{$post->id}}, 'news', 1);">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
                     <font>{{$post->collection_count}}</font>
                 </a>
                 @else
                 <a href="javascript:;" onclick="collected.init({{$post->id}}, 'news', 1);">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
                     <font>{{$post->collection_count}}</font>
                 </a>
                 @endif
@@ -59,7 +59,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->hits}}
             </span>
             <span class="options" onclick="options(this)">
-                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
             </span>
             <div class="options_div">
                 <div class="triangle"></div>
@@ -67,7 +67,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
                     @if($post->user_id == $TS['id'])
                     <li>
                         <a href="javascript:;" onclick="news.pinneds({{$post->id}}, 'news');">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
                         </a>
                     </li>
                     @endif

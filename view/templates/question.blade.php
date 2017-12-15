@@ -63,7 +63,7 @@
             @endif
             <div class="q_action">
                 <button class="button button-plain">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-guanzhu"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-follow"></use></svg>
                     {{ $post->watchers_count }} 关注
                 </button>
                 <button class="button button-plain">
@@ -72,7 +72,7 @@
                 </button>
                 @if($post->amount > 0)
                     <button class="button button-plain">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jinqian"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-money"></use></svg>
                         {{ $post->amount * ($config['bootstrappers']['wallet:ratio']/100/100) }}
                     </button>
                 @endif

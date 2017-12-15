@@ -30,7 +30,7 @@
                     @else
                         <div class="has-follow add-follow" data-id="{{ $topic->id }}" data-status="0">+ 关注</div>
                     @endif
-                        
+
                     {{-- 第三方分享 --}}
                     <div class="topic-share">
                         <button class="button button-plain show-share" type="button">
@@ -103,7 +103,7 @@
         <div class="q_c_post_btn">
             <a href="javascript:;" onclick="question.create({{ $topic->id }})">
             <span>
-                <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>提问
+                <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-publish"></use></svg>提问
             </span>
             </a>
         </div>
@@ -194,7 +194,7 @@
             }
             console.log($(this).data())
         });
-        
+
         $('.show-description').on('click', function () {
             if ($(this).data('show') == 0) {
                 $('.h-d').hide();

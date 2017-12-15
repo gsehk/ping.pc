@@ -13,7 +13,7 @@
 
 @section('content')
 <div class="questionpage">
-    <!-- question-header -->
+    {{-- question-header --}}
     <div class="questionheader">
         <div class="questionheader-content">
             <div class="questionheader-main">
@@ -35,7 +35,7 @@
                 </div>
                 <h1 class="questionheader-title">{{ $question->subject }}</h1>
                 <div class="questionheader-detail">
-                    <!-- js增删  .questionrichtext--collapsed 改变content字数 -->
+                    {{-- js增删  .questionrichtext--collapsed 改变content字数 --}}
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
                             @php
@@ -108,7 +108,6 @@
                             <div class="share-show">
                                 分享至：
                                 @php
-                                    // 设置第三方分享图片
                                     preg_match('/<img src="(.*?)".*?/', $question->body_html, $imgs);
                                     if (count($imgs) > 0) {
                                         $share_pic = $imgs[1];
@@ -137,7 +136,7 @@
                         @endif
                         @if($question['user_id'] == $TS['id'])
                             <a class="button button-plain options" onclick="options(this)" type="button" aria-haspopup="true" aria-expanded="false">
-                                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                                <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                             </a>
                             <div class="options_div">
                                 <div class="triangle"></div>
@@ -149,7 +148,7 @@
                                     </li>
                                     <li>
                                         <a href="javascript:;" onclick="question.delQuestion('{{$question['id']}}')">
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>删除
                                         </a>
                                     </li>
                                 </ul>
@@ -181,8 +180,8 @@
             </div>
         </div>
     </div>
-    <!-- /question-header -->
-    <!-- quesition-main -->
+    {{-- /question-header --}}
+    {{-- quesition-main --}}
     <div class="question-main">
 
         {{-- 评论 --}}
@@ -207,7 +206,7 @@
                 </div>
             </div>
         </div>
-        <!-- 发布回答 start-->
+         {{-- 发布回答 start --}}
         <div class="question-main-r hide">
             <div class="user-mine">
             <span class="user-link">
@@ -235,10 +234,10 @@
             </div>
             <div class="answer-anonymity"><button id="answer-send">提交</button></div>
         </div>
-        <!----发布回答 end-->
+        {{-- --发布回答 end --}}
     </div>
 
-    <!-- /quesition-main -->
+    {{-- /quesition-main --}}
 
     {{-- 相关问题推荐 --}}
     @include('pcview::widgets.relevantquestion')

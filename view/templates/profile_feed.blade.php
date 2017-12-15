@@ -33,11 +33,11 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
             <span class="digg" id="J-likes{{$post->id}}" rel="{{$post->like_count}}" status="{{(int) $post->has_like}}">
                 @if($post->has_like)
                 <a href="javascript:void(0)" onclick="liked.init({{$post->id}}, 'feeds', 1)">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg> <font>{{$post->like_count}}</font>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-likered"></use></svg> <font>{{$post->like_count}}</font>
                 </a>
                 @else
                 <a href="javascript:;" onclick="liked.init({{$post->id}}, 'feeds', 1)">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg> <font>{{$post->like_count}}</font>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg> <font>{{$post->like_count}}</font>
                 </a>
                 @endif
             </span>
@@ -48,30 +48,30 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->feed_view_count}}
             </span>
             <span class="options">
-                <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
             </span>
             <div class="options_div">
                 <ul>
                     <li id="J-collect{{$post->id}}" rel="0" status="{{(int) $post->has_collect}}">
                         @if($post->has_collect)
                         <a class="act" href="javascript:;" onclick="collected.init({{$post->id}}, 'feeds', 0);">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>已收藏
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>已收藏
                         </a>
                         @else
                         <a href="javascript:;" onclick="collected.init({{$post->id}}, 'feeds', 0);">
-                          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>收藏
+                          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>收藏
                         </a>
                         @endif
                     </li>
                     @if(!empty($TS['id']) && $post->user_id == $TS['id'])
                     <li>
                         <a href="javascript:;" onclick="profile.pinneds({{$post->id}}, 'feeds');">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
                         </a>
                     </li>
                     <li>
                         <a href="javascript:;" onclick="profile.delete({{$post->id}}, 'feeds');">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>删除
                         </a>
                     </li>
                     @endif
@@ -137,7 +137,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatContent;
     $('#feed_photos_{{$post->id}}').PicShow({
         data: data,
         bigWidth: {{ $conw or 635}},
-        bigHeight: {{ $conh or 400}}        
+        bigHeight: {{ $conh or 400}}
     });
 </script>
 @endforeach

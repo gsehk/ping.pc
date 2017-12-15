@@ -50,7 +50,7 @@
             </ul>
 
             <a class="btn btn-primary contribute-btn" href="{{ route('pc:newsrelease') }}">
-                <svg class="icon"><use xlink:href="#icon-feiji"></use></svg>投稿
+                <svg class="icon"><use xlink:href="#icon-publish"></use></svg>投稿
             </a>
         @else
             <ul class="profile_nav_list clearfix">

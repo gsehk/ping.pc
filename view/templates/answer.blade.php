@@ -13,9 +13,9 @@
 	    <div class="qa-toolbar feed_datas font14">
 			<a href="javascript:;" class="gcolor liked" id="J-likes{{$data->id}}" onclick="liked.init({{$data->id}}, 'question', 1);" status="{{(int) (isset($TS) && $data->liked)}}" rel="{{ $data['likes_count'] }}">
 				@if(isset($TS) && $data->liked)
-					<svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-red"></use></svg>
+					<svg class="icon" aria-hidden="true"><use xlink:href="#icon-likered"></use></svg>
 				@else
-					<svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+					<svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg>
 				@endif
 				<font>{{ $data->likes_count }}</font> 点赞
 			</a>
@@ -24,7 +24,7 @@
 	        </a>
 
 	        <span class="options">
-	            <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+	            <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
 	        </span>
 	    </div>
 		<div class="comment_box" style="display: none;">

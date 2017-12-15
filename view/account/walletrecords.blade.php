@@ -2,7 +2,7 @@
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 @endphp
 
-@if ($type == 2) 
+@if ($type == 2)
     {{-- 交易记录 --}}
     @if(!$records->isEmpty())
     <div class="wallet-table">

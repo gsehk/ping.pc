@@ -34,7 +34,7 @@
         </li>
         <li>
             <a href="{{ route('pc:account') }}">
-                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-setting"></use></svg>设置
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-sets"></use></svg>设置
             </a>
         </li>
 

@@ -30,7 +30,7 @@
     <div class="q_c_post_btn">
         <a href="javascript:;" onclick="question.create()">
             <span>
-                <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>提问
+                <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-publish"></use></svg>提问
             </span>
         </a>
     </div>

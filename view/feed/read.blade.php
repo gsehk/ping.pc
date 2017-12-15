@@ -33,7 +33,7 @@
                 </dd>
                 <dd class="fr mt20 relative">
                     <span class="options" onclick="options(this)">
-                        <svg class="icon icon-gengduo-copy" aria-hidden="true"><use xlink:href="#icon-gengduo-copy"></use></svg>
+                        <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                     </span>
                     <div class="options_div">
                         <div class="triangle"></div>
@@ -41,12 +41,12 @@
                             @if(isset($TS->id) && $user->id == $TS->id)
                             <li>
                                 <a href="javascript:;" onclick="weibo.pinneds({{$feed->id}});">
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhiding-copy-copy1"></use></svg>申请置顶
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
                                 </a>
                             </li>
                             <li>
                                 <a href="javascript:;" onclick="weibo.delFeed({{$feed->id}}, 1);">
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu-copy1"></use></svg>删除
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>删除
                                 </a>
                             </li>
                             @endif
@@ -81,12 +81,12 @@
                 <span id="J-collect{{ $feed->id }}" rel="{{ $feed->collect_count }}" status="{{(int) $feed->has_collect}}">
                     @if($feed->has_collect)
                     <a href="javascript:;" onclick="collected.init({{$feed->id}}, 'feeds', 0);" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
                         <font class="cs">{{ $feed->collect_count }}</font> 人收藏
                     </a>
                     @else
                     <a href="javascript:;" onclick="collected.init({{$feed->id}}, 'feeds', 0);">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shoucang-copy1"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
                         <font class="cs">{{ $feed->collect_count }}</font> 人收藏
                     </a>
                     @endif
@@ -94,12 +94,12 @@
                 <span id="J-likes{{$feed->id}}" rel="{{ $feed->like_count }}" status="{{(int) $feed->has_like}}">
                     @if($feed->has_like)
                     <a href="javascript:;" onclick="liked.init({{$feed->id}}, 'feeds', 0);" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white-copy"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like-copy"></use></svg>
                         <font>{{ $feed->like_count }}</font> 人喜欢
                     </a>
                     @else
                     <a href="javascript:;" onclick="liked.init({{$feed->id}}, 'feeds', 0);">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-xihuan-white"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg>
                         <font>{{ $feed->like_count }}</font> 人喜欢
                     </a>
                     @endif
@@ -152,10 +152,10 @@
                 <li><a href="{{ route('pc:follows', ['user_id' => $user['id'], 'type' => 2]) }}">关注<span>{{ $user['extra']['followings_count'] }}</span></a></li>
             </ul>
         </div>
-        <!-- 推荐用户 -->
+        {{-- 推荐用户 --}}
         @include('pcview::widgets.recusers')
 
-        <!-- 收入达人排行榜 -->
+        {{-- 收入达人排行榜 --}}
         @include('pcview::widgets.incomerank')
     </div>
 @endsection

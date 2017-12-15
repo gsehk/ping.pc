@@ -33,7 +33,7 @@
             <div class="news_release_btn">
                 <a href="javascript:;" id="news-release">
                     <span>
-                        <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-feiji"></use></svg>投稿
+                        <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-publish"></use></svg>投稿
                     </span>
                 </a>
             </div>
