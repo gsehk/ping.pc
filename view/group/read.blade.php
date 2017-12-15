@@ -87,11 +87,13 @@
         <p class="u-more f-csp">
             <a class="f-db" href="{{ route('pc:groupnotice', ['group_id'=>$group->id]) }}">查看详细公告</a>
         </p>
-        <div class="g-sidec f-csp f-mb30">
-            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-setting"></use></svg>
-            &nbsp;&nbsp;&nbsp;<a href="{{ route('pc:groupedit', ['group_id'=>$group->id]) }}">
-            <span class="f-fs3">圈子管理</span></a>
-        </div>
+        @if (in_array($group->joined->role, ['administrator', 'founder']))
+            <div class="g-sidec f-csp f-mb30">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-setting"></use></svg>
+                &nbsp;&nbsp;&nbsp;<a href="{{ route('pc:groupedit', ['group_id'=>$group->id]) }}">
+                <span class="f-fs3">圈子管理</span></a>
+            </div>
+        @endif
         <div class="g-sidec">
             <h3 class="u-tt">圈子成员</h3>
             <dl class="qz-box">
