@@ -16,8 +16,8 @@
                <nav class="m-crumb m-crumb-arr f-ib">
                    <ul class="f-cb s-fc4">
                        <li><a href="#">圈子</a></li>
-                       <li><a href="#">萌宠</a></li>
-                       <li>聚众吸猫</li>
+                       <li><a href="#">{{$group->category->name}}</a></li>
+                       <li>{{$group->name}}</li>
                    </ul>
                </nav>
                <div class="m-sch f-fr">
@@ -82,7 +82,7 @@
         </div>
         <div class="g-sidec s-bgc">
             <h3 class="u-tt">圈子公告</h3>
-            <p class="u-ct">{{$group->notice}}</p>
+            <p class="u-ct f-tac">{{$group->notice or '暂无公告信息'}}</p>
         </div>
         <p class="u-more f-csp">
             <a class="f-db" href="{{ route('pc:groupnotice', ['group_id'=>$group->id]) }}">查看详细公告</a>
