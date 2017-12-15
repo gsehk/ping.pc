@@ -47,7 +47,7 @@ class GroupController extends BaseController
         $data['tags'] = createRequest('GET', '/api/v2/tags');
         $data['cates'] = createRequest('GET', '/api/v2/plus-group/categories');
         $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
-        // dd($data['group']);
+
         return view('pcview::group.manage_edit', $data, $this->PlusData);
     }
 
@@ -218,6 +218,7 @@ class GroupController extends BaseController
             'limit' => $request->query('limit', 15),
             'type' => $request->query('type', 'member'),
         ];
+        $group = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
         $members = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', $params);
         if ($params['type'] == 'audit') {
 
@@ -227,6 +228,7 @@ class GroupController extends BaseController
         $member = clone $members;
         $after = $member->pop()->id ?? 0;
         $data['type'] = $params['type'];
+        $data['group'] = $group;
         $data['members'] = $members;
         $memberData = view('pcview::templates.member', $data, $this->PlusData)->render();
 

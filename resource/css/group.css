@@ -147,7 +147,9 @@
 .p-member .m-row dd{margin-left:15px;}
 .p-member .m-row .u-opt{margin-top:10px;font-size:14px;position:relative;cursor:pointer;}
 .p-member .m-row .u-opt svg{margin-bottom:2px;margin-left:5px;}
-.p-member .m-row .u-menu{width:110px;line-height:30px;padding:10px 20px;box-shadow:0px 2px 3px #aaa;z-index:5;font-size:14px;position:absolute;text-align:center;background-color:white;}
+.p-member .m-row .u-menu{width:110px;line-height:30px;box-shadow:0px 2px 3px #aaa;z-index:5;font-size:14px;position:absolute;text-align:center;background-color:white;}
+.p-member .m-row .u-menu li{padding:2px 20px;}
+.p-member .m-row .u-menu li:hover{background-color:#ededed;}
 .p-member .no-member{margin-left:60px;color:#ccc;}
 
 .p-bankroll .m-hd{padding:30px 0;margin-bottom:30px;border-bottom:5px solid #ededed;}
