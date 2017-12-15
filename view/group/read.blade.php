@@ -1,6 +1,4 @@
-@section('title')
-    {{ $group->title }}
-@endsection
+@section('title') 圈子-{{ $group->name }} @endsection
 
 @extends('pcview::layouts.default')
 
@@ -43,18 +41,21 @@
                             <span>帖子 <font class="s-fc">{{$group->posts_count}}</font></span>
                             <span>成员 <font class="s-fc">{{$group->users_count}}</font></span>
                             <span>
-                                <svg class="icon s-fc3"><use xlink:href="#icon-site"></use></svg>
+                                <svg class="icon s-fc2 f-vatb"><use xlink:href="#icon-position"></use></svg>
                                 <font class="s-fc">{{$group->location}}</font></span>
-                                {{-- @if ($group->joined)
+                                @if ($group->joined)
                                     <div class="group-join" gid="{{ $group->id }}"  status="1">已加入</div>
                                 @else
                                     <div class="group-join add-join" gid="{{ $group->id }}"  status="0">+加入</div>
-                                @endif --}}
+                                @endif
                         </div>
                     </div>
                 </div>
                 <div class="m-tag">
                     <span>圈子标签</span>
+                    @foreach ($group->tags as $tag)
+                        <span class="u-tag">{{$tag->name}}</span>
+                    @endforeach
                     <span class="u-tag">猫奴</span>
                     <span class="u-tag">宠物世界</span>
                 </div>
@@ -75,7 +76,7 @@
         <div class="f-mb30">
             <a href="{{ route('pc:postcreate', $group->id) }}">
                 <div class="u-btn">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-writing"></use></svg>
+                    <svg class="icon f-vatb" aria-hidden="true"><use xlink:href="#icon-writing"></use></svg>
                     <span>发 帖</span>
                 </div>
             </a>
@@ -96,7 +97,7 @@
             <h3 class="u-tt">圈子成员</h3>
             <dl class="qz-box">
                 <dt><img class="avatar" src="{{asset('zhiyicx/plus-component-pc/images/default_picture.png')}}"></dt>
-                <dd>圈主：{{$group->user->name}}</dd>
+                <dd>圈主：{{$group->founder->user->name}}</dd>
                 <dd><span class="contact">联系圈主</span></dd>
             </dl>
             <ul class="cy-box">
@@ -110,17 +111,17 @@
                 @endforeach
             </ul>
         </div>
-        <p class="u-more f-csp"><a class="f-db" href="">更多圈子成员</a></p>
+        <p class="u-more f-csp">
+            <a class="f-db" href="{{ route('pc:memberpage',['group_id'=>$group->id]) }}">更多圈子成员</a>
+        </p>
         {{-- 热门圈子 --}}
-        {{-- @include('pcview::widgets.hotgroups') --}}
+        @include('pcview::widgets.hotgroups')
     </div>
 </div>
 @endsection
 
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.uploadify.js') }}"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.picshow.js') }}"></script>
 <script>
     $(function () {

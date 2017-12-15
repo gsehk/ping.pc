@@ -184,7 +184,7 @@ $('#J-tab li').on('click', function(){
     scroll.init({
         container: '#member-box',
         loading: '#member-box',
-        url: '/group/member',
+        url: '/group/get-member',
         params: params
     });
 

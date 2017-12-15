@@ -228,11 +228,12 @@ Route::prefix('group')->group(function () {
 
     // 圈子管理
     Route::get('notice', 'GroupController@noticeRead')->name('pc:groupnotice');
+    Route::get('member', 'GroupController@member')->name('pc:memberpage');
     Route::get('report', 'GroupController@reportList')->name('pc:reportList');
-    Route::get('member', 'GroupController@memberList')->name('pc:memberList');
+    Route::get('get-member', 'GroupController@memberList')->name('pc:memberList');
     Route::get('incomes', 'GroupController@incomes')->name('pc:incomes');
-    Route::get('manage/edit', 'GroupController@edit')->name('pc:groupedit');
-    Route::get('manage/member', 'GroupController@member')->name('pc:groupmember');
+    Route::get('manage/group', 'GroupController@manageGroup')->name('pc:groupedit');
+    Route::get('manage/member', 'GroupController@manageMember')->name('pc:groupmember');
     Route::get('manage/bankroll', 'GroupController@bankroll')->name('pc:groupbankroll');
     Route::get('manage/report', 'GroupController@report')->name('pc:groupreport');
     Route::get('manage/report_detail', 'GroupController@reportDetail')->name('pc:reportdetail');

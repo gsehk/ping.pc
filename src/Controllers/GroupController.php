@@ -41,7 +41,7 @@ class GroupController extends BaseController
      * @author 28youth
      * @param Request $request
      */
-    public function edit(Request $request)
+    public function manageGroup(Request $request)
     {
         $group_id = $request->query('group_id', 2);
         $data['tags'] = createRequest('GET', '/api/v2/tags');
@@ -52,12 +52,12 @@ class GroupController extends BaseController
     }
 
     /**
-     * 编辑成员管理.
+     * 成员管理.
      *
      * @author 28youth
      * @param Request $request
      */
-    public function member(Request $request)
+    public function manageMember(Request $request)
     {
         $group_id = $request->query('group_id', 2);
         $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
@@ -148,6 +148,22 @@ class GroupController extends BaseController
         $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
 
         return view('pcview::group.notice', $data, $this->PlusData);
+    }
+
+    /**
+     * 圈子成员界面.
+     *
+     * @author 28youth
+     * @param  Request $request
+     */
+    public function member(Request $request)
+    {
+        $group_id = $request->query('group_id');
+        $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
+        $data['members'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', ['type'=>'member']);
+        $data['manager'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', ['type'=>'manager']);
+
+        return view('pcview::group.member', $data, $this->PlusData);
     }
 
     /**
