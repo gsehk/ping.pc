@@ -120,7 +120,6 @@
     }
 
 $('#group_box').on('click', '.J-join', function(){
-    checkLogin();
     var _this = this;
     var status = $(this).attr('status');
     var group_id = $(this).attr('gid');
@@ -170,19 +169,22 @@ $('.m-chip span').on('click', function() {
 // 切换分类
 $('.group_navbar a').on('click', function() {
     var cate = $(this).data('cate');
+    var params = {cate: cate, limit: 15}
+    (cate == 1)
+    ? $('.m-chip').show()
+    : $('.m-chip').hide()
+    ;
     $('#group_box').html('');
-    if (cate == 1) {
-        $('.m-chip').show();
-    } else {
-        $('.m-chip').hide();
+    if (cate == 3) {
+        params.longitude = 222;
+        params.latitude = 111;
     }
-
     scroll.init({
         container: '#group_box',
         loading: '.group_container',
         url: '/group/list',
         paramtype: 1,
-        params: {cate: cate, limit: 15}
+        params: params
     });
 
     $('.group_navbar a').removeClass('active');

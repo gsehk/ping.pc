@@ -190,6 +190,15 @@ class GroupController extends BaseController
             ];
             $groups = createRequest('GET', '/api/v2/plus-group/user-groups', $params);
         }
+        if ($cate == 3) {
+            $params = [
+                'offset' => $request->query('offset', 0),
+                'limit' => $request->query('limit', 15),
+                'longitude' => $request->query('longitude'),
+                'latitude' => $request->query('latitude'),
+            ];
+            $groups = createRequest('GET', '/api/v2/plus-group/round/groups', $params);
+        }
 
         $group = clone $groups;
         $after = $group->pop()->id ?? 0;
