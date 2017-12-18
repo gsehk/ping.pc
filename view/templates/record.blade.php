@@ -1,4 +1,4 @@
-@if ($record->isEmpty())
+@if (!$record->isEmpty())
     <table class="m-table m-table-row">
         @if ($loadcount == 1)
         <thead>
@@ -11,20 +11,14 @@
         </thead>
         @endif
         <tbody>
-            {{-- @foreach ($record as $item)
+            @foreach ($record as $item)
                 <tr>
-                    <td>{{$item->creared_at}}</td>
-                    <td>{{$item->title}}</td>
-                    <td><span class="s-fc3">+3.00</span></td>
-                    <td><a class="s-fc" href="">详情</a></td>
+                    <td>{{$item->created_at}}</td>
+                    <td>{{$item->subject}}</td>
+                    <td><span class="s-fc3">+{{$item->amount}}</span></td>
+                    <td><a class="s-fc" href="{{ route('pc:bankrolldetail',['group_id'=>$group_id]) }}">详情</a></td>
                 </tr>
-            @endforeach --}}
-            <tr>
-                <td>2017-12-11 10:00</td>
-                <td>申请帖子置顶</td>
-                <td><span class="s-fc3">+3.00</span></td>
-                <td><a class="s-fc" href="">详情</a></td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 @endif

@@ -25,7 +25,7 @@
                     <li><a href="#">举报管理</a></li>
                     <li>管理详情</li>
                 </ul>
-                <a class="u-back" href="">返回</a>
+                <a class="u-back" href="javascript:history.go(-1);">返回</a>
             </nav>
             <div class="m-ct">
                 <div class="m-item">
@@ -58,15 +58,4 @@
         </div>
     </div>
 </div>
-@endsection
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
-@section('scripts')
-<script>
-axios.defaults.baseURL = TS.API;
-axios.defaults.headers.common['Accept'] = 'application/json';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
-axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
-
-</script>
 @endsection
