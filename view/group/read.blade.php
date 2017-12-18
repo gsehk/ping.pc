@@ -22,7 +22,7 @@
                </nav>
                <div class="m-sch f-fr">
                     <input class="u-schipt" type="text" placeholder="输入关键词搜索">
-                    <a class="u-schico" href="javascript:;"><svg class="icon s-fc"><use xlink:href="#icon-search"></use></svg></a>
+                    <a class="u-schico" id="J-search" href="javascript:;"><svg class="icon s-fc"><use xlink:href="#icon-search"></use></svg></a>
                </div>
             </div>
             <div class="g-hd-ct">
@@ -174,6 +174,26 @@
 
             $('.feed_menu a').removeClass('selected');
             $(this).addClass('selected');
+        });
+    });
+
+    // 所有帖子搜索
+    $('#J-search').on('click', function(){
+        var key = $(this).prev('input').val();
+        if (!key) {noticebox('搜索关键字不能为空', 0);return;}
+        var params = {
+            limit: 15,
+            keyword: key,
+            group_id: {{$group->id}},
+        }
+        $('#feeds_list').html('');
+
+        scroll.init({
+            container: '#feeds_list',
+            loading: '.feed_content',
+            url: '/group/postLists',
+            paramtype: 1,
+            params: params,
         });
     });
 </script>

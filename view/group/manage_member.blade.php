@@ -149,6 +149,7 @@ var MAG = {
      * 审核圈子加入请求
      * @param  int gid
      * @param  int uid
+     * @param int type [1-通过 2-驳回]
      */
     audit: function(gid, uid, type){
         var URL = '/plus-group/groups/'+gid+'/members/'+uid+'/audit';

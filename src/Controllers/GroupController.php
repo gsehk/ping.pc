@@ -327,15 +327,24 @@ class GroupController extends BaseController
     public function postLists(Request $request)
     {
         $group_id = $request->input('group_id');
-        $type = $request->input('type');
         $params = [
+            'type' => $request->input('type'),
             'offset' => $request->query('offset', 0),
             'limit' => $request->query('limit', 15),
         ];
 
         $posts = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/posts', $params);
+        if ($request->keyword) {
+            $posts['pinneds'] = collect();
+            $params = [
+                'limit' => $request->query('limit', 15),
+                'offset' => $request->query('offset', 0),
+                'keyword' =>$request->query('keyword'),
+                'group_id' => $request->query('group_id'),
+            ];
+            $posts['posts'] = createRequest('GET', '/api/v2/plus-group/group-posts', $params);
+        }
         $after =  0;
-
         $posts['conw'] = 815;
         $posts['conh'] = 545;
         $posts['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
