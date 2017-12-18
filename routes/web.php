@@ -235,6 +235,7 @@ Route::prefix('group')->group(function () {
     Route::get('manage/group', 'GroupController@manageGroup')->name('pc:groupedit');
     Route::get('manage/member', 'GroupController@manageMember')->name('pc:groupmember');
     Route::get('manage/bankroll', 'GroupController@bankroll')->name('pc:groupbankroll');
+    Route::get('manage/bankroll_detail', 'GroupController@bankrollDetail')->name('pc:bankrolldetail');
     Route::get('manage/report', 'GroupController@report')->name('pc:groupreport');
     Route::get('manage/report_detail', 'GroupController@reportDetail')->name('pc:reportdetail');
 
