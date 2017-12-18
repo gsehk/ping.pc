@@ -1,4 +1,4 @@
-@if ($reports->isEmpty())
+@if (!$reports->isEmpty())
     <table class="m-table m-table-row">
         <thead>
             <tr>
@@ -10,15 +10,21 @@
             </tr>
         </thead>
         <tbody>
-            {{-- @foreach ($reports as $report)
+            @foreach ($reports as $report)
                 <tr>
-                    <td>2017-12-11 10:00</td>
-                    <td>申请帖子置顶</td>
-                    <td><span class="s-fc3">+3.00</span></td>
-                    <td>评论；"啊啊啊"</td>
-                    <td><a class="s-fc" href="{{ route('pc:reportdetail') }}">详情</a></td>
+                    <td>{{$report->created_at}}</td>
+                    <td>{{$report->user->name}}</td>
+                    <td><span class="s-fc3">{{$report->content or ''}}</span></td>
+                    <td>
+                        @if ($report->type == 'post')
+                            帖子：{{$report->resource->body or '资源已被删除'}}
+                        @else
+                            评论：{{$report->resource->body or '资源已被删除'}}
+                        @endif
+                    </td>
+                    <td><a class="s-fc" href="{{ route('pc:reportdetail',['group_id'=>$group_id]) }}">详情</a></td>
                 </tr>
-            @endforeach --}}
+            @endforeach
         </tbody>
     </table>
 @endif

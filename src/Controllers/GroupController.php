@@ -256,8 +256,9 @@ class GroupController extends BaseController
      */
     public function reportList(Request $request)
     {
-        $group_id = $request->query('group_id', 2);
+        $group_id = $request->query('group_id');
         $params = [
+            'start' => $request->query('start'),
             'after' => $request->query('after', 0),
             'limit' => $request->query('limit', 15),
             'status' => $request->query('status'),
@@ -268,6 +269,7 @@ class GroupController extends BaseController
         $report = clone $reports;
         $after = $report->pop()->id ?? 0;
         $data['reports'] = $reports;
+        $data['group_id'] = $group_id;
         $reportData = view('pcview::templates.report', $data, $this->PlusData)->render();
 
         return response()->json([
