@@ -116,8 +116,8 @@
 .p-readgroup .m-ct .ct-intro{margin:0;height:52px;line-height:26px;color:#777;font-size:13px;}
 .p-readgroup .m-ct .ct-stat{height:42;line-height:42px;}
 .p-readgroup .m-ct .ct-stat span{font-size:14px;margin-right:10px;}
-.p-readgroup .m-ct .group-join{float:right;width:88px;line-height:32px;margin-top:5px;border:1px solid #ccc;color:#aaa;border-radius:20px;cursor:pointer;text-align:center;}
-.p-readgroup .m-ct .add-join{color:#59b6d7;border-color:#59b6d7;}
+.p-readgroup .m-ct .joinbtn{float:right;width:88px;line-height:32px;color:#59b6d7;border:1px solid #59b6d7;background-color: white;margin-top:5px;border-radius:18px;cursor:pointer;}
+.p-readgroup .m-ct .joined{border-color:#ccc;color:#aaa;}
 .p-readgroup .g-hd .m-tag{line-height:36px;font-size:14px;}
 .p-readgroup .g-hd .m-tag .u-tag{margin:5px;padding:5px 10px;border-radius:3px;color:#59b6d7;background-color:#EEF8FB;}
 .p-readgroup .qz-box{padding-bottom:20px;border-bottom:1px solid #eaeaea;}

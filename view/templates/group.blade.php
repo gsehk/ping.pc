@@ -10,9 +10,23 @@
                 </div>
                 <div class="join">
                     @if ($item->joined)
-                        <button class="J-join joined" gid="{{ $item->id }}"  status="1">已加入</button>
+                        <button
+                            class="J-join joined"
+                            id="{{$item->id}}"
+                            state="1"
+                            mode="{{$item->mode}}"
+                            money="{{$item->money}}"
+                            onclick="grouped.init(this);"
+                        >已加入</button>
                     @else
-                        <button class="J-join" gid="{{ $item->id }}"  status="0">+加入</button>
+                        <button
+                            class="J-join"
+                            id="{{$item->id}}"
+                            state="0"
+                            mode="{{$item->mode}}"
+                            money="{{$item->money}}"
+                            onclick="grouped.init(this);"
+                        >+加入</button>
                     @endif
                 </div>
             </dd>

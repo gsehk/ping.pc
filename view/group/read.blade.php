@@ -40,14 +40,28 @@
                         <p class="ct-intro">{{$group->summary}}</p>
                         <div class="ct-stat">
                             <span>帖子 <font class="s-fc">{{$group->posts_count}}</font></span>
-                            <span>成员 <font class="s-fc">{{$group->users_count}}</font></span>
+                            <span>成员 <font class="s-fc" id="join-count-{{$group->id}}">{{$group->users_count}}</font></span>
                             <span>
                                 <svg class="icon s-fc2 f-vatb"><use xlink:href="#icon-position"></use></svg>
                                 <font class="s-fc">{{$group->location}}</font></span>
                                 @if ($group->joined)
-                                    <div class="group-join" gid="{{ $group->id }}"  status="1">已加入</div>
+                                    <button
+                                        class="joinbtn joined"
+                                        id="{{$group->id}}"
+                                        state="1"
+                                        mode="{{$group->mode}}"
+                                        money="{{$group->money}}"
+                                        onclick="grouped.init(this);"
+                                    >已加入</button>
                                 @else
-                                    <div class="group-join add-join" gid="{{ $group->id }}"  status="0">+加入</div>
+                                    <button
+                                        class="joinbtn"
+                                        id="{{$group->id}}"
+                                        state="0"
+                                        mode="{{$group->mode}}"
+                                        money="{{$group->money}}"
+                                        onclick="grouped.init(this);"
+                                    >+加入</button>
                                 @endif
                         </div>
                     </div>
@@ -126,30 +140,6 @@
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.picshow.js') }}"></script>
 <script>
     $(function () {
-        // 切换加入状态
-        $('.ct-stat').on('click', '.group-join', function(){
-            checkLogin()
-            var _this = this;
-            var status = $(this).attr('status');
-            var group_id = $(this).attr('gid');
-            var joinCount = parseInt($('#join-count').text());
-            group(status, group_id, function(){
-                if (status == 1) {
-                    $(_this).text('+加入');
-                    $(_this).attr('status', 0);
-                    $(_this).addClass('add-join');
-                    $('#join-count').text(joinCount - 1);
-                    $('.group_post').slideUp();
-                } else {
-                    $(_this).text('已加入');
-                    $(_this).attr('status', 1);
-                    $(_this).removeClass('add-join');
-                    $('#join-count').text(joinCount + 1);
-                    $('.group_post').slideDown();
-                }
-            });
-        });
-
         // 初始帖子列表
         setTimeout(function() {
             scroll.init({

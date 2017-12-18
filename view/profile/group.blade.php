@@ -42,24 +42,5 @@ scroll.init({
     paramtype: 1,
     params: {limit: 15, user: {{$user->id}} }
 });
-
-$('#content_list').on('click', '.J-join', function(){
-    checkLogin();
-    var _this = this;
-    var status = $(this).attr('status');
-    var group_id = $(this).attr('gid');
-    group(status, group_id, function(){
-        if (status == 1) {
-            $(_this).text('+关注');
-            $(_this).attr('status', 0);
-            $(_this).removeClass('joined');
-        } else {
-            $(_this).text('已加入');
-            $(_this).attr('status', 1);
-            $(_this).addClass('joined');
-        }
-    });
-});
-
 </script>
 @endsection
