@@ -22,7 +22,7 @@
         <div class="g-mn">
             <div class="m-nav">
                 <ul class="f-cb" id="J-tab">
-                    <li class="cur" type="member">全部成员</li>
+                    <a href="{{ route('pc:groupmember', ['group_id'=>$group->id]) }}"><li class="cur">全部成员</li></a>
                     <li type="audit">待审核</li>
                     <li type="blacklist">黑名单</li>
                 </ul>
@@ -176,6 +176,9 @@ var MAG = {
 
 $('#J-tab li').on('click', function(){
     var type = $(this).attr('type');
+        if (type == undefined){
+            return;
+        }
         $('#member-box').html('');
         $('#J-tab li').removeClass('cur'); $(this).addClass('cur');
     var params = {

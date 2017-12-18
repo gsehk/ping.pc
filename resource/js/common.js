@@ -553,6 +553,7 @@ var grouped = {
                     }
                 })
             })
+            _this.lockStatus = 0;
         } else {
             $.ajax({
                 url: url,
