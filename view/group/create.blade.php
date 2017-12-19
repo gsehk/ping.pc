@@ -92,15 +92,21 @@
             </div>
             <p class="tooltips">提交后，我们将在2个工作日内给予反馈，谢谢合作！</p>
             <div class="f-tac">
+                <input type="hidden" name="latitude" value="" />
+                <input type="hidden" name="longitude" value="" />
+                <input type="hidden" name="geo_hash" value="" />
                 <button class="btn btn-primary btn-lg" id="J-create-group" type="button">提 交</button>
             </div>
         </div>
     </div>
 </div>
 @endsection
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
+<script src='//webapi.amap.com/maps?v=1.4.2&key=e710c0acaf316f2daf2c1c4fd46390e3'></script>
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 @section('scripts')
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/geohash.js')}}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script>
 axios.defaults.baseURL = TS.API;
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -156,14 +162,25 @@ $('#J-create-group').on('click', function(){
     var modeType = $('[name="modes"]:checked').val();
     var POST_URL = '/plus-group/categories/' + categrey + '/groups';
     var formData = new FormData();
-        formData.append('avatar', $('#J-upload-cover')[0].files[0]);
-        formData.append('name', $('[name="name"]').val());
-        formData.append('summary', $('[name="summary"]').val());
-        formData.append('notice', $('[name="notice"]').val());
-        formData.append('location', $('[name="location"]').val());
-        formData.append('latitude', '100');
-        formData.append('longitude', '100');
-        formData.append('geo_hash', '123');
+        var attrs = {
+            avatar: $('#J-upload-cover')[0].files[0],
+            name: $('[name="name"]').val(),
+            summary: $('[name="summary"]').val(),
+            notice: $('[name="notice"]').val(),
+            location: $('[name="location"]').val(),
+            latitude: $('[name="latitude"]').val(),
+            longitude: $('[name="longitude"]').val(),
+            geo_hash: $('[name="geo_hash"]').val(),
+        };
+        if (getLength(attrs.name) > 20) {
+            noticebox('圈子名称不能大于20个字符', 0);return;
+        }
+        if (getLength(attrs.summary) > 255) {
+            noticebox('圈子简介不能大于255个字符', 0);return;
+        }
+        _.forEach(attrs, function(v, k) {
+            formData.append(k, v);
+        });
         if (modeType == '1') {
             formData.append('mode', $('[name="mode"]:checked').val());
         } else {
@@ -183,5 +200,14 @@ $('#J-create-group').on('click', function(){
             });
         }
 });
+$('[name="location"]').on('click', function(){
+    var _this = this;
+    getMaps(function(poi){
+        $('[name="latitude"]').val(poi.location.lat);
+        $('[name="longitude"]').val(poi.location.lng);
+        $('[name="geo_hash"]').val(encodeGeoHash(poi.location.lat, poi.location.lng));
+        $(_this).val(poi.district+poi.address);
+    });
+})
 </script>
 @endsection
