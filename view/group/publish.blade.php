@@ -27,12 +27,8 @@
         </div>
     </div>
     <div class="g-side right_container">
-        <div class="g-sidec f-mb30">
-            <div class="u-btn">
-                <svg class="icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-xiugaimima"></use></svg>
-                <a href="{{ route('pc:postcreate', $group_id) }}"><span>发帖</span></a>
-            </div>
-        </div>
+        {{-- 热门圈子 --}}
+        @include('pcview::widgets.hotgroups')
     </div>
 </div>
 @endsection
@@ -57,10 +53,10 @@ $('#J-publish-post').on('click', function(e){
     }
     axios.post(POST_URL, args)
     .then(function (response) {
-        noticebox('发布成功', 1);
+        noticebox('发布成功', 1, '/group' + '/{{ $group_id }}');
     })
     .catch(function (error) {
-        showError(error.responseJSON);
+        showError(error.response.data);
     });
 });
 </script>
