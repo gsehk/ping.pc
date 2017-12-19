@@ -11,14 +11,14 @@
 <div class="p-member p-notice">
     <div class="g-mn">
         <div class="g-hd f-mb30">
-            <span class="f-fs5">圈子公告</span>
+            <span class="f-fs5">圈子成员</span>
             <a class="f-fr s-fc" href="javascript:history.go(-1);">返回</a>
         </div>
         <div class="g-bd">
 	        <div>
 	            <div class="f-mt20 f-fs4">圈主</div>
 	            <dl class="m-row">
-	                <dt><img src="{{$group->founder->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+	                <dt><img src="{{ getAvatar($manage->user, 50) }}" width="50"></dt>
 	                <dd>{{$group->founder->user->name}}</dd>
 	            </dl>
 	        </div>
@@ -27,7 +27,7 @@
 	            @if (!$manager->isEmpty())
 	            @foreach ($manager as $manage)
 	                <dl class="m-row">
-	                    <dt><img src="{{$manage->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+	                    <dt><img src="{{ getAvatar($manage->user, 50) }}" width="50"></dt>
 	                    <dd><div>{{$manage->user->name}}</div></dd>
 	                </dl>
 	            @endforeach
@@ -41,7 +41,7 @@
 	            @if (!$members->isEmpty())
 	            @foreach ($members as $member)
 	                <dl class="m-row">
-	                    <dt><img src="{{$member->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+	                    <dt><img src="{{ getAvatar($manage->user, 50) }}" width="50"></dt>
 	                    <dd><div>{{$member->user->name}}</div></dd>
 	                </dl>
 	            @endforeach
