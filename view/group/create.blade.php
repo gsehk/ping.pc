@@ -88,7 +88,7 @@
             </div>
             <div class="formitm">
                 <label class="lab">&nbsp;</label>
-                <input class="iptck" type="checkbox" name="protocol"><span>我已阅读并遵守ThinkSns+的圈子创建协议</span>
+                <input class="iptck" type="checkbox" name="protocol" checked><span>我已阅读并遵守ThinkSNS+的圈子创建协议</span>
             </div>
             <p class="tooltips">提交后，我们将在2个工作日内给予反馈，谢谢合作！</p>
             <div class="f-tac">
@@ -161,6 +161,9 @@ $('#J-create-group').on('click', function(){
         formData.append('summary', $('[name="summary"]').val());
         formData.append('notice', $('[name="notice"]').val());
         formData.append('location', $('[name="location"]').val());
+        formData.append('latitude', '100');
+        formData.append('longitude', '100');
+        formData.append('geo_hash', '123');
         if (modeType == '1') {
             formData.append('mode', $('[name="mode"]:checked').val());
         } else {
@@ -173,14 +176,12 @@ $('#J-create-group').on('click', function(){
         if (protocol !== undefined) {
             axios.post(POST_URL, formData)
             .then(function (response) {
-                console.log(response)
-                // noticebox('发布成功', 1);
+                noticebox('发布成功，请等待审核', 1, SITE_URL + '/group');
             })
             .catch(function (error) {
-                showError(error.responseJSON);
+                showError(error.response.data);
             });
         }
-
 });
 </script>
 @endsection

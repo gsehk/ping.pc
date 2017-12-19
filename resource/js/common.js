@@ -1931,7 +1931,7 @@ $(function() {
     // IM聊天
     if (TS.MID > 0 && TS.BOOT['im:serve']) {
         // 聊天初始化
-        message.init();
+        // message.init();
     }
 
     // 回车事件绑定
