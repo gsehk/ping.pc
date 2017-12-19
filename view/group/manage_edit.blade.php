@@ -222,11 +222,10 @@ $('#J-create-group').on('click', function(){
 
         axios.patch(POST_URL, formData)
         .then(function (response) {
-            console.log(response)
-            // noticebox('修改成功', 1);
+            noticebox('修改成功', 1, 'refresh');
         })
         .catch(function (error) {
-            showError(error.responseJSON);
+            showError(error.response.data);
         });
 });
 </script>
