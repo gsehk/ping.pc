@@ -3,6 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
+use Zhiyi\PlusGroup\Models\Group as GroupModel;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class GroupController extends BaseController
@@ -17,6 +18,9 @@ class GroupController extends BaseController
     {
         $this->PlusData['current'] = 'group';
         $data['cates'] = createRequest('GET', '/api/v2/plus-group/categories');
+
+        // 圈子总数
+        $data['groups_count'] = GroupModel::where('audit', 1)->count();
 
         return view('pcview::group.index', $data, $this->PlusData);
     }

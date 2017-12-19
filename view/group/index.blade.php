@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="g-sidec f-mb30">
-            <p>共有 <span class="s-fc3 f-fs5">8000</span> 个兴趣圈子，等待你的加入！</p>
+            <p>共有 <span class="s-fc3 f-fs5">{{ $groups_count }}</span> 个兴趣圈子，等待你的加入！</p>
         </div>
         <div class="g-sidead f-mb30">
             <img src="{{ asset('zhiyicx/plus-component-pc/css/img/ad.png') }}">
@@ -108,6 +108,7 @@
             });
         }
     }
+
     function tree(obj)
     {
         var text = '';
@@ -119,54 +120,54 @@
         return text;
     }
 
-setTimeout(function() {
-    scroll.init({
-        container: '#group_box',
-        loading: '.group_container',
-        paramtype: 1,
-        url: '/group/list',
-        params: {limit: 10}
-    });
-}, 300);
+    setTimeout(function() {
+        scroll.init({
+            container: '#group_box',
+            loading: '.group_container',
+            paramtype: 1,
+            url: '/group/list',
+            params: {limit: 10}
+        });
+    }, 300);
 
-// 圈子分类筛选
-$('.m-chip span').on('click', function() {
-    var cateid = $(this).attr('rel');
-    $('#group_box').html('');
+    // 圈子分类筛选
+    $('.m-chip span').on('click', function() {
+        var cateid = $(this).attr('rel');
+        $('#group_box').html('');
 
-    scroll.init({
-        container: '#group_box',
-        loading: '.group_container',
-        url: '/group/list',
-        paramtype: 1,
-        params: {category_id: cateid, limit: 10}
-    });
+        scroll.init({
+            container: '#group_box',
+            loading: '.group_container',
+            url: '/group/list',
+            paramtype: 1,
+            params: {category_id: cateid, limit: 10}
+        });
 
-    $('.m-chip span').removeClass('cur');
-    $(this).addClass('cur');
-});
-
-// 切换分类
-$('.group_navbar a').on('click', function() {
-    var cate = $(this).data('cate');
-    var params = {cate: cate, limit: 10};
-    (cate == 1) ? $('.m-chip').show() : $('.m-chip').hide();
-    $('#group_box').html('');
-    if (cate == 3) {
-        params.longitude = 222;
-        params.latitude = 111;
-    }
-    scroll.init({
-        container: '#group_box',
-        loading: '.group_container',
-        url: '/group/list',
-        paramtype: 1,
-        params: params
+        $('.m-chip span').removeClass('cur');
+        $(this).addClass('cur');
     });
 
-    $('.group_navbar a').removeClass('active');
-    $(this).addClass('active');
-});
+    // 切换分类
+    $('.group_navbar a').on('click', function() {
+        var cate = $(this).data('cate');
+        var params = {cate: cate, limit: 10};
+        (cate == 1) ? $('.m-chip').show() : $('.m-chip').hide();
+        $('#group_box').html('');
+        if (cate == 3) {
+            params.longitude = 222;
+            params.latitude = 111;
+        }
+        scroll.init({
+            container: '#group_box',
+            loading: '.group_container',
+            url: '/group/list',
+            paramtype: 1,
+            params: params
+        });
+
+        $('.group_navbar a').removeClass('active');
+        $(this).addClass('active');
+    });
 
 </script>
 @endsection
