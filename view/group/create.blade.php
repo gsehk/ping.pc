@@ -14,7 +14,7 @@
         <div class="m-form">
             <div class="formitm">
                 <input class="chools-cover" id="J-upload-cover" type="file" name="file">
-                <img class="cover" id="J-preview-cover" src="{{ asset('zhiyicx/plus-component-pc/images/pic_upload.png') }}">
+                <img class="cover" id="J-preview-cover" src="{{ asset('zhiyicx/plus-component-pc/images/default_group_cover.png') }}">
                 <input id="avatar_id" type="hidden" name="avatar" value="" />
             </div>
             <div class="formitm">
