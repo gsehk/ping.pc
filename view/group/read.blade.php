@@ -101,7 +101,7 @@
         <p class="u-more f-csp">
             <a class="f-db" href="{{ route('pc:groupnotice', ['group_id'=>$group->id]) }}">查看详细公告</a>
         </p>
-        @if (in_array($group->joined->role, ['administrator', 'founder']))
+        @if ($group->joined && in_array($group->joined->role, ['administrator', 'founder']))
             <div class="g-sidec f-csp f-mb30">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-setting"></use></svg>
                 &nbsp;&nbsp;&nbsp;<a href="{{ route('pc:groupedit', ['group_id'=>$group->id]) }}">
