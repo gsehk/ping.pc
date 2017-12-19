@@ -125,7 +125,7 @@ setTimeout(function() {
         loading: '.group_container',
         paramtype: 1,
         url: '/group/list',
-        params: {limit: 15}
+        params: {limit: 10}
     });
 }, 300);
 
@@ -139,7 +139,7 @@ $('.m-chip span').on('click', function() {
         loading: '.group_container',
         url: '/group/list',
         paramtype: 1,
-        params: {category_id: cateid, limit: 15}
+        params: {category_id: cateid, limit: 10}
     });
 
     $('.m-chip span').removeClass('cur');
@@ -149,7 +149,7 @@ $('.m-chip span').on('click', function() {
 // 切换分类
 $('.group_navbar a').on('click', function() {
     var cate = $(this).data('cate');
-    var params = {cate: cate, limit: 15}
+    var params = {cate: cate, limit: 10}
     (cate == 1)
     ? $('.m-chip').show()
     : $('.m-chip').hide()
