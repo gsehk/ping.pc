@@ -24,8 +24,8 @@
             <div class="m-form">
                 <div class="formitm">
                     <input class="chools-cover" id="J-upload-cover" type="file" name="file">
-                    <img class="cover" id="J-preview-cover" src="{{ $group->avatar or asset('zhiyicx/plus-component-pc/images/pic_upload.png') }}">
-                    <input id="avatar_id" type="hidden" name="avatar" value="" />
+                    <img class="cover" id="J-preview-cover" src="{{ $group->avatar or asset('zhiyicx/plus-component-pc/images/default_group_cover.png') }}">
+                    <button class="J-upload-cover-btn change-cover">更改圈子头像</button>
                 </div>
                 <div class="formitm">
                     <label class="lab">圈子名称</label>
@@ -115,15 +115,15 @@
                 <div class="formitm">
                     <label class="lab">发帖权限</label>
                     <span class="f-mr20">
-                        <input class="regular-radio f-dn" id="radio-qz" name="auth" type="radio" value="1" checked />
+                        <input class="regular-radio f-dn" id="radio-qz" name="permissions" type="radio" value="0" @if ($group->permissions == 'administrator') checked @endif/>
                         <label class="radio" for="radio-qz"></label>仅圈主
                     </span>
                     <span class="f-mr20">
-                        <input class="regular-radio f-dn" id="radio-tt" name="auth" type="radio" value="2" />
+                        <input class="regular-radio f-dn" id="radio-tt" name="permissions" type="radio" value="1" @if ($group->permissions == 'administrator,founder') checked @endif/>
                         <label class="radio" for="radio-tt"></label>圈主和管理员
                     </span>
                     <span class="f-mr20">
-                        <input class="regular-radio f-dn" id="radio-all" name="auth" type="radio" value="3" />
+                        <input class="regular-radio f-dn" id="radio-all" name="permissions" type="radio" value="2" @if ($group->permissions == 'member,administrator,founder') checked @endif/>
                         <label class="radio" for="radio-all"></label>全体成员
                     </span>
                 </div>
@@ -141,14 +141,20 @@
                     </span>
                 </div>
                 <div class="f-tac">
+                    <input type="hidden" name="latitude" value="{{$group->latitude}}" />
+                    <input type="hidden" name="longitude" value="{{$group->longitude}}" />
+                    <input type="hidden" name="geo_hash" value="{{$group->geo_hash}}" />
                     <button class="btn btn-primary btn-lg f-mt20" id="J-create-group" type="button">提 交</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src='//webapi.amap.com/maps?v=1.4.2&key=e710c0acaf316f2daf2c1c4fd46390e3'></script>
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 @endsection
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/geohash.js')}}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 @section('scripts')
 <script>
@@ -186,6 +192,9 @@ selBox.on('click', 'span', function(){
     $(this).remove();
 });
 
+$('.J-upload-cover-btn').click(function(){
+    $('#J-upload-cover').click();
+});
 $('#J-upload-cover').on('change', function(e){
     var file = e.target.files[0];
     var a = new FileReader();
@@ -194,25 +203,35 @@ $('#J-upload-cover').on('change', function(e){
         $('#J-preview-cover').attr('src', data);
     };
     a.readAsDataURL(file);
-    /*fileUpload.init(file, function(image, f, file_id){
-        $('#avatar_id').val(file_id);
-        $('#J-preview-cover').attr('src', TS.API+'/files/'+file_id+'?w=230&h=163');
-    });*/
 });
-
 $('#J-create-group').on('click', function(){
-    var categrey = $('#categrey').data('value');
     var modeType = $('[name="modes"]:checked').val();
     var POST_URL = '/plus-group/groups/{{$group->id}}';
+    var group = ['administrator', 'administrator,founder', 'member,administrator,founder'];
     var formData = new FormData();
-        formData.append('avatar', $('#J-upload-cover')[0].files[0]);
-        formData.append('name', $('[name="name"]').val());
-        formData.append('summary', $('[name="summary"]').val());
-        formData.append('notice', $('[name="notice"]').val());
-        formData.append('location', $('[name="location"]').val());
-        formData.append('latitude', '100');
-        formData.append('longitude', '100');
-        formData.append('geo_hash', '123');
+        var attrs = {
+            name: $('[name="name"]').val(),
+            summary: $('[name="summary"]').val(),
+            notice: $('[name="notice"]').val(),
+            location: $('[name="location"]').val(),
+            latitude: $('[name="latitude"]').val(),
+            longitude: $('[name="longitude"]').val(),
+            geo_hash: $('[name="geo_hash"]').val(),
+            allow_feed: $('[name="allow_feed"]:checked').val(),
+            permissions: group[$('[name="permissions"]:checked').val()],
+        };
+        if (getLength(attrs.name) > 20) {
+            noticebox('圈子名称不能大于20个字符', 0);return;
+        }
+        if (getLength(attrs.summary) > 255) {
+            noticebox('圈子简介不能大于255个字符', 0);return;
+        }
+        _.forEach(attrs, function(v, k) {
+            formData.append(k, v);
+        });
+        if ($('#J-upload-cover')[0].files[0] !== undefined) {
+            formData.append('avatar', $('#J-upload-cover')[0].files[0]);
+        }
         if (modeType == '1') {
             formData.append('mode', $('[name="mode"]:checked').val());
         } else {
@@ -222,14 +241,22 @@ $('#J-create-group').on('click', function(){
         $('.tags-box span').each(function(){
             formData.append('tags[][id]', $(this).data('id'));
         });
-
         axios.post(POST_URL, formData)
         .then(function (response) {
-            noticebox('修改成功', 1, 'refresh');
+            noticebox('修改成功', 1, '/group/{{$group->id}}');
         })
         .catch(function (error) {
             showError(error.response.data);
         });
 });
+$('[name="location"]').on('click', function(){
+    var _this = this;
+    getMaps(function(poi){
+        $('[name="latitude"]').val(poi.location.lat);
+        $('[name="longitude"]').val(poi.location.lng);
+        $('[name="geo_hash"]').val(encodeGeoHash(poi.location.lat, poi.location.lng));
+        $(_this).val(poi.district+poi.address);
+    });
+})
 </script>
 @endsection
