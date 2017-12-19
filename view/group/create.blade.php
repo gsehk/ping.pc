@@ -172,11 +172,20 @@ $('#J-create-group').on('click', function(){
             longitude: $('[name="longitude"]').val(),
             geo_hash: $('[name="geo_hash"]').val(),
         };
-        if (getLength(attrs.name) > 20) {
-            noticebox('圈子名称不能大于20个字符', 0);return;
+        if (!categrey) {
+            noticebox('请选择圈子分类', 0);return;
+        }
+        if (!attrs.name || getLength(attrs.name) > 20) {
+            noticebox('圈子名称长度为1 - 20个字', 0);return;
         }
         if (getLength(attrs.summary) > 255) {
-            noticebox('圈子简介不能大于255个字符', 0);return;
+            noticebox('圈子简介不能大于255个字', 0);return;
+        }
+        if ($('.tags-box span').length < 1) {
+            noticebox('请选择圈子标签', 0);return;
+        }
+        if (!attrs.location || !attrs.latitude || !attrs.longitude) {
+            noticebox('请选择圈子位置', 0);return;
         }
         _.forEach(attrs, function(v, k) {
             formData.append(k, v);

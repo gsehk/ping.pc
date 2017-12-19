@@ -220,11 +220,17 @@ $('#J-create-group').on('click', function(){
             allow_feed: $('[name="allow_feed"]:checked').val(),
             permissions: group[$('[name="permissions"]:checked').val()],
         };
-        if (getLength(attrs.name) > 20) {
-            noticebox('圈子名称不能大于20个字符', 0);return;
+        if (!attrs.name || getLength(attrs.name) > 20) {
+            noticebox('圈子名称长度为1 - 20个字', 0);return;
         }
         if (getLength(attrs.summary) > 255) {
-            noticebox('圈子简介不能大于255个字符', 0);return;
+            noticebox('圈子简介不能大于255个字', 0);return;
+        }
+        if ($('.tags-box span').length < 1) {
+            noticebox('请选择圈子标签', 0);return;
+        }
+        if (!attrs.location || !attrs.latitude || !attrs.longitude) {
+            noticebox('请选择圈子位置', 0);return;
         }
         _.forEach(attrs, function(v, k) {
             formData.append(k, v);
@@ -243,7 +249,7 @@ $('#J-create-group').on('click', function(){
         });
         axios.post(POST_URL, formData)
         .then(function (response) {
-            noticebox('修改成功', 1, '/group/{{$group->id}}');
+            noticebox('修改成功~', 1, '/group/{{$group->id}}');
         })
         .catch(function (error) {
             showError(error.response.data);
