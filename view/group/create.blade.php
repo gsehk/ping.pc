@@ -27,11 +27,11 @@
             </div>
             <div class="formitm">
                 <label class="lab">圈子分类</label>
-                <div data-value="" class="zy_select t_c gap12" id="categrey">
-                    <span></span>
+                <div data-value="{{ $cates[0]['id'] }}" class="zy_select t_c gap12" id="categrey">
+                    <span>推荐</span>
                     <ul>
-                        @foreach ($cates as $cate)
-                            <li data-value="{{$cate->id}}">{{$cate->name}}</li>
+                        @foreach ($cates as $key => $cate)
+                            <li @if($key == 0) class="active" @endif data-value="{{$cate->id}}">{{$cate->name}}</li>
                         @endforeach
                     </ul>
                     <i></i>
@@ -154,7 +154,7 @@ $('#J-create-group').on('click', function(){
     var protocol = $('[name="protocol"]:checked').val();
     var categrey = $('#categrey').data('value');
     var modeType = $('[name="modes"]:checked').val();
-    var POST_URL = '/plus-group/categories/'+categrey+'/groups';
+    var POST_URL = '/plus-group/categories/' + categrey + '/groups';
     var formData = new FormData();
         formData.append('avatar', $('#J-upload-cover')[0].files[0]);
         formData.append('name', $('[name="name"]').val());
@@ -176,7 +176,7 @@ $('#J-create-group').on('click', function(){
         if (protocol !== undefined) {
             axios.post(POST_URL, formData)
             .then(function (response) {
-                noticebox('发布成功，请等待审核', 1, SITE_URL + '/group');
+                noticebox('发布成功，请等待审核', 1, '/group');
             })
             .catch(function (error) {
                 showError(error.response.data);

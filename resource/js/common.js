@@ -672,7 +672,7 @@ var noticebox = function(msg, status, tourl) {
         }, 1000);
     } else {
         setTimeout(function() {
-            noticebox_cb(tourl);
+            noticebox_cb(TS.SITE_URL + tourl);
         }, 1500);
     }
 }
