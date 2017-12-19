@@ -175,6 +175,9 @@ $('#J-create-group').on('click', function(){
         if (!categrey) {
             noticebox('请选择圈子分类', 0);return;
         }
+        if (!attrs.avatar || attrs.avatar === undefined) {
+            noticebox('请选上传圈子头像', 0);return;
+        }
         if (!attrs.name || getLength(attrs.name) > 20) {
             noticebox('圈子名称长度为1 - 20个字', 0);return;
         }
