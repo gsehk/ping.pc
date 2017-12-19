@@ -14,8 +14,8 @@
         <div class="g-sd">
             <ul>
                 <a href="{{ route('pc:groupedit', ['group_id'=>$group->id]) }}"><li class="cur">圈子资料</li></a>
+                <a href="{{ route('pc:groupbankroll', ['group_id'=>$group->id]) }}"><li>圈子收益</li></a>
                 <a href="{{ route('pc:groupmember', ['group_id'=>$group->id]) }}"><li>成员管理</li></a>
-                <a href="{{ route('pc:groupbankroll', ['group_id'=>$group->id]) }}"><li>财务管理</li></a>
                 <a href="{{ route('pc:groupreport', ['group_id'=>$group->id]) }}"><li>举报管理</li></a>
             </ul>
         </div>
@@ -210,6 +210,9 @@ $('#J-create-group').on('click', function(){
         formData.append('summary', $('[name="summary"]').val());
         formData.append('notice', $('[name="notice"]').val());
         formData.append('location', $('[name="location"]').val());
+        formData.append('latitude', '100');
+        formData.append('longitude', '100');
+        formData.append('geo_hash', '123');
         if (modeType == '1') {
             formData.append('mode', $('[name="mode"]:checked').val());
         } else {
@@ -220,7 +223,7 @@ $('#J-create-group').on('click', function(){
             formData.append('tags[][id]', $(this).data('id'));
         });
 
-        axios.patch(POST_URL, formData)
+        axios.post(POST_URL, formData)
         .then(function (response) {
             noticebox('修改成功', 1, 'refresh');
         })

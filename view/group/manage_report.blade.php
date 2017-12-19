@@ -14,8 +14,8 @@
         <div class="g-sd">
             <ul>
                 <a href="{{ route('pc:groupedit', ['group_id'=>$group->id]) }}"><li>圈子资料</li></a>
+                <a href="{{ route('pc:groupbankroll', ['group_id'=>$group->id]) }}"><li>圈子收益</li></a>
                 <a href="{{ route('pc:groupmember', ['group_id'=>$group->id]) }}"><li>成员管理</li></a>
-                <a href="{{ route('pc:groupbankroll', ['group_id'=>$group->id]) }}"><li>财务管理</li></a>
                 <a href="{{ route('pc:groupreport', ['group_id'=>$group->id]) }}"><li class="cur">举报管理</li></a>
             </ul>
         </div>
