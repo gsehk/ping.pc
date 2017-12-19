@@ -149,11 +149,8 @@ $('.m-chip span').on('click', function() {
 // 切换分类
 $('.group_navbar a').on('click', function() {
     var cate = $(this).data('cate');
-    var params = {cate: cate, limit: 10}
-    (cate == 1)
-    ? $('.m-chip').show()
-    : $('.m-chip').hide()
-    ;
+    var params = {cate: cate, limit: 10};
+    (cate == 1) ? $('.m-chip').show() : $('.m-chip').hide();
     $('#group_box').html('');
     if (cate == 3) {
         params.longitude = 222;
