@@ -1,3 +1,7 @@
+@php
+	use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
+
 @section('title')圈子成员@endsection
 
 @extends('pcview::layouts.default')
@@ -18,7 +22,7 @@
 	        <div>
 	            <div class="f-mt20 f-fs4">圈主</div>
 	            <dl class="m-row">
-	                <dt><img src="{{ getAvatar($manage->user, 50) }}" width="50"></dt>
+	                <dt><img src="{{ getAvatar($group->founder->user, 50) }}" width="50"></dt>
 	                <dd>{{$group->founder->user->name}}</dd>
 	            </dl>
 	        </div>
@@ -41,7 +45,7 @@
 	            @if (!$members->isEmpty())
 	            @foreach ($members as $member)
 	                <dl class="m-row">
-	                    <dt><img src="{{ getAvatar($manage->user, 50) }}" width="50"></dt>
+	                    <dt><img src="{{ getAvatar($member->user, 50) }}" width="50"></dt>
 	                    <dd><div>{{$member->user->name}}</div></dd>
 	                </dl>
 	            @endforeach
