@@ -261,3 +261,6 @@ Route::prefix('socialite')->group(function () {
 
 // 成功提示
 Route::get('/success', 'BaseController@success')->name('pc:success');
+
+// 前台查看举报资源
+Route::get('/report/view', 'BaseController@reportView')->name('pc:reportview');

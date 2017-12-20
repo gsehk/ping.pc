@@ -3,12 +3,13 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Session;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\Config\Repository;
 use Zhiyi\Plus\Http\Controllers\Controller;
-use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
 use Zhiyi\Plus\Models\JWTCache as JWTCacheModel;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class BaseController extends Controller
@@ -93,6 +94,11 @@ class BaseController extends Controller
         $data['time'] = $time;
 
         return view('pcview::templates.notice', $data, $this->PlusData);
+    }
+
+    public function reportView(Request $request)
+    {
+        
     }
 }
 
