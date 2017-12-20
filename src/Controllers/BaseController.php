@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\Config\Repository;
 use Zhiyi\Plus\Http\Controllers\Controller;
+use Zhiyi\Plus\Models\Comment as CommentModel;
 use Zhiyi\Plus\Models\JWTCache as JWTCacheModel;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
@@ -96,9 +97,51 @@ class BaseController extends Controller
         return view('pcview::templates.notice', $data, $this->PlusData);
     }
 
+    /**
+     * 查看资源页面
+     *
+     * @param Request $request
+     * @return mixed
+     * @author BS <414606094@qq.com>
+     */
     public function reportView(Request $request)
     {
-        
+        $reportable_id = $request->query('reportable_id');
+        $reportable_type = $request->query('reportable_type');
+        if (! $reportable_id || ! $reportable_type) {
+            return abort(404);
+        }
+
+        switch ($reportable_type) {
+            case 'users':
+                return response()->redirectTo(route('pc:mine', ['user' => $reportable_id]), 302);
+                break;
+            case 'comments': // 评论部分暂时跳转到所属资源的详情页
+                $comment = CommentModel::find($reportable_id);
+                if (! $comment) {
+                    return abort(404);
+                }
+                return response()->redirectTo(route('pc:reportview', ['reportable_id' => $comment->commentable_id, 'reportable_type' => $comment->commentable_type]), 302);
+                break;
+            case 'feeds':
+                return response()->redirectTo(route('pc:feedread', ['feed' => $reportable_id]), 302);
+                break;
+            case 'questions':
+                return response()->redirectTo(route('pc:questionread', ['question_id' => $reportable_id]), 302);
+                break;
+            case 'question-answers':
+                return response()->redirectTo(route('pc:answeread', ['answer' => $reportable_id]), 302);
+                break;
+            case 'news':
+                return response()->redirectTo(route('pc:newsread', ['news_id' => $reportable_id]), 302);
+                break;
+            case 'groups':
+                return response()->redirectTo(route('pc:groupread', ['group_id' => $reportable_id]), 302);
+                break;
+            default:
+                return abort(404);
+                break;
+        }
     }
 }
 
