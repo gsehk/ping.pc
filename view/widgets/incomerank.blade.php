@@ -9,10 +9,12 @@
                 <li>
                     <div class="fans-span">{{$loop->iteration}}</div>
                     <div class="income-avatar">
-                        <img src="{{ getAvatar($income, 60) }}" alt="{{$income['name']}}">
+                        <a href="{{ route('pc:mine', $income['id']) }}">
+                            <img src="{{ getAvatar($income, 60) }}" alt="{{$income['name']}}">
+                        </a>
                     </div>
                     <div class="income-name">
-                        <a class="name" href="javascript:;">{{$income['name']}}</a>
+                        <a class="name" href="{{ route('pc:mine', $income['id']) }}">{{$income['name']}}</a>
                         <div class="answers-count">回答数：{{$income['extra']['answers_count']}}</div>
                     </div>
                 </li>
