@@ -41,7 +41,7 @@
     </div>
 
     <div class="right_container g-side">
-        <div class="g-sidec f-mb30">
+        <div class="g-sidec g-sidec-publish f-mb30">
             <a href="{{route('pc:groupcreate')}}">
                 <div class="u-btn f-mb20">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-label"></use></svg>
