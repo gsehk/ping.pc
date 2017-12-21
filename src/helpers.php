@@ -141,13 +141,18 @@ function createRequest($method = 'POST', $url = '', $params = array(), $instance
     $request = Request::create($url, $method, $params);
     $request->headers->add(['Accept' => 'application/json', 'Authorization' => 'Bearer '. Session::get('token')]);
 
-    // 注入JWT请求单例
-    app(\Tymon\JWTAuth\JWTAuth::class)->setRequest($request);
+    app()->resolving(\Tymon\JWTAuth\JWT::class, function ($jwt) use ($request) {
+        $jwt->setRequest($request);
+
+        return $jwt;
+    });
+    Auth::guard('api')->setRequest($request);
 
     // 解决获取认证用户
-    $request->setUserResolver(function($guard) {
-        return Auth::user($guard);
+    $request->setUserResolver(function() {
+        return Auth::user('api');
     });
+
     // 解决请求传参问题
     if ($instance) { // 获取登录用户不需要传参
         app()->instance(Request::class, $request);
