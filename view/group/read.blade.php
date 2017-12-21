@@ -37,7 +37,13 @@
                             <span class="u-share">
                                 <svg class="icon f-mr10"><use xlink:href="#icon-share"></use></svg>分享</span>
                         </div>
+                        @if(strlen($group->summary) <= 300)
                         <p class="ct-intro">{{$group->summary}}</p>
+                        @else
+                        <p class="ct-intro-all">{{$group->summary}}<span class="ct-intro-more" onclick="grouped.intro(0)">收起</span></p>
+                        <p class="ct-intro">{{str_limit($group->summary, 160, '...')}}<span class="ct-intro-more" onclick="grouped.intro(1)">显示全部</span></p>
+                        @endif
+
                         <div class="ct-stat">
                             <span>帖子 <font class="s-fc">{{$group->posts_count}}</font></span>
                             <span>成员 <font class="s-fc" id="join-count-{{$group->id}}">{{$group->users_count}}</font></span>

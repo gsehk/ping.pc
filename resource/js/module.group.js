@@ -99,6 +99,15 @@ var grouped = {
                 showError(xhr.responseJSON);
             }
         })
+    },
+    intro:function(status){
+        if (status == 0) {
+            $('.ct-intro-all').hide();
+            $('.ct-intro').show();
+        } else {
+            $('.ct-intro-all').show();
+            $('.ct-intro').hide();
+        }
     }
 }
 
