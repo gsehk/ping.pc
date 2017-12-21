@@ -21,7 +21,7 @@
     @else
     <div class="checkin_div checked_div">
         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-checkin"></use></svg>
-        已签到<span>连续签到<font class="colnum">{{ $data['last_checkin_count'] }}</font>天</span>
+        已<span>累计签到<font class="colnum">{{ $data['last_checkin_count'] }}</font>天</span>
     </div>
     @endif
 </div>
