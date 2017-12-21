@@ -1,5 +1,7 @@
-{{-- 成员管理 --}}
-@section('title')创建圈子@endsection
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
+@section('title') {{ $group->name }}-成员管理 @endsection
 
 @extends('pcview::layouts.default')
 

@@ -1,5 +1,5 @@
-{{-- 举报详情 --}}
-@section('title')圈子-举报管理@endsection
+
+@section('title') {{ $group->name }}-圈子收益 @endsection
 
 @extends('pcview::layouts.default')
 

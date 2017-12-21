@@ -1,5 +1,5 @@
-{{-- 资金管理 --}}
-@section('title')创建圈子@endsection
+
+@section('title') {{ $group->name }}-圈子收益 @endsection
 
 @extends('pcview::layouts.default')
 

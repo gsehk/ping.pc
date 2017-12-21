@@ -1,5 +1,5 @@
-{{-- 编辑圈子资料 --}}
-@section('title')创建圈子@endsection
+
+@section('title') {{ $group->name }}-圈子资料 @endsection
 
 @extends('pcview::layouts.default')
 
