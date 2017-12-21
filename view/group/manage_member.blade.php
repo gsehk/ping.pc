@@ -35,7 +35,7 @@
             <div>
                 <div class="f-mt20 f-fs4">圈主</div>
                 <dl class="m-row">
-                    <dt><img src="{{$group->founder->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+                    <dt><img src="{{ getAvatar($group->founder->user, 50) }}" width="50"></dt>
                     <dd>{{$group->founder->user->name}}</dd>
                 </dl>
             </div>
@@ -44,7 +44,7 @@
                 @if (!$manager->isEmpty())
                 @foreach ($manager as $manage)
                     <dl class="m-row">
-                        <dt><img src="{{$manage->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+                        <dt><img src="{{ getAvatar($manage->user, 50) }}" width="50"></dt>
                         <dd><div>{{$manage->user->name}}</div>
                             <div class="u-opt">
                                 <span>管理</span>
@@ -69,7 +69,7 @@
                 @if (!$members->isEmpty())
                 @foreach ($members as $member)
                     <dl class="m-row">
-                        <dt><img src="{{$member->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+                        <dt><img src="{{ getAvatar($member->user, 50) }}" width="50"></dt>
                         <dd><div>{{$member->user->name}}</div>
                             <div class="u-opt">
                                 <span>管理</span>
