@@ -62,6 +62,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js')}}"></script>
 <script>
     $("#location").keyup(function(event){
         last = event.timeStamp;
