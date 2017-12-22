@@ -90,7 +90,7 @@
                     <div class="j-sub0 @if (!in_array($group->mode, ['public','private'])) f-dn @endif">
                         <div class="form-control f-mb20">
                             <input class="regular-radio f-dn" id="radio-open" name="mode" type="radio" value="public"
-                            @if ($group->mode == 'public') checked @endif />
+                            @if ($group->mode == 'public' || $group->mode == 'paid') checked @endif />
                             <label class="radio" for="radio-open"></label>公开圈子<span class="f-ml20 s-fc4">加入圈子即可发帖</span>
                         </div>
                         <div class="form-control">
