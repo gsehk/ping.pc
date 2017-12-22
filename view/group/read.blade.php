@@ -93,7 +93,7 @@
 
     <div class="g-side right_container">
         <div class="f-mb30">
-            <a href="{{ route('pc:postcreate', $group->id) }}">
+            <a @if($group->joined) href="{{ route('pc:postcreate', $group->id) }} @else  href="javascript:;" onclick="noticebox('请先加入该圈子', 0)" @endif">
                 <div class="u-btn">
                     <svg class="icon f-vatb" aria-hidden="true"><use xlink:href="#icon-writing"></use></svg>
                     <span>发 帖</span>
