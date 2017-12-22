@@ -35,7 +35,13 @@
                         <div class="ct-tt">
                             {{$group->name}}
                             <span class="u-share">
-                                <svg class="icon f-mr10"><use xlink:href="#icon-share"></use></svg>分享</span>
+                                <svg class="icon f-mr10"><use xlink:href="#icon-share"></use></svg>分享
+                                <div class="u-share-show">
+                                    分享至：
+                                    @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:groupread', ['group_id' => $group->id]), 'share_title' => $group->name, 'share_pic' => $group->avatar])
+                                    <div class="triangle"></div>
+                                </div>
+                            </span>
                         </div>
                         @if(strlen($group->summary) <= 300)
                         <p class="ct-intro">{{$group->summary}}</p>
@@ -189,6 +195,11 @@
             $('.feed_menu a').removeClass('selected');
             $(this).addClass('selected');
         });
+
+        // 分享
+        $('.u-share').click(function(){
+            $('.u-share-show').toggle();
+        })
     });
 
     // 所有帖子搜索
