@@ -131,8 +131,8 @@
 .p-readgroup .qz-box dd{margin-left:65px;margin-top:10px;}
 .p-readgroup .qz-box dd.self{padding-top:16px;}
 .p-readgroup .qz-box dd .contact{padding:4px 10px;border-radius:2px;font-size:12px;background-color:#59b6d7;color:#fff;}
-.p-readgroup .cy-box{display:flex;justify-content:space-between;flex-wrap:wrap;}
-.p-readgroup .cy-box li{display: inline-flex;text-align: center;}
+.p-readgroup .cy-box{display:flex;flex-wrap:wrap;margin-left:-28px;}
+.p-readgroup .cy-box li{display:inline-flex;text-align:center;width: calc(33.333% - 30px);margin-left: 28px;}
 .p-readgroup .cy-box li p{width:55px;}
 .p-publish .g-mn{padding:50px 80px;background-color:white;}
 .p-publish .m-form .formitm{margin-bottom:30px;font-size:14px;position:relative;}
