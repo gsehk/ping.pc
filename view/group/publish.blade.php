@@ -21,7 +21,7 @@
                 <input class="iptck" type="checkbox" name="sync_feed" value="1"><span>同步分享至动态</span>
             </div>
             <div class="f-tac">
-                <button class="btn btn-default btn-lg" id="" type="button">存草稿</button>
+                {{-- <button class="btn btn-default btn-lg" id="" type="button">存草稿</button> --}}
                 <button class="btn btn-primary btn-lg" id="J-publish-post" type="button">发 布</button>
             </div>
         </div>
