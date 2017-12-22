@@ -20,7 +20,7 @@
             <dl class="user-box clearfix">
                 <dt class="fl">
                     <a class="avatar_box" href="{{ route('pc:mine', $post->user_id) }}">
-                    <img class="round" src="{{ getAvatar($post->user, 60) }}" width="60">
+                    <img class="round" src="{{ getAvatar($post->user, 60) }}" width="60" class="avatar">
                     @if($post->user->verified)
                     <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                     @endif
@@ -98,7 +98,7 @@
             <div class="info clearfix">
                 <div class="auth_header">
                     <a href="#">
-                        <img src="{{ getAvatar($post->user, 60) }}" />
+                        <img src="{{ getAvatar($post->user, 60) }}" class="avatar"/>
                     </a>
                 </div>
                 <div class="auth_info">
