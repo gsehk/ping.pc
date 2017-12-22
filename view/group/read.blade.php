@@ -132,6 +132,14 @@
                 @endif
             </dl>
             <ul class="cy-box">
+                @foreach ($manager as $manage)
+                    <li>
+                        <a href="{{ route('pc:mine', $manage->user_id) }}">
+                            <img src="{{ $manage->user->avatar or asset('zhiyicx/plus-component-pc/images/pic_default_secret.png') }}" width="50">
+                            <p class="f-toe">{{$manage->user->name}}</p>
+                        </a>
+                    </li>
+                @endforeach
                 @foreach ($members as $member)
                     <li>
                         <a href="{{ route('pc:mine', $member->user_id) }}">

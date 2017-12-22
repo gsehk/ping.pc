@@ -338,6 +338,7 @@ class GroupController extends BaseController
         $user = $this->PlusData['TS']['id'] ?? 0;
         $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
         $data['members'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members',['type'=>'member']);
+        $data['manager'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', ['type'=>'manager']);
 
         return view('pcview::group.read', $data, $this->PlusData);
     }
