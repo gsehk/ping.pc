@@ -28,7 +28,6 @@
             <div class="formitm">
                 <label class="lab">圈子分类</label>
                 <div data-value="{{ $cates[0]['id'] }}" class="zy_select t_c gap12" id="categrey">
-                    <span>推荐</span>
                     <ul>
                         @foreach ($cates as $key => $cate)
                             <li @if($key == 0) class="active" @endif data-value="{{$cate->id}}">{{$cate->name}}</li>
