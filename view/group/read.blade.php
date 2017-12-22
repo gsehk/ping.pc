@@ -102,7 +102,11 @@
         </div>
         <div class="g-sidec s-bgc">
             <h3 class="u-tt">圈子公告</h3>
-            <p class="u-ct f-tac">{{$group->notice or '暂无公告信息'}}</p>
+            @if(strlen($group->notice) >= 100)
+            <p class="u-ct">{{str_limit($group->notice, 100, '...')}}</p>
+            @else
+            <p class="u-ct">{{$group->notice or '暂无公告信息'}}</p>
+            @endif
         </div>
         <p class="u-more f-csp">
             <a class="f-db" href="{{ route('pc:groupnotice', ['group_id'=>$group->id]) }}">查看详细公告</a>

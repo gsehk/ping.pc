@@ -69,6 +69,7 @@
 .g-side .g-sidec{padding:20px;border-radius:3px;background-color:white;font-size:14px;}
 .g-side .g-sidec-publish{background:none;padding:0px;}
 .g-side .g-sidec .u-tt{padding-bottom:15px;margin-top:0;text-align:center;font-weight:500;font-size:18px;border-bottom:1px solid #ededed;}
+.g-side .g-sidec .u-ct{word-break:break-all;}
 .g-side .u-btn{line-height:52px;border-radius:26px;text-align:center;vertical-align:middle;color:white;background-color:#59B6D7;}
 .g-side .g-sidec .icon{vertical-align:text-bottom;}
 .g-side .u-more{line-height:35px;margin-bottom:30px;margin-top:-3px;background-color:#F8FCFF;text-align:center;font-size:14px;color:#AAA;}
