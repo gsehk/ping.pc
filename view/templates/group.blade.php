@@ -3,7 +3,11 @@
         <dl class="clearfix">
             <dt><a href="{{Route('pc:groupread', $item->id)}}"><img src="@if(isset($item->avatar->id))  {{ $routes['storage'].$item->avatar->id }} @else {{ asset('zhiyicx/plus-component-pc/images/default_picture.png') }} @endif" width="120" height="120"></a></dt>
             <dd>
-                <a class="title" href="{{Route('pc:groupread', $item->id)}}" alt="{{ $item->name }}">{{ str_limit($item->name, 20, '...') }}</a>
+                <a class="title" href="{{Route('pc:groupread', $item->id)}}" alt="{{ $item->name }}">{{ str_limit($item->name, 16, '...') }}
+                    @if ($item->mode == 'paid')
+                    <span class="paid">付费</span>
+                    @endif
+                </a>
                 <div class="tool">
                     <span>分享 <font class="mcolor">{{ $item->posts_count }}</font></span>
                     <span>订阅 <font class="mcolor" id="join-count-{{ $item->id }}">{{ $item->users_count }}</font></span>
