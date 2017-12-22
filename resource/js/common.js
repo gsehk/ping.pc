@@ -1846,6 +1846,19 @@ $(function() {
             comment_box.hide();
         }
     });
+    
+    // 显示跳转详情文字
+    $(document).on("mouseover mouseout", '.date', function(event){
+        if(event.type == "mouseover"){
+          var width = $(this).find('span').first().width();
+            width = width < 60 ? 60 : width;
+          $(this).find('span').first().hide();
+          $(this).find('span').last().css({display:'inline-block', width: width});
+        }else if(event.type == "mouseout"){
+          $(this).find('span').first().show();
+          $(this).find('span').last().hide();
+        }
+    });
 
     $(document).on('focus keyup change', '.reward_input input', function() {
         $('.reward_spans span').removeClass('current');

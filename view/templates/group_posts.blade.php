@@ -138,6 +138,7 @@
         </a>
         <a href="{{ route('pc:grouppost', [$post->group_id, $post->id]) }}" class="date">
             <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
+            <span class="feed_time font12 hide">查看详情</span>
         </a>
     </div>
 
