@@ -122,8 +122,14 @@
             <h3 class="u-tt">圈子成员</h3>
             <dl class="qz-box">
                 <dt><img class="avatar" src="{{$group->founder->user->avatar or asset('zhiyicx/plus-component-pc/images/pic_default_secret.png')}}"></dt>
+                @if ($TS['id'] != $group->founder->user->id)
                 <dd>圈主：{{$group->founder->user->name}}</dd>
-                <dd><span class="contact">联系圈主</span></dd>
+                <dd>
+                    <span class="contact">联系圈主</span>
+                </dd>
+                @else
+                <dd class="self">圈主：{{$group->founder->user->name}}</dd>
+                @endif
             </dl>
             <ul class="cy-box">
                 @foreach ($members as $member)

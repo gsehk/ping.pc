@@ -126,9 +126,10 @@
 .p-readgroup .m-ct .joined{border-color:#ccc;color:#aaa;}
 .p-readgroup .g-hd .m-tag{line-height:36px;font-size:14px;}
 .p-readgroup .g-hd .m-tag .u-tag{margin:5px;padding:5px 10px;border-radius:3px;color:#59b6d7;background-color:#EEF8FB;}
-.p-readgroup .qz-box{padding-bottom:20px;border-bottom:1px solid #eaeaea;}
+.p-readgroup .qz-box{padding-bottom:20px;border-bottom:1px solid #eaeaea;height:70px;}
 .p-readgroup .qz-box dt{width:52px;height:52px;float:left;}
 .p-readgroup .qz-box dd{margin-left:65px;margin-top:10px;}
+.p-readgroup .qz-box dd.self{padding-top:16px;}
 .p-readgroup .qz-box dd .contact{padding:4px 10px;border-radius:2px;font-size:12px;background-color:#59b6d7;color:#fff;}
 .p-readgroup .cy-box{display:flex;justify-content:space-between;flex-wrap:wrap;}
 .p-readgroup .cy-box li{display: inline-flex;text-align: center;}
