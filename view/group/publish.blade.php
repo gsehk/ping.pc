@@ -15,7 +15,7 @@
                 <input class="ipt f-fs5" id="title" name="title" type="text"  placeholder="请在此输入20字以内的标题"/>
             </div>
             <div class="formitm">
-                @include('pcview::widgets.markdown', ['place' => '输入要分享的新鲜事', 'content'=>$content ?? ''])
+                @include('pcview::widgets.markdown', ['place' => '请输入帖子内容', 'content'=>$content ?? ''])
             </div>
             <div class="formitm">
                 <input class="iptck" type="checkbox" name="sync_feed" value="1"><span>同步分享至动态</span>
@@ -47,6 +47,14 @@ $('#J-publish-post').on('click', function(e){
         'title': $('#title').val(),
         'body': editor.getMarkdown(),
     };
+    if (!args.title || getLength(args.title) > 20) {
+        noticebox('请输入20字以内的标题', 0);return;
+    }
+
+    if (!args.body) {
+        noticebox('请输入帖子内容', 0);return;
+    }
+
     if (isSync !== undefined) {
         args.sync_feed = isSync;
         args.feed_from = 'pc';
