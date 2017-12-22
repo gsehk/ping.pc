@@ -182,13 +182,16 @@ $('#J-create-group').on('click', function(){
             noticebox('圈子名称长度为1 - 20个字', 0);return;
         }
         if (getLength(attrs.summary) > 255) {
-            noticebox('圈子简介不能大于255个字', 0);return;
+            noticebox('圈子简介不能超过255个字', 0);return;
         }
         if ($('.tags-box span').length < 1) {
             noticebox('请选择圈子标签', 0);return;
         }
         if (!attrs.location || !attrs.latitude || !attrs.longitude) {
             noticebox('请选择圈子位置', 0);return;
+        }
+        if (getLength(attrs.notice) > 2000) {
+            noticebox('圈子公告不能超过2000字', 0);return;
         }
         _.forEach(attrs, function(v, k) {
             formData.append(k, v);
