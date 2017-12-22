@@ -790,7 +790,7 @@ var getMaps = function(callback){
                     '<input id="pickerInput" placeholder="输入关键字选取地点" /><button id="getpoi">确定</button>'+
                     '<div id="poiInfo"></div>'+
                 '</div>';
-    ly.loadHtml(html, '定位', 600, 500);
+    ly.loadHtml(html, '', 600, 500);
     var map = new AMap.Map('container', { zoom: 10 });
     AMapUI.loadUI(['misc/PoiPicker'], function(PoiPicker) {
         var poiPicker = new PoiPicker({
@@ -1418,8 +1418,8 @@ var thirdShare = function(type, url, title, pic, obj) {
             window.open(tourl);
           break;
         case 3: // 微信
-            $(obj).parent().find('.weixin_qrcode').html('');
-            $(obj).parent().find('.weixin_qrcode').qrcode({
+            $('.weixin_qrcode').html('');
+            $('.weixin_qrcode').qrcode({
                 width: 200,
                 height:200,
                 text: url //任意内容
@@ -1653,6 +1653,10 @@ $(function() {
         // 分享
         if(!target.is('div.share-show,button.show-share') && target.parents('.share-show').length == 0) {
             $('.share-show').fadeOut();
+        }
+
+        if(!target.is('.u-share, .u-share-show') && target.parents('.u-share-show').length == 0) {
+            $('.u-share-show').fadeOut();
         }
 
         // 相关问题

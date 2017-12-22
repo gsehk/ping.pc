@@ -51,6 +51,10 @@
     {{-- 底部 --}}
     @include('pcview::layouts.partials.footer')
 
+    {{-- 二维码 --}}
+    <div class="weixin_qrcode">
+    </div>
+
     <script src="{{ asset('zhiyicx/plus-component-pc/js/common.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/lodash.js') }}"></script>
     <script src="{{ asset('zhiyicx/plus-component-pc/js/font/iconfont.js') }}"></script>

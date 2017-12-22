@@ -36,12 +36,12 @@
                             {{$group->name}}
                             <span class="u-share">
                                 <svg class="icon f-mr10"><use xlink:href="#icon-share"></use></svg>分享
-                                <div class="u-share-show">
-                                    分享至：
-                                    @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:groupread', ['group_id' => $group->id]), 'share_title' => $group->name, 'share_pic' => $group->avatar])
-                                    <div class="triangle"></div>
-                                </div>
                             </span>
+                            <div class="u-share-show">
+                                分享至：
+                                @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:groupread', ['group_id' => $group->id]), 'share_title' => $group->name, 'share_pic' => $group->avatar])
+                                <div class="triangle"></div>
+                            </div>
                         </div>
                         @if(strlen($group->summary) <= 300)
                         <p class="ct-intro">{{$group->summary}}</p>
@@ -168,6 +168,7 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.picshow.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
 <script>
     $(function () {
         // 初始帖子列表

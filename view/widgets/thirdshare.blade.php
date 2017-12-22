@@ -11,5 +11,3 @@
 <a href="javascript:;" onclick="thirdShare(3, '{{ $share_url }}', '{{ $share_title }}', '{{ $share_pic }}', this)" title="分享到朋友圈">
     <svg class="icon third_share third_share_weixin" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg>
 </a>
-<div class="weixin_qrcode">
-</div>
