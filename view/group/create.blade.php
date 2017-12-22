@@ -199,6 +199,9 @@ $('#J-create-group').on('click', function(){
             formData.append('mode', $('[name="mode"]:checked').val());
         } else {
             formData.append('mode', 'paid');
+            if (!$('[name="money"]').val()) {
+                noticebox('请设置付费金额', 0);return;
+            }
             formData.append('money', $('[name="money"]').val());
         }
         $('.tags-box span').each(function(){
