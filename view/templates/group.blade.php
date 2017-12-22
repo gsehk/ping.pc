@@ -1,7 +1,11 @@
 @foreach ($group as $item)
-    <div class="group_item @if(($loop->iteration) % 2 == 0) group_item_right @endif">
+    <div class="group_item @if($loop->iteration % 2 == 0) group_item_right @endif">
         <dl class="clearfix">
-            <dt><a href="{{Route('pc:groupread', $item->id)}}"><img src="@if(isset($item->avatar->id))  {{ $routes['storage'].$item->avatar->id }} @else {{ asset('zhiyicx/plus-component-pc/images/default_picture.png') }} @endif" width="120" height="120"></a></dt>
+            <dt>
+                <a href="{{Route('pc:groupread', $item->id)}}">
+                    <img src="{{ $item->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png') }}" width="120" height="120">
+                </a>
+            </dt>
             <dd>
                 <a class="title" href="{{Route('pc:groupread', $item->id)}}" alt="{{ $item->name }}">{{ str_limit($item->name, 16, '...') }}
                     @if ($item->mode == 'paid')
@@ -19,7 +23,7 @@
                             id="{{$item->id}}"
                             state="1"
                             mode="{{$item->mode}}"
-                            money="{{$item->money}}"
+                            money="{{$item->money}}"q
                             onclick="grouped.init(this);"
                         >已加入</button>
                     @else
