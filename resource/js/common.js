@@ -1655,7 +1655,7 @@ $(function() {
             $('.share-show').fadeOut();
         }
 
-        if(!target.is('.u-share, .u-share-show') && target.parents('.u-share-show').length == 0) {
+        if(!target.is('.u-share, .u-share-show') && !target.is('.u-share svg') && target.parents('.u-share-show').length == 0) {
             $('.u-share-show').fadeOut();
         }
 
