@@ -28,6 +28,7 @@
             <div class="formitm">
                 <label class="lab">圈子分类</label>
                 <div data-value="{{ $cates[0]['id'] }}" class="zy_select t_c gap12" id="categrey">
+                    <span>{{ $cates[0]['name'] }}</span>
                     <ul>
                         @foreach ($cates as $key => $cate)
                             <li @if($key == 0) class="active" @endif data-value="{{$cate->id}}">{{$cate->name}}</li>
@@ -76,6 +77,17 @@
                     <label class="lab">设置入圈金额</label>
                     <input min="1" oninput="value=moneyLimit(value)" class="iptline" name="money" type="text"/>&nbsp;&nbsp;<span class="s-fc4">金币</span>
                 </div>
+            </div>
+            <div class="formitm">
+                <label class="lab">分享设置</label>
+                <span class="f-mr20">
+                    <input class="regular-radio f-dn" id="radio-yes" name="allow_feed" type="radio" value="1" checked />
+                    <label class="radio" for="radio-yes"></label>帖子可分享至动态
+                </span>
+                <span class="f-mr20">
+                    <input class="regular-radio f-dn" id="radio-no" name="allow_feed" type="radio" value="0" />
+                    <label class="radio" for="radio-no"></label>帖子不可分享至动态
+                </span>
             </div>
             <div class="formitm">
                 <label class="lab">圈子位置</label>
@@ -149,10 +161,6 @@ $('#J-upload-cover').on('change', function(e){
         $('#J-preview-cover').attr('src', data);
     };
     a.readAsDataURL(file);
-    /*fileUpload.init(file, function(image, f, file_id){
-        $('#avatar_id').val(file_id);
-        $('#J-preview-cover').attr('src', TS.API+'/files/'+file_id+'?w=230&h=163');
-    });*/
 });
 
 $('#J-create-group').on('click', function(){
@@ -170,6 +178,7 @@ $('#J-create-group').on('click', function(){
             latitude: $('[name="latitude"]').val(),
             longitude: $('[name="longitude"]').val(),
             geo_hash: $('[name="geo_hash"]').val(),
+            allow_feed: $('[name="allow_feed"]:checked').val(),
         };
         if (!categrey) {
             noticebox('请选择圈子分类', 0);return;
