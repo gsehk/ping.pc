@@ -32,16 +32,16 @@
             <div class="m-hd">
                 <div class="m-income all-income">
                     <span>{{$group->join_income_count+$group->pinned_income_count}}</span>
-                    <div class="s-fc4 f-fs2">账户余额（金币）</div>
+                    <div class="s-fc4 f-fs2">账户余额（{{ $config['bootstrappers']['site']['gold_name']['name'] }}）</div>
                 </div>
                 <div class="f-dn m-income pinned-income">
                     <span>{{$group->pinned_income_count or 0}}</span>
-                    <div class="s-fc4 f-fs2">置顶收益（金币） 共置顶了
+                    <div class="s-fc4 f-fs2">置顶收益（{{ $config['bootstrappers']['site']['gold_name']['name'] }}） 共置顶了
                     <font color="#3CA967">{{$group->posts_count}}</font> 条帖子</div>
                 </div>
                 <div class="f-dn m-income join-income">
                     <span>{{$group->join_income_count or 0}}</span>
-                    <div class="s-fc4 f-fs2">成员费（金币） 共
+                    <div class="s-fc4 f-fs2">成员费（{{ $config['bootstrappers']['site']['gold_name']['name'] }}） 共
                     <font color="#3CA967">{{$group->users_count}}</font> 个付费成员</div>
                 </div>
             </div>
@@ -49,7 +49,9 @@
                 <div class="u-tt f-mb20">
                     <span>交易记录</span>
                     <div class="m-filter f-fr">
-                        <input class="t-filter" type="text" placeholder="请选择日期">
+                        <input class="t-filter" id="T-start" type="text" placeholder="请选择开始日期">
+                        -
+                        <input class="t-filter" id="T-end" type="text" placeholder="请选择结束日期">
                     </div>
                 </div>
                 <div id="incomes-box"> </div>
@@ -77,18 +79,29 @@ setTimeout(function() {
 }, 200);
 
 laydate.render({
-    elem: '.t-filter',
+    elem: '#T-start',
     done: function(value){
         $('#incomes-box').html('');
         scroll.init({
             container: '#incomes-box',
             loading: '#incomes-box',
             url: '/group/incomes',
-            params: {limit: 15, group_id: {{$group->id}}, start: value }
+            params: {limit: 15, group_id: {{$group->id}}, start: value, end: $('#T-end').val() }
         });
     }
 });
-
+laydate.render({
+    elem: '#T-end',
+    done: function(value){
+        $('#incomes-box').html('');
+        scroll.init({
+            container: '#incomes-box',
+            loading: '#incomes-box',
+            url: '/group/incomes',
+            params: {limit: 15, group_id: {{$group->id}}, start: $('#T-start').val(), end: value}
+        });
+    }
+});
 $('#J-tab li').on('click', function(){
     var type = $(this).attr('type');
         $('#incomes-box').html('');
