@@ -181,11 +181,13 @@
                     <li id="J-collect{{$post->id}}" rel="0" status="{{(int) $post->collected}}">
                         @if($post->collected)
                         <a class="act" href="javascript:;" onclick="collected.init({{$post->id}}, 'group', 1);" class="act">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>已收藏
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                            <span>已收藏</span>
                         </a>
                         @else
                         <a href="javascript:;" onclick="collected.init({{$post->id}}, 'group', 1);">
-                          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>收藏
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                            <span>收藏</span>
                         </a>
                         @endif
                     </li>

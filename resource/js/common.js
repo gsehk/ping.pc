@@ -1141,7 +1141,7 @@ var collected = {
                 _this.box.attr('status', 1);
                 _this.box.find('a').addClass('act');
                 _this.box.find('font').text(_this.num);
-                _this.box.find('span.collect').text('已收藏');
+                _this.box.find('span').text('已收藏');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
@@ -1166,7 +1166,7 @@ var collected = {
                 _this.box.attr('status', 0);
                 _this.box.find('a').removeClass('act');
                 _this.box.find('font').text(_this.num);
-                _this.box.find('span.collect').text('收藏');
+                _this.box.find('span').text('收藏');
             },
             error: function(xhr) {
                 showError(xhr.responseJSON);
@@ -1850,7 +1850,7 @@ $(function() {
             comment_box.hide();
         }
     });
-    
+
     // 显示跳转详情文字
     $(document).on("mouseover mouseout", '.date', function(event){
         if(event.type == "mouseover"){
