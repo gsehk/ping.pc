@@ -48,6 +48,10 @@ $('#J-publish-post').on('click', function(e){
         'title': $('#title').val(),
         'body': editor.getMarkdown(),
     };
+    var bodyStr = args.body.replace(/\@\!\[\]\((\d+)\)/gi, "");
+    if (bodyStr) {
+        args.summary = bodyStr.replace(/([\\\`\*\_\[\]\#\+\-\!\>\~])?(\[(.*)\]\((.*)\))?(\n)/g, "");
+    }
     if (!args.title || getLength(args.title) > 20) {
         noticebox('请输入20字以内的标题', 0);return;
     }
@@ -55,10 +59,9 @@ $('#J-publish-post').on('click', function(e){
     if (!args.body) {
         noticebox('请输入帖子内容', 0);return;
     }
-
     if (isSync !== undefined) {
         args.sync_feed = isSync;
-        args.feed_from = 'pc';
+        args.feed_from = 1;
     }
     axios.post(POST_URL, args)
     .then(function (response) {
