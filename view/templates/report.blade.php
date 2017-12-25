@@ -17,9 +17,11 @@
                     <td><span class="s-fc3">{{$report->content or ''}}</span></td>
                     <td>
                         @if ($report->type == 'post')
-                            帖子：{{$report->resource->body or '资源已被删除'}}
+                        @php $body = $report->resource->summary ?? '资源已被删除'; @endphp
+                            帖子：{{str_limit($body, 12)}}
                         @else
-                            评论：{{$report->resource->body or '资源已被删除'}}
+                        @php $body = $report->resource->body ?? '资源已被删除'; @endphp
+                            评论：{{str_limit($body, 12)}}
                         @endif
                     </td>
                     <td><a class="s-fc" href="{{ route('pc:reportdetail',['group_id'=>$group_id]) }}">详情</a></td>
