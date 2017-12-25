@@ -791,7 +791,7 @@ var getMaps = function(callback){
                     '<div id="poiInfo"></div>'+
                 '</div>';
     ly.loadHtml(html, '', 600, 500);
-    var map = new AMap.Map('container', { zoom: 10 });
+    var map = new AMap.Map('container', { zoom: 12 });
     AMapUI.loadUI(['misc/PoiPicker'], function(PoiPicker) {
         var poiPicker = new PoiPicker({
             // city:'北京',
@@ -821,16 +821,17 @@ var getMaps = function(callback){
             infoWindow.setMap(map);
             marker.setPosition(poi.location);
             infoWindow.setPosition(poi.location);
-            infoWindow.setContent('POI信息: <pre>' + JSON.stringify(info, null, 2) + '</pre>');
+            // infoWindow.setContent('POI信息: <pre>' + JSON.stringify(info, null, 2) + '</pre>');
             infoWindow.open(map, marker.getPosition());
             map.setCenter(marker.getPosition());
+            $('#pickerInput').val(poi.name);
             $('#getpoi').on('click', function(){
                 ly.close();
                 callback(poi);
             });
         });
         poiPicker.onCityReady(function() {
-            poiPicker.suggest('土豆');
+            poiPicker.suggest('php');
         });
     }
 }
