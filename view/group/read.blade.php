@@ -101,14 +101,16 @@
         <div class="f-mb30">
             <a
                 @if($group->joined)
-                    @if ($group->joined->disabled)
+                    @if (!str_is($group->joined->role, $group->permissions))
+                        href="javascript:;" onclick="noticebox('当前圈子没有权限发帖', 0)"
+                    @elseif($group->joined->disabled)
                         href="javascript:;" onclick="noticebox('用户已被禁用，不能进行发帖', 0)"
                     @else
                         href="{{ route('pc:postcreate', $group->id) }}"
                     @endif
                 @else
                     href="javascript:;" onclick="noticebox('请先加入该圈子', 0)"
-                @endif"
+                @endif
             >
                 <div class="u-btn">
                     <svg class="icon f-vatb" aria-hidden="true"><use xlink:href="#icon-writing"></use></svg>

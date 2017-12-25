@@ -116,7 +116,7 @@
                 <div class="formitm">
                     <label class="lab">发帖权限</label>
                     <span class="f-mr20">
-                        <input class="regular-radio f-dn" id="radio-qz" name="permissions" type="radio" value="0" @if ($group->permissions == 'administrator') checked @endif/>
+                        <input class="regular-radio f-dn" id="radio-qz" name="permissions" type="radio" value="0" @if ($group->permissions == 'founder') checked @endif/>
                         <label class="radio" for="radio-qz"></label>仅圈主
                     </span>
                     <span class="f-mr20">
@@ -266,7 +266,7 @@ $('#J-create-group').on('click', function(){
         });
         axios.post(POST_URL, formData)
         .then(function (response) {
-            noticebox('修改成功~', 1, '/group/{{$group->id}}');
+            noticebox('修改成功~', 1);
         })
         .catch(function (error) {
             showError(error.response.data);
