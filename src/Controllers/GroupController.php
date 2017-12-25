@@ -135,7 +135,7 @@ class GroupController extends BaseController
      */
     public function publish(Request $request, int $group_id)
     {
-        $data['group_id'] = $group_id;
+        $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
 
         return view('pcview::group.publish', $data, $this->PlusData);
     }

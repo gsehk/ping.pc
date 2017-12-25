@@ -17,9 +17,11 @@
             <div class="formitm">
                 @include('pcview::widgets.markdown', ['place' => '请输入帖子内容', 'content'=>$content ?? ''])
             </div>
+            @if ($group->allow_feed)
             <div class="formitm">
                 <input class="iptck" type="checkbox" name="sync_feed" value="1"><span>同步分享至动态</span>
             </div>
+            @endif
             <div class="f-tac">
                 {{-- <button class="btn btn-default btn-lg" id="" type="button">存草稿</button> --}}
                 <button class="btn btn-primary btn-lg" id="J-publish-post" type="button">发 布</button>
@@ -42,7 +44,7 @@ axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
 axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
 
 $('#J-publish-post').on('click', function(e){
-    var POST_URL = '/plus-group/groups/{{$group_id}}/posts';
+    var POST_URL = '/plus-group/groups/{{$group->id}}/posts';
     var isSync = $("input:checkbox:checked").val();
     var args = {
         'title': $('#title').val(),
@@ -65,7 +67,7 @@ $('#J-publish-post').on('click', function(e){
     }
     axios.post(POST_URL, args)
     .then(function (response) {
-        noticebox('发布成功', 1, '/group' + '/{{ $group_id }}' + '/post/' + response.data.post.id);
+        noticebox('发布成功', 1, '/group/{{ $group->id }}/post/' + response.data.post.id);
     })
     .catch(function (error) {
         showError(error.response.data);

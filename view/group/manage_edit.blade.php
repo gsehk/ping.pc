@@ -288,7 +288,7 @@ $('#J-create-group-manager').on('click', function(){
 
     axios.post(POST_URL, formData)
     .then(function (response) {
-        noticebox('修改成功~', 1, '/group/{{$group->id}}');
+        noticebox('修改成功~', 1);
     })
     .catch(function (error) {
         showError(error.response.data);
