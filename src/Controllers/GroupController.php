@@ -437,12 +437,7 @@ class GroupController extends BaseController
         $comment = clone $comments['comments'];
         $after = $comment->pop()->id ?? 0;
 
-        /*$comments['comments']->map(function($item){
-            $item->user = $item->user;
-
-            return $item;
-        });*/
-        $comments['top'] = false;
+        $comments['top'] = true;
         $commentData = view('pcview::templates.comment', $comments, $this->PlusData)->render();
 
         return response()->json([
