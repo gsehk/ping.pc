@@ -21,6 +21,7 @@
         </div>
         <div class="g-mn">
             <div class="m-nav">圈子资料</div>
+            @if ($group->joined->role == 'founder')
             <div class="m-form">
                 <div class="formitm">
                     <input class="chools-cover" id="J-upload-cover" type="file" name="file">
@@ -147,6 +148,21 @@
                     <button class="btn btn-primary btn-lg f-mt20" id="J-create-group" type="button">提 交</button>
                 </div>
             </div>
+            @else
+            <div class="m-form">
+                <div class="formitm f-mt20">
+                    <label class="lab">圈子简介</label>
+                    <textarea class="txt" name="summary" rows="4" placeholder="最多 255 个字">{{$group->summary}}</textarea>
+                </div>
+                <div class="formitm">
+                    <label class="lab">圈子公告</label>
+                    <textarea class="txt" name="notice" rows="6" placeholder="编辑自己的圈子公告或规则（选填）">{{$group->notice}}</textarea>
+                </div>
+                <div class="f-tac">
+                    <button class="btn btn-primary btn-lg f-mt20" id="J-create-group-manager" type="button">提 交</button>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
@@ -204,6 +220,7 @@ $('#J-upload-cover').on('change', function(e){
     };
     a.readAsDataURL(file);
 });
+
 $('#J-create-group').on('click', function(){
     var modeType = $('[name="modes"]:checked').val();
     var POST_URL = '/plus-group/groups/{{$group->id}}';
@@ -254,6 +271,28 @@ $('#J-create-group').on('click', function(){
         .catch(function (error) {
             showError(error.response.data);
         });
+});
+$('#J-create-group-manager').on('click', function(){
+    var POST_URL = '/plus-group/groups/{{$group->id}}';
+    var formData = new FormData();
+    var attrs = {
+        summary: $('[name="summary"]').val(),
+        notice: $('[name="notice"]').val(),
+    };
+    if (getLength(attrs.summary) > 255) {
+        noticebox('圈子简介不能大于255个字', 0);return;
+    }
+    _.forEach(attrs, function(v, k) {
+        formData.append(k, v);
+    });
+
+    axios.post(POST_URL, formData)
+    .then(function (response) {
+        noticebox('修改成功~', 1, '/group/{{$group->id}}');
+    })
+    .catch(function (error) {
+        showError(error.response.data);
+    });
 });
 $('[name="location"]').on('click', function(){
     var _this = this;
