@@ -161,19 +161,6 @@ $(function() {
             case '5': // 圈子加载
                 var params = {
                     type: type,
-                    keywords: keywords
-                };
-                scroll.init({
-                    container: '#content_list',
-                    loading: '.search_container',
-                    url: '/search/data',
-                    params: params,
-                });
-                break;
-
-            case '6': // 圈子加载
-                var params = {
-                    type: type,
                     limit: 10,
                     keywords: keywords
                 };
@@ -182,6 +169,7 @@ $(function() {
                     loading: '.search_container',
                     url: '/search/data',
                     params: params,
+                    paramtype: 1,
                 });
                 break;
 

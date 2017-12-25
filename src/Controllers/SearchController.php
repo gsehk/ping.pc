@@ -96,14 +96,13 @@ class SearchController extends BaseController
                 $html =  view('pcview::templates.user', $data, $this->PlusData)->render();
                 break;
             case '5':
-                $user = $this->PlusData['TS']['id'] ?? 0;
                 $params = [
-                    'after' => $after,
-                    'search' => $keywords
+                    'limit' => $limit,
+                    'offset' => $offset,
+                    'keyword' => $keywords
                 ];
 
-                $datas = createRequest('GET', '/api/v2/groups', $params);
-
+                $datas = createRequest('GET', '/api/v2/plus-group/groups', $params);
                 $data['group'] = $datas;
                 $group = clone $data['group'];
                 $after = $group->pop()->id ?? 0;
@@ -122,7 +121,7 @@ class SearchController extends BaseController
                 $topic = clone $data['data'];
                 $after = $topic->pop()->id ?? 0;
                 $html = view('pcview::templates.topic', $data, $this->PlusData)->render();
-                break;    
+                break;
 
         }
 
