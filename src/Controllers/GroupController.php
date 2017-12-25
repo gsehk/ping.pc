@@ -178,7 +178,7 @@ class GroupController extends BaseController
      */
     public function list(Request $request)
     {
-        $cate = $request->input('cate', 1);
+        $cate = $request->query('cate', 1);
         $params = [
             'offset' => $request->query('offset', 0),
             'limit' => $request->query('limit', 15),
@@ -334,7 +334,7 @@ class GroupController extends BaseController
     {
         $this->PlusData['current'] = 'group';
 
-        $data['type'] = $request->input('type', 'latest_post');
+        $data['type'] = $request->query('type', 'latest_post');
         $user = $this->PlusData['TS']['id'] ?? 0;
         $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
         $data['members'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members',['type'=>'member']);
@@ -351,9 +351,9 @@ class GroupController extends BaseController
      */
     public function postLists(Request $request)
     {
-        $group_id = $request->input('group_id');
+        $group_id = $request->query('group_id');
         $params = [
-            'type' => $request->input('type'),
+            'type' => $request->query('type'),
             'offset' => $request->query('offset', 0),
             'limit' => $request->query('limit', 15),
         ];
