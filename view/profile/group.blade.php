@@ -19,7 +19,28 @@
         {{-- 收藏列表 --}}
         <div class="profile_content">
             <div class="profile_menu J-menu">
-                <a class="active" href="javascript:;" cid="1">@if ($TS->id == $user->id) 我加入的 @else TA加入的 @endif</a>
+                <ul class="g-tab">
+                    <li>
+                        <div type="5" class="zy_select t_c gap12 select-gray" id="J-group">
+                            <span>圈子</span>
+                            <ul>
+                                <li type="1" @if($type == 1) class="active" @endif>我加入的</li>
+                                <li type="2" @if($type == 2) class="active" @endif>待审核的</li>
+                            </ul>
+                            <i></i>
+                        </div>
+                    </li>
+                    <li>
+                        <div type="5" class="zy_select t_c gap12 select-gray" id="J-group">
+                            <span>帖子</span>
+                            <ul>
+                                <li type="3" @if($type == 3) class="active" @endif>我加入的</li>
+                                <li type="4" @if($type == 4) class="active" @endif>待审核的</li>
+                            </ul>
+                            <i></i>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <div id="content_list" class="clearfix"></div>
         </div>

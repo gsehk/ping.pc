@@ -191,7 +191,7 @@ class ProfileController extends BaseController
                     'after' => $after
             ]);
         }
-
+        $data['type'] = 1;
         $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
         $data['user']->hasFollower = $data['user']->hasFollower($request->user());
         $this->PlusData['current'] = 'group';

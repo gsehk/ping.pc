@@ -235,6 +235,9 @@
     width: 235px;
 }
 
+.profile_body .g-tab>li{
+    display: inline-block;
+}
 /*  列表  */
 .profile_content {
     background: #fff;
