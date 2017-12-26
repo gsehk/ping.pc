@@ -175,23 +175,26 @@ class ProfileController extends BaseController
     public function group(Request $request, int $user_id = 0)
     {
         if ($request->ajax()) {
+            $type = (int) $request->query('type');
             $params = [
                 'offset' => $request->query('offset', 0),
-                'limit' => $request->query('limit', 15),
+                'limit' => $request->query('limit', 10),
+                'type' => $request->query('type'),
             ];
-            $groups = createRequest('GET', '/api/v2/plus-group/user-groups', $params);
-            $group = clone $groups;
-            $after = $group->pop()->id ?? 0;
-            $data['group'] = $groups;
-            $groupData = view('pcview::templates.group', $data, $this->PlusData)->render();
+            if (!$type) {
+                $data['group'] = createRequest('GET', '/api/v2/plus-group/user-groups', $params);
+                $html = view('pcview::templates.group', $data, $this->PlusData)->render();
+            } else {
+                $posts['pinneds'] = collect();
+                $posts['posts'] = createRequest('GET', '/api/v2/plus-group/user-group-posts', $params);
+                $html = view('pcview::templates.group_posts', $posts, $this->PlusData)->render();
+            }
 
             return response()->json([
-                    'status'  => true,
-                    'data' => $groupData,
-                    'after' => $after
+                'data' => $html,
             ]);
         }
-        $data['type'] = 1;
+        $data['type'] = 'join';
         $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
         $data['user']->hasFollower = $data['user']->hasFollower($request->user());
         $this->PlusData['current'] = 'group';

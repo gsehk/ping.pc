@@ -5,6 +5,7 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/feed.css') }}"/>
 <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/group.css') }}"/>
 <link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/css/profile.css') }}"/>
 @endsection
@@ -21,21 +22,30 @@
             <div class="profile_menu J-menu">
                 <ul class="g-tab">
                     <li>
-                        <div type="5" class="zy_select t_c gap12 select-gray" id="J-group">
+                        <div type="join" class="zy_select t_c gap12" id="J-group">
                             <span>圈子</span>
                             <ul>
-                                <li type="1" @if($type == 1) class="active" @endif>我加入的</li>
-                                <li type="2" @if($type == 2) class="active" @endif>待审核的</li>
+                                @if ($TS->id == $user->id)
+                                    <li type="join" @if($type == 'join') class="active" @endif>我加入的</li>
+                                    <li type="audit" @if($type == 'audit') class="active" @endif>待审核的</li>
+                                @else
+                                    <li type="join" @if($type == 'join') class="active" @endif>TA加入的</li>
+                                @endif
                             </ul>
                             <i></i>
                         </div>
                     </li>
                     <li>
-                        <div type="5" class="zy_select t_c gap12 select-gray" id="J-group">
+                        <div type="5" class="zy_select t_c gap12 select-gray" id="J-post">
                             <span>帖子</span>
                             <ul>
-                                <li type="3" @if($type == 3) class="active" @endif>我加入的</li>
-                                <li type="4" @if($type == 4) class="active" @endif>待审核的</li>
+                                @if ($TS->id == $user->id)
+                                    <li type="1" @if($type == 1) class="active" @endif>我发布的</li>
+                                    <li type="2" @if($type == 2) class="active" @endif>已置顶的</li>
+                                    <li type="3" @if($type == 3) class="active" @endif>置顶待审核</li>
+                                @else
+                                    <li type="1" @if($type == 1) class="active" @endif>TA发布的</li>
+                                @endif
                             </ul>
                             <i></i>
                         </div>
@@ -54,14 +64,33 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script>
-scroll.init({
-    container: '#content_list',
-    loading: '.profile_content',
-    url: '/profile/group',
-    paramtype: 1,
-    params: {limit: 15, user: {{$user->id}} }
-});
+    scroll.init({
+        container: '#content_list',
+        loading: '.profile_content',
+        url: '/profile/group',
+        paramtype: 1,
+        params: {limit: 10}
+    });
+    $('#J-group li, #J-post li').on('click', function(){
+        $('#J-post').addClass('select-gray');
+        $('#J-group').addClass('select-gray');
+        $(this).parents('.zy_select').removeClass('select-gray');
+        $('#content_list').html('');
+        var params = {
+            limit: 10,
+            type: $(this).attr('type'),
+        };
+
+        scroll.init({
+            container: '#content_list',
+            loading: '.profile_content',
+            url: '/profile/group',
+            params: params,
+            paramtype: 1,
+        });
+    });
 </script>
 @endsection
