@@ -56,8 +56,9 @@
                                 @if (($group->joined->role == 'founder') && ($group->joined->user_id != $manage->user_id))
                                     <ul class="u-menu f-dn">
                                         <a href="javascript:;" onclick="MAG.set({{$group->id}}, {{$manage->user_id}}, 0);"><li>撤销管理员</li></a>
-                                        <a href="javascript:;"><li>加入黑名单</li></a>
-                                        <a href="javascript:;"><li>踢出圈子</li></a>
+                                        <a href="javascript:;" onclick="MAG.assign({{$group->id}}, {{$member->user_id}});"><li>转让圈子</li></a>
+                                        <a href="javascript:;"　onclick="MAG.black({{$group->id}}, {{$member->user_id}}, 1);"><li>加入黑名单</li></a>
+                                        <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$member->user_id}});"><li>踢出圈子</li></a>
                                     </ul>
                                 @endif
                             </div>
@@ -81,6 +82,7 @@
                                 <ul class="u-menu f-dn">
                                     @if ($group->joined->role == 'founder')
                                     <a href="javascript:;" onclick="MAG.set({{$group->id}}, {{$member->user_id}}, 1);"><li>设为管理员</li></a>
+                                    <a href="javascript:;" onclick="MAG.assign({{$group->id}}, {{$member->user_id}});"><li>转让圈子</li></a>
                                     @endif
                                     <a href="javascript:;" onclick="MAG.black({{$group->id}}, {{$member->user_id}}, 1);"><li>加入黑名单</li></a>
                                     <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$member->user_id}});"><li>踢出圈子</li></a>
@@ -172,6 +174,20 @@ var MAG = {
     delete: function(gid, uid){
         var URL = '/plus-group/groups/'+gid+'/members/'+uid;
         axios.delete( URL )
+            .then(function (response) {
+                noticebox('操作成功', 1);
+            });
+    },
+    /**
+     *  圈子转让
+     * @param  int gid
+     * @param  int uid
+     */
+    assign: function(gid, uid){
+        var URL = '/plus-group/groups/'+gid+'/owner';
+        axios.patch( URL, {
+                target: uid
+            })
             .then(function (response) {
                 noticebox('操作成功', 1);
             });
