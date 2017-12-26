@@ -224,6 +224,8 @@ $('#J-create-group').on('click', function(){
             .catch(function (error) {
                 showError(error.response.data);
             });
+        } else {
+            noticebox('请勾选同意ThinkSNS+的圈子创建协议', 0);
         }
 });
 $('[name="location"]').on('click', function(){
