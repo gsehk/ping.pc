@@ -129,7 +129,7 @@ var MAG = {
             url: params.url,
         })
         .then(function (response) {
-            noticebox('操作成功', 1);
+            noticebox('操作成功', 1, 'refresh');
         });
     },
     /**
@@ -148,7 +148,7 @@ var MAG = {
             url: params.url,
         })
         .then(function (response) {
-            noticebox('操作成功', 1);
+            noticebox('操作成功', 1, 'refresh');
         });
     },
     /**
@@ -163,7 +163,7 @@ var MAG = {
                 status: type
             })
             .then(function (response) {
-                noticebox('操作成功', 1);
+                noticebox('操作成功', 1, 'refresh');
             });
     },
     /**
@@ -175,7 +175,7 @@ var MAG = {
         var URL = '/plus-group/groups/'+gid+'/members/'+uid;
         axios.delete( URL )
             .then(function (response) {
-                noticebox('操作成功', 1);
+                noticebox('操作成功', 1, 'refresh');
             });
     },
     /**
@@ -189,7 +189,7 @@ var MAG = {
                 target: uid
             })
             .then(function (response) {
-                noticebox('操作成功', 1);
+                noticebox('操作成功', 1, 'refresh');
             });
     }
 }
