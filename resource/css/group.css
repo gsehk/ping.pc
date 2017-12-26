@@ -119,12 +119,15 @@
 .p-readgroup .m-ct .u-share{float:right;font-size:14px;color:#AAA;cursor:pointer;}
 .p-readgroup .m-ct .u-share-show{display:none;font-size:14px;position:absolute;left:440px;top:40px;border-radius:3px;background:#fff;box-shadow:0 1px 22px #e2e0e0;height:70px;padding:22px 30px;z-index:1;width:205px;}
 .p-readgroup .m-ct .u-share-show .triangle{margin-left:65px;margin-top:-55px;}
-.p-readgroup .m-ct .ct-intro{margin:0;height:52px;line-height:26px;color:#777;font-size:13px;}
+.p-readgroup .m-ct .ct-intro{height:52px;line-height:26px;color:#777;font-size:13px;}
 .p-readgroup .m-ct .ct-intro-all{margin:0;height:auto;line-height:26px;color:#777;font-size:13px;display:none}
 .p-readgroup .m-ct .ct-intro-more{display:inline-block;color:#5caac6;margin-left:4px;cursor:pointer;font-size:14px}
-.p-readgroup .m-ct .ct-stat{height:42;line-height:42px;}
-.p-readgroup .m-ct .ct-stat span{font-size:14px;margin-right:10px;}
-.p-readgroup .m-ct .joinbtn{float:right;width:88px;line-height:32px;color:#59b6d7;border:1px solid #59b6d7;background-color: white;margin-top:5px;border-radius:18px;cursor:pointer;}
+.p-readgroup .m-ct .ct-stat{height:42px;line-height:42px;}
+.p-readgroup .m-ct .ct-stat .u-poi{width:266px;float:left;font-size:14px;}
+.p-readgroup .m-ct .ct-stat .u-report{margin-left:20px;color:#777;display:none;}
+.p-readgroup .m-ct .ct-stat:hover .u-report{display: inline-block;}
+.p-readgroup .m-ct .ct-stat span{font-size:14px;margin-right:10px;float: left;}
+.p-readgroup .m-ct .joinbtn{float:right;width:88px;margin-top:3px;line-height:32px;color:#59b6d7;border:1px solid #59b6d7;background-color: white;border-radius:18px;cursor:pointer;}
 .p-readgroup .m-ct .joined{border-color:#ccc;color:#aaa;}
 .p-readgroup .g-hd .m-tag{line-height:36px;font-size:14px;}
 .p-readgroup .g-hd .m-tag .u-tag{margin:5px;padding:5px 10px;border-radius:3px;color:#59b6d7;background-color:#EEF8FB;}

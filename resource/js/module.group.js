@@ -108,6 +108,10 @@ var grouped = {
             $('.ct-intro-all').show();
             $('.ct-intro').hide();
         }
+    },
+    report:function(gid){
+        var url = TS.API+'/plus-group/groups/'+gid+'/reports';
+        reported(url);
     }
 }
 
@@ -216,11 +220,11 @@ post.delPost = function(group_id, post_id) {
 };
 
 post.pinnedPost = function(post_id){
-    var url = '/api/v2/plus-group/pinned/posts/'+post_id;
+    var url = TS.API+'/plus-group/pinned/posts/'+post_id;
     pinneds(url);
 };
 
 post.reportPost = function(post_id){
-    var url ='/api/v2/plus-group/reports/posts/'+post_id;
+    var url = TS.API+'/plus-group/reports/posts/'+post_id;
     reported(url);
 };

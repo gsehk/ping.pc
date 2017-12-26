@@ -1248,22 +1248,23 @@ var pinneds = function (url) {
 
 // 举报
 var reported = function (url) {
-    var html = '<div class="pinned_box">'
+    var html = '<div class="pinned_box mr20 ml20 mt20">'
                 + '<p class="confirm_title">举报</p>'
+                + '<a class="ucolor">举报理由</a>'
                 + '<div class="pinned_input">'
-                    + '<input id="report-ct" type="text" placeholder="请输入举报原因">'
+                    + '<textarea id="report-ct" rows="4" cols="30" placeholder="请输入举报理由，不超过255字"></textarea>'
                 + '</div>'
             + '</div>';
     ly.confirm(html, '', '', function(){
-        var con = $('#report-ct').val();
-        if (!con) {
-            lyNotice('请输入举报原因');
+        var reason = $('#report-ct').val();
+        if (!reason) {
+            lyNotice('请输入举报理由');
             return false;
         }
         $.ajax({
             url: url,
             type: 'POST',
-            data: data,
+            data: {reason: reason},
             success: function(res) {
                 layer.closeAll();
                 noticebox(res.message, 1);

@@ -53,9 +53,11 @@
                         <div class="ct-stat">
                             <span>帖子 <font class="s-fc">{{$group->posts_count}}</font></span>
                             <span>成员 <font class="s-fc" id="join-count-{{$group->id}}">{{$group->users_count}}</font></span>
-                            <span>
+                            <div class="u-poi f-toe">
                                 <svg class="icon s-fc2 f-vatb"><use xlink:href="#icon-position"></use></svg>
-                                <font class="s-fc">{{$group->location}}</font></span>
+                                <font class="s-fc">{{$group->location}}</font>
+                            </div>
+                            <a class="u-report" href="javascript:;" onclick="grouped.report({{$group->id}});">举报圈子</a>
                                 @if ($group->joined)
                                     <button
                                         class="joinbtn joined"
