@@ -122,7 +122,18 @@ class SearchController extends BaseController
                 $after = $topic->pop()->id ?? 0;
                 $html = view('pcview::templates.topic', $data, $this->PlusData)->render();
                 break;
-
+            case '7':
+                $params = [
+                    'limit' => 10,
+                    'offset' => $offset,
+                    'keyword' => $keywords
+                ];
+                $posts['pinneds'] = collect();
+                $posts['posts'] = createRequest('GET', '/api/v2/plus-group/group-posts', $params);
+                $datas = $posts['posts'];
+                $after = 0;
+                $html = view('pcview::templates.group_posts', $posts, $this->PlusData)->render();
+                break;
         }
 
         return response()->json([

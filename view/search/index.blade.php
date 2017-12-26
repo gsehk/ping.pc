@@ -1,6 +1,4 @@
-@section('title')
-	搜索 {{ $keywords }}
-@endsection
+@section('title') 搜索 {{ $keywords }} @endsection
 
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
@@ -26,7 +24,17 @@
                     <li><a href="javascript:;" @if($type == 3) class="selected" @endif type="3">文章</a></li>
                     {{--<li><a href="javascript:;" @if($type == 2) class="selected" @endif type="2">问答</a></li>--}}
                     <li><a href="javascript:;" @if($type == 4) class="selected" @endif type="4">用户</a></li>
-                    <li><a href="javascript:;" @if($type == 5) class="selected" @endif type="5">圈子</a></li>
+                    {{-- <li><a href="javascript:;" @if($type == 5) class="selected" @endif type="5">圈子</a></li> --}}
+                    <li>
+                        <div type="5" class="zy_select t_c gap12 select-gray" id="J-group">
+                            <span @if($type == 5 || $type == 7) class="selected" @endif>{{ $type == 7 ? '帖子' : '圈子' }}</span>
+                            <ul>
+                                <li type="5" @if($type == 5) class="active" @endif>圈子</li>
+                                <li type="7" @if($type == 7) class="active" @endif>帖子</li>
+                            </ul>
+                            <i></i>
+                        </div>
+                    </li>
                     {{--<li><a href="javascript:;" @if($type == 6) class="selected" @endif type="6">话题</a></li>--}}
                     <li>
                         <div type="2" class="zy_select t_c gap12 select-gray" id="J-question">
@@ -85,6 +93,7 @@ $(function() {
         type = $(this).attr('type');
         $(this).parents('ul').find('a').removeClass('selected');
         !$('#J-question').hasClass('select-gray') && $('#J-question').addClass('select-gray');
+        !$('#J-group').hasClass('select-gray') && $('#J-group').addClass('select-gray');
         $(this).addClass('selected');
         keywords = $('#search_input').val();
         switchType(type);
@@ -173,10 +182,37 @@ $(function() {
                 });
                 break;
 
+            case '6': // 话题加载
+                var params = {
+                    type: type,
+                    limit: 10,
+                    keywords: keywords
+                };
+                scroll.init({
+                    container: '#content_list',
+                    loading: '.search_container',
+                    url: '/search/data',
+                    params: params,
+                });
+                break;
+
+            case '7': // 帖子加载
+                var params = {
+                    type: type,
+                    limit: 10,
+                    keywords: keywords
+                };
+                scroll.init({
+                    container: '#content_list',
+                    loading: '.search_container',
+                    url: '/search/data',
+                    params: params,
+                });
+                break;
         };
     }
 
-    $('#J-question li').on('click', function(){
+    $('#J-question li, #J-group li').on('click', function(){
         $(this).parents('ul').find('a').removeClass('selected');
         $(this).removeClass('select-gray');
         type = $(this).attr('type');

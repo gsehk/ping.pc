@@ -23,7 +23,7 @@
                             id="{{$item->id}}"
                             state="1"
                             mode="{{$item->mode}}"
-                            money="{{$item->money}}"q
+                            money="{{$item->money}}"
                             onclick="grouped.init(this);"
                         >已加入</button>
                     @else

@@ -45,6 +45,7 @@
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
                 <font>{{$post->views_count}}</font>
             </span>
+            @if (isset($group))
             <span class="options" onclick="options(this)">
                 <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
             </span>
@@ -91,6 +92,7 @@
                     @endif
                 </ul>
             </div>
+            @endif
         </div>
          {{-- 评论 --}}
         @include('pcview::widgets.comments', ['id' => $post->id, 'group_id' => $post->group_id, 'comments_count' => $post->comments_count, 'comments_type' => 'group', 'url' => Route('pc:grouppost', [$post->group_id, $post->id]), 'position' => 1, 'comments_data' => $post->comments])
@@ -172,6 +174,7 @@
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
                 <font>{{$post->views_count}}</font>
             </span>
+            @if (isset($group))
             <span class="options" onclick="options(this)">
                 <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
             </span>
@@ -224,6 +227,7 @@
                     @endif
                 </ul>
             </div>
+            @endif
         </div>
 
          {{-- 评论 --}}
