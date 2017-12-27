@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+@endphp
 @if (!$reports->isEmpty())
     <table class="m-table m-table-row">
         <thead>
@@ -12,7 +15,7 @@
         <tbody>
             @foreach ($reports as $report)
                 <tr>
-                    <td>{{$report->created_at}}</td>
+                    <td>{{getTime($report->created_at)}}</td>
                     <td>{{$report->user->name}}</td>
                     <td><span class="s-fc3">{{$report->content or ''}}</span></td>
                     <td>
