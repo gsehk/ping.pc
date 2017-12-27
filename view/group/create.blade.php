@@ -192,6 +192,9 @@ $('#J-create-group').on('click', function(){
         if (getLength(attrs.summary) > 255) {
             noticebox('圈子简介不能超过255个字', 0);return;
         }
+        if (getLength(attrs.notice) > 2000) {
+            noticebox('圈子公告不能大于2000个字', 0);return;
+        }
         if ($('.tags-box span').length < 1) {
             noticebox('请选择圈子标签', 0);return;
         }
