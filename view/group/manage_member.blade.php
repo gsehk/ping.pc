@@ -32,7 +32,9 @@
                 </ul>
                 <div class="m-sch f-fr">
                     <input class="u-schipt" type="text" placeholder="输入关键词搜索">
-                    <a class="u-schico" href="javascript:;"><svg class="icon s-fc"><use xlink:href="#icon-search"></use></svg></a>
+                    <a class="u-schico" id="J-search" href="javascript:;">
+                        <svg class="icon s-fc"><use xlink:href="#icon-search"></use></svg>
+                    </a>
                </div>
             </div>
             <div class="g-body" id="member-box">
@@ -55,10 +57,10 @@
                                 <svg class="icon f-fs2"><use xlink:href="#icon-setting"></use></svg>
                                 @if (($group->joined->role == 'founder') && ($group->joined->user_id != $manage->user_id))
                                     <ul class="u-menu f-dn">
-                                        <a href="javascript:;" onclick="MAG.set({{$group->id}}, {{$manage->user_id}}, 0);"><li>撤销管理员</li></a>
+                                        <a href="javascript:;" onclick="MAG.set({{$group->id}}, {{$manage->id}}, 0);"><li>撤销管理员</li></a>
                                         <a href="javascript:;" onclick="MAG.assign({{$group->id}}, {{$manage->user_id}});"><li>转让圈子</li></a>
-                                        <a href="javascript:;"　onclick="MAG.black({{$group->id}}, {{$manage->user_id}}, 1);"><li>加入黑名单</li></a>
-                                        <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$manage->user_id}});"><li>踢出圈子</li></a>
+                                        <a href="javascript:;"　onclick="MAG.black({{$group->id}}, {{$manage->id}}, 1);"><li>加入黑名单</li></a>
+                                        <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$manage->id}});"><li>踢出圈子</li></a>
                                     </ul>
                                 @endif
                             </div>
@@ -81,11 +83,11 @@
                                 <svg class="icon f-fs2"><use xlink:href="#icon-setting"></use></svg>
                                 <ul class="u-menu f-dn">
                                     @if ($group->joined->role == 'founder')
-                                    <a href="javascript:;" onclick="MAG.set({{$group->id}}, {{$member->user_id}}, 1);"><li>设为管理员</li></a>
+                                    <a href="javascript:;" onclick="MAG.set({{$group->id}}, {{$member->id}}, 1);"><li>设为管理员</li></a>
                                     <a href="javascript:;" onclick="MAG.assign({{$group->id}}, {{$member->user_id}});"><li>转让圈子</li></a>
                                     @endif
-                                    <a href="javascript:;" onclick="MAG.black({{$group->id}}, {{$member->user_id}}, 1);"><li>加入黑名单</li></a>
-                                    <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$member->user_id}});"><li>踢出圈子</li></a>
+                                    <a href="javascript:;" onclick="MAG.black({{$group->id}}, {{$member->id}}, 1);"><li>加入黑名单</li></a>
+                                    <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$member->id}});"><li>踢出圈子</li></a>
                                 </ul>
                             </div>
                         </dd>

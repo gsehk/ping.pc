@@ -118,7 +118,7 @@
                 <div class="formitm">
                     <label class="lab">发帖权限</label>
                     <span class="f-mr20">
-                        <input class="regular-radio f-dn" id="radio-qz" name="permissions" type="radio" value="0" @if ($group->permissions == 'founder') checked @endif/>
+                        <input class="regular-radio f-dn" id="radio-qz" name="permissions" type="radio" value="0" @if ($group->permissions == 'administrator') checked @endif/>
                         <label class="radio" for="radio-qz"></label>仅圈主
                     </span>
                     <span class="f-mr20">
@@ -226,7 +226,8 @@ $('#J-upload-cover').on('change', function(e){
 $('#J-create-group').on('click', function(){
     var modeType = $('[name="modes"]:checked').val();
     var POST_URL = '/plus-group/groups/{{$group->id}}';
-    var group = ['administrator', 'administrator,founder', 'member,administrator,founder'];
+    var group = [[ 'administrator'], ['administrator', 'founder'], ['member', 'administrator','founder']];
+    var permissions = group[$('[name="permissions"]:checked').val()];
     var formData = new FormData();
         var attrs = {
             name: $('[name="name"]').val(),
@@ -237,7 +238,6 @@ $('#J-create-group').on('click', function(){
             longitude: $('[name="longitude"]').val(),
             geo_hash: $('[name="geo_hash"]').val(),
             allow_feed: $('[name="allow_feed"]:checked').val(),
-            permissions: group[$('[name="permissions"]:checked').val()],
         };
         if (!attrs.name || getLength(attrs.name) > 20) {
             noticebox('圈子名称长度为1 - 20个字', 0);return;
@@ -253,6 +253,9 @@ $('#J-create-group').on('click', function(){
         }
         _.forEach(attrs, function(v, k) {
             formData.append(k, v);
+        });
+        _.forEach(permissions, function(v, k) {
+            formData.append('permissions[]', v);
         });
         if ($('#J-upload-cover')[0].files[0] !== undefined) {
             formData.append('avatar', $('#J-upload-cover')[0].files[0]);

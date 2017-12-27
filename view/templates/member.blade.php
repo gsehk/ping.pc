@@ -11,8 +11,8 @@
                             <span>管理</span>
                             <svg class="icon f-fs2"><use xlink:href="#icon-setting"></use></svg>
                             <ul class="u-menu f-dn">
-                                <a href="javascript:;" onclick="MAG.audit({{$group->id}}, {{$member->user_id}}, 1);"><li>通过</li></a>
-                                <a href="javascript:;" onclick="MAG.audit({{$group->id}}, {{$member->user_id}}, 2);"><li>驳回</li></a>
+                                <a href="javascript:;" onclick="MAG.audit({{$group->id}}, {{$member->member_id}}, 1);"><li>通过</li></a>
+                                <a href="javascript:;" onclick="MAG.audit({{$group->id}}, {{$member->member_id}}, 2);"><li>驳回</li></a>
                             </ul>
                         </div>
                     </dd>
@@ -34,8 +34,8 @@
                             <span>管理</span>
                             <svg class="icon f-fs2"><use xlink:href="#icon-setting"></use></svg>
                             <ul class="u-menu f-dn">
-                                <a href="javascript:;" onclick="MAG.black({{$group->id}}, {{$member->user_id}}, 0);"><li>移除黑名单</li></a>
-                                <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$member->user_id}});"><li>踢出圈子</li></a>
+                                <a href="javascript:;" onclick="MAG.black({{$group->id}}, {{$member->id}}, 0);"><li>移除黑名单</li></a>
+                                <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$member->id}});"><li>踢出圈子</li></a>
                             </ul>
                         </div>
                     </dd>
