@@ -241,6 +241,12 @@ Route::prefix('group')->group(function () {
 
 });
 
+Route::prefix('group-posts')->group(function () {
+
+    // 帖子打赏列表
+    Route::get('/{post_id}/rewards', 'PostController@rewards');
+});
+
 Route::prefix('search')->group(function () {
     Route::get('/{type?}/{keywords?}', 'SearchController@index')->where(['type' => '[1-6]+'])->name('pc:search');
     Route::get('/data', 'SearchController@getData');

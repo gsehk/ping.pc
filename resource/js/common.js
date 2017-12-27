@@ -743,6 +743,9 @@ var rewarded = {
             if (type == 'user') {
                 url = '/api/v2/user/'+id+'/rewards';
             }
+            if (type == 'group-posts') {
+                url = '/api/v2/plus-group/group-posts/'+id+'/rewards';
+            }
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -767,17 +770,13 @@ var rewarded = {
         var url = '';
 
         if (type == 'answer') {
-
             url = '/question/answer/'+id+'/rewards';
-
         } else if (type == 'news') {
-
             url = '/news/'+id+'/rewards';
-
+        } else if(type == 'group-posts'){
+            url = '/group-posts/'+id+'/rewards';
         } else {
-
             url = '/feeds/'+id+'/rewards';
-
         }
 
         ly.load(TS.SITE_URL + url, '', '340px');

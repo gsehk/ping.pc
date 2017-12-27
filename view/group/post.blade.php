@@ -88,6 +88,9 @@
                     @endphp
                     @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:feedread', ['post_id' => $post->id]), 'share_title' => addslashes($post->content), 'share_pic' => $share_pic])
                 </div>
+                @php $rewards = ['count' => $post->reward_number, 'amount' => $post->reward_amount]; @endphp
+                {{-- 打賞 --}}
+                @include('pcview::widgets.rewards' , ['rewards_data' => $post->rewards, 'rewards_type' => 'group-posts', 'rewards_id' => $post->id, 'rewards_info' => $rewards])
             </div>
 
             {{-- 评论 --}}
