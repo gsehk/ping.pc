@@ -27,8 +27,11 @@
                     </a>
                 </dt>
                 <dd class="fl ml20 body-box">
-                    <span class="tcolor">{{ $post->user->name }}</span>
-                    <div class="gcolor mt10">{{ getTime($post->created_at) }}</div>
+                    <span>{{ $post->user->name }}</span>
+                    <div class="ucolor mt10 font14">
+                        <span>发布时间  {{ getTime($post->created_at) }}</span>
+                        <span class="ml20">浏览量  {{ $post->views_count}}</span>
+                    </div>
                 </dd>
             </dl>
 
@@ -39,7 +42,7 @@
                     @endforeach
                 </div>
             @endif
-
+            <h3 class="u-tt">{{$post->title}}</h3>
             <div class="detail_body">
                 {!!$post->body!!}
             </div>
