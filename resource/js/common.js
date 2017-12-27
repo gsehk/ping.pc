@@ -1271,7 +1271,7 @@ var reported = function (url) {
         $.ajax({
             url: url,
             type: 'POST',
-            data: {reason: reason},
+            data: {reason: reason, content: reason},
             success: function(res) {
                 layer.closeAll();
                 noticebox(res.message, 1);

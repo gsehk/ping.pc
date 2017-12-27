@@ -219,7 +219,7 @@
                             </li>
                         @else
                             <li>
-                                <a href="javascript:;" onclick="post.reportPost('{{$post->group_id}}', '{{$post->id}}');">
+                                <a href="javascript:;" onclick="post.reportPost('{{$post->id}}');">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>举报
                                 </a>
                             </li>
