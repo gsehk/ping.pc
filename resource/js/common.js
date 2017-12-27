@@ -1264,6 +1264,10 @@ var reported = function (url) {
             lyNotice('请输入举报理由');
             return false;
         }
+        if (getLength(reason) > 255) {
+            lyNotice('举报理由不能大于255个字');
+            return false;
+        }
         $.ajax({
             url: url,
             type: 'POST',
