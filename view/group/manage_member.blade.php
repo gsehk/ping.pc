@@ -56,9 +56,9 @@
                                 @if (($group->joined->role == 'founder') && ($group->joined->user_id != $manage->user_id))
                                     <ul class="u-menu f-dn">
                                         <a href="javascript:;" onclick="MAG.set({{$group->id}}, {{$manage->user_id}}, 0);"><li>撤销管理员</li></a>
-                                        <a href="javascript:;" onclick="MAG.assign({{$group->id}}, {{$member->user_id}});"><li>转让圈子</li></a>
-                                        <a href="javascript:;"　onclick="MAG.black({{$group->id}}, {{$member->user_id}}, 1);"><li>加入黑名单</li></a>
-                                        <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$member->user_id}});"><li>踢出圈子</li></a>
+                                        <a href="javascript:;" onclick="MAG.assign({{$group->id}}, {{$manage->user_id}});"><li>转让圈子</li></a>
+                                        <a href="javascript:;"　onclick="MAG.black({{$group->id}}, {{$manage->user_id}}, 1);"><li>加入黑名单</li></a>
+                                        <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$manage->user_id}});"><li>踢出圈子</li></a>
                                     </ul>
                                 @endif
                             </div>
