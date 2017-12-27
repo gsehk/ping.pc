@@ -336,6 +336,7 @@ class GroupController extends BaseController
 
         $data['type'] = $request->query('type', 'latest_post');
         $user = $this->PlusData['TS']['id'] ?? 0;
+
         $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
         $data['members'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members',['type'=>'member']);
         $data['manager'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', ['type'=>'manager']);
@@ -413,6 +414,7 @@ class GroupController extends BaseController
     {
         $this->PlusData['current'] = 'group';
 
+        $data['top'] = true;
         $data['post'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/posts/'.$post_id);
 
         return view('pcview::group.post', $data, $this->PlusData);

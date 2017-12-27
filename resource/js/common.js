@@ -1008,6 +1008,10 @@ var comment = {
             url = '/api/v2/news/' + source_id + '/comments/' + id + '/pinneds';
             pinneds(url);
         }
+        if (type == 'group-posts') {
+            url = '/api/v2/plus-group/pinned/comments/'+ id;
+            pinneds(url);
+        }
     }
 };
 
