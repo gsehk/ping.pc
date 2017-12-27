@@ -24,7 +24,16 @@
                             评论：{{str_limit($body, 12)}}
                         @endif
                     </td>
-                    <td><a class="s-fc" href="{{ route('pc:reportdetail',['group_id'=>$group_id]) }}">详情</a></td>
+                    <td>
+                        @if (!$report->status)
+                            <a class="f-mr10 s-fc" onclick="MAG.audit({{$report->id}}, 1);" href="javascript:;">通过</a>
+                            <a class="s-fc" onclick="MAG.audit({{$report->id}}, 0);" href="javascript:;">驳回</a>
+                        @elseif($report->status == 1)
+                            <a class="f-mr10 s-fc2" href="javascript:;">已处理</a>
+                        @elseif($report->status == 2)
+                            <a class="f-mr10 s-fc2" href="javascript:;">被驳回</a>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>

@@ -71,6 +71,32 @@ laydate.render({
     }
 });
 
+var MAG = {
+    /**
+     * 圈子举报审核
+     * @param int gid
+     * @param int uid
+     * @param int type [1-通过 0-驳回]
+     */
+    audit: function(rid, type){
+        var params = {
+            url: '/plus-group/reports/'+rid+'/accept',
+            method: 'PATCH',
+        }
+        if (!type) {
+            params.url = '/plus-group/reports/'+rid+'/reject';
+        }
+        axios({
+            method: params.method,
+            url: params.url,
+        })
+        .then(function (response) {
+            noticebox('操作成功', 1);
+        });
+    },
+
+};
+
 $('#J-tab li').on('click', function(){
     var status = $(this).attr('status');
         $('#report-box').html('');
