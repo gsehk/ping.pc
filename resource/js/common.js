@@ -567,14 +567,14 @@ var noticebox = function(msg, status, tourl) {
         }, 1000);
     } else {
         setTimeout(function() {
-            noticebox_cb(TS.SITE_URL + tourl);
+            noticebox_cb(tourl);
         }, 1500);
     }
 }
 
 // 消息提示回调
 var noticebox_cb = function(tourl) {
-    window.location.href = tourl == 'refresh' ? window.location.href : tourl;
+    window.location.href = tourl == 'refresh' ? window.location.href : TS.SITE_URL + tourl;
 }
 
 // 无数据提示dom
