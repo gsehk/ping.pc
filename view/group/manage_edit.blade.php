@@ -126,7 +126,7 @@
                         <label class="radio" for="radio-tt"></label>圈主和管理员
                     </span>
                     <span class="f-mr20">
-                        <input class="regular-radio f-dn" id="radio-all" name="permissions" type="radio" value="2" @if ($group->permissions == 'member,administrator,founder') checked @endif/>
+                        <input class="regular-radio f-dn" id="radio-all" name="permissions" type="radio" value="2" @if ($group->permissions == 'administrator,member,founder') checked @endif/>
                         <label class="radio" for="radio-all"></label>全体成员
                     </span>
                 </div>
@@ -226,7 +226,7 @@ $('#J-upload-cover').on('change', function(e){
 $('#J-create-group').on('click', function(){
     var modeType = $('[name="modes"]:checked').val();
     var POST_URL = '/plus-group/groups/{{$group->id}}';
-    var group = [[ 'administrator'], ['administrator', 'founder'], ['member', 'administrator','founder']];
+    var group = [[ 'administrator'], ['administrator', 'founder'], ['administrator','member','founder']];
     var permissions = group[$('[name="permissions"]:checked').val()];
     var formData = new FormData();
         var attrs = {

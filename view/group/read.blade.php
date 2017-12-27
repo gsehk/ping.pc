@@ -103,7 +103,7 @@
         <div class="f-mb30">
             <a
                 @if($group->joined)
-                    @if (!str_is($group->joined->role, $group->permissions))
+                    @if (!str_contains($group->permissions, $group->joined->role))
                         href="javascript:;" onclick="noticebox('当前圈子没有权限发帖', 0)"
                     @elseif($group->joined->disabled)
                         href="javascript:;" onclick="noticebox('用户已被禁用，不能进行发帖', 0)"
