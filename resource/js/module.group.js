@@ -200,8 +200,9 @@ post.afterCreatePost = function (group_id, post_id) {
     })
 };
 
-post.delPost = function(group_id, post_id) {
+post.delPost = function(group_id, post_id, poi) {
     layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
+        var tourl = '/group/'+group_id;
         var url ='/api/v2/plus-group/groups/' + group_id + '/posts/' + post_id;
         $.ajax({
             url: url,
@@ -210,6 +211,9 @@ post.delPost = function(group_id, post_id) {
             success: function(res) {
                 $('#feed' + post_id).fadeOut();
                 layer.closeAll();
+                if (poi == 'read') {
+                    noticebox('删除成功', 1, tourl);
+                }
             },
             error: function(xhr){
                 layer.closeAll();
