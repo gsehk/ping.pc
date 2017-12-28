@@ -1,24 +1,21 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('zhiyicx/plus-component-pc/markdown/css/editormd.css') }}">
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="{{ asset('zhiyicx/plus-component-pc/markdown/pluseditor.css') }}">
 <div id="layout" class="div">
-    <div class="editormd" id="TS_edit">
-        <textarea>{{$content}}</textarea>
+    <div class="editormd">
+        <textarea id="editor" style="display: none"></textarea>
     </div>
 </div>
-<script type="text/javascript" charset="utf-8" src="{{ asset('zhiyicx/plus-component-pc/markdown/js/editormd.js') }}"></script>
-
+<script type="text/javascript" src="{{ asset('zhiyicx/plus-component-pc/markdown/pluseditor.min.js') }}"></script>
+<style> .CodeMirror { height: {{$height or '435px'}} } </style>
 <script type="text/javascript">
-    var editor = editormd("TS_edit",{
-        id   : "editormd",
-        width: "{{ $width or '100%'}}",
-        height: "{{ $height or '530px'}}",
-        watch : false,
-        placeholder: "{{ $place or ''}}",
-        path : "{{ asset('zhiyicx/plus-component-pc/markdown/lib') }}/",
-        saveHTMLToTextarea : true,
-        imageUpload : true,
-        imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        imageUploadURL : "/api/v2/files",
-        uploadSuccess: function (image, f, storage_id) {}
+    var editor = new pluseditor({
+        element: document.querySelector('#editor'),
+        fileApiPath: TS.API+"/files/",
+        placeholder: "{{ $place or '开始你的表演'}}",
+        uploadFile: function(file, cb){
+            fileUpload.init(file, function(image, f, id){
+                cb(id);
+            })
+        }
     });
-    editor.setToolbarAutoFixed(false);
 </script>

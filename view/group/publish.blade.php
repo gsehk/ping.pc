@@ -48,11 +48,18 @@ $('#J-publish-post').on('click', function(e){
     var isSync = $("input:checkbox:checked").val();
     var args = {
         'title': $('#title').val(),
-        'body': editor.getMarkdown(),
+        'body': editor.value(),
+        'images': [],
     };
-    var bodyStr = args.body.replace(/\@\!\[\]\((\d+)\)/gi, "");
+    var images = args.body.match(/\((\d+)\)/g);
+    _.forEach(images, function(v, k) {
+        var id = v.match(/\d+/g);
+        args.images.push(id[0]);
+    });
+
+    var bodyStr = args.body.replace(/\@\!\[(.*)\]\((\d+)\)/gi, "");
     if (bodyStr) {
-        args.summary = bodyStr.replace(/([\\\`\*\_\[\]\#\+\-\!\>\~])?(\[(.*)\]\((.*)\))?(\n)/g, "");
+        args.summary = bodyStr.replace(/(\[(.*)\]\((.*)\))|(\n)|([\\\`\*\_\[\]\#\+\-\!\>\~])/g, "");
     }
     if (!args.title || getLength(args.title) > 20) {
         noticebox('请输入20字以内的标题', 0);return;
