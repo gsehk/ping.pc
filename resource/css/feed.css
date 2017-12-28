@@ -81,7 +81,7 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 .auth_info {width:125px;float:left;margin-left:15px;}
 .auth_info .info_name a {display:block;margin-bottom:10px;margin-top:5px;font-size:16px;color:#333;}
 .auth_info .info_bio {font-size:14px;height:44px;line-height:22px;color:#999;margin-top:10px;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;display:-webkit-box;}
-.right_about .auth_fans {margin:0;font-size:0;}
+.right_about .auth_fans {font-size:0;}
 .right_about .auth_fans li {display:inline-block;border-top:1px solid #ededed;width:50%;height:49px;line-height:47px;font-size:14px;text-align:center;}
 .right_about .auth_fans li:nth-child(even) {border-left:1px solid #ededed;}
 .right_about .auth_fans li a>span {color:#000;margin-left:3px;font-size:18px;}

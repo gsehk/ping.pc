@@ -1251,6 +1251,7 @@ var pinneds = function (url) {
 
 // 举报
 var reported = function (url) {
+    checkLogin();
     var html = '<div class="pinned_box mr20 ml20 mt20">'
                 + '<p class="confirm_title">举报</p>'
                 + '<a class="ucolor">举报理由</a>'
