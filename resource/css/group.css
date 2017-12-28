@@ -10,6 +10,7 @@
 .group_item dd {padding:10px 0 10px 95px;}
 .group_item .tool span {font-size:14px;color:#777;margin-right:8px;line-height:33px;}
 .group_item .join {margin-top:20px;}
+.group_item .join .role {background-color:#ccc;color:white;padding:3px 8px;border-radius:4px;font-size:14px;}
 .group_item .join > button {border:1px solid #59b6d7;border-radius:12px;padding:0px 10px;font-size:14px;color:#59b6d7;background-color:white;line-height:22px;cursor:pointer;}
 .group_item .join .joined {border:1px solid #ccc;color:#ccc;}
 /*动态发布*/

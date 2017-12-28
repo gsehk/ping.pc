@@ -14,10 +14,10 @@
     <div class="left_container g-mn">
         <div class="group_container">
             <div class="group_navbar">
-                <a class="active" href="javascript:;" data-cate="1">全部圈子</a>
-                <a class="active" href="javascript:;" data-cate="3">附近圈子</a>
+                <a class="active" href="javascript:;" type="all">全部圈子</a>
+                <a class="active" href="javascript:;" type="nearby">附近圈子</a>
                 @if(!empty($TS))
-                <a href="javascript:;" data-cate="2">我加入的</a>
+                <a href="javascript:;" type="join">我加入的</a>
                 @endif
             </div>
             <div class="m-chip">
@@ -146,11 +146,11 @@
 
     // 切换分类
     $('.group_navbar a').on('click', function() {
-        var cate = $(this).data('cate');
-        var params = {cate: cate, limit: 10};
-        (cate == 1) ? $('.m-chip').show() : $('.m-chip').hide();
+        var type = $(this).attr('type');
+        var params = {type: type, limit: 10};
+        (type == 'all') ? $('.m-chip').show() : $('.m-chip').hide();
         $('#group_box').html('');
-        if (cate == 3) {
+        if (type == 'nearby') {
             params.longitude = 222;
             params.latitude = 111;
         }

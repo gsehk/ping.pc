@@ -178,7 +178,7 @@ class GroupController extends BaseController
      */
     public function list(Request $request)
     {
-        $cate = $request->query('cate', 1);
+        $type = $request->query('type', 'all');
         $params = [
             'offset' => $request->query('offset', 0),
             'limit' => $request->query('limit', 15),
@@ -187,14 +187,14 @@ class GroupController extends BaseController
 
         $groups = createRequest('GET', '/api/v2/plus-group/groups', $params);
 
-        if ($cate == 2) {
+        if ($type == 'join') {
             $params = [
                 'offset' => $request->query('offset', 0),
                 'limit' => $request->query('limit', 15),
             ];
             $groups = createRequest('GET', '/api/v2/plus-group/user-groups', $params);
         }
-        if ($cate == 3) {
+        if ($type == 'nearby') {
             $params = [
                 'offset' => $request->query('offset', 0),
                 'limit' => $request->query('limit', 15),
@@ -206,6 +206,7 @@ class GroupController extends BaseController
 
         $group = clone $groups;
         $after = $group->pop()->id ?? 0;
+        $data['type'] = $type;
         $data['group'] = $groups;
         $groupData = view('pcview::templates.group', $data, $this->PlusData)->render();
 

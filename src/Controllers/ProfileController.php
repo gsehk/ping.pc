@@ -179,9 +179,10 @@ class ProfileController extends BaseController
             $params = [
                 'offset' => $request->query('offset', 0),
                 'limit' => $request->query('limit', 10),
-                'type' => $request->query('type'),
+                'type' => $request->query('type', 'join'),
             ];
             if (!$type) {
+                $data['type'] = $params['type'];
                 $data['group'] = createRequest('GET', '/api/v2/plus-group/user-groups', $params);
                 $html = view('pcview::templates.group', $data, $this->PlusData)->render();
             } else {
