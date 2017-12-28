@@ -70,6 +70,8 @@
                 <ul>
                     <li data-value="3" class="active">动态评论置顶</li>
                     <li data-value="4">文章评论置顶</li>
+                    <li data-value="5">帖子评论置顶</li>
+                    <li data-value="6">帖子置顶</li>
                 </ul>
                 <i></i>
             </div>
@@ -221,22 +223,48 @@
                     audit_top.addClass('hide');
 
                     break;
-                case 3: // 动态审核
+                case 3: // 动态评论置顶审核
                     scroll.init({
                         container: '#message_cont',
                         loading: '.message_cont',
-                        url: '/message/feedCommentTop',
+                        url: '/message/pinnedFeedComment',
                         params: {limit: 20},
                         loadtype: 2
                     });
                     body_title.addClass('hide');
                     audit_top.removeClass('hide');
                     break;
-                case 4: // 资讯审核
+                case 4: // 资讯评论置顶审核
                     scroll.init({
                         container: '#message_cont',
                         loading: '.message_cont',
-                        url: '/message/newsCommentTop',
+                        url: '/message/pinnedNewsComment',
+                        params: {limit: 20},
+                        loadtype: 2
+                    });
+
+                    body_title.addClass('hide');
+                    audit_top.removeClass('hide');
+                    break;
+                case 5: // 帖子评论置顶审核
+                    scroll.init({
+                        container: '#message_cont',
+                        loading: '.message_cont',
+                        url: '/message/pinnedPostComment',
+                        paramtype: 1,
+                        params: {limit: 20},
+                        loadtype: 2
+                    });
+
+                    body_title.addClass('hide');
+                    audit_top.removeClass('hide');
+                    break;
+                case 6: // 帖子置顶审核
+                    scroll.init({
+                        container: '#message_cont',
+                        loading: '.message_cont',
+                        url: '/message/pinnedPost',
+                        paramtype: 1,
                         params: {limit: 20},
                         loadtype: 2
                     });

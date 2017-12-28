@@ -191,11 +191,14 @@ Route::prefix('message')->group(function () {
     Route::get('/likes', 'MessageController@likes')->name('pc:webmessagelikes');
     // 通知列表
     Route::get('/notifications', 'MessageController@notifications')->name('pc:webmessagenotifications');
-    // 动态评论置顶消息列表
-    Route::get('/feedCommentTop', 'MessageController@feedCommentTop')->name('pc:webmessagefeedcomment');
-    // 文章评论置顶消息列表
-    Route::get('/newsCommentTop', 'MessageController@newsCommentTop')->name('pc:webmessagenewscomment');
-
+    // 动态评论置顶列表
+    Route::get('/pinnedFeedComment', 'MessageController@pinnedFeedComment')->name('pc:webmessagefeedcomment');
+    // 文章评论置顶列表
+    Route::get('/pinnedNewsComment', 'MessageController@pinnedNewsComment')->name('pc:webmessagenewscomment');
+    // 帖子评论置顶列表
+    Route::get('/pinnedPostComment', 'MessageController@pinnedPostComment')->name('pc:webmessagepostcomment');
+    // 帖子置顶列表
+    Route::get('/pinnedPost', 'MessageController@pinnedPost')->name('pc:webmessagepost');
 });
 
 Route::prefix('group')->group(function () {

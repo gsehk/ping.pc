@@ -164,13 +164,18 @@ class MessageController extends BaseController
         ]);
     }
 
-    public function feedCommentTop(Request $request)
+    /**
+     * 动态评论置顶
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function pinnedFeedComment(Request $request)
     {
         $after = $request->input('after') ?: 0;
         $limit = $request->input('limit') ?: 20;
         $data['comments'] = createRequest('GET', '/api/v2/user/feed-comment-pinneds', ['after' => $after, 'limit' => $limit]);
 
-        $return = view('pcview::message.feedcomment_top', $data, $this->PlusData)->render();
+        $return = view('pcview::message.pinned_feedcomment', $data, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,
@@ -180,13 +185,18 @@ class MessageController extends BaseController
         ]);
     }
 
-    public function newsCommentTop(Request $request)
+    /**
+     * 文章评论置顶
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function pinnedNewsComment(Request $request)
     {
         $after = $request->input('after') ?: 0;
         $limit = $request->input('limit') ?: 20;
         $data['comments'] = createRequest('GET', '/api/v2/news/comments/pinneds', ['after' => $after, 'limit' => $limit]);
 
-        $return = view('pcview::message.newscomment_top', $data, $this->PlusData)->render();
+        $return = view('pcview::message.pinned_newscomment', $data, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,
@@ -196,4 +206,46 @@ class MessageController extends BaseController
         ]);
     }
 
+    /**
+     * 帖子评论置顶
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function pinnedPostComment(Request $request)
+    {
+        $offset = $request->input('offset') ?: 0;
+        $limit = $request->input('limit') ?: 20;
+        $data['comments'] = createRequest('GET', '/api/v2/plus-group/pinned/comments', ['offset' => $offset, 'limit' => $limit]);
+
+        $return = view('pcview::message.pinned_postcomment', $data, $this->PlusData)->render();
+
+        return response()->json([
+            'status'  => true,
+            'data' => $return,
+            'count' => $data['comments']->count(),
+            'after' => $data['comments']->pop()->id ?? 0
+        ]);
+    }
+
+
+    /**
+     * 圈子帖子置顶
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function pinnedPost(Request $request)
+    {
+        $offset = $request->input('offset') ?: 0;
+        $limit = $request->input('limit') ?: 20;
+        $data['comments'] = createRequest('GET', '/api/v2/plus-group/pinned/posts', ['offset' => $offset, 'limit' => $limit]);
+
+        $return = view('pcview::message.pinned_post', $data, $this->PlusData)->render();
+
+        return response()->json([
+            'status'  => true,
+            'data' => $return,
+            'count' => $data['comments']->count(),
+            'after' => $data['comments']->pop()->id ?? 0
+        ]);
+    }
 }
