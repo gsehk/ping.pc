@@ -253,7 +253,7 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 .income-rank .income-name .name {color:#333;}
 .income-rank .answers-count {color:#999;}
 /*广告位*/.news_ad img {margin-bottom:30px;}
-/*分割线*//*积分规则*/.w_815 {width:815px;margin:auto;}
+/*积分规则*/.w_815 {width:815px;margin:auto;}
 .int_top {width:100%;height:160px;margin:40px auto 30px;background:#fff;}
 .intTop_left {float:left;width:4px;height:160px;border-radius:3px;background:#fbbeb9;}
 .intTop_num {font-size:42px;float:left;margin:48px auto 18px 68px;color:#333;}
@@ -279,13 +279,15 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 .int_b {margin-bottom:50px;}
 .sign_img {width:16px;margin-right:10px;vertical-align:-2px;}
 .dy_center .top-menu-left {position:relative;height:60px;}
-/* btn style reference bootstrap */.btn {display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:400;line-height:1.4;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;border:1px solid transparent;border-radius:4px;}
-/* btn size */.btn-lg {padding:8px 22px;font-size:16px;line-height:1.3;border-radius:3px;}
+/* btn style reference bootstrap */
+.btn {display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:400;line-height:1.4;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;border:1px solid transparent;border-radius:4px;}
+.btn-lg {padding:8px 22px;font-size:16px;line-height:1.3;border-radius:3px;}
 .btn-sm {padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px;}
-/* btn theme */.btn-default {color:#fff;background-color:#d4d4d4;border-color:#d4d4d4;}
+.btn-default {color:#fff;background-color:#d4d4d4;border-color:#d4d4d4;}
 .btn-primary {color:#fff;background-color:#59b6d7;border-color:#59b6d7;}
 .btn-warning {color:#fff;background-color:#F76C6A;border-color:#F76C6A;}
-/*分享列表评论*/.comment_line {margin-top:18px;border-top:1px solid #efefef;margin-bottom:20px;height:1px;position:relative;}
+/*分享列表评论*/
+.comment_line {margin-top:18px;border-top:1px solid #efefef;margin-bottom:20px;height:1px;position:relative;}
 .comment_line>.tr2 {width:10px;height:10px;position:absolute;top:-15px;left:98px;}
 .comment_line>.tr2:before,.comment_line>.tr2:after {content:'';display:block;position:absolute;border:8px solid transparent;left:0;}
 .comment_line>.tr2:before {border-bottom:7px solid #efefef;top:-1px;}
@@ -347,7 +349,7 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 .pinned_box .pinned_input {margin-bottom:20px;}
 .pinned_box .pinned_input input {outline:none;text-indent:10px;background-color:transparent;height:28px;line-height:28px;color:#333;border:1px solid #ccc;border-radius:5px;vertical-align:bottom;width:260px;}
 .pinned_box .pinned_total {font-size:20px;color:#59b6d7;}
-/*打赏*//*打赏*/.reward_cont {margin-top:40px;text-align:center;}
+/*打赏*/.reward_cont {margin-top:40px;text-align:center;}
 .reward_cont .reward_user {width:75%;margin:0 auto;overflow:hidden;}
 .reward_cont .user_item {position:relative;display:inline-block;margin-right:5px;}
 .reward_cont .user_item .verified_icon {width:19px;position:absolute;bottom:0px;right:-1px;}
@@ -366,6 +368,8 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 .reward_popups .reward_title {font-size:18px;margin-bottom:10px;margin-top:0;}
 .reward_popups .reward_list {line-height:60px;}
 .reward_popups .reward_list .uname {color:#444;margin:0 20px;}
+.reward_list .u-avatar {position:relative;display:inline-block;}
+.reward_list .role-icon {width:19px;position:absolute;bottom:5px;right:0;}
 .reward_popups .reward_sum .opt {cursor:pointer;display:inline-block;padding:5px 15px;margin-right:20px;border:1px solid #CCC;border-radius:2px;background-color:white;}
 .reward_popups .reward_sum .active {color:#59b6d7;border-color:#59b6d7;}
 .reward_popups .reward_sum .opt:last-child {margin-right:0;}
