@@ -11,7 +11,7 @@
                 <li @if($type == 0)class="current_room"@endif data-type="0" id="chat_comments">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
-                            <use xlink:href="#icon-ico_pinglun"></use>
+                            <use xlink:href="#icon-side-msg"></use>
                         </svg>
                     </div>
                     <div class="chat_item">
@@ -22,7 +22,7 @@
                 <li @if($type == 1)class="current_room"@endif data-type="1" id="chat_likes">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
-                            <use xlink:href="#icon-ico_zan"></use>
+                            <use xlink:href="#icon-side-like"></use>
                         </svg>
                     </div>
                     <div class="chat_item">
@@ -33,7 +33,7 @@
                 <li @if($type == 2)class="current_room"@endif data-type="2" id="chat_notifications">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
-                            <use xlink:href="#icon-ico_tongzhi"></use>
+                            <use xlink:href="#icon-side-notice"></use>
                         </svg>
                     </div>
                     <div class="chat_item">
@@ -43,7 +43,7 @@
                 <li @if($type == 3)class="current_room"@endif data-type="3" id="chat_pinneds">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
-                            <use xlink:href="#icon-ico_shenghe"></use>
+                            <use xlink:href="#icon-side-auth"></use>
                         </svg>
                     </div>
                     <div class="chat_item">
