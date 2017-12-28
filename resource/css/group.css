@@ -154,7 +154,7 @@
 .p-group .m-nav>ul{width:300px;display:inline-flex;margin-bottom:0;justify-content:space-between;}
 .p-group .m-nav li{display:inline-flex;cursor:pointer;color:#AAA;}
 .p-group .m-nav li.cur{color:#333;}
-
+/* 圈子成员管理 */
 .p-member .m-row{display:inline-flex;align-items:center;width:24.5%;}
 .p-member .m-row dd{margin-left:15px;}
 .p-member .m-row .u-opt{margin-top:10px;font-size:14px;position:relative;cursor:pointer;}
@@ -163,7 +163,7 @@
 .p-member .m-row .u-menu li{padding:2px 20px;}
 .p-member .m-row .u-menu li:hover{background-color:#ededed;}
 .p-member .no-member{margin-left:60px;color:#ccc;}
-
+/* 圈子收入记录 */
 .p-bankroll .m-hd{padding:30px 0;margin-bottom:30px;border-bottom:5px solid #ededed;}
 .p-bankroll .m-income>span{font-size:36px;color:#FF9400;}
 .p-bankroll .m-table thead{background-color:#F2F2F2;font-weight:normal;border-top:1px solid #CCC;}
@@ -175,6 +175,12 @@
 .p-bankroll .t-filter{padding:2px 10px;width:135px;border-radius:2px;border:1px solid #999;color:#777;}
 .p-notice .g-mn{width:880px;margin:0 auto;padding:40px;background-color:white;}
 .p-notice .g-mn .g-hd{padding-bottom:20px;border-bottom:1px solid #EDEDED;}
+/* 帖子详情 */
+.p-post .m-act{padding: 20px 0;text-align:center;}
+.p-post .auth_fans{padding-left:20px;padding-right:20px;}
+.p-post .auth_fans li{border-bottom:1px solid #ededed;}
+.p-post .m-act .joinbtn{width:88px;line-height:32px;color:#59b6d7;border:1px solid #59b6d7;background-color: white;border-radius:5px;cursor:pointer;}
+.p-post .m-act .joined{border-color:#ccc;color:#aaa;}
 
 /* 高德map */
 #container {width:100%;height:100%;margin:0px;font-size:13px;}

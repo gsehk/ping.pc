@@ -410,7 +410,7 @@ class GroupController extends BaseController
      * @param  [type]  $post_id  [圈子动态id]
      * @return mixed
      */
-    public function postDetail(Request $request, $group_id, $post_id)
+    public function postDetail(Request $request, int $group_id, int $post_id)
     {
         $this->PlusData['current'] = 'group';
 

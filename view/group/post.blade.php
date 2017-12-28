@@ -13,14 +13,13 @@
 @endsection
 
 @section('content')
+<div class="p-post">
     <div class="left_container">
         <div class="feed_left">
-
-            {{-- <div class="post-title">{{$post->title}}</div> --}}
             <dl class="user-box clearfix">
                 <dt class="fl">
                     <a class="avatar_box" href="{{ route('pc:mine', $post->user_id) }}">
-                    <img class="round" src="{{ getAvatar($post->user, 60) }}" width="60" class="avatar">
+                    <img class="round" src="{{ getAvatar($post->user, 50) }}" width="50" class="avatar">
                     @if($post->user->verified)
                     <img class="role-icon" src="{{ $post->user->verified->icon or asset('zhiyicx/plus-component-pc/images/vip_icon.svg') }}">
                     @endif
@@ -33,8 +32,53 @@
                         <span class="ml20">浏览量  {{ $post->views_count}}</span>
                     </div>
                 </dd>
+                <dd class="fr mt20 relative">
+                    <span class="options" onclick="options(this)">
+                        <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
+                    </span>
+                    <div class="options_div">
+                        <div class="triangle"></div>
+                        <ul>
+                        @if ($post->group->joined && ($post->group->joined->role=='administrator' || $post->group->joined->role=='founder'))
+                        <li>
+                            <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}');">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned"></use></svg>
+                                <span>置顶帖子</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" onclick="post.delPost('{{$post->group_id}}', '{{$post->id}}', 'read');">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>
+                                <span>删除</span>
+                            </a>
+                        </li>
+                        @else
+                            @if($post->user_id == $TS['id'])
+                                <li>
+                                    <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}');">
+                                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>
+                                        <span>申请置顶</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" onclick="post.delPost('{{$post->group_id}}', '{{$post->id}}', 'read');">
+                                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>
+                                        <span>删除</span>
+                                    </a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="javascript:;" onclick="post.reportPost('{{$post->id}}');">
+                                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
+                                        <span>举报</span>
+                                    </a>
+                                </li>
+                            @endif
+                        @endif
+                        </ul>
+                    </div>
+                </dd>
             </dl>
-
             @if($post->images)
                 <div class="detail_images" id="layer-photos-demo">
                     @foreach($post->images as $store)
@@ -95,11 +139,10 @@
 
             {{-- 评论 --}}
             @include('pcview::widgets.comments', ['id' => $post->id, 'group_id' => $post->group_id , 'comments_count' => $post->comments_count, 'comments_type' => 'group', 'loading' => '.feed_left', 'position' => 0])
-
         </div>
     </div>
 
-    <div class="right_container">
+    <div class="right_container g-side">
         <div class="right_about">
             <div class="info clearfix">
                 <div class="auth_header">
@@ -118,13 +161,34 @@
                 <li><a href="{{ route('pc:follows', ['user_id' => $post->user->id, 'type' => 1]) }}">粉丝<span>{{ $post->user->extra->followers_count }}</span></a></li>
                 <li><a href="{{ route('pc:follows', ['user_id' => $post->user->id, 'type' => 2]) }}">关注<span>{{ $post->user->extra->followings_count }}</span></a></li>
             </ul>
+            <div class="m-act">
+                @if ($post->group->joined)
+                    <button
+                        class="joinbtn joined"
+                        id="{{$post->group->id}}"
+                        state="1"
+                        mode="{{$post->group->mode}}"
+                        money="{{$post->group->money}}"
+                        onclick="grouped.init(this);"
+                    >已加入</button>
+                @else
+                    <button
+                        class="joinbtn"
+                        id="{{$post->group->id}}"
+                        state="0"
+                        mode="{{$post->group->mode}}"
+                        money="{{$post->group->money}}"
+                        onclick="grouped.init(this);"
+                    >+加入</button>
+                @endif
+            </div>
         </div>
         <!-- 推荐用户 -->
         @include('pcview::widgets.recusers')
         <!-- 收入达人 -->
         @include('pcview::widgets.incomerank')
-
     </div>
+</div>
 @endsection
 
 @section('scripts')
