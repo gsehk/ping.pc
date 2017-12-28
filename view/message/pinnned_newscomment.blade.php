@@ -5,9 +5,6 @@
 
 @if (!$comments->isEmpty())
     @foreach($comments as $comment)
-    @php
-        dd($comment['comment']['body']);
-    @endphp
         <dl class="message_one">
             <dt><img src="{{ getAvatar($comment['user'], 40) }}"></dt>
             <dd>
