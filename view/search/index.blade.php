@@ -73,6 +73,7 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.weibo.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.question.js') }}"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.picshow.js') }}"></script>
 <script type="text/javascript">
 $(function() {
