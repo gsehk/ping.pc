@@ -224,13 +224,13 @@ $('#J-upload-cover').on('change', function(e){
 });
 
 $('#J-create-group').on('click', function(){
+    var name = $('[name="name"]').val();
     var modeType = $('[name="modes"]:checked').val();
     var POST_URL = '/plus-group/groups/{{$group->id}}';
     var group = [[ 'administrator'], ['administrator', 'founder'], ['administrator','member','founder']];
     var permissions = group[$('[name="permissions"]:checked').val()];
     var formData = new FormData();
         var attrs = {
-            name: $('[name="name"]').val(),
             summary: $('[name="summary"]').val(),
             notice: $('[name="notice"]').val(),
             location: $('[name="location"]').val(),
@@ -239,8 +239,11 @@ $('#J-create-group').on('click', function(){
             geo_hash: $('[name="geo_hash"]').val(),
             allow_feed: $('[name="allow_feed"]:checked').val(),
         };
-        if (!attrs.name || getLength(attrs.name) > 20) {
-            noticebox('圈子名称长度为1 - 20个字', 0);return;
+        if ('{{$group->name}}' != name) {
+            if (!name || getLength(name) > 20) {
+                noticebox('圈子名称长度为1 - 20个字', 0);return;
+            }
+            formData.append('name', name);
         }
         if (getLength(attrs.summary) > 255) {
             noticebox('圈子简介不能大于255个字', 0);return;
