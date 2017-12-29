@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+@endphp
 @if (!$members->isEmpty())
     @if ($type == 'audit')
         <div class="f-mt20">

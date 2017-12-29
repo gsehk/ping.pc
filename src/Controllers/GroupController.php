@@ -233,10 +233,10 @@ class GroupController extends BaseController
             'type' => $request->query('type', 'member'),
         ];
         $group = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
-        $members = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', $params);
         if ($params['type'] == 'audit') {
-
             $members = createRequest('GET', '/api/v2/plus-group/user-group-audit-members', $params);
+        } else {
+            $members = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', $params);
         }
 
         $member = clone $members;
@@ -244,7 +244,7 @@ class GroupController extends BaseController
         $data['type'] = $params['type'];
         $data['group'] = $group;
         $data['members'] = $members;
-        $memberData = view('pcview::templates.member', $data, $this->PlusData)->render();
+        $memberData = view('pcview::templates.group_member', $data, $this->PlusData)->render();
 
         return response()->json([
             'status'  => true,
