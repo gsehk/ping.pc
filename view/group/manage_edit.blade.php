@@ -28,7 +28,7 @@
                 <div class="formitm">
                     <input class="chools-cover" id="J-upload-cover" type="file" name="file">
                     <img class="cover" id="J-preview-cover" src="{{ $group->avatar or asset('zhiyicx/plus-component-pc/images/default_group_cover.png') }}">
-                    <button class="J-upload-cover-btn change-cover">更改圈子头像</button>
+                    <button class="J-upload-cover-btn change-cover" onclick="$('#J-upload-cover').click();">更改圈子头像</button>
                 </div>
                 <div class="formitm">
                     <label class="lab">圈子名称</label>
@@ -183,6 +183,10 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('c
 
 $('#J-submodel label').on('click', function(e){
     var val = $('#'+$(this).attr('for')).val();
+    if ('{{$group->mode}}' == 'paid') {
+        e.preventDefault();
+        noticebox('禁止修改模式', 0);return;
+    }
     if (val == '2') {
         $('.j-sub0').hide();
         $('.j-sub1').show();
@@ -192,6 +196,13 @@ $('#J-submodel label').on('click', function(e){
     }
 });
 
+$('.j-sub0 label').on('click', function(e){
+    var mode = $(this).attr('for');
+    if ('{{$group->mode}}' == 'private' && mode == 'radio-open') {
+        e.preventDefault();
+        noticebox('禁止修改模式', 0);return;
+    }
+});
 var selBox = $('.tags-box');
 $('#J-tag-box dd').on('click', function(e){
     e.stopPropagation();
@@ -210,9 +221,6 @@ selBox.on('click', 'span', function(){
     $(this).remove();
 });
 
-$('.J-upload-cover-btn').click(function(){
-    $('#J-upload-cover').click();
-});
 $('#J-upload-cover').on('change', function(e){
     var file = e.target.files[0];
     var a = new FileReader();
