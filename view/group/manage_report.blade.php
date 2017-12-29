@@ -41,7 +41,7 @@
 </div>
 @endsection
 <script src="{{ asset('zhiyicx/plus-component-pc/layer/laydate/laydate.js')}}"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/axios.min.js')}}"></script>
 @section('scripts')
 <script>
 axios.defaults.baseURL = TS.API;

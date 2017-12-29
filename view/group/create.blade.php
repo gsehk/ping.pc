@@ -115,7 +115,7 @@
 <script src='//webapi.amap.com/maps?v=1.4.2&key=e710c0acaf316f2daf2c1c4fd46390e3'></script>
 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 @section('scripts')
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/axios.min.js')}}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/geohash.js')}}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js')}}"></script>
 <script>

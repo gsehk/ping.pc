@@ -102,8 +102,8 @@
     </div>
 </div>
 @endsection
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 @section('scripts')
+<script src="{{ asset('zhiyicx/plus-component-pc/js/axios.min.js')}}"></script>
 <script>
 axios.defaults.baseURL = TS.API;
 axios.defaults.headers.common['Accept'] = 'application/json';

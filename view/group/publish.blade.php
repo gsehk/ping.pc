@@ -34,7 +34,7 @@
     </div>
 </div>
 @endsection
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('zhiyicx/plus-component-pc/js/axios.min.js')}}"></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/md5.min.js') }}"></script>
 @section('scripts')
 <script>
