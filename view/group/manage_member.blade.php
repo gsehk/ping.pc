@@ -132,6 +132,9 @@ var MAG = {
         })
         .then(function (response) {
             noticebox('操作成功', 1, 'refresh');
+        })
+        .catch(function (error) {
+            showError(error.response.data);
         });
     },
     /**
@@ -151,6 +154,9 @@ var MAG = {
         })
         .then(function (response) {
             noticebox('操作成功', 1, 'refresh');
+        })
+        .catch(function (error) {
+            showError(error.response.data);
         });
     },
     /**
@@ -164,9 +170,12 @@ var MAG = {
         axios.patch( URL, {
                 status: type
             })
-            .then(function (response) {
-                noticebox('操作成功', 1, 'refresh');
-            });
+        .then(function (response) {
+            noticebox('操作成功', 1, 'refresh');
+        })
+        .catch(function (error) {
+            showError(error.response.data);
+        });
     },
     /**
      * 移除圈子成员
@@ -176,9 +185,12 @@ var MAG = {
     delete: function(gid, uid){
         var URL = '/plus-group/groups/'+gid+'/members/'+uid;
         axios.delete( URL )
-            .then(function (response) {
-                noticebox('操作成功', 1, 'refresh');
-            });
+        .then(function (response) {
+            noticebox('操作成功', 1, 'refresh');
+        })
+        .catch(function (error) {
+            showError(error.response.data);
+        });
     },
     /**
      *  圈子转让
@@ -190,9 +202,12 @@ var MAG = {
         axios.patch( URL, {
                 target: uid
             })
-            .then(function (response) {
-                noticebox('操作成功', 1, 'refresh');
-            });
+        .then(function (response) {
+            noticebox('操作成功', 1, 'refresh');
+        })
+        .catch(function (error) {
+            showError(error.response.data);
+        });
     }
 }
 
