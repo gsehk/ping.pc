@@ -3,6 +3,7 @@
 @endphp
 @if (!$reports->isEmpty())
     <table class="m-table m-table-row">
+        @if ($loadcount == 1)
         <thead>
             <tr>
                 <th>举报时间</th>
@@ -12,12 +13,13 @@
                 <th>操作</th>
             </tr>
         </thead>
+        @endif
         <tbody>
             @foreach ($reports as $report)
                 <tr>
                     <td>{{getTime($report->created_at)}}</td>
                     <td>{{$report->user->name}}</td>
-                    <td><span class="s-fc3">{{$report->content or ''}}</span></td>
+                    <td><span class="s-fc3 f-pre">{{$report->content or ''}}</span></td>
                     <td>
                         @if ($report->type == 'post')
                         @php $body = $report->resource->summary ?? '资源已被删除'; @endphp

@@ -275,6 +275,7 @@ class GroupController extends BaseController
         $after = $report->pop()->id ?? 0;
         $data['reports'] = $reports;
         $data['group_id'] = $group_id;
+        $data['loadcount'] = $request->query('loadcount');
         $reportData = view('pcview::templates.report', $data, $this->PlusData)->render();
 
         return response()->json([
