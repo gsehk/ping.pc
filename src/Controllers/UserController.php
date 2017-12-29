@@ -94,8 +94,8 @@ class UserController extends BaseController
             $type = $request->query('type');
 
             $params = [
-                'after' => $request->query('after'),
-                'limit' => 10
+                'offset' => $request->query('offset'),
+                'limit' => $request->query('limit')
             ];
 
             // 判断是否为自己
@@ -109,14 +109,11 @@ class UserController extends BaseController
 
             $users = createRequest('GET', $api, $params);
             $data['users'] = $users;
-            $user = clone $users;
-            $after = $user->pop()->id ?? 0;
 
             $html =  view('pcview::templates.user', $data, $this->PlusData)->render();
 
             return response()->json([
                 'status'  => true,
-                'after' => $after,
                 'data' => $html,
                 'count' => count($users)
             ]);

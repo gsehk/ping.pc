@@ -58,14 +58,15 @@
         $('#user_list').html('');
         var params = {
             user_id: user_id,
-            type: type
+            type: type,
+            limit: 10
         };
         scroll.init({
-            limit: 9,
             container: '#user_list',
             loading: '.user_container',
             url: '/users/follows',
-            params: params
+            params: params,
+            paramtype: 1,
         });
     }
 
