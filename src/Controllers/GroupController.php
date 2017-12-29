@@ -262,6 +262,7 @@ class GroupController extends BaseController
             'after' => $request->query('after', 0),
             'limit' => $request->query('limit', 15),
             'start' => strtotime($request->query('start')),
+            'end' => strtotime($request->query('end')),
             'status' => $request->query('status'),
             'group_id' => $request->query('group_id'),
         ];

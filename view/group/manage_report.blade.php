@@ -30,7 +30,9 @@
                     <li status="2">已驳回</li>
                 </ul>
                 <div class="m-filter f-fr">
-                    <input class="t-filter" type="text" placeholder="请选择日期">
+                    <input class="t-filter" id="T-start" type="text" placeholder="请选择开始日期">
+                    -
+                    <input class="t-filter" id="T-end" type="text" placeholder="请选择结束日期">
                 </div>
             </div>
             <div class="m-ct">
@@ -59,14 +61,26 @@ setTimeout(function() {
 }, 200);
 
 laydate.render({
-    elem: '.t-filter',
+    elem: '#T-start',
     done: function(value){
         $('#report-box').html('');
         scroll.init({
             container: '#report-box',
             loading: '#report-box',
             url: '/group/report',
-            params: {limit: 15, group_id: {{$group->id}}, start: value }
+            params: {limit: 15, group_id: {{$group->id}}, start: value, end: $('#T-end').val() }
+        });
+    }
+});
+laydate.render({
+    elem: '#T-end',
+    done: function(value){
+        $('#report-box').html('');
+        scroll.init({
+            container: '#report-box',
+            loading: '#report-box',
+            url: '/group/report',
+            params: {limit: 15, group_id: {{$group->id}}, start: $('#T-start').val(), end: value}
         });
     }
 });
