@@ -75,7 +75,7 @@
                 </div>
                 <div class="form-control f-dn j-sub1">
                     <label class="lab">设置入圈金额</label>
-                    <input min="1" oninput="value=moneyLimit(value)" class="iptline" name="money" type="text"/>&nbsp;&nbsp;<span class="s-fc4">金币</span>
+                    <input min="1" oninput="value=moneyLimit(value)" class="iptline" name="money" type="text"/>&nbsp;&nbsp;<span class="s-fc4">{{ $config['bootstrappers']['site']['gold_name']['name'] }}</span>
                 </div>
             </div>
             <div class="formitm">
@@ -214,7 +214,7 @@ $('#J-create-group').on('click', function(){
             if (!$('[name="money"]').val()) {
                 noticebox('请设置付费金额', 0);return;
             }
-            formData.append('money', $('[name="money"]').val());
+            formData.append('money', $('[name="money"]').val() / TS.BOOT['wallet:ratio']);
         }
         $('.tags-box span').each(function(){
             formData.append('tags[][id]', $(this).data('id'));
