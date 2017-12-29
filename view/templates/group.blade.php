@@ -2,12 +2,25 @@
     <div class="group_item @if($loop->iteration % 2 == 0) group_item_right @endif">
         <dl class="clearfix">
             <dt>
-                <a href="{{Route('pc:groupread', $item->id)}}">
+                <a
+                @if ($item->mode == 'paid' && !$item->joined)
+                    href="javascript:noticebox('必须先加入圈子', 0);"
+                @else
+                    href="{{Route('pc:groupread', $item->id)}}"
+                @endif
+                >
                     <img src="{{ $item->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png') }}" width="120" height="120">
                 </a>
             </dt>
             <dd>
-                <a class="title" href="{{Route('pc:groupread', $item->id)}}" alt="{{ $item->name }}">{{ str_limit($item->name, 16, '...') }}
+                <a class="title"
+                    @if ($item->mode == 'paid' && !$item->joined)
+                        href="javascript:noticebox('必须先加入圈子', 0);"
+                    @else
+                        href="{{Route('pc:groupread', $item->id)}}"
+                    @endif
+                    alt="{{ $item->name }}"
+                >{{ str_limit($item->name, 16, '...') }}
                     @if ($item->mode == 'paid')
                     <span class="paid">付费</span>
                     @endif

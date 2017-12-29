@@ -331,12 +331,13 @@ class GroupController extends BaseController
      */
     public function read(Request $request, int $group_id)
     {
+        $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
+        if ($data['group']['message']) {
+            return redirect(route('pc:group'));
+        }
         $this->PlusData['current'] = 'group';
-
         $data['type'] = $request->query('type', 'latest_post');
         $user = $this->PlusData['TS']['id'] ?? 0;
-
-        $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
         $data['members'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members',['type'=>'member']);
         $data['manager'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', ['type'=>'manager']);
 
