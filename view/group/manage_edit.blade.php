@@ -118,7 +118,7 @@
                 <div class="formitm">
                     <label class="lab">发帖权限</label>
                     <span class="f-mr20">
-                        <input class="regular-radio f-dn" id="radio-qz" name="permissions" type="radio" value="0" @if ($group->permissions == 'administrator') checked @endif/>
+                        <input class="regular-radio f-dn" id="radio-qz" name="permissions" type="radio" value="0" @if ($group->permissions == 'founder') checked @endif/>
                         <label class="radio" for="radio-qz"></label>仅圈主
                     </span>
                     <span class="f-mr20">
@@ -126,7 +126,7 @@
                         <label class="radio" for="radio-tt"></label>圈主和管理员
                     </span>
                     <span class="f-mr20">
-                        <input class="regular-radio f-dn" id="radio-all" name="permissions" type="radio" value="2" @if ($group->permissions == 'administrator,member,founder') checked @endif/>
+                        <input class="regular-radio f-dn" id="radio-all" name="permissions" type="radio" value="2" @if ($group->permissions == 'member,administrator,founder') checked @endif/>
                         <label class="radio" for="radio-all"></label>全体成员
                     </span>
                 </div>
@@ -235,7 +235,7 @@ $('#J-create-group').on('click', function(){
     var name = $('[name="name"]').val();
     var modeType = $('[name="modes"]:checked').val();
     var POST_URL = '/plus-group/groups/{{$group->id}}';
-    var group = [[ 'administrator'], ['administrator', 'founder'], ['administrator','member','founder']];
+    var group = [[ 'founder'], ['administrator', 'founder'], ['member','administrator','founder']];
     var permissions = group[$('[name="permissions"]:checked').val()];
     var formData = new FormData();
         var attrs = {
