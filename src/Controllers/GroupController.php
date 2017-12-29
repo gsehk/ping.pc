@@ -233,11 +233,7 @@ class GroupController extends BaseController
             'type' => $request->query('type', 'member'),
         ];
         $group = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
-        if ($params['type'] == 'audit') {
-            $members = createRequest('GET', '/api/v2/plus-group/user-group-audit-members', $params);
-        } else {
-            $members = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', $params);
-        }
+        $members = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id.'/members', $params);
 
         $member = clone $members;
         $after = $member->pop()->id ?? 0;
