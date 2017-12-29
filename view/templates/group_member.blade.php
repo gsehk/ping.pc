@@ -14,8 +14,8 @@
                             <span>管理</span>
                             <svg class="icon f-fs2"><use xlink:href="#icon-setting"></use></svg>
                             <ul class="u-menu f-dn">
-                                <a href="javascript:;" onclick="MAG.audit({{$group->id}}, {{$member->member_id}}, 1);"><li>通过</li></a>
-                                <a href="javascript:;" onclick="MAG.audit({{$group->id}}, {{$member->member_id}}, 2);"><li>驳回</li></a>
+                                <a href="javascript:;" onclick="MAG.audit({{$group->id}}, {{$member->id}}, 1);"><li>通过</li></a>
+                                <a href="javascript:;" onclick="MAG.audit({{$group->id}}, {{$member->id}}, 2);"><li>驳回</li></a>
                             </ul>
                         </div>
                     </dd>
