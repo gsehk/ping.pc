@@ -53,9 +53,9 @@
                 dataType: 'json',
                 error: function(xml) {},
                 success: function(res, data, xml) {
-                    if (xml.status == 201) {
+                    if (data.type == 1){
                         $(_this).parent('.comment_audit').html('<a href="javascript:">同意置顶</a>');
-                    } else if (xml.status == 204) {
+                    } else {
                         $(_this).parent('.comment_audit').html('<a href="javascript:">拒绝置顶</a>');
                     }
                     TS.UNREAD.pinneds -= 1;
