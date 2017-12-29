@@ -436,7 +436,13 @@ class GroupController extends BaseController
 
         $comment = clone $comments['comments'];
         $after = $comment->pop()->id ?? 0;
+        if ($comments['pinneds'] != null) {
 
+            $comments['pinneds']->each(function ($item, $key) use ($comments) {
+                $item->top = 1;
+                $comments['comments']->prepend($item);
+            });
+        }
         $comments['top'] = true;
         $commentData = view('pcview::templates.comment', $comments, $this->PlusData)->render();
 
