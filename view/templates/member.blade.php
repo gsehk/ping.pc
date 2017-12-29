@@ -5,7 +5,7 @@
             @if (!$members->isEmpty())
             @foreach ($members as $member)
                 <dl class="m-row">
-                    <dt><img src="{{$member->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+                    <dt><img src="{{ getAvatar($member->user, 50) }}" width="50"></dt>
                     <dd><div>{{$member->user->name}}</div>
                         <div class="u-opt">
                             <span>管理</span>
@@ -28,7 +28,7 @@
             @if (!$members->isEmpty())
             @foreach ($members as $member)
                 <dl class="m-row">
-                    <dt><img src="{{$member->user->avatar or asset('zhiyicx/plus-component-pc/images/default_picture.png')}}" width="50"></dt>
+                    <dt><img src="{{ getAvatar($member->user, 50) }}" width="50"></dt>
                     <dd><div>{{$member->user->name}}</div>
                         <div class="u-opt">
                             <span>管理</span>
