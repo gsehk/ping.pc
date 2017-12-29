@@ -30,12 +30,12 @@
                     <li type="audit">待审核</li>
                     <li type="blacklist">黑名单</li>
                 </ul>
-                <div class="m-sch f-fr">
+                {{-- <div class="m-sch f-fr">
                     <input class="u-schipt" type="text" placeholder="输入关键词搜索">
                     <a class="u-schico" id="J-search" href="javascript:;">
                         <svg class="icon s-fc"><use xlink:href="#icon-search"></use></svg>
                     </a>
-               </div>
+               </div> --}}
             </div>
             <div class="g-body" id="member-box">
             <div>
