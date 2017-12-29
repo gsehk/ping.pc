@@ -59,8 +59,6 @@
                                     <ul class="u-menu f-dn">
                                         <a href="javascript:;" onclick="MAG.set({{$group->id}}, {{$manage->id}}, 0);"><li>撤销管理员</li></a>
                                         <a href="javascript:;" onclick="MAG.assign({{$group->id}}, {{$manage->user_id}});"><li>转让圈子</li></a>
-                                        <a href="javascript:;"　onclick="MAG.black({{$group->id}}, {{$manage->id}}, 1);"><li>加入黑名单</li></a>
-                                        <a href="javascript:;" onclick="MAG.delete({{$group->id}}, {{$manage->id}});"><li>踢出圈子</li></a>
                                     </ul>
                                 @endif
                             </div>
