@@ -49,6 +49,7 @@ $('#J-publish-post').on('click', function(e){
     var args = {
         'title': $('#title').val(),
         'body': editor.value(),
+        'summary': '',
         'images': [],
     };
     var images = args.body.match(/\((\d+)\)/g);

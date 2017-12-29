@@ -560,11 +560,11 @@ var noticebox = function(msg, status, tourl) {
         var html = '<div class="notice"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-choosed"></use></svg> ' + msg + '</div>';
     }
     _this.html(html);
-    _this.slideDown(500);
+    _this.slideDown(200);
     if (tourl == '') {
         setTimeout(function() {
             $('.noticebox').slideUp(200);
-        }, 1000);
+        }, 1500);
     } else {
         setTimeout(function() {
             noticebox_cb(tourl);
