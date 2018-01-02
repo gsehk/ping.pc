@@ -380,6 +380,7 @@ class GroupController extends BaseController
         $after =  0;
         $posts['conw'] = 815;
         $posts['conh'] = 545;
+        $posts['top'] = true;
         $posts['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
         $feedData = view('pcview::templates.group_posts', $posts, $this->PlusData)->render();
 
