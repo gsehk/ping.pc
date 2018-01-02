@@ -35,10 +35,10 @@
                     <span class="options" onclick="options(this)">
                         <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                     </span>
+                    @if(isset($TS->id) && $user->id == $TS->id)
                     <div class="options_div">
                         <div class="triangle"></div>
                         <ul>
-                            @if(isset($TS->id) && $user->id == $TS->id)
                             <li>
                                 <a href="javascript:;" onclick="weibo.pinneds({{$feed->id}});">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
@@ -49,10 +49,10 @@
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>删除
                                 </a>
                             </li>
-                            @endif
 
                         </ul>
                     </div>
+                    @endif
                 </dd>
             </dl>
 
