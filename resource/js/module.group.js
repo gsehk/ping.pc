@@ -6,7 +6,7 @@ var grouped = {
         this.state = $(obj).attr('state');
         this.money = $(obj).attr('money');
         this.mode = $(obj).attr('mode');
-        this.gid = $(obj).attr('id');
+        this.gid = $(obj).attr('gid');
         this.count = parseInt($('#join-count-'+this.gid).text());
         if (parseInt(this.state)) {
             this.unjoined();

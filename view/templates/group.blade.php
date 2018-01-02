@@ -38,7 +38,7 @@
                         @else
                             {{-- <button
                                 class="J-join joined"
-                                id="{{$item->id}}"
+                                gid="{{$item->id}}"
                                 state="1"
                                 mode="{{$item->mode}}"
                                 money="{{$item->money}}"
@@ -48,7 +48,7 @@
                     @else
                         <button
                             class="J-join"
-                            id="{{$item->id}}"
+                            gid="{{$item->id}}"
                             state="0"
                             mode="{{$item->mode}}"
                             money="{{$item->money}}"

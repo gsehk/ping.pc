@@ -165,7 +165,7 @@
                 @if ($post->group->joined)
                     <button
                         class="joinbtn joined"
-                        id="{{$post->group->id}}"
+                        gid="{{$post->group->id}}"
                         state="1"
                         mode="{{$post->group->mode}}"
                         money="{{$post->group->money}}"
@@ -174,7 +174,7 @@
                 @else
                     <button
                         class="joinbtn"
-                        id="{{$post->group->id}}"
+                        gid="{{$post->group->id}}"
                         state="0"
                         mode="{{$post->group->mode}}"
                         money="{{$post->group->money}}"
