@@ -61,6 +61,7 @@
                                 @if ($group->joined)
                                     <button
                                         class="joinbtn joined"
+                                        id="J-hoverbtn"
                                         gid="{{$group->id}}"
                                         state="1"
                                         mode="{{$group->mode}}"
@@ -236,5 +237,10 @@
             params: params,
         });
     });
+    $("#J-hoverbtn").hover(function(){
+        $(this).text('退 出');
+    },function(){
+        $(this).text('已加入');
+    })
 </script>
 @endsection
