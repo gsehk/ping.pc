@@ -206,7 +206,7 @@ Route::prefix('group')->group(function () {
     Route::middleware(PcMiddleware\CheckLogin::class)->get('/create', 'GroupController@create')->name('pc:groupcreate');
 
     //发布帖子
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/publish/{group_id}', 'GroupController@publish')->name('pc:postcreate');
+    Route::middleware(PcMiddleware\CheckLogin::class)->get('/publish', 'GroupController@publish')->name('pc:postcreate');
 
     // 圈子列表
     Route::get('/', 'GroupController@index')->name('pc:group');

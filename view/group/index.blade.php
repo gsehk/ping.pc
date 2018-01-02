@@ -48,6 +48,12 @@
                     <span>创建圈子</span>
                 </div>
             </a>
+            <a href="{{route('pc:postcreate', ['type'=>'outside'])}}">
+                <div class="u-btn">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-writing"></use></svg>
+                    <span>发帖</span>
+                </div>
+            </a>
         </div>
         <div class="g-sidec f-mb30">
             <p>共有 <span class="s-fc3 f-fs5">{{ $groups_count }}</span> 个兴趣圈子，等待你的加入！</p>

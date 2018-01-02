@@ -222,7 +222,7 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 @keyframes icon-load {from {-webkit-transform:rotate(0deg);transform:rotate(0deg);}
 to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 }
-/*  模拟 select */.zy_select {display:inline-block;position:relative;white-space:normal;cursor:pointer;}
+/*  模拟 select */.zy_select {display:inline-block;position:relative;white-space:normal;cursor:pointer;text-align:center;}
 .zy_select a {color:inherit;cursor:pointer;}
 .zy_select >i {overflow:hidden;float:right;position:relative;display:block;margin-top:4px;margin-left:4px;width:16px;height:16px;vertical-align:middle;transform-origin:center;transition:all .2s;}
 .zy_select > i::after {display:block;position:absolute;top:50%;left:50%;width:0;height:0;border:6px solid transparent;border-top-color:#000;transform:translate(-50%,-25%);content:"";}
@@ -230,7 +230,6 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 .zy_select>ul {display:none;overflow-x:hidden;position:absolute;top:100%;left:0;z-index:5;margin:0;padding:0;width:calc(100% + 2px);background:#fff;}
 .zy_select>ul >li {overflow:hidden;display:block;margin-bottom:1px;padding:5px;width:100%;min-height:20px;text-overflow:ellipsis;cursor:pointer;}
 .zy_select>ul >li.active,.zy_select>ul >li:hover {background-color:#dfdfdf;color:#fff;}
-.zy_select.t_c {text-align:center;}
 .zy_select.gap12>ul {left:50%;margin-top:12px;padding:15px 0 5px;min-width:111px;border-radius:2px;box-shadow:0 0 9px 0 rgba(0,0,0,.1);transform:translateX(-50%);}
 .zy_select.gap12>ul li {background:none !important;padding:5px;margin-bottom:10px;}
 .zy_select.gap12>ul li.active,.zy_select.gap12>ul li:hover {color:#59b6d7;}

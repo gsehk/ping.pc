@@ -108,7 +108,7 @@
                     @elseif($group->joined->disabled)
                         href="javascript:;" onclick="noticebox('用户已被禁用，不能进行发帖', 0)"
                     @else
-                        href="{{ route('pc:postcreate', $group->id) }}"
+                        href="{{ route('pc:postcreate', ['group_id'=>$group->id]) }}"
                     @endif
                 @else
                     href="javascript:;" onclick="noticebox('请先加入该圈子', 0)"

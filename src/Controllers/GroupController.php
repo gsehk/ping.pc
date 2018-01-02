@@ -133,11 +133,18 @@ class GroupController extends BaseController
      * @param  Request $request
      * @param  int     $group_id 圈子id
      */
-    public function publish(Request $request, int $group_id)
+    public function publish(Request $request)
     {
-        $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
+        $template = 'publish';
+        if ($request->type) {
+            $template = 'publish_outside';
+            $data['cates'] = createRequest('GET', '/api/v2/plus-group/user-groups',['type' => 'allow_post']);
+        } else {
+            $group_id = $request->query('group_id');
+            $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
+        }
 
-        return view('pcview::group.publish', $data, $this->PlusData);
+        return view('pcview::group.'.$template, $data, $this->PlusData);
     }
 
     /**
