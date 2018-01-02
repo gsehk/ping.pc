@@ -3,6 +3,7 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceImage;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -79,18 +80,10 @@
                     </div>
                 </dd>
             </dl>
-            @if($post->images)
-                <div class="detail_images" id="layer-photos-demo">
-                    @foreach($post->images as $store)
-                        <img data-original="{{ $routes['storage']}}{{$store['id'] }}?w=675&h=380" class="lazy img-responsive"/>
-                    @endforeach
-                </div>
-            @endif
             <h3 class="u-tt">{{$post->title}}</h3>
             <div class="detail_body">
-                {!!$post->body!!}
+            {!! Parsedown::instance()->setMarkupEscaped(true)->text(replaceImage($post->body)) !!}
             </div>
-
             <div class="detail_share">
                 <span id="J-collect{{ $post->id }}" rel="{{ $post->collectors->count() }}" status="{{(int) $post->collected}}">
                     @if($post->collected)
@@ -193,18 +186,8 @@
 
 @section('scripts')
     <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js') }}"></script>
-    <script src="{{ asset('zhiyicx/plus-component-pc/js/qrcode.js') }}"></script>
+    <script src="{{ asset('zhiyicx/plus-component-pc/js/ .js') }}"></script>
     <script type="text/javascript">
-        layer.photos({
-            photos: '#layer-photos-demo'
-            ,anim: 5
-            ,move: false
-        });
-
-        $(document).ready(function(){
-            $("img.lazy").lazyload({effect: "fadeIn"});
-        });
-
-
+        $("img.lazy").lazyload({effect: "fadeIn"});
     </script>
 @endsection
