@@ -31,19 +31,19 @@
                 </div>
                 <div class="join">
                     @if ($item->joined)
-                        @if ($type == 'join' && $item->joined->role == 'administrator')
+                        @if ($item->joined->role == 'administrator')
                             <span class="role" >管理员</span>
-                        @elseif ($type == 'join' && $item->joined->role == 'founder')
+                        @elseif ($item->joined->role == 'founder')
                             <span class="role" >圈主</span>
                         @else
-                            <button
+                            {{-- <button
                                 class="J-join joined"
                                 id="{{$item->id}}"
                                 state="1"
                                 mode="{{$item->mode}}"
                                 money="{{$item->money}}"
                                 onclick="grouped.init(this);"
-                            >已加入</button>
+                            >已加入</button> --}}
                         @endif
                     @else
                         <button
