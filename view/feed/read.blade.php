@@ -94,7 +94,7 @@
                 <span id="J-likes{{$feed->id}}" rel="{{ $feed->like_count }}" status="{{(int) $feed->has_like}}">
                     @if($feed->has_like)
                     <a href="javascript:;" onclick="liked.init({{$feed->id}}, 'feeds', 0);" class="act">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like-copy"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg>
                         <font>{{ $feed->like_count }}</font> 人喜欢
                     </a>
                     @else

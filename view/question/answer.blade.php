@@ -108,7 +108,7 @@
             <span id="J-likes{{$answer->id}}" rel="{{ $answer->likes_count }}" status="{{(int) $answer->liked}}">
                 @if($answer->liked)
                 <a class="act" href="javascript:;" onclick="liked.init({{$answer->id}}, 'question', 0);">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like-copy"></use></svg>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg>
                     <font>{{ $answer->likes_count }}</font> 人喜欢
                 </a>
                 @else

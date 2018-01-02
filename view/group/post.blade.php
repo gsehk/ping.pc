@@ -101,7 +101,7 @@
                 <span class="digg" id="J-likes{{$post->id}}" rel="{{$post->likes_count}}" status="{{(int) $post->liked}}">
                     @if($post->liked)
                     <a class="act" href="javascript:void(0)" onclick="liked.init({{$post->id}}, 'group', 0)">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like-copy"></use></svg>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like"></use></svg>
                         <font>{{$post->likes_count}}</font> 人喜欢
                     </a>
                     @else
