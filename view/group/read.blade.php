@@ -237,10 +237,15 @@
             params: params,
         });
     });
-    $("#J-hoverbtn").hover(function(){
-        $(this).text('退 出');
-    },function(){
-        $(this).text('已加入');
-    })
+    $("#J-hoverbtn").on('mouseover mouseout', function(e){
+        if ($(this).attr('state') == '1') {
+            if (e.type == 'mouseover') {
+                $(this).text('退 出');
+            }
+            if (e.type == 'mouseout') {
+                $(this).text('已加入');
+            }
+        }
+    });
 </script>
 @endsection
