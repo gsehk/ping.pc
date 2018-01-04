@@ -49,14 +49,14 @@
 
             $.ajax({
                 url: url,
-                type: type, 
+                type: type,
                 dataType: 'json',
                 error: function(xml) {},
                 success: function(res) {
                     if (data.type == 1){
-                        $(_this).parent('.comment_audit').html('<a href="javascript:">同意置顶</a>');
+                        $(_this).parent('.comment_audit').html('<a href="javascript:">已审核</a>');
                     } else {
-                        $(_this).parent('.comment_audit').html('<a href="javascript:">拒绝置顶</a>');
+                        $(_this).parent('.comment_audit').html('<a href="javascript:">已审核</a>');
                     }
                     TS.UNREAD.pinneds -= 1;
                     message.setUnreadMessage();
