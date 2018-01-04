@@ -85,12 +85,19 @@ $('#J-publish-post').on('click', function(e){
         args.sync_feed = isSync;
         args.feed_from = isSync;
     }
+    var _this = this;
+    if (_this.lockStatus == 1) {
+        return;
+    }
+    _this.lockStatus = 1;
     axios.post(POST_URL, args)
     .then(function (response) {
         noticebox('发布成功', 1, '/group/'+group_id+'/post/'+response.data.post.id);
+        _this.lockStatus = 0;
     })
     .catch(function (error) {
         showError(error.response.data);
+        _this.lockStatus = 0;
     });
 });
 
