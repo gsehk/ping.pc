@@ -1256,7 +1256,7 @@ var reported = function (url) {
                 + '<p class="confirm_title">举报</p>'
                 + '<a class="ucolor">举报理由</a>'
                 + '<div class="pinned_input">'
-                    + '<textarea id="report-ct" rows="4" cols="30" placeholder="请输入举报理由，不超过255字"></textarea>'
+                    + '<textarea id="report-ct" rows="4" cols="30" placeholder="请输入举报理由，不超过190字"></textarea>'
                 + '</div>'
             + '</div>';
     ly.confirm(html, '', '', function(){
@@ -1265,8 +1265,8 @@ var reported = function (url) {
             lyNotice('请输入举报理由');
             return false;
         }
-        if (getLength(reason) > 255) {
-            lyNotice('举报理由不能大于255个字');
+        if (getLength(reason) > 190) {
+            lyNotice('举报理由不能大于190个字');
             return false;
         }
         $.ajax({
