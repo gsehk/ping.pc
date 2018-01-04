@@ -17,7 +17,7 @@
         TS.BOOT = {!! json_encode($config['bootstrappers']) !!};
         TS.COMMON = {!! json_encode($config['common']) !!};
         // 转换比例处理
-        TS.BOOT['wallet:ratio'] = parseFloat(TS.BOOT['wallet:ratio'] / 100 / 100);
+        // TS.BOOT['wallet:ratio'] = parseFloat(TS.BOOT['wallet:ratio'] / 100 / 100);
         // 未读消息数量
         TS.UNREAD = {};
     </script>

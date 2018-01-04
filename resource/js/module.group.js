@@ -25,10 +25,11 @@ var grouped = {
         _this.lockStatus = 1;
 
         if (this.mode == 'paid') {
+            var money = this.money * TS.BOOT['wallet:ratio'];
             html = '<div class="f-tac" style="padding:20px;">'+
                         '<h3 class="f-mb30">加入付费圈子</h3>'+
-                        '<div><font color="red" size="4">'+this.money+'</font></div>'+
-                        '<p>加入此圈子需要支付'+this.money+'金币，是否<br/>继续加入?</p>'+
+                        '<div><font color="red" size="4">'+money+'</font></div>'+
+                        '<p>加入此圈子需要支付'+money+TS.BOOT.site.gold_name.name+'，是否<br/>继续加入?</p>'+
                    '</div>';
         }
         if (this.mode == 'private') {

@@ -31,16 +31,16 @@
             </div>
             <div class="m-hd">
                 <div class="m-income all-income">
-                    <span>{{$group->join_income_count+$group->pinned_income_count}}</span>
+                    <span>{{($group->join_income_count+$group->pinned_income_count) * $config['bootstrappers']['wallet:ratio']}}</span>
                     <div class="s-fc4 f-fs2">账户余额（{{ $config['bootstrappers']['site']['gold_name']['name'] }}）</div>
                 </div>
                 <div class="f-dn m-income pinned-income">
-                    <span>{{$group->pinned_income_count or 0}}</span>
+                    <span>{{$group->pinned_income_count * $config['bootstrappers']['wallet:ratio']}}</span>
                     <div class="s-fc4 f-fs2">置顶收益（{{ $config['bootstrappers']['site']['gold_name']['name'] }}） 共置顶了
                     <font color="#3CA967">{{$group->posts_count}}</font> 条帖子</div>
                 </div>
                 <div class="f-dn m-income join-income">
-                    <span>{{$group->join_income_count or 0}}</span>
+                    <span>{{$group->join_income_count * $config['bootstrappers']['wallet:ratio']}}</span>
                     <div class="s-fc4 f-fs2">成员费（{{ $config['bootstrappers']['site']['gold_name']['name'] }}） 共
                     <font color="#3CA967">{{$group->users_count}}</font> 个付费成员</div>
                 </div>
