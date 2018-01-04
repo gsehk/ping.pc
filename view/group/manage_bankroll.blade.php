@@ -82,6 +82,11 @@ laydate.render({
     elem: '#T-start',
     done: function(value){
         $('#incomes-box').html('');
+        if ($('#T-end').val() && value > $('#T-end').val()) {
+            noticebox('开始日期不能大于结束日期', 0);
+            $('#T-start').val('');
+            return;
+        }
         scroll.init({
             container: '#incomes-box',
             loading: '#incomes-box',
@@ -94,6 +99,11 @@ laydate.render({
     elem: '#T-end',
     done: function(value){
         $('#incomes-box').html('');
+        if ($('#T-start').val() && value < $('#T-start').val()) {
+            noticebox('结束日期不能小于开始日期', 0);
+            $('#T-end').val('');
+            return;
+        }
         scroll.init({
             container: '#incomes-box',
             loading: '#incomes-box',
