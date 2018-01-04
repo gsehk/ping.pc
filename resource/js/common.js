@@ -1278,7 +1278,7 @@ var reported = function (url) {
                 noticebox(res.message, 1);
             },
             error: function(error) {
-                lyNotice(error.responseJSON);
+                lyShowError(error.responseJSON);
             }
         });
     });
