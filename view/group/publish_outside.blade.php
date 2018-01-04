@@ -17,9 +17,9 @@
             <div class="formitm">
                 <div data-value="" class="zy_select gap12" id="categrey">
                     <span>请选择圈子</span>
-                    <ul>
+                    <ul id="J-group">
                         @foreach ($cates as $cate)
-                            <li data-value="{{$cate->id}}">{{$cate->name}}</li>
+                            <li data-value="{{$cate->id}}" allow_feed="{{$cate->allow_feed}}">{{$cate->name}}</li>
                         @endforeach
                     </ul>
                     <i></i>
@@ -29,8 +29,10 @@
             <div class="formitm">
                 @include('pcview::widgets.markdown', ['place' => '请输入帖子内容', 'content'=>$content ?? ''])
             </div>
+            <div class="formitm f-dn allow_feed">
+                <input class="iptck" type="checkbox" name="sync_feed" value="1"><span>同步分享至动态</span>
+            </div>
             <div class="f-tac">
-                {{-- <button class="btn btn-default btn-lg" id="" type="button">存草稿</button> --}}
                 <button class="btn btn-primary btn-lg" id="J-publish-post" type="button">发 布</button>
             </div>
         </div>
@@ -81,7 +83,7 @@ $('#J-publish-post').on('click', function(e){
     }
     if (isSync !== undefined) {
         args.sync_feed = isSync;
-        args.feed_from = 1;
+        args.feed_from = isSync;
     }
     axios.post(POST_URL, args)
     .then(function (response) {
@@ -90,6 +92,14 @@ $('#J-publish-post').on('click', function(e){
     .catch(function (error) {
         showError(error.response.data);
     });
+});
+
+$('#J-group li').on('click', function(){
+    if ($(this).attr('allow_feed') == '1') {
+        $('.allow_feed').show();
+    } else {
+        $('.allow_feed').hide();
+    }
 });
 </script>
 @endsection
