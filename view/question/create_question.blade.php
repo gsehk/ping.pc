@@ -341,7 +341,7 @@
 
         function stepOne() {
             args.subject = $('#subject').val().replace(/(\s*$)/g, "");
-            args.body = editor.getMarkdown();
+            args.body = editor.value();
             args.anonymity = $("input[type='checkbox'][name='anonymity']:checked").val() == 'on' ? 1 : 0;
             args.topics_ = [];
             $('#J-select-topics li').each(function(index){

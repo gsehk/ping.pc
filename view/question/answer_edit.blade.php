@@ -23,7 +23,7 @@
         var answer_id = '{{ $answer->id }}';
         $('#answer-submit').on('click', function () {
             var args = {};
-            args.body = editor.getMarkdown();
+            args.body = editor.value();
             args.anonymity = $("input[type='checkbox'][name='anonymity']:checked").val() == 'on' ? 1 : 0;
             $.ajax({
                 type: 'PATCH',

@@ -345,7 +345,7 @@
             }
             checkSubmitFlg = true;
             var args = {
-                'body': editor.getMarkdown(),
+                'body': editor.value(),
                 'anonymity': $("input[type='checkbox'][name='anonymity']:checked").val() == 'on' ? 1 : 0
             };
             if (args.body == '') {

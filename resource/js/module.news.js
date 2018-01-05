@@ -12,7 +12,7 @@ $('.subject-submit').on('click', function() {
         'author': $('#subject-author').val(),
         'title': $('#subject-title').val(),
         'subject': $('#subject-abstract').val(),
-        'content': editor.getMarkdown(),
+        'content': editor.value(),
         'image': $('#subject-image').val(),
         'from': $('#subject-from').val(),
         'cate_id': $('#cate_id').val(),
