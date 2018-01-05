@@ -65,11 +65,44 @@
         @include('pcview::widgets.hotgroups')
     </div>
 </div>
+<div class="f-dn" id="iCenter"></div>
 @endsection
-
 @section('scripts')
+<script src='//webapi.amap.com/maps?v=1.4.2&key=e710c0acaf316f2daf2c1c4fd46390e3'></script>
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.group.js')}}"></script>
 <script>
+    mapObj = new AMap.Map('iCenter');
+    mapObj.plugin('AMap.Geolocation', function () {
+        geolocation = new AMap.Geolocation();
+        mapObj.addControl(geolocation);
+        geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    });
+    //定位完成后切换
+    function onComplete(poi){
+        $('.group_navbar a').on('click', function() {
+            var type = $(this).attr('type');
+            var params = {type: type, limit: 10};
+            (type == 'all') ? $('.m-chip').show() : $('.m-chip').hide();
+            $('#group_box').html('');
+            if (type == 'nearby') {
+                params.longitude = poi.position.lng;
+                params.latitude = poi.position.lat;
+            }
+            scroll.init({
+                container: '#group_box',
+                loading: '.group_container',
+                url: '/group/list',
+                paramtype: 1,
+                params: params
+            });
+
+            $('.group_navbar a').removeClass('active');
+            $(this).addClass('active');
+        });
+    }
+
     $("#location").keyup(function(event){
         last = event.timeStamp;
         setTimeout(function(){
@@ -149,28 +182,5 @@
         $('.m-chip span').removeClass('cur');
         $(this).addClass('cur');
     });
-
-    // 切换分类
-    $('.group_navbar a').on('click', function() {
-        var type = $(this).attr('type');
-        var params = {type: type, limit: 10};
-        (type == 'all') ? $('.m-chip').show() : $('.m-chip').hide();
-        $('#group_box').html('');
-        if (type == 'nearby') {
-            params.longitude = 222;
-            params.latitude = 111;
-        }
-        scroll.init({
-            container: '#group_box',
-            loading: '.group_container',
-            url: '/group/list',
-            paramtype: 1,
-            params: params
-        });
-
-        $('.group_navbar a').removeClass('active');
-        $(this).addClass('active');
-    });
-
 </script>
 @endsection
