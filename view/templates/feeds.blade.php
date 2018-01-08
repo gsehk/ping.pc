@@ -71,11 +71,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
                     <li id="J-collect{{$post->id}}" rel="0" status="{{(int) $post->has_collect}}">
                         @if($post->has_collect)
                         <a href="javascript:;" onclick="collected.init({{$post->id}}, 'feeds', 0);" class="act">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>已收藏
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                            <span>已收藏</span>
                         </a>
                         @else
                         <a href="javascript:;" onclick="collected.init({{$post->id}}, 'feeds', 0);">
-                          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>收藏
+                          <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                          <span>收藏</span>
                         </a>
                         @endif
                     </li>
