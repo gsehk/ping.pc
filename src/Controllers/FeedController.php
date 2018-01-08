@@ -117,24 +117,4 @@ class FeedController extends BaseController
             'after' => $after
         ]);
     }
-
-    /**
-     * 动态打赏列表
-     * @author ZsyD
-     * @param  Request $request
-     * @param  int     $feed_id [动态id]
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function rewards(Request $request, int $feed_id)
-    {
-        $params = [
-            'order' => $request->query('order') ?: 'desc',
-            'order_type' => $request->query('order_type') ?: 'date'
-        ];
-
-        $data['rewards'] = createRequest('GET', '/api/v2/feeds/'.$feed_id.'/rewards', $params);
-        $data['app'] = '动态';
-
-        return view('pcview::templates.rewards', $data, $this->PlusData)->render();
-    }
 }

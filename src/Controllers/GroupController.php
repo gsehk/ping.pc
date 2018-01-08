@@ -443,7 +443,6 @@ class GroupController extends BaseController
         ];
 
         $comments = createRequest('GET', '/api/v2/plus-group/group-posts/'.$post_id.'/comments', $params);
-
         $comment = clone $comments['comments'];
         $after = $comment->pop()->id ?? 0;
         if ($comments['pinneds'] != null) {

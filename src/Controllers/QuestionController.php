@@ -357,23 +357,4 @@ class QuestionController extends BaseController
 
         return view('pcview::question.answer_edit', $data, $this->PlusData);
     }
-
-    /**
-     * 回答打赏列表
-     * @author ZsyD
-     * @param  Request $request
-     * @param  int     $answer  [回答id]
-     * @return mixed
-     */
-    public function answerRewards(Request $request, int $answer)
-    {
-        $params = [
-            'type' => $request->query('order') ?: 'time',
-        ];
-
-        $data['rewards'] = createRequest('GET', '/api/v2/question-answers/'.$answer.'/rewarders', $params);
-        $data['app'] = '问答';
-
-        return view('pcview::templates.rewards', $data, $this->PlusData)->render();
-    }
 }

@@ -767,19 +767,8 @@ var rewarded = {
         })
     },
     list: function(id, type){
-        var url = '';
-
-        if (type == 'answer') {
-            url = '/question/answer/'+id+'/rewards';
-        } else if (type == 'news') {
-            url = '/news/'+id+'/rewards';
-        } else if(type == 'group-posts'){
-            url = '/group-posts/'+id+'/rewards';
-        } else {
-            url = '/feeds/'+id+'/rewards';
-        }
-
-        ly.load(TS.SITE_URL + url, '', '340px');
+        var reward_url = TS.SITE_URL + '/reward/view?type='+type+'&post_id='+id;
+        ly.load(reward_url, '', '340px');
     }
 }
 
