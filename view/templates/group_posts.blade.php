@@ -16,7 +16,13 @@
             @endif
         </a>
         <span class="feed_uname font14">{{ $post->user->name }}</span>
-        <span class="s-fc f-fr">置顶</span>
+        <a href="{{ route('pc:grouppost', [$post->group_id, $post->id]) }}" class="date">
+            <span class="feed_time font12">{{ getTime($post->created_at) }}</span>
+            <span class="feed_time font12 hide">查看详情</span>
+        </a>
+        <a class="pinned" href="javascript:;">
+            <span class="font12">置顶</span>
+        </a>
     </div>
     <div class="feed_body">
         <p class="feed_text">{!! formatContent($post->title) !!}</p>
