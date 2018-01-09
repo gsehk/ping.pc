@@ -51,7 +51,7 @@
                 loading: '.question_body',
                 url: '/question',
                 paramtype: 1,
-                params: {type: 'hot', limit: 10}
+                params: {type: 'hot', isAjax: true, limit: 10}
             });
         }, 300);
 
@@ -67,7 +67,7 @@
                     loading: '.question_body',
                     url: '/question',
                     paramtype: 1,
-                    params: {type: type, limit: 10}
+                    params: {type: type, isAjax: true, limit: 10}
                 });
             }, 300);
 

@@ -17,7 +17,7 @@ class QuestionController extends BaseController
     public function question(Request $request)
     {
         $this->PlusData['current'] = 'question';
-        if ($request->ajax()){
+        if ($request->isAjax){
             $params = [
                 'offset' => $request->query('offset', 0),
                 'limit' => $request->query('limit', 0),
@@ -48,7 +48,7 @@ class QuestionController extends BaseController
      */
     public function topic(Request $request)
     {
-        if ($request->ajax()){
+        if ($request->isAjax){
             $cate = $request->query('cate', 1);
             switch ($cate) {
                 case 1:
@@ -289,7 +289,7 @@ class QuestionController extends BaseController
      */
     public function topicExpert(Request $request, int $topic)
     {
-        if ($request->ajax()) {
+        if ($request->isAjax) {
             $limit = $request->input('limit') ?: 18;
             $offset = $request->input('offset') ?: 0;
             $params = [

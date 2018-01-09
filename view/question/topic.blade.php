@@ -50,7 +50,7 @@
                 loading: '.question_body',
                 url: '/question/topic',
                 paramtype: 1,
-                params: {cate: 1, limit: 10}
+                params: {cate: 1, isAjax: true, limit: 10}
             });
         }, 300);
 
@@ -65,7 +65,7 @@
                 loading: '.question_body',
                 url: '/question/topic',
                 paramtype: 1,
-                params: {cate: type, limit: 10}
+                params: {cate: type, isAjax: true, limit: 10}
             });
 
             // 修改样式

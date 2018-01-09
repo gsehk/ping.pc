@@ -59,6 +59,7 @@
         var params = {
             user_id: user_id,
             type: type,
+            isAjax: true,
             limit: 10
         };
         scroll.init({

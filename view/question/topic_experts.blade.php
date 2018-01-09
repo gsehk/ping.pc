@@ -46,6 +46,7 @@
             $('#user_list').html('');
             var params = {
                 limit: 18,
+                isAjax: true,
                 ajax: true
             };
             setTimeout(function() {

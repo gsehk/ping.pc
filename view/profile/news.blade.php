@@ -39,10 +39,10 @@
 @section('scripts')
 <script src="{{ asset('zhiyicx/plus-component-pc/js/module.profile.js') }}"></script>
 <script>
-var params = {type: {{ $type }} };
+var params = { type: {{ $type }}, isAjax: true };
 
 @if ($user->id != $TS->id)
-    params = { user: {{$user->id}} }
+    params = { user: {{$user->id}}, isAjax: true }
 @endif
 
 scroll.init({
@@ -60,7 +60,7 @@ $('.J-menu > a').on('click', function(){
         container: '#content_list',
         loading: '.profile_content',
         url: '/profile/news',
-        params: {type: type }
+        params: {type: type, isAjax: true }
     });
 
     $('.J-menu a').removeClass('active');

@@ -40,6 +40,7 @@
 var params = {
     type: 'users',
     cate: 1,
+    isAjax: true,
     user: {{$user->id}}
 };
 

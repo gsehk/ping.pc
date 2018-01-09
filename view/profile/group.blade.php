@@ -72,7 +72,7 @@
         loading: '.profile_content',
         url: '/profile/group',
         paramtype: 1,
-        params: {limit: 10}
+        params: {isAjax: true, limit: 10}
     });
     $('#J-group li, #J-post li').on('click', function(){
         $('#J-post').addClass('select-gray');
@@ -81,6 +81,7 @@
         $('#content_list').html('');
         var params = {
             limit: 10,
+            isAjax: true,
             type: $(this).attr('type'),
         };
 

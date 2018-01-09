@@ -44,7 +44,7 @@ setTimeout(function() {
         loading: '.profile_content',
         url: '/profile/collect',
         paramtype: 1,
-        params: {cate: 1, limit: 10}
+        params: {cate: 1, limit: 10, isAjax: true}
     });
 }, 300);
 
@@ -56,7 +56,7 @@ $('.J-menu > a').on('click', function(){
         container: '#content_list',
         loading: '.profile_content',
         url: '/profile/collect',
-        params: {cate: cate, limit: 10 }
+        params: {cate: cate, limit: 10, isAjax: true }
     });
 
     $('.J-menu a').removeClass('active');

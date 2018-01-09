@@ -58,7 +58,7 @@
             container: '#content_list',
             loading: '.profile_content',
             url: '/profile/question',
-            params: {type: 'all' }
+            params: {isAjax: true, type: 'all' }
         });
 
         $('#J-question li').on('click', function(){
@@ -68,7 +68,7 @@
                 container: '#content_list',
                 loading: '.profile_content',
                 url: '/profile/question',
-                params: {type: type, cate: 1 }
+                params: {type: type, isAjax: true, cate: 1 }
             });
         });
         $('#J-answer li').on('click', function(){
@@ -78,7 +78,7 @@
                 container: '#content_list',
                 loading: '.profile_content',
                 url: '/profile/question',
-                params: {type: type, cate: 2 }
+                params: {type: type, isAjax: true, cate: 2 }
             });
         });
 
@@ -89,7 +89,7 @@
                 container: '#content_list',
                 loading: '.profile_content',
                 url: '/profile/question',
-                params: {cate: type }
+                params: {isAjax: true, cate: type }
             });
 
             $('.qa_opt').removeClass('active');

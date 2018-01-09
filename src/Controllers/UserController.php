@@ -89,7 +89,7 @@ class UserController extends BaseController
      */
     public function follows(Request $request, int $type = 1, int $user_id = 0)
     {
-        if ($request->ajax()) {
+        if ($request->isAjax) {
             $user_id = $request->query('user_id');
             $type = $request->query('type');
 

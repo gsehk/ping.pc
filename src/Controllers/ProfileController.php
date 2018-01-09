@@ -17,7 +17,7 @@ class ProfileController extends BaseController
      */
     public function feeds(Request $request, int $user_id = 0)
     {
-        if ($request->ajax()) {
+        if ($request->isAjax) {
             $params = [
                 'type' => $request->query('type'),
                 'user' => $request->query('user'),
@@ -60,7 +60,7 @@ class ProfileController extends BaseController
      */
     public function news(Request $request, int $user_id = 0)
     {
-        if ($request->ajax()) {
+        if ($request->isAjax) {
             $params = [
                 'type' => $request->query('type'),
                 'after' => $request->query('after', 0)
@@ -100,7 +100,7 @@ class ProfileController extends BaseController
      */
     public function collect(Request $request)
     {
-        if ($request->ajax()) {
+        if ($request->isAjax) {
             $cate = $request->query('cate', 1);
             switch ($cate) {
                 case 1:
@@ -174,7 +174,7 @@ class ProfileController extends BaseController
      */
     public function group(Request $request, int $user_id = 0)
     {
-        if ($request->ajax()) {
+        if ($request->isAjax) {
             $type = (int) $request->query('type');
             $params = [
                 'offset' => $request->query('offset', 0),
@@ -212,7 +212,7 @@ class ProfileController extends BaseController
      */
     public function question(Request $request, int $user_id = 0)
     {
-        if ($request->ajax()) {
+        if ($request->isAjax) {
             $cate = $request->query('cate', 1);
             switch ($cate) {
                 case 1:
