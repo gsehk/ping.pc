@@ -26,15 +26,10 @@ class HomeController extends Controller
             return redirect(route('admin'), 302);
         }
 
-        // token
-        $token = JWTCache::where('user_id', $request->user()->id)
-            ->where('status', 0)
-            ->value('value');
-
-        $token = 'Bearer '.trim($token);
+        config('jwt.single_auth', false);
 
         return view('pcview::admin', [
-            'token' => $token,
+            'token' => $jwt->create($request->user()),
             'base_url' => route('pc:admin'),
             'csrf_token' => csrf_token(),
             'api' => url('api/v2'),
