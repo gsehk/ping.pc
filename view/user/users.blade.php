@@ -94,25 +94,22 @@
         area_searching.html('').hide();
 
         if (val != "") {
-            $.ajax({
-                type: "GET",
-                url: '/api/v2/locations/search',
-                data: {
-                    name: val
-                },
-                success: function(res) {
-                    if (res.length > 0) {
-                        $.each(res, function(key, value) {
-                            if (key < 3) {
-                                var text = tree(value.tree);
-                                var html = '<a>' + text + '</a>';
-                                area_searching.append(html);
-                            }
-                        });
-                        area_searching.show();
-                    }
+            axios.get('/api/v2/locations/search', { name: val })
+              .then(function (response) {
+                if (response.data.length > 0) {
+                    $.each(response.data, function(key, value) {
+                        if (key < 3) {
+                            var text = tree(value.tree);
+                            var html = '<a>' + text + '</a>';
+                            area_searching.append(html);
+                        }
+                    });
+                    area_searching.show();
                 }
-            });
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         }
     }
 
@@ -133,7 +130,8 @@
         $('#user_list').html('');
         var params = {
             type: type,
-            limit: 10
+            limit: 10,
+            isAjax: true,
         };
         setTimeout(function() {
             scroll.init({

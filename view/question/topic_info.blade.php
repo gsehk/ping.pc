@@ -158,41 +158,30 @@
             var url = TS.API + '/user/question-topics/' + topic_id;
             var followCount = parseInt($('#tf-count-' + topic_id).text());
             if (status == 0) {
-                $.ajax({
-                    url: url,
-                    type: 'PUT',
-                    success: function(res, data, xml) {
-                        if (xml.status == 201) {
-                            noticebox('操作成功', 1);
-                            _this.removeClass('add-follow');
-                            _this.data('status', 1);
-                            _this.text('已关注');
-                            $('#tf-count-' + topic_id).text(followCount + 1);
-                        }
-                    },
-                    error: function(xhr){
-                        showError(xhr.responseJSON);
-                    }
-                })
+                axios.put(url)
+                  .then(function (response) {
+                    noticebox('操作成功', 1);
+                    _this.removeClass('add-follow');
+                    _this.data('status', 1);
+                    _this.text('已关注');
+                    $('#tf-count-' + topic_id).text(followCount + 1);
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data);
+                  });
             } else {
-                $.ajax({
-                    url: url,
-                    type: 'DELETE',
-                    success: function(res, data, xml) {
-                        if (xml.status == 204) {
-                            noticebox('操作成功', 1);
-                            _this.addClass('add-follow');
-                            _this.data('status', 0);
-                            _this.text('+ 关注');
-                            $('#tf-count-' + topic_id).text(followCount - 1);
-                        }
-                    },
-                    error: function(xhr){
-                        showError(xhr.responseJSON);
-                    }
-                })
+                axios.delete(url)
+                  .then(function (response) {
+                    noticebox('操作成功', 1);
+                    _this.addClass('add-follow');
+                    _this.data('status', 0);
+                    _this.text('+ 关注');
+                    $('#tf-count-' + topic_id).text(followCount - 1);
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data);
+                  });
             }
-            console.log($(this).data())
         });
 
         $('.show-description').on('click', function () {

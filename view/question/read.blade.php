@@ -281,31 +281,24 @@
             checkLogin();
             var _this = $(this);
             var watched = _this.data('watched');
-            var type = '';
-            if (watched == '1') {
-                type = 'DELETE';
-            } else {
-                type = 'PUT';
-            }
-            $.ajax({
-                url: '/api/v2/user/question-watches/{{$question['id']}}',
-                type: type,
-                data: {},
-                success: function(res) {
-                    if (watched == '1') {
-                        _this.removeClass('button-grey').addClass('button-primary button-blue').text('关注');
-                        _this.data('watched', '0');
-                        $('#watchers_count_value').text(parseInt($('#watchers_count_value').text())-1);
-                    } else {
-                        _this.removeClass('button-primary button-blue').addClass('button-grey').text('已关注');
-                        _this.data('watched', '1');
-                        $('#watchers_count_value').text(parseInt($('#watchers_count_value').text())+1);
-                    }
-                },
-                error: function(xhr){
-                    showError(xhr.responseJSON);
+            var url = '/api/v2/user/question-watches/{{$question['id']}}';
+            var type = (watched == '1') ? 'DELETE' : 'PUT';
+
+            axios({ method:type, url: url })
+              .then(function (response) {
+                if (watched == '1') {
+                    _this.removeClass('button-grey').addClass('button-primary button-blue').text('关注');
+                    _this.data('watched', '0');
+                    $('#watchers_count_value').text(parseInt($('#watchers_count_value').text())-1);
+                } else {
+                    _this.removeClass('button-primary button-blue').addClass('button-grey').text('已关注');
+                    _this.data('watched', '1');
+                    $('#watchers_count_value').text(parseInt($('#watchers_count_value').text())+1);
                 }
-            })
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         });
         // 切换问题排序
         $('.zy_select').on('click', 'li', function() {
@@ -353,20 +346,14 @@
 
                 return false;
             }
-            $.ajax({
-                type: 'POST',
-                url: '/api/v2/questions/{{$question['id']}}/answers',
-                data: args,
-                success: function(res, data, xml) {
-                    if (xml.status == 201) {
-                        noticebox(res.message, 1, '/question/{{ $question['id'] }}');
-                    }
-                },
-                error:function (xml) {
-                    showError(xml);
-                    checkSubmitFlg = false;
-                }
-            });
+            axios.post('/api/v2/questions/{{$question['id']}}/answers', args)
+              .then(function (response) {
+                noticebox(response.data.message, 1, '/question/{{ $question['id'] }}');
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+                checkSubmitFlg = false;
+              });
         });
 
         $('#comment-button').on('click', function(){

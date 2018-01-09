@@ -14,39 +14,29 @@ var QA = {
     },
     adoptions: function (question_id, answer_id, back_url) {
         var url = '/api/v2/questions/' + question_id + '/adoptions/' + answer_id;
-        $.ajax({
-            url: url,
-            type: 'PUT',
-            dataType: 'json',
-            success: function(res) {
-                noticebox('采纳成功', 1, back_url);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
+        axios.put(url)
+          .then(function (response) {
+            noticebox('采纳成功', 1, back_url);
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     },
     delAnswer: function (question_id, answer_id, callUrl) {
         callUrl = callUrl ? callUrl : '';
         url = '/api/v2/question-answers/' + answer_id;
-         $.ajax({
-             url: url,
-             type: 'DELETE',
-             dataType: 'json',
-             success: function(res, data, xml) {
-                 if (xml.status == 204) {
-                     if (callUrl == '') {
-                         $('#answer' + answer_id).fadeOut();
-                         $('.qs' + question_id).text(parseInt($('.qs' + question_id).text())-1);
-                     } else {
-                         noticebox('删除成功', 1, callUrl);
-                     }
-                 }
-             },
-             error: function(xhr){
-                 showError(xhr.responseJSON);
+        axios.delete(url)
+          .then(function (response) {
+             if (callUrl == '') {
+                 $('#answer' + answer_id).fadeOut();
+                 $('.qs' + question_id).text(parseInt($('.qs' + question_id).text())-1);
+             } else {
+                 noticebox('删除成功', 1, callUrl);
              }
-         });
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     },
     share: function (answer_id) {
         var bdDesc = $('#answer' + answer_id).find('.answer-body').text();
@@ -73,32 +63,27 @@ var QA = {
             }
             _this.lockStatus = 1;
             var url ='/api/v2/question-answers/' + answer_id + '/onlookers';
-
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                success: function(res, data, xml) {
-                    if (!obj) {
-                        noticebox('围观成功', 1, '/question/' + question_id);
-                    } else {
-                        noticebox('围观成功', 1);
-                        var txt = res.answer.body.replace(/\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)/g, "[图片]");
-                        var body = txt.length > 130 ? txt.substr(0, 130) + '...' : txt;
-                        $(obj).removeClass('fuzzy');
-                        $(obj).removeAttr('onclick');
-                        $(obj).text(body);
-                        $(obj).after('<a href="/question/answer/' + answer_id + '" class="button button-plain button-more">查看详情</a>');
-                        layer.closeAll();
-                        _this.lockStatus = 0;
-                    }
-                },
-                error: function(xhr){
+            axios.post(url)
+              .then(function (response) {
+                if (!obj) {
+                    noticebox('围观成功', 1, '/question/' + question_id);
+                } else {
+                    noticebox('围观成功', 1);
+                    var txt = response.data.answer.body.replace(/\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)/g, "[图片]");
+                    var body = txt.length > 130 ? txt.substr(0, 130) + '...' : txt;
+                    $(obj).removeClass('fuzzy');
+                    $(obj).removeAttr('onclick');
+                    $(obj).text(body);
+                    $(obj).after('<a href="/question/answer/' + answer_id + '" class="button button-plain button-more">查看详情</a>');
+                    layer.closeAll();
+                    _this.lockStatus = 0;
+                }
+              })
+              .catch(function (error) {
                     _this.lockStatus = 0;
                     layer.closeAll();
-                    showError(xhr.responseJSON);
-                }
-            });
+                    showError(error.response.data);
+              });
         });
     }
 };
@@ -127,23 +112,15 @@ var question = {
     delQuestion: function(question_id) {
         ly.confirm(formatConfirm('提示', '确定删除这条信息？'), '' , '', function(){
             var url ='/api/v2/questions/' + question_id;
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                dataType: 'json',
-                success: function(res, data, xhr) {
-                    layer.closeAll();
-                    if (xhr.status == 204) {
-                        noticebox('删除成功', 1, '/question');
-                    } else {
-                        noticebox(res.message, 0);
-                    }
-                },
-                error: function(xhr){
-                    layer.closeAll();
-                    showError(xhr.responseJSON);
-                }
-            });
+            axios.delete(url)
+              .then(function (response) {
+                layer.closeAll();
+                noticebox('删除成功', 1, '/question');
+              })
+              .catch(function (error) {
+                layer.closeAll();
+                showError(error.response.data);
+              });
         });
     },
     share: function (question_id) {
@@ -169,24 +146,17 @@ var question = {
             }
             _this.lockStatus = 1;
             var url ='/api/v2/user/question-application/' + question_id;
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                success: function(res, data, xml) {
-                    layer.closeAll();
-                    if (xml.status == 201) {
-                        noticebox('申请成功', 1);
-                    } else {
-                        _this.lockStatus = 0;
-                    }
-                },
-                error: function(xhr){
-                    _this.lockStatus = 0;
-                    layer.closeAll();
-                    showError(xhr.responseJSON);
-                }
-            });
+            axios.post(url)
+              .then(function (response) {
+                layer.closeAll();
+                _this.lockStatus = 0;
+                noticebox('申请成功', 1);
+              })
+              .catch(function (error) {
+                layer.closeAll();
+                _this.lockStatus = 0;
+                showError(error.response.data);
+              });
         });
     },
     amount: function (question_id) {
@@ -220,24 +190,16 @@ var question = {
                 return false;
             }
             var url = '/api/v2/questions/' + question_id + '/amount';
-            $.ajax({
-                url: url,
-                type: 'PATCH',
-                data: {amount: num ? num : amount},
-                dataType: 'json',
-                error: function(xml) {
-                    _this.lockStatus = 0;
-                    lyShowError(xml.responseJSON);
-                },
-                success: function(res, data, xml) {
-                    layer.closeAll();
-                    if (xml.status == 204) {
-                        noticebox('操作成功', 1, 'refresh');
-                    } else {
-                        _this.lockStatus = 0;
-                    }
-                }
-            });
+            axios.patch(url, {amount: num ? num : amount})
+              .then(function (response) {
+                layer.closeAll();
+                _this.lockStatus = 0;
+                noticebox('操作成功', 1, 'refresh');
+              })
+              .catch(function (error) {
+                _this.lockStatus = 0;
+                lyShowError(error.response.data);
+              });
         });
     }
 };
@@ -256,22 +218,13 @@ var QT = {
             + '</form>';
         ly.alert(html, '提交', function(){
             var data = $('#topic-create').serializeArray();
-            $.ajax({
-                url: '/api/v2/user/question-topics/application',
-                type: 'POST',
-                data: data,
-                dataType: 'json',
-                error: function(xml) {
-                    noticebox(xml.responseJSON.message, 0);
-                },
-                success: function(res, data, xml) {
-                    if (xml.status == 201) {
-                        noticebox('申请成功', 1);
-                    } else {
-                        noticebox(res.message, 0);
-                    }
-                }
-            });
+            axios.post('/api/v2/user/question-topics/application', data)
+              .then(function (response) {
+                noticebox('申请成功', 1);
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         });
     },
     follow: function (obj) {

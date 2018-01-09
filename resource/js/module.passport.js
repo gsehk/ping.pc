@@ -237,14 +237,9 @@ $(function() {
     // 发送短信验证码
     $('#smscode').click(function() {
         if ($(this).hasClass('get_code_disable')) return false;
-        
         var _this = $(this);
-        // 发送类型
         var type = _this.attr('type');
-        // 注册类型
         var regtype = $('input[name="verifiable_type"]').val();
-
-
         var login = regtype == 'sms' ? $('input[name="phone"]').val() : $('input[name="email"]').val();
         var captcha = $('input[name="captchacode"]').val();
 
@@ -273,35 +268,26 @@ $(function() {
 
         // 验证图形验证码
         var url = '/passport/checkcaptcha';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: { captcha: captcha },
-            success: function(res) {
-                // 发送验证码 
+        axios.post(url, { captcha: captcha })
+          .then(function (response) {
+                /*发送验证码*/
                 var url = type == 'reg' ? '/api/v2/verifycodes/register' : '/api/v2/verifycodes';
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: data,
-                    success: function() {
+                axios.post(url, data)
+                  .then(function (response) {
                         var str = '等待<span id="passsec">60</span>秒';
                         _this.html(str);
                         timeDown(60);
                         $('input[name="code"]').val('');
                         noticebox('验证码发送成功', 1);
-                    },
-                    error: function(xhr) {
-                        showError(xhr.responseJSON);
-                    }
-                }, 'json');
-            },
-            error: function(xhr) {
-                noticebox('图形验证码错误', 0);
-                re_captcha();
-            }
-        }, 'json');
-        return false;
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data);
+                  });
+          })
+          .catch(function (error) {
+            noticebox('图形验证码错误', 0);
+            re_captcha();
+          });
     })
 
 })

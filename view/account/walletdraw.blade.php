@@ -57,18 +57,13 @@ $('#J-pay-btn').on('click', function(){
         account: account
     };
 
-    $.ajax({
-        url: '/api/v2/wallet/cashes',
-        type: 'POST',
-        data: params,
-        dataType: 'json',
-        error: function(xml) {
-            showError(xml.responseJSON);
-        },
-        success: function(res) {
-            noticebox('提现成功，请等待管理员审核', 1, "{{ route('pc:wallet', ['type'=>3]) }}");
-        }
-    });
+    axios.post('/api/v2/wallet/cashes')
+      .then(function (response) {
+        noticebox('提现成功，请等待管理员审核', 1, "{{ route('pc:wallet', ['type'=>3]) }}");
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 });
 
 

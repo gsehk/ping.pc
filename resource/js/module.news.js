@@ -98,26 +98,16 @@ var news = {
         }
          _this.lockStatus = 1;
         var url = '/api/v2/news/categories/'+args.cate_id+'/news';
-        $.ajax({
-                url: url,
-                type: 'POST',
-                data: args,
-                dataType: 'json',
-                error: function(xml) {
-                    _this.lockStatus = 0;
-                    layer.closeAll();
-                    showError(xml.responseJSON);
-                },
-                success: function(res, data, xml) {
-                    layer.closeAll();
-                    if (xml.status == 201) {
-                        noticebox('投稿成功，请等待审核', 1, '/news');
-                    } else {
-                        noticebox(res.message, 0);
-                        _this.lockStatus = 0;
-                    }
-                }
-            });
+        axios.post(url, args)
+          .then(function (response) {
+            layer.closeAll();
+            noticebox('投稿成功，请等待审核', 1, '/news');
+          })
+          .catch(function (error) {
+            _this.lockStatus = 0;
+            layer.closeAll();
+            showError(error.response.data);
+          });
     },
     update: function (args) {
         var _this = this;
@@ -126,41 +116,28 @@ var news = {
         }
          _this.lockStatus = 1;
         var url = '/api/v2/news/categories/'+args.cate_id+'/news/'+args.news_id;
-        $.ajax({
-                url: url,
-                type: 'PATCH',
-                data: args,
-                dataType: 'json',
-                error: function(xml) {
-                    noticebox(xml.responseJSON.message, 0);
-                    _this.lockStatus = 0;
-                },
-                success: function(res, data, xml) {
-                    if (xml.status == 204) {
-                        noticebox('修改成功，请等待审核', 1, '/news');
-                    } else {
-                        noticebox(res.message, 0);
-                        _this.lockStatus = 0;
-                    }
-                }
-            });
+        axios.patch(url, args)
+          .then(function (response) {
+            layer.closeAll();
+            noticebox('修改成功，请等待审核', 1, '/news');
+          })
+          .catch(function (error) {
+            _this.lockStatus = 0;
+            showError(error.response.data);
+          });
     },
     delete: function (news_id, cate_id) {
         var url = '/api/v2/news/categories/'+cate_id+'/news/'+news_id;
         layer.confirm(confirmTxt + '确定删除这篇文章？', function() {
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                dataType: 'json',
-                error: function(error) {
-                    layer.closeAll();
-                    showError(error.responseJSON);
-                },
-                success: function(res) {
-                    layer.closeAll();
-                    noticebox(res.message, 1);
-                }
-            });
+            axios.delete(url)
+              .then(function (response) {
+                layer.closeAll();
+                noticebox(response.data.message, 1);
+              })
+              .catch(function (error) {
+                _this.lockStatus = 0;
+                showError(error.response.data);
+              });
         });
     },
     pinneds: function (news_id) {

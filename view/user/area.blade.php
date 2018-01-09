@@ -91,24 +91,23 @@
                 var val = $.trim($("#location").val());
 		        var box = $(".area_searching");
 		        if (val == "")  return false;
-	            $.ajax({
-	                type: "GET",
-	                url: '/api/v2/locations/search',
-	                data: { name: val },
-	                success: function(res) {
-	                    if (res.length > 0) {
-	                        $.each(res, function(key, value) {
-	                            if (key < 3) {
-	                                var text = tree(value.tree);
-	                                var html = '<a>' + text + '</a>';
-	                                box.html('');
-	                                box.append(html);
-	                            }
-	                        });
-	                        box.show();
-	                    }
-	                }
-	            });
+                axios.post('/api/v2/locations/search', { name: val })
+                  .then(function (response) {
+                    if (response.data.length > 0) {
+                        $.each(response.data, function(key, value) {
+                            if (key < 3) {
+                                var text = tree(value.tree);
+                                var html = '<a>' + text + '</a>';
+                                box.html('');
+                                box.append(html);
+                            }
+                        });
+                        box.show();
+                    }
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data);
+                  });
             }
         }, 100);
     })
@@ -138,19 +137,18 @@
 
     var getGeo = function(key, callback){
         if(key) {
-            $.ajax({
-                type: "GET",
-                url: '/api/v2/around-amap/geo',
-                data: { address: key },
-                success: function(res) {
-                    if(res.geocodes[0]){
-                        var geo = res.geocodes[0].location.split(',');
-                        callback(geo);
-                    } else {
-                        return false;
-                    }
+            axios.get('/api/v2/around-amap/geo', { address: key })
+              .then(function (response) {
+                if(response.data.geocodes[0]){
+                    var geo = response.data.geocodes[0].location.split(',');
+                    callback(geo);
+                } else {
+                    return false;
                 }
-            });
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         }
     }
 </script>

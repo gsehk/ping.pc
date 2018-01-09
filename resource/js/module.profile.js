@@ -7,19 +7,15 @@ var weibo = {
     delFeed : function(id) {
         var url = '/api/v2/feeds/' + id;
         layer.confirm('确定删除这条信息？', {icon: 3}, function(index) {
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                dataType: 'json',
-                success: function(res) {
-                    $('#feed' + id).fadeOut();
-                    layer.close(index);
-                },
-                error: function(xhr){
-                    layer.closeAll();
-                    showError(xhr.responseJSON);
-                }
-            });
+            axios.delete(url)
+              .then(function (response) {
+                $('#feed' + id).fadeOut();
+                layer.close(index);
+              })
+              .catch(function (error) {
+                layer.closeAll();
+                showError(error.response.data);
+              });
         });
     },
     pinneds: function (id) {
@@ -63,17 +59,14 @@ $(function() {
         var file = e.target.files[0];
         var formDatas = new FormData();
             formDatas.append("image", file);
-            $.ajax({
-                url: '/api/v2/user/bg',
-                type: 'POST',
-                data: formDatas,
-                contentType: false,
-                processData: false,
-                success: function(res) {
-                    noticebox('更换背景图成功', 1);
-                    $('.profile_top_cover').css("background-image","url("+window.URL.createObjectURL(file)+")");
-                }
-            });
+            axios.post('/api/v2/user/bg', formDatas)
+              .then(function (response) {
+                noticebox('更换背景图成功', 1);
+                $('.profile_top_cover').css("background-image","url("+window.URL.createObjectURL(file)+")");
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
     });
 
     // 显示跳转详情文字

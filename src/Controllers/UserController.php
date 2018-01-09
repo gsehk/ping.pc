@@ -16,7 +16,7 @@ class UserController extends BaseController
      */
     public function users(Request $request, int $type = 1)
     {
-        if ($request->ajax()){
+        if ($request->isAjax){
             $type = $request->query('type');
             $limit = $request->query('limit') ?: 10;
             $offset = $request->query('offset') ?: 0;

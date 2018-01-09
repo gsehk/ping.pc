@@ -25,19 +25,13 @@
             var args = {};
             args.body = editor.value();
             args.anonymity = $("input[type='checkbox'][name='anonymity']:checked").val() == 'on' ? 1 : 0;
-            $.ajax({
-                type: 'PATCH',
-                url: '/api/v2/question-answers/' + answer_id,
-                data: args,
-                success: function(res, data, xml) {
-                    if (xml.status == 201) {
-                        noticebox(res.message, 1, '/question/answer/' + answer_id);
-                    }
-                },
-                error: function (xml) {
-                    showError(xml.responseJSON);
-                }
-            });
+            axios.patch('/api/v2/question-answers/'+answer_id, args)
+              .then(function (response) {
+                noticebox(response.data.message, 1, '/question/answer/' + answer_id);
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         });
     </script>
 @endsection

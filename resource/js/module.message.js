@@ -52,30 +52,30 @@ socket = {
             // 若房间为新创建，新建房间
             if (!message.datas.list[dbMsg['cid']]) {
                 // 获取对话信息
-                $.ajax({
-                    url: '/api/v2/im/conversations/' + dbMsg['cid'],
-                    type: 'GET',
-                    success:function(res){
-                        var _res = _.keyBy([res], 'cid');
-                        message.datas.list = Object.assign({}, message.datas.list, _res);
+                axios.get('/api/v2/im/conversations/' + dbMsg['cid'])
+                  .then(function (response) {
+                    var _res = _.keyBy([response.data], 'cid');
+                    message.datas.list = Object.assign({}, message.datas.list, _res);
 
-                        // 获取用户信息
-                        var _uids = _.split(res['uids'], ',');
-                        _.forEach(_uids, function(v, k) {
-                            if (v != window.TS.MID) {
-                                var user = getUserInfo(v);
-                                var _user = _.keyBy([user], 'id');
-                                message.datas.users = Object.assign({}, message.datas.users, _user);
+                    // 获取用户信息
+                    var _uids = _.split(response.data['uids'], ',');
+                    _.forEach(_uids, function(v, k) {
+                        if (v != window.TS.MID) {
+                            var user = getUserInfo(v);
+                            var _user = _.keyBy([user], 'id');
+                            message.datas.users = Object.assign({}, message.datas.users, _user);
 
-                                res['other_uid'] = parseInt(v);
-                            }
-                        });
+                            response.data['other_uid'] = parseInt(v);
+                        }
+                    });
 
-                        res.last_message = dbMsg.txt;
-                        message.storeConversation(res);
-                        message.setNewCon(res);
-                    }
-                }, 'json');
+                    response.data.last_message = dbMsg.txt;
+                    message.storeConversation(response.data);
+                    message.setNewCon(response.data);
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data);
+                  });
             }
         }
 
@@ -210,30 +210,30 @@ message = {
         // 非连接状态及未连接状态 连接SOCKET
         if (window.TS.webSocket == null) {
             var url = '/api/v1/im/users';
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success:function(res){
-                    if (res.status) {
-                        try {
-                            window.TS.webSocket = new window.WebSocket(TS.BOOT['im:serve'] + '?token=' + res.data.im_password);
-                            window.TS.webSocket.onopen = function(evt) {
-                                socket.onOpen(evt);
-                            }
-                            window.TS.webSocket.onmessage = function(evt) {
-                                socket.onMessage(evt);
-                            }
-                            window.TS.webSocket.onclose = function(evt) {
-                                socket.onClose(evt);
-                            }
-                        } catch (e) {
-                            window.console.log(e);
+            axios.get(url)
+              .then(function (response) {
+                if (response.data.status) {
+                    try {
+                        window.TS.webSocket = new window.WebSocket(TS.BOOT['im:serve'] + '?token=' + response.data.data.im_password);
+                        window.TS.webSocket.onopen = function(evt) {
+                            socket.onOpen(evt);
                         }
-                    } else {
-                        console.log('获取聊天授权失败');
+                        window.TS.webSocket.onmessage = function(evt) {
+                            socket.onMessage(evt);
+                        }
+                        window.TS.webSocket.onclose = function(evt) {
+                            socket.onClose(evt);
+                        }
+                    } catch (e) {
+                        window.console.log(e);
                     }
+                } else {
+                    console.log('获取聊天授权失败');
                 }
-            }, 'json');
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         } else if (window.TS.webSocket && window.TS.webSocket.readyState != 1) {
             try {
                 window.TS.webSocket = new window.WebSocket(TS.BOOT['im:serve']);
@@ -256,32 +256,31 @@ message = {
     getConversations: function() {
 
         var _this = this;
-        $.ajax({
-            url: TS.API + '/im/conversations/list/all',
-            async: false,
-            type: 'GET',
-            success: function(res) {
-                var uids = [];
-                var _res = _.keyBy(res, 'cid');
+        axios.get('/api/v2/im/conversations/list/all')
+          .then(function (response) {
+            var uids = [];
+            var _res = _.keyBy(response.data, 'cid');
 
-                _.forEach(_res, function(value, key){
-                    var _uids = _.split(value['uids'], ',');
-                    _.forEach(_uids, function(v, k) {
-                        if (v != window.TS.MID) {
-                            uids.push(v);
-                            value['other_uid'] = parseInt(v);
-                        }
-                    });
-                })
+            _.forEach(_res, function(value, key){
+                var _uids = _.split(value['uids'], ',');
+                _.forEach(_uids, function(v, k) {
+                    if (v != window.TS.MID) {
+                        uids.push(v);
+                        value['other_uid'] = parseInt(v);
+                    }
+                });
+            })
 
-                // 获取对话中其他用户用户信息
-                var users = getUserInfo(uids);
-                var _users = _.keyBy(users, 'id');
+            // 获取对话中其他用户用户信息
+            var users = getUserInfo(uids);
+            var _users = _.keyBy(users, 'id');
 
-                _this.datas.list = _res;
-                _this.datas.users = _users;
-            }
-        }, 'json');
+            _this.datas.list = _res;
+            _this.datas.users = _users;
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     },
 
     // 设置弹窗会话
@@ -414,17 +413,9 @@ message = {
     // 创建会话
     createConversation: function(user_id) {
         checkLogin();
-        $.ajax({
-            url: '/api/v2/im/conversations',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                type: 0,
-                uids: TS.USER.id + ',' + user_id
-            },
-            success: function(res) {
-
-                var _res = _.keyBy([res], 'cid');
+        axios.post('/api/v2/im/conversations', { type: 0, uids: TS.USER.id + ',' + user_id })
+          .then(function (response) {
+                var _res = _.keyBy([response.data], 'cid');
                 message.datas.list = Object.assign({}, message.datas.list, _res);
 
                 // 获取用户信息
@@ -432,19 +423,18 @@ message = {
                 var _user = _.keyBy([user], 'id');
                 message.datas.users = Object.assign({}, message.datas.users, _user);
 
-                res['other_uid'] = user_id;
-                message.storeConversation(res);
-                message.datas.seqs = _.union(message.datas.seqs, [res.cid]);
+                response.data['other_uid'] = user_id;
+                message.storeConversation(response.data);
+                message.datas.seqs = _.union(message.datas.seqs, [response.data.cid]);
                 // 如果侧边栏没有该会话，则创建
-                if ($('#ms_chat_' + res.cid).length == 0) {
-                    message.setOuterCon(res);
+                if ($('#ms_chat_' + response.data.cid).length == 0) {
+                    message.setOuterCon(response.data);
                 }
-                message.openChatDialog(5, res.cid);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
+                message.openChatDialog(5, response.data.cid);
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     },
 
     // 查询消息列表
@@ -559,21 +549,21 @@ message = {
     // 获取未读消息数量
     getUnreadMessage: function() {
         // 获取未读通知数量
-        $.ajax({
-            url: TS.API + '/user/notifications',
-            type: 'HEAD',
-            success: function(data, status, request) {
-                TS.UNREAD.notifications = request.getResponseHeader('unread-notification-limit');
+        axios.post('/api/v2/user/notifications')
+          .then(function (response) {
+            console.log(response)
+                TS.UNREAD.notifications = response.headers('unread-notification-limit');
 
                 message.setUnreadMessage();
-            }
-        }, 'json');
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
 
         // 获取未读点赞，评论，审核通知数量
-        $.ajax({
-            url: TS.API + '/user/unread-count',
-            type: 'GET',
-            success: function(res) {
+        axios.get('/api/v2/user/unread-count')
+          .then(function (response) {
+                var res = response.data;
                 res.counts = res.counts ? res.counts : {};
                 TS.UNREAD.comments = res.counts.unread_comments_count ? res.counts.unread_comments_count : 0;
                 TS.UNREAD.last_comments = res.comments.length > 0 ? res.comments[0]['user']['name'] : '';
@@ -588,9 +578,10 @@ message = {
                 TS.UNREAD.pinneds = pinneds_count;
 
                 message.setUnreadMessage();
-            }
-        }, 'json');
-
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     },
 
     // 获取未读聊天消息数量
@@ -678,9 +669,9 @@ message = {
     openChatDialog: function(type, cid) {
         if (type == 5) { // 聊天消息
             message.setRead(1, cid);
-            ly.load(TS.SITE_URL + '/message/' + type + '/' + cid, '', '720px', '572px');
+            ly.load('/message/' + type + '/' + cid, '', '720px', '572px');
         } else {
-            ly.load(TS.SITE_URL + '/message/' + type, '', '720px', '572px');
+            ly.load('/message/' + type, '', '720px', '572px');
         }
     }
 }

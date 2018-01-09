@@ -157,20 +157,14 @@ $('.J-authenticate-btn').on('click', function(e) {
     if (getArgs().type == 'org') {
         getArgs().files = [getArgs().license_id];
     }
-    $.ajax({
-        url: '/api/v2/user/certification',
-        type: 'PATCH',
-        data: getArgs(),
-        dataType: 'json',
-        success: function(res, data, xml) {
-            if (xml.status ===  201) {
-                noticebox(res.message, 1, '/account/authenticate');
-            }
-        },
-        error: function(xhr){
-            showError(xhr.responseJSON);
-        }
-    });
+
+    axios.patch('/api/v2/user/certification', getArgs())
+      .then(function (response) {
+        noticebox(response.data.message, 1, '/account/authenticate');
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 });
 
 $('.J-file-upload').on('change', function(e){

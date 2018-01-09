@@ -108,13 +108,10 @@
 <script type="text/javascript">
     var type = {{ $type }};
     $(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-                'Authorization': 'Bearer ' + TS.TOKEN,
-                'Accept': 'application/json'
-            }
-        })
+        axios.defaults.baseURL = TS.SITE_URL;
+        axios.defaults.headers.common['Accept'] = 'application/json';
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
 
         var body_title = $('.body_title');
         var audit_top = $('.audit_top');

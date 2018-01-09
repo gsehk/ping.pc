@@ -188,21 +188,13 @@
                     return false;
                 }
 
-                var url = '/api/v2/user';
-                $.ajax({
-                    type: 'PUT',
-                    url: url,
-                    data: data,
-                    success: function (res, data, xml) {
-                        if (xml.status == 204) {
-
-                            noticebox('已成功绑定' + title, 1, '/account/binds');
-                        }
-                    },
-                    error: function (xml) {
-                        showError(xml.responseJSON);
-                    }
-                }, 'json');
+                axios.put('/api/v2/user', data)
+                  .then(function (response) {
+                    noticebox('已成功绑定' + title, 1, '/account/binds');
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data);
+                  });
             });
         }
 
@@ -242,20 +234,13 @@
                     return false;
                 }
 
-                var url = '/api/v2/user/' + type;
-                $.ajax({
-                    type: 'DELETE',
-                    url: url,
-                    data: data,
-                    success: function (res, data, xml) {
-                        if (xml.status == 204) {
-                            noticebox('已取消'+title+'绑定', 1, '/account/binds');
-                        }
-                    },
-                    error: function (xml) {
-                        showError(xml.responseJSON);
-                    }
-                }, 'json');
+                axios.delete('/api/v2/user/'+type, { params: data })
+                  .then(function (response) {
+                    noticebox('已取消'+title+'绑定', 1, '/account/binds');
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data);
+                  });
             })
         }
 
@@ -286,21 +271,17 @@
                     return false;
                 }
             }
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: data,
-                success: function() {
-                    var str = '等待<span id="passsec">60</span>秒';
-                    _this.html(str);
-                    timeDown(60);
-                    $('#code').val('');
-                    noticebox('验证码发送成功', 1);
-                },
-                error: function(xml) {
-                    showError(xml.responseJSON);
-                }
-            }, 'json');
+            axios.post(url, data)
+              .then(function (response) {
+                var str = '等待<span id="passsec">60</span>秒';
+                _this.html(str);
+                timeDown(60);
+                $('#code').val('');
+                noticebox('验证码发送成功', 1);
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         });
 
         // 验证码倒计时
@@ -327,27 +308,16 @@
 
             if (_this.data('bind') == 1) {
                 var url = '/api/v2/user/socialite/'+type;
-                $.ajax({
-                    url: TS.SITE_URL + url,
-                    type: 'DELETE',
-                    data: {},
-                    dataType: 'json',
-                    error: function (xml) {
-                        showError(xml.responseJSON);
-                    },
-                    success: function (res, data, xml) {
-                        if (xml.status == 204) {
-                            _this.removeClass('remove').addClass('blue').text('去绑定');
-                            _this.removeAttr('data-type').removeAttr('data-bind');
-                            _this.attr('href', TS.SITE_URL + '/socialite/'+type+'/bind');
-
-                            noticebox('操作成功', 1);
-                        }
-
-                        return false;
-                    }
-                });
-
+                axios.delete(url)
+                  .then(function (response) {
+                    _this.removeClass('remove').addClass('blue').text('去绑定');
+                    _this.removeAttr('data-type').removeAttr('data-bind');
+                    _this.attr('href', TS.SITE_URL + '/socialite/'+type+'/bind');
+                    noticebox('操作成功', 1);
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data);
+                  });
             }
         });
 

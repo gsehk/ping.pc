@@ -78,7 +78,8 @@
 <script type="text/javascript">
 // 加载微博
 var params = {
-    type: '{{ $type }}'
+    type: '{{ $type }}',
+    isAjax: true,
 };
 
 scroll.init({
@@ -98,7 +99,8 @@ $(function(){
 
         // 加载相关微博
         var params = {
-            type: type
+            type: type,
+            isAjax: true,
         };
         scroll.init({
             container: '#feeds_list',

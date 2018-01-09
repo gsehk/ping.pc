@@ -18,7 +18,7 @@ class FeedController extends BaseController
      */
     public function feeds(Request $request)
     {
-        if($request->ajax()){
+        if($request->isAjax){
             if ($request->query('feed_id')){ // 获取单条微博内容
                 $feeds['feeds'] = collect();
                 $feed = createRequest('GET', '/api/v2/feeds/'.$request->feed_id);

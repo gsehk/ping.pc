@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 @endsection
@@ -113,28 +113,24 @@
         var val = $.trim($("#location").val());
         var area_searching = $(".area_searching");
         area_searching.html('').hide();
+        if (!val || val == "") { return; }
 
-        if (val != "") {
-            $.ajax({
-                type: "GET",
-                url: '/api/v2/locations/search',
-                data: {
-                    name: val
-                },
-                success: function(res) {
-                    if (res.length > 0) {
-                        $.each(res, function(key, value) {
-                            if (key < 3) {
-                                var text = tree(value.tree);
-                                var html = '<div><a>' + text + '</a></div>';
-                                area_searching.append(html);
-                            }
-                        });
-                        area_searching.show();
+        axios.get('/api/v2/locations/search', { params: {name:val} })
+          .then(function (response) {
+            if (response.data.length > 0) {
+                $.each(response.data, function(key, value) {
+                    if (key < 3) {
+                        var text = tree(value.tree);
+                        var html = '<div><a>' + text + '</a></div>';
+                        area_searching.append(html);
                     }
-                }
-            });
-        }
+                });
+                area_searching.show();
+            }
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     }
 
     function tree(obj)
@@ -236,17 +232,14 @@
                     var _this = this;
                     var formDatas = new FormData();
                         formDatas.append("avatar", file);
-                    $.ajax({
-                        url: '/api/v2/user/avatar',
-                        type: 'POST',
-                        data: formDatas,
-                        contentType: false,
-                        processData: false,
-                        error: function(xml) {noticebox('修改失败请重试', 0);},
-                        success: function(res) {
-                            _this.insert(url);
-                        }
-                    });
+
+                    axios.post('/api/v2/user/avatar', formDatas)
+                      .then(function (response) {
+                        _this.insert(url);
+                      })
+                      .catch(function (error) {
+                        showError(error.response.data);
+                      });
                 },
                 insert: function(src) {
                     $('#J-image-preview').attr('src', src);

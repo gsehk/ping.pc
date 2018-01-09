@@ -149,33 +149,27 @@
             searching_existing.html('');
             $('.searching-notice').remove();
 
-            if (val != "") {
-                $.ajax({
-                    type: "GET",
-                    url: '/api/v2/questions',
-                    data: {
-                        subject: val,
-                        type: "all",
-                        limit: 8
-                    },
-                    success: function(res) {
-                        if (res.length > 0) {
-                            question_searching.prepend('<div class="searching-notice">您的问题可能已有答案</div>');
-                            $.each(res, function(key, value) {
-                                if (key < 8) {
-                                    var html = '<div><a href="/question/' + value.id + '">' + value.subject + '</a></div>';
-                                    searching_existing.append(html);
-                                }
-                            });
-                            question_searching.show();
-                            $('.searching-notice').on('click', function () {
-                                searching_existing.html('');
-                                $('.searching-notice').remove();
-                            })
+            if (!val || val == "") { return; }
+            axios.get('/api/v2/questions', { params:{ subject:val, type:"all", limit:8 } })
+              .then(function (response) {
+                if (response.data.length > 0) {
+                    question_searching.prepend('<div class="searching-notice">您的问题可能已有答案</div>');
+                    $.each(response.data, function(key, value) {
+                        if (key < 8) {
+                            var html = '<div><a href="/question/' + value.id + '">' + value.subject + '</a></div>';
+                            searching_existing.append(html);
                         }
-                    }
-                });
-            }
+                    });
+                    question_searching.show();
+                    $('.searching-notice').on('click', function () {
+                        searching_existing.html('');
+                        $('.searching-notice').remove();
+                    })
+                }
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         }
 
         // 选择话题
@@ -320,23 +314,15 @@
                 return update();
             }
             lockStatus = true;
-            $.ajax({
-                type: 'POST',
-                url: '/api/v2/questions',
-                data: args,
-                success: function(res, data, xml) {
-                    if (xml.status == 201) {
-                        noticebox(res.message, 1, '/question/'+res.question.id);
-                    } else {
-                        noticebox(res.message, 0);
-                        lockStatus = false;
-                    }
-                },
-                error: function (xml) {
-                    showError(xml.responseJSON);
-                    lockStatus = false;
-                }
-            });
+            axios.post('/api/v2/questions', args)
+              .then(function (response) {
+                lockStatus = false;
+                noticebox(response.data.message, 1, '/question/'+response.data.question.id);
+              })
+              .catch(function (error) {
+                lockStatus = false;
+                showError(error.response.data);
+              });
         });
 
         function stepOne() {
@@ -393,23 +379,15 @@
             }
             args.topics = topic;
             lockStatus = true;
-            $.ajax({
-                type: 'PATCH',
-                url: '/api/v2/questions/' + question_id,
-                data: args,
-                success: function(res, data, xml) {
-                    if (xml.status == 204) {
-                        noticebox('修改成功', 1, '/question/'+question_id);
-                    } else {
-                        noticebox(res.message, 0);
-                        lockStatus = false;
-                    }
-                },
-                error: function (xml) {
-                    showError(xml.responseJSON);
-                    lockStatus = false;
-                }
-            });
+            axios.patch('/api/v2/questions/'+question_id, args)
+              .then(function (response) {
+                lockStatus = false;
+                noticebox('修改成功', 1, '/question/'+question_id);
+              })
+              .catch(function (error) {
+                lockStatus = false;
+                showError(error.response.data);
+              });
         }
 
     </script>

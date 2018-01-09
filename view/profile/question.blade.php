@@ -117,7 +117,7 @@
             checkLogin();
             var _this = this;
             var status = $(this).attr('status');
-            var id = $(this).data('id');
+            var url = '/api/v2/user/question-watches/'+$(this).data('id')
             var type = '';
 
             if (status == 1) {
@@ -125,23 +125,20 @@
             } else {
                 type = 'PUT';
             }
-            $.ajax({
-                url: '/api/v2/user/question-watches/' + id,
-                type: type,
-                data: {},
-                success: function(res) {
-                    if (status == '1') {
-                        _this.attr('status', 0);
-                        _this.find('span.watched').text('关注');
-                    } else {
-                        _this.attr('status', 1);
-                        _this.find('span.watched').text('已关注');
-                    }
-                },
-                error: function(xhr){
-                    showError(xhr.responseJSON);
+
+            axios({ method:type, url:url })
+              .then(function (response) {
+                if (status == '1') {
+                    _this.attr('status', 0);
+                    _this.find('span.watched').text('关注');
+                } else {
+                    _this.attr('status', 1);
+                    _this.find('span.watched').text('已关注');
                 }
-            });
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         });
 
     </script>

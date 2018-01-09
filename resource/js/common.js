@@ -3,14 +3,10 @@ var clickHtml = "<div class='click_loading'><a href='javascript:;'>加载更多<
 var confirmTxt = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-warning"></use></svg> ';
 var initNums = 255;
 
-// ajax 设置 headers
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-        'Authorization': 'Bearer ' + TS.TOKEN,
-        'Accept': 'application/json'
-    }
-})
+axios.defaults.baseURL = TS.SITE_URL;
+axios.defaults.headers.common['Accept'] = 'application/json';
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
+axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
 
 // 获取浏览器信息
 var browser = {
@@ -37,7 +33,6 @@ var storeLocal = {
     set: function(key, value){
         window.localStorage.setItem(key, JSON.stringify(value));
     },
-
     get: function(key){
         var data = window.localStorage.getItem(key);
         if (!data) {
@@ -46,11 +41,9 @@ var storeLocal = {
             return JSON.parse(data);
         }
     },
-
     remove: function(key){
         window.localStorage.removeItem(key);
     },
-
     clear: function(){
         window.localStorage.clear();
     }
@@ -112,43 +105,38 @@ var ly = {
         });
     },
     load: function(requestUrl,title,width,height,type,requestData){
+        var obj = this;
+        var ajaxType = "GET";
         if(load == 1) return false;
         layer.closeAll();
         load = 1;
-
-        if(undefined != typeof(type)) {
-            var ajaxType = type;
-        }else{
-            var ajaxType = "GET";
+        if(undefined != type) {
+            ajaxType = type;
         }
-        var obj = this;
         if(undefined == requestData) {
             var requestData = {};
         }
-        $.ajax({
-            url: requestUrl,
-            type: ajaxType,
-            data: requestData,
-            cache:false,
-            dataType:'html',
-            success:function(html){
-                layer.closeAll();
-                layer.open({
-                    type: 1,
-                    title: title,
-                    area: [width,height],
-                    shadeClose: true,
-                    shade:0.5,
-                    scrollbar: false,
-                    content: html
-                });
-                load = 0;
-            }
+        axios({
+          method:ajaxType,
+          url:requestUrl,
+          data:requestData,
+        })
+          .then(function(response) {
+            layer.closeAll();
+            layer.open({
+                type: 1,
+                title: title,
+                area: [width,height],
+                shadeClose: true,
+                shade:0.5,
+                scrollbar: false,
+                content: response.data
+            });
+            load = 0;
         });
     },
     loadHtml: function(html,title,width,height){
         layer.closeAll();
-
         layer.open({
             type: 1,
             title: title,
@@ -163,7 +151,7 @@ var ly = {
         confirmBtn = confirmBtn || '确认';
         cancelBtn = cancelBtn || '取消';
         layer.confirm(html, {
-            btn: [confirmBtn, cancelBtn], //按钮
+            btn: [confirmBtn, cancelBtn],
             title: '',
             shadeClose: true,
             shade:0.5,
@@ -178,7 +166,7 @@ var ly = {
         btn = btn || '知道了';
         callback = callback || false;
         layer.alert(html, {
-            btn: btn, //按钮
+            btn: btn,
             title: '',
             scrollbar: false,
             area: ['auto', 'auto']
@@ -207,40 +195,26 @@ var fileUpload = {
         var reader = new FileReader();
         reader.onload = function(e){
             var hash = md5(e.target.result);
-            $.ajax({
-                url: '/api/v2/files/uploaded/' + hash,
-                type: 'GET',
-                async: false,
-                success: function(response) {
-                    if(response.id > 0) callback(image, f, response.id);
-                },
-                error: function(error){
-                    error.status === 404 && _this.uploadFile(image, f, callback);
-                    // showError(error.responseJSON);
-                }
-            });
+            axios.get('/api/v2/files/uploaded/'+hash)
+              .then(function (response) {
+                if(response.data.id > 0) callback(image, f, response.data.id);
+              })
+              .catch(function (error) {
+                error.response.status === 404 && _this.uploadFile(image, f, callback);
+              });
         }
         reader.readAsArrayBuffer(f);
     },
     uploadFile: function(image, f, callback){
         var formDatas = new FormData();
-        formDatas.append("file", f);
-        // 上传文件
-        $.ajax({
-            url: '/api/v2/files',
-            type: 'POST',
-            data: formDatas,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                if(response.id > 0) callback(image, f, response.id);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
+            formDatas.append("file", f);
+        axios.post('/api/v2/files', formDatas)
+          .then(function (response) {
+            if(response.data.id > 0) callback(image, f, response.data.id);
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     }
 };
 
@@ -309,105 +283,98 @@ scroll.loadMore = function() {
     scroll.setting.canload = false;
     scroll.setting.loadcount++;
     scroll.params.loadcount = scroll.setting.loadcount;
+    axios.get(scroll.setting.url, {params:scroll.params})
+      .then(function (response) {
+        var res = response.data;
+        if (res.data != '') {
+            scroll.setting.canload = true;
 
-    $.ajax({
-        url: scroll.setting.url,
-        type: 'GET',
-        data: scroll.params,
-        dataType: 'json',
-        error: function(xml) {},
-        success: function(res) {
-            if (res.data != '') {
-                scroll.setting.canload = true;
-
-                // 两种不同的加载方式
-                if (scroll.setting.paramtype == 0) {
-                    scroll.params.after = res.after;
-                } else {
-                    scroll.params.offset = scroll.setting.loadcount * scroll.params.limit;
-                }
-
-                var html = res.data;
-                if (scroll.setting.loadcount == 1) {
-                    $(scroll.setting.container).html(html);
-                } else {
-                    $(scroll.setting.container).append(html);
-                }
-                $('.loading').remove();
-
-                // 点击加载更多
-                if (scroll.setting.loadtype == 2) {
-                    res.count = res.count ? res.count : 0;
-                    if (scroll.params.limit <= res.count) {
-                        $(scroll.setting.loading).after(clickHtml);
-                    }
-                }
-
-                $("img.lazy").lazyload({ effect: "fadeIn" });
+            // 两种不同的加载方式
+            if (scroll.setting.paramtype == 0) {
+                scroll.params.after = res.after;
             } else {
-                scroll.setting.canload = false;
-                if (scroll.setting.loadcount == 1 && scroll.setting.nodata == 0) {
-                    no_data(scroll.setting.container, 1, ' 暂无相关内容');
-                    $('.loading').html('');
-                } else {
-                    $('.loading').html('没有更多了');
+                scroll.params.offset = scroll.setting.loadcount * scroll.params.limit;
+            }
+
+            var html = res.data;
+            if (scroll.setting.loadcount == 1) {
+                $(scroll.setting.container).html(html);
+            } else {
+                $(scroll.setting.container).append(html);
+            }
+            $('.loading').remove();
+
+            // 点击加载更多
+            if (scroll.setting.loadtype == 2) {
+                res.count = res.count ? res.count : 0;
+                if (scroll.params.limit <= res.count) {
+                    $(scroll.setting.loading).after(clickHtml);
                 }
             }
 
-            // 若隐藏则显示
-            if ($(scroll.setting.container).css('display') == 'none') {
-                $(scroll.setting.container).show();
-            }
-
-            if (scroll.setting.callback && typeof(scroll.setting.callback) == 'function') {
-                scroll.setting.callback();
+            $("img.lazy").lazyload({ effect: "fadeIn" });
+        } else {
+            scroll.setting.canload = false;
+            if (scroll.setting.loadcount == 1 && scroll.setting.nodata == 0) {
+                no_data(scroll.setting.container, 1, ' 暂无相关内容');
+                $('.loading').html('');
+            } else {
+                $('.loading').html('没有更多了');
             }
         }
-    });
+        // 若隐藏则显示
+        if ($(scroll.setting.container).css('display') == 'none') {
+            $(scroll.setting.container).show();
+        }
+
+        if (scroll.setting.callback && typeof(scroll.setting.callback) == 'function') {
+            scroll.setting.callback();
+        }
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 };
 
 scroll.clickMore = function(obj) {
     // 将能加载参数关闭
     scroll.setting.canload = false;
     scroll.setting.loadcount++;
-    $(obj).parent().html("<img src='" + TS.RESOURCE_URL + "/images/three-dots.svg' class='load'>");
+    $(obj).parent().html("<img src='"+TS.RESOURCE_URL+"/images/three-dots.svg' class='load'>");
+    axios.get(scroll.setting.url, {params:scroll.params})
+      .then(function (response) {
+        var res = response.data;
+        if (res.data != '') {
+            scroll.setting.canload = true;
 
-    $.ajax({
-        url: scroll.setting.url,
-        type: 'GET',
-        data: scroll.params,
-        dataType: 'json',
-        error: function(xml) {},
-        success: function(res) {
-            if (res.data != '') {
-                scroll.setting.canload = true;
-
-                // 两种不同的加载方式
-                if (scroll.setting.paramtype == 0) {
-                    scroll.params.after = res.after;
-                } else {
-                    scroll.params.offset = scroll.setting.loadcount * scroll.params.limit;
-                }
-
-                var html = res.data;
-                $(scroll.setting.container).append(html);
-                $('.click_loading').remove();
-
-                // 点击加载更多
-                if (scroll.setting.loadtype == 2) {
-                    res.count = res.count ? res.count : 0;
-                    if (scroll.params.limit <= res.count) {
-                        $(scroll.setting.loading).after(clickHtml);
-                    }
-                }
-
-                $("img.lazy").lazyload({ effect: "fadeIn" });
+            // 两种不同的加载方式
+            if (scroll.setting.paramtype == 0) {
+                scroll.params.after = res.after;
             } else {
-                scroll.setting.canload = false;
-                $('.click_loading').html('没有更多了');
+                scroll.params.offset = scroll.setting.loadcount * scroll.params.limit;
             }
+
+            var html = res.data;
+            $(scroll.setting.container).append(html);
+            $('.click_loading').remove();
+
+            // 点击加载更多
+            if (scroll.setting.loadtype == 2) {
+                res.count = res.count ? res.count : 0;
+                if (scroll.params.limit <= res.count) {
+                    $(scroll.setting.loading).after(clickHtml);
+                }
+            }
+
+            $("img.lazy").lazyload({ effect: "fadeIn" });
+        } else {
+            scroll.setting.canload = false;
+            $('.click_loading').html('没有更多了');
         }
-    });
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 }
 
 
@@ -469,60 +436,46 @@ var checkNums = function(obj, len, show) {
 var follow = function(status, user_id, target, callback) {
     checkLogin();
 
-    var url = TS.API + '/user/followings/' + user_id;
+    var url = '/api/v2/user/followings/'+user_id;
     if (status == 0) {
-        $.ajax({
-            url: url,
-            type: 'PUT',
-            success: function(response) {
-                callback(target);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        })
+        axios.put(url)
+          .then(function (response) {
+            callback(target);
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     } else {
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            data: { user_id: user_id },
-            success: function(response) {
-                callback(target);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        })
+        axios.delete(url, {params: {user_id: user_id}})
+          .then(function (response) {
+            callback(target);
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     }
 }
 
 // 话题
 var topic = function(status, topic_id, callback) {
     checkLogin();
-
-    var url = TS.API + '/user/question-topics/' + topic_id;
+    var url = '/api/v2/user/question-topics/'+topic_id;
     if (status == 0) {
-        $.ajax({
-            url: url,
-            type: 'PUT',
-            success: function(response) {
-                callback();
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        })
+        axios.put(url)
+          .then(function (response) {
+            callback();
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     } else {
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            success: function(response) {
-                callback();
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        })
+        axios.delete(url)
+          .then(function (response) {
+            callback();
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     }
 }
 
@@ -605,19 +558,15 @@ var showError = function(message, defaultMessage) {
                 return;
             }
         }
-
         noticebox(defaultMessage, 0);
         return;
     }
     if (message.message && message.message !== null) {
-
         noticebox(message.message, 0);
         return;
     }
-
     for (var key in message) {
         if (Array.isArray(message[key])) {
-
             noticebox(message[key], 0);
             return;
         }
@@ -638,7 +587,6 @@ var lyShowError = function(message, defaultMessage) {
                 return;
             }
         }
-
         lyNotice(defaultMessage);
         return;
     }
@@ -646,19 +594,15 @@ var lyShowError = function(message, defaultMessage) {
         var message = message.message;
         for (var key in message) {
             // if (Array.isArray(message[key])) {
-
             lyNotice(message[key]);
             return;
             // }
         }
-
         lyNotice(defaultMessage);
         return;
     }
-
     for (var key in message) {
         if (Array.isArray(message[key])) {
-
             lyNotice(message[key]);
             return;
         }
@@ -688,21 +632,17 @@ var checkEmail = function(string) {
 var checkIn = function(is_check, nums) {
     var url = '/api/v2/user/checkin';
     if (!is_check) {
-        $.ajax({
-            url: url,
-            type: 'PUT',
-            success: function(response) {
-                noticebox('签到成功', 1);
-                $('#checkin').addClass('checked_div');
-                var html = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-checkin"></use></svg>'
-                html += '已签到<span>连续签到<font class="colnum">' + (nums + 1) + '</font>天</span>';
-                $('#checkin').html(html);
-                $('#checkin').removeAttr('onclick');
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        })
+        axios.put(url)
+          .then(function (response) {
+            noticebox('签到成功', 1);
+            $('#checkin').addClass('checked_div');
+            var html = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-checkin"></use></svg>已签到<span>连续签到<font class="colnum">'+(nums+1)+'</font>天</span>';
+            $('#checkin').html(html);
+            $('#checkin').removeAttr('onclick');
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     }
 }
 
@@ -711,14 +651,14 @@ var rewarded = {
     show: function(id, type) {
         checkLogin();
         var html = '<div class="reward_box">'
-                        + '<p class="confirm_title">打赏</p>'
-                        + '<div class="reward_text">选择打赏金额</div>'
-                        + '<div class="reward_spans">';
-                        $.each(TS.BOOT.site.reward.amounts.split(','), function (index, value) {
-                            if (value > 0) {
-                                html += '<span num="' + value / TS.BOOT['wallet:ratio'] + '">' + value + '</span>';
-                            }
-                        });
+                    + '<p class="confirm_title">打赏</p>'
+                    + '<div class="reward_text">选择打赏金额</div>'
+                    + '<div class="reward_spans">';
+                    $.each(TS.BOOT.site.reward.amounts.split(','), function (index, value) {
+                        if (value > 0) {
+                            html += '<span num="' + value / TS.BOOT['wallet:ratio'] + '">' + value + '</span>';
+                        }
+                    });
                     html += '</div>'
                     + '<div class="reward_input">'
                         + '<input min="1" oninput="value=moneyLimit(value)" onkeydown="if ( !isNumber(event.keyCode) ) return false; " type="number" placeholder="自定义打赏金额，必须为整数">'
@@ -728,12 +668,11 @@ var rewarded = {
         ly.confirm(html, '打赏', '', function(){
             var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
             var amount = $('.reward_input input').val() / TS.BOOT['wallet:ratio'];
+            var url = '/api/v2/feeds/'+id+'/rewards';
 
             if (!num && !amount) {
                 return false;
             }
-
-            var url = '/api/v2/feeds/'+id+'/rewards';
             if (type == 'news') {
                 url = '/api/v2/news/'+id+'/rewards';
             }
@@ -746,21 +685,15 @@ var rewarded = {
             if (type == 'group-posts') {
                 url = '/api/v2/plus-group/group-posts/'+id+'/rewards';
             }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {amount: num ? num : amount},
-                dataType: 'json',
-                error: function(xml) {
-                    lyShowError(xml.responseJSON)
-                },
-                success: function(res) {
-                    ly.close();
-                    noticebox(res.message, 1, 'refresh');
-                }
-            });
+            axios.post(url, {amount: num ? num : amount})
+              .then(function (response) {
+                ly.close();
+                noticebox(response.data.message, 1, 'refresh');
+              })
+              .catch(function (error) {
+                lyShowError(error.response.data);
+              });
         });
-
         $('.reward-sum label').on('click', function(){
             $('.reward-sum label').removeClass('active');
             $(this).addClass('active');
@@ -785,7 +718,6 @@ var getMaps = function(callback){
             // city:'北京',
             input: 'pickerInput'
         });
-        //初始化poiPicker
         poiPickerReady(poiPicker);
     });
     function poiPickerReady(poiPicker) {
@@ -873,77 +805,67 @@ var comment = {
 
         this.support.button.text('评论中..');
         _this.lockStatus = 1;
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(res) {
-                _this.support.button.text('评论');
-                _this.support.editor.val('');
-                _this.support.to_uid = 0;
-
-                var info = {
-                    id: res.comment.id,
-                    commentable_id: _this.support.row_id,
-                };
-                if (_this.support.position) {
-                    var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
-                        html +=     '<span class="tcolor">' + TS.USER.name + '：</span>' + original_body + '';
-                        if (_this.support.top)
-                        html +=     '<a class="comment_del mouse" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
-                        html +=     '<a class="comment_del mouse" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
-                        html += '</p>';
-                } else {
-                    var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
-                        html += '    <dl class="clearfix">';
-                        html += '        <dt>';
-                        html += '            <img src="' + getAvatar(TS.USER, 50) + '" width="50">';
-                        html += '        </dt>';
-                        html += '        <dd>';
-                        html += '            <span class="reply_name">' + TS.USER.name + '</span>';
-                        html += '            <div class="reply_tool feed_datas">';
-                        html += '                <span class="reply_time">刚刚</span>';
-                        html += '                <span class="reply_action options" onclick="options(this)"><svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg></span>';
-                        html += '                <div class="options_div">'
-                        html += '                    <div class="triangle"></div>'
-                        html += '                    <ul>';
-                    if (_this.support.top) {
-                        html += '                        <li>'
-                        html += '                            <a href="javascript:;" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
-                        html += '                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶'
-                        html += '                            </a>'
-                        html += '                        </li>';
-                    }
-                        html += '                        <li>'
-                        html += '                            <a href="javascript:;" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
-                        html += '                                <svg class="icon"><use xlink:href="#icon-delete"></use></svg>删除'
-                        html += '                            </a>'
-                        html += '                        </li>'
-                        html += '                    </ul>'
-                        html += '                </div>'
-                        html += '            </div>';
-                        html += '            <div class="reply_body">'+original_body+'</div>';
-                        html += '        </dd>';
-                        html += '    </dl>';
-                        html += '</div>';
+        axios.post(url, formData)
+          .then(function (response) {
+            _this.support.button.text('评论');
+            _this.support.editor.val('');
+            _this.support.to_uid = 0;
+            var res = response.data;
+            var info = {
+                id: res.comment.id,
+                commentable_id: _this.support.row_id,
+            };
+            if (_this.support.position) {
+                var html = '<p class="comment_con" id="comment'+res.comment.id+'">';
+                    html +=     '<span class="tcolor">' + TS.USER.name + '：</span>' + original_body + '';
+                    if (_this.support.top)
+                    html +=     '<a class="comment_del mouse" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">申请置顶</a>'
+                    html +=     '<a class="comment_del mouse" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ')">删除</a>'
+                    html += '</p>';
+            } else {
+                var html  = '<div class="comment_item" id="comment'+res.comment.id+'">';
+                    html += '    <dl class="clearfix">';
+                    html += '        <dt>';
+                    html += '            <img src="' + getAvatar(TS.USER, 50) + '" width="50">';
+                    html += '        </dt>';
+                    html += '        <dd>';
+                    html += '            <span class="reply_name">' + TS.USER.name + '</span>';
+                    html += '            <div class="reply_tool feed_datas">';
+                    html += '                <span class="reply_time">刚刚</span>';
+                    html += '                <span class="reply_action options" onclick="options(this)"><svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg></span>';
+                    html += '                <div class="options_div">'
+                    html += '                    <div class="triangle"></div>'
+                    html += '                    <ul>';
+                if (_this.support.top) {
+                    html += '                        <li>'
+                    html += '                            <a href="javascript:;" onclick="comment.pinneds(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
+                    html += '                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶'
+                    html += '                            </a>'
+                    html += '                        </li>';
                 }
-
-                // 第一次评论去掉缺省图
-                $('#J-commentbox'+_this.support.row_id).find('.no_data_div').remove();
-
-                $('#J-commentbox'+_this.support.row_id).prepend(html);
-
-                _this.lockStatus = 0;
-
-                callback(res);
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-                _this.support.button.text('评论');
-                _this.lockStatus =0;
+                    html += '                        <li>'
+                    html += '                            <a href="javascript:;" onclick="comment.delete(\'' + res.comment.commentable_type + '\', ' + res.comment.commentable_id + ', ' + res.comment.id + ');">'
+                    html += '                                <svg class="icon"><use xlink:href="#icon-delete"></use></svg>删除'
+                    html += '                            </a>'
+                    html += '                        </li>'
+                    html += '                    </ul>'
+                    html += '                </div>'
+                    html += '            </div>';
+                    html += '            <div class="reply_body">'+original_body+'</div>';
+                    html += '        </dd>';
+                    html += '    </dl>';
+                    html += '</div>';
             }
-        });
+            $('#J-commentbox'+_this.support.row_id).find('.no_data_div').remove();/*第一次评论去掉缺省图*/
+            $('#J-commentbox'+_this.support.row_id).prepend(html);
+            _this.lockStatus = 0;
+            callback(res);
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+            _this.support.button.text('评论');
+            _this.lockStatus =0;
+          });
     },
     delete: function(type, source_id, id) {
         var url = '';
@@ -971,20 +893,16 @@ var comment = {
                 break;
         }
         _this.lockStatus = 1;
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function(res) {
-                $('#comment' + id).fadeOut();
-                $('.cs' + source_id).text(parseInt($('.cs' + source_id).text())-1);
-                _this.lockStatus = 0;
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-                _this.lockStatus =0;
-            }
-        });
+        axios.delete(url)
+          .then(function (response) {
+            $('#comment' + id).fadeOut();
+            $('.cs' + source_id).text(parseInt($('.cs' + source_id).text())-1);
+            _this.lockStatus = 0;
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+            _this.lockStatus =0;
+          });
     },
     pinneds: function (type, source_id, id){
         var url = '';
@@ -1026,29 +944,24 @@ var liked = {
             return;
         }
         _this.lockStatus = 1;
-        $.ajax({
-            url: _this.res.link,
-            type: 'POST',
-            dataType: 'json',
-            success: function() {
-                _this.num ++;
-                _this.lockStatus = 0;
-                _this.box.attr('rel', _this.num);
-                _this.box.attr('status', 1);
-                _this.box.find('a').addClass('act');
-                _this.box.find('font').text(_this.num);
-                if (_this.type) {
-                    _this.box.find('svg').html('<use xlink:href="#icon-likered"></use>');
-                } else {
-                    _this.box.find('svg').html('<use xlink:href="#icon-like"></use>');
-                }
-
-            },
-            error: function(xhr) {
-                showError(xhr.responseJSON);
+        axios.post(_this.res.link)
+          .then(function (response) {
+            _this.num ++;
+            _this.lockStatus = 0;
+            _this.box.attr('rel', _this.num);
+            _this.box.attr('status', 1);
+            _this.box.find('a').addClass('act');
+            _this.box.find('font').text(_this.num);
+            if (_this.type) {
+                _this.box.find('svg').html('<use xlink:href="#icon-likered"></use>');
+            } else {
+                _this.box.find('svg').html('<use xlink:href="#icon-like"></use>');
             }
-        });
-
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+            _this.lockStatus =0;
+          });
     },
     unlike: function(feed_id, page) {
         var _this = this;
@@ -1056,23 +969,20 @@ var liked = {
             return;
         }
         _this.lockStatus = 1;
-        $.ajax({
-            url: _this.res.unlink,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function() {
-                _this.num --;
-                _this.lockStatus = 0;
-                _this.box.attr('rel', _this.num);
-                _this.box.attr('status', 0);
-                _this.box.find('a').removeClass('act');
-                _this.box.find('font').text(_this.num);
-                _this.box.find('svg').html('<use xlink:href="#icon-like"></use>');
-            },
-            error: function(xhr) {
-                showError(xhr.responseJSON);
-            }
-        });
+        axios.delete(_this.res.unlink)
+          .then(function (response) {
+            _this.num --;
+            _this.lockStatus = 0;
+            _this.box.attr('rel', _this.num);
+            _this.box.attr('status', 0);
+            _this.box.find('a').removeClass('act');
+            _this.box.find('font').text(_this.num);
+            _this.box.find('svg').html('<use xlink:href="#icon-like"></use>');
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+            _this.lockStatus =0;
+          });
     },
     get_link: function(){
         var res = {};
@@ -1123,24 +1033,20 @@ var collected = {
             return;
         }
         _this.lockStatus = 1;
-        $.ajax({
-            url: _this.res.link,
-            type: 'POST',
-            dataType: 'json',
-            success: function() {
-                _this.num ++;
-                _this.lockStatus = 0;
-                _this.box.attr('rel', _this.num);
-                _this.box.attr('status', 1);
-                _this.box.find('a').addClass('act');
-                _this.box.find('font').text(_this.num);
-                _this.box.find('span').text('已收藏');
-            },
-            error: function(xhr) {
-                showError(xhr.responseJSON);
-            }
-        });
-
+        axios.post(_this.res.link)
+          .then(function (response) {
+            _this.num ++;
+            _this.lockStatus = 0;
+            _this.box.attr('rel', _this.num);
+            _this.box.attr('status', 1);
+            _this.box.find('a').addClass('act');
+            _this.box.find('font').text(_this.num);
+            _this.box.find('span').text('已收藏');
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+            _this.lockStatus =0;
+          });
     },
     uncollect: function(feed_id, page) {
         var _this = this;
@@ -1148,23 +1054,20 @@ var collected = {
             return;
         }
         _this.lockStatus = 1;
-        $.ajax({
-            url: _this.res.unlink,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function() {
-                _this.num --;
-                _this.lockStatus = 0;
-                _this.box.attr('rel', _this.num);
-                _this.box.attr('status', 0);
-                _this.box.find('a').removeClass('act');
-                _this.box.find('font').text(_this.num);
-                _this.box.find('span').text('收藏');
-            },
-            error: function(xhr) {
-                showError(xhr.responseJSON);
-            }
-        });
+        axios.delete(_this.res.unlink)
+          .then(function (response) {
+            _this.num --;
+            _this.lockStatus = 0;
+            _this.box.attr('rel', _this.num);
+            _this.box.attr('status', 0);
+            _this.box.find('a').removeClass('act');
+            _this.box.find('font').text(_this.num);
+            _this.box.find('span').text('收藏');
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+            _this.lockStatus =0;
+          });
     },
     get_link: function(){
         var res = {};
@@ -1195,21 +1098,21 @@ var collected = {
 // 申请置顶
 var pinneds = function (url) {
     var html = '<div class="pinned_box">'
-                    + '<p class="confirm_title">申请置顶</p>'
-                    + '<div class="pinned_text">选择置顶天数</div>'
-                    + '<div class="pinned_spans">'
-                        + '<span days="1">1d</span>'
-                        + '<span days="5">5d</span>'
-                        + '<span days="10">10d</span>'
-                    + '</div>'
-                    + '<div class="pinned_text">设置置顶金额</div>'
-                    + '<div class="pinned_input">'
-                        + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义置顶金额，必须为整数">'
-                    + '</div>'
-                    + '<div class="pinned_text">当前平均置顶金额为' + TS.BOOT.site.gold_name.name + '200/天，钱包余额为' + TS.USER.wallet.balance * TS.BOOT['wallet:ratio'] + '</div>'
-                    + '<div class="pinned_text">需要支付总金额：</div>'
-                    + '<div class="pinned_total"><span>0</span></div>'
-                + '</div>';
+            + '<p class="confirm_title">申请置顶</p>'
+            + '<div class="pinned_text">选择置顶天数</div>'
+            + '<div class="pinned_spans">'
+                + '<span days="1">1d</span>'
+                + '<span days="5">5d</span>'
+                + '<span days="10">10d</span>'
+            + '</div>'
+            + '<div class="pinned_text">设置置顶金额</div>'
+            + '<div class="pinned_input">'
+                + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="自定义置顶金额，必须为整数">'
+            + '</div>'
+            + '<div class="pinned_text">当前平均置顶金额为' + TS.BOOT.site.gold_name.name + '200/天，钱包余额为' + TS.USER.wallet.balance * TS.BOOT['wallet:ratio'] + '</div>'
+            + '<div class="pinned_text">需要支付总金额：</div>'
+            + '<div class="pinned_total"><span>0</span></div>'
+        + '</div>';
 
     ly.confirm(html, '', '', function(){
         var data = {};
@@ -1223,18 +1126,14 @@ var pinneds = function (url) {
             lyNotice('请输入置顶金额');
             return false;
         }
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: data,
-            success: function(res) {
-                layer.closeAll();
-                noticebox(res.message, 1);
-            },
-            error: function(error) {
-                lyShowError(error.responseJSON);
-            }
-        });
+        axios.post(url, data)
+          .then(function (response) {
+            layer.closeAll();
+            noticebox(response.data.message, 1);
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     });
 };
 
@@ -1258,18 +1157,14 @@ var reported = function (url) {
             lyNotice('举报理由不能大于190个字');
             return false;
         }
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {reason: reason, content: reason},
-            success: function(res) {
-                layer.closeAll();
-                noticebox(res.message, 1);
-            },
-            error: function(error) {
-                lyShowError(error.responseJSON);
-            }
-        });
+        axios.post(url, {reason: reason, content: reason})
+          .then(function (response) {
+            layer.closeAll();
+            noticebox(response.data.message, 1);
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     });
 };
 
@@ -1294,7 +1189,6 @@ var setHistory = function(str) {
         hisArr = new Array();
         hisArr.push(str);
     }
-
     var hisStr = JSON.stringify(hisArr);
     localStorage.history = hisStr;
 }
@@ -1428,35 +1322,35 @@ var thirdShare = function(type, url, title, pic, obj) {
     }
 }
 
-// 获取用户信息
+/**
+ * 获取用户信息
+ * @param  int uids 用户id
+ * @return user
+ */
 var getUserInfo = function(uids) {
     var user = [];
     var type = typeof(uids);
-    if (type == 'object') { // 多用户
+    if (type == 'object') {
         var url = TS.API + '/users/';
-
         var _uids = _.chunk(uids, 20);
         _.forEach(_uids, function(value, key) {
-            $.ajax({
-                url: url,
-                type: 'GET',
-                data: {id: _.join(value, ',')},
-                async: false,
-                success:function(res){
-                    user = _.unionWith(user, res);
-                }
-            }, 'json');
+            axios.get(url, {id: _.join(value, ',')})
+              .then(function (response) {
+                user = _.unionWith(user, response.data);
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
         })
     } else {
         var url = TS.API + '/users/' + uids;
-        $.ajax({
-            url: url,
-            type: 'GET',
-            async: false,
-            success:function(res){
-                user = res;
-            }
-        }, 'json');
+        axios.get(url)
+          .then(function (response) {
+            user = response.data;
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     }
     return user;
 }
@@ -1536,7 +1430,6 @@ var strLen = function (str){
 };
 
 $(function() {
-
     // Jquery fixed拓展
     jQuery.fn.fixed = function(options) {
         var defaults = {
@@ -1562,18 +1455,17 @@ $(function() {
         });
     };
 
-
     // 右侧边栏
     if (TS.MID != 0 && !browser.versions.mobile) {
         var _st = $.cookie("ms_fixed");
         if (!_st) _st=0;
         var _code = '<div id="ms_fixed_wrap">'
-                  +      '<dl id="ms_fixed">'
-                  +          '<dd id="ms_comments"><a href="javascript:;" onclick="message.openChatDialog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-msg"></use></svg></a></dd>'
-                  +          '<dd id="ms_likes"><a href="javascript:;" onclick="message.openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-like"></use></svg></a></dd>'
-                  +          '<dd id="ms_notifications"><a href="javascript:;" onclick="message.openChatDialog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-notice"></use></svg></a></dd>'
-                  +          '<dd id="ms_pinneds"><a href="javascript:;" onclick="message.openChatDialog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-auth"></use></svg></a></dd>'
-                  +     '</dl>'
+                  + '<dl id="ms_fixed">'
+                  +   '<dd id="ms_comments"><a href="javascript:;" onclick="message.openChatDialog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-msg"></use></svg></a></dd>'
+                  +   '<dd id="ms_likes"><a href="javascript:;" onclick="message.openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-like"></use></svg></a></dd>'
+                  +   '<dd id="ms_notifications"><a href="javascript:;" onclick="message.openChatDialog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-notice"></use></svg></a></dd>'
+                  +   '<dd id="ms_pinneds"><a href="javascript:;" onclick="message.openChatDialog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-auth"></use></svg></a></dd>'
+                  + '</dl>'
                   + '</div>';
         if (_st == 1) {
             $(_code).hide().appendTo("body").fixed({x:-44,y:0}).fadeIn(500);
@@ -1702,7 +1594,6 @@ $(function() {
     $("#head_search").focus(function() {
         var val = $.trim($("#head_search").val());
         $('.head_search').show();
-
         if (val.length >= 1) {
             $('.history').hide();
             head_search();

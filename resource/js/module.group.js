@@ -1,4 +1,3 @@
-// var group={};
 var grouped = {
     init: function(obj){
         checkLogin();
@@ -18,7 +17,7 @@ var grouped = {
         var html = '';
         var _self = this;
         var _this = this._this;
-        var url = TS.API+'/plus-group/groups/'+this.gid;
+        var url = '/api/v2/plus-group/groups/'+this.gid;
         if (_this.lockStatus == 1) {
             return;
         }
@@ -40,66 +39,52 @@ var grouped = {
         }
         if (html && html != '') {
             ly.confirm(html,'','',function(){
-                $.ajax({
-                    url: url,
-                    type: 'PUT',
-                    success: function(response) {
-                        ly.close();
-                        noticebox(response.message, 1);
-                        _this.lockStatus = 0;
-                    },
-                    error: function(xhr){
-                        ly.close();
-                        _this.lockStatus = 0;
-                        showError(xhr.responseJSON);
-                    }
-                })
+                axios.put(url)
+                  .then(function (response) {
+                    noticebox(response.data.message, 1);
+                    _this.lockStatus = 0;
+                  })
+                  .catch(function (error) {
+                    _this.lockStatus = 0;
+                    showError(error.response.data);
+                  });
+                ly.close();
             })
-            _this.lockStatus = 0;
         } else {
-            $.ajax({
-                url: url,
-                type: 'PUT',
-                success: function(response) {
-                    $(_this).text('已加入');
-                    $(_this).attr('state', 1);
-                    $(_this).addClass('joined');
-                    $('#join-count-'+_self.gid).text(_self.count + 1);
-                    _this.lockStatus = 0;
-                },
-                error: function(xhr){
-                    ly.close();
-                    _this.lockStatus = 0;
-                    showError(xhr.responseJSON);
-                }
-            })
+            axios.put(url)
+              .then(function (response) {
+                $(_this).text('已加入');
+                $(_this).attr('state', 1);
+                $(_this).addClass('joined');
+                $('#join-count-'+_self.gid).text(_self.count + 1);
+                _this.lockStatus = 0;
+              })
+              .catch(function (error) {
+                _this.lockStatus = 0;
+                showError(error.response.data);
+              });
         }
     },
     unjoined:function(){
         var _self = this;
         var _this = this._this;
-        var url = TS.API+'/plus-group/groups/'+this.gid+'/exit';
+        var url = '/api/v2/plus-group/groups/'+this.gid+'/exit';
         if (_this.lockStatus == 1) {
             return;
         }
         _this.lockStatus = 1;
-
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            success: function(response) {
-                $(_this).text('+加入');
-                $(_this).attr('state', 0);
-                $(_this).removeClass('joined');
-                $('#join-count-'+_self.gid).text(_self.count - 1);
-                _this.lockStatus = 0;
-            },
-            error: function(xhr){
-                ly.close();
-                _this.lockStatus = 0;
-                showError(xhr.responseJSON);
-            }
-        })
+        axios.delete(url)
+          .then(function (response) {
+            $(_this).text('+加入');
+            $(_this).attr('state', 0);
+            $(_this).removeClass('joined');
+            $('#join-count-'+_self.gid).text(_self.count - 1);
+            _this.lockStatus = 0;
+          })
+          .catch(function (error) {
+            _this.lockStatus = 0;
+            showError(error.response.data);
+          });
     },
     intro:function(status){
         if (status == 0) {
@@ -111,7 +96,7 @@ var grouped = {
         }
     },
     report:function(gid){
-        var url = TS.API+'/plus-group/groups/'+gid+'/reports';
+        var url = '/api/v2/plus-group/groups/'+gid+'/reports';
         reported(url);
     }
 }
@@ -138,16 +123,15 @@ post.showImg = function(){
 post.createPost = function (group_id) {
     checkLogin();
     var _this = this;
+    var images = [];
+    var url = '/api/v2/groups/' + group_id + '/posts';
     if (_this.lockStatus == 1) {
         noticebox('请勿重复提交', 0);
         return;
     }
-
-    var images = [];
     $('.feed_picture').find('img').each(function() {
         images.push({'id':$(this).attr('tid')});
     });
-
     var data = {
         //title: $('#post_title').val(),
         content: $('#feed_content').val(),
@@ -162,74 +146,62 @@ post.createPost = function (group_id) {
         return false;
     }
     _this.lockStatus = 1;
-    $.ajax({
-        url: '/api/v2/groups/' + group_id + '/posts',
-        type: 'post',
-        data: data,
-        success: function(res) {
-            noticebox('发布成功', 1);
-            $('.feed_picture').html('').hide();
-            $('#post_title').val('');
-            $('#feed_content').val('');
-            post.afterCreatePost(group_id, res.id);
-            _this.lockStatus = 0;
-        },
-        error: function(xhr){
-            showError(xhr.responseJSON);
-            _this.lockStatus = 0;
-        }
-    })
+
+    axios.post(url, data)
+      .then(function (response) {
+        noticebox('发布成功', 1);
+        $('.feed_picture').html('').hide();
+        $('#post_title').val('');
+        $('#feed_content').val('');
+        post.afterCreatePost(group_id, response.data.id);
+        _this.lockStatus = 0;
+      })
+      .catch(function (error) {
+        _this.lockStatus = 0;
+        showError(error.response.data);
+      });
 };
 
 post.afterCreatePost = function (group_id, post_id) {
     var url = '/group/getPost';
-    $.ajax({
-        url: url,
-        type: 'get',
-        data: {
-            group_id: group_id,
-            post_id: post_id
-        },
-        dataType: 'json',
-        success: function(res) {
-            if ($('#feeds_list').find('.no_data_div').length > 0) {
-                $('#feeds_list').find('.no_data_div').remove();
-            }
-            $(res.data).hide().prependTo('#feeds_list').fadeIn('slow');
-            $("img.lazy").lazyload({effect: "fadeIn"});
+    axios.get(url, { group_id: group_id, post_id: post_id })
+      .then(function (response) {
+        if ($('#feeds_list').find('.no_data_div').length > 0) {
+            $('#feeds_list').find('.no_data_div').remove();
         }
-    })
+        $(response.data.data).hide().prependTo('#feeds_list').fadeIn('slow');
+        $("img.lazy").lazyload({effect: "fadeIn"});
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 };
 
 post.delPost = function(group_id, post_id, poi) {
     layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
         var tourl = '/group/'+group_id;
         var url ='/api/v2/plus-group/groups/' + group_id + '/posts/' + post_id;
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function(res) {
-                $('#feed' + post_id).fadeOut();
-                layer.closeAll();
-                if (poi == 'read') {
-                    noticebox('删除成功', 1, tourl);
-                }
-            },
-            error: function(xhr){
-                layer.closeAll();
-                showError(xhr.responseJSON);
+        axios.delete(url)
+          .then(function (response) {
+            $('#feed' + post_id).fadeOut();
+            layer.closeAll();
+            if (poi == 'read') {
+                noticebox('删除成功', 1, tourl);
             }
-        });
+          })
+          .catch(function (error) {
+            layer.closeAll();
+            showError(error.response.data);
+          });
     });
 };
 
 post.pinnedPost = function(post_id){
-    var url = TS.API+'/plus-group/pinned/posts/'+post_id;
+    var url = TS.API+'/api/v2/plus-group/pinned/posts/'+post_id;
     pinneds(url);
 };
 
 post.reportPost = function(post_id){
-    var url = TS.API+'/plus-group/reports/posts/'+post_id;
+    var url = '/api/v2/plus-group/reports/posts/'+post_id;
     reported(url);
 };

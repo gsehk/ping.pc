@@ -164,60 +164,49 @@ weibo.doPostFeed = function(type) {
 
     _this.lockStatus = 1;
 
-    $.ajax({
-        url: '/api/v2/feeds',
-        type: 'post',
-        data: data,
-        success: function(res) {
+    axios.post('/api/v2/feeds', data)
+      .then(function (response) {
             $('.feed_picture').html('').hide();
             $('#feed_content').val('');
-            weibo.afterPostFeed(res.id);
+            weibo.afterPostFeed(response.data.id);
             noticebox('发布成功', 1);
             layer.closeAll();
             _this.lockStatus = 0;
-        },
-        error: function(xhr){
-            _this.lockStatus = 0;
-            $('.pay_images').length > 0 && type == 'pay' ? lyShowError(xhr.responseJSON) : showError(xhr.responseJSON);
-        }
-    });
+      })
+      .catch(function (error) {
+        _this.lockStatus = 0;
+        $('.pay_images').length > 0 && type == 'pay' ? lyShowError(error.response.data) : showError(error.response.data);
+      });
 };
 
 weibo.afterPostFeed = function(feed_id) {
-    var url = '/feeds';
-    $.ajax({
-        url: url,
-        type: 'get',
-        data: { feed_id: feed_id},
-        dataType: 'json',
-        success: function(res) {
+    axios.get('/feeds', {params: {feed_id:feed_id} })
+      .then(function (response) {
             if ($('#feeds_list').find('.no_data_div').length > 0) {
                 $('#feeds_list').find('.no_data_div').remove();
             }
-            $(res.data).hide().prependTo('#feeds_list').fadeIn('slow');
+            $(response.data.data).hide().prependTo('#feeds_list').fadeIn('slow');
             $("img.lazy").lazyload({effect: "fadeIn"});
-        }
-    })
+      })
+      .catch(function (error) {
+        showError(error.response.data)
+      });
 };
 weibo.delFeed = function(feed_id, type) {
     layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
         var url = '/api/v2/feeds/' + feed_id;
-        $.ajax({
-            url: url,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function(res) {
+        axios.delete(url)
+          .then(function (response) {
                 layer.closeAll();
                 if (type) {
                     noticebox('删除成功', 1, '/feeds');
                 }
                 $('#feed_' + feed_id).fadeOut();
-            },
-            error: function(xhr){
-                layer.closeAll();
-                showError(xhr.responseJSON);
-            }
-        });
+          })
+          .catch(function (error) {
+            layer.closeAll();
+            showError(error.response.data)
+          });
     });
 };
 weibo.denounce = function(obj) {
@@ -228,18 +217,13 @@ weibo.denounce = function(obj) {
             layer.msg(' 请填写举报理由', { icon: 0 });
         }
         var url = '';
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: { aid: feed_id, to_uid: to_uid, reason: val, from: 'weibo' },
-            dataType: 'json',
-            success: function(res) {
-                layer.msg(' 举报成功', { icon: 1 });
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
+        axios.post(url, { aid: feed_id, to_uid: to_uid, reason: val, from: 'weibo' })
+          .then(function (response) {
+            layer.msg(' 举报成功', { icon: 1 });
+          })
+          .catch(function (error) {
+            showError(error.response.data)
+          });
         layer.close(index);
     });
 };
@@ -273,35 +257,29 @@ weibo.payText = function(obj, tourl){
     ly.confirm(html, '', '', function(){
         var url = '/api/v2/purchases/' + node;
         // 确认支付
-        $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: 'json',
-            success: function(res) {
-                layer.closeAll();
-                if (tourl == '') {
-                    noticebox('支付成功', 1);
-
-                    // 获取动态完整内容
-                    $.ajax({
-                        url: '/api/v2/feeds/' + id.replace('feed_', ''),
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(res) {
-                            _this.text(res.feed_content);
-                            _this.removeClass('fuzzy');
-                            _this.removeAttr('onclick');
-                        }
-                    });
-                } else {
-                    noticebox('支付成功', 1, tourl);
-                }
-            },
-            error: function(xhr) {
-                layer.closeAll();
-                showError(xhr.responseJSON);
+        axios.post(url)
+          .then(function (response) {
+            layer.closeAll();
+            if (tourl == '') {
+                noticebox('支付成功', 1);
+                /*获取动态完整内容*/
+                axios.get('/api/v2/feeds/'+id.replace('feed_', ''))
+                  .then(function (response) {
+                    _this.text(response.data.feed_content);
+                    _this.removeClass('fuzzy');
+                    _this.removeAttr('onclick');
+                  })
+                  .catch(function (error) {
+                    showError(error.response.data)
+                  });
+            } else {
+                noticebox('支付成功', 1, tourl);
             }
-        });
+          })
+          .catch(function (error) {
+            layer.closeAll();
+            showError(error.response.data)
+          });
     })
 };
 weibo.payImage = function(obj){
@@ -318,24 +296,19 @@ weibo.payImage = function(obj){
         var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + TS.BOOT.site.gold_name.name + '即可查看高清大图，是否确认支付？');
         ly.confirm(html, '', '', function(){
             var url = '/api/v2/purchases/' + node;
-            // 确认支付
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                success: function(res) {
-                    // 刷新图片
-                    _this.attr('src', image + '&t=paid');
-                    _this.removeAttr('onclick');
-                    _this.addClass('bigcursor');
-                    layer.closeAll();
-                    noticebox('支付成功', 1);
-                },
-                error: function(xhr) {
-                    layer.closeAll();
-                    showError(xhr.responseJSON);
-                }
-            });
+            /*确认支付*/
+            axios.post(url)
+              .then(function (response) {
+                _this.attr('src', image + '&t=paid');
+                _this.removeAttr('onclick');
+                _this.addClass('bigcursor');
+                layer.closeAll();
+                noticebox('支付成功', 1);
+              })
+              .catch(function (error) {
+                layer.closeAll();
+                showError(error.response.data)
+              });
         })
 };
 
@@ -376,23 +349,19 @@ $(function() {
         var html = formatConfirm('购买支付', '<div class="confirm_money">' + amount + '</div>您只需要支付' + amount + TS.BOOT.site.gold_name.name + '即可查看高清大图，是否确认支付？');
         ly.confirm(html, '', '', function(){
             var url = '/api/v2/purchases/' + node;
-            // 确认支付
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                success: function(res) {
-                    var img = '<img class="lazy per_image" data-original="' + image + '"/>';
-                    _this.replaceWith(img);
-                    $("img.lazy").lazyload({ effect: "fadeIn" });
-                    layer.closeAll();
-                    noticebox('支付成功', 1);
-                },
-                error: function(xhr) {
-                    layer.closeAll();
-                    showError(xhr.responseJSON);
-                }
-            });
+            /*确认支付*/
+            axios.post(url)
+              .then(function (response) {
+                layer.closeAll();
+                var img = '<img class="lazy per_image" data-original="' + image + '"/>';
+                _this.replaceWith(img);
+                $("img.lazy").lazyload({ effect: "fadeIn" });
+                noticebox('支付成功', 1);
+              })
+              .catch(function (error) {
+                layer.closeAll();
+                showError(error.response.data)
+              });
         })
     });
 

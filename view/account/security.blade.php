@@ -73,18 +73,13 @@ $('#J-user-security').on('click', function(){
         return false;
     }
 
-    $.ajax({
-        url: '/api/v2/user/password',
-        type: 'PUT',
-        data: data,
-        dataType: 'json',
-        error: function(xhr) {
-            showError(xhr.responseJSON);
-        },
-        success: function(res) {
-            noticebox('密码修改成功', 1, 'refresh');
-        }
-    });
+    axios.put('/api/v2/user/password', data)
+      .then(function (response) {
+        noticebox('密码修改成功', 1, 'refresh');
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 });
 </script>
 @endsection

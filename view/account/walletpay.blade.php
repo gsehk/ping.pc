@@ -69,23 +69,17 @@ $('#J-pay-btn').on('click', function(){
         }
     }
 
-    $.ajax({
-        url: '/api/v2/wallet/recharge',
-        type: 'POST',
-        data: params,
-        async: false,
-        dataType: 'json',
-        error: function(xml) {
-            showError(xml.responseJSON);
-        },
-        success: function(response) {
-            var res = JSON.stringify(response.charge);
-            var surl = TS.SITE_URL + '/account/gateway?res=' + window.encodeURIComponent(res);
-            $("#payurla").attr("href", surl);
-            $("#payurlc").trigger("click");
-            payPop(response.id);
-        }
-    });
+    axios.post('/api/v2/wallet/recharge', params)
+      .then(function (response) {
+        var res = JSON.stringify(response.data.charge);
+        var surl = TS.SITE_URL + '/account/gateway?res=' + window.encodeURIComponent(res);
+        $("#payurla").attr("href", surl);
+        $("#payurlc").trigger("click");
+        payPop(response.data.id);
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 });
 
 function payPop(id){
@@ -113,24 +107,19 @@ function payPop(id){
 
 function checkStatus(id, type) {
     type = type || 0;
-    if (id) {
-        $.ajax({
-            url: '/api/v2/wallet/charges/'+id+'?mode=retrieve',
-            type: 'GET',
-            dataType: 'json',
-            success: function(res) {
-                if (res.status == 1) {
-                    window.location.href = TS.SITE_URL + '/account/success?status=1&url={{route('pc:wallet')}}&time=3&message=充值成功';
-                }
-                if (type == 1) {
-                    window.location.href = TS.SITE_URL + '/account/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中&content=操作失败';
-                }
-            },
-            error: function(xhr){
-                showError(xhr.responseJSON);
-            }
-        });
-    }
+    if (!id) { return; }
+    axios.get('/api/v2/wallet/charges/'+id+'?mode=retrieve')
+      .then(function (response) {
+        if (response.data.status == 1) {
+            window.location.href = TS.SITE_URL + '/account/success?status=1&url={{route('pc:wallet')}}&time=3&message=充值成功';
+        }
+        if (type == 1) {
+            window.location.href = TS.SITE_URL + '/account/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中&content=操作失败';
+        }
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 }
 </script>
 @endsection

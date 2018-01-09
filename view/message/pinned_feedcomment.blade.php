@@ -28,13 +28,10 @@
     @endforeach
 
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-                'Authorization': 'Bearer ' + TS.TOKEN,
-                'Accept': 'application/json'
-            }
-        });
+        axios.defaults.baseURL = TS.SITE_URL;
+        axios.defaults.headers.common['Accept'] = 'application/json';
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
         $('.comment_audit').on('click', 'a', function () {
             var _this = this;
             var data = urlToObject($(this).data('args'));
@@ -48,21 +45,19 @@
                 type = 'DELETE';
             }
 
-            $.ajax({
-                url: url,
-                type: type,
-                dataType: 'json',
-                error: function(xml) {},
-                success: function(res, data, xml) {
-                    if (data.type == 1){
-                        $(_this).parent('.comment_audit').html('<a href="javascript:">已审核</a>');
-                    } else {
-                        $(_this).parent('.comment_audit').html('<a href="javascript:">已审核</a>');
-                    }
-                    TS.UNREAD.pinneds -= 1;
-                    message.setUnreadMessage();
+            axios({ method:type, url:url })
+              .then(function(response) {
+                if (response.data.type == 1){
+                    $(_this).parent('.comment_audit').html('<a href="javascript:">已审核</a>');
+                } else {
+                    $(_this).parent('.comment_audit').html('<a href="javascript:">已审核</a>');
                 }
-            });
+                TS.UNREAD.pinneds -= 1;
+                message.setUnreadMessage();
+              })
+              .catch(function (error) {
+                showError(error.response.status);
+              });
         });
     </script>
 

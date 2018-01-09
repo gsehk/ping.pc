@@ -49,37 +49,29 @@ $('#J-tags li').on('click', function(e){
     var tag_name = $(this).text();
     var lenth = $('#J-tags li.active').length;
     if (_this.hasClass('active')) {
-        $.ajax({
-            url: '/api/v2/user/tags/'+tag_id,
-            type: 'DELETE',
-            dataType: 'json',
-            error: function(xml) {
-                noticebox('操作失败', 0, 'refresh');
-            },
-            success: function(res) {
-                $('.num').text(lenth-1);
-                _this.removeClass('active');
-                $('.taged'+tag_id).remove();
-            }
-        });
+        axios.delete('/api/v2/user/tags/'+tag_id)
+          .then(function (response) {
+            $('.num').text(lenth-1);
+            _this.removeClass('active');
+            $('.taged'+tag_id).remove();
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     } else {
         if (lenth >= 5) {
             noticebox('个人标签最多选择５个', 0);
             return false;
         }
-        $.ajax({
-            url: '/api/v2/user/tags/'+tag_id,
-            type: 'PUT',
-            dataType: 'json',
-            error: function(xml) {
-                noticebox('操作失败', 0, 'refresh');
-            },
-            success: function(res) {
-                _this.addClass('active');
-                $('.num').text(lenth+1);
-                $('.selected-box').append('<li class="taged'+tag_id+'" data-id="'+tag_id+'">'+tag_name+'</li>');
-            }
-        });
+        axios.put('/api/v2/user/tags/'+tag_id)
+          .then(function (response) {
+            _this.addClass('active');
+            $('.num').text(lenth+1);
+            $('.selected-box').append('<li class="taged'+tag_id+'" data-id="'+tag_id+'">'+tag_name+'</li>');
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
     }
 });
 
@@ -87,16 +79,15 @@ $('.selected-box').on('click', 'li', function(){
     var _self = this;
     var tid = $(_self).data('id');
     var lenth = $('#J-tags li.active').length;
-    $.ajax({
-        url: '/api/v2/user/tags/'+tid,
-        type: 'DELETE',
-        dataType: 'json',
-        success: function(res) {
-            $(_self).remove();
-            $('.num').text(lenth-1);
-            $('.tag_'+tid).removeClass('active');
-        }
-    });
+    axios.delete('/api/v2/user/tags/'+tid)
+      .then(function (response) {
+        $(_self).remove();
+        $('.num').text(lenth-1);
+        $('.tag_'+tid).removeClass('active');
+      })
+      .catch(function (error) {
+        showError(error.response.data);
+      });
 });
 </script>
 @endsection

@@ -26,16 +26,11 @@ $('#J-user-info').on('click', function(e) {
         noticebox('个人简介不能超过50个字符', 0);
         return;
     }
-    $.ajax({
-        url: '/api/v2/user',
-        type: 'PATCH',
-        data: arg,
-        dataType: 'json',
-        error: function(xml) {
-            noticebox('资料修改失败', 0, 'refresh');
-        },
-        success: function(res) {
-            noticebox('资料修改成功', 1, 'refresh');
-        }
-    });
+    axios.patch('/api/v2/user', arg)
+      .then(function (response) {
+        noticebox('资料修改成功', 1, 'refresh');
+      })
+      .catch(function (error) {
+        noticebox('资料修改失败', 0, 'refresh');
+      });
 });
