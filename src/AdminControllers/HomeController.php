@@ -1,10 +1,10 @@
 <?php
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\AdminControllers;
 
-use Zhiyi\Plus\Models\JWTCache;
 use Zhiyi\Plus\Models\User;
-use Zhiyi\Plus\Models\AuthToken;
 use Illuminate\Http\Request;
+use Zhiyi\Plus\Models\AuthToken;
+use Zhiyi\Plus\Auth\JWTAuthToken;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -20,7 +20,7 @@ class HomeController extends Controller
      * @param  Request $request
      * @return mixed
      */
-    public function show(Request $request)
+    public function show(Request $request, JWTAuthToken $jwt)
     {
         if (! $request->user()) {
             return redirect(route('admin'), 302);
