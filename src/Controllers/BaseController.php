@@ -43,7 +43,7 @@ class BaseController extends Controller
 
                 // 启动信息接口
                 $config['bootstrappers'] = createRequest('GET', '/api/v2/bootstrappers/', [], 0);
-                $config['bootstrappers']['wallet:ratio'] = $config['bootstrappers']['wallet:ratio'] / 100 / 100;
+                $config['bootstrappers']['wallet:ratio'] = ($config['bootstrappers']['wallet:ratio'] ?? 100) / 100 / 100;
                 $config['bootstrappers']['site']['reward']['amounts'] = '5,10,15';
 
                 // 基本配置
