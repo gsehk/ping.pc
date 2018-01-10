@@ -144,7 +144,7 @@ a {font-size:100%;vertical-align:baseline;background:transparent;text-decoration
 .recusers ul {display:inline-block;}
 .recusers li {float:left;width:50px;margin:0 12px 0 15px;text-align:left;}
 .recusers li img {width:50px;height:50px;margin-top:20px;border-radius:50%;}
-.recusers li span {font-size:12px;display:block;overflow:hidden;width:50px;margin-top:10px;text-align:center;white-space:nowrap;text-overflow:ellipsis;color:#666;}
+.recusers li span {font-size:12px;display:block;overflow:hidden;width:50px;margin-top:10px;text-align:center;white-space:nowrap;text-overflow:ellipsis;color:#666;line-height:12px;}
 .recusers li span a {color:#333;}
 .recusers .recmore {font-size:12px;line-height:40px;display:block;height:40px;margin-top:10px;cursor:pointer;text-align:center;color:#999;background:#f8fcff;}
 .recusers .recmore {color:#999;}
