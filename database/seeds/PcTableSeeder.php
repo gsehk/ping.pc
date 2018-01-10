@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Zhiyi\Plus\Models\AdvertisingSpace;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
 
 class PcTableSeeder extends Seeder
 {
@@ -13,6 +14,17 @@ class PcTableSeeder extends Seeder
     public function run()
     {
         $this->createData();
+
+        Navigation::create([
+            'name' => '动态',
+            'app_name' => 'feeds',
+            'url' => '/feeds',
+            'target' => '_self',
+            'status' => 1,
+            'position' => 0,
+            'parent_id' => 0,
+            'order_sort' => 0,
+        ]);
     }
 
     /**
