@@ -47,7 +47,7 @@
                     <a href="{{ route('pc:mine')}}">个人主页</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" onclick="logout()">退出</a>
+                    <a href="{{ route('logout') }}">退出</a>
                 </li>
             </ul>
         </div>
