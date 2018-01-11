@@ -1,6 +1,6 @@
 /*个人主页顶部*/
 .contribute-btn {float:right;margin-top:21px;border-radius:18px;padding:7px 23px;}
-.profile-btn {padding:5px 15px;float:right;margin-top:24px;border-radius:18px;border:1px solid #59B6D7;margin-left:10px;}
+.profile-btn {padding:5px 15px;float:right;margin-top:24px;border-radius:18px;border:1px solid #59B6D7;margin-left:10px;line-height:24px;}
 .profile-btn > svg,.contribute-btn > svg{margin-right:3px;}
 .follow-box {line-height:80px;float:right;}
 .follow-box > div {line-height:36px;display:inline-block;width:100px;height:36px;margin-left:10px;cursor:pointer;text-align:center;vertical-align:middle;border:1px solid #ccc;border-radius:18px;background:#fff;}
