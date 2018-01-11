@@ -20,18 +20,24 @@ class BaseController extends Controller
     public function __construct()
     {
         // 初始化
-        $this->middleware(function($request, $next){
-            // 用户信息
-            $this->PlusData['token'] = Session::get('token');
+        $this->middleware(function($request, $next) {
+            $user = $request->user();
+            if ($user) {
+                $user->load('wallet', 'extra', 'tags');
+                $user->makeVisible(['phone', 'email']);
+            }
 
+            $token = $this->PlusData['token'] = $request->session()->get('token');
             $this->PlusData['TS'] = null;
-            if ($this->PlusData['token']) {
-                // TODO 设置当前token为有效，临时解决方案
-                JWTCacheModel::where('value', '"'. $this->PlusData['token'] . '"')->update([
-                    'status' => 0,
-                ]);
+            if ($user) {
+                $jwt = app(\Tymon\JWTAuth\JWT::class);
+                if (! $token || ! $jwt->setToken($token)->check()) {
+                    $token = $this->PlusData['token'] = $jwt->fromUser($user);
+                    $request->session()->put('token', $token);
+                    $request->session()->save();
+                }
 
-                $this->PlusData['TS'] = createRequest('GET', '/api/v2/user/', [], 0);
+                $this->PlusData['TS'] = clone $user;
                 $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
             }
 
