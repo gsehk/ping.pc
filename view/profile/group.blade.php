@@ -23,31 +23,31 @@
                 <ul class="g-tab">
                     <li>
                         <div type="join" class="zy_select t_c gap12" id="J-group">
-                            <span>圈子</span>
-                            <ul>
-                                @if ($TS->id == $user->id)
+                            @if ($TS->id == $user->id)
+                                <span>圈子</span>
+                                <ul>
                                     <li type="join" @if($type == 'join') class="active" @endif>我加入的</li>
                                     <li type="audit" @if($type == 'audit') class="active" @endif>待审核的</li>
-                                @else
-                                    <li type="join" @if($type == 'join') class="active" @endif>TA加入的</li>
-                                @endif
-                            </ul>
-                            <i></i>
+                                </ul>
+                                <i></i>
+                            @else
+                                <a type="join" @if($type == 'join') class="active" @endif>TA加入的</a>
+                            @endif
                         </div>
                     </li>
                     <li>
                         <div type="5" class="zy_select t_c gap12 select-gray" id="J-post">
-                            <span>帖子</span>
-                            <ul>
-                                @if ($TS->id == $user->id)
+                            @if ($TS->id == $user->id)
+                                <span>帖子</span>
+                                <ul>
                                     <li type="1" @if($type == 1) class="active" @endif>我发布的</li>
                                     <li type="2" @if($type == 2) class="active" @endif>已置顶的</li>
                                     <li type="3" @if($type == 3) class="active" @endif>置顶待审核</li>
-                                @else
-                                    <li type="1" @if($type == 1) class="active" @endif>TA发布的</li>
-                                @endif
-                            </ul>
-                            <i></i>
+                                </ul>
+                                <i></i>
+                            @else
+                                <a type="1" @if($type == 1) class="active" @endif>TA发布的</a>
+                            @endif
                         </div>
                     </li>
                 </ul>
@@ -74,7 +74,7 @@
         paramtype: 1,
         params: {isAjax: true, limit: 10}
     });
-    $('#J-group li, #J-post li').on('click', function(){
+    $('#J-group li, #J-post li, #J-group a, #J-post a').on('click', function(){
         $('#J-post').addClass('select-gray');
         $('#J-group').addClass('select-gray');
         $(this).parents('.zy_select').removeClass('select-gray');
