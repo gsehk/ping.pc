@@ -2,8 +2,10 @@
 
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
+use Auth;
 use Session;
 use Cookie;
+use Tymon\JWTAuth\JWT;
 use Illuminate\Http\Request;
 use Gregwar\Captcha\CaptchaBuilder;
 use Zhiyi\Plus\Http\Controllers\Controller;
@@ -11,6 +13,40 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class PassportController extends BaseController
 {
+    /**
+     * Create the controller instance.
+     *
+     * @author Seven Du <shiweidu@outlook.com>
+     */
+    public function __construct()
+    {
+        // Run parent construct method.
+        parent::__construct();
+
+        // Register "guest" middleware
+        $this->middleware('guest')->except('logout', 'perfect', 'captcha', 'checkCaptcha');
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request, JWT $jwt)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        if ($token = $request->session()->get('token')) {
+            $jwt->setToken($token);
+            $jwt->invalidate();
+        }
+
+        return redirect(route('pc:feeds'));
+    }
+
     /**
      * 凭据存储
      * @author Foreach
@@ -55,17 +91,6 @@ class PassportController extends BaseController
         }
 
     	return view('pcview::passport.login', [], $this->PlusData);
-    }
-
-    /**
-     * 登出
-     * @author Foreach
-     * @return mixed
-     */
-    public function logout()
-    {
-        Session::flush();
-        return redirect(route('pc:feeds'));
     }
 
     /**
@@ -151,5 +176,15 @@ class PassportController extends BaseController
         } else {
             return response()->json([], 501);
         }
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard();
     }
 }
