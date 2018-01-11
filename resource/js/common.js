@@ -538,13 +538,15 @@ var no_data = function(selector, type, txt) {
 }
 
 // 退出登录提示
-var logout = function() {
+$('#action-logout').on('click', function(event) {
+    event.preventDefault();
     $('.nav_menu').hide();
-    storeLocal.clear();
-    ly.confirm(formatConfirm('提示', '感谢您对' + (TS.COMMON.site_name || 'ThinkSNS+') + '的信任，是否退出当前账号？'), '' ,'', function(){
-        window.location.href = '/passport/logout';
+    var action = formatConfirm('提示', '是否确认退出当前账号？');
+    var url = this.href;
+    ly.confirm(action, '', '', function() {
+        window.location.href = url;
     });
-}
+});
 
 // 接口返回错误解析
 var showError = function(message, defaultMessage) {
