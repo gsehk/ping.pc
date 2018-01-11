@@ -33,7 +33,7 @@ class PcPackageHandler extends PackageHandler
         // publish public assets
         $command->call('vendor:publish', [
             '--provider' => PcServiceProvider::class,
-            '--tag' => 'public',
+            '--tag' => 'pc-public',
             '--force' => true,
         ]);
 

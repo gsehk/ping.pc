@@ -19,12 +19,12 @@ class PcServiceProvider extends ServiceProvider
     public function boot()
     {
         // load views.
-        $this->loadViewsFrom(dirname(__DIR__).'/view', 'pcview');
+        $this->loadViewsFrom(dirname(__DIR__).'/resources/views', 'pcview');
 
         // publish resource
         $this->publishes([
-            dirname(__DIR__).'/resource' => $this->app->PublicPath().'/zhiyicx/plus-component-pc',
-        ], 'public');
+            dirname(__DIR__).'/assets' => $this->app->PublicPath().'/assets/pc',
+        ], 'pc-public');
 
         // load routes
         $this->loadRoutesFrom(

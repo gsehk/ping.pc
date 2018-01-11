@@ -12,7 +12,7 @@ use SlimKit\PlusSocialite\API\Requests\AccessTokenRequest;
 use Illuminate\Support\Facades\Route;
 use Zhiyi\Plus\Models\User;
 use GuzzleHttp\Client as GuzzleHttpClient;
-use function asset as plus_asset;
+use function asset as plusAsset;
 use function view as plus_view;
 
 /**
@@ -26,8 +26,7 @@ use function view as plus_view;
  */
 function asset($path, $secure = null)
 {
-    $path = asset_path($path);
-    return plus_asset($path, $secure);
+    return plusAsset('assets/pc/'.$path, $secure);
 }
 /**
  * Get The component resource asset path.
