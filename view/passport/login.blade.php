@@ -8,21 +8,27 @@
 
 @section('content')
 <div class="login_container">
+
     <div class="login_left">
         <img src="@if(isset($config['common']['loginbg']) && $config['common']['loginbg']) {{ $routes['storage'] . $config['common']['loginbg'] }} @else {{ $routes['resource'] }}/images/login_bg.png @endif"/>
     </div>
     <div class="login_right">
-        <form method="POST" id="login_form">
+        <form role="form" method="POST" action="{{ url('/auth/login') }}">
+
+            {{ csrf_field() }}
+
+        <!-- <form method="POST" id="login_form"> -->
             <div class="login_input">
-                <input type="text" placeholder="输入手机号/邮箱/昵称" name="login" id="l_login"/>
+                <input type="text" placeholder="输入手机号/邮箱/昵称" name="login" value="{{ old('email', old('phone', old('name', old('id', '')))) }}" required autofocus />
             </div>
             <div class="login_input">
-                <input type="password" placeholder="输入密码" name="password" id="l_password"/>
+                <input type="password" placeholder="输入密码" name="password" required/>
             </div>
             <div class="login_extra">
                 <a class="forget_pwd" href="{{ route('pc:findpassword') }}">忘记密码</a>
             </div>
-            <a class="login_button" id="login_btn">登录</a>
+            <button class="login_button" type="submit">登录</button>
+            <!-- <a class="login_button" type="submit">登录</a> -->
         </form>
 
         <div class="login_right_bottom">
@@ -56,9 +62,15 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.form.js') }} "></script>
-<script src="{{ asset('zhiyicx/plus-component-pc/js/module.passport.js') }} "></script>
-<script type="text/javascript">
+
+    @if($errors->isNotEmpty())
+        <script type="text/javascript">
+            noticebox('{{ $errors->first() }}', 0);
+        </script>
+    @endif
+<!-- <script src="{{ asset('zhiyicx/plus-component-pc/js/jquery.form.js') }} "></script> -->
+<!-- <script src="{{ asset('zhiyicx/plus-component-pc/js/module.passport.js') }} "></script> -->
+<!-- <script type="text/javascript">
 $(function(){
     $('.bind').click('on', function () {
         var type = $(this).data('type');
@@ -91,5 +103,5 @@ function toBind(other_type, access_token, name) {
     form.appendTo(document.body);
     form.submit();
 }
-</script>
+</script> -->
 @endsection

@@ -25,7 +25,11 @@
 .login_right_bottom .icon_weixin {color:#54c58c;}
 .login_share {font-size:12px;margin-top:0;color:#b3b3b3 !important;float:right;}
 .login_share svg {font-size:24px !important;padding:2px;cursor:pointer;border:1px solid #ededed;border-radius:50%;}
-.login_button {font-size:16px;line-height:50px;display:block;height:50px;margin:20px auto 50px;cursor:pointer;text-align:center;letter-spacing:2px;color:#fff;border-radius:3px;background:#59b6d7;}
+.login_button {
+    font-size:16px;line-height:50px;display:block;height:50px;margin:20px auto 50px;cursor:pointer;text-align:center;letter-spacing:2px;color:#fff;border-radius:3px;background:#59b6d7;
+    width: 300px;
+    border: none;
+}
 .login_button:link,.login_button:visited,.login_button:active,.login_button:hover {color:#fff;}
 .login_word {position:relative;z-index:1;clear:both;width:100%;height:50px;margin-top:-50px;text-align:center;color:#CCC;}
 /*忘记密码*/.reg_cont {width:1080px;height:500px;margin:40px auto auto;padding:60px 70px 0;background:#fff;}
