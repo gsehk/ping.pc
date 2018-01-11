@@ -58,7 +58,7 @@
         @if(isset($config['bootstrappers']['registerSettings']['type']) && $config['bootstrappers']['registerSettings']['type'] == 'all')
         <a class="nava" href="{{ route('pc:register') }}">注册</a>
         @endif
-        <a class="nava" href="{{ route('pc:login') }}">登录</a>
+        <a class="nava" href="{{ route('login') }}">登录</a>
     </div>
     @endif
 

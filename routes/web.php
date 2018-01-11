@@ -3,15 +3,26 @@
 use Zhiyi\Plus\Http\Middleware;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Middleware as PcMiddleware;
 
+// Route::any('/', [
+//     'uses' => '\Illuminate\Routing\RedirectController',
+//     'as' => 'home',
+// ])->defaults('destination', '/feeds');
+
 Route::prefix('passport')->group(function () {
     // 登录
-    Route::get('/login', 'PassportController@index')->name('pc:login');
+    Route::get('/login', [
+        'uses' => 'PassportController@index',
+        'as' => 'login',
+    ]);
 
     // 登录成功记录token
     Route::get('/token/{token}/{type}', 'PassportController@token')->name('pc:token');
 
     // 登出
-    Route::any('/logout', 'PassportController@logout')->name('pc:logout');
+    Route::get('/logout', [
+        'uses' => 'PassportController@logout',
+        'as' => 'logout',
+    ]);
 
     // 注册
     Route::get('/register/{type?}', 'PassportController@register')->where(['type' => '[0-9]+'])->name('pc:register');

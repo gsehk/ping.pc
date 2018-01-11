@@ -7,12 +7,12 @@
                     </a>
                 </div>
                 <div class="login_top">
-                    @if (route::currentrouteName() == 'pc:login')
+                    @if (route::currentrouteName() == 'login')
                         @if(isset($config['bootstrappers']['registerSettings']['type']) && $config['bootstrappers']['registerSettings']['type'] == 'all')
                             <a href="{{ route('pc:register') }}" class="font16 ">注册</a>
                         @endif
                     @else
-                    <a href="{{ route('pc:login') }}" class="font16 ">登录</a>
+                    <a href="{{ route('login') }}" class="font16 ">登录</a>
                     @endif
                     <a href="{{ route('pc:feeds') }}" class="font16 ">随便看看</a>
                     <a href="http://www.thinksns.com" class="font16 ">TS+官网</a>
