@@ -8,21 +8,24 @@ use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Middleware as PcMiddleware;
 //     'as' => 'home',
 // ])->defaults('destination', '/feeds');
 
-Route::prefix('passport')->group(function () {
+Route::prefix('auth')->group(function () {
     // 登录
     Route::get('/login', [
         'uses' => 'PassportController@index',
         'as' => 'login',
     ]);
 
-    // 登录成功记录token
-    Route::get('/token/{token}/{type}', 'PassportController@token')->name('pc:token');
-
     // 登出
     Route::get('/logout', [
         'uses' => 'PassportController@logout',
         'as' => 'logout',
     ]);
+});
+
+Route::prefix('passport')->group(function () {
+
+    // 登录成功记录token
+    Route::get('/token/{token}/{type}', 'PassportController@token')->name('pc:token');
 
     // 注册
     Route::get('/register/{type?}', 'PassportController@register')->where(['type' => '[0-9]+'])->name('pc:register');
@@ -96,7 +99,7 @@ Route::prefix('rank')->group(function () {
     Route::get('/rankList', 'RankController@_getRankList')->name('pc:ranklist');
 });
 
-Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
+Route::prefix('account')->middleware('auth')->group(function () {
     // 基本设置
     Route::get('/index', 'AccountController@index')->name('pc:account');
 
@@ -139,7 +142,7 @@ Route::prefix('account')->middleware(PcMiddleware\CheckLogin::class)->group(func
     Route::get('/gateway', 'AccountController@gateway')->name('pc:gateway');
 });
 
-Route::prefix('profile')->middleware(PcMiddleware\CheckLogin::class)->group(function () {
+Route::prefix('profile')->middleware('auth')->group(function () {
 
     // 动态
     Route::get('/{user?}', 'ProfileController@feeds')->where(['user' => '[0-9]+'])->name('pc:mine');
@@ -163,8 +166,8 @@ Route::prefix('users')->group(function () {
     // 地区查找
     Route::get('/area', 'UserController@area')->name('pc:userarea');
     // 粉丝关注
-    // Route::middleware(PcMiddleware\CheckLogin::class)->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]', 'user_id' => '[0-9+]'])->name('pc:follows');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]'])->name('pc:follows');
+    // Route::middleware('auth')->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]', 'user_id' => '[0-9+]'])->name('pc:follows');
+    Route::middleware('auth')->get('/follows/{type?}/{user_id?}', 'UserController@follows')->where(['type' => '[1-2]'])->name('pc:follows');
 });
 
 
@@ -182,7 +185,7 @@ Route::prefix('news')->group(function () {
     Route::get('/{news_id}/comments', 'NewsController@comments')->where(['news_id' => '[0-9]+']);
 
     // 投稿
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
+    Route::middleware('auth')->get('/release/{news_id?}', 'NewsController@release')->name('pc:newsrelease');
 });
 
 Route::prefix('message')->group(function () {
@@ -205,10 +208,10 @@ Route::prefix('message')->group(function () {
 
 Route::prefix('group')->group(function () {
     //创建圈子
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/create', 'GroupController@create')->name('pc:groupcreate');
+    Route::middleware('auth')->get('/create', 'GroupController@create')->name('pc:groupcreate');
 
     //发布帖子
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('/publish', 'GroupController@publish')->name('pc:postcreate');
+    Route::middleware('auth')->get('/publish', 'GroupController@publish')->name('pc:postcreate');
 
     // 圈子列表
     Route::get('/', 'GroupController@index')->name('pc:group');
@@ -232,17 +235,17 @@ Route::prefix('group')->group(function () {
     Route::get('/{post_id}/comments', 'GroupController@comments')->where(['post_id' => '[0-9]+']);
 
     // 圈子管理
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('notice', 'GroupController@noticeRead')->name('pc:groupnotice');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('member', 'GroupController@member')->name('pc:memberpage');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('report', 'GroupController@reportList')->name('pc:reportList');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('get-member', 'GroupController@memberList')->name('pc:memberList');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('incomes', 'GroupController@incomes')->name('pc:incomes');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('manage/group', 'GroupController@manageGroup')->name('pc:groupedit');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('manage/member', 'GroupController@manageMember')->name('pc:groupmember');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('manage/bankroll', 'GroupController@bankroll')->name('pc:groupbankroll');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('manage/bankroll_detail', 'GroupController@bankrollDetail')->name('pc:bankrolldetail');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('manage/report', 'GroupController@report')->name('pc:groupreport');
-    Route::middleware(PcMiddleware\CheckLogin::class)->get('manage/report_detail', 'GroupController@reportDetail')->name('pc:reportdetail');
+    Route::middleware('auth')->get('notice', 'GroupController@noticeRead')->name('pc:groupnotice');
+    Route::middleware('auth')->get('member', 'GroupController@member')->name('pc:memberpage');
+    Route::middleware('auth')->get('report', 'GroupController@reportList')->name('pc:reportList');
+    Route::middleware('auth')->get('get-member', 'GroupController@memberList')->name('pc:memberList');
+    Route::middleware('auth')->get('incomes', 'GroupController@incomes')->name('pc:incomes');
+    Route::middleware('auth')->get('manage/group', 'GroupController@manageGroup')->name('pc:groupedit');
+    Route::middleware('auth')->get('manage/member', 'GroupController@manageMember')->name('pc:groupmember');
+    Route::middleware('auth')->get('manage/bankroll', 'GroupController@bankroll')->name('pc:groupbankroll');
+    Route::middleware('auth')->get('manage/bankroll_detail', 'GroupController@bankrollDetail')->name('pc:bankrolldetail');
+    Route::middleware('auth')->get('manage/report', 'GroupController@report')->name('pc:groupreport');
+    Route::middleware('auth')->get('manage/report_detail', 'GroupController@reportDetail')->name('pc:reportdetail');
 
 });
 
