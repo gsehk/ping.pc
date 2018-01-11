@@ -1,30 +1,33 @@
 {
-  "name": "zhiyicx/plus-component-pc",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Foreach",
-      "email": "missu082500@163.com",
-      "role": "Developer"
+    "name": "zhiyicx/plus-component-pc",
+    "authors": [
+        {
+            "name": "Foreach",
+            "email": "missu082500@163.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "database/seeds/"
+        ],
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Zhiyi\\Component\\ZhiyiPlus\\PlusComponentPc\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zhiyi\\Component\\ZhiyiPlus\\PlusComponentPc\\PcServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "overtrue/easy-sms": "^0.0.10",
+        "overtrue/socialite": "^1.3",
+        "gregwar/captcha": "1.*"
     }
-  ],
-  "autoload": {
-    "classmap": ["database/"],
-    "files": ["src/helpers.php"],
-    "psr-4": {
-      "Zhiyi\\Component\\ZhiyiPlus\\PlusComponentPc\\": "src/"
-    }
-  },
-  "extra": {
-    "laravel": {
-        "providers": [
-            "Zhiyi\\Component\\ZhiyiPlus\\PlusComponentPc\\PcServiceProvider"
-        ]
-    }
-  },
-  "require": {
-    "overtrue/easy-sms": "^0.0.10",
-    "overtrue/socialite": "^1.3",
-    "gregwar/captcha": "1.*"
-  }
 }
