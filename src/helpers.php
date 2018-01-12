@@ -159,6 +159,11 @@ function createRequest($method = 'POST', $url = '', $params = array(), $instance
     }
 
     $response = Route::dispatch($request);
+
+    // 错误跳转
+    if (!$response->isSuccessful()) {
+        abort(500);
+    }
     return $original ? $response->original : $response;
     // if ($response->isSuccessful()){
     //     return $response->original;

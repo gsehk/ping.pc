@@ -108,26 +108,6 @@ class GroupController extends BaseController
     }
 
     /**
-     * 举报详情.
-     *
-     * @author 28youth
-     * @param Request $request
-     */
-    public function reportDetail(Request $request)
-    {
-        $group_id = $request->query('group_id');
-        $params = [
-            'limit' => $request->query('limit', 15),
-            'offset' => $request->query('offset', 0),
-            'group_id' => $request->query('group_id'),
-        ];
-        $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
-        $data['reports'] = createRequest('GET', '/api/v2/plus-group/reports/', $params);
-
-        return view('pcview::group.manage_report_detail', $data, $this->PlusData);
-    }
-
-    /**
      * 发布帖子.
      *
      * @author 28youth
@@ -281,7 +261,7 @@ class GroupController extends BaseController
         $data['reports'] = $reports;
         $data['group_id'] = $group_id;
         $data['loadcount'] = $request->query('loadcount');
-        $reportData = view('pcview::templates.report', $data, $this->PlusData)->render();
+        $reportData = view('pcview::templates.group_report', $data, $this->PlusData)->render();
 
         return response()->json([
             'status' => true,
@@ -320,14 +300,6 @@ class GroupController extends BaseController
             'data' => $recordData,
             'after' => $after
         ]);
-    }
-
-    public function bankrollDetail(Request $request)
-    {
-        $group_id = $request->query('group_id');
-        $data['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
-
-        return view('pcview::group.manage_bankroll_detail', $data, $this->PlusData);
     }
 
     /**
