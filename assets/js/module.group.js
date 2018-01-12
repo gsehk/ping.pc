@@ -197,7 +197,7 @@ post.delPost = function(group_id, post_id, poi) {
 };
 
 post.pinnedPost = function(post_id){
-    var url = TS.API+'/api/v2/plus-group/pinned/posts/'+post_id;
+    var url = '/api/v2/plus-group/pinned/posts/'+post_id;
     pinneds(url);
 };
 
