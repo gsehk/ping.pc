@@ -61,13 +61,8 @@
 </div>
 @endsection
 <script src="{{ asset('assets/pc/layer/laydate/laydate.js')}}"></script>
-<script src="{{ asset('assets/pc/js/axios.min.js')}}"></script>
 @section('scripts')
 <script>
-axios.defaults.baseURL = TS.API;
-axios.defaults.headers.common['Accept'] = 'application/json';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
-axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
 
 setTimeout(function() {
     scroll.init({

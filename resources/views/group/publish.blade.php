@@ -34,17 +34,12 @@
     </div>
 </div>
 @endsection
-<script src="{{ asset('assets/pc/js/axios.min.js')}}"></script>
 <script src="{{ asset('assets/pc/js/md5.min.js') }}"></script>
 @section('scripts')
 <script>
-axios.defaults.baseURL = TS.API;
-axios.defaults.headers.common['Accept'] = 'application/json';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
-axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
 
 $('#J-publish-post').on('click', function(e){
-    var POST_URL = '/plus-group/groups/{{$group->id}}/posts';
+    var POST_URL = '/api/v2/plus-group/groups/{{$group->id}}/posts';
     var isSync = $("input:checkbox:checked").val();
     var args = {
         'title': $('#title').val(),

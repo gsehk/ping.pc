@@ -1333,7 +1333,7 @@ var getUserInfo = function(uids) {
     var user = [];
     var type = typeof(uids);
     if (type == 'object') {
-        var url = TS.API + '/users/';
+        var url = '/api/v2/users/';
         var _uids = _.chunk(uids, 20);
         _.forEach(_uids, function(value, key) {
             axios.get(url, {id: _.join(value, ',')})
@@ -1345,7 +1345,7 @@ var getUserInfo = function(uids) {
               });
         })
     } else {
-        var url = TS.API + '/users/' + uids;
+        var url = '/api/v2/users/' + uids;
         axios.get(url)
           .then(function (response) {
             user = response.data;

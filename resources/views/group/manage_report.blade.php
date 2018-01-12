@@ -43,13 +43,8 @@
 </div>
 @endsection
 <script src="{{ asset('assets/pc/layer/laydate/laydate.js')}}"></script>
-<script src="{{ asset('assets/pc/js/axios.min.js')}}"></script>
 @section('scripts')
 <script>
-axios.defaults.baseURL = TS.API;
-axios.defaults.headers.common['Accept'] = 'application/json';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
-axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
 
 setTimeout(function() {
     scroll.init({
@@ -104,11 +99,11 @@ var MAG = {
      */
     audit: function(rid, type){
         var params = {
-            url: '/plus-group/reports/'+rid+'/accept',
+            url: '/api/v2/plus-group/reports/'+rid+'/accept',
             method: 'PATCH',
         }
         if (!type) {
-            params.url = '/plus-group/reports/'+rid+'/reject';
+            params.url = '/api/v2/plus-group/reports/'+rid+'/reject';
         }
         axios({
             method: params.method,

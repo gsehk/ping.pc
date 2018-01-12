@@ -101,12 +101,7 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{ asset('assets/pc/js/axios.min.js')}}"></script>
 <script>
-axios.defaults.baseURL = TS.API;
-axios.defaults.headers.common['Accept'] = 'application/json';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
-axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
 
 $('body').on('click', '.u-opt svg', function(){
     $(this).next("ul").toggle();
@@ -121,7 +116,7 @@ var MAG = {
      */
     set: function(gid, uid, type){
         var params = {
-            url: '/plus-group/groups/'+gid+'/managers/'+uid,
+            url: '/api/v2/plus-group/groups/'+gid+'/managers/'+uid,
             method: type ? 'PUT' : 'DELETE',
         }
         axios({
@@ -143,7 +138,7 @@ var MAG = {
      */
     black: function(gid, uid, type){
         var params = {
-            url: '/plus-group/groups/'+gid+'/blacklist/'+uid,
+            url: '/api/v2/plus-group/groups/'+gid+'/blacklist/'+uid,
             method:type ? 'PUT' : 'DELETE',
         }
         axios({
@@ -164,7 +159,7 @@ var MAG = {
      * @param int type [1-通过 2-驳回]
      */
     audit: function(gid, uid, type){
-        var URL = '/plus-group/groups/'+gid+'/members/'+uid+'/audit';
+        var URL = '/api/v2/plus-group/groups/'+gid+'/members/'+uid+'/audit';
         axios.patch( URL, {
                 status: type
             })
@@ -181,7 +176,7 @@ var MAG = {
      * @param  int uid
      */
     delete: function(gid, uid){
-        var URL = '/plus-group/groups/'+gid+'/members/'+uid;
+        var URL = '/api/v2/plus-group/groups/'+gid+'/members/'+uid;
         axios.delete( URL )
         .then(function (response) {
             noticebox('操作成功', 1, 'refresh');
@@ -196,7 +191,7 @@ var MAG = {
      * @param  int uid
      */
     assign: function(gid, uid){
-        var URL = '/plus-group/groups/'+gid+'/owner';
+        var URL = '/api/v2/plus-group/groups/'+gid+'/owner';
         axios.patch( URL, {
                 target: uid
             })

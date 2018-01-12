@@ -171,15 +171,10 @@
 <script src='//webapi.amap.com/maps?v=1.4.2&key=e710c0acaf316f2daf2c1c4fd46390e3'></script>
 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 @endsection
-<script src="{{ asset('assets/pc/js/axios.min.js')}}"></script>
 <script src="{{ asset('assets/pc/js/geohash.js')}}"></script>
 <script src="{{ asset('assets/pc/js/md5.min.js')}}"></script>
 @section('scripts')
 <script>
-axios.defaults.baseURL = TS.API;
-axios.defaults.headers.common['Accept'] = 'application/json';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
-axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
 
 $('#J-submodel label').on('click', function(e){
     var val = $('#'+$(this).attr('for')).val();
@@ -234,7 +229,7 @@ $('#J-upload-cover').on('change', function(e){
 $('#J-create-group').on('click', function(){
     var name = $('[name="name"]').val();
     var modeType = $('[name="modes"]:checked').val();
-    var POST_URL = '/plus-group/groups/{{$group->id}}';
+    var POST_URL = '/api/v2/plus-group/groups/{{$group->id}}';
     var group = [[ 'founder'], ['administrator', 'founder'], ['member','administrator','founder']];
     var permissions = group[$('[name="permissions"]:checked').val()];
     var formData = new FormData();
@@ -292,7 +287,7 @@ $('#J-create-group').on('click', function(){
         });
 });
 $('#J-create-group-manager').on('click', function(){
-    var POST_URL = '/plus-group/groups/{{$group->id}}';
+    var POST_URL = '/api/v2/plus-group/groups/{{$group->id}}';
     var formData = new FormData();
     var attrs = {
         summary: $('[name="summary"]').val(),

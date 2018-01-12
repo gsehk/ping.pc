@@ -10,7 +10,7 @@
 <script type="text/javascript">
     var editor = new pluseditor({
         element: document.querySelector('#editor'),
-        fileApiPath: TS.API+"/files/",
+        fileApiPath: "/api/v2/files/",
         placeholder: "{{ $place or '开始你的表演'}}",
         uploadFile: function(file, cb){
             fileUpload.init(file, function(image, f, id){
