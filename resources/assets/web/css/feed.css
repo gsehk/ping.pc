@@ -2,9 +2,9 @@
 .feed_cont {float:left;width:635px;margin:0 30px 0;}
 /*动态发布*/
 .feed_post {width:100%;margin-bottom:20px;padding:30px 40px;border-radius:3px;background:white;}
-.feed_post .post_textarea {font-size:16px;width:557px;height:158px;padding:10px;resize:none;border:1px solid #ededed;outline:none;background:#f3f6f7;color:#333;overflow:hidden;}
+.feed_post .post_textarea {font-size:16px;width:557px;height:158px;padding:10px;resize:none;border:1px solid #ededed;outline:none;background:#f3f6f7;color:#333;}
 .feed_post .post_extra {position:relative;line-height:31px;margin-top:10px;}
-.feed_post .post_extra .dy_cs {position:absolute;right:5px;top:-47px;font-size:12px;}
+.feed_post .post_extra .dy_cs {position:absolute;right:15px;top:-45px;font-size:12px;}
 .feed_post .post_extra span {cursor:pointer;line-height:37px;display:inline-block;color:#666;}
 .feed_post .post_extra svg {display:inline-block;margin-right:2px;margin-bottom:2px;font-size:20px;}
 .feed_post .post_button {line-height:32px;float:right;width:85px;height:32px;text-align:center;color:#fff;border:0;border-radius:3px;background:#59b6d7;/* margin-right:40px;.del_huifu */}

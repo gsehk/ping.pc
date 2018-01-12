@@ -1225,7 +1225,7 @@ var checkLogin = function() {
     if (TS.MID == 0) {
         // 记录url
         $.cookie('referer_url', window.location.href, 1);
-        window.location.href = TS.SITE_URL + '/auth/login';
+        window.location.href = TS.SITE_URL + '/passport/login';
         throw new Error("请登录");
     }
 }
@@ -1300,33 +1300,17 @@ var thirdShare = function(type, url, title, pic, obj) {
             window.open(tourl);
           break;
         case 2: // QQ
-            // 获取真实图片地址
+            tourl = 'http://connect.qq.com/widget/shareqq/index.html?url=';
+            tourl += encodeURIComponent(url);
+            tourl += '&title=';
+            tourl += title;
+            tourl += '&desc=';
+            tourl += title;
             if (pic != '') {
-                axios.get(pic + '?json=1')
-                  .then(function (response) {
-                    pic = response.data.url;
-                    tourl = 'http://connect.qq.com/widget/shareqq/index.html?url=';
-                    tourl += encodeURIComponent(url);
-                    tourl += '&title=';
-                    tourl += title;
-                    tourl += '&desc=';
-                    tourl += title;
-                    tourl += '&pics=';
-                    tourl += pic;
-                    window.open(tourl);
-                  })
-                  .catch(function (error) {
-                    showError(error.response.data);
-                  });
-            } else {
-                tourl = 'http://connect.qq.com/widget/shareqq/index.html?url=';
-                tourl += encodeURIComponent(url);
-                tourl += '&title=';
-                tourl += title;
-                tourl += '&desc=';
-                tourl += title;
-                window.open(tourl);
+                tourl += '&pics=';
+                tourl += pic;
             }
+            window.open(tourl);
           break;
         case 3: // 微信
             $('.weixin_qrcode').html('');
@@ -1339,7 +1323,6 @@ var thirdShare = function(type, url, title, pic, obj) {
           break;
     }
 }
-
 
 /**
  * 获取用户信息
