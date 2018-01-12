@@ -158,17 +158,23 @@ $('.J-authenticate-btn').on('click', function(e) {
 
         return args.get();
     };
+
     if (authType == 'user') {
         var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
         if(reg.test(getArgs().number) === false)
         {
-            noticebox('身份证输入不合法', 0);
-            return;
+            noticebox('身份证输入不合法', 0);return;
+        }
+        if (!getArgs().front_id || !getArgs().behind_id) {
+            noticebox('请上传证件照', 0);return;
         }
         getArgs().files = [getArgs().front_id, getArgs().behind_id];
     }
 
     if (authType == 'org') {
+        if (!getArgs().license_id) {
+            noticebox('请上传证件照', 0);return;
+        }
         getArgs().files = [getArgs().license_id];
     }
     axios.post('/api/v2/user/certification', getArgs())
