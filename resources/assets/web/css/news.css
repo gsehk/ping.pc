@@ -69,11 +69,10 @@
 .unslider .title {width:100%;position:absolute;bottom:0;padding:20px;margin:0;color:#ffffff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:20px;text-align:left;background-image:-webkit-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,.4) 100%);}
 /*投稿按钮*/.news_release_btn svg {margin-right:5px;color:#fff;}
 .news_release_btn span {font-size:20px;display:inline-block;width:100%;margin:30px 0;padding:10px 0;text-align:center;color:#fff;border-radius:30px;background:#59b6d7;}
-/*投稿*/.release_cont {padding:60px;}
+/*投稿*/
+.release_cont {padding:60px;}
 .release_title {font-size:20px;padding-bottom:15px;border-bottom:1px solid #ededed;}
 .release_title input {width:100%;border:none;outline:none;color:#333;}
-.release_cates span {font-size:18px;display:inline-block;margin-bottom:3px;padding:2px 15px;cursor:pointer;}
-.release_cates span.current {color:white;border-radius:2px;background-color:#0096e6;}
 .p_30 {font-size:14px;padding-top:28px;}
 .release_place {overflow:hidden;width:695px;height:530px;margin-top:30px;}
 .release_place textarea {width:100%;height:100%;border:none;}

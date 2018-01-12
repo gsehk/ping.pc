@@ -15,7 +15,7 @@ $('.subject-submit').on('click', function() {
         'content': editor.value(),
         'image': $('#subject-image').val(),
         'from': $('#subject-from').val(),
-        'cate_id': $('#cate_id').val(),
+        'cate_id': $('.zy_select').data('value'),
         'news_id': $('#news_id').val() || 0
     };
     var tags = [];
@@ -32,7 +32,7 @@ $('.subject-submit').on('click', function() {
         noticebox('文章标题字数不能超过20字', 0);
         return false;
     }
-    if (args.cate_id == '0') {
+    if (!args.cate_id) {
         noticebox('请选择栏目', 0);
         return false;
     }

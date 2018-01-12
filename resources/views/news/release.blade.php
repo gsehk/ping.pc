@@ -20,17 +20,15 @@
         <div class="release_title p_30">
             <input type="text" id="subject-abstract" name="abstract" value="{{$subject or ''}}" placeholder="请在此输入200字以内的文章摘要"/>
         </div>
-        <div class="release_title p_30 release_cates">
-            @if(isset($cates))
-                @foreach($cates as $k=>$cate)
-                    <span data-cid="{{$cate['id']}}"
-                        @if(isset($category) && count($category) > 0)
-                            @if($cate['id'] == $category['id']) class="current" @endif
-                        @endif
-                    >{{$cate['name']}}</span>
+        <div data-value="" class="zy_select gap12 p_30" id="categrey">
+            <span>请选择文章分类</span>
+            <ul>
+                @foreach ($cates as $cate)
+                    <li data-value="{{$cate->id}}">{{$cate->name}}</li>
                 @endforeach
-            @endif
-            <input type="hidden" name="cate_id" id="cate_id" value="{{ $category['id'] or 0 }}">
+            </ul>
+            <i></i>
+            <input id="cate" type="hidden" value="{{$cate_id or 0}}" />
         </div>
         <div class="release_place">
             @include('pcview::widgets.markdown', ['height'=>'530px', 'width' => '100%', 'content'=>$content ?? ''])
@@ -253,18 +251,6 @@
                 };
                 return new CropAvatar($('#crop-avatar'));
             });
-        });
-        // 资讯分类点击
-        $('.release_cates span').on('click', function(e){
-            if ($(this).hasClass('current')) {
-                $('#cate_id').val('');
-                $(this).removeClass('current');
-            }else{
-                $(this).siblings().removeClass('current');
-                $(this).addClass('current');
-                var cid  = $(this).data('cid');
-                $('#cate_id').val(cid);
-            }
         });
     </script>
 @endsection
