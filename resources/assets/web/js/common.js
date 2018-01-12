@@ -1225,7 +1225,7 @@ var checkLogin = function() {
     if (TS.MID == 0) {
         // 记录url
         $.cookie('referer_url', window.location.href, 1);
-        window.location.href = TS.SITE_URL + '/passport/login';
+        window.location.href = TS.SITE_URL + '/auth/login';
         throw new Error("请登录");
     }
 }
