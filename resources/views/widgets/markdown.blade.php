@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{{ asset('assets/pc/markdown/pluseditor.css') }}">
 <div id="layout" class="div">
     <div class="editormd">
-        <textarea id="editor" style="display: none"></textarea>
+        <textarea id="editor" style="display: none">{{$content or ''}}</textarea>
     </div>
 </div>
 <script type="text/javascript" src="{{ asset('assets/pc/markdown/pluseditor.min.js') }}"></script>
