@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "axios": "^0.17.1",
+        "js-md5": "^0.7.3",
         "simkit-bootstrap-ui-kit": "^0.0.3",
         "vue": "^2.5.9",
         "vue-router": "^3.0.1"
