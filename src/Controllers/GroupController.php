@@ -18,6 +18,7 @@ class GroupController extends BaseController
     {
         $this->PlusData['current'] = 'group';
         $data['cates'] = createRequest('GET', '/api/v2/plus-group/categories');
+        $this->PlusData['TS'] && $data['my_group'] = createRequest('GET', '/api/v2/plus-group/user-groups');
 
         // 圈子总数
         $data['groups_count'] = GroupModel::where('audit', 1)->count();

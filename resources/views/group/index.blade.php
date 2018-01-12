@@ -48,7 +48,13 @@
                     <span>创建圈子</span>
                 </div>
             </a>
-            <a href="{{route('pc:postcreate', ['type'=>'outside'])}}">
+            <a
+                @if (isset($my_group) && !$my_group->isEmpty())
+                    href="{{route('pc:postcreate', ['type'=>'outside'])}}"
+                @else
+                    href="javascript:;" onclick="noticebox('未加入圈子，不能进行发帖', 0)"
+                @endif
+            >
                 <div class="u-btn">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-writing"></use></svg>
                     <span>发帖</span>
