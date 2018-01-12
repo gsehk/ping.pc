@@ -171,7 +171,7 @@
             url: '/group/list',
             params: {limit: 10}
         });
-    }, 300);
+    }, 150);
 
     // 圈子分类筛选
     $('.m-chip span').on('click', function() {

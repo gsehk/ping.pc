@@ -195,7 +195,7 @@
                 paramtype: 1,
                 params: {type:"{{$type}}", group_id:"{{$group->id}}", limit:15}
             });
-        }, 200);
+        }, 150);
 
         // 切换帖子列表
         $('.feed_menu a').on('click', function() {
