@@ -69,7 +69,7 @@
                 </a>
             @else
                 <a class="btn profile-btn mcolor" id="follow" status="1" href="javascript:;">
-                    <svg class="icon hide"><use xlink:href="#icon-added"></use></svg><span>已关注</span>
+                    <svg class="icon hide"><use xlink:href="#icon-add"></use></svg><span>已关注</span>
                 </a>
             @endif
 
