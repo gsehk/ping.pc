@@ -7,6 +7,7 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('assets/pc/css/global.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/pc/css/feed.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/pc/css/news.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/pc/css/user.css') }}"/>
