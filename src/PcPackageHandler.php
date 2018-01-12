@@ -138,7 +138,7 @@ class PcPackageHandler extends PackageHandler
      */
     protected function getPaths(): array
     {
-        return PcServiceProvider::pathsToPublish(PcServiceProvider::class, 'public');
+        return PcServiceProvider::pathsToPublish(PcServiceProvider::class, 'pc-public');
     }
 
 }
