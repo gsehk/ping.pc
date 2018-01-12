@@ -3,7 +3,7 @@
 	$.fn.Huploadify = function(opts){
 		var itemTemp = '<a class="feed_picture_span uploadify-queue-item" id="${fileID}"><img class="imgload" src=" '+loadgif+' "/></a>';
 		var defaults = {
-			fileTypeExts:'*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG',//允许上传的文件类型，格式'*.jpg;*.doc'
+			fileTypeExts:'*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.gif;*.GIF',//允许上传的文件类型，格式'*.jpg;*.doc'
 			auto:true,//是否开启自动上传
 			method:'post',//发送请求的方式，get或post
 			multi:true,//是否允许选择多个文件
@@ -25,7 +25,7 @@
 			onSelect:null,//选择文件后的回调函数，可传入参数file
 			onQueueComplete:null,//队列中的所有文件上传完成后触发
 		}
-			
+
 		var option = $.extend(defaults,opts);
 
 		//定义一个通用函数集合
@@ -51,7 +51,7 @@
 			},
 			////根据文件序号获取文件
 			getFile : function(index,files){
-				for(var i=0;i<files.length;i++){	   
+				for(var i=0;i<files.length;i++){
 					if(files[i].index == index){
 						return files[i];
 					}
@@ -92,7 +92,7 @@
 							}
 							else{
 								var file = F.getFile(fileIndex,uploadManager.filteredFiles);
-								file && uploadManager._uploadFile(file);	
+								file && uploadManager._uploadFile(file);
 							}
 						},
 						disable : function(instanceID){
@@ -136,11 +136,11 @@
 					//文件选择控件选择
 					var fileInput = this._getInputBtn();
 				  	if (fileInput.length>0) {
-						fileInput.change(function(e) { 
-							uploadManager._getFiles(e); 
-					 	});	
+						fileInput.change(function(e) {
+							uploadManager._getFiles(e);
+					 	});
 				 	}
-				  
+
 					//点击选择文件按钮时触发file的click事件
 					$('#feed_pic').on('click',function(){
 						_this.find('.selectbtn').trigger('click');
@@ -240,7 +240,7 @@
 
 			uploadManager.init();
 		});
-		
+
 		return returnObj;
 
 	}
