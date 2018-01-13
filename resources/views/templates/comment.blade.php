@@ -21,28 +21,40 @@
             <a href="{{ route('pc:mine', $comment['user']['id']) }}"><span class="reply_name">{{$comment['user']['name']}}</span></a>
             <div class="reply_tool feed_datas">
                 <span class="reply_time">{{ getTime($comment['created_at']) }}</span>
-                @if ($comment['user']['id'] == $TS['id'])
                 <span class="reply_action ml10 mt-3" onclick="options(this)">
                     <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                 </span>
                 <div class="options_div">
                     <div class="triangle"></div>
                     <ul>
-                        @if(isset($top) ? $top : true)
+                    @if (
+                            ($comment['user']['id'] == $TS['id']) ||
+                            (isset($group->joined) && in_array($group->joined->role, ['administrator', 'founder']))
+                        )
+                        @if(isset($top) && $top == 1 && $comment['user']['id'] == $TS['id'])
                         <li>
-                            <a href="javascript:;" class="mouse" onclick="comment.pinneds('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
+                            <a href="javascript:;" onclick="comment.pinneds('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
                             </a>
                         </li>
                         @endif
                         <li>
-                            <a href="javascript:;" class="mouse" onclick="comment.delete('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
+                            <a href="javascript:;" onclick="comment.delete('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
                                 <svg class="icon"><use xlink:href="#icon-delete"></use></svg>删除
                             </a>
                         </li>
+                    @else
+                        @if (isset($group->joined) && $group->joined->role == 'member')
+                        <li>
+                            <a href="javascript:;" onclick="post.reportComment('{{$comment['id']}}');">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
+                                <span>举报</span>
+                            </a>
+                        </li>
+                        @endif
+                    @endif
                     </ul>
                 </div>
-                @endif
                 @if(isset($comment->top) && $comment->top == 1)
                     <span class="green fr">置顶</span>
                 @endif

@@ -411,10 +411,8 @@ class GroupController extends BaseController
      */
     public function comments(Request $request, $post_id)
     {
-        $params = [
-            'after' => $request->query('after') ?: 0
-        ];
-
+        $group_id = $request->query('group_id', 0);
+        $params = [ 'after' => $request->query('after', 0) ];
         $comments = createRequest('GET', '/api/v2/plus-group/group-posts/'.$post_id.'/comments', $params);
         $comment = clone $comments['comments'];
         $after = $comment->pop()->id ?? 0;
@@ -426,6 +424,7 @@ class GroupController extends BaseController
             });
         }
         $comments['top'] = true;
+        $comments['group'] = createRequest('GET', '/api/v2/plus-group/groups/'.$group_id);
         $commentData = view('pcview::templates.comment', $comments, $this->PlusData)->render();
 
         return response()->json([

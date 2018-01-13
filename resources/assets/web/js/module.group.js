@@ -215,7 +215,13 @@ post.cancelPinned = function(post_id){
           });
     });
 };
+/* 举报帖子 */
 post.reportPost = function(post_id){
     var url = '/api/v2/plus-group/reports/posts/'+post_id;
+    reported(url);
+};
+/* 举报帖子评论 */
+post.reportComment = function(comment_id){
+    var url = '/api/v2/plus-group/reports/comments/'+comment_id;
     reported(url);
 };

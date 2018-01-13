@@ -44,6 +44,9 @@
                                 <a class="mouse comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
                             @else
                                 <a class="mouse" onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
+                                @if (isset($group->joined) && $group->joined->role == 'member')
+                                    <a class="mouse" onclick="post.reportComment('{{$cv['id']}}');">举报</a>
+                                @endif
                             @endif
                         </p>
                     @endforeach
@@ -75,6 +78,7 @@
 @endif
 
 <script>
+    var params = {};
     var position = '{{ $position or 0 }}';
     if (position == 0) {
         setTimeout(function() {
@@ -83,6 +87,9 @@
             var id = '{{ $id }}';
             var url = '';
             var group_id = '{{ $group_id or 0 }}';
+            if (group_id) {
+                params.group_id = group_id;
+            }
 
             if (comments_type == 'answer') {
 
@@ -110,6 +117,7 @@
                 container: '.J-commentbox',
                 loading: loading,
                 url: url,
+                params: params,
                 canload: true
             });
         }, 200);
