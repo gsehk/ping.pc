@@ -22,8 +22,13 @@
                     <td><span class="s-fc3 f-pre">{{$report->content or ''}}</span></td>
                     <td>
                         @if ($report->type == 'post')
-                        @php $body = $report->resource->summary ?? '资源已被删除'; @endphp
-                            帖子：{{str_limit($body, 12)}}
+                            @if (isset($report->resource->summary))
+                                <a class="s-fc" href="{{ route('pc:grouppost', [$report->group_id, $report->resource_id]) }}">
+                                    帖子：{{str_limit($report->resource->summary, 12)}}
+                                </a>
+                            @else
+                                帖子：该资源已被删除
+                            @endif
                         @else
                         @php $body = $report->resource->body ?? '资源已被删除'; @endphp
                             评论：{{str_limit($body, 12)}}
