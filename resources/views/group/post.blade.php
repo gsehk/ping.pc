@@ -40,7 +40,7 @@
                     <div class="options_div">
                         <div class="triangle"></div>
                         <ul>
-                        @if ($post->group->joined && ($post->group->joined->role=='administrator' || $post->group->joined->role=='founder'))
+                        @if (isset($post->group->joined) && in_array($post->group->joined->role, ['administrator', 'founder']))
                         <li>
                             <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}', 'pinned');">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned"></use></svg>

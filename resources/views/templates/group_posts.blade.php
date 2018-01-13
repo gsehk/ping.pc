@@ -70,7 +70,7 @@
                         </a>
                         @endif
                     </li>
-                    @if ($group->joined && ($group->joined->role == 'administrator' || $group->joined->role == 'founder'))
+                    @if (isset($group->joined) && in_array($group->joined->role, ['administrator', 'founder']))
                         <li>
                             <a href="javascript:;" onclick="post.cancelPinned('{{$post->id}}');">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned"></use></svg>撤销置顶
@@ -181,7 +181,6 @@
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg>
                 <font>{{$post->views_count}}</font>
             </span>
-            @if (isset($group))
             <span class="options" onclick="options(this)">
                 <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
             </span>
@@ -201,7 +200,7 @@
                         </a>
                         @endif
                     </li>
-                    @if ($group->joined && ($group->joined->role == 'administrator' || $group->joined->role == 'founder'))
+                    @if (isset($group->joined) && in_array($group->joined->role, ['administrator', 'founder']))
                         <li>
                             <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}', 'pinned');">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned"></use></svg>置顶帖子
@@ -234,7 +233,6 @@
                     @endif
                 </ul>
             </div>
-            @endif
         </div>
 
          {{-- 评论 --}}
