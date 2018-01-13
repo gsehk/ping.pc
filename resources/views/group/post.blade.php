@@ -55,12 +55,14 @@
                         </li>
                         @else
                             @if($post->user_id == $TS['id'])
+                                @if (!$post->pinned)
                                 <li>
                                     <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}');">
                                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>
                                         <span>申请置顶</span>
                                     </a>
                                 </li>
+                                @endif
                                 <li>
                                     <a href="javascript:;" onclick="post.delPost('{{$post->group_id}}', '{{$post->id}}', 'read');">
                                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>

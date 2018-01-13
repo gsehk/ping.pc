@@ -195,12 +195,23 @@ post.delPost = function(group_id, post_id, poi) {
           });
     });
 };
-
+/* 置顶帖子 */
 post.pinnedPost = function(post_id){
     var url = '/api/v2/plus-group/pinned/posts/'+post_id;
     pinneds(url);
 };
-
+/* 撤销置顶 */
+post.cancelPinned = function(post_id){
+    ly.confirm(confirmTxt + '确定取消置顶帖子？', '', '', function(){
+        axios.patch('/api/v2/plus-group/pinned/posts/'+post_id+'/cancel')
+          .then(function (response) {
+            noticebox(response.data.message, 1, 'refresh');
+          })
+          .catch(function (error) {
+            showError(error.response.data);
+          });
+    });
+};
 post.reportPost = function(post_id){
     var url = '/api/v2/plus-group/reports/posts/'+post_id;
     reported(url);
