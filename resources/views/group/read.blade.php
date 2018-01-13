@@ -57,7 +57,9 @@
                                 <svg class="icon s-fc2 f-vatb"><use xlink:href="#icon-position"></use></svg>
                                 <font class="s-fc">{{$group->location}}</font>
                             </div>
-                            <a class="u-report" href="javascript:;" onclick="grouped.report({{$group->id}});">举报圈子</a>
+                            @if ($group->joined && ($group->joined->role == 'member'))
+                                <a class="u-report" href="javascript:;" onclick="grouped.report({{$group->id}});">举报圈子</a>
+                            @endif
                                 @if ($group->joined)
                                     <button
                                         class="joinbtn joined"
