@@ -55,7 +55,7 @@
                         </li>
                         @else
                             @if($post->user_id == $TS['id'])
-                                @if (!$post->pinned)
+                                @if (!$post->pinned && isset($group->joined) && !$group->joined->disabled)
                                 <li>
                                     <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}');">
                                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>
@@ -70,12 +70,14 @@
                                     </a>
                                 </li>
                             @else
+                                @if (isset($group->joined) && !$group->joined->disabled)
                                 <li>
                                     <a href="javascript:;" onclick="post.reportPost('{{$post->id}}');">
                                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
                                         <span>举报</span>
                                     </a>
                                 </li>
+                                @endif
                             @endif
                         @endif
                         </ul>

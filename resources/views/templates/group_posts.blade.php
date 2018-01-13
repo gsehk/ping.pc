@@ -89,12 +89,14 @@
                                 </a>
                             </li>
                         @else
+                        @if (isset($group->joined) && !$group->joined->disabled)
                             <li>
                                 <a href="javascript:;" onclick="post.reportPost('{{$post->id}}');">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
                                     <span>举报</span>
                                 </a>
                             </li>
+                        @endif
                         @endif
                     @endif
                 </ul>
@@ -213,22 +215,26 @@
                         </li>
                     @else
                         @if($post->user_id == $TS['id'])
+                            @if (isset($group->joined) && !$group->joined->disabled)
                             <li>
                                 <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}');">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
                                 </a>
                             </li>
+                            @endif
                             <li>
                                 <a href="javascript:;" onclick="post.delPost('{{$post->group_id}}', '{{$post->id}}');">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>删除
                                 </a>
                             </li>
                         @else
+                        @if (isset($group->joined) && !$group->joined->disabled)
                             <li>
                                 <a href="javascript:;" onclick="post.reportPost('{{$post->id}}');">
                                     <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>举报
                                 </a>
                             </li>
+                        @endif
                         @endif
                     @endif
                 </ul>
