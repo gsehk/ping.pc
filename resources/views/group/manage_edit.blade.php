@@ -180,7 +180,7 @@ $('#J-submodel label').on('click', function(e){
     var val = $('#'+$(this).attr('for')).val();
     if ('{{$group->mode}}' == 'paid') {
         e.preventDefault();
-        noticebox('禁止修改模式', 0);return;
+        noticebox('收费圈子不能改成公开和私有圈子', 0);return;
     }
     if (val == '2') {
         $('.j-sub0').hide();
@@ -195,7 +195,7 @@ $('.j-sub0 label').on('click', function(e){
     var mode = $(this).attr('for');
     if ('{{$group->mode}}' == 'private' && mode == 'radio-open') {
         e.preventDefault();
-        noticebox('禁止修改模式', 0);return;
+        noticebox('私有圈子不能改成公开圈子', 0);return;
     }
 });
 var selBox = $('.tags-box');

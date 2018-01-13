@@ -74,7 +74,6 @@ class FeedController extends BaseController
     public function read(Request $request, int $feed_id)
     {
         $feed = createRequest('GET', '/api/v2/feeds/'.$feed_id);
-        dd($feed);
         $feed->collect_count = $feed->collection->count();
         $feed->rewards = $feed->rewards->filter(function ($value, $key) {
             return $key < 10;
