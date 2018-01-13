@@ -34,6 +34,9 @@ class GroupController extends BaseController
      */
     public function create(Request $request)
     {
+        if (!$this->PlusData['config']['bootstrappers']['group:create']['need_verified']) {
+            abort(403, '未认证用户不能创建圈子');
+        }
         $data['tags'] = createRequest('GET', '/api/v2/tags');
         $data['cates'] = createRequest('GET', '/api/v2/plus-group/categories');
 
