@@ -33,13 +33,17 @@
                             @if(isset($cv->pinned) && $cv->pinned == 1)
                                 <span class="mouse green">置顶</span>
                             @endif
-                            @if($cv->user_id != $TS['id'])
-                                <a class="mouse" onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
-                            @else
-                                @if(isset($top) && $top == 1)
+
+                            @if (
+                                    ($TS['id'] == $cv->user_id) ||
+                                    (isset($group->joined) && in_array($group->joined->role, ['administrator', 'founder']))
+                                )
+                                @if(isset($top) && $top == 1 && $TS['id'] == $cv->user_id)
                                     <a class="mouse comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
                                 @endif
                                 <a class="mouse comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
+                            @else
+                                <a class="mouse" onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
                             @endif
                         </p>
                     @endforeach
