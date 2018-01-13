@@ -196,9 +196,12 @@ post.delPost = function(group_id, post_id, poi) {
     });
 };
 /* 置顶帖子 */
-post.pinnedPost = function(post_id){
+post.pinnedPost = function(post_id, type){
     var url = '/api/v2/plus-group/pinned/posts/'+post_id;
-    pinneds(url);
+    if (type == 'pinned') {
+        url = '/api/v2/plus-group/pinned/posts/'+post_id+'/create';
+    }
+    pinneds(url, type);
 };
 /* 撤销置顶 */
 post.cancelPinned = function(post_id){

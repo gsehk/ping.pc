@@ -42,7 +42,7 @@
                         <ul>
                         @if ($post->group->joined && ($post->group->joined->role=='administrator' || $post->group->joined->role=='founder'))
                         <li>
-                            <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}');">
+                            <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}', 'pinned');">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned"></use></svg>
                                 <span>置顶帖子</span>
                             </a>

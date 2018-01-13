@@ -203,7 +203,7 @@
                     </li>
                     @if ($group->joined && ($group->joined->role == 'administrator' || $group->joined->role == 'founder'))
                         <li>
-                            <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}');">
+                            <a href="javascript:;" onclick="post.pinnedPost('{{$post->id}}', 'pinned');">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned"></use></svg>置顶帖子
                             </a>
                         </li>

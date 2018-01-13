@@ -1098,7 +1098,7 @@ var collected = {
 };
 
 // 申请置顶
-var pinneds = function (url) {
+var pinneds = function (url, type) {
     var html = '<div class="pinned_box">'
             + '<p class="confirm_title">申请置顶</p>'
             + '<div class="pinned_text">选择置顶天数</div>'
@@ -1115,18 +1115,32 @@ var pinneds = function (url) {
             + '<div class="pinned_text">需要支付总金额：</div>'
             + '<div class="pinned_total"><span>0</span></div>'
         + '</div>';
+    if (type == 'pinned') {
+        html = '<div class="pinned_box">'
+            + '<p class="confirm_title">置顶帖子</p>'
+            + '<div class="pinned_text">设置帖子置顶天数</div>'
+            + '<div class="pinned_input">'
+                + '<input min="1" oninput="value=moneyLimit(value)" type="number" placeholder="设置范围为1~30天">'
+            + '</div>'
+        + '</div>';
+    }
 
     ly.confirm(html, '', '', function(){
         var data = {};
-        data.day = $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '';
-        data.amount = $('.pinned_input input').val() / TS.BOOT['wallet:ratio'] * data.day;
-        if (!data.day) {
-            lyNotice('请选择置顶天数');
-            return false;
-        }
-        if (!data.amount) {
-            lyNotice('请输入置顶金额');
-            return false;
+        if (type != 'pinned') {
+            data.day = $('.pinned_spans .current').length > 0 ? $('.pinned_spans .current').attr('days') : '';
+            data.amount = $('.pinned_input input').val() / TS.BOOT['wallet:ratio'] * data.day;
+            if (!data.day) {
+                lyNotice('请选择置顶天数');return;
+            }
+            if (!data.amount) {
+                lyNotice('请输入置顶金额');return;
+            }
+        } else {
+            data.day = $('.pinned_input input').val();
+            if (!data.day) {
+                lyNotice('请输入置顶天数');return;
+            }
         }
         axios.post(url, data)
           .then(function (response) {
