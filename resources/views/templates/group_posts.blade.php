@@ -25,7 +25,8 @@
         </a>
     </div>
     <div class="feed_body">
-        <p class="feed_text">{!! formatContent($post->title) !!}</p>
+        <p class="s-fc">{!! formatContent($post->title) !!}</p>
+        <p class="f-fs2">{{ $post->summary or ''}}</p>
         @include('pcview::templates.feed_images')
     </div>
     <div class="feed_bottom">
@@ -152,8 +153,8 @@
 
     {{-- <div class="post-title"><a href="{{ route('pc:grouppost', ['group_id' => $post->group_id, 'post_id' => $post->id]) }}">{{$post->title}}</a></div> --}}
     <div class="feed_body">
-        <p class="feed_text">{!! formatContent($post->title) !!}</p>
-
+        <p class="s-fc"><a href="{{ route('pc:grouppost', [$post->group_id, $post->id]) }}">{!! formatContent($post->title) !!}</a></p>
+        <p class="f-fs2">{{ $post->summary or ''}}</p>
         @include('pcview::templates.feed_images')
     </div>
 
