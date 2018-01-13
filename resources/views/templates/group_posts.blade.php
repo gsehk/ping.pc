@@ -12,7 +12,7 @@
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="avatar" src="{{ getAvatar($post->user, 50) }}" />
             @if($post->user->verified)
-            <img class="role-icon" src="{{ $post->user->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+            <img class="role-icon" src="{{ $post->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
             @endif
         </a>
         <span class="feed_uname font14">{{ $post->user->name }}</span>
@@ -137,7 +137,7 @@
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="avatar" src="{{ getAvatar($post->user, 50) }}" />
             @if($post->user->verified)
-            <img class="role-icon" src="{{ $post->user->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+            <img class="role-icon" src="{{ $post->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
             @endif
         </a>
 

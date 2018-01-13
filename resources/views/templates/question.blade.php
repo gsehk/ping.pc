@@ -25,7 +25,7 @@
                             <div class="post-user-avatar">
                                 <img src="{{ getAvatar($post->answer->user, 24) }}" class="avatar">
                                 @if ($post->answer->user->verified)
-                                    <img class="role-icon" src="{{ $post->answer->user->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+                                    <img class="role-icon" src="{{ $post->answer->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
                                 @endif
                             </div>
                             <div class="q_user_info">

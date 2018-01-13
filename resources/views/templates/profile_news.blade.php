@@ -12,7 +12,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
         <a class="avatar_box" href="{{ route('pc:mine', $post->user->id) }}">
             <img class="avatar" src="{{ getAvatar($post->user, 50) }}" width="50" />
             @if($post->user->verified)
-            <img class="role-icon" src="{{ $post->user->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+            <img class="role-icon" src="{{ $post->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
             @endif
         </a>
 

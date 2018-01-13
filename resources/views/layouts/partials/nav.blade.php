@@ -14,7 +14,7 @@
     <div class="nav_right relative">
         <img src="{{ getAvatar($TS, 30) }}" id="menu_toggle" alt="{{ $TS['name'] }}"/>
         @if($TS->verified)
-            <img class="role-icon" src="{{ $TS->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+            <img class="role-icon" src="{{ $TS->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
         @endif
         <span class="font16 nav_name">{{$TS['name']}}</span>
 

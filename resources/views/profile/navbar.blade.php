@@ -16,7 +16,7 @@
             <a href="{{ route('pc:mine', $user->id) }}">
                 <img class="round" src="{{ getAvatar($user, 160) }}"/>
                 @if($user->verified)
-                    <img class="role-icon" src="{{ $user->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+                    <img class="role-icon" src="{{ $user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
                 @endif
             </a>
         </div>

@@ -22,7 +22,7 @@
                     <a href="{{ route('pc:mine', $answer->user->id) }}">
                         <img class="round" src="{{ getAvatar($answer->user, 60) }}" width="60">
                         @if ($answer->user->verified)
-                            <img class="role-icon" src="{{ $answer->user->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+                            <img class="role-icon" src="{{ $answer->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
                         @endif
                     </a>
                 @endif
@@ -156,7 +156,7 @@
                     <a href="{{ route('pc:mine', $answer->user->id) }}">
                         <img src="{{ getAvatar($answer->user) }}" class="avatar">
                         @if ($answer->user->verified)
-                            <img class="role-icon" src="{{ $answer->user->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+                            <img class="role-icon" src="{{ $answer->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
                         @endif
                     </a>
                 </div>

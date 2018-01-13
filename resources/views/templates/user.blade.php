@@ -7,7 +7,7 @@
             <a class="avatar_box" href="{{route('pc:mine',['user_id'=>$data['id']])}}">
                 <img src="{{ getAvatar($data, 60) }}" class="user_avatar" alt="{{ $data['name'] }}"/>
                 @if($data->verified)
-                <img class="role-icon" src="{{ $post->user->verified->icon or asset('assets/pc/images/vip_icon.svg') }}">
+                <img class="role-icon" src="{{ $post->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
                 @endif
             </a>
         </div>
