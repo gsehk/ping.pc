@@ -43,8 +43,8 @@
     </div>
 </div>
 @endsection
-<script src="{{ asset('assets/pc/js/md5.min.js') }}"></script>
 @section('scripts')
+<script src="{{ asset('assets/pc/js/md5.min.js') }}"></script>
 <script>
 
 $('#J-publish-post').on('click', function(e){
@@ -66,18 +66,20 @@ $('#J-publish-post').on('click', function(e){
     var bodyStr = args.body.replace(/\@\!\[(.*)\]\((\d+)\)/gi, "");
     if (bodyStr) {
         args.summary = bodyStr.replace(/(\[(.*)\]\((.*)\))|(\n)|([\\\`\*\_\[\]\#\+\-\!\>\~])/g, "");
-        if (getLength(args.summary) > 190) {
+        if (args.summary.length > 190) {
             args.summary = args.summary.substring(0, 190);
         }
     }
-    if (!args.title || getLength(args.title) > 20) {
-        noticebox('请输入20字以内的标题', 0);return;
+    if (!args.title || args.title.length > 20) {
+        noticebox('请输入20字以内的标题', 0);
+        return;
     }
     if (!group_id) {
         noticebox('请选择发帖圈子', 0);return;
     }
-    if (!args.body || getLength(args.body) > 20000) {
-        noticebox('请输入2W字以内的帖子内容', 0);return;
+    if (!args.body || args.body.length > 20000) {
+        noticebox('请输入2W字以内的帖子内容', 0);
+        return;
     }
     if (isSync !== undefined) {
         args.sync_feed = isSync;

@@ -14,7 +14,7 @@ $('#J-user-info').on('click', function(e) {
         return args.get();
     };
     var arg = getArgs();
-    if (!args.data.name || getLength(args.data.name) > 8) {
+    if (!args.data.name || args.data.name.length > 8) {
         noticebox('用户名长度为2-8位', 0);
         return;
     }
@@ -22,7 +22,7 @@ $('#J-user-info').on('click', function(e) {
         noticebox('个人简介不能为空', 0);
         return;
     }
-    if (getLength(args.data.bio) > 50) {
+    if (args.data.bio.length > 50) {
         noticebox('个人简介不能超过50个字符', 0);
         return;
     }

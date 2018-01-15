@@ -419,8 +419,7 @@ var getLength = function(str, shortUrl) {
 // 统计输入字符串长度(用于评论回复最大字数计算)
 var checkNums = function(obj, len, show) {
     var str = $(obj).val();
-    var _length = getLength(str);
-    var surplus = len - _length;
+    var surplus = len - str.length;
     if (surplus < 0) {
         $(obj).parent().find('.' + show)
             .text(surplus)
@@ -801,7 +800,7 @@ var comment = {
             formData.body = formData.body.split('：')[1];
             formData.reply_user = this.support.to_uid;
         }
-        if (getLength(formData.body) > 255) {
+        if (formData.body.length > 255) {
             noticebox('内容超出长度限制', 0); return;
         }
 
@@ -1169,7 +1168,7 @@ var reported = function (url) {
             lyNotice('请输入举报理由');
             return false;
         }
-        if (getLength(reason) > 190) {
+        if (reason.length > 190) {
             lyNotice('举报理由不能大于190个字');
             return false;
         }

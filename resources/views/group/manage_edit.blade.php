@@ -243,15 +243,15 @@ $('#J-create-group').on('click', function(){
             allow_feed: $('[name="allow_feed"]:checked').val(),
         };
         if ('{{$group->name}}' != name) {
-            if (!name || getLength(name) > 20) {
+            if (!name || name.length > 20) {
                 noticebox('圈子名称长度为1 - 20个字', 0);return;
             }
             formData.append('name', name);
         }
-        if (getLength(attrs.summary) > 255) {
+        if (attrs.summary.length > 255) {
             noticebox('圈子简介不能大于255个字', 0);return;
         }
-        if (getLength(attrs.notice) > 2000) {
+        if (attrs.notice.length > 2000) {
             noticebox('圈子公告不能大于2000个字', 0);return;
         }
         if ($('.tags-box span').length < 1) {
@@ -293,11 +293,13 @@ $('#J-create-group-manager').on('click', function(){
         summary: $('[name="summary"]').val(),
         notice: $('[name="notice"]').val(),
     };
-    if (getLength(attrs.summary) > 255) {
-        noticebox('圈子简介不能大于255个字', 0);return;
+    if (attrs.summary.length > 255) {
+        noticebox('圈子简介不能大于255个字', 0);
+        return;
     }
-    if (getLength(attrs.notice) > 2000) {
-        noticebox('圈子公告不能大于2000个字', 0);return;
+    if (attrs.notice.length > 2000) {
+        noticebox('圈子公告不能大于2000个字', 0);
+        return;
     }
     _.forEach(attrs, function(v, k) {
         formData.append(k, v);

@@ -138,7 +138,7 @@ post.createPost = function (group_id) {
         group_post_mark: TS.MID + new Date().getTime(),
     };
 
-    var strlen = getLength(data.content);
+    var strlen = data.content.length;
     var leftnums = initNums - strlen;
     if ((leftnums < 0 || leftnums == initNums) && data.images.length < 1) {
         noticebox('分享内容长度为1-' + initNums + '字', 0);

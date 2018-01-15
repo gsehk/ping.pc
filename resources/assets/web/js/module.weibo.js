@@ -32,7 +32,7 @@ weibo.postFeed = function() {
     if (select == 'pay') {
         if ($('.feed_picture').find('img').length > 0) { // 图片付费弹窗
             // 分享文字内容不超过255字
-            if (getLength($('#feed_content').val()) > initNums) {
+            if ($('#feed_content').val().length > initNums) {
                 noticebox('分享内容长度不能超过' + initNums + '字', 0);
                 return false;
             }
@@ -69,7 +69,7 @@ weibo.postFeed = function() {
             var html = pay_box + images_box + info_box + '</div>';
         } else { // 文字付费弹窗
             // 分享字数限制
-            var strlen = getLength($('#feed_content').val());
+            var strlen = $('#feed_content').val().length;
             var leftnums = initNums - strlen;
             if (leftnums < 0 || leftnums == initNums || strlen < 50) {
                 noticebox('付费动态内容长度为50-' + initNums + '字', 0);
@@ -100,7 +100,7 @@ weibo.postFeed = function() {
         });
     } else {
         // 分享字数限制
-        var strlen = getLength($('#feed_content').val());
+        var strlen = $('#feed_content').val().length;
         var leftnums = initNums - strlen;
 
         // 免费并仅有文字时验证1-255个字，其余不超过255字即可

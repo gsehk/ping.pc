@@ -24,36 +24,32 @@ $('.subject-submit').on('click', function() {
     });
     args.tags = tags;
 
-    if (!args.title) {
-        noticebox('文章标题不能为空', 0);
-        return false;
-    }
-    if (getLength(args.title) > 20) {
-        noticebox('文章标题字数不能超过20字', 0);
-        return false;
+    if (!args.title || args.title.length > 20) {
+        noticebox('文章标题为1 ~ 20个字', 0);
+        return;
     }
     if (!args.cate_id) {
         noticebox('请选择栏目', 0);
-        return false;
+        return;
     }
-    if (getLength(args.subject) > 200) {
+    if (args.subject.length > 200) {
         noticebox('摘要内容不能超过200字', 0);
-        return false;
+        return;
     }
     if (!args.content) {
         noticebox('文章内容不能为空', 0);
-        return false;
+        return;
     }
-    if (getLength(args.content) > 5000) {
+    if (args.content.length > 5000) {
         noticebox('文章内容不能超过5000字', 0);
-        return false;
+        return;
     }
     /*if (!args.subject) { // 如果没有摘要，则截取内容前200字作为摘要
         args.subject = subString(editor.getHTML().replace(/<.*?>/ig,""), 200)
     }*/
     if (args.tags.length < 1) {
         noticebox('请选择标签', 0);
-        return false;
+        return;
     }
     if (!args.image || args.image == 0) {
         /*var reg = /\@\!\[\]\((\w+)\)/;
@@ -62,7 +58,7 @@ $('.subject-submit').on('click', function() {
             args.image = imgs[1];
         }*/
         noticebox('请上传封面图片', 0);
-        return false;
+        return;
     }
 
     if (args.news_id > 0) {
