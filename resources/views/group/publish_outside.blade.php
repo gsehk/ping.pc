@@ -76,8 +76,8 @@ $('#J-publish-post').on('click', function(e){
     if (!group_id) {
         noticebox('请选择发帖圈子', 0);return;
     }
-    if (!args.body) {
-        noticebox('请输入帖子内容', 0);return;
+    if (!args.body || getLength(args.body) > 20000) {
+        noticebox('请输入2W字以内的帖子内容', 0);return;
     }
     if (isSync !== undefined) {
         args.sync_feed = isSync;

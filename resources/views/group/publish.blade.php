@@ -63,9 +63,8 @@ $('#J-publish-post').on('click', function(e){
     if (!args.title || getLength(args.title) > 20) {
         noticebox('请输入20字以内的标题', 0);return;
     }
-
-    if (!args.body) {
-        noticebox('请输入帖子内容', 0);return;
+    if (!args.body || getLength(args.body) > 20000) {
+        noticebox('请输入2W字以内的帖子内容', 0);return;
     }
     if (isSync !== undefined) {
         args.sync_feed = isSync;
