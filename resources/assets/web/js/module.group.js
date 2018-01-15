@@ -42,14 +42,13 @@ var grouped = {
                 axios.put(url)
                   .then(function (response) {
                     noticebox(response.data.message, 1);
-                    _this.lockStatus = 0;
                   })
                   .catch(function (error) {
-                    _this.lockStatus = 0;
                     showError(error.response.data);
                   });
                 ly.close();
             })
+            _this.lockStatus = 0;
         } else {
             axios.put(url)
               .then(function (response) {
