@@ -209,6 +209,7 @@ $(function() {
                     loading: '.search_container',
                     url: '/search/data',
                     params: params,
+                    paramtype: 1,
                 });
                 break;
         };
