@@ -86,7 +86,7 @@
                 </dd>
             </dl>
             <h3 class="u-tt">{{$post->title}}</h3>
-            <div class="detail_body editor-preview">
+            <div class="detail_body markdown-body">
             {!! Parsedown::instance()->setMarkupEscaped(true)->text(replaceImage($post->body)) !!}
             </div>
             <div class="detail_share">
