@@ -67,7 +67,7 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 .feed_left {position:relative;width:815px;background:#fff;margin-right:30px;padding:20px 40px;}
 .detail_images {background:#f3f6f7;position:relative;}
 .detail_images img {display:block;max-width:675px;margin:10px auto;}
-.detail_body {margin:20px 0;word-break:break-all;text-align:justify;line-height:24px;letter-spacing:1px;color:#666;font-size:14px;}
+.detail_body {margin:20px 0;word-break:break-all;text-align:justify;line-height:24px;letter-spacing:1px;color:#666;font-size:14px;display: block;position: initial;background-color: transparent;}
 .detail_share {padding-bottom:40px;border-bottom:1px solid #ededed;}
 .detail_share span a {font-size:14px;line-height:40px;display:inline-block;width:120px;text-align:center;color:#666;border:1px solid #ededed;border-radius:3px;}
 .detail_share span a.act {color:#59b6d7;border:1px solid #59b6d7;}

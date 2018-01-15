@@ -9,6 +9,7 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('assets/pc/markdown/pluseditor.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/pc/css/feed.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/pc/css/group.css') }}"/>
 @endsection
@@ -85,7 +86,7 @@
                 </dd>
             </dl>
             <h3 class="u-tt">{{$post->title}}</h3>
-            <div class="detail_body">
+            <div class="detail_body editor-preview">
             {!! Parsedown::instance()->setMarkupEscaped(true)->text(replaceImage($post->body)) !!}
             </div>
             <div class="detail_share">
@@ -190,7 +191,6 @@
 
 @section('scripts')
     <script src="{{ asset('assets/pc/js/module.group.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/ .js') }}"></script>
     <script type="text/javascript">
         $("img.lazy").lazyload({effect: "fadeIn"});
     </script>
