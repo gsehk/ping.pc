@@ -150,7 +150,8 @@
                 $('#message_wrap').hide();
                 $('#chat_wrap').show();
                 var cid = $(this).data('cid');
-                $('#chat_send').attr('onclick', 'easemob.sendMes(' + cid + ')');
+                var uid = $(this).data('uid');
+                $('#chat_send').attr('onclick', 'easemob.sendMes(' + cid + ', ' + uid + ')');
 
                 // 设置为已读
                 easemob.cid = cid;
