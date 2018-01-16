@@ -189,7 +189,7 @@ Route::prefix('news')->group(function () {
 });
 
 Route::prefix('message')->group(function () {
-    Route::get('/{type}/{cid?}', 'MessageController@index')->where(['type' => '[0-5]', 'cid' => '[0-9]+'])->name('pc:webmessage');
+    Route::get('/{type}/{cid?}/{uid?}', 'MessageController@index')->where(['type' => '[0-5]', 'cid' => '[0-9]+', 'uid' => '[0-9]+'])->name('pc:webmessage');
     // 评论我的列表
     Route::get('/comments', 'MessageController@comments')->name('pc:webmessagecomments');
     // 点赞我的列表

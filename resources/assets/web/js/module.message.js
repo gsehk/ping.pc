@@ -441,7 +441,6 @@ message = {
     listMessage: function(cid) {
         var _this = this;
         // 设置房间名
-        console.log(message.datas.users[message.datas.list[cid]['other_uid']].name);
         $('#chat_wrap .body_title').html(message.datas.users[message.datas.list[cid]['other_uid']].name);
         $('#chat_wrap .clickMore').remove();
         $('#chat_cont').html('');

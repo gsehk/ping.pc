@@ -92,4 +92,13 @@
 		return false;
 	};
 
+	$.removeAllCookie = function () {
+	    var keys = document.cookie.match(/[^ =;]+(?=\=)/g);  
+	    if(keys) {  
+	        for(var i = keys.length; i--;)
+				$.cookie(keys[i], '', $.extend({}, options, { expires: -1 }));
+	    }
+	    return true;
+	};
+
 }));

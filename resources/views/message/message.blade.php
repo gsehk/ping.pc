@@ -100,7 +100,7 @@
 
         <div class="chat_bottom">
             <textarea placeholder="输入文字, ctrl+enter发送" class="chat_textarea" id="chat_text"></textarea>
-            <span class="chat_send" onclick="message.sendMessage({{ $cid }})" id="chat_send">发送</span>
+            <span class="chat_send" onclick="easemob.sendMes({{ $cid }}, {{ $uid }})" id="chat_send">发送</span>
         </div>
     </div>
 </div>
@@ -150,12 +150,12 @@
                 $('#message_wrap').hide();
                 $('#chat_wrap').show();
                 var cid = $(this).data('cid');
-                $('#chat_send').attr('onclick', 'message.sendMessage(' + cid + ')');
+                $('#chat_send').attr('onclick', 'easemob.sendMes(' + cid + ')');
 
                 // 设置为已读
-                message.datas.cid = cid;
-                message.setRead(1, cid);
-                message.listMessage(cid);
+                easemob.cid = cid;
+                easemob.setRead(1, cid);
+                easemob.listMes(cid, uid);
             } else {
                 $('#message_wrap').show();
                 $('#chat_wrap').hide();
@@ -177,7 +177,7 @@
                         params: {limit: 20},
                         loadtype: 2,
                         callback: function(){
-                            message.setRead(0, 'comments');
+                            easemob.setRead(0, 'comments');
                         }
                     });
                     body_title.html(title);
@@ -194,7 +194,7 @@
                         params: {limit: 20},
                         loadtype: 2,
                         callback: function(){
-                            message.setRead(0, 'likes');
+                            easemob.setRead(0, 'likes');
                         }
                     });
                     body_title.html(title);
@@ -212,7 +212,7 @@
                         params: {limit: 20},
                         loadtype: 2,
                         callback: function(){
-                            message.setRead(0, 'notifications');
+                            easemob.setRead(0, 'notifications');
                         }
                     });
                     body_title.html(title);
@@ -276,15 +276,12 @@
         for (var i in TS.UNREAD) {
             if (TS.UNREAD[i] > 0) {
                 $('#chat_' + i + ' .chat_unread_div').remove();
-                $('#chat_' + i).prepend(message.formatUnreadHtml(1, TS.UNREAD[i]));
+                $('#chat_' + i).prepend(easemob.formatUnreadHtml(1, TS.UNREAD[i]));
             }
         }
 
         // 设置房间
-        message.datas.cid = {{ $cid or 0 }};
-
-        _.forEach(message.datas.seqs, function(value, key){
-            message.setInnerCon(message.datas.list[value]);
-        });
+        easemob.cid = {{ $cid or 0 }};
+        easemob.setInnerCon();
     });
 </script>

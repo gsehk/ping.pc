@@ -9,9 +9,10 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
 
 class MessageController extends BaseController
 {
-	public function index(Request $request, int $type = 0, int $cid = 0)
+	public function index(Request $request, int $type = 0, int $cid = 0, int $uid = 0)
 	{
         $data['cid'] = $cid;
+        $data['uid'] = $uid;
         $data['type'] = $type;
 
 		return view('pcview::message.message', $data, $this->PlusData);

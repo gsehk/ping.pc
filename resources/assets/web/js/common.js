@@ -539,6 +539,7 @@ var no_data = function(selector, type, txt) {
 // 退出登录提示
 $('#action-logout').on('click', function(event) {
     event.preventDefault();
+    $.removeAllCookie();
     $('.nav_menu').hide();
     var action = formatConfirm('提示', '是否确认退出当前账号？');
     var url = this.href;
@@ -549,7 +550,7 @@ $('#action-logout').on('click', function(event) {
 
 // 接口返回错误解析
 var showError = function(message, defaultMessage) {
-    defaultMessage = defaultMessage || '操作失败';
+    defaultMessage = defaultMessage || '出错了';
     if (message.errors && message.errors !== null) {
         var message = message.errors;
         for (var key in message) {
@@ -562,8 +563,8 @@ var showError = function(message, defaultMessage) {
         noticebox(defaultMessage, 0);
         return;
     }
-    if (message.message && message.message !== null) {
-        noticebox(message.message, 0);
+    if (message.message !== null) {
+        noticebox(message.message || defaultMessage, 0);
         return;
     }
     for (var key in message) {
@@ -1343,29 +1344,40 @@ var thirdShare = function(type, url, title, pic, obj) {
  * @return user
  */
 var getUserInfo = function(uids) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
+            'Authorization': 'Bearer ' + TS.TOKEN,
+            'Accept': 'application/json'
+        }
+    })
     var user = [];
     var type = typeof(uids);
-    if (type == 'object') {
-        var url = '/api/v2/users/';
+    if (type == 'object') { // 多用户
+        var url = TS.API + '/users/';
+
         var _uids = _.chunk(uids, 20);
         _.forEach(_uids, function(value, key) {
-            axios.get(url, {id: _.join(value, ',')})
-              .then(function (response) {
-                user = _.unionWith(user, response.data);
-              })
-              .catch(function (error) {
-                showError(error.response.data);
-              });
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {id: _.join(value, ',')},
+                async: false,
+                success:function(res){
+                    user = _.unionWith(user, res);
+                }
+            }, 'json');
         })
     } else {
-        var url = '/api/v2/users/' + uids;
-        axios.get(url)
-          .then(function (response) {
-            user = response.data;
-          })
-          .catch(function (error) {
-            showError(error.response.data);
-          });
+        var url = TS.API + '/users/' + uids;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            async: false,
+            success:function(res){
+                user = res;
+            }
+        }, 'json');
     }
     return user;
 }
@@ -1476,10 +1488,10 @@ $(function() {
         if (!_st) _st=0;
         var _code = '<div id="ms_fixed_wrap">'
                   + '<dl id="ms_fixed">'
-                  +   '<dd id="ms_comments"><a href="javascript:;" onclick="message.openChatDialog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-msg"></use></svg></a></dd>'
-                  +   '<dd id="ms_likes"><a href="javascript:;" onclick="message.openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-like"></use></svg></a></dd>'
-                  +   '<dd id="ms_notifications"><a href="javascript:;" onclick="message.openChatDialog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-notice"></use></svg></a></dd>'
-                  +   '<dd id="ms_pinneds"><a href="javascript:;" onclick="message.openChatDialog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-auth"></use></svg></a></dd>'
+                  +   '<dd id="ms_comments"><a href="javascript:;" onclick="easemob.openChatDialog(0)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-msg"></use></svg></a></dd>'
+                  +   '<dd id="ms_likes"><a href="javascript:;" onclick="easemob.openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-like"></use></svg></a></dd>'
+                  +   '<dd id="ms_notifications"><a href="javascript:;" onclick="easemob.openChatDialog(2)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-notice"></use></svg></a></dd>'
+                  +   '<dd id="ms_pinneds"><a href="javascript:;" onclick="easemob.openChatDialog(3)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-auth"></use></svg></a></dd>'
                   + '</dl>'
                   + '</div>';
         if (_st == 1) {

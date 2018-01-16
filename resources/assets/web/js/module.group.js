@@ -163,7 +163,7 @@ post.createPost = function (group_id) {
 
 post.afterCreatePost = function (group_id, post_id) {
     var url = '/group/getPost';
-    axios.get(url, { group_id: group_id, post_id: post_id })
+    axios.get(url, { params:{group_id: group_id, post_id: post_id} })
       .then(function (response) {
         if ($('#feeds_list').find('.no_data_div').length > 0) {
             $('#feeds_list').find('.no_data_div').remove();

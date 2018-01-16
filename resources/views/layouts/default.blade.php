@@ -12,7 +12,7 @@
             TOKEN: "{{ $token or '' }}",
             SITE_URL: "{{ $routes['siteurl'] }}",
             RESOURCE_URL: '{{ $routes["resource"] }}',
-            COMMON: {!! json_encode($config['common']) !!},
+            CONFIG: {!! json_encode($config) !!},
             BOOT: {!! json_encode($config['bootstrappers']) !!},
             UNREAD: {},// 未读消息数量
         };
@@ -51,14 +51,19 @@
     <div class="weixin_qrcode">
     </div>
     <script src="{{ asset('assets/pc/js/axios.min.js')}}"></script>
-    <script src="{{ asset('assets/pc/js/common.js') }}"></script>
     <script src="{{ asset('assets/pc/js/lodash.min.js') }}"></script>
+    <script src="{{ asset('assets/pc/js/common.js') }}"></script>
     <script src="{{ asset('assets/pc/js/font/iconfont.js') }}"></script>
     <script src="{{ asset('assets/pc/js/jquery.lazyload.min.js') }}"></script>
     <script src="{{ asset('assets/pc/js/jquery.cookie.js') }}"></script>
     <script src="{{ asset('assets/pc/layer/layer.js') }}"></script>
     <script src="{{ asset('assets/pc/js/dexie.min.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/module.message.js') }}"></script>
+
+    {{-- 环信 --}}
+    <script src="{{ asset('assets/pc/js/easemob/webim.config.js') }}"></script>
+    <script src="{{ asset('assets/pc/js/easemob/strophe-1.2.8.min.js') }}"></script>
+    <script src="{{ asset('assets/pc/js/easemob/websdk-1.4.13.js') }}"></script>
+    <script src="{{ asset('assets/pc/js/module.easemob.js') }}"></script>
     @yield('scripts')
 
     {{-- 统计代码 --}}
