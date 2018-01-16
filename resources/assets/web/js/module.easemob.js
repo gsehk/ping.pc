@@ -40,7 +40,7 @@ easemob = {
                                 type: 'chat',
                                 mid: TS.MID,
                                 uid: message.from,
-                                last_message: message.id,
+                                last_message_time: dbMsg.time,
                                 last_message_txt: message.sourceMsg, 
                                 del: 0
                             };
@@ -67,7 +67,7 @@ easemob = {
                             });
                         } else { // 存在修改会话内容
                             window.TS.dataBase.room.where({mid: TS.MID, uid: message.from}).modify({
-                                last_message: message.id,
+                                last_message_time: dbMsg.time,
                                 last_message_txt: message.sourceMsg
                             })
 
@@ -121,12 +121,13 @@ easemob = {
         // 获取用户信息
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
             window.TS.dataBase.room
-                .orderBy('last_message')
+                .orderBy('last_message_time')
                 .filter( (item) => {
                     return (item.del != 1 && item.mid == TS.MID);
                 })
                 .reverse()
                 .toArray().then(function(items){
+                    console.log(items);
                     var uids = _.map(items, 'uid');
                     easemob.users = _.keyBy(getUserInfo(uids), 'id');
                     easemob.setOuterCon();
@@ -158,7 +159,7 @@ easemob = {
             message: "id, time, cid, type, mid, uid, touid, txt, read",
 
             // room
-            room: "++id, type, mid, uid, last_message, last_message_txt, del",
+            room: "++id, type, mid, uid, last_message_time, last_message_txt, del",
         });
 
         window.TS.dataBase = db;
@@ -185,7 +186,7 @@ easemob = {
                     var last_message_txt = item.last_message_txt == undefined ? '' : item.last_message_txt;
 
                     var html = '<li ' + css + ' class="room_item" data-type="5" data-uid="' + item.uid + '" data-cid="' + item.id + '" id="chat_' + item.id + '">'
-                                +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delConversation(' + item.id + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
+                                +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delCon(' + item.id + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
                                 +      '<div class="chat_left_icon">'
                                 +          '<img src="' + getAvatar(_this.users[item.uid]) + '" class="chat_svg">'
                                 +       '</div>'
@@ -213,9 +214,73 @@ easemob = {
         });
     },
 
-    createCon: function(){
+    createCon: function(uid){
+        checkLogin();
+        var user = getUserInfo(uid);
+        var _user = _.keyBy([user], 'id');
+        easemob.users = Object.assign({}, easemob.users, _user);
 
+
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
+            window.TS.dataBase.room.where({mid: TS.MID, uid: uid}).first(function(item){
+                console.log(item);
+                if (item === undefined) { // 不存在创建会话
+                    var room = {
+                        type: 'chat',
+                        mid: TS.MID,
+                        uid: uid,
+                        last_message_time: (new Date()).valueOf(),
+                        last_message_txt: '',
+                        del: 0
+                    };
+                    window.TS.dataBase.room.add(room).then(function(i){
+                        easemob.cid = i;
+                        easemob.openChatDialog(5, i, uid);
+                    });
+                } else { // 存在修改会话内容
+                    if (item.del == 1) {
+                        window.TS.dataBase.room.where({mid: TS.MID, uid: uid}).modify({
+                            del: 0
+                        });
+                    }
+                    easemob.openChatDialog(5, item.id, uid);
+                } 
+            });
+        });
     },
+
+    // 删除会话
+    delCon: function(cid) {
+        cancelBubble();
+        var chat = $('#chat_' + cid);
+
+        // 查找下个会话
+        if (chat.next().length > 0) {
+            var next_cid = chat.next().eq(0).data('cid');
+        } else if (chat.prev('.room_item').length > 0) {
+            var next_cid = chat.prev().eq(0).data('cid');
+        } else {
+            var next_cid = 0;
+        }
+
+        $('#ms_chat_' + cid).remove();
+        if ($('.chat_dialog').length > 0) chat.remove();
+
+        // 清空会话，或者展示下个会话的聊天列表
+        if (next_cid == 0) {
+            messageData(3);
+        } else {
+            $('#chat_' + cid).addClass('current_room');
+            message.listMes(next_cid);
+        }
+
+        window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
+            window.TS.dataBase.room.where({id: cid}).modify({
+                del: 1
+            });
+        });
+    },
+
 
     setNewCon: function(room){
         var _this = this;
@@ -227,7 +292,7 @@ easemob = {
             var last_message_txt = room.last_message_txt == undefined ? '' : room.last_message_txt;
 
             var html = '<li class="room_item" data-type="5" data-cid="' + room['id'] + '" id="chat_' + room['id'] + '">'
-                        +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delConversation(' + room['id'] + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
+                        +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delCon(' + room['id'] + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
                         +      '<div class="chat_left_icon">'
                         +          '<img src="' + getAvatar(_this.users[room.uid]) + '" class="chat_svg">'
                         +       '</div>'
