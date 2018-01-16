@@ -136,7 +136,7 @@ easemob = {
 
         // 设置未读消息定时器
         easemob.getUnreadMessage();
-        var unread_message_timeout = window.setInterval(easemob.getUnreadMessage, 5000);
+        var unread_message_timeout = window.setInterval(easemob.getUnreadMessage, 20000);
         easemob.getUnreadChats();
         var unread_chat_timeout = window.setInterval(easemob.getUnreadChats, 1000);
     },
