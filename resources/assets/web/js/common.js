@@ -1633,7 +1633,7 @@ $(function() {
                 var ul = $('.history ul');
                 var lis = '';
 
-                for (var i = 0, len = (hisArr.length >= 4 ? 4 : hisArr.length); i < len; i++) {
+                for (var i = 0, len = (hisArr.length > 10 ? 10 : hisArr.length); i < len; i++) {
                     lis += '<li type="1"><span class="keywords">' + hisArr[i] + '</span><i></i></li>';
                 }
 
