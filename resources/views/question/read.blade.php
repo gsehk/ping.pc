@@ -257,7 +257,7 @@
                 loading: '.question-main-l',
                 url: '/question/{{$question['id']}}/answers',
                 paramtype: 1,
-                params: {order_type: 'time', limit: 10}
+                params: {order_type: 'default', limit: 10}
             });
         }, 300);
         // 展示问题详情
@@ -318,9 +318,8 @@
 
         $('#write-answer').on('click', function () {
             checkLogin();
-            $('.question-main-r').slideDown();
-            window.editor.resize();
-            window.editor.focus();
+            $('.question-main-r').show();
+            $('html,body').animate({scrollTop:$('.question-main-r').offset().top}, 500);
             window.editor.setCursor({line:0, ch:0});
             var _targetTop = $('.question-main-r').offset().top;//获取位置
             jQuery("html,body").animate({scrollTop:_targetTop},300);//跳转
