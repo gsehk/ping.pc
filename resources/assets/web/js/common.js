@@ -551,7 +551,7 @@ $('#action-logout').on('click', function(event) {
 // 接口返回错误解析
 var showError = function(message, defaultMessage) {
     defaultMessage = defaultMessage || '出错了';
-    if (message.errors && message.errors !== null) {
+    if (message.errors !== undefined && message.errors !== null) {
         var message = message.errors;
         for (var key in message) {
             if (Array.isArray(message[key])) {
@@ -563,7 +563,7 @@ var showError = function(message, defaultMessage) {
         noticebox(defaultMessage, 0);
         return;
     }
-    if (message.message !== null) {
+    if (message.message !== undefined && message.message !== null) {
         noticebox(message.message || defaultMessage, 0);
         return;
     }
