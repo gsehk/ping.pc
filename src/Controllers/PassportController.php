@@ -48,38 +48,6 @@ class PassportController extends BaseController
     }
 
     /**
-     * 凭据存储
-     * @author Foreach
-     * @param  string $token [凭据]
-     * @param  int    $type  [跳转类型]
-     * @return mixed
-     */
-    public function token(string $token, int $type)
-    {
-        Session::put('token', $token);
-
-        Session::put('initial_password', Session::get('initial_password', true));
-
-        // 若设置history
-        if (Session::get('history')) {
-            $history = Session::get('history');
-            Session::forget('history');
-            return redirect($history);
-        }
-
-        // 若设置referer_url
-        if (isset($_COOKIE['referer_url']) && $_COOKIE['referer_url'] != '') {
-            return redirect($_COOKIE['referer_url']);
-        }
-
-        if ($type) {
-            return redirect(route('pc:perfect'));
-        } else {
-            return redirect(route('pc:feeds'));
-        }
-    }
-
-    /**
      * 登录
      * @author Foreach
      * @return mixed

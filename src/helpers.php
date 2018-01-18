@@ -159,20 +159,10 @@ function createRequest($method = 'POST', $url = '', $params = array(), $instance
     }
 
     $response = Route::dispatch($request);
-
-    // 错误跳转
-    if (!$response->isSuccessful()) {
-        abort(500);
-    }
     return $original ? $response->original : $response;
-    // if ($response->isSuccessful()){
-    //     return $response->original;
-    // } else {
-    //     return $response;
-    // }
 }
 
-function socialiteRequest($method = 'POST', $url = '', $params = array())
+function socialiteRequest($method = 'POST', $url = '', $params = array(), $instance = 1, $original = 1)
 {
     $request = AccessTokenRequest::create($url, $method, $params);
     $request->headers->add(['Accept' => 'application/json', 'Authorization' => 'Bearer '. Session::get('token')]);
@@ -191,12 +181,12 @@ function socialiteRequest($method = 'POST', $url = '', $params = array())
     });
 
     // 解决请求传参问题
-    if ($url != '/api/v2/user/' && $url != '/api/v2/bootstrappers/' && $url != '/api/v2/tokens/') { // 获取登录用户不需要传参
-        app()->instance(AccessTokenRequest::class, $request);
+    if ($instance) { // 获取登录用户不需要传参
+        app()->instance(Request::class, $request);
     }
 
-    $response = Route::dispatch($request)->original;
-    return $response;
+    $response = Route::dispatch($request);
+    return $original ? $response->original : $response;
 }
 
 

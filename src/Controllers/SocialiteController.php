@@ -22,11 +22,6 @@ class SocialiteController extends BaseController
         $config[$service] = $this->PlusData['config']['common'][$service];
         $config[$service]['redirect'] = $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback';
 
-        if (!$config) {
-
-            dd('暂未开通'.$service.'登录');
-        }
-
         $socialite = new SocialiteManager($config);
 
         $response = $socialite->driver($service)->redirect();
@@ -49,11 +44,6 @@ class SocialiteController extends BaseController
         }
         $config[$service] = $this->PlusData['config']['common'][$service];
         $config[$service]['redirect'] = $this->PlusData['routes']['siteurl'].'/socialite/'.$service.'/callback?type=bind';
-
-        if (!$config) {
-
-            dd('暂未开通'.$service.'登录');
-        }
 
         $socialite = new SocialiteManager($config);
 
@@ -89,12 +79,9 @@ class SocialiteController extends BaseController
 
         } else {
         // 未登录时账号注册/绑定
-
             $res = socialiteRequest('POST', '/api/v2/socialite/'.$service, ['access_token' => $access_token]);
 
             if (isset($res['token'])) { // 登录
-                Session::put('initial_password', $res['user']['initial_password']);
-
                 $return = [
                     'status' => 1,
                     'message' => '登录成功',
@@ -104,7 +91,6 @@ class SocialiteController extends BaseController
                 ];
 
             } else { // 绑定、注册
-                Session::put('initial_password', false);
                 $return = [
                     'status' => -1,
                     'message' => '正在前往绑定窗口...',
@@ -115,7 +101,6 @@ class SocialiteController extends BaseController
                     ],
                 ];
             }
-
 
             return view('pcview::socialite.socialite', $return, $this->PlusData);
         }
