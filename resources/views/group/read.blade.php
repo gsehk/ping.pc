@@ -148,7 +148,7 @@
                 @if ($TS['id'] != $group->founder->user->id)
                 <dd>圈主：{{$group->founder->user->name}}</dd>
                 <dd>
-                    <span class="contact" onclick="message.createConversation({{ $group->founder->user->id }})">联系圈主</span>
+                    <span class="contact" onclick="easemob.createCon({{ $group->founder->user->id }})">联系圈主</span>
                 </dd>
                 @else
                 <dd class="self">圈主：{{$group->founder->user->name}}</dd>
