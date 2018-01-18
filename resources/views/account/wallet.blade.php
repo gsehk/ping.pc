@@ -115,17 +115,16 @@
         }
     };
 
+    // 充值检测
     var checkWallet = function (obj) {
 
         if (typeof(TS.BOOT['wallet:recharge-type']) != "undefined" && $.inArray('alipay_pc_direct', TS.BOOT['wallet:recharge-type'])) {
-
+            var url = $(obj).data('url');
+            window.location.href = url;
+        } else {
             noticebox('未配置支付环境', 0);
-
             return false;
         }
-
-        var url = $(obj).data('url');
-        window.location.href = url;
     };
 </script>
 @endsection
