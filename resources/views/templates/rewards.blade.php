@@ -24,17 +24,15 @@
         </div>
     </div>
     <script>
-        setTimeout(function() {
-            var rewardType = "{{$type}}";
-            var params = {type:rewardType, post_id:"{{$post_id}}", limit: 6, getinfo: true};
-            scroll.init({
-                container: '#J-reward-list',
-                loading: '.reward_list',
-                url: '/reward/view',
-                paramtype: 1,
-                params: params,
-                loadtype: 2,
-            });
-        }, 200);
+        var rewardType = "{{$type}}";
+        var params = {type:rewardType, post_id:"{{$post_id}}", limit: 6, getinfo: true};
+        scroll.init({
+            container: '#J-reward-list',
+            loading: '.reward_list',
+            url: '/reward/view',
+            paramtype: 1,
+            params: params,
+            loadtype: 2,
+        });
     </script>
 @endif

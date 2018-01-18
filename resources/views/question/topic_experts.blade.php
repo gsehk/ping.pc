@@ -49,15 +49,6 @@
                 isAjax: true,
                 ajax: true
             };
-            setTimeout(function() {
-                scroll.init({
-                    container: '#user_list',
-                    loading: '.user_container',
-                    url: '/question/topic/' + topic_id + '/expert',
-                    params: params,
-                    paramtype: 1
-                });
-            }, 100);
         };
 
         // 关注回调

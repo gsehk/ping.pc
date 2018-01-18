@@ -104,14 +104,12 @@
                 new: 1
             }
             if (cate != 0) params.cate = cate;
-            setTimeout(function() {
-                scroll.init({
-                    container: '#wallet-records',
-                    loading: '#wallet-records',
-                    url: '/account/wallet/records',
-                    params: params
-                });
-            }, 300);
+            scroll.init({
+                container: '#wallet-records',
+                loading: '#wallet-records',
+                url: '/account/wallet/records',
+                params: params
+            });
         }
     };
 

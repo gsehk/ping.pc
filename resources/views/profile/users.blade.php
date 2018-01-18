@@ -42,14 +42,12 @@
         });
     })
     // 加载关联用户列表
-    setTimeout(function() {
-        scroll.init({
-            container: '#follow-list',
-            user_id:"{{ $user_id }}",
-            loading: '.fan_cont',
-            type: "{{ $type }}"
-        });
-    }, 300);
+    scroll.init({
+        container: '#follow-list',
+        user_id:"{{ $user_id }}",
+        loading: '.fan_cont',
+        type: "{{ $type }}"
+    });
 
 
     // 关注回调

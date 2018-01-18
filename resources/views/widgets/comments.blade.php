@@ -81,46 +81,44 @@
     var params = {};
     var position = '{{ $position or 0 }}';
     if (position == 0) {
-        setTimeout(function() {
-            var comments_type = '{{ $comments_type }}';
-            var loading = '{{ $loading or ''}}';
-            var id = '{{ $id }}';
-            var url = '';
-            var group_id = '{{ $group_id or 0 }}';
-            if (group_id) {
-                params.group_id = group_id;
-            }
+        var comments_type = '{{ $comments_type }}';
+        var loading = '{{ $loading or ''}}';
+        var id = '{{ $id }}';
+        var url = '';
+        var group_id = '{{ $group_id or 0 }}';
+        if (group_id) {
+            params.group_id = group_id;
+        }
 
-            if (comments_type == 'answer') {
+        if (comments_type == 'answer') {
 
-                url = '/question/answer/' + id + '/comments';
+            url = '/question/answer/' + id + '/comments';
 
-            } else if (comments_type == 'question') {
+        } else if (comments_type == 'question') {
 
-                return ;
-                //url = '/question/' + id + '/comments';
+            return ;
+            //url = '/question/' + id + '/comments';
 
-            } else if (comments_type == 'feed') {
+        } else if (comments_type == 'feed') {
 
-                url = '/feeds/' + id + '/comments'
+            url = '/feeds/' + id + '/comments'
 
-            } else if (comments_type == 'group') {
+        } else if (comments_type == 'group') {
 
-                url = '/group/' + id + '/comments' ;
+            url = '/group/' + id + '/comments' ;
 
-            } else if (comments_type == 'news') {
+        } else if (comments_type == 'news') {
 
-                url = '/news/' + id + '/comments';
-            }
+            url = '/news/' + id + '/comments';
+        }
 
-            scroll.init({
-                container: '.J-commentbox',
-                loading: loading,
-                url: url,
-                params: params,
-                canload: true
-            });
-        }, 200);
+        scroll.init({
+            container: '.J-commentbox',
+            loading: loading,
+            url: url,
+            params: params,
+            canload: true
+        });
     }
 
     function doComment(id, position, comments_type, group_id) {

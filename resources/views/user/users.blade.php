@@ -133,15 +133,13 @@
             limit: 10,
             isAjax: true,
         };
-        setTimeout(function() {
-            scroll.init({
-                container: '#user_list',
-                loading: '.user_container',
-                url: '/users',
-                params: params,
-                paramtype: 1
-            });
-        }, 100);
+        scroll.init({
+            container: '#user_list',
+            loading: '.user_container',
+            url: '/users',
+            params: params,
+            paramtype: 1
+        });
     }
 
     // 关注回调

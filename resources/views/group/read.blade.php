@@ -189,15 +189,13 @@
 <script>
     $(function () {
         // 初始帖子列表
-        setTimeout(function() {
-            scroll.init({
-                container: '#feeds_list',
-                loading: '.feed_content',
-                url: '/group/postLists',
-                paramtype: 1,
-                params: {type:"{{$type}}", group_id:"{{$group->id}}", limit:15}
-            });
-        }, 150);
+        scroll.init({
+            container: '#feeds_list',
+            loading: '.feed_content',
+            url: '/group/postLists',
+            paramtype: 1,
+            params: {type:"{{$type}}", group_id:"{{$group->id}}", limit:15}
+        });
 
         // 切换帖子列表
         $('.feed_menu a').on('click', function() {

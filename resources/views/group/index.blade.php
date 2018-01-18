@@ -169,15 +169,13 @@
         return text;
     }
 
-    setTimeout(function() {
-        scroll.init({
-            container: '#group_box',
-            loading: '.group_container',
-            paramtype: 1,
-            url: '/group/list',
-            params: {limit: 10}
-        });
-    }, 150);
+    scroll.init({
+        container: '#group_box',
+        loading: '.group_container',
+        paramtype: 1,
+        url: '/group/list',
+        params: {limit: 10}
+    });
 
     // 圈子分类筛选
     $('.m-chip span').on('click', function() {

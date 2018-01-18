@@ -64,14 +64,12 @@
 @section('scripts')
 <script>
 
-setTimeout(function() {
-    scroll.init({
-        container: '#incomes-box',
-        loading: '#incomes-box',
-        url: '/group/incomes',
-        params: {limit: 15, group_id: {{$group->id}} }
-    });
-}, 200);
+scroll.init({
+    container: '#incomes-box',
+    loading: '#incomes-box',
+    url: '/group/incomes',
+    params: {limit: 15, group_id: {{$group->id}} }
+});
 
 laydate.render({
     elem: '#T-start',

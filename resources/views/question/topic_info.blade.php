@@ -117,16 +117,14 @@
     <script src="{{ asset('assets/pc/js/module.question.js') }}"></script>
     <script>
         var topic_id = "{{ $topic->id }}";
-        setTimeout(function() {
-            scroll.init({
-                container: '#question-list',
-                loading: '.question_body',
-                url: '/question/topic/' + topic_id + '/question',
-                paramtype:1,
-                loadtype: 1,
-                params: {type: 'hot', limit: 10, topic_id : topic_id}
-            });
-        }, 300);
+        scroll.init({
+            container: '#question-list',
+            loading: '.question_body',
+            url: '/question/topic/' + topic_id + '/question',
+            paramtype:1,
+            loadtype: 1,
+            params: {type: 'hot', limit: 10, topic_id : topic_id}
+        });
 
         // 切换分类
         $('.question_sub_nav a').on('click', function() {
@@ -134,16 +132,14 @@
             // 清空数据
             $('#question-list').html('');
 
-            setTimeout(function() {
-                scroll.init({
-                    container: '#question-list',
-                    loading: '.question_body',
-                    url: '/question/topic/' + topic_id + '/question',
-                    paramtype:1,
-                    loadtype: 1,
-                    params: {type: type, limit: 10, topic_id : topic_id}
-                });
-            }, 300);
+            scroll.init({
+                container: '#question-list',
+                loading: '.question_body',
+                url: '/question/topic/' + topic_id + '/question',
+                paramtype:1,
+                loadtype: 1,
+                params: {type: type, limit: 10, topic_id : topic_id}
+            });
 
             // 修改样式
             $('.question_sub_nav a').removeClass('active');

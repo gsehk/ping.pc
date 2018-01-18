@@ -59,14 +59,12 @@ var params = {
     recommend: 1,
 };
 
-setTimeout(function() {
-    scroll.init({
-        container: '#news_list',
-        loading: '#news_list',
-        url: '/news/list',
-        params: params
-    });
-}, 300);
+scroll.init({
+    container: '#news_list',
+    loading: '#news_list',
+    url: '/news/list',
+    params: params
+});
 
 (function(){
     // 分类展开

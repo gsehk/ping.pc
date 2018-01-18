@@ -1227,7 +1227,7 @@ var delHistory = function(str) {
         $('.history').hide();
     } else {
         hisArr = JSON.parse(localStorage.history);
-        hisArr.splice($.inArray('str', hisArr), 1);
+        hisArr.splice($.inArray(str, hisArr), 1);
 
         var hisStr = JSON.stringify(hisArr);
         localStorage.history = hisStr;

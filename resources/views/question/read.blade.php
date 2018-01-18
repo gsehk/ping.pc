@@ -251,15 +251,14 @@
 
     <script>
         var checkSubmitFlg = false;
-        setTimeout(function() {
-            scroll.init({
-                container: '#question-answers-list',
-                loading: '.question-main-l',
-                url: '/question/{{$question['id']}}/answers',
-                paramtype: 1,
-                params: {order_type: 'default', limit: 10}
-            });
-        }, 300);
+        scroll.init({
+            container: '#question-answers-list',
+            loading: '.question-main-l',
+            url: '/question/{{$question['id']}}/answers',
+            paramtype: 1,
+            params: {order_type: 'default', limit: 10}
+        });
+        
         // 展示问题详情
         $('.questionrichtext-more').on('click', function () {
             var _this = $(this);
@@ -305,15 +304,13 @@
             var type = $(this).data('type');
             // 清空数据
             $('#question-answers-list').html('');
-            setTimeout(function() {
-                scroll.init({
-                    container: '#question-answers-list',
-                    loading: '.question-main-l',
-                    url: '/question/{{$question['id']}}/answers',
-                    paramtype: 1,
-                    params: {order_type: type, limit: 10}
-                });
-            }, 300);
+            scroll.init({
+                container: '#question-answers-list',
+                loading: '.question-main-l',
+                url: '/question/{{$question['id']}}/answers',
+                paramtype: 1,
+                params: {order_type: type, limit: 10}
+            });
         });
 
         $('#write-answer').on('click', function () {
@@ -359,29 +356,25 @@
             $('.detail_comment').show();
             $('.question-main-l').hide();
             $('.question-main-r').hide();
-            setTimeout(function() {
-                scroll.init({
-                    container: '.J-commentbox',
-                    loading: '.detail_comment',
-                    url: '/question/{{$question->id}}/comments' ,
-                    canload: true
-                });
-            }, 300);
+            scroll.init({
+                container: '.J-commentbox',
+                loading: '.detail_comment',
+                url: '/question/{{$question->id}}/comments' ,
+                canload: true
+            });
         });
 
         $('#answer-button').on('click', function () {
             $('.question-main-l').show();
             $('.detail_comment').hide();
             $('.question-main-r').hide();
-            setTimeout(function() {
-                scroll.init({
-                    container: '#question-answers-list',
-                    loading: '.question-main-l',
-                    url: '/question/{{$question['id']}}/answers',
-                    paramtype: 1,
-                    params: {order_type: 'default', limit: 10}
-                });
-            }, 300);
+            scroll.init({
+                container: '#question-answers-list',
+                loading: '.question-main-l',
+                url: '/question/{{$question['id']}}/answers',
+                paramtype: 1,
+                params: {order_type: 'default', limit: 10}
+            });
         });
     </script>
 @endsection

@@ -44,15 +44,13 @@
 @section('scripts')
     <script src="{{ asset('assets/pc/js/module.question.js') }}"></script>
     <script>
-        setTimeout(function() {
-            scroll.init({
-                container: '#topic-list',
-                loading: '.question_body',
-                url: '/question/topic',
-                paramtype: 1,
-                params: {cate: 1, isAjax: true, limit: 10}
-            });
-        }, 300);
+        scroll.init({
+            container: '#topic-list',
+            loading: '.question_body',
+            url: '/question/topic',
+            paramtype: 1,
+            params: {cate: 1, isAjax: true, limit: 10}
+        });
 
         // 切换分类
         $('.question_sub_nav a').on('click', function() {

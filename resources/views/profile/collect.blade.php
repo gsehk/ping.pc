@@ -38,15 +38,13 @@
 <script src="{{ asset('assets/pc/js/module.weibo.js') }}"></script>
 <script src="{{ asset('assets/pc/js/module.picshow.js') }}"></script>
 <script>
-setTimeout(function() {
-    scroll.init({
-        container: '#content_list',
-        loading: '.profile_content',
-        url: '/profile/collect',
-        paramtype: 1,
-        params: {cate: 1, limit: 10, isAjax: true}
-    });
-}, 300);
+scroll.init({
+    container: '#content_list',
+    loading: '.profile_content',
+    url: '/profile/collect',
+    paramtype: 1,
+    params: {cate: 1, limit: 10, isAjax: true}
+});
 
 $('.J-menu > a').on('click', function(){
     var cate = $(this).attr('cid');

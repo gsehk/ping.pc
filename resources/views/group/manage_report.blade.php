@@ -46,14 +46,12 @@
 @section('scripts')
 <script>
 
-setTimeout(function() {
-    scroll.init({
-        container: '#report-box',
-        loading: '#report-box',
-        url: '/group/report',
-        params: {limit: 15, group_id: {{$group->id}} }
-    });
-}, 200);
+scroll.init({
+    container: '#report-box',
+    loading: '#report-box',
+    url: '/group/report',
+    params: {limit: 15, group_id: {{$group->id}} }
+});
 
 laydate.render({
     elem: '#T-start',
