@@ -290,7 +290,7 @@ class QuestionController extends BaseController
      */
     public function topicExpert(Request $request, int $topic)
     {
-        if (!$request->isAjax) {
+        if ($request->isAjax) {
             $limit = $request->input('limit') ?: 18;
             $after = $request->input('after') ?: 0;
             $params = [
