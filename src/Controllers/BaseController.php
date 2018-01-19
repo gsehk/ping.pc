@@ -67,8 +67,9 @@ class BaseController extends Controller
                 // 获取所有广告位
                 $config['ads_space'] = createRequest('GET', '/api/v2/advertisingspace', [], 0)->keyBy('space');
 
-                // 环信key
-                $config['easemob_key'] = '1139171207178196#thinksns-plus';
+                // 环信
+                $easemob = $repository->get('easemob');
+                $config['easemob_key'] = $easemob['app_key'];
 
                 // 缓存配置信息
                 Cache::forever('config', $config);

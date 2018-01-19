@@ -63,11 +63,11 @@
         {{-- 问答 --}}
         <div class="question_body">
             <div class="question_sub_nav">
-                <a class="active" href="#" data-type="hot">热门</a>
-                <a href="#" data-type="excellent">精选</a>
-                <a href="#" data-type="reward">悬赏</a>
-                <a href="#" data-type="new">最新</a>
-                <a href="#" data-type="all">全部</a>
+                <a class="active" href="javascript:;" data-type="hot">热门</a>
+                <a href="javascript:;" data-type="excellent">精选</a>
+                <a href="javascript:;" data-type="reward">悬赏</a>
+                <a href="javascript:;" data-type="new">最新</a>
+                <a href="javascript:;" data-type="all">全部</a>
             </div>
             <div id="question-list" class="question_list"></div>
         </div>
@@ -116,8 +116,8 @@
 @section('scripts')
     <script src="{{ asset('assets/pc/js/module.question.js') }}"></script>
     <script>
+        var topic_id = "{{ $topic->id }}";
         $(function(){
-            var topic_id = "{{ $topic->id }}";
             scroll.init({
                 container: '#question-list',
                 loading: '.question_body',

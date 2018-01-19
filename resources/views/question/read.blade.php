@@ -250,8 +250,8 @@
     <script src="{{ asset('assets/pc/js/qrcode.js') }}"></script>
 
     <script>
+        var checkSubmitFlg = false;
         $(function(){
-            var checkSubmitFlg = false;
             scroll.init({
                 container: '#question-answers-list',
                 loading: '.question-main-l',
