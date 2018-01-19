@@ -128,7 +128,7 @@ easemob = {
                 .reverse()
                 .toArray().then(function(items){
                     var uids = _.map(items, 'uid');
-                    easemob.users = _.keyBy(easemob.getUserInfo(uids), 'id');
+                    easemob.users = _.keyBy(getUserInfo(uids), 'id');
                     easemob.setOuterCon();
                 });
         });
@@ -520,44 +520,5 @@ easemob = {
         .catch(e => {
             console.log(e);
         });
-    },
-
-    getUserinfo: function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content'),
-                'Authorization': 'Bearer ' + TS.TOKEN,
-                'Accept': 'application/json'
-            }
-        })
-        var user = [];
-        var type = typeof(uids);
-        if (type == 'object') { // 多用户
-            var url = TS.API + '/users/';
-
-            var _uids = _.chunk(uids, 20);
-            _.forEach(_uids, function(value, key) {
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    data: {id: _.join(value, ',')},
-                    async: false,
-                    success:function(res){
-                        user = _.unionWith(user, res);
-                    }
-                }, 'json');
-            })
-        } else {
-            var url = TS.API + '/users/' + uids;
-            $.ajax({
-                url: url,
-                type: 'GET',
-                async: false,
-                success:function(res){
-                    user = res;
-                }
-            }, 'json');
-        }
-        return user;
     }
 }
