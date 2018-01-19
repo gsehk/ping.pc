@@ -3,7 +3,6 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use DB;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;

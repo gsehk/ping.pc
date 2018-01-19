@@ -1,6 +1,7 @@
 
 @php
 	use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
+	use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
 @endphp
 @foreach ($datas as $data)
 	<div class="qa-item">

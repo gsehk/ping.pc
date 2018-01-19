@@ -39,18 +39,20 @@
 @section('scripts')
 <script src="{{ asset('assets/pc/js/module.profile.js') }}"></script>
 <script>
-var params = { type: {{ $type }}, isAjax: true };
+$(function(){
+    var params = { type: {{ $type }}, isAjax: true };
 
-@if ($user->id != $TS->id)
-    params = { user: {{$user->id}}, isAjax: true }
-@endif
+    @if ($user->id != $TS->id)
+        params = { user: {{$user->id}}, isAjax: true }
+    @endif
 
-scroll.init({
-    container: '#content_list',
-    loading: '.profile_content',
-    url: '/profile/news',
-    params: params
-});
+    scroll.init({
+        container: '#content_list',
+        loading: '.profile_content',
+        url: '/profile/news',
+        params: params
+    });
+})
 
 $('.J-menu > a').on('click', function(){
 	var type = $(this).attr('cid');

@@ -23,6 +23,14 @@
 <script src="{{ asset('assets/pc/js/module.profile.js') }} "></script>
 <script type="text/javascript">
     $(function(){
+        // 加载关联用户列表
+        scroll.init({
+            container: '#follow-list',
+            user_id:"{{ $user_id }}",
+            loading: '.fan_cont',
+            type: "{{ $type }}"
+        });
+    
         // 关注
         $('#follow-list').on('click', '.fan_care', function(){
             var _this = $(this);
@@ -41,14 +49,6 @@
             $(this).addClass('a_border');
         });
     })
-    // 加载关联用户列表
-    scroll.init({
-        container: '#follow-list',
-        user_id:"{{ $user_id }}",
-        loading: '.fan_cont',
-        type: "{{ $type }}"
-    });
-
 
     // 关注回调
     var afterdata = function(target){

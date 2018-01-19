@@ -14,7 +14,7 @@
             RESOURCE_URL: '{{ $routes["resource"] }}',
             CONFIG: {!! json_encode($config) !!},
             BOOT: {!! json_encode($config['bootstrappers']) !!},
-            UNREAD: {},// 未读消息数量
+            UNREAD: {}
         };
     </script>
     <link rel="stylesheet" href="{{ asset('assets/pc/css/common.css') }}">

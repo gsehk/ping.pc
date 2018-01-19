@@ -11,7 +11,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/pc/css/news.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/pc/markdown/css/editormd.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/pc/markdown/pluseditor.css') }}"/>
 @endsection
 
 @section('content')
@@ -165,7 +165,6 @@
 
 @section('scripts')
 <script src="{{ asset('assets/pc/js/module.news.js') }}"></script>
-<script src="{{ asset('assets/pc/markdown/lib/marked.js') }}"></script>
 <script src="{{ asset('assets/pc/js/qrcode.js') }}"></script>
 <script>
 $(function(){

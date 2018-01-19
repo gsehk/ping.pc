@@ -36,20 +36,22 @@
 <script src="{{ asset('assets/pc/js/module.weibo.js') }}"></script>v
 <script src="{{ asset('assets/pc/js/module.picshow.js') }}"></script>
 <script>
-// 加载微博
-var params = {
-    type: 'users',
-    cate: 1,
-    isAjax: true,
-    user: {{$user->id}}
-};
+$(function(){
+    // 加载微博
+    var params = {
+        type: 'users',
+        cate: 1,
+        isAjax: true,
+        user: {{$user->id}}
+    };
 
-scroll.init({
-    container: '#content_list',
-    loading: '.profile_content',
-    url: '/profile',
-    params: params
-});
+    scroll.init({
+        container: '#content_list',
+        loading: '.profile_content',
+        url: '/profile',
+        params: params
+    });
+})
 
 // 关注
 $('#follow').click(function(){

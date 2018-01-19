@@ -67,13 +67,15 @@
 <script src="{{ asset('assets/pc/js/module.group.js') }}"></script>
 <script src="{{ asset('assets/pc/js/module.profile.js') }}"></script>
 <script>
-    scroll.init({
-        container: '#content_list',
-        loading: '.profile_content',
-        url: '/profile/group',
-        paramtype: 1,
-        params: {isAjax: true, limit: 10}
-    });
+    $(function(){
+        scroll.init({
+            container: '#content_list',
+            loading: '.profile_content',
+            url: '/profile/group',
+            paramtype: 1,
+            params: {isAjax: true, limit: 10}
+        });
+    })
     $('#J-group li, #J-post li, #J-group a, #J-post a').on('click', function(){
         $('#J-post').addClass('select-gray');
         $('#J-group').addClass('select-gray');

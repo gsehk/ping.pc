@@ -53,20 +53,21 @@
 <script src="{{ asset('assets/pc/js/module.news.js') }}"></script>
 <script src="{{ asset('assets/pc/js/unslider.min.js') }}"></script>
 <script type="text/javascript">
-//加载资讯列表
-var params = {
-    cate_id: '{{ $cate_id }}',
-    recommend: 1,
-};
+$(function(){
+    //加载资讯列表
+    var params = {
+        cate_id: '{{ $cate_id }}',
+        recommend: 1,
+    };
 
-scroll.init({
-    container: '#news_list',
-    loading: '#news_list',
-    url: '/news/list',
-    params: params
-});
+    scroll.init({
+        container: '#news_list',
+        loading: '#news_list',
+        url: '/news/list',
+        params: params
+    });
 
-(function(){
+
     // 分类展开
     var cateH = $('.news_cates_tab').innerHeight();
                 $('.news_cates_tab').css('height', '86px');
@@ -131,6 +132,6 @@ scroll.init({
 
         return false;
     });
-})()
+})
 </script>
 @endsection

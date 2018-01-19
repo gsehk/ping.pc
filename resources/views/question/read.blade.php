@@ -250,14 +250,16 @@
     <script src="{{ asset('assets/pc/js/qrcode.js') }}"></script>
 
     <script>
-        var checkSubmitFlg = false;
-        scroll.init({
-            container: '#question-answers-list',
-            loading: '.question-main-l',
-            url: '/question/{{$question['id']}}/answers',
-            paramtype: 1,
-            params: {order_type: 'default', limit: 10}
-        });
+        $(function(){
+            var checkSubmitFlg = false;
+            scroll.init({
+                container: '#question-answers-list',
+                loading: '.question-main-l',
+                url: '/question/{{$question['id']}}/answers',
+                paramtype: 1,
+                params: {order_type: 'default', limit: 10}
+            });
+        })
         
         // 展示问题详情
         $('.questionrichtext-more').on('click', function () {

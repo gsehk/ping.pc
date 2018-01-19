@@ -196,28 +196,28 @@
             paramtype: 1,
             params: {type:"{{$type}}", group_id:"{{$group->id}}", limit:15}
         });
-
-        // 切换帖子列表
-        $('.feed_menu a').on('click', function() {
-            $('#feeds_list').html('');
-            scroll.init({
-                container: '#feeds_list',
-                loading: '.feed_content',
-                url: '/group/postLists',
-                paramtype: 1,
-                params: {type:$(this).attr('rel'), group_id:"{{$group->id}}", limit:15}
-            });
-
-            $('.feed_menu a').removeClass('selected');
-            $(this).addClass('selected');
-        });
-
-        // 分享
-        $('.u-share').click(function(){
-            $('.u-share-show').toggle();
-        })
     });
 
+    // 切换帖子列表
+    $('.feed_menu a').on('click', function() {
+        $('#feeds_list').html('');
+        scroll.init({
+            container: '#feeds_list',
+            loading: '.feed_content',
+            url: '/group/postLists',
+            paramtype: 1,
+            params: {type:$(this).attr('rel'), group_id:"{{$group->id}}", limit:15}
+        });
+
+        $('.feed_menu a').removeClass('selected');
+        $(this).addClass('selected');
+    });
+
+    // 分享
+    $('.u-share').click(function(){
+        $('.u-share-show').toggle();
+    });
+    
     // 所有帖子搜索
     $('#J-search').on('click', function(){
         var key = $(this).prev('input').val();

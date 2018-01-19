@@ -45,13 +45,14 @@
 <script src="{{ asset('assets/pc/layer/laydate/laydate.js')}}"></script>
 @section('scripts')
 <script>
-
-scroll.init({
-    container: '#report-box',
-    loading: '#report-box',
-    url: '/group/report',
-    params: {limit: 15, group_id: {{$group->id}} }
-});
+$(function(){
+    scroll.init({
+        container: '#report-box',
+        loading: '#report-box',
+        url: '/group/report',
+        params: {limit: 15, group_id: {{$group->id}} }
+    });
+})
 
 laydate.render({
     elem: '#T-start',

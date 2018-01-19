@@ -74,6 +74,15 @@
 <script src='//webapi.amap.com/maps?v=1.4.2&key=e710c0acaf316f2daf2c1c4fd46390e3'></script>
 <script src="{{ asset('assets/pc/js/module.group.js')}}"></script>
 <script>
+    $(function(){
+        scroll.init({
+            container: '#group_box',
+            loading: '.group_container',
+            paramtype: 1,
+            url: '/group/list',
+            params: {limit: 10}
+        });
+    })
 
     $('.group_navbar a').on('click', function() {
         var type = $(this).attr('type');
@@ -168,14 +177,6 @@
         }
         return text;
     }
-
-    scroll.init({
-        container: '#group_box',
-        loading: '.group_container',
-        paramtype: 1,
-        url: '/group/list',
-        params: {limit: 10}
-    });
 
     // 圈子分类筛选
     $('.m-chip span').on('click', function() {

@@ -54,12 +54,14 @@
 @section('scripts')
     <script src="{{ asset('assets/pc/js/module.question.js') }}"></script>
     <script>
-        scroll.init({
-            container: '#content_list',
-            loading: '.profile_content',
-            url: '/profile/question',
-            params: {isAjax: true, type: 'all' }
-        });
+        $(function(){
+            scroll.init({
+                container: '#content_list',
+                loading: '.profile_content',
+                url: '/profile/question',
+                params: {isAjax: true, type: 'all' }
+            });
+        })
 
         $('#J-question li').on('click', function(){
             var type = $(this).data('value');

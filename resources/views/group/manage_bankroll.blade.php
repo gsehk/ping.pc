@@ -63,13 +63,14 @@
 <script src="{{ asset('assets/pc/layer/laydate/laydate.js')}}"></script>
 @section('scripts')
 <script>
-
-scroll.init({
-    container: '#incomes-box',
-    loading: '#incomes-box',
-    url: '/group/incomes',
-    params: {limit: 15, group_id: {{$group->id}} }
-});
+$(function(){
+    scroll.init({
+        container: '#incomes-box',
+        loading: '#incomes-box',
+        url: '/group/incomes',
+        params: {limit: 15, group_id: {{$group->id}} }
+    });
+})
 
 laydate.render({
     elem: '#T-start',

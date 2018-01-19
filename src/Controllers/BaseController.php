@@ -21,6 +21,7 @@ class BaseController extends Controller
     {
         // 初始化
         $this->middleware(function($request, $next) {
+            // 用户认证
             $user = $request->user();
             if ($user) {
                 $user->load('wallet', 'extra', 'tags');
@@ -55,6 +56,7 @@ class BaseController extends Controller
                 // 基本配置
                 $repository = app(\Illuminate\Contracts\Config\Repository::class);
                 $config['common'] = $repository->get('pc');
+                $config['app'] = $repository->get('app');
 
                 // 顶部导航
                 $config['nav'] = Navigation::byPid(0)->byPos(0)->orderBy('order_sort')->get();

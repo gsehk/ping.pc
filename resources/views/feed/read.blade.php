@@ -171,7 +171,8 @@
       ,img: '.per_image'
     });
 
-    $(document).ready(function(){
+    
+    $(function(){
         $("img.lazy").lazyload({effect: "fadeIn"});
     });
 </script>

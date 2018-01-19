@@ -76,21 +76,22 @@
 <script src="{{ asset('assets/pc/js/jquery.uploadify.js') }}"></script>
 <script src="{{ asset('assets/pc/js/md5.min.js') }}"></script>
 <script type="text/javascript">
-// 加载微博
-var params = {
-    type: '{{ $type }}',
-    isAjax: true,
-};
-
-scroll.init({
-    container: '#feeds_list',
-    loading: '.feed_content',
-    url: '/feeds',
-    params: params,
-    loadtype: 1
-});
-
 $(function(){
+    // 加载微博
+    var params = {
+        type: '{{ $type }}',
+        isAjax: true,
+    };
+
+    scroll.init({
+        container: '#feeds_list',
+        loading: '.feed_content',
+        url: '/feeds',
+        params: params,
+        loadtype: 1
+    });
+
+    
     // 切换分类
     $('.feed_menu a').on('click', function() {
         var type = $(this).data('type');

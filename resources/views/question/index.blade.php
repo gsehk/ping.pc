@@ -43,8 +43,9 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/pc/js/module.question.js') }}"></script>
-    <script>
+<script src="{{ asset('assets/pc/js/module.question.js') }}"></script>
+<script>
+    $(function(){
         scroll.init({
             container: '#question-list',
             loading: '.question_body',
@@ -52,27 +53,26 @@
             paramtype: 1,
             params: {type: 'hot', isAjax: true, limit: 10}
         });
+    })
+    
+    // 切换分类
+    $('.question_sub_nav a').on('click', function() {
+        var type = $(this).data('type');
+        // 清空数据
+        $('#question-list').html('');
 
-        // 切换分类
-        $('.question_sub_nav a').on('click', function() {
-            var type = $(this).data('type');
-            // 清空数据
-            $('#question-list').html('');
-
-            setTimeout(function() {
-                scroll.init({
-                    container: '#question-list',
-                    loading: '.question_body',
-                    url: '/question',
-                    paramtype: 1,
-                    params: {type: type, isAjax: true, limit: 10}
-                });
-            }, 300);
-
-            // 修改样式
-            $('.question_sub_nav a').removeClass('active');
-            $(this).addClass('active');
+        scroll.init({
+            container: '#question-list',
+            loading: '.question_body',
+            url: '/question',
+            paramtype: 1,
+            params: {type: type, isAjax: true, limit: 10}
         });
 
-    </script>
+        // 修改样式
+        $('.question_sub_nav a').removeClass('active');
+        $(this).addClass('active');
+    });
+
+</script>
 @endsection

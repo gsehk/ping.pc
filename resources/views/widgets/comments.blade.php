@@ -78,49 +78,40 @@
 @endif
 
 <script>
-    var params = {};
-    var position = '{{ $position or 0 }}';
-    if (position == 0) {
-        var comments_type = '{{ $comments_type }}';
-        var loading = '{{ $loading or ''}}';
-        var id = '{{ $id }}';
-        var url = '';
-        var group_id = '{{ $group_id or 0 }}';
-        if (group_id) {
-            params.group_id = group_id;
+    $(function(){
+        var params = {};
+        var position = '{{ $position or 0 }}';
+        if (position == 0) {
+                var comments_type = '{{ $comments_type }}';
+                var loading = '{{ $loading or ''}}';
+                var id = '{{ $id }}';
+                var url = '';
+                var group_id = '{{ $group_id or 0 }}';
+                if (group_id) {
+                    params.group_id = group_id;
+                }
+                if (comments_type == 'answer') {
+                    url = '/question/answer/' + id + '/comments';
+                // } else if (comments_type == 'question') {
+                    // return ;
+                    //url = '/question/' + id + '/comments';
+                } else if (comments_type == 'feed') {
+                    url = '/feeds/' + id + '/comments'
+                } else if (comments_type == 'group') {
+                    url = '/group/' + id + '/comments' ;
+                } else if (comments_type == 'news') {
+                    url = '/news/' + id + '/comments';
+                }
+                scroll.init({
+                    container: '.J-commentbox',
+                    loading: loading,
+                    url: url,
+                    params: params,
+                    canload: true
+                });
         }
-
-        if (comments_type == 'answer') {
-
-            url = '/question/answer/' + id + '/comments';
-
-        } else if (comments_type == 'question') {
-
-            return ;
-            //url = '/question/' + id + '/comments';
-
-        } else if (comments_type == 'feed') {
-
-            url = '/feeds/' + id + '/comments'
-
-        } else if (comments_type == 'group') {
-
-            url = '/group/' + id + '/comments' ;
-
-        } else if (comments_type == 'news') {
-
-            url = '/news/' + id + '/comments';
-        }
-
-        scroll.init({
-            container: '.J-commentbox',
-            loading: loading,
-            url: url,
-            params: params,
-            canload: true
-        });
-    }
-
+    })
+    
     function doComment(id, position, comments_type, group_id) {
         var url = '';
         if (comments_type == 'answer') {

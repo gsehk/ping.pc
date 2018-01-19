@@ -1237,9 +1237,7 @@ var delHistory = function(str) {
 //验证登录
 var checkLogin = function() {
     if (TS.MID == 0) {
-        // 记录url
-        $.cookie('referer_url', window.location.href, 1);
-        window.location.href = TS.SITE_URL + '/passport/login';
+        window.location.href = TS.SITE_URL + '/auth/login';
         throw new Error("请登录");
     }
 }
@@ -1496,24 +1494,9 @@ $(function() {
                   + '</div>';
         if (_st == 1) {
             $(_code).hide().appendTo("body").fixed({x:-44,y:0}).fadeIn(500);
-            $("#ms_fixed dt a.close").width('68px');
         } else {
             $(_code).hide().appendTo("body").fixed({x:0,y:0}).fadeIn(500);
         }
-        $("#ms_fixed dt").click(function(){
-            var _right = $("#ms_fixed").offset().right;
-            if (_right>=0) {
-                $.cookie("fixed",1,{path:'/'});
-                $("#ms_fixed").animate({right:-44},300,'swing',function(){
-                    $("#ms_fixed dt a.close").hide().width('68px').fadeIn(500);
-                });
-            } else {
-                $.cookie("fixed",0,{path:'/'});
-                $("#ms_fixed dt a.close").width('44px');
-                $("#ms_fixed").animate({right:0}, 300, 'swing', function(){
-                });
-            }
-        });
     }
 
     // 获得用户时区与GMT时区的差值

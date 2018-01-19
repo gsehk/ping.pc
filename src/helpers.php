@@ -235,11 +235,7 @@ function replaceImage($content)
 
 function getUserInfo($id)
 {
-    $user = Cache::get('user_' . $id);
-    if (!$user) {
-        $user = User::where('id', '=', $id)->first();
-        Cache::forever('user_' . $id, $user);
-    }
+    $user = User::where('id', '=', $id)->first();
 
     return $user;
 }
