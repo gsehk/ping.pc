@@ -42,7 +42,7 @@
                 <div class="f-dn m-income join-income">
                     <span>{{$group->join_income_count * $config['bootstrappers']['wallet:ratio']}}</span>
                     <div class="s-fc4 f-fs2">成员费（{{ $config['bootstrappers']['site']['gold_name']['name'] }}） 共
-                    <font color="#3CA967">{{$group->users_count}}</font> 个付费成员</div>
+                    {{-- <font color="#3CA967">{{$group->users_count}}</font> 个付费成员</div> --}}
                 </div>
             </div>
             <div class="m-ct">
