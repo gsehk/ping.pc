@@ -76,13 +76,13 @@
 
     <div class="right_container">
         {{-- 相关专家 --}}
-        @if($topic->experts->count() > 1)
+        @if($experts->count() > 1)
             <div class="recusers">
                 <div class="experts-users-title">
                     <div>相关专家</div>
                 </div>
                 <ul>
-                    @foreach ($topic->experts as $user)
+                    @foreach ($experts as $user)
                         <li>
                             <a href="{{ route('pc:mine', $user['id']) }}">
                                 <img src="{{ getAvatar($user, 50) }}"/>
@@ -93,7 +93,7 @@
                         </li>
                     @endforeach
                 </ul>
-                @if ($topic->experts->count() >= 9)
+                @if ($experts->count() >= 9)
                     <a class="recmore" href="{{ route('pc:topicexpert', $topic->id) }}">更多相关专家</a>
                 @endif
             </div>

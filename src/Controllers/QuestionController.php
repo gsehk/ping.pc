@@ -96,6 +96,7 @@ class QuestionController extends BaseController
     public function topicInfo(Request $request, int $topic)
     {
         $data['topic'] = createRequest('GET', '/api/v2/question-topics/'.$topic );
+        $data['experts'] = createRequest('GET', '/api/v2/question-topics/'.$topic . '/experts');
 
         return view('pcview::question.topic_info', $data, $this->PlusData);
     }
