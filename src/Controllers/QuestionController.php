@@ -290,22 +290,22 @@ class QuestionController extends BaseController
      */
     public function topicExpert(Request $request, int $topic)
     {
-        if ($request->isAjax) {
+        if (!$request->isAjax) {
             $limit = $request->input('limit') ?: 18;
-            $offset = $request->input('offset') ?: 0;
+            $after = $request->input('after') ?: 0;
             $params = [
                 'limit' => $limit,
-                'offset' => $offset,
+                'after' => $after,
             ];
-
             $data['users'] = createRequest('GET', '/api/v2/question-topics/'.$topic.'/experts', $params);
+            $after = $data['users']->pop()->id ?? 0;
 
             $html =  view('pcview::templates.user', $data, $this->PlusData)->render();
 
             return response()->json([
                 'status'  => true,
                 'data' => $html,
-                'count' => count($data['users'])
+                'after' => $after
             ]);
         }
 

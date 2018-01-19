@@ -47,8 +47,14 @@
             var params = {
                 limit: 18,
                 isAjax: true,
-                ajax: true
             };
+            scroll.init({
+                container: '#user_list',
+                loading: '.user_container',
+                url: '/question/topic/' + topic_id + '/expert',
+                params: params,
+                paramtype: 0
+            });
         };
 
         // 关注回调
