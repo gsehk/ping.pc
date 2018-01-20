@@ -22,9 +22,10 @@ easemob = {
             //收到文本消息
             onTextMessage: function ( message ) {
                 window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
-
+                    // 因为返回的是来源用户ID是字符串类型，所以转换一下
+                    message.from = parseInt(message.from);
                     // 查询会话是否存在
-                    window.TS.dataBase.room.where({mid: TS.MID, uid: message.from}).first(function(item){
+                    window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, message.from]).first(function(item){
                         var dbMsg = {};
                         dbMsg.id = message.id;
                         dbMsg.time = (new Date()).valueOf();
@@ -56,40 +57,34 @@ easemob = {
                                 room.id = i;
                                 easemob.setNewCon(room);
 
-                                // 若聊天窗口为打开状态
-                                if ($('.chat_dialog').length > 0) {
-                                    // 当前会话，添加消息
-                                    if (easemob.cid == dbMsg.cid && window.TS.MID == dbMsg.touid) {
-                                        easemob.setMes(dbMsg.txt, dbMsg.uid);
-                                    }
-                                    easemob.updateLastMes(dbMsg.cid, dbMsg.txt);
-                                }
+
                             });
                         } else { // 存在修改会话内容
-                            window.TS.dataBase.room.where({mid: TS.MID, uid: message.from}).modify({
+                            window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, message.from]).modify({
                                 last_message_time: dbMsg.time,
                                 last_message_txt: message.sourceMsg
                             })
 
                             if (item.del == 1) {
-                                window.TS.dataBase.room.where({mid: TS.MID, uid: message.from}).modify({
+                                window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, message.from]).modify({
                                     del: 0
                                 });
                                 // 设置会话
                                 easemob.setNewCon(item);
                             }
                             dbMsg.cid = item.id;
-                            dbMsg.read = easemob.cid == dbMsg.cid ? 1 : 0;
+                            dbMsg.read = (easemob.cid == dbMsg.cid && $('.chat_dialog').length > 0) ? 1 : 0;
                             window.TS.dataBase.message.add(dbMsg);
 
-                            // 若聊天窗口为打开状态
-                            if ($('.chat_dialog').length > 0) {
-                                // 当前会话，添加消息
-                                if (easemob.cid == dbMsg.cid && window.TS.MID == dbMsg.touid) {
-                                    easemob.setMes(dbMsg.txt, dbMsg.uid);
-                                }
-                                easemob.updateLastMes(dbMsg.cid, dbMsg.txt);
+                        }
+
+                        // 若聊天窗口为打开状态
+                        if ($('.chat_dialog').length > 0) {
+                            // 当前会话，添加消息
+                            if (easemob.cid == dbMsg.cid && window.TS.MID == dbMsg.touid) {
+                                easemob.setMes(dbMsg.txt, dbMsg.uid);
                             }
+                            easemob.updateLastMes(dbMsg.cid, dbMsg.txt);
                         }
                     });
                 });
@@ -123,7 +118,7 @@ easemob = {
             window.TS.dataBase.room
                 .orderBy('last_message_time')
                 .filter( (item) => {
-                    return (item.del != 1 && item.mid == TS.MID);
+                    return (item.mid == TS.MID);
                 })
                 .reverse()
                 .toArray().then(function(items){
@@ -155,10 +150,10 @@ easemob = {
         var db = new Dexie('TS_EASEMOB');
         db.version(1).stores({
             // message
-            message: "id, time, cid, type, mid, uid, touid, txt, read",
+            message: "id, time, cid, type, mid, uid, touid, txt, read, [cid+read]",
 
             // room
-            room: "++id, type, mid, uid, last_message_time, last_message_txt, del",
+            room: "++id, type, mid, uid, last_message_time, last_message_txt, del, [mid+del], [mid+uid]",
         });
 
         window.TS.dataBase = db;
@@ -167,7 +162,7 @@ easemob = {
     setOuterCon: function(){
         var _this = this;
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
-            window.TS.dataBase.room.where({mid: TS.MID, del: 0}).each(function(item){
+            window.TS.dataBase.room.where('[mid+del]').equals([TS.MID, 0]).each(function(item){
                 var sidehtml = '<dd class="ms_chat" id="ms_chat_' + item.id + '" data-cid="' + item.id + '" data-name="' + _this.users[item.uid]['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(5, '+ item.id +', '+ item.uid +')"><img src="' + getAvatar(_this.users[item.uid], 50) + '"/></a></dd>';
 
                 $('#ms_fixed').append(sidehtml);
@@ -178,14 +173,15 @@ easemob = {
     setInnerCon: function(){
         var _this = this;
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
-            window.TS.dataBase.room.where({mid: TS.MID, del: 0}).each(function(item){
+            window.TS.dataBase.room.where('[mid+del]').equals([TS.MID, 0]).each(function(item){
                 if (item.del == 0 || item.id == easemob.cid) {
+                    console.log(123);
                     var css = item.id == easemob.cid ? 'class="room_item current_room"' : 'class="room_item"';
 
                     var last_message_txt = item.last_message_txt == undefined ? '' : item.last_message_txt;
 
                     var html = '<li ' + css + ' class="room_item" data-type="5" data-uid="' + item.uid + '" data-cid="' + item.id + '" id="chat_' + item.id + '">'
-                                +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delCon(' + item.id + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
+                                +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delCon(' + item.id + ', ' + item.uid + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
                                 +      '<div class="chat_left_icon">'
                                 +          '<img src="' + getAvatar(_this.users[item.uid]) + '" class="chat_svg">'
                                 +       '</div>'
@@ -221,7 +217,7 @@ easemob = {
 
 
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
-            window.TS.dataBase.room.where({mid: TS.MID, uid: uid}).first(function(item){
+            window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, uid]).first(function(item){
                 if (item === undefined) { // 不存在创建会话
                     var room = {
                         type: 'chat',
@@ -232,12 +228,14 @@ easemob = {
                         del: 0
                     };
                     window.TS.dataBase.room.add(room).then(function(i){
+                        var sidehtml = '<dd class="ms_chat" id="ms_chat_' + i + '" data-cid="' + i + '" data-name="' + user['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(5, '+ i +', '+ uid +')"><img src="' + getAvatar(user, 50) + '"/></a></dd>';
+                        $('#ms_fixed').append(sidehtml);
                         easemob.cid = i;
                         easemob.openChatDialog(5, i, uid);
                     });
                 } else { // 存在修改会话内容
                     if (item.del == 1) {
-                        window.TS.dataBase.room.where({mid: TS.MID, uid: uid}).modify({
+                        window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, uid]).modify({
                             del: 0
                         });
                     }
@@ -248,15 +246,17 @@ easemob = {
     },
 
     // 删除会话
-    delCon: function(cid) {
+    delCon: function(cid, uid) {
         cancelBubble();
         var chat = $('#chat_' + cid);
 
         // 查找下个会话
         if (chat.next().length > 0) {
             var next_cid = chat.next().eq(0).data('cid');
+            var next_uid = chat.next().eq(0).data('uid');
         } else if (chat.prev('.room_item').length > 0) {
             var next_cid = chat.prev().eq(0).data('cid');
+            var next_uid = chat.next().eq(0).data('uid');   
         } else {
             var next_cid = 0;
         }
@@ -266,10 +266,13 @@ easemob = {
 
         // 清空会话，或者展示下个会话的聊天列表
         if (next_cid == 0) {
+            easemob.cid = 0;
+            $('#message_wrap').show();
+            $('#chat_wrap').hide();
             messageData(3);
         } else {
             $('#chat_' + cid).addClass('current_room');
-            message.listMes(next_cid);
+            easemob.listMes(next_cid, next_uid);
         }
 
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
@@ -290,7 +293,7 @@ easemob = {
             var last_message_txt = room.last_message_txt == undefined ? '' : room.last_message_txt;
 
             var html = '<li class="room_item" data-type="5" data-cid="' + room['id'] + '" id="chat_' + room['id'] + '">'
-                        +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delCon(' + room['id'] + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
+                        +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delCon(' + room['id'] + ', ' + room.uid + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
                         +      '<div class="chat_left_icon">'
                         +          '<img src="' + getAvatar(_this.users[room.uid]) + '" class="chat_svg">'
                         +       '</div>'
@@ -307,7 +310,7 @@ easemob = {
     listMes: function(cid, uid){
         var _this = this;
         // 设置房间名
-        $('#chat_wrap .body_title').html(easemob.users[uid].name).show();
+        $('#chat_wrap .body_title').html(_this.users[uid]['name']).show();
         $('#chat_cont').html('');
 
         // 查询消息
@@ -451,7 +454,7 @@ easemob = {
             $('#ms_chat_' + cid).find('.unread_div').remove();
             $('#chat_' + cid).find('.chat_unread_div').remove();
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
-                window.TS.dataBase.message.where({mid: window.TS.MID, cid: cid}).modify({
+                window.TS.dataBase.message.where({cid: cid}).modify({
                     read: 1
                 });
             });
@@ -510,7 +513,7 @@ easemob = {
         // 获取未读消息数量
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, window.TS.dataBase.message, () => {
             window.TS.dataBase.room.where({mid: TS.MID}).each( value => {
-                window.TS.dataBase.message.where({read: 0, cid: value.id}).count( number => {
+                window.TS.dataBase.message.where('[cid+read]').equals([value.id, 0]).count( number => {
                     if (number > 0) {
                         easemob.setUnreadChat(value.id, number);
                     }

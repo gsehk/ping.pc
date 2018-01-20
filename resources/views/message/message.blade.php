@@ -107,15 +107,14 @@
 
 <script type="text/javascript">
     var type = {{ $type }};
+    var body_title = $('.body_title');
+    var audit_top = $('.audit_top');
+    var select = $(".message_select");
     $(function () {
         axios.defaults.baseURL = TS.SITE_URL;
         axios.defaults.headers.common['Accept'] = 'application/json';
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + TS.TOKEN;
         axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="_token"]').attr('content');
-
-        var body_title = $('.body_title');
-        var audit_top = $('.audit_top');
-        var select = $(".message_select");
 
         select.on("click", function(e){
             e.stopPropagation();
@@ -158,120 +157,12 @@
                 easemob.setRead(1, cid);
                 easemob.listMes(cid, uid);
             } else {
+                easemob.cid = 0;
                 $('#message_wrap').show();
                 $('#chat_wrap').hide();
                 messageData(type);
             }
         });
-
-        // 获取消息列表
-        function messageData(type) {
-            $('#message_cont').html('');
-            var title = '';
-            switch(type) {
-                case 0: // 评论
-                    title = '评论的';
-                    scroll.init({
-                        container: '#message_cont',
-                        loading: '.message_cont',
-                        url: '/message/comments',
-                        params: {limit: 20},
-                        loadtype: 2,
-                        callback: function(){
-                            easemob.setRead(0, 'comments');
-                        }
-                    });
-                    body_title.html(title);
-                    body_title.removeClass('hide');
-                    audit_top.addClass('hide');
-
-                    break;
-                case 1: // 点赞
-                    title = '点赞的';
-                    scroll.init({
-                        container: '#message_cont',
-                        loading: '.message_cont',
-                        url: '/message/likes',
-                        params: {limit: 20},
-                        loadtype: 2,
-                        callback: function(){
-                            easemob.setRead(0, 'likes');
-                        }
-                    });
-                    body_title.html(title);
-                    body_title.removeClass('hide');
-                    audit_top.addClass('hide');
-
-                    break;
-                case 2: // 通知
-                    title = '通知';
-                    scroll.init({
-                        container: '#message_cont',
-                        loading: '.message_cont',
-                        url: '/message/notifications',
-                        paramtype: 1,
-                        params: {limit: 20},
-                        loadtype: 2,
-                        callback: function(){
-                            easemob.setRead(0, 'notifications');
-                        }
-                    });
-                    body_title.html(title);
-                    body_title.removeClass('hide');
-                    audit_top.addClass('hide');
-
-                    break;
-                case 3: // 动态评论置顶审核
-                    scroll.init({
-                        container: '#message_cont',
-                        loading: '.message_cont',
-                        url: '/message/pinnedFeedComment',
-                        params: {limit: 20},
-                        loadtype: 2
-                    });
-                    body_title.addClass('hide');
-                    audit_top.removeClass('hide');
-                    break;
-                case 4: // 资讯评论置顶审核
-                    scroll.init({
-                        container: '#message_cont',
-                        loading: '.message_cont',
-                        url: '/message/pinnedNewsComment',
-                        params: {limit: 20},
-                        loadtype: 2
-                    });
-
-                    body_title.addClass('hide');
-                    audit_top.removeClass('hide');
-                    break;
-                case 5: // 帖子评论置顶审核
-                    scroll.init({
-                        container: '#message_cont',
-                        loading: '.message_cont',
-                        url: '/message/pinnedPostComment',
-                        paramtype: 1,
-                        params: {limit: 20},
-                        loadtype: 2
-                    });
-
-                    body_title.addClass('hide');
-                    audit_top.removeClass('hide');
-                    break;
-                case 6: // 帖子置顶审核
-                    scroll.init({
-                        container: '#message_cont',
-                        loading: '.message_cont',
-                        url: '/message/pinnedPost',
-                        paramtype: 1,
-                        params: {limit: 20},
-                        loadtype: 2
-                    });
-
-                    body_title.addClass('hide');
-                    audit_top.removeClass('hide');
-                    break;
-            }
-        }
 
         // 设置未读数量
         for (var i in TS.UNREAD) {
@@ -285,4 +176,112 @@
         easemob.cid = {{ $cid or 0 }};
         easemob.setInnerCon();
     });
+    // 获取消息列表
+    function messageData(type) {
+        $('#message_cont').html('');
+        var title = '';
+        switch(type) {
+            case 0: // 评论
+                title = '评论的';
+                scroll.init({
+                    container: '#message_cont',
+                    loading: '.message_cont',
+                    url: '/message/comments',
+                    params: {limit: 20},
+                    loadtype: 2,
+                    callback: function(){
+                        easemob.setRead(0, 'comments');
+                    }
+                });
+                body_title.html(title);
+                body_title.removeClass('hide');
+                audit_top.addClass('hide');
+
+                break;
+            case 1: // 点赞
+                title = '点赞的';
+                scroll.init({
+                    container: '#message_cont',
+                    loading: '.message_cont',
+                    url: '/message/likes',
+                    params: {limit: 20},
+                    loadtype: 2,
+                    callback: function(){
+                        easemob.setRead(0, 'likes');
+                    }
+                });
+                body_title.html(title);
+                body_title.removeClass('hide');
+                audit_top.addClass('hide');
+
+                break;
+            case 2: // 通知
+                title = '通知';
+                scroll.init({
+                    container: '#message_cont',
+                    loading: '.message_cont',
+                    url: '/message/notifications',
+                    paramtype: 1,
+                    params: {limit: 20},
+                    loadtype: 2,
+                    callback: function(){
+                        easemob.setRead(0, 'notifications');
+                    }
+                });
+                body_title.html(title);
+                body_title.removeClass('hide');
+                audit_top.addClass('hide');
+
+                break;
+            case 3: // 动态评论置顶审核
+                scroll.init({
+                    container: '#message_cont',
+                    loading: '.message_cont',
+                    url: '/message/pinnedFeedComment',
+                    params: {limit: 20},
+                    loadtype: 2
+                });
+                body_title.addClass('hide');
+                audit_top.removeClass('hide');
+                break;
+            case 4: // 资讯评论置顶审核
+                scroll.init({
+                    container: '#message_cont',
+                    loading: '.message_cont',
+                    url: '/message/pinnedNewsComment',
+                    params: {limit: 20},
+                    loadtype: 2
+                });
+
+                body_title.addClass('hide');
+                audit_top.removeClass('hide');
+                break;
+            case 5: // 帖子评论置顶审核
+                scroll.init({
+                    container: '#message_cont',
+                    loading: '.message_cont',
+                    url: '/message/pinnedPostComment',
+                    paramtype: 1,
+                    params: {limit: 20},
+                    loadtype: 2
+                });
+
+                body_title.addClass('hide');
+                audit_top.removeClass('hide');
+                break;
+            case 6: // 帖子置顶审核
+                scroll.init({
+                    container: '#message_cont',
+                    loading: '.message_cont',
+                    url: '/message/pinnedPost',
+                    paramtype: 1,
+                    params: {limit: 20},
+                    loadtype: 2
+                });
+
+                body_title.addClass('hide');
+                audit_top.removeClass('hide');
+                break;
+        }
+    }
 </script>

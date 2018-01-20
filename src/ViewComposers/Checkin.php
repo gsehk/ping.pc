@@ -13,7 +13,7 @@ class CheckIn
 
         if ($open) {
     		$data = createRequest('GET', '/api/v2/user/checkin');
-	    	$data['checked_in'] = $data['checked_in'] ? 1 : 0;
+	    	$data['checked_in'] = isset($data['checked_in']) && $data['checked_in'] ? 1 : 0;
 	        $view->with('data', $data);
    		}
     }
