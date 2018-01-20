@@ -67,7 +67,7 @@
                 @if(isset($store['paid']) && !$store['paid'])
                     <img style="height:{{ $store_height }}px" data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy" onclick="weibo.payImage(this)" data-node="{{ $store['paid_node'] }}" data-amount="{{ $store['amount'] }}" data-file="{{ $store['file'] }}" />
                 @else
-                    <img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy"/>
+                    <a target="_blank" href="{{ getImageUrl($store, '', '', false) }}"><img data-original="{{ getImageUrl($store, '', '', false) }}" class="per_image lazy"/></a>
                 @endif
             @endforeach
             </div>
@@ -164,14 +164,6 @@
 <script src="{{ asset('assets/pc/js/module.weibo.js') }}"></script>
 <script src="{{ asset('assets/pc/js/qrcode.js') }}"></script>
 <script type="text/javascript">
-    layer.photos({
-      photos: '#layer-photos-demo'
-      ,anim: 5
-      ,move: false
-      ,img: '.per_image'
-    });
-
-    
     $(function(){
         $("img.lazy").lazyload({effect: "fadeIn"});
     });
