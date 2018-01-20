@@ -31,11 +31,11 @@
                     <span class="tcolor">{{ $user['name'] }}</span>
                     <div class="gcolor mt10">{{ getTime($feed['created_at']) }}</div>
                 </dd>
+                @if(isset($TS->id) && $user->id == $TS->id)
                 <dd class="fr mt20 relative">
                     <span class="options" onclick="options(this)">
                         <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                     </span>
-                    @if(isset($TS->id) && $user->id == $TS->id)
                     <div class="options_div">
                         <div class="triangle"></div>
                         <ul>
@@ -52,12 +52,12 @@
 
                         </ul>
                     </div>
-                    @endif
                 </dd>
+                @endif
             </dl>
 
             @if(!empty($feed->images))
-            <div class="detail_images" id="layer-photos-demo">
+            <div class="detail_images">
             @foreach($feed->images as $store)
                 {{-- 计算图片高度 --}}
                 @php
