@@ -335,17 +335,19 @@
             });
             if (args.subject.length < 1) {
                 $('#subject').focus();
-                $('.subject-error').text('请输入标题').show();
-
+                noticebox('请输入标题', 0);
+                // $('.subject-error').text('请输入标题').show();
                 return false;
             } else if (args.subject.charAt(args.subject.length - 1) != '?' && args.subject.charAt(args.subject.length - 1) != '？') {
                 $('#subject').focus();
-                $('.subject-error').text('请以问号结束提问').show();
+                noticebox('请以问号结束提问', 0);
+                // $('.subject-error').text('请以问号结束提问').show();
 
                 return false;
             } else if (args.subject.match(/([\u4E00-\u9FA5A-Za-z0-9])/g) == null) {
                 $('#subject').focus();
-                $('.subject-error').text('请认真填写标题').show();
+                noticebox('请认真填写标题', 0);
+                // $('.subject-error').text('请认真填写标题').show();
 
                 return false;
             }

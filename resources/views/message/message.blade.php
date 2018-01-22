@@ -8,7 +8,7 @@
     <div class="chat_left_wrap">
         <div class="chat_left" id="chat_left_scroll">
             <ul id="root_list">
-                <li @if($type == 0)class="current_room"@endif data-type="0" id="chat_comments">
+                <li @if($type == 1)class="current_room"@endif data-type="1" id="chat_comments">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
                             <use xlink:href="#icon-side-msg"></use>
@@ -19,7 +19,7 @@
                         <div class="last_content"></div>
                     </div>
                 </li>
-                <li @if($type == 1)class="current_room"@endif data-type="1" id="chat_likes">
+                <li @if($type == 2)class="current_room"@endif data-type="2" id="chat_likes">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
                             <use xlink:href="#icon-side-like"></use>
@@ -30,7 +30,7 @@
                         <div class="last_content"></div>
                     </div>
                 </li>
-                <li @if($type == 2)class="current_room"@endif data-type="2" id="chat_notifications">
+                <li @if($type == 3)class="current_room"@endif data-type="3" id="chat_notifications">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
                             <use xlink:href="#icon-side-notice"></use>
@@ -40,7 +40,7 @@
                         <span class="chat_span chat_span_noinfo">通知</span>
                     </div>
                 </li>
-                <li @if($type == 3)class="current_room"@endif data-type="3" id="chat_pinneds">
+                <li @if($type == 4)class="current_room"@endif data-type="4" id="chat_pinneds">
                     <div class="chat_left_icon">
                         <svg class="icon chat_svg" aria-hidden="true">
                             <use xlink:href="#icon-side-auth"></use>
@@ -60,7 +60,7 @@
     </div>
 
     {{-- 消息相关 --}}
-    <div class="chat_right @if($type == 5) hide @endif" id="message_wrap">
+    <div class="chat_right @if($type == 0) hide @endif" id="message_wrap">
         <div class="body_title">评论的</div>
 
         {{-- 审核通知 --}}
@@ -68,10 +68,10 @@
             <div data-value="" class="zy_select t_c gap12 message_select">
                 <span>动态评论置顶</span>
                 <ul>
-                    <li data-value="3" class="active">动态评论置顶</li>
-                    <li data-value="4">文章评论置顶</li>
-                    <li data-value="5">帖子评论置顶</li>
-                    <li data-value="6">帖子置顶</li>
+                    <li data-value="4" class="active">动态评论置顶</li>
+                    <li data-value="5">文章评论置顶</li>
+                    <li data-value="6">帖子评论置顶</li>
+                    <li data-value="7">帖子置顶</li>
                 </ul>
                 <i></i>
             </div>
@@ -87,7 +87,7 @@
     </div>
 
     {{-- 聊天 --}}
-    <div class="chat_right @if($type != 5) hide @endif" id="chat_wrap">
+    <div class="chat_right @if($type != 0) hide @endif" id="chat_wrap">
         <div class="body_title"></div>
 
         <div class="chat_content_wrap chat_height">
@@ -136,15 +136,12 @@
             select.removeClass("open");
         });
 
-
-        messageData(type);
-
         // 切换消息类型
         $('#root_list').on('click', 'li', function () {
             $(this).hasClass("current_room") || ($(this).addClass("current_room").siblings('.current_room').removeClass('current_room'));
             var type = $(this).data('type');
 
-            if (type == 5) {
+            if (type == 0) {
                 body_title.removeClass('hide');
                 $('#message_wrap').hide();
                 $('#chat_wrap').show();
@@ -175,13 +172,16 @@
         // 设置房间
         easemob.cid = {{ $cid or 0 }};
         easemob.setInnerCon();
+
+        // 加载内容
+        if(type != 0) messageData(type);
     });
     // 获取消息列表
     function messageData(type) {
         $('#message_cont').html('');
         var title = '';
         switch(type) {
-            case 0: // 评论
+            case 1: // 评论
                 title = '评论的';
                 scroll.init({
                     container: '#message_cont',
@@ -198,7 +198,7 @@
                 audit_top.addClass('hide');
 
                 break;
-            case 1: // 点赞
+            case 2: // 点赞
                 title = '点赞的';
                 scroll.init({
                     container: '#message_cont',
@@ -215,7 +215,7 @@
                 audit_top.addClass('hide');
 
                 break;
-            case 2: // 通知
+            case 3: // 通知
                 title = '通知';
                 scroll.init({
                     container: '#message_cont',
@@ -233,7 +233,7 @@
                 audit_top.addClass('hide');
 
                 break;
-            case 3: // 动态评论置顶审核
+            case 4: // 动态评论置顶审核
                 scroll.init({
                     container: '#message_cont',
                     loading: '.message_cont',
@@ -244,7 +244,7 @@
                 body_title.addClass('hide');
                 audit_top.removeClass('hide');
                 break;
-            case 4: // 资讯评论置顶审核
+            case 5: // 资讯评论置顶审核
                 scroll.init({
                     container: '#message_cont',
                     loading: '.message_cont',
@@ -256,7 +256,7 @@
                 body_title.addClass('hide');
                 audit_top.removeClass('hide');
                 break;
-            case 5: // 帖子评论置顶审核
+            case 6: // 帖子评论置顶审核
                 scroll.init({
                     container: '#message_cont',
                     loading: '.message_cont',
@@ -269,7 +269,7 @@
                 body_title.addClass('hide');
                 audit_top.removeClass('hide');
                 break;
-            case 6: // 帖子置顶审核
+            case 7: // 帖子置顶审核
                 scroll.init({
                     container: '#message_cont',
                     loading: '.message_cont',

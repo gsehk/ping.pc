@@ -163,7 +163,7 @@ easemob = {
         var _this = this;
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
             window.TS.dataBase.room.where('[mid+del]').equals([TS.MID, 0]).each(function(item){
-                var sidehtml = '<dd class="ms_chat" id="ms_chat_' + item.id + '" data-cid="' + item.id + '" data-name="' + _this.users[item.uid]['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(5, '+ item.id +', '+ item.uid +')"><img src="' + getAvatar(_this.users[item.uid], 50) + '"/></a></dd>';
+                var sidehtml = '<dd class="ms_chat" id="ms_chat_' + item.id + '" data-cid="' + item.id + '" data-name="' + _this.users[item.uid]['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(0, '+ item.id +', '+ item.uid +')"><img src="' + getAvatar(_this.users[item.uid], 50) + '"/></a></dd>';
 
                 $('#ms_fixed').append(sidehtml);
             });
@@ -175,7 +175,6 @@ easemob = {
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
             window.TS.dataBase.room.where('[mid+del]').equals([TS.MID, 0]).each(function(item){
                 if (item.del == 0 || item.id == easemob.cid) {
-                    console.log(123);
                     var css = item.id == easemob.cid ? 'class="room_item current_room"' : 'class="room_item"';
 
                     var last_message_txt = item.last_message_txt == undefined ? '' : item.last_message_txt;
@@ -228,10 +227,10 @@ easemob = {
                         del: 0
                     };
                     window.TS.dataBase.room.add(room).then(function(i){
-                        var sidehtml = '<dd class="ms_chat" id="ms_chat_' + i + '" data-cid="' + i + '" data-name="' + user['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(5, '+ i +', '+ uid +')"><img src="' + getAvatar(user, 50) + '"/></a></dd>';
+                        var sidehtml = '<dd class="ms_chat" id="ms_chat_' + i + '" data-cid="' + i + '" data-name="' + user['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(0, '+ i +', '+ uid +')"><img src="' + getAvatar(user, 50) + '"/></a></dd>';
                         $('#ms_fixed').append(sidehtml);
                         easemob.cid = i;
-                        easemob.openChatDialog(5, i, uid);
+                        easemob.openChatDialog(0, i, uid);
                     });
                 } else { // 存在修改会话内容
                     if (item.del == 1) {
@@ -239,7 +238,7 @@ easemob = {
                             del: 0
                         });
                     }
-                    easemob.openChatDialog(5, item.id, uid);
+                    easemob.openChatDialog(0, item.id, uid);
                 } 
             });
         });
@@ -285,7 +284,7 @@ easemob = {
 
     setNewCon: function(room){
         var _this = this;
-        var sidehtml = '<dd class="ms_chat" id="ms_chat_' + room.id + '" data-cid="' + room.id + '" data-name="' + _this.users[room.uid]['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(5, '+ room.id +', '+ room.uid +')"><img src="' + getAvatar(_this.users[room.uid], 50) + '"/></a></dd>';
+        var sidehtml = '<dd class="ms_chat" id="ms_chat_' + room.id + '" data-cid="' + room.id + '" data-name="' + _this.users[room.uid]['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(0, '+ room.id +', '+ room.uid +')"><img src="' + getAvatar(_this.users[room.uid], 50) + '"/></a></dd>';
 
         $('#ms_pinneds').after(sidehtml);
 
@@ -463,7 +462,7 @@ easemob = {
 
     // 打开消息对话框
     openChatDialog: function(type, cid, uid) {
-        if (type == 5) { // 聊天消息
+        if (type == 0) { // 聊天消息
             easemob.setRead(1, cid);
             ly.load('/message/' + type + '/' + cid + '/' + uid, '', '720px', '572px');
         } else {
