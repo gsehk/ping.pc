@@ -1196,14 +1196,15 @@ var options = function(obj) {
 
 // 存入搜索记录
 var setHistory = function(str) {
+    if (str == '') return false;
     if (localStorage.history) {
         hisArr = JSON.parse(localStorage.history);
         if ($.inArray(str, hisArr) == -1) {
-            hisArr.push(str);
+            hisArr.unshift(str);
         }
     } else {
         hisArr = new Array();
-        hisArr.push(str);
+        hisArr.unshift(str);
     }
     var hisStr = JSON.stringify(hisArr);
     localStorage.history = hisStr;
@@ -1647,7 +1648,7 @@ $(function() {
         }
 
         var type = $(this).parents('li').attr('type');
-        window.location.href = '/search/' + type + '/' + val;
+        window.location.href = SITE_URL + '/search/' + type + '/' + val;
     });
 
     // 删除历史记录
@@ -1655,7 +1656,8 @@ $(function() {
         var val = $(this).siblings('span').text();
         delHistory(val);
 
-        if ($(this).parent().siblings().length == 0) {
+        var siblings = $(this).parent().siblings().filter(function(){return $(this).css('display')!='none';});  
+        if (siblings.length == 0) {
             $('.history').hide();
             $('head_search').hide();
         }
