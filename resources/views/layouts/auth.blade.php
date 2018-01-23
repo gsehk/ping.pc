@@ -8,11 +8,13 @@
         var TS = {
             API:'{{ $routes["api"] }}',
             USER:{!! json_encode($TS) !!},
-            MID: "{{$TS['id'] or 0}}",
+            MID: "{{ $TS['id'] or 0 }}",
             TOKEN: "{{ $token or '' }}",
             SITE_URL: "{{ $routes['siteurl'] }}",
             RESOURCE_URL: '{{ $routes["resource"] }}',
+            CONFIG: {!! json_encode($config) !!},
             BOOT: {!! json_encode($config['bootstrappers']) !!},
+            UNREAD: {}
         };
     </script>
     <link rel="stylesheet" href="{{ asset('assets/pc/css/common.css') }}">
