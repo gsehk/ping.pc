@@ -162,14 +162,14 @@ easemob = {
         window.TS.dataBase = db;
 
         // 添加IM小助手
-        if (TS.BOOT['im:helpers'] !== undefined) {
+        if (TS.BOOT['im:helper'] !== undefined) {
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
-                window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, TS.BOOT['im:helpers'][0]['uid']]).first(function(item){
+                window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, TS.BOOT['im:helper'][0]['uid']]).first(function(item){
                     if (item === undefined) {
                         var room = {
                             type: 'chat',
                             mid: TS.MID,
-                            uid: TS.BOOT['im:helpers'][0]['uid'],
+                            uid: TS.BOOT['im:helper'][0]['uid'],
                             last_message_time: (new Date()).valueOf(),
                             last_message_txt: '', 
                             del: 0
