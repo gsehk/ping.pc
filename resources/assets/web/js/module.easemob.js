@@ -165,7 +165,7 @@ easemob = {
         if (TS.BOOT['im:helpers'] !== undefined) {
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
                 window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, TS.BOOT['im:helpers'][0]['uid']]).first(function(item){
-                    if (item == undefined) {
+                    if (item === undefined) {
                         var room = {
                             type: 'chat',
                             mid: TS.MID,
