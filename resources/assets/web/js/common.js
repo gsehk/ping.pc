@@ -1483,8 +1483,6 @@ $(function() {
 
     // 右侧边栏
     if (TS.MID != 0 && !browser.versions.mobile) {
-        var _st = $.cookie("ms_fixed");
-        if (!_st) _st=0;
         var _code = '<div id="ms_fixed_wrap">'
                   + '<dl id="ms_fixed">'
                   +   '<dd id="ms_comments"><a href="javascript:;" onclick="easemob.openChatDialog(1)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-msg"></use></svg></a></dd>'
@@ -1493,11 +1491,7 @@ $(function() {
                   +   '<dd id="ms_pinneds"><a href="javascript:;" onclick="easemob.openChatDialog(4)"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-side-auth"></use></svg></a></dd>'
                   + '</dl>'
                   + '</div>';
-        if (_st == 1) {
-            $(_code).hide().appendTo("body").fixed({x:-44,y:0}).fadeIn(500);
-        } else {
-            $(_code).hide().appendTo("body").fixed({x:0,y:0}).fadeIn(500);
-        }
+        $(_code).hide().appendTo("body").fixed({x:0,y:0}).fadeIn(500);
     }
 
     // 获得用户时区与GMT时区的差值

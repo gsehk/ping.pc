@@ -1,5 +1,6 @@
 var easemob = {};
 easemob = {
+    // 初始化
     init: function(){
         easemob.conn = new WebIM.connection({
             isMultiLoginSessions: WebIM.config.isMultiLoginSessions,
@@ -135,6 +136,7 @@ easemob = {
         var unread_chat_timeout = window.setInterval(easemob.getUnreadChats, 1000);
     },
 
+    // IM登录
     login: function(){
         var options = { 
           apiUrl: WebIM.config.apiURL,
@@ -145,6 +147,7 @@ easemob = {
         easemob.conn.open(options);
     },
 
+    // 创建本地数据库
     database: function(){
         // 创建本地存储
         var db = new Dexie('TS_EASEMOB');
@@ -157,8 +160,28 @@ easemob = {
         });
 
         window.TS.dataBase = db;
+
+        // 添加IM小助手
+        if (BOOT['im:helpers'] !== undefined) {
+            window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
+                window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, BOOT['im:helpers'][0]['uid']]).first(function(item){
+                    if (item == undefined) {
+                        var room = {
+                            type: 'chat',
+                            mid: TS.MID,
+                            uid: BOOT['im:helpers'][0]['uid'],
+                            last_message_time: (new Date()).valueOf(),
+                            last_message_txt: '', 
+                            del: 0
+                        };
+                        window.TS.dataBase.room.add(room);
+                    }
+                });
+            });
+        }
     },
 
+    // 设置右侧会话
     setOuterCon: function(){
         var _this = this;
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
@@ -170,6 +193,7 @@ easemob = {
         });
     },
 
+    // 设置弹出会话
     setInnerCon: function(){
         var _this = this;
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
@@ -208,6 +232,7 @@ easemob = {
         });
     },
 
+    // 创建会话
     createCon: function(uid){
         checkLogin();
         var user = getUserInfo(uid);
@@ -281,7 +306,7 @@ easemob = {
         });
     },
 
-
+    // 设置新会话
     setNewCon: function(room){
         var _this = this;
         var sidehtml = '<dd class="ms_chat" id="ms_chat_' + room.id + '" data-cid="' + room.id + '" data-name="' + _this.users[room.uid]['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(0, '+ room.id +', '+ room.uid +')"><img src="' + getAvatar(_this.users[room.uid], 50) + '"/></a></dd>';

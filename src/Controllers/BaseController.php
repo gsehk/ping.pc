@@ -9,8 +9,8 @@ use Illuminate\Contracts\Config\Repository;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Plus\Models\Comment as CommentModel;
 use Zhiyi\Plus\Models\JWTCache as JWTCacheModel;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class BaseController extends Controller
@@ -70,7 +70,7 @@ class BaseController extends Controller
                 // 环信
                 $easemob = $repository->get('easemob');
                 $config['easemob_key'] = $easemob['app_key'];
-
+                
                 // 缓存配置信息
                 Cache::forever('config', $config);
             }
