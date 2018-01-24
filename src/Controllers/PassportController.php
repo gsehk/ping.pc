@@ -6,8 +6,10 @@ use Auth;
 use Session;
 use Cookie;
 use Tymon\JWTAuth\JWT;
+use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Http\Request;
 use Gregwar\Captcha\CaptchaBuilder;
+use Illuminate\Support\Facades\Auth as Authorize;
 use Zhiyi\Plus\Http\Controllers\Controller;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -154,5 +156,24 @@ class PassportController extends BaseController
     protected function guard()
     {
         return Auth::guard();
+    }
+
+    /**
+     * 通过token登录用户
+     * @author Foreach
+     * @return mixed
+     */
+    public function token(Request $request, string $token)
+    {
+        // 保存token
+        $request->session()->put('token', $token);
+        $request->session()->save();
+
+        $jwt = app(JWTAuth::class);
+        $user = $jwt->setToken($token)->authenticate();
+
+        // 登录用户实例
+        Authorize::login($user, true);
+        return response()->json([], 200);
     }
 }

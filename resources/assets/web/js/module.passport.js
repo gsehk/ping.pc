@@ -3,46 +3,6 @@ $(function() {
     $('input[name="login"]').focus();
 
     var passlod = false;
-    $('#login_btn').click(function() {
-        var _this = $(this);
-
-        var login = $('input[name="login"]').val();
-        var password = $('input[name="password"]').val();
-        if (login == '') {
-            $('input[name="login"]').focus();
-            return false;
-        }
-        if (password == '') {
-            $('input[name="password"]').focus();
-            return false;
-        }
-        if (!passlod) {
-            var url = '/api/v2/tokens';
-            passlod = true;
-            $('#login_form').ajaxSubmit({
-                type: 'post',
-                url: url,
-                beforeSend: function() {
-                    _this.text('登录中');
-                    _this.css('cursor', 'no-drop');
-                },
-                success: function(res) {
-                    noticebox('登录成功，跳转中...', 1, '/passport/token/' + res.token + '/0');
-                },
-                error: function(xhr) {
-                    showError(xhr.responseJSON);
-                },
-                complete: function() {
-                    _this.text('登录');
-                    _this.css('cursor', 'pointer');
-                    passlod = false;
-                }
-            });
-        }
-        return false;
-
-    });
-
     // 注册提交
     $('#reg_btn').click(function() {
         var _this = $(this);
@@ -129,7 +89,14 @@ $(function() {
                     _this.css('cursor', 'no-drop');
                 },
                 success: function(res) {
-                    noticebox('注册成功，跳转中...', 1, '/passport/token/' + res.token + '/1');
+                    // 记录token
+                    axios.post('/passport/token', {token: res.token})
+                      .then(function (response) {
+                        noticebox('注册成功，跳转中...', 1, '/passport/perfect');
+                      })
+                      .catch(function (error) {
+                        showError(error.response.data);
+                      });
                 },
                 error: function(xhr) {
                     showError(xhr.responseJSON);

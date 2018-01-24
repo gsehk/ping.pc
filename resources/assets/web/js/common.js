@@ -1642,7 +1642,7 @@ $(function() {
         }
 
         var type = $(this).parents('li').attr('type');
-        window.location.href = SITE_URL + '/search/' + type + '/' + val;
+        window.location.href = TS.SITE_URL + '/search/' + type + '/' + val;
     });
 
     // 删除历史记录
