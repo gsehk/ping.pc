@@ -163,8 +163,9 @@ class PassportController extends BaseController
      * @author Foreach
      * @return mixed
      */
-    public function token(Request $request, string $token)
+    public function token(Request $request)
     {
+        $token = $request->input('token');
         // 保存token
         $request->session()->put('token', $token);
         $request->session()->save();

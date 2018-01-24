@@ -25,7 +25,7 @@ Route::prefix('auth')->group(function () {
 Route::prefix('passport')->group(function () {
 
     // 登录成功记录token
-    Route::post('/token/{token}', 'PassportController@token')->name('pc:token');
+    Route::post('/token', 'PassportController@token')->name('pc:token');
 
     // 注册
     Route::get('/register/{type?}', 'PassportController@register')->where(['type' => '[0-9]+'])->name('pc:register');
