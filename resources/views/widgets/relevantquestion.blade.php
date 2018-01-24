@@ -6,7 +6,7 @@
                 @foreach($issues as $issue)
                     <li>
                         <a href="{{ Route('pc:questionread', $issue->id) }}">{{$issue->subject}}</a>
-                        <span>{{$issue->likes_count}}个赞</span>
+                        {{-- <span>{{$issue->likes_count}}个赞</span> --}}
                     </li>
                 @endforeach
             </ul>
