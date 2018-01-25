@@ -203,7 +203,7 @@ easemob = {
 
                     var last_message_txt = item.last_message_txt == undefined ? '' : item.last_message_txt;
 
-                    var html = '<li ' + css + ' class="room_item" data-type="5" data-uid="' + item.uid + '" data-cid="' + item.id + '" id="chat_' + item.id + '">'
+                    var html = '<li ' + css + ' class="room_item" data-type="0" data-uid="' + item.uid + '" data-cid="' + item.id + '" id="chat_' + item.id + '">'
                                 +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delCon(' + item.id + ', ' + item.uid + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
                                 +      '<div class="chat_left_icon">'
                                 +          '<img src="' + getAvatar(_this.users[item.uid]) + '" class="chat_svg">'
@@ -316,7 +316,7 @@ easemob = {
         if ($('.chat_dialog').length > 0) {
             var last_message_txt = room.last_message_txt == undefined ? '' : room.last_message_txt;
 
-            var html = '<li class="room_item" data-type="5" data-cid="' + room['id'] + '" id="chat_' + room['id'] + '">'
+            var html = '<li class="room_item" data-type="0" data-cid="' + room['id'] + '" id="chat_' + room['id'] + '">'
                         +      '<div class="chat_delete"><a href="javascript:;" onclick="easemob.delCon(' + room['id'] + ', ' + room.uid + ')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-delbtn1"></use></svg></a></div>'
                         +      '<div class="chat_left_icon">'
                         +          '<img src="' + getAvatar(_this.users[room.uid]) + '" class="chat_svg">'
