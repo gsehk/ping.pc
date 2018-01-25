@@ -81,4 +81,25 @@ $(function() {
           $(this).find('span').last().hide();
         }
     });
+
+    // 关注
+    $('#follow').click(function(){
+        var _this = $(this);
+        var status = $(this).attr('status');
+        var user_id = $(this).attr('uid');
+        follow(status, user_id, _this, function(target){
+            if (target.attr('status') == 1) {
+                target.find('span').text('关注');
+                target.find('.icon').show();
+                target.attr('status', 0);
+                target.removeClass('followed');
+            } else {
+                target.find('.icon').hide();
+                target.find('span').text('已关注');
+                target.attr('status', 1);
+                target.addClass('followed');
+            }
+        });
+    });
+
 });

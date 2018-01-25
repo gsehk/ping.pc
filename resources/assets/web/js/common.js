@@ -213,7 +213,7 @@ var fileUpload = {
             if(response.data.id > 0) callback(image, f, response.data.id);
           })
           .catch(function (error) {
-            showError(error.response.data);
+            showError(error.response);
           });
     }
 };
@@ -1650,7 +1650,7 @@ $(function() {
         var val = $(this).siblings('span').text();
         delHistory(val);
 
-        var siblings = $(this).parent().siblings().filter(function(){return $(this).css('display')!='none';});  
+        var siblings = $(this).parent().siblings().filter(function(){return $(this).css('display')!='none';});
         if (siblings.length == 0) {
             $('.history').hide();
             $('head_search').hide();

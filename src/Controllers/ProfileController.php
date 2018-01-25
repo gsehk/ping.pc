@@ -16,8 +16,9 @@ class ProfileController extends BaseController
      * @param  int|integer $user_id [用户id]
      * @return mixed
      */
-    public function feeds(Request $request, int $user_id = 0)
+    public function feeds(Request $request, UserModel $user)
     {
+        $this->PlusData['current'] = 'feeds';
         if ($request->isAjax) {
             $params = [
                 'type' => $request->query('type'),
@@ -46,11 +47,9 @@ class ProfileController extends BaseController
             ]));
         }
 
-        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
-        $data['user']->hasFollower = $data['user']->hasFollower($request->user());
-        $this->PlusData['current'] = 'feeds';
+        $user = $user->id ? $user : $request->user();
 
-        return view('pcview::profile.index', $data, $this->PlusData);
+        return view('pcview::profile.index', compact('user'), $this->PlusData);
     }
 
     /**
@@ -59,8 +58,9 @@ class ProfileController extends BaseController
      * @param  Request $request
      * @return mixed
      */
-    public function news(Request $request, int $user_id = 0)
+    public function news(Request $request, UserModel $user)
     {
+        $this->PlusData['current'] = 'news';
         if ($request->isAjax) {
             $params = [
                 'type' => $request->query('type'),
@@ -85,12 +85,10 @@ class ProfileController extends BaseController
             ]);
         }
 
-        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
-        $data['user']->hasFollower = $data['user']->hasFollower($request->user());
-        $this->PlusData['current'] = 'news';
-        $data['type'] = 0;
+        $user = $user->id ? $user : $request->user();
+        $type = 0;
 
-        return view('pcview::profile.news', $data, $this->PlusData);
+        return view('pcview::profile.news', compact('user', 'type'), $this->PlusData);
     }
 
     /**
@@ -101,6 +99,7 @@ class ProfileController extends BaseController
      */
     public function collect(Request $request)
     {
+        $this->PlusData['current'] = 'collect';
         if ($request->isAjax) {
             $cate = $request->query('cate', 1);
             switch ($cate) {
@@ -158,12 +157,10 @@ class ProfileController extends BaseController
                 'data' => $html
             ]);
         }
+        $user = $request->user();
+        $type = 0;
 
-        $data['user'] = $this->PlusData['TS'];
-        $this->PlusData['current'] = 'collect';
-        $data['type'] = 0;
-
-        return view('pcview::profile.collect', $data, $this->PlusData);
+        return view('pcview::profile.collect', compact('user', 'type'), $this->PlusData);
     }
 
     /**
@@ -173,8 +170,9 @@ class ProfileController extends BaseController
      * @param  int $user_id [用户id]
      * @return mixed
      */
-    public function group(Request $request, int $user_id = 0)
+    public function group(Request $request, UserModel $user)
     {
+        $this->PlusData['current'] = 'group';
         if ($request->isAjax) {
             $type = (int) $request->query('type');
             $params = [
@@ -196,12 +194,10 @@ class ProfileController extends BaseController
                 'data' => $html,
             ]);
         }
-        $data['type'] = 'join';
-        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
-        $data['user']->hasFollower = $data['user']->hasFollower($request->user());
-        $this->PlusData['current'] = 'group';
+        $type = 'join';
+        $user = $user->id ? $user : $request->user();
 
-        return view('pcview::profile.group', $data, $this->PlusData);
+        return view('pcview::profile.group', compact('user', 'type'), $this->PlusData);
     }
 
     /**

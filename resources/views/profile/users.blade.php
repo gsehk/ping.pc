@@ -23,24 +23,14 @@
 <script src="{{ asset('assets/pc/js/module.profile.js') }} "></script>
 <script type="text/javascript">
     $(function(){
-        // 加载关联用户列表
         scroll.init({
             container: '#follow-list',
             user_id:"{{ $user_id }}",
             loading: '.fan_cont',
             type: "{{ $type }}"
         });
-    
-        // 关注
-        $('#follow-list').on('click', '.fan_care', function(){
-            var _this = $(this);
-            var status = $(this).attr('status');
-            var user_id = $(this).attr('uid');
-            follow(status, user_id, _this, afterdata);
-        })
-        $("img.lazy").lazyload({effect: "fadeIn"});
 
-
+        // 菜单切换
         $('.fan_ul a').on('click', function(){
             var type = $(this).data('type');
             $('#follow-list').html('');
@@ -48,19 +38,27 @@
             $('.fan_ul a').removeClass('a_border');
             $(this).addClass('a_border');
         });
-    })
 
-    // 关注回调
-    var afterdata = function(target){
-        if (target.attr('status') == 1) {
-            target.text('+关注');
-            target.attr('status', 0);
-            target.removeClass('c_ccc');
-        } else {
-            target.text('已关注');
-            target.attr('status', 1);
-            target.addClass('c_ccc');
-        }
-    }
+        // 关注
+        $('#follow-list').on('click', '.fan_care', function(){
+            var _this = $(this);
+            var status = $(this).attr('status');
+            var user_id = $(this).attr('uid');
+            follow(status, user_id, _this, function(target){
+                if (target.attr('status') == 1) {
+                    target.text('+关注');
+                    target.attr('status', 0);
+                    target.removeClass('c_ccc');
+                } else {
+                    target.text('已关注');
+                    target.attr('status', 1);
+                    target.addClass('c_ccc');
+                }
+            });
+        });
+
+        $("img.lazy").lazyload({effect: "fadeIn"});
+    });
+
 </script>
 @endsection

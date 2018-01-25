@@ -66,11 +66,11 @@
                 <svg class="icon"><use xlink:href="#icon-messaged"></use></svg>聊天
             </a>
             @if ($user->follower)
-                <a class="btn profile-btn mcolor" id="follow" status="1" href="javascript:;">
+                <a class="btn profile-btn mcolor" id="follow" status="1" uid="{{$user->id}}" href="javascript:;">
                     <svg class="icon hide"><use xlink:href="#icon-add"></use></svg><span>已关注</span>
                 </a>
             @else
-                <a class="btn profile-btn mcolor" id="follow" status="0" href="javascript:;">
+                <a class="btn profile-btn mcolor" id="follow" status="0" uid="{{$user->id}}" href="javascript:;">
                     <svg class="icon"><use xlink:href="#icon-add"></use></svg><span>关注</span>
                 </a>
             @endif
