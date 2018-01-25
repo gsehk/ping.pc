@@ -201,4 +201,16 @@ class ConfigController extends Controller
 
         return response()->json(['message' => ['更新站点配置成功']], 201);
     }
+
+    /**
+     * 清除站点缓存.
+     *
+     * @return cacheclear
+     */
+    public function cacheclear()
+    {
+        cacheClear();
+
+        return response()->json(['message' => '清除成功'], 200);
+    }
 }

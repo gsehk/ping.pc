@@ -35,4 +35,5 @@ Route::prefix('nav')->group(function () {
 Route::prefix('site')->group(function () {
     Route::get('baseinfo', 'ConfigController@get');
     Route::patch('baseinfo', 'ConfigController@updateSiteInfo');
+    Route::put('cacheclear', 'ConfigController@cacheclear');
 });

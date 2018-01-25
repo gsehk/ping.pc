@@ -62,12 +62,15 @@
 
         <!-- button -->
         <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-4">
+          <div class="col-sm-offset-2 col-sm-2">
             <button v-if="submit.state === true" class="btn btn-primary" type="submit" disabled="disabled">
               <span class="glyphicon glyphicon-refresh component-loadding-icon"></span>
               提交...
             </button>
             <button v-else type="button" class="btn btn-primary" @click.stop.prevent="submitHandle">提交</button>
+          </div>
+          <div class="col-sm-4">
+              <button type="button" class="btn btn-primary" @click="cacheclear()">清除站点缓存</button>
           </div>
           <div class="col-sm-6 help-block">
             <span :class="`text-${submit.type}`">{{ submit.message }}</span>
@@ -112,7 +115,16 @@ const NavmanageComponent = {
     }
   }),
   methods: {
-	requestSiteInfo () {
+    cacheclear(){
+      request.put(createRequestURI('site/cacheclear'), {
+        validateStatus: status => status === 200
+      }).then(({ data = {} }) => {
+        this.submit.state = false;
+        this.submit.type = 'success';
+        this.submit.message = data.message;
+      });
+    },
+	  requestSiteInfo () {
       request.get(createRequestURI('site/baseinfo'), {
         validateStatus: status => status === 200
       }).then(({ data = {} }) => {
