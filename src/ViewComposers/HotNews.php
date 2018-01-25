@@ -15,7 +15,7 @@ class HotNews
         // 每周
         $stime = $time->subDays(7)->toDateTimeString();
         $week = News::byAudit()
-                ->where('updated_at', '>', $stime)
+                ->where('created_at', '>', $stime)
                 ->select('id','title', 'hits')
                 ->orderBy('hits', 'desc')
                 ->take($limit)
@@ -26,19 +26,19 @@ class HotNews
         $etime = Carbon::create(null, null, $time->daysInMonth); // 本月结束时间
 
         $month = News::byAudit()
-                ->whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                ->whereBetween('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                 ->select('id','title','hits')
                 ->orderBy('hits', 'desc')
                 ->take($limit)
                 ->get();
 
-        // 每季度 
+        // 每季度
         $season = ceil($time->month/3);//当月是第几季度
         $stime = Carbon::create($time->year, $season*3-3+1, 01, 0, 0, 0);// 本季度开始时间
         $etime = Carbon::create($time->year, $season*3, $time->daysInMonth, 23, 59, 59); // 本季度结束时间
 
         $quarter = News::byAudit()
-                ->whereBetween('updated_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
+                ->whereBetween('created_at', [$stime->toDateTimeString(), $etime->toDateTimeString()])
                 ->select('id','title','hits')
                 ->orderBy('hits', 'desc')
                 ->take($limit)
