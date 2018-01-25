@@ -27,7 +27,11 @@
                     <i></i>
                 </div>
                 <div data-value="1" class="zy_select t_c gap12 mr20 select-gray" id="J-answer">
-                    <span class="qa_opt">我的回答</span>
+                    @if ($user->id == $TS->id)
+                        <span class="qa_opt">我的回答</span>
+                    @else
+                        <span class="qa_opt">TA的回答</span>
+                    @endif
                     <ul>
                         <li data-value="all" class="active">全部</li>
                         <li data-value="adoption">被采纳</li>
@@ -36,8 +40,10 @@
                     </ul>
                     <i></i>
                 </div>
-                <a class="qa_opt ucolor" href="javascript:;" data-value="3">关注的问题</a>
-                <a class="qa_opt ucolor" href="javascript:;" data-value="4">关注的话题</a>
+                @if ($user->id == $TS->id)
+                    <a class="qa_opt ucolor" href="javascript:;" data-value="3">关注的问题</a>
+                    <a class="qa_opt ucolor" href="javascript:;" data-value="4">关注的话题</a>
+                @endif
             </div>
             <div id="content_list" class="profile_list follow_topic clearfix question_list">
             </div>
@@ -59,7 +65,7 @@
                 container: '#content_list',
                 loading: '.profile_content',
                 url: '/profile/question',
-                params: {isAjax: true, type: 'all' }
+                params: {isAjax: true, type: 'all', user_id: '{{$user->id}}' }
             });
         })
 
@@ -70,7 +76,7 @@
                 container: '#content_list',
                 loading: '.profile_content',
                 url: '/profile/question',
-                params: {type: type, isAjax: true, cate: 1 }
+                params: {type: type, isAjax: true, cate: 1, user_id: '{{$user->id}}' }
             });
         });
         $('#J-answer li').on('click', function(){
@@ -80,7 +86,7 @@
                 container: '#content_list',
                 loading: '.profile_content',
                 url: '/profile/question',
-                params: {type: type, isAjax: true, cate: 2 }
+                params: {type: type, isAjax: true, cate: 2, user_id: '{{$user->id}}' }
             });
         });
 
@@ -91,7 +97,7 @@
                 container: '#content_list',
                 loading: '.profile_content',
                 url: '/profile/question',
-                params: {isAjax: true, cate: type }
+                params: {isAjax: true, cate: type, user_id: '{{$user->id}}' }
             });
 
             $('.qa_opt').removeClass('active');

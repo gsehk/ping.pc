@@ -3,6 +3,7 @@
 namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
+use Zhiyi\Plus\Models\User as UserModel;
 use function zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceUrl;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
@@ -210,8 +211,9 @@ class ProfileController extends BaseController
      * @param  int $user_id [用户id]
      * @return mixed
      */
-    public function question(Request $request, int $user_id = 0)
+    public function question(Request $request, UserModel $user)
     {
+        $this->PlusData['current'] = 'question';
         if ($request->isAjax) {
             $cate = $request->query('cate', 1);
             switch ($cate) {
@@ -219,6 +221,7 @@ class ProfileController extends BaseController
                     $params = [
                         'after' => $request->query('after', 0),
                         'type' => $request->query('type', 'all'),
+                        'user_id' => $request->query('user_id'),
                     ];
                     $questions = createRequest('GET', '/api/v2/user/questions', $params);
                     $question = clone $questions;
@@ -231,6 +234,7 @@ class ProfileController extends BaseController
                     $params = [
                         'after' => $request->query('after', 0),
                         'type' => $request->query('type', 'all'),
+                        'user_id' => $request->query('user_id'),
                     ];
                     $answers = createRequest('GET', '/api/v2/user/question-answer', $params);
                     $answer = clone $answers;
@@ -242,6 +246,7 @@ class ProfileController extends BaseController
                     $params = [
                         'offset' => $request->query('offset', 0),
                         'limit' => $request->query('limit', 10),
+                        'user_id' => $request->query('user_id'),
                     ];
                     $watches = createRequest('GET', '/api/v2/user/question-watches', $params);
                     $data['data'] = $watches;
@@ -252,6 +257,7 @@ class ProfileController extends BaseController
                     $params = [
                         'after' => $request->query('after', 0),
                         'type' => $request->query('type', 'follow'),
+                        'user_id' => $request->query('user_id'),
                     ];
                     $topics = createRequest('GET', '/api/v2/user/question-topics', $params);
                     $topics->map(function($item){
@@ -269,10 +275,8 @@ class ProfileController extends BaseController
                 'after' => $after
             ]);
         }
-        $data['data'] = createRequest('GET', '/api/v2/user/questions');
-        $data['user'] = $user_id ? createRequest('GET', '/api/v2/users/' . $user_id) : $request->user();
-        $this->PlusData['current'] = 'question';
+        $user = $user->id ? $user : $request->user();
 
-        return view('pcview::profile.question', $data, $this->PlusData);
+        return view('pcview::profile.question', compact('user'), $this->PlusData);
     }
 }
