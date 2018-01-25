@@ -74,7 +74,6 @@ class BaseController extends Controller
                 // 缓存配置信息
                 Cache::forever('config', $config);
             }
-            dd($config);
 
             $this->PlusData['config'] = $config;
 
