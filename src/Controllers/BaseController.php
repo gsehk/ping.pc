@@ -12,9 +12,12 @@ use Zhiyi\Plus\Models\JWTCache as JWTCacheModel;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
+use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Traits\CreateJsonResponseData;
 
 class BaseController extends Controller
 {
+    use CreateJsonResponseData;
+
     protected $PlusData;
 
     public function __construct()
