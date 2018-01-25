@@ -23,7 +23,7 @@ class PcServiceProvider extends ServiceProvider
 
         // publish resource
         $this->publishes([
-            dirname(__DIR__).'/assets' => $this->app->PublicPath().'/assets/pc',
+            dirname(__DIR__).'/resources/assets/web' => $this->app->PublicPath().'/assets/pc',
         ], 'pc-public');
 
         // load routes

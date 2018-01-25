@@ -11,10 +11,10 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('assets');
+mix.setPublicPath('resources/assets/web');
 mix.setResourceRoot('/assets/pc/admin');
 mix.sourceMaps(! mix.inProduction());
 
 // More documents see: https://laravel.com/docs/master/mix
-mix.copy('resources/assets/web', 'assets/');
-mix.js('resources/assets/admin', 'assets/admin.js');
+// mix.copy('resources/assets/web', 'assets/');
+mix.js('resources/assets/admin', 'admin.js');
