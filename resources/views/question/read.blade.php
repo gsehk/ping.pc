@@ -18,7 +18,7 @@
         <div class="questionheader-content">
             <div class="questionheader-main">
                 @if($question->amount > 0)
-                    <span class="questionheader-price">{{ sprintf("%.2f", $question->amount*($config['bootstrappers']['wallet:ratio']/100/100)) }}</span>
+                    <span class="questionheader-price">{{ sprintf("%.2f", $question->amount*($config['bootstrappers']['wallet:ratio'])) }}</span>
                 @endif
                 <div class="questionheader-tags">
                     <div class="questionheader-topics">
@@ -91,7 +91,7 @@
             <div class="questionheader-footer-inner">
                 <div class="questionheader-main questionheader-footer-main">
                     @if($question['look'] == 1 && isset($question['invitation_answers']) && !$question['invitation_answers']->isEmpty() && $question['invitation_answers'][0]['onlookers_count'] > 0)
-                        <span class="questionheader-onlook">{{ sprintf("%.2f", $question['invitation_answers'][0]['onlookers_count']*$config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio']/100/100)) }}围观</span>
+                        <span class="questionheader-onlook">{{ sprintf("%.2f", $question['invitation_answers'][0]['onlookers_count']*$config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio'])) }}围观</span>
                     @endif
                     <div class="questionheaderactions">
                         <div class="questionheader-comment">
@@ -123,7 +123,7 @@
                         </div>
                         @if($question['user_id'] == $TS['id'])
                             <a class="button button-plain" type="button" href="{{ route('pc:createquestion', $question['id']) }}">
-                               <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>
+                               <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>
                                 编辑
                             </a>
                         @endif
@@ -142,8 +142,8 @@
                                 <div class="triangle"></div>
                                 <ul>
                                     <li>
-                                        <a href="javascript:;" onclick="question.selected({{ $question['id'] }}, {{ $config['bootstrappers']['question:apply_amount'] * ($config['bootstrappers']['wallet:ratio']/100/100) }})">
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-jingxuanwenda"></use></svg>申请为精选问答
+                                        <a href="javascript:;" onclick="question.selected({{ $question['id'] }}, {{ $config['bootstrappers']['question:apply_amount'] * ($config['bootstrappers']['wallet:ratio']) }})">
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-text"></use></svg>申请为精选问答
                                         </a>
                                     </li>
                                     <li>
@@ -260,7 +260,7 @@
                 params: {order_type: 'default', limit: 10}
             });
         })
-        
+
         // 展示问题详情
         $('.questionrichtext-more').on('click', function () {
             var _this = $(this);

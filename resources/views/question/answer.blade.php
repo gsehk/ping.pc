@@ -49,7 +49,7 @@
                         <ul>
                             <li>
                                 <a href="{{ route('pc:answeredit', $answer->id) }}">
-                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-bianji2"></use></svg>编辑
+                                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit"></use></svg>编辑
                                 </a>
                             </li>
                             <li>
