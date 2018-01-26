@@ -1789,7 +1789,9 @@ $(function() {
     // IM聊天
     if (TS.MID > 0 && TS.BOOT['im:serve']) {
         // 聊天初始化
-        easemob.init();
+        setTimeout(function(){
+            easemob.init();
+        }, 5000);
     }
 
     // 回车事件绑定
