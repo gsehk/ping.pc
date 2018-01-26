@@ -80,13 +80,10 @@
         </div>
     @endforeach
 @elseif(isset($search) && $search)
-    <div class="no_data_div">
-        <div class="no_data">
-            <img src="{{ asset('assets/pc/images/pic_default_content.png') }}">
-            <p> 没有找到相关问题，去提问？</p>
-            <div class="search-button">
-                <a href="{{ route('pc:createquestion') }}">去提问</a>
-            </div>
-        </div>
-    </div>
+<script>
+if (!$('.no_data_div').length) {
+    var box = $('#content_list');
+    box.append('<div class="no_data_div"><div class="no_data"><img src="{{ asset('assets/pc/images/pic_default_content.png') }}"><p><div class="search-button"><a href="{{ route('pc:createquestion') }}">去提问</a></div></div></div>');
+}
+</script>
 @endif
