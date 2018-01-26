@@ -207,17 +207,20 @@ var question = {
 var QT = {
     show : function () {
         checkLogin();
-        var html = '<form class="topic-show" id="topic-create">'
+        var html = '<form class="topic-show">'
             + '<p class="topic-title">建议创建话题</p>'
             + '<div class="topic-from-row">'
-            + '<input type="text" name="name" placeholder="请输入话题名称">'
+            + '<input id="topic_name" type="text" name="name" placeholder="请输入话题名称">'
             + '</div>'
             + '<div class="topic-from-row">'
-            + '<textarea name="description" placeholder="请输入话题相关描述信息"></textarea>'
+            + '<textarea id="topic_desc" name="description" placeholder="请输入话题相关描述信息"></textarea>'
             + '</div>'
             + '</form>';
         ly.alert(html, '提交', function(){
-            var data = $('#topic-create').serializeArray();
+            var data = {
+                name: $('#topic_name').val(),
+                description: $('#topic_desc').val(),
+            };
             axios.post('/api/v2/user/question-topics/application', data)
               .then(function (response) {
                 noticebox('申请成功', 1);
