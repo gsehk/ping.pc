@@ -78,63 +78,42 @@
 @endif
 
 <script>
-    $(function(){
-        var params = {};
-        var position = '{{ $position or 0 }}';
-        if (position == 0) {
-                var comments_type = '{{ $comments_type }}';
-                var loading = '{{ $loading or ''}}';
-                var id = '{{ $id }}';
-                var url = '';
-                var group_id = '{{ $group_id or 0 }}';
-                if (group_id) {
-                    params.group_id = group_id;
-                }
-                if (comments_type == 'answer') {
-                    url = '/question/answer/' + id + '/comments';
-                // } else if (comments_type == 'question') {
-                    // return ;
-                    //url = '/question/' + id + '/comments';
-                } else if (comments_type == 'feed') {
-                    url = '/feeds/' + id + '/comments'
-                } else if (comments_type == 'group') {
-                    url = '/group/' + id + '/comments' ;
-                } else if (comments_type == 'news') {
-                    url = '/news/' + id + '/comments';
-                }
-                scroll.init({
-                    container: '.J-commentbox',
-                    loading: loading,
-                    url: url,
-                    params: params,
-                    canload: true
-                });
-        }
-    })
-    
+    var params = {};
+    var position = '{{ $position or 0 }}';
+    if (position == 0) {
+        setTimeout(function() {
+            var comments_type = '{{ $comments_type }}';
+            var group_id = '{{ $group_id or 0 }}';
+            if (group_id) {
+                params.group_id = group_id;
+            }
+            var types = {
+                'news' : '/news/{{$id}}/comments',
+                'feed' : '/feeds/{{$id}}/comments',
+                'group' : '/group/{{$id}}/comments',
+                'answer' : '/question/answer/{{$id}}/comments',
+                'product' : '/product/{{$id}}/comments',
+                'question' : '/questions/{{$id}}/comments',
+            };
+            scroll.init({
+                container: '.J-commentbox',
+                loading: '{{ $loading or ''}}',
+                url: types[comments_type],
+                params: params,
+                canload: true
+            });
+        }, 200);
+    }
+
     function doComment(id, position, comments_type, group_id) {
-        var url = '';
-        if (comments_type == 'answer') {
-
-            url = '/api/v2/question-answers/' + id + '/comments';
-
-        } else if (comments_type == 'question') {
-
-            url = '/api/v2/questions/' + id + '/comments';
-
-        } else if (comments_type == 'feed') {
-
-            url = '/api/v2/feeds/' + id + '/comments'
-
-        } else if (comments_type == 'group') {
-
-            url = '/api/v2/plus-group/group-posts/' + id + '/comments'
-
-        } else if (comments_type == 'news') {
-
-            url = '/api/v2/news/' + id + '/comments';
-        }
-
+        var types = {
+            'news' : '/api/v2/news/'+id+'/comments',
+            'feed' : '/api/v2/feeds/'+id+'/comments',
+            'group' : '/api/v2/plus-group/group-posts/'+id+'/comments',
+            'answer' : '/api/v2/question-answers/'+id+'/comments',
+            'product' : '/api/v2/product/'+id+'/comments',
+            'question' : '/api/v2/questions/'+id+'/comments',
+        };
         comment.support.row_id = id;
         comment.support.position = position == '1' ? 1 : 0;
         comment.support.editor = $('#J-editor' + id);

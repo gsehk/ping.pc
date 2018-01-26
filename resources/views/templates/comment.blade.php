@@ -31,7 +31,7 @@
                             ($comment['user']['id'] == $TS['id']) ||
                             (isset($group->joined) && in_array($group->joined->role, ['administrator', 'founder']))
                         )
-                        @if(isset($top) && $top == 1 && $comment['user']['id'] == $TS['id'])
+                        @if($comment['user']['id'] == $TS['id'])
                         <li>
                             <a href="javascript:;" onclick="comment.pinneds('{{$comment['commentable_type']}}', {{$comment['commentable_id']}}, {{$comment['id']}});">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
