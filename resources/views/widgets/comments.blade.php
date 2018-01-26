@@ -93,7 +93,7 @@
                 'group' : '/group/{{$id}}/comments',
                 'answer' : '/question/answer/{{$id}}/comments',
                 'product' : '/product/{{$id}}/comments',
-                'question' : '/questions/{{$id}}/comments',
+                'question' : '/question/{{$id}}/comments',
             };
             scroll.init({
                 container: '.J-commentbox',
