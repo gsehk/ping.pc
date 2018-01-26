@@ -93,15 +93,16 @@
                 'group' : '/group/{{$id}}/comments',
                 'answer' : '/question/answer/{{$id}}/comments',
                 'product' : '/product/{{$id}}/comments',
-                'question' : '/question/{{$id}}/comments',
+                // 'question' : '/question/{{$id}}/comments',
             };
-            scroll.init({
-                container: '.J-commentbox',
-                loading: '{{ $loading or ''}}',
-                url: types[comments_type],
-                params: params,
-                canload: true
-            });
+            if (types[comments_type] !== undefined) {
+                scroll.init({
+                    container: '.J-commentbox',
+                    loading: '{{ $loading or ''}}',
+                    url: types[comments_type],
+                    params: params,
+                });
+            }
         }, 200);
     }
 
