@@ -51,7 +51,7 @@
 	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg> {{ $data->answers_count }}条 回答
 	        </span>
 	        <span class="mony gcolor">
-	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg> {{ $data->amount * ($config['bootstrappers']['wallet:ratio']/100/100) }}
+	            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg> {{ $data->amount * ($config['bootstrappers']['wallet:ratio']) }}
 	        </span>
 	        <span class="options">
 	            <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>

@@ -43,7 +43,7 @@
                                         $config['bootstrappers']['wallet:ratio'] = 100;
                                     }
                                 @endphp
-                                {{ $TS['wallet']['balance']*($config['bootstrappers']['wallet:ratio']/100/100) }}</div>
+                                {{ $TS['wallet']['balance']*($config['bootstrappers']['wallet:ratio']) }}</div>
                             <div class="operate">
                                 <a href="javascript:;" data-url="{{ route('pc:walletpay') }}" onclick="checkWallet(this)"><button>充值</button></a>
                                 <a href="{{ route('pc:walletdraw') }}"><button class="gray">提现</button></a>

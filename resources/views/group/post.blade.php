@@ -34,6 +34,7 @@
                         <span class="ml20">浏览量  {{ $post->views_count}}</span>
                     </div>
                 </dd>
+                @if (isset($post->group->joined))
                 <dd class="fr mt20 relative">
                     <span class="options" onclick="options(this)">
                         <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
@@ -84,6 +85,7 @@
                         </ul>
                     </div>
                 </dd>
+                @endif
             </dl>
             <h3 class="u-tt">{{$post->title}}</h3>
             <div class="detail_body markdown-body">
