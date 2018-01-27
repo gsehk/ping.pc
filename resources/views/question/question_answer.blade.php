@@ -77,13 +77,13 @@
                                 @if(isset($TS) && $answer->question->user_id == $TS['id'])
                                     <li>
                                         @if($answer->adoption == 1)
-                                            <a href="javascript:;">
-                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-caina"></use></svg>
+                                            <a class="act" href="javascript:;">
+                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-adopt"></use></svg>
                                                 已采纳
                                             </a>
                                         @else
                                             <a href="javascript:;" onclick="QA.adoptions('{{$answer['question_id']}}', '{{$answer['id']}}', '{{ route('pc:questionread', $answer['question_id']) }}')">
-                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-caina"></use></svg>
+                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-adopt"></use></svg>
                                                 采纳
                                             </a>
                                         @endif

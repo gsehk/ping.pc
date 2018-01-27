@@ -69,12 +69,12 @@
                             <ul>
                                 <li>
                                     @if($answer->adoption == 1)
-                                        <a href="javascript:;">
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-caina"></use></svg>已采纳
+                                        <a class="act" href="javascript:;">
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-adopt"></use></svg>已采纳
                                         </a>
                                     @else
                                         <a href="javascript:;" onclick="QA.adoptions('{{$answer['question_id']}}', '{{$answer['id']}}', '{{ route('pc:answeread', $answer->id) }}')">
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-caina"></use></svg>采纳
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-adopt"></use></svg>采纳
                                         </a>
                                     @endif
                                 </li>
