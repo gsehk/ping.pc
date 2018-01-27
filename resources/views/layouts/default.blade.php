@@ -12,7 +12,7 @@
             TOKEN: "{{ $token or '' }}",
             SITE_URL: "{{ $routes['siteurl'] }}",
             RESOURCE_URL: '{{ $routes["resource"] }}',
-            CONFIG: {!! json_encode($config) !!},
+            EASEMOB_KEY: {!! json_encode($config['easemob_key']) !!},
             BOOT: {!! json_encode($config['bootstrappers']) !!},
             UNREAD: {}
         };

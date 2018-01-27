@@ -18,7 +18,7 @@ WebIM.config = {
     /*
      * Application AppKey
      */
-    appkey: TS.CONFIG.easemob_key,
+    appkey: TS.EASEMOB_KEY,
 
     /*
      * Whether to use wss
@@ -98,7 +98,7 @@ WebIM.config = {
     /**
      * When a message sent or arrived, will save it into the localStorage,
      * true: Store the chat record
-     * false: Don't store the chat record 
+     * false: Don't store the chat record
      */
     saveLocal: false,
 
