@@ -1787,7 +1787,7 @@ $(function() {
     });
 
     // IM聊天
-    if (TS.MID > 0 && TS.BOOT['im:serve']) {
+    if (TS.MID > 0 && TS.EASEMOB_KEY) {
         // 聊天初始化
         setTimeout(function(){
             easemob.init();
