@@ -100,6 +100,7 @@ $(function() {
                 },
                 error: function(xhr) {
                     showError(xhr.responseJSON);
+                    passlod = false;
                 },
                 complete: function() {
                     _this.text('注册');
