@@ -48,7 +48,7 @@
             <tbody>
                 @foreach ($records as $item)
                 <tr>
-                    <td width="20%">{{ $item->created_at }}</td>
+                    <td width="20%">{{ getTime($item->created_at, 0, 0) }}</td>
                     <td width="50%"><p class="ptext">{{ $item->remark }}</p></td>
                     <td width="15%"><font color="#FF9400">{{ $item->value*($config['bootstrappers']['wallet:ratio']) }}</font></td>
                     <td width="15%">

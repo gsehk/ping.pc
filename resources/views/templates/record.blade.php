@@ -1,3 +1,6 @@
+@php
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
+@endphp
 @if (!$record->isEmpty())
     <table class="m-table m-table-row">
         @if ($loadcount == 1)
@@ -13,7 +16,7 @@
         <tbody>
             @foreach ($record as $item)
                 <tr>
-                    <td>{{$item->created_at}}</td>
+                    <td>{{ getTime($item->created_at, 0, 0) }}</td>
                     <td>{{$item->subject}}</td>
                     <td><span class="s-fc3">+{{$item->amount * $config['bootstrappers']['wallet:ratio']}}</span></td>
                     {{-- <td><a class="s-fc" href="{{ route('pc:bankrolldetail',['group_id'=>$group_id]) }}">详情</a></td> --}}
