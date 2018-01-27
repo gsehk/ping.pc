@@ -1,6 +1,6 @@
 
 @php
-	use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
+	use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatList;
 	use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
 @endphp
 @foreach ($datas as $data)
@@ -9,7 +9,7 @@
 	        @if (0)
 	        	<img class="fl mr20" src="{{ asset('assets/pc/images/pic_locked.png') }}" height="100">
 	        @endif
-	        <span class="tcolor margin0">{!! str_limit(replaceContent($data->body), 250, '...') !!}</span><a href="{{ route('pc:answeread', $data->id) }}" class="button button-plain button-more">查看详情</a>
+	        <span class="tcolor margin0">{!! str_limit(formatList($data->body), 250, '...') !!}</span><a href="{{ route('pc:answeread', $data->id) }}" class="button button-plain button-more">查看详情</a>
 	    </div>
 	    <div class="qa-toolbar feed_datas font14">
 			<a href="javascript:;" class="gcolor liked" id="J-likes{{$data->id}}" onclick="liked.init({{$data->id}}, 'question', 1);" status="{{(int) (isset($TS) && $data->liked)}}" rel="{{ $data['likes_count'] }}">

@@ -4,7 +4,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceImage;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatMarkdown;
 
 class QuestionController extends BaseController
 {
@@ -112,7 +112,7 @@ class QuestionController extends BaseController
         $this->PlusData['current'] = 'question';
 
         $question = createRequest('GET', '/api/v2/questions/'.$question_id);
-        $question->body = replaceImage($question->body);
+        $question->body = formatMarkdown($question->body);
         $data['question'] = $question;
 
         return view('pcview::question.read', $data, $this->PlusData);
@@ -129,7 +129,6 @@ class QuestionController extends BaseController
     {
         $answer = createRequest('GET', '/api/v2/question-answers/'.$answer );
         $answer->collect_count = $answer->collectors->count();
-        $answer->body = replaceImage($answer->body);
         $answer->rewarders = $answer->rewarders->reverse();
         $data['answer'] = $answer;
         $data['answer']->user->hasFollower = $data['answer']['user']->hasFollower($this->PlusData['TS']['id']);

@@ -35,16 +35,16 @@
                 </div>
                 <h1 class="questionheader-title">{{ $question->subject }}</h1>
                 <div class="questionheader-detail">
-                    {{-- js增删  .questionrichtext--collapsed 改变content字数 --}}
+                    {{-- js增删  .questionrichtextcollapsed 改变content字数 --}}
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
                             @php
                                 $body_text = preg_replace('@\@*\!\[\w*\]\([https]+\:\/\/[\w\/\.]+\)@', '[图片]', $question->body);
                             @endphp
                             @if(strpos($body_text, '[图片]') === false && strlen($body_text) <= 300)
-                                <span class="show-body">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+                                <span class="show-body">{!! $question->body !!}</span>
                             @else
-                                <span class="show-body hide">{!! $question->body_html = Parsedown::instance()->setMarkupEscaped(true)->text($question->body) !!}</span>
+                                <span class="show-body hide">{!! $question->body !!}</span>
                                 <span class="richtext" itemprop="text">{{ str_limit($body_text, 300, '...') }}</span>
                                 <button class="button button-plain button-more questionrichtext-more" data-show="0">显示全部</button>
                             @endif
@@ -108,7 +108,7 @@
                             <div class="share-show">
                                 分享至：
                                 @php
-                                    preg_match('/<img src="(.*?)".*?/', $question->body_html, $imgs);
+                                    preg_match('/<img src="(.*?)".*?/', $question->body, $imgs);
                                     if (count($imgs) > 0) {
                                         $share_pic = $imgs[1];
                                     } else {
@@ -234,7 +234,7 @@
             </div>
             <div class="answer-anonymity"><button id="answer-send">提交</button></div>
         </div>
-        {{-- --发布回答 end --}}
+        {{-- 发布回答 end --}}
     </div>
 
     {{-- /quesition-main --}}

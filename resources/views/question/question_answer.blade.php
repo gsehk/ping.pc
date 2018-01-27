@@ -1,6 +1,6 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
-    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatList;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
 @endphp
@@ -42,7 +42,7 @@
             <div class="list-item-content">
                 <div class="content-inner">
                     @if($answer->invited == 0 || $answer->question->look == 0 || (isset($TS) && $answer->invited == 1 && ($answer->could || $answer->question->user_id == $TS['id'] || $answer->user_id == $TS['id'])))
-                        <span class="answer-body">{!! str_limit(replaceContent($answer->body), 250, '...') !!}</span>
+                        <span class="answer-body">{!! str_limit(formatList($answer->body), 250, '...') !!}</span>
                         <a class="button button-plain button-more" href="{{ route('pc:answeread', $answer->id) }}">查看详情</a>
                     @else
                         <span class="answer-body fuzzy" onclick="QA.look({{ $answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio']/100/100)) }}' , {{ $answer->question_id }})">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>

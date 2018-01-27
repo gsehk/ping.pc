@@ -5,7 +5,7 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getUserInfo;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceContent;
+use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatList;
 
 class MessageController extends BaseController
 {
@@ -61,7 +61,7 @@ class MessageController extends BaseController
                     case 'question-answers':
                         $v['source_type'] = '评论了你的回答';
                         $v['source_url'] = Route('pc:answeread', $v['commentable']['id']);
-                        $v['source_content'] = replaceContent($v['commentable']['body']);
+                        $v['source_content'] = formatList($v['commentable']['body']);
                         preg_match('/\@\!\[.*\]\((\d+)\)/i', $v['commentable']['body'], $imgs);
                         count($imgs) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$imgs[1];
                         break;
@@ -121,7 +121,7 @@ class MessageController extends BaseController
                     case 'question-answers':
                         $v['source_type'] = '赞了你的回答';
                         $v['source_url'] = Route('pc:answeread', $v['likeable']['id']);
-                        $v['source_content'] = replaceContent($v['likeable']['body']);
+                        $v['source_content'] = formatList($v['likeable']['body']);
                         preg_match('/\@\!\[.*\]\((\d+)\)/i', $v['likeable']['body'], $imgs);
                         count($imgs) > 0 && $v['source_img'] = $this->PlusData['routes']['storage'].$imgs[1];
                         break;

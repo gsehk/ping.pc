@@ -5,6 +5,7 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatMarkdown;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -68,7 +69,7 @@
                 @endif
 
                 <div class="detail_content markdown-body editormd-preview-container">
-                {!! Parsedown::instance()->setMarkupEscaped(true)->text($news->content) !!}
+                {!! formatMarkdown($news->content) !!}
                 </div>
                 @if (!$news['audit_status'])
                 <div class="detail_share">

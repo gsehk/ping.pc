@@ -3,7 +3,7 @@
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
-    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\replaceImage;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatMarkdown;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -89,7 +89,8 @@
             </dl>
             <h3 class="u-tt">{{$post->title}}</h3>
             <div class="detail_body markdown-body">
-            {!! Parsedown::instance()->setMarkupEscaped(true)->text(replaceImage($post->body)) !!}
+
+            {!! formatMarkdown($post->body) !!}
             </div>
             <div class="detail_share">
                 <span id="J-collect{{ $post->id }}" rel="{{ $post->collectors->count() }}" status="{{(int) $post->collected}}">

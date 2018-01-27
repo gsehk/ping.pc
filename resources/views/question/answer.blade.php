@@ -2,6 +2,7 @@
 
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatMarkdown;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -88,7 +89,7 @@
         </div>
 
         <div class="answer-body">
-            {!! Parsedown::instance()->setMarkupEscaped(true)->text($answer->body) !!}
+            {!! formatMarkdown($answer->body) !!}
         </div>
 
         <div class="detail_share">

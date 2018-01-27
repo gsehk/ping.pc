@@ -130,7 +130,7 @@ function formatContent($content)
     // 回车替换
     $pattern = array("\r\n","\n","\r");
     $replace = '<br>';
-    $content = str_replace($pattern, $replace, $content); 
+    $content = str_replace($pattern, $replace, $content);
 
     return $content;
 }
@@ -228,24 +228,11 @@ function getImageUrl($image = array(), $width, $height, $cut = true, $blur = 0)
 
 }
 
-function replaceImage($content)
-{
-    return preg_replace('/\@\!\[(.*)\]\((\d+)\)/i', '![$1](' . getenv('APP_URL') . '/api/v2/files/$2)', $content);
-}
-
 function getUserInfo($id)
 {
     $user = User::where('id', '=', $id)->first();
 
     return $user;
-}
-
-function replaceContent($content)
-{
-    $content = preg_replace('@\@*\!\[\w*\]\(([https]+\:\/\/[\w\/\.]+|[0-9]+)\)@', '[图片]', $content);
-    $content = preg_replace('/\<*((?:https?|mailto|ftp):\/\/([^\x{2e80}-\x{9fff}\s<\'\"“”‘’，。}]*)?)\>*/u', '网页链接+', $content);
-
-    return $content;
 }
 
 /**
@@ -285,4 +272,20 @@ function getAvatar($user, $width = 0)
     $width && $avatar .= '?s='.$width;
 
     return $avatar;
+}
+
+function formatMarkdown($body)
+{
+    // 图片替换
+    $body = preg_replace('/\@\!\[(.*?)\]\((\d+)\)/i', '![$1](' . getenv('APP_URL') . '/api/v2/files/$2)', $body);
+
+    // Markdown格式解析成html
+    return  \Parsedown::instance()->setMarkupEscaped(true)->text($body);
+}
+
+function formatList($body)
+{
+    $body = preg_replace('/\@\!\[(.*?)\]\((\d+)\)/', '[图片]', $body);
+
+    return  \Parsedown::instance()->setMarkupEscaped(true)->text($body);
 }
