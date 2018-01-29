@@ -15,12 +15,12 @@
                     <div class="feed-content">
                         @if(isset($like['source_img']))
                             <div class="con-img">
-                                <img src="{{$like['source_img']}}">
+                                <img src="{{$like['source_img']}}?w=35&h=35">
                             </div>
                         @endif
                         <div class="con-con">
                             @if($like['likeable'])
-                                {{$like['source_content']}}
+                                {!! $like['source_content'] !!}
                             @else
                                 内容已被删除
                             @endif
