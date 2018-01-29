@@ -34,7 +34,7 @@
                     {{-- 第三方分享 --}}
                     <div class="topic-share">
                         <button class="button button-plain show-share" type="button">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-fenxiang1"></use></svg>
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-share"></use></svg>
                             分享
                         </button>
                         <div class="share-show">

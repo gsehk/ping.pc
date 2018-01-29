@@ -6,10 +6,12 @@
 @foreach ($datas as $data)
 	<div class="qa-item">
 	    <div class="qa-body mb20 clearfix">
-	        @if (0)
-	        	<img class="fl mr20" src="{{ asset('assets/pc/images/pic_locked.png') }}" height="100">
-	        @endif
-	        <span class="tcolor margin0">{!! str_limit(formatList($data->body), 250, '...') !!}</span><a href="{{ route('pc:answeread', $data->id) }}" class="button button-plain button-more">查看详情</a>
+	        @if(!$data->invited || !$data->question->look || (isset($TS) && $data->invited && ($data->could || $data->question->user_id == $TS['id'] || $data->user_id == $TS['id'])))
+                <span class="answer-body">{!! str_limit(formatList($data->body), 250, '...') !!}</span>
+                <a class="button button-plain button-more" href="{{ route('pc:answeread', $data->id) }}">查看详情</a>
+            @else
+                <span class="answer-body fuzzy" onclick="QA.look({{ $data->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio'])) }}' , {{ $data->question_id }})">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
+            @endif
 	    </div>
 	    <div class="qa-toolbar feed_datas font14">
 			<a href="javascript:;" class="gcolor liked" id="J-likes{{$data->id}}" onclick="liked.init({{$data->id}}, 'question', 1);" status="{{(int) (isset($TS) && $data->liked)}}" rel="{{ $data['likes_count'] }}">
