@@ -2,6 +2,8 @@
 
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatList;
+    use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatMarkdown;
 @endphp
 
 @extends('pcview::layouts.default')
@@ -38,14 +40,11 @@
                     {{-- js增删  .questionrichtextcollapsed 改变content字数 --}}
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
                         <div>
-                            @php
-                                $body_text = preg_replace('@\@*\!\[\w*\]\([https]+\:\/\/[\w\/\.]+\)@', '[图片]', $question->body);
-                            @endphp
-                            @if(strpos($body_text, '[图片]') === false && strlen($body_text) <= 300)
-                                <span class="show-body">{!! $question->body !!}</span>
+                            @if(strpos(formatList($question->body), '[图片]') === false && strlen(formatList($question->body)) <= 300)
+                                <span class="show-body">{!! formatMarkdown($question->body) !!}</span>
                             @else
-                                <span class="show-body hide">{!! $question->body !!}</span>
-                                <span class="richtext" itemprop="text">{{ str_limit($body_text, 300, '...') }}</span>
+                                <span class="show-body hide">{!! formatMarkdown($question->body) !!}</span>
+                                <span class="richtext" itemprop="text">{!! str_limit(formatList($question->body), 300, '...') !!}</span>
                                 <button class="button button-plain button-more questionrichtext-more" data-show="0">显示全部</button>
                             @endif
                         </div>
@@ -108,7 +107,7 @@
                             <div class="share-show">
                                 分享至：
                                 @php
-                                    preg_match('/<img src="(.*?)".*?/', $question->body, $imgs);
+                                    preg_match('/<img src="(.*?)".*?/', formatMarkdown($question->body), $imgs);
                                     if (count($imgs) > 0) {
                                         $share_pic = $imgs[1];
                                     } else {
@@ -117,7 +116,7 @@
 
 
                                 @endphp
-                                @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:questionread', ['question_id' => $question->id]), 'share_title' => addslashes(preg_replace('@\@*\!\[\w*\]\([https]+\:\/\/[\w\/\.]+\)@', '', $question->body)), 'share_pic' => $share_pic])
+                                @include('pcview::widgets.thirdshare' , ['share_url' => route('pc:questionread', ['question_id' => $question->id]), 'share_title' => $question->subject, 'share_pic' => $share_pic])
                                 <div class="triangle"></div>
                             </div>
                         </div>
@@ -143,7 +142,7 @@
                                 <ul>
                                     <li>
                                         <a href="javascript:;" onclick="question.selected({{ $question['id'] }}, {{ $config['bootstrappers']['question:apply_amount'] * ($config['bootstrappers']['wallet:ratio']) }})">
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-text"></use></svg>申请为精选问答
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-text"></use></svg>申请为精选
                                         </a>
                                     </li>
                                     <li>
@@ -234,7 +233,7 @@
             </div>
             <div class="answer-anonymity"><button id="answer-send">提交</button></div>
         </div>
-        {{-- 发布回答 end --}}
+        {{-- --发布回答 end --}}
     </div>
 
     {{-- /quesition-main --}}
@@ -251,16 +250,15 @@
 
     <script>
         var checkSubmitFlg = false;
-        $(function(){
+        setTimeout(function() {
             scroll.init({
                 container: '#question-answers-list',
                 loading: '.question-main-l',
                 url: '/question/{{$question['id']}}/answers',
                 paramtype: 1,
-                params: {order_type: 'default', limit: 10}
+                params: {order_type: 'time', limit: 10}
             });
-        })
-
+        }, 300);
         // 展示问题详情
         $('.questionrichtext-more').on('click', function () {
             var _this = $(this);
@@ -306,13 +304,15 @@
             var type = $(this).data('type');
             // 清空数据
             $('#question-answers-list').html('');
-            scroll.init({
-                container: '#question-answers-list',
-                loading: '.question-main-l',
-                url: '/question/{{$question['id']}}/answers',
-                paramtype: 1,
-                params: {order_type: type, limit: 10}
-            });
+            setTimeout(function() {
+                scroll.init({
+                    container: '#question-answers-list',
+                    loading: '.question-main-l',
+                    url: '/question/{{$question['id']}}/answers',
+                    paramtype: 1,
+                    params: {order_type: type, limit: 10}
+                });
+            }, 300);
         });
 
         $('#write-answer').on('click', function () {
@@ -358,25 +358,29 @@
             $('.detail_comment').show();
             $('.question-main-l').hide();
             $('.question-main-r').hide();
-            scroll.init({
-                container: '.J-commentbox',
-                loading: '.detail_comment',
-                url: '/question/{{$question->id}}/comments' ,
-                canload: true
-            });
+            setTimeout(function() {
+                scroll.init({
+                    container: '.J-commentbox',
+                    loading: '.detail_comment',
+                    url: '/question/{{$question->id}}/comments' ,
+                    canload: true
+                });
+            }, 300);
         });
 
         $('#answer-button').on('click', function () {
             $('.question-main-l').show();
             $('.detail_comment').hide();
             $('.question-main-r').hide();
-            scroll.init({
-                container: '#question-answers-list',
-                loading: '.question-main-l',
-                url: '/question/{{$question['id']}}/answers',
-                paramtype: 1,
-                params: {order_type: 'default', limit: 10}
-            });
+            setTimeout(function() {
+                scroll.init({
+                    container: '#question-answers-list',
+                    loading: '.question-main-l',
+                    url: '/question/{{$question['id']}}/answers',
+                    paramtype: 1,
+                    params: {order_type: 'default', limit: 10}
+                });
+            }, 300);
         });
     </script>
 @endsection

@@ -4,7 +4,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatMarkdown;
 
 class QuestionController extends BaseController
 {
@@ -112,7 +111,6 @@ class QuestionController extends BaseController
         $this->PlusData['current'] = 'question';
 
         $question = createRequest('GET', '/api/v2/questions/'.$question_id);
-        $question->body = formatMarkdown($question->body);
         $data['question'] = $question;
 
         return view('pcview::question.read', $data, $this->PlusData);
