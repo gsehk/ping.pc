@@ -648,14 +648,13 @@ var checkIn = function(is_check, nums) {
     }
 }
 
-// 打赏
 var rewarded = {
-    show: function(id, type) {
+    show: function(id, type, pay_amount) {
         checkLogin();
         var html = '<div class="reward_box">'
                     + '<p class="confirm_title">打赏</p>'
                     + '<div class="reward_text">选择打赏金额</div>'
-                    + '<div class="reward_spans">';
+                    + '<div class="reward_spans" id="J-reward">';
                     $.each(TS.BOOT.site.reward.amounts.split(','), function (index, value) {
                         if (value > 0) {
                             html += '<span num="' + value / TS.BOOT['wallet:ratio'] + '">' + value + '</span>';
@@ -663,31 +662,24 @@ var rewarded = {
                     });
                     html += '</div>'
                     + '<div class="reward_input">'
-                        + '<input min="1" oninput="value=moneyLimit(value)" onkeydown="if ( !isNumber(event.keyCode) ) return false; " type="number" placeholder="自定义打赏金额，必须为整数">'
+                        + '<input id="J-custom" oninput="value=moneyLimit(value)" onkeydown="if(!isNumber(event.keyCode)) return false;" type="number" placeholder="自定义打赏金额，必须为整数">'
                     + '</div>'
                 + '</div>';
-
-        ly.confirm(html, '打赏', '', function(){
-            var num = $('.reward_spans .current').length > 0 ? $('.reward_spans .current').attr('num') : '';
-            var amount = $('.reward_input input').val() / TS.BOOT['wallet:ratio'];
-            var url = '/api/v2/feeds/'+id+'/rewards';
-
-            if (!num && !amount) {
-                return false;
-            }
-            if (type == 'news') {
-                url = '/api/v2/news/'+id+'/rewards';
-            }
-            if (type == 'answer') {
-                url = '/api/v2/question-answers/'+id+'/rewarders';
-            }
-            if (type == 'user') {
-                url = '/api/v2/user/'+id+'/rewards';
-            }
-            if (type == 'group-posts') {
-                url = '/api/v2/plus-group/group-posts/'+id+'/rewards';
-            }
-            axios.post(url, {amount: num ? num : amount})
+        if (pay_amount > 0) {
+            html = formatConfirm('购买支付', '<div class="confirm_money">' + pay_amount + '</div>您需要支付' + pay_amount + TS.BOOT.site.gold_name.name + '是否确认支付？');
+        }
+        ly.confirm(html, '', '', function(){
+            var num = $('#J-reward .current').length ? $('#J-reward .current').attr('num') : ($('#J-custom').val() / TS.BOOT['wallet:ratio']);
+            var amount = pay_amount ? (pay_amount / TS.BOOT['wallet:ratio']) : ($('#J-custom').val() / TS.BOOT['wallet:ratio']);
+            var types = {
+                'user' : '/api/v2/user/'+id+'/rewards',
+                'news' : '/api/v2/news/'+id+'/rewards',
+                'feeds' : '/api/v2/feeds/'+id+'/rewards',
+                'product' : '/api/v2/product/'+id+'/rewards',
+                'answer' : '/api/v2/question-answers/'+id+'/rewarders',
+                'group-posts' : '/api/v2/plus-group/group-posts/'+id+'/rewards',
+            };
+            axios.post(types[type], {amount: num ? num : amount})
               .then(function (response) {
                 ly.close();
                 noticebox(response.data.message, 1, 'refresh');
@@ -1791,7 +1783,7 @@ $(function() {
         // 聊天初始化
         setTimeout(function(){
             easemob.init();
-        }, 5000);
+        }, 2000);
     }
 
     // 回车事件绑定
