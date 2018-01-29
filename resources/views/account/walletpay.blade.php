@@ -15,7 +15,7 @@
 
         <p class="tcolor">设置充值金额</p>
         <div class="pay-sum">
-            <label class="opt" for="sum10">¥10.00<input class="hide" id="sum10" type="radio" name="sum" value="10"></label>
+            <label class="opt" for="sum10">¥10.00<input class="hide" id="sum10" type="radio" name="sum" value="1000"></label>
             <label class="opt active" for="sum50">¥50.00<input class="hide" id="sum50" type="radio" name="sum" value="5000" checked></label>
             <label class="opt" for="sum100">¥100.00<input class="hide" id="sum100" type="radio" name="sum" value="10000"></label>
         </div>
@@ -111,10 +111,10 @@ function checkStatus(id, type) {
     axios.get('/api/v2/wallet/charges/'+id+'?mode=retrieve')
       .then(function (response) {
         if (response.data.status == 1) {
-            window.location.href = TS.SITE_URL + '/account/success?status=1&url={{route('pc:wallet')}}&time=3&message=充值成功';
+            window.location.href = TS.SITE_URL + '/success?status=1&url={{route('pc:wallet')}}&time=3&message=充值成功';
         }
         if (type == 1) {
-            window.location.href = TS.SITE_URL + '/account/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中&content=操作失败';
+            window.location.href = TS.SITE_URL + '/success?status=0&url={{route('pc:wallet')}}&time=3&message=充值失败或正在处理中&content=操作失败';
         }
       })
       .catch(function (error) {

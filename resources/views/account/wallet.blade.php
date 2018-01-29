@@ -115,8 +115,7 @@
 
     // 充值检测
     var checkWallet = function (obj) {
-
-        if (typeof(TS.BOOT['wallet:recharge-type']) != "undefined" && $.inArray('alipay_pc_direct', TS.BOOT['wallet:recharge-type'])) {
+        if (TS.BOOT['wallet:recharge-type'] && $.inArray('alipay_pc_direct', TS.BOOT['wallet:recharge-type'])) {
             var url = $(obj).data('url');
             window.location.href = url;
         } else {

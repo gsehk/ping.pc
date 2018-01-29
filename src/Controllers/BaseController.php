@@ -73,7 +73,7 @@ class BaseController extends Controller
                 // 环信
                 $easemob = $repository->get('easemob');
                 $config['easemob_key'] = $easemob['app_key'];
-                
+
                 // 缓存配置信息
                 Cache::forever('config', $config);
             }
@@ -102,13 +102,13 @@ class BaseController extends Controller
      * @param  int    $time    [跳转时间]
      * @return mixed
      */
-    public function notice(int $status = 1, string $url = '', string $message = '', string $content = '', int $time = 5)
+    public function notice(Request $request)
     {
-        $data['status'] = $status;
-        $data['message'] = $message;
-        $data['content'] = $content;
-        $data['url'] = $url;
-        $data['time'] = $time;
+        $data['status'] = $request->query('status', 1);
+        $data['message'] = $request->query('message');
+        $data['content'] = $request->query('content');
+        $data['url'] = $request->query('url');
+        $data['time'] = $request->query('time', 3);
 
         return view('pcview::templates.notice', $data, $this->PlusData);
     }
