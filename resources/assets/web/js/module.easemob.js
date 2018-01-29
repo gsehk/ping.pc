@@ -162,7 +162,7 @@ easemob = {
         window.TS.dataBase = db;
 
         // 添加IM小助手
-        if (TS.BOOT['im:helper'] !== undefined) {
+        if (!TS.BOOT['im:helper']) {
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
                 window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, TS.BOOT['im:helper'][0]['uid']]).first(function(item){
                     if (item === undefined) {

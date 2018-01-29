@@ -1778,14 +1778,6 @@ $(function() {
         }
     });
 
-    // IM聊天
-    if (TS.MID > 0 && TS.EASEMOB_KEY) {
-        // 聊天初始化
-        setTimeout(function(){
-            easemob.init();
-        }, 2000);
-    }
-
     // 回车事件绑定
     document.onkeyup = function(e){
         e = e || window.event;
@@ -1807,4 +1799,11 @@ $(function() {
         }
     }
 
+    // IM聊天
+    $(function(){
+        if (TS.MID > 0 && TS.EASEMOB_KEY) {
+            // 聊天初始化
+            easemob.init();
+        }
+    })
 });
