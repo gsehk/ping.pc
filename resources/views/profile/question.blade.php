@@ -58,6 +58,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('assets/pc/js/module.profile.js') }} "></script>
     <script src="{{ asset('assets/pc/js/module.question.js') }}"></script>
     <script>
         $(function(){
