@@ -67,7 +67,7 @@
 .answer-detail-box .answer-body {margin:20px 0;min-height:300px;line-height:24px;color:#666;word-wrap:break-word;}
 /* 提问 */.create-question {width:815px;background:#fff;padding:40px;margin:auto;}
 .create-question .step2 {display:none;}
-.create-question .question-tw {font-size:20px;font-weight:700;}
+.create-question .question-tw {font-size:20px;font-weight:500;}
 .create-question .question-tw .tw-notice {font-size:14px;font-weight:100;}
 .create-question .question-tw .reward-rule {font-size:12px;font-weight:100;padding:3px 0;float:right;cursor:pointer;}
 .create-question .question-tw .reward-rule::before {display:inline-block;width:20px;height:20px;content:'';background-image:url(./img/tags_icon.png);background-repeat:no-repeat;background-position:center;background-size:20px;vertical-align:bottom;}
@@ -192,7 +192,7 @@
 .avatar--medium {border-radius:3px;}
 .avatar--large {border-radius:4px;}
 .questionpage {position:relative;}
-.questionpage .questionheader {position:relative;padding:16px 0;width:100%;background:#fff;box-shadow:0 1px 3px 0 rgba(0,37,55,0.1);}
+.questionpage .questionheader {position:relative;padding:25px 0;width:100%;background:#fff;box-shadow:0 1px 3px 0 rgba(0,37,55,0.1);}
 .questionpage .questionheader-content {display:-webkit-box;display:flex;margin:0 auto;padding:0 20px;width:100%;height:100%;justify-content:space-between;}
 .questionpage .questionheader-main {position:relative;margin-right:45px;padding-left:20px;width:800px;}
 .questionpage .questionheader-side {width:235px;text-align:right;}
@@ -204,7 +204,7 @@
 .questionpage .questionheader-topics .button {margin-left:12px;vertical-align:middle;}
 .questionpage .questionheader-topics .tag {display:inline-block;position:relative;border-radius:100px;padding:0 16px;height:25px;font-size:12px;line-height:25px;vertical-align:top;color:#59b6d7;background:rgba(89,182,215,0.2);}
 .richtext a:not(.link-box):not(.userlink-link) {border-bottom:1px solid rgba(64,64,64,0.72);text-decoration:none;cursor:pointer;}
-.questionheader-title {overflow:hidden;margin-top:12px;margin-bottom:4px;font-size:22px;font-weight:700;line-height:32px;white-space:nowrap;text-overflow:ellipsis;color:#333;cursor:pointer;}
+.questionheader-title {overflow:hidden;margin-top:12px;margin-bottom:4px;font-size:22px;font-weight:500;line-height:32px;white-space:nowrap;text-overflow:ellipsis;color:#333;cursor:pointer;}
 .questionheader-detail {min-height:60px;}
 .questionrichtext {font-size:14px;line-height:25px;color:#666;}
 .questionrichtext--expandable.questionrichtext--collapsed {overflow:hidden;/*max-height:75px;*/    transition:color .14s ease-out;cursor:pointer;}
@@ -242,8 +242,8 @@
 .questionheaderactions .set-amount {border:0;padding:0;line-height:22px;color:#59b6d7;}
 .question-main {margin-top:30px;width:800px;float:left;}
 .question-main .question-main-l {width:100%;position:relative;background:#fff;box-shadow:0 1px 3px 0 rgba(0,37,55,0.1);}
-.question-answers-list .question-answers-list-header {display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:64px;margin:0 40px;border-bottom:1px solid #f0f2f7;color:#666;font-size:14px;}
-.question-answers-list .question-answers-list-header .headertxt {margin:0;font-size:18px;color:#333;}
+.question-answers-list .question-answers-list-header {display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:54px;margin:0 40px;border-bottom:1px solid #f0f2f7;color:#666;font-size:14px;}
+.question-answers-list .question-answers-list-header .headertxt {margin:0;font-size:16px;color:#333;font-weight:500;}
 .question-answers-list .list-item {width:100%;padding:20px 40px;}
 .question-answers-list .list-item .list-item-header {display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}
 .question-answers-list .list-item .list-item-header .authorinfo-content {-webkit-box-flex:1;-ms-flex:1;flex:1;margin-left:20px;overflow:hidden;margin-top:10px;}
