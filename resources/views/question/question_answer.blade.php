@@ -56,7 +56,7 @@
                             <font class="cs{{$answer->id}}">{{$answer->comments_count}}</font> 评论
                         </a>
                         <a href="{{ route('pc:answeread', $answer->id) }}" class="button button-plain">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-fenxiang1"></use></svg>
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-share"></use></svg>
                             {{ $answer->likes_count }} 分享
                         </a>
                         <a href="javascript:;" class="button button-plain" id="J-likes{{$answer->id}}" onclick="liked.init({{$answer->id}}, 'question', 1);" status="{{(int) (isset($TS) && $answer->liked)}}" rel="{{ $answer['likes_count'] }}">
