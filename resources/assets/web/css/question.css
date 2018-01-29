@@ -237,7 +237,7 @@
 @media (max-width:690px) {.questionheaderactions > .Button:not(:first-child),.questionheaderactions > .popover:not(:first-child) {margin-left:25px;}
 }
 .questionheaderactions .sharemenu .share-show .triangle {top:0px;left:calc(50% - 58px);}
-.questionheaderactions .options_div {width:178px;right:-74px;}
+.questionheaderactions .options_div {width:148px;right:-58px;}
 .questionheaderactions .options_div .triangle {margin-left:calc(50% - 8px);}
 .questionheaderactions .set-amount {border:0;padding:0;line-height:22px;color:#59b6d7;}
 .question-main {margin-top:30px;width:800px;float:left;}
