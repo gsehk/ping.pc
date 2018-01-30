@@ -749,6 +749,7 @@ var getMaps = function(callback){
         });
     }
 }
+
 // 评论
 var comment = {
     support: {
@@ -760,25 +761,45 @@ var comment = {
         editor: {},
         button: {},
         wordcount: 255,
-        top: true
+        top: true,
+        type: ''
+    },
+    // 获取链接
+    urls: function(id, type) {
+        var types = {
+            'news' : '/api/v2/news/' + id + '/comments',
+            'feeds' : '/api/v2/feeds/' + id + '/comments',
+            'group' : '/api/v2/plus-group/group-posts/' + id + '/comments',
+            'answer' : '/api/v2/question-answers/' + id + '/comments',
+            'product' : '/api/v2/product/' + id + '/comments',
+            'question' : '/api/v2/questions/' + id + '/comments',
+        };
+        return types[type];
     },
     // 初始化回复操作
-    reply: function(id, source_id, name) {
+    reply: function(id, source_id, name, type) {
         this.support.to_uid = id;
         this.support.to_uname = name;
         this.support.row_id = source_id;
-        this.support.editor = $('#J-editor'+this.support.row_id);
-        this.support.editor.val('回复@'+this.support.to_uname+'：');
+        this.support.editor = $('#J-editor-' + type + this.support.row_id);
+        this.support.editor.val('回复@' + this.support.to_uname+'：');
         this.support.editor.focus();
     },
-    publish: function(url, callback) {
-        checkLogin()
+    publish: function(obj) {
+        checkLogin();
+        this.support.row_id = $(obj).data('id');
+        this.support.position = $(obj).data('position');
+        this.support.type = $(obj).data('type');
+        this.support.editor = $('#J-editor-'+ this.support.type + this.support.row_id);
+        this.support.button = $('#J-button' + this.support.row_id);
+        this.support.top = $(obj).data('top');
+
         var _this = this;
         if (_this.lockStatus == 1) {
             noticebox('请勿重复提交', 0);
             return;
         }
-        var formData = { body: this.support.editor.val() };
+        var formData = { body: _this.support.editor.val() };
         if (!formData.body) {
             noticebox('评论内容不能为空', 0); return;
         }
@@ -786,20 +807,20 @@ var comment = {
         // 保留原始回复内容
         var original_body = formData.body;
         // 去除回复@
-        if (this.support.to_uid > 0) {
+        if (_this.support.to_uid > 0) {
             if (formData.body == '回复@'+this.support.to_uname+'：') {
                 noticebox('回复内容不能为空', 0); return;
             }
             formData.body = formData.body.split('：')[1];
-            formData.reply_user = this.support.to_uid;
+            formData.reply_user = _this.support.to_uid;
         }
         if (formData.body.length > 255) {
             noticebox('内容超出长度限制', 0); return;
         }
 
-        this.support.button.text('评论中..');
+        _this.support.button.text('评论中..');
         _this.lockStatus = 1;
-        axios.post(url, formData)
+        axios.post(comment.urls(_this.support.row_id, _this.support.type), formData)
           .then(function (response) {
             _this.support.button.text('评论');
             _this.support.editor.val('');
@@ -850,15 +871,18 @@ var comment = {
                     html += '    </dl>';
                     html += '</div>';
             }
-            $('#J-commentbox'+_this.support.row_id).find('.no_data_div').remove();/*第一次评论去掉缺省图*/
-            $('#J-commentbox'+_this.support.row_id).prepend(html);
+            $('#J-commentbox-' + _this.support.type + _this.support.row_id).find('.no_data_div').remove();/*第一次评论去掉缺省图*/
+            $('#J-commentbox-' + _this.support.type + _this.support.row_id).prepend(html);
             _this.lockStatus = 0;
-            callback(res);
+
+            $('.nums').text(_this.wordcount);
+            $('.cs' + _this.support.row_id).text(parseInt($('.cs' + _this.support.row_id).text()) + 1);
           })
           .catch(function (error) {
+            console.log(error);
             showError(error.response.data);
             _this.support.button.text('评论');
-            _this.lockStatus =0;
+            _this.lockStatus = 0;
           });
     },
     delete: function(type, source_id, id) {

@@ -67,7 +67,7 @@
 
                 {!! formatContent($comment['body']) !!}
                 @if ($comment['user']['id'] != $TS['id'])
-                    <a href="javascript:;" class="mouse" onclick="comment.reply('{{$comment['user']['id']}}', {{$comment['commentable_id']}}, '{{$comment['user']['name']}}')">回复</a>
+                    <a href="javascript:;" class="mouse" onclick="comment.reply('{{$comment['user']['id']}}', {{$comment['commentable_id']}}, '{{$comment['user']['name']}}', '{{$comment['commentable_type']}}')">回复</a>
                 @endif
             </div>
         </dd>

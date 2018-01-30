@@ -14,10 +14,7 @@
     </div>
     <div class="login_right">
         <form role="form" method="POST" action="{{ url('/auth/login') }}">
-
             {{ csrf_field() }}
-
-        <!-- <form method="POST" id="login_form"> -->
             <div class="login_input">
                 <input type="text" placeholder="输入手机号/邮箱/昵称" name="login" value="{{ old('email', old('phone', old('name', old('id', '')))) }}" required autofocus />
             </div>
@@ -62,46 +59,9 @@
 @endsection
 
 @section('scripts')
-
-    @if($errors->isNotEmpty())
-        <script type="text/javascript">
-            noticebox('{{ $errors->first() }}', 0);
-        </script>
-    @endif
-<!-- <script src="{{ asset('assets/pc/js/jquery.form.js') }} "></script> -->
-<!-- <script src="{{ asset('assets/pc/js/module.passport.js') }} "></script> -->
-<!-- <script type="text/javascript">
-$(function(){
-    $('.bind').click('on', function () {
-        var type = $(this).data('type');
-        window.open("/socialite/" + type, "", "height=560, width=700");
-    });
-});
-
-function getToken(token) {
-    window.location.href = '/passport/token/' + token + '/0';
-}
-
-function toBind(other_type, access_token, name) {
-    var _token = $('meta[name="_token"]').attr('content');
-    var args = {};
-    args.other_type = other_type;
-    args.access_token = access_token;
-    args.name = name;
-    args._token = _token;
-    var form = $("<form method='post'></form>"),
-        input;
-
-    form.attr({"action": '/socialite'});
-
-    $.each(args,function(key,value){
-        input = $("<input type='hidden'>");
-        input.attr({"name":key});
-        input.val(value);
-        form.append(input);
-    });
-    form.appendTo(document.body);
-    form.submit();
-}
-</script> -->
+@if($errors->isNotEmpty())
+    <script type="text/javascript">
+        noticebox('{{ $errors->first() }}', 0);
+    </script>
+@endif
 @endsection

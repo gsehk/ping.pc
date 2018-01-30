@@ -6,17 +6,16 @@
     <div class="comment_box" style="display: none;">
         <div class="comment_line">
             <div class="tr2"></div>
-            {{-- <img src="{{ asset('assets/pc/images/line.png') }}" /> --}}
         </div>
         <div class="comment_body" id="comment_box{{ $id }}">
             <div class="comment_textarea">
-                <textarea class="comment-editor" id="J-editor{{ $id }}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
+                <textarea class="comment-editor" id="J-editor-{{ $comments_type }}{{ $id }}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
                 <div class="comment_post">
                     <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                    <a class="btn btn-primary fr" id="J-button{{ $id }}" onclick="doComment('{{ $id }}', '{{ $position or 0 }}', '{{ $comments_type }}', '{{ $group_id or 0 }}')"> 评 论 </a>
+                    <a class="btn btn-primary fr" id="J-button{{ $id }}" data-id="{{ $id }}" data-position="{{ $position or 0 }}" data-type="{{ $comments_type }}" data-top="{{ $top or 0 }}" data-groupid="{{ $group_id or 0 }}" onclick="comment.publish(this)"> 评 论 </a>
                 </div>
             </div>
-            <div id="J-commentbox{{ $id }}">
+            <div id="J-commentbox-{{ $comments_type }}{{ $id }}">
                 @if($comments_count)
                     @foreach($comments_data as $cv)
                         <p class="comment_con" id="comment{{$cv->id}}">
@@ -41,7 +40,7 @@
                                 @endif
                                 <a class="mouse comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
                             @else
-                                <a class="mouse" onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
+                                <a class="mouse" onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}', '{{ $cv['commentable_type'] }}')">回复</a>
                                 <a class="mouse" onclick="reported.init('{{$cv['id']}}', '{{$cv['commentable_type']}}');">举报</a>
                             @endif
                         </p>
@@ -63,65 +62,41 @@
         @endif
         <div class="comment_title"><span class="comment_count cs{{ $id }}">{{ $comments_count }} </span>人评论</div>
         <div class="comment_box">
-            <textarea class="comment_editor" id="J-editor{{ $id }}" placeholder="说点什么吧" onkeyup="checkNums(this, 255, 'nums');"></textarea>
+            <textarea class="comment_editor" id="J-editor-{{ $comments_type }}{{ $id }}" placeholder="说点什么吧" onkeyup="checkNums(this, 255, 'nums');"></textarea>
             <div class="comment_tool">
                 <span class="text_stats">可输入<span class="nums mcolor"> 255 </span>字</span>
-                <button class="btn btn-primary" id="J-button{{ $id }}" onclick="doComment('{{ $id }}', '{{ $position or 0 }}', '{{ $comments_type }}', '{{ $group_id or 0 }}')"> 评 论 </button>
+                <button class="btn btn-primary" id="J-button{{ $id }}" data-id="{{ $id }}" data-position="{{ $position or 0 }}" data-type="{{ $comments_type }}" data-top="{{ $top or 0 }}" data-groupid="{{ $group_id or 0 }}" onclick="comment.publish(this)"> 评 论 </button>
             </div>
         </div>
-        <div class="comment_list J-commentbox" id="J-commentbox{{ $id }}"></div>
+        <div class="comment_list J-commentbox" id="J-commentbox-{{ $comments_type }}{{ $id }}"></div>
     </div>
 @endif
 
+@if ($position == 0)
 <script>
-    var params = {};
-    var position = '{{ $position or 0 }}';
-    if (position == 0) {
-        setTimeout(function() {
-            var comments_type = '{{ $comments_type }}';
-            var group_id = '{{ $group_id or 0 }}';
-            if (group_id) {
-                params.group_id = group_id;
-            }
-            var types = {
-                'news' : '/news/{{$id}}/comments',
-                'feed' : '/feeds/{{$id}}/comments',
-                'group' : '/group/{{$id}}/comments',
-                'answer' : '/question/answer/{{$id}}/comments',
-                'product' : '/product/{{$id}}/comments',
-                // 'question' : '/question/{{$id}}/comments',
-            };
-            if (types[comments_type] !== undefined) {
-                scroll.init({
-                    container: '.J-commentbox',
-                    loading: '{{ $loading or ''}}',
-                    url: types[comments_type],
-                    params: params,
-                });
-            }
-        }, 200);
-    }
-
-    function doComment(id, position, comments_type, group_id) {
+    $(function(){
+        var params = {};
+        var comments_type = '{{ $comments_type }}';
+        var group_id = '{{ $group_id or 0 }}';
+        if (group_id) {
+            params.group_id = group_id;
+        }
         var types = {
-            'news' : '/api/v2/news/'+id+'/comments',
-            'feed' : '/api/v2/feeds/'+id+'/comments',
-            'group' : '/api/v2/plus-group/group-posts/'+id+'/comments',
-            'answer' : '/api/v2/question-answers/'+id+'/comments',
-            'product' : '/api/v2/product/'+id+'/comments',
-            'question' : '/api/v2/questions/'+id+'/comments',
+            'news' : '/news/{{$id}}/comments',
+            'feeds' : '/feeds/{{$id}}/comments',
+            'group' : '/group/{{$id}}/comments',
+            'answer' : '/question/answer/{{$id}}/comments',
+            'product' : '/product/{{$id}}/comments',
+            // 'question' : '/question/{{$id}}/comments',
         };
-        comment.support.row_id = id;
-        comment.support.position = position == '1' ? 1 : 0;
-        comment.support.editor = $('#J-editor' + id);
-        comment.support.button = $('#J-button' + id);
-        comment.support.top = {{ isset($top) ? $top : 0 }};
-
-
-        comment.publish(types[comments_type], function(res){
-            $('.nums').text(comment.support.wordcount);
-            $('.cs' + id).text(parseInt($('.cs' + id).text()) + 1);
-        });
-    }
-
+        if (types[comments_type] !== undefined) {
+            scroll.init({
+                container: '.J-commentbox',
+                loading: '{{ $loading or ''}}',
+                url: types[comments_type],
+                params: params,
+            });
+        }
+    })
 </script>
+@endif
