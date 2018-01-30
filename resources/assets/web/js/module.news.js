@@ -18,7 +18,7 @@ $('.subject-submit').on('click', function() {
         'news_id': $('#news_id').val(),
         'tags'   : [],
     };
-    $('.tags-box span').each(function(){
+    $('#J-select-tags li').each(function(){
         args.tags.push($(this).data('id'));
     });
     if (!args.title || args.title.length > 20) {

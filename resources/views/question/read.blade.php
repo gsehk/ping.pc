@@ -35,19 +35,17 @@
                         @endif
                     </div>
                 </div>
-                <h1 class="questionheader-title">{{ $question->subject }}</h1>
+                <h1 class="questionheader-title txt-hide">{{ $question->subject }}</h1>
                 <div class="questionheader-detail">
                     {{-- js增删  .questionrichtextcollapsed 改变content字数 --}}
                     <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
-                        <div>
-                            @if(strpos(formatList($question->body), '[图片]') === false && strlen(formatList($question->body)) <= 300)
-                                <span class="show-body">{!! formatMarkdown($question->body) !!}</span>
-                            @else
-                                <span class="show-body hide">{!! formatMarkdown($question->body) !!}</span>
-                                <span class="richtext" itemprop="text">{!! str_limit(formatList($question->body), 300, '...') !!}</span>
-                                <button class="button button-plain button-more questionrichtext-more" data-show="0">显示全部</button>
-                            @endif
-                        </div>
+                        @if(strpos(formatList($question->body), '[图片]') === false && strlen(formatList($question->body)) <= 300)
+                            <div class="show-body"> {!! formatMarkdown($question->body) !!} </div>
+                        @else
+                            <span class="show-body hide">{!! formatMarkdown($question->body) !!}</span>
+                            <span class="richtext" itemprop="text">{!! str_limit(formatList($question->body), 300, '...') !!}</span>
+                            <button class="button button-plain button-more questionrichtext-more" data-show="0">显示全部</button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -153,10 +151,10 @@
                                 </ul>
                             </div>
                         @else
-                            {{--<button class="button button-plain" type="button">--}}
-                                {{--<svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>--}}
-                                {{--举报--}}
-                            {{--</button>--}}
+                            <button class="button button-plain" onclick="reported.init('{{$question['id']}}', 'question');">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
+                                举报
+                            </button>
                         @endif
 
                     </div>

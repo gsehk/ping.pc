@@ -1146,34 +1146,54 @@ var pinneds = function (url, type) {
 };
 
 // 举报
-var reported = function (url) {
-    checkLogin();
-    var html = '<div class="pinned_box mr20 ml20 mt20">'
-                + '<p class="confirm_title">举报</p>'
-                + '<a class="ucolor">举报理由</a>'
-                + '<div class="pinned_input">'
-                    + '<textarea id="report-ct" rows="4" cols="30" placeholder="请输入举报理由，不超过190字"></textarea>'
-                + '</div>'
-            + '</div>';
-    ly.confirm(html, '', '', function(){
-        var reason = $('#report-ct').val();
-        if (!reason) {
-            lyNotice('请输入举报理由');
-            return false;
-        }
-        if (reason.length > 190) {
-            lyNotice('举报理由不能大于190个字');
-            return false;
-        }
-        axios.post(url, {reason: reason, content: reason})
-          .then(function (response) {
-            layer.closeAll();
-            noticebox(response.data.message, 1);
-          })
-          .catch(function (error) {
-            showError(error.response.data);
-          });
-    });
+var reported = {
+    init: function(row_id, type){
+        checkLogin();
+        this.type = type;
+        this.row_id = row_id;
+        this.url = this.get_link();
+        this.report();
+    },
+    report: function(){
+        var _this = this;
+        var html = '<div class="pinned_box mr20 ml20 mt20"><p class="confirm_title">举报</p><a class="ucolor">举报理由</a>'+
+        '<div class="pinned_input"><textarea id="report-ct" rows="4" cols="30" placeholder="请输入举报理由，不超过190字"></textarea></div></div>';
+        ly.confirm(html, '', '', function(){
+            var reason = $('#report-ct').val();
+            if (!reason) {
+                lyNotice('请输入举报理由');
+                return false;
+            }
+            if (reason.length > 190) {
+                lyNotice('举报理由不能大于190个字');
+                return false;
+            }
+            axios.post(_this.url, {reason: reason, content: reason})
+              .then(function (response) {
+                layer.closeAll();
+                noticebox(response.data.message, 1);
+              })
+              .catch(function (error) {
+                showError(error.response.data);
+              });
+        });
+    },
+    get_link: function(){
+        var urls = {
+            'user' : '/api/v2/user/'+this.row_id+'/rewards',
+            'feed' : '/api/v2/feeds/'+this.row_id+'/reports', // 动态
+            'news' : '/api/v2/report/comments/'+this.row_id,
+            'feeds' : '/api/v2/report/comments/'+this.row_id, //动态评论
+            'posts' : '/api/v2/plus-group/reports/posts/'+this.row_id,
+            'group' : '/api/v2/plus-group/groups/'+this.row_id+'/reports',
+            'question' : '/api/v2/questions/'+this.row_id+'/reports', //问题
+            'post-comment' : '/api/v2/plus-group/reports/comments/'+this.row_id,
+            'question-answer' : '/api/v2/question-answers/'+this.row_id+'/reports', //回答
+            'question-answers' : '/api/v2/report/comments/'+this.row_id, //回答评论
+        };
+
+        return urls[this.type];
+    }
 };
 
 // 更多操作

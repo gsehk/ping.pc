@@ -81,7 +81,7 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
                         </a>
                         @endif
                     </li>
-                    @if(!empty($TS['id']) && $post->user_id == $TS['id'])
+                    @if($post->user_id == $TS['id'])
                     <li>
                         <a href="javascript:;" onclick="weibo.pinneds({{$post->id}});">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
@@ -90,6 +90,13 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
                     <li>
                         <a href="javascript:;" onclick="weibo.delFeed({{$post->id}});">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>删除
+                        </a>
+                    </li>
+                    @else
+                    <li>
+                        <a href="javascript:;" onclick="reported.init('{{$post->id}}', 'feed');">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
+                            <span>举报</span>
                         </a>
                     </li>
                     @endif

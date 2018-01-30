@@ -44,14 +44,12 @@
                             </a>
                         </li>
                     @else
-                        @if (isset($group->joined) && $group->joined->role == 'member')
                         <li>
-                            <a href="javascript:;" onclick="post.reportComment('{{$comment['id']}}');">
+                            <a href="javascript:;" onclick="reported.init('{{$comment['id']}}', '{{$comment['commentable_type']}}');">
                                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
                                 <span>举报</span>
                             </a>
                         </li>
-                        @endif
                     @endif
                     </ul>
                 </div>

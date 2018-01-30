@@ -21,10 +21,8 @@
                     @foreach($comments_data as $cv)
                         <p class="comment_con" id="comment{{$cv->id}}">
                             <span class="tcolor">{{ $cv->user['name'] }}：</span>
-                            @if ($cv->reply_user != 0)
-                                @php
-                                    $user = getUserInfo($cv->reply_user);
-                                @endphp
+                            @if ($cv->reply_user)
+                                @php $user = getUserInfo($cv->reply_user); @endphp
                                 回复<a href="{{ route('pc:mine', $user->id) }}">{{ '@'.$user->name }}</a>：
                             @endif
 
@@ -44,9 +42,7 @@
                                 <a class="mouse comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
                             @else
                                 <a class="mouse" onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
-                                @if (isset($group->joined) && $group->joined->role == 'member')
-                                    <a class="mouse" onclick="post.reportComment('{{$cv['id']}}');">举报</a>
-                                @endif
+                                <a class="mouse" onclick="reported.init('{{$cv['id']}}', '{{$cv['commentable_type']}}');">举报</a>
                             @endif
                         </p>
                     @endforeach
@@ -122,7 +118,7 @@
         comment.support.top = {{ isset($top) ? $top : 0 }};
 
 
-        comment.publish(url, function(res){
+        comment.publish(types[comments_type], function(res){
             $('.nums').text(comment.support.wordcount);
             $('.cs' + id).text(parseInt($('.cs' + id).text()) + 1);
         });

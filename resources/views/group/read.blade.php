@@ -58,7 +58,7 @@
                                 <font class="s-fc">{{$group->location}}</font>
                             </div>
                             @if ($group->joined && ($group->joined->role == 'member'))
-                                <a class="u-report" href="javascript:;" onclick="grouped.report({{$group->id}});">举报圈子</a>
+                                <a class="u-report" href="javascript:;" onclick="reported.init({{$group->id}}, 'group');">举报圈子</a>
                             @endif
                                 @if ($group->joined)
                                     <button
@@ -217,7 +217,7 @@
     $('.u-share').click(function(){
         $('.u-share-show').toggle();
     });
-    
+
     // 所有帖子搜索
     $('#J-search').on('click', function(){
         var key = $(this).prev('input').val();

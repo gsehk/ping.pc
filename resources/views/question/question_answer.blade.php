@@ -74,7 +74,18 @@
                         <div class="options_div">
                             <div class="triangle"></div>
                             <ul>
-                                @if(isset($TS) && $answer->question->user_id == $TS['id'])
+                                <li>
+                                    <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);" id="J-collect{{$answer->id}}" status="{{(int) (isset($TS) && $answer->collected)}}">
+                                        @if(isset($TS) && $answer['collected'] == 1)
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                                            <span class="collect">已收藏</span>
+                                        @else
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                                            <span class="collect">收藏</span>
+                                        @endif
+                                    </a>
+                                </li>
+                                @if($answer->user_id == $TS['id'])
                                     <li>
                                         @if($answer->adoption == 1)
                                             <a class="act" href="javascript:;">
@@ -88,31 +99,20 @@
                                             </a>
                                         @endif
                                     </li>
-                                @endif
-                                <li>
-                                    <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);" id="J-collect{{$answer->id}}" status="{{(int) (isset($TS) && $answer->collected)}}">
-                                        @if(isset($TS) && $answer['collected'] == 1)
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
-                                            <span class="collect">已收藏</span>
-                                        @else
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
-                                            <span class="collect">收藏</span>
-                                        @endif
-                                    </a>
-                                </li>
-                                @if(isset($TS) && $answer->user_id == $TS['id'] && !isset($answer->invited) && $answer->adoption != 1)
+                                    @if (!$answer->invited && !$answer->adoption)
+                                        <li>
+                                            <a href="javascript:;" onclick="QA.delAnswer({{$answer->question_id}}, {{$answer->id}}, '{{ route('pc:questionread', $answer->question_id) }}')">
+                                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>
+                                                删除
+                                            </a>
+                                        </li>
+                                    @endif
+                                @else
                                     <li>
-                                        <a href="javascript:;" onclick="QA.delAnswer({{$answer->question_id}}, {{$answer->id}}, '{{ route('pc:questionread', $answer->question_id) }}')">
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-delete"></use></svg>
-                                            删除
+                                        <a href="javascript:;" onclick="reported.init('{{$answer['id']}}', 'question-answer');">
+                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>举报
                                         </a>
                                     </li>
-                                {{--@else--}}
-                                    {{--<li>--}}
-                                        {{--<a href="javascript:;" onclick="">--}}
-                                            {{--<svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>举报--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
                                 @endif
                             </ul>
                         </div>

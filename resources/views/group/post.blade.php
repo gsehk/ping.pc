@@ -74,7 +74,7 @@
                             @else
                                 @if (isset($post->group->joined) && !$post->group->joined->disabled)
                                 <li>
-                                    <a href="javascript:;" onclick="post.reportPost('{{$post->id}}');">
+                                    <a href="javascript:;" onclick="reported.init('{{$post->id}}', 'posts');">
                                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
                                         <span>举报</span>
                                     </a>
