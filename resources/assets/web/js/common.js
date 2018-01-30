@@ -1827,3 +1827,6 @@ $(function() {
         }
     })
 });
+
+/* 解决ie 不支持 Premise */
+(function(undefined) {}).call('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});
