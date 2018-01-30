@@ -69,7 +69,20 @@
 .unslider .title {width:100%;position:absolute;bottom:0;padding:20px;margin:0;color:#ffffff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:20px;text-align:left;background-image:-webkit-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,.4) 100%);}
 /*投稿按钮*/.news_release_btn svg {margin-right:5px;color:#fff;}
 .news_release_btn span {font-size:20px;display:inline-block;width:100%;margin:30px 0;padding:10px 0;text-align:center;color:#fff;border-radius:30px;background:#59b6d7;}
-/*投稿*/
+
+/* 投稿 */
+.p-newsrel .m-form .formitm{font-size:14px;position:relative;}
+.p-newsrel .m-form .ipt,.m-form .txt{width: 100%;padding:10px;border:1px solid #ededed;}
+.p-newsrel .m-form .tags-box{display:inline-block;min-height:56px;vertical-align:text-top;}
+.p-newsrel .m-form .tags-box .place{position:absolute;padding:8px;color:#ccc;}
+.p-newsrel .m-form .tags-box span{display:inline-block;line-height:28px;padding:3px 12px;margin-right: 8px;color:#59b6b7;background-color:#EEF8F8;border-radius:3px;}
+.p-newsrel .m-form .tags-box span:after{display:inline-block;margin-left:5px;width:16px;height:16px;background-image:url(./img/close_icon.png);background-position:center;background-size:16px;background-repeat:no-repeat;content:'X';vertical-align:middle;font-size:0}
+.p-newsrel .m-form .tags-box:hover .choos-tags{display:block;}
+.p-newsrel .m-form .choos-tags{display:none;width:600px;position:absolute;left:0;top:56px;padding:10px 40px;background-color:white;z-index:5;box-shadow: 0 0 10px 0 rgba(23, 23, 23, .1);}
+.p-newsrel .m-form .choos-tags dt{margin-bottom:10px;color:#ccc}
+.p-newsrel .m-form .choos-tags dd{font-size:14px;display:inline-block;margin:10px;cursor:pointer;color:#666}
+.p-newsrel .m-form .subject{width:100%;border:0;}
+
 .release_cont {padding:60px;}
 .release_title {font-size:20px;padding-bottom:15px;border-bottom:1px solid #ededed;}
 .release_title input {width:100%;border:none;outline:none;color:#333;}

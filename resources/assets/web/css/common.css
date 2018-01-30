@@ -1,6 +1,6 @@
 ﻿* {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 body {font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;margin:0;color:#333;}
-input,button,select,textarea {font-family:inherit;font-size:inherit;line-height:inherit;outline:none;}
+input,button,select,textarea {font-family:inherit;font-size:inherit;line-height:inherit;outline:none;resize: none;}
 input::-webkit-input-placeholder,/* WebKit browsers */textarea::-webkit-input-placeholder {/* WebKit browsers */    color:rgb(204,204,204);}
 input:-moz-placeholder,/* Mozilla Firefox 4 to 18 */textarea:-moz-placeholder {/* Mozilla Firefox 4 to 18 */    color:rgb(204,204,204);}
 input::-moz-placeholder,/* Mozilla Firefox 19+ */textarea::-moz-placeholder {/* Mozilla Firefox 19+ */    color:rgb(204,204,204);}

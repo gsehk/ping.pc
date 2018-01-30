@@ -1,6 +1,4 @@
-@section('title')
-投稿
-@endsection
+@section('title') 文章 - 投稿 @endsection
 
 @extends('pcview::layouts.default')
 
@@ -10,15 +8,15 @@
 <link rel="stylesheet" href="{{ asset('assets/pc/cropper/cropper.min.css') }}"/>
 <link rel="stylesheet" href="{{ asset('assets/pc/css/news.css') }}"/>
 @endsection
-
+<div class="p-newsrel">
 <div class="news_left">
-    <div class="release_cont">
+    <div class="m-form release_cont">
         <div class="release_title">
-            <input type="hidden" id="news_id" name="id" value="{{$id or 0}}" />
-            <input type="text" id="subject-title" name="title" value="{{$title or ''}}" placeholder="请在此输入20字以内的标题" maxlength="20"/>
+            <input type="hidden" id="news_id" name="id" value="{{$data->id or 0}}" />
+            <input type="text" id="subject-title" name="title" value="{{$data->title or ''}}" placeholder="请在此输入20字以内的标题" maxlength="20"/>
         </div>
         <div class="release_title p_30">
-            <input type="text" id="subject-abstract" name="abstract" value="{{$subject or ''}}" placeholder="请在此输入200字以内的文章摘要"/>
+        <textarea class="subject" id="subject-abstract" name="abstract" value="{{$data->subject or ''}}" placeholder="请在此输入200字以内的文章摘要"></textarea>
         </div>
         <div data-value="" class="zy_select gap12 p_30" id="categrey">
             <span>请选择文章分类</span>
@@ -28,59 +26,59 @@
                 @endforeach
             </ul>
             <i></i>
-            <input id="cate" type="hidden" value="{{$cate_id or 0}}" />
+            <input id="cate" type="hidden" value="{{$data->cate_id or 0}}" />
         </div>
         <div class="release_place">
-            @include('pcview::widgets.markdown', ['height'=>'530px', 'width' => '100%', 'content'=>$content ?? ''])
+            @include('pcview::widgets.markdown', ['height'=>'530px', 'width' => '100%', 'content'=>$data->content ?? ''])
         </div>
-        <div class="release_tags">
-            <label for="J-select-tags" @if(isset($id) || isset($tags)) style="display: none;" @endif>请选择标签</label for="J-select-tags">
-            <ul class="release_tags_selected" id="J-select-tags">
-                @if(isset($tags))
-                    @foreach($tags as $tag)
-                        <li class="tag_{{ $tag['id'] }}" data-id="{{ $tag['id'] }}">{{ $tag['name'] }}</li>
+        <div class="formitm">
+            <div class="tags-box ipt">
+                <div class="place">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-tag"></use></svg>
+                    请选择标签
+                </div>
+                <div class="choos-tags" id="J-tag-box">
+                    @foreach ($tags as $tag)
+                        <dl>
+                            <dt>{{ $tag->name }}</dt>
+                            @foreach ($tag->tags as $item)
+                                <dd data-id="{{$item->id}}">{{$item->name}}</dd>
+                            @endforeach
+                        </dl>
+                    @endforeach
+                </div>
+                @if(isset($data->tags))
+                    @foreach($data->tags as $tag)
+                        <span class="tid{{$tag['id']}}" data-id="{{$tag['id']}}">{{$tag['name']}}</span>
                     @endforeach
                 @endif
-            </ul>
-            <div class="release_tags_list" id="J-tag-box" style="display: none;">
-                @foreach ($release_tags as $release_tag)
-                    <dl>
-                        <dt>{{ $release_tag->name }}</dt>
-                        @foreach ($release_tag->tags as $item)
-                            <dd data-id="{{$item->id}}">{{ $item->name }}</dd>
-                        @endforeach
-                    </dl>
-                @endforeach
             </div>
-            <input type="hidden" name="tags" id="tags" />
         </div>
         <div class="release_produce">
             <span class="release_bq" style="display: none;">
                 <img src="{{ asset('assets/pc/images/pro.png') }}" /><input placeholder="添加标签，多个标签用逗号分开" />
             </span>
             <span class="ai_face_box">
-                <img src="@if (!empty($image)) {{ $routes['storage'] }}{{$image['id']}}?w=230&h=163 @else {{ asset('assets/pc/images/pic_upload.png') }} @endif" id="J-image-preview" />
+                <img src="@if (!empty($image)) {{ $routes['storage'] }}{{$data->image['id']}}?w=230&h=163 @else {{ asset('assets/pc/images/pic_upload.png') }} @endif" id="J-image-preview" />
                 <div class="ai_upload">
-                    <input name="subject-image" id="subject-image" type="hidden" value="{{$image['id'] or 0}}" />
+                    <input name="subject-image" id="subject-image" type="hidden" value="{{$data->image['id'] or 0}}" />
                 </div>
             </span>
         </div>
         <div class="release_word">
-            <input type="text" id="subject-author" name="subject-author" value="{{(isset($author) && isset($TS) && $author != $TS['name']) ? $author : ''}}" placeholder="文章作者（选填）" maxlength="8"/>
+            <input type="text" id="subject-author" name="subject-author" value="{{$data->author or ''}}" placeholder="文章作者（选填）" maxlength="8"/>
         </div>
         <div class="release_word">
-            <input type="text" id="subject-from" name="subject-from" value="{{(isset($from) && $from != '原创') ? $from : ''}}" placeholder="文章转载至何处（非转载可不填）"  maxlength="8"/>
+            <input type="text" id="subject-from" name="subject-from" value="{{$data->from or ''}}" placeholder="文章转载至何处（非转载可不填）"  maxlength="8"/>
         </div>
         <div class="release_after">投稿后，我们将在两个工作日内给予反馈，谢谢合作！</div>
         <div class="release_btn">
-            {{-- <button type="submit" class="subject-submit button release_a1" data-url="{{ Route('pc:doSavePost',['type'=>2]) }}">存草稿</button> --}}
             <button type="submit" class="subject-submit button release_a2">投稿</button>
         </div>
     </div>
 </div>
 
 <div class="right_container">
-    <!-- 投稿须知 -->
     <div class="release_right">
         <div class="release_right_title">投稿须知</div>
         <div class="release_right_artic">
@@ -89,12 +87,8 @@
             <p>详细补充您的咨询内容, 并提供一些相关的素材以供参与者更多的了解您所要表述的资讯思想。</p>
             <p>注：如果您的内容不够正式，为了数据更美观，您的投稿将不会通过；投稿内容一经审核通过，所投递的内容将共所有人可以阅读，并在您发布资讯中进行分享、点赞和评论</p>
         </div>
-        {{-- <a href="{{ route('pc:minearc') }}">
-            <div class="release_right_bottom">
-                我的草稿<span class="release_right_num"><i class="icon iconfont icon-icon07"></i></span>
-            </div>
-        </a> --}}
     </div>
+</div>
 </div>
 @endsection
 
@@ -103,38 +97,27 @@
     <script src="{{ asset('assets/pc/js/module.news.js')}}"></script>
     <script src="{{ asset('assets/pc/js/md5.min.js')}}"></script>
     <script type="text/javascript">
-        var selBox = $('#J-select-tags');
-
-        $('.release_tags').on('click', '>*', function(e){
-            e.stopPropagation();
-            $('#J-tag-box').toggle();
-        });
-
+        var selBox = $('.tags-box');
         $('#J-tag-box dd').on('click', function(e){
+            $('.place').hide();
             e.stopPropagation();
-            var tag_id = $(this).data('id');
-            var tag_name = $(this).text();
-            if (selBox.find('li').hasClass('tag_'+tag_id)) {
+            var tid = $(this).data('id');
+            var name = $(this).text();
+            if (selBox.find('span').hasClass('tid'+tid)) {
                 noticebox('标签已存在', 0); return;
             }
 
-            if (selBox.find('li').length > 4) {
+            if (selBox.find('span').length > 4) {
                 noticebox('标签最多五个', 0); return;
             }
-
-            selBox.append('<li class="tag_'+tag_id+'" data-id="'+tag_id+'">'+tag_name+'</li>');
-            if (selBox.find('li').length > 0) {
-                $('.release_tags label').hide();
-            }
+            selBox.append('<span class="tid'+tid+'" data-id="'+tid+'">'+name+'</span>');
         });
-
-        selBox.on('click', 'li', function(){
+        selBox.on('click', 'span', function(){
             $(this).remove();
-            if (selBox.find('li').length == 0) {
-                $('.release_tags label').show();
+            if ((selBox.find('span').length) <= 0) {
+                $('.place').show();
             }
         });
-
 
         $('#J-image-preview').on('click',function(){
             var html = '<div id="model">'
