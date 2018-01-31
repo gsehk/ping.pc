@@ -76,7 +76,7 @@
             @endif
 
             <a class="btn reward-btn profile-btn mcolor" href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
-                <svg class="icon"><use xlink:href="#icon-monies"></use></svg>打赏
+                <svg class="icon"><use xlink:href="#icon-money"></use></svg>打赏
             </a>
         @endif
     </div>

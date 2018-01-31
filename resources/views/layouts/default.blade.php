@@ -50,19 +50,11 @@
     {{-- 二维码 --}}
     <div class="weixin_qrcode">
     </div>
-    <script src="{{ asset('assets/pc/js/axios.min.js')}}"></script>
-    <script src="{{ asset('assets/pc/js/lodash.min.js') }}"></script>
+    <script src="{{ asset('assets/pc/js/global.min.js')}}"></script>
     <script src="{{ asset('assets/pc/js/common.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/font/iconfont.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/jquery.lazyload.min.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/jquery.cookie.js') }}"></script>
-    <script src="{{ asset('assets/pc/layer/layer.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/dexie.min.js') }}"></script>
 
     {{-- 环信 --}}
-    <script src="{{ asset('assets/pc/js/easemob/webim.config.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/easemob/strophe-1.2.8.min.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/easemob/websdk-1.4.13.js') }}"></script>
+    <script src="{{ asset('assets/pc/js/easemob/easemob.min.js') }}"></script>
     <script src="{{ asset('assets/pc/js/module.easemob.js') }}"></script>
     @yield('scripts')
 
