@@ -1,6 +1,6 @@
 var easemob = {};
 easemob = {
-    // 初始化
+    /*初始化*/
     init: function(){
         easemob.conn = new WebIM.connection({
             isMultiLoginSessions: WebIM.config.isMultiLoginSessions,
@@ -14,18 +14,18 @@ easemob = {
         });
 
         easemob.conn.listen({
-            // 连接成功回调
-            // 如果isAutoLogin设置为false，那么必须手动设置上线，否则无法收消息
-            // 手动上线指的是调用conn.setPresence(); 如果conn初始化时已将isAutoLogin设置为true
-            // 则无需调用conn.setPresence();        
+            /*连接成功回调
+            如果isAutoLogin设置为false，那么必须手动设置上线，否则无法收消息
+            手动上线指的是调用conn.setPresence(); 如果conn初始化时已将isAutoLogin设置为true
+            则无需调用conn.setPresence();*/
             onOpened: function ( message ) {
             },
-            //收到文本消息
+            /*收到文本消息*/
             onTextMessage: function ( message ) {
                 window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, window.TS.dataBase.room, () => {
-                    // 因为返回的是来源用户ID是字符串类型，所以转换一下
+                    /*因为返回的是来源用户ID是字符串类型，所以转换一下*/
                     message.from = parseInt(message.from);
-                    // 查询会话是否存在
+                    /*查询会话是否存在*/
                     window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, message.from]).first(function(item){
                         var dbMsg = {};
                         dbMsg.id = message.id;
@@ -37,21 +37,22 @@ easemob = {
                         dbMsg.read = 0;
                         dbMsg.txt = message.sourceMsg;
 
-                        if (item === undefined) { // 不存在创建会话
+                         /*不存在创建会话*/
+                        if (item === undefined) {
                             var room = {
                                 type: 'chat',
                                 mid: TS.MID,
                                 uid: message.from,
                                 last_message_time: dbMsg.time,
-                                last_message_txt: message.sourceMsg, 
+                                last_message_txt: message.sourceMsg,
                                 del: 0
                             };
                             window.TS.dataBase.room.add(room).then(function(i){
-                                // 插入聊天信息
+                               /* 插入聊天信息 */
                                 dbMsg.cid = i;
                                 window.TS.dataBase.message.add(dbMsg);
 
-                                // 获取用户信息，创建会话
+                                /*获取用户信息，创建会话*/
                                 var user = getUserInfo(message.from);
                                 var _user = _.keyBy([user], 'id');
                                 easemob.users = Object.assign({}, easemob.users, _user);
@@ -60,7 +61,8 @@ easemob = {
 
 
                             });
-                        } else { // 存在修改会话内容
+                        /*存在修改会话内容*/
+                        } else {
                             window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, message.from]).modify({
                                 last_message_time: dbMsg.time,
                                 last_message_txt: message.sourceMsg
@@ -70,7 +72,7 @@ easemob = {
                                 window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, message.from]).modify({
                                     del: 0
                                 });
-                                // 设置会话
+                                /*设置会话*/
                                 easemob.setNewCon(item);
                             }
                             dbMsg.cid = item.id;
@@ -79,9 +81,9 @@ easemob = {
 
                         }
 
-                        // 若聊天窗口为打开状态
+                        /*若聊天窗口为打开状态*/
                         if ($('.chat_dialog').length > 0) {
-                            // 当前会话，添加消息
+                            /*当前会话，添加消息*/
                             if (easemob.cid == dbMsg.cid && window.TS.MID == dbMsg.touid) {
                                 easemob.setMes(dbMsg.txt, dbMsg.uid);
                             }
@@ -90,7 +92,7 @@ easemob = {
                     });
                 });
             },
-            // 失败回调
+            /*失败回调*/
             onError: function ( message ) {
                 console.log(message);
             },
@@ -98,7 +100,7 @@ easemob = {
 
         easemob.database();
 
-        // 获取IM账号密码
+        /*获取IM账号密码*/
         if ($.cookie('im_passwd') === undefined) {
             axios.get('/api/v2/easemob/password/')
                 .then(function (response) {
@@ -114,7 +116,7 @@ easemob = {
             easemob.login();
         }
 
-        // 获取用户信息并设置会话
+        /*获取用户信息并设置会话*/
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
             window.TS.dataBase.room
                 .orderBy('last_message_time')
@@ -129,16 +131,16 @@ easemob = {
                 });
         });
 
-        // 设置未读消息定时器
+        /*设置未读消息定时器*/
         easemob.getUnreadMessage();
         var unread_message_timeout = window.setInterval(easemob.getUnreadMessage, 20000);
         easemob.getUnreadChats();
         var unread_chat_timeout = window.setInterval(easemob.getUnreadChats, 1000);
     },
 
-    // IM登录
+    /*IM登录*/
     login: function(){
-        var options = { 
+        var options = {
           apiUrl: WebIM.config.apiURL,
           user: TS.MID,
           pwd: easemob.password,
@@ -147,21 +149,21 @@ easemob = {
         easemob.conn.open(options);
     },
 
-    // 创建本地数据库
+    /*创建本地数据库*/
     database: function(){
-        // 创建本地存储
+        /*创建本地存储*/
         var db = new Dexie('TS_EASEMOB');
         db.version(1).stores({
-            // message
+            /*message*/
             message: "id, time, cid, type, mid, uid, touid, txt, read, [cid+read]",
 
-            // room
+            /*room*/
             room: "++id, type, mid, uid, last_message_time, last_message_txt, del, [mid+del], [mid+uid]",
         });
 
         window.TS.dataBase = db;
 
-        // 添加IM小助手
+        /*添加IM小助手*/
         if (!TS.BOOT['im:helper']) {
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
                 window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, TS.BOOT['im:helper'][0]['uid']]).first(function(item){
@@ -171,7 +173,7 @@ easemob = {
                             mid: TS.MID,
                             uid: TS.BOOT['im:helper'][0]['uid'],
                             last_message_time: (new Date()).valueOf(),
-                            last_message_txt: '', 
+                            last_message_txt: '',
                             del: 0
                         };
                         window.TS.dataBase.room.add(room);
@@ -181,7 +183,7 @@ easemob = {
         }
     },
 
-    // 设置右侧会话
+    /*设置右侧会话*/
     setOuterCon: function(){
         var _this = this;
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
@@ -193,7 +195,7 @@ easemob = {
         });
     },
 
-    // 设置弹出会话
+    /*设置弹出会话*/
     setInnerCon: function(){
         var _this = this;
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
@@ -222,7 +224,7 @@ easemob = {
                     }
                 }
 
-                // 设置为未删除
+                /*设置为未删除*/
                 if (item.del == 1 && item.id == easemob.cid) {
                     window.TS.dataBase.room.where({id: item.id}).modify({
                         del: 0
@@ -232,7 +234,7 @@ easemob = {
         });
     },
 
-    // 创建会话
+    /*创建会话*/
     createCon: function(uid){
         checkLogin();
         var user = getUserInfo(uid);
@@ -242,7 +244,8 @@ easemob = {
 
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, () => {
             window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, uid]).first(function(item){
-                if (item === undefined) { // 不存在创建会话
+                 /*不存在创建会话*/
+                if (item === undefined) {
                     var room = {
                         type: 'chat',
                         mid: TS.MID,
@@ -257,30 +260,31 @@ easemob = {
                         easemob.cid = i;
                         easemob.openChatDialog(0, i, uid);
                     });
-                } else { // 存在修改会话内容
+                /* 存在修改会话内容*/
+                } else {
                     if (item.del == 1) {
                         window.TS.dataBase.room.where('[mid+uid]').equals([TS.MID, uid]).modify({
                             del: 0
                         });
                     }
                     easemob.openChatDialog(0, item.id, uid);
-                } 
+                }
             });
         });
     },
 
-    // 删除会话
+    /*删除会话*/
     delCon: function(cid, uid) {
         cancelBubble();
         var chat = $('#chat_' + cid);
 
-        // 查找下个会话
+        /*查找下个会话*/
         if (chat.next().length > 0) {
             var next_cid = chat.next().eq(0).data('cid');
             var next_uid = chat.next().eq(0).data('uid');
         } else if (chat.prev('.room_item').length > 0) {
             var next_cid = chat.prev().eq(0).data('cid');
-            var next_uid = chat.next().eq(0).data('uid');   
+            var next_uid = chat.next().eq(0).data('uid');
         } else {
             var next_cid = 0;
         }
@@ -288,7 +292,7 @@ easemob = {
         $('#ms_chat_' + cid).remove();
         if ($('.chat_dialog').length > 0) chat.remove();
 
-        // 清空会话，或者展示下个会话的聊天列表
+        /*清空会话，或者展示下个会话的聊天列表*/
         if (next_cid == 0) {
             easemob.cid = 0;
             $('#message_wrap').show();
@@ -306,7 +310,7 @@ easemob = {
         });
     },
 
-    // 设置新会话
+    /*设置新会话*/
     setNewCon: function(room){
         var _this = this;
         var sidehtml = '<dd class="ms_chat" id="ms_chat_' + room.id + '" data-cid="' + room.id + '" data-name="' + _this.users[room.uid]['name'] + '"><a href="javascript:;" onclick="easemob.openChatDialog(0, '+ room.id +', '+ room.uid +')"><img src="' + getAvatar(_this.users[room.uid], 50) + '"/></a></dd>';
@@ -330,14 +334,14 @@ easemob = {
         }
     },
 
-    // 列出消息
+    /*列出消息*/
     listMes: function(cid, uid){
         var _this = this;
-        // 设置房间名
+        /*设置房间名*/
         $('#chat_wrap .body_title').html(_this.users[uid]['name']).show();
         $('#chat_cont').html('');
 
-        // 查询消息
+        /*查询消息*/
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
             window.TS.dataBase.message
                 .orderBy('time')
@@ -359,24 +363,24 @@ easemob = {
         });
     },
 
-    // 发送消息
+    /*发送消息*/
     sendMes: function(cid, touid) {
         var txt = $('#chat_text').val();
         if (txt == '') {
             $('#chat_text').focus();
             return false;
         }
-        
-        // 生成本地消息id
+
+        /*生成本地消息id*/
         var id = easemob.conn.getUniqueId();
-        // 创建文本消息
+        /*创建文本消息*/
         var msg = new WebIM.message('txt', id);
         msg.set({
             msg: txt,
             to: touid,
             roomType: false,
             success: function (id, serverMsgId) {
-                // 消息入库
+                /*消息入库*/
                 var dbMsg = {};
                 dbMsg.id = id;
                 dbMsg.time = (new Date()).valueOf();
@@ -399,7 +403,7 @@ easemob = {
         easemob.conn.send(msg.body);
     },
 
-    // 设置消息
+    /*设置消息*/
     setMes: function(txt, user_id){
         $('#chat_text').val('');
         txt = txt.replace(/\r\n/g, "<br>");
@@ -421,12 +425,12 @@ easemob = {
         div.scrollTop = div.scrollHeight;
     },
 
-    // 更新最后一条消息
+    /*更新最后一条消息*/
     updateLastMes: function(cid, txt) {
         $('#chat_' + cid + ' .chat_item').find('div').html(txt);
     },
 
-    // 获取未读消息数量html
+    /*获取未读消息数量html*/
     formatUnreadHtml: function(type, value) {
         if (type == 0) {
             var html = '<div class="unread_div"><span>' + (value > 99 ? 99 : value) + '</span></div>';
@@ -436,7 +440,7 @@ easemob = {
         return html;
     },
 
-    // 设置未读消息数量
+    /*设置未读消息数量*/
     setUnreadMes: function() {
         for (var i in TS.UNREAD) {
             if (TS.UNREAD[i] > 0) {
@@ -458,7 +462,7 @@ easemob = {
         }
     },
 
-    // 设置未读聊天消息数量
+    /*设置未读聊天消息数量*/
     setUnreadChat: function(cid, value) {
         $('#ms_chat_' + cid + ' .unread_div').remove();
         $('#ms_chat_' + cid).prepend(easemob.formatUnreadHtml(0, value));
@@ -468,13 +472,15 @@ easemob = {
         }
     },
 
-    // 设置消息已读
+    /*设置消息已读*/
     setRead: function(type, cid) {
-        if (type == 0) { // 消息
+         /*消息*/
+        if (type == 0) {
             TS.UNREAD[cid] = 0;
             $('#ms_' + cid).find('.unread_div').remove();
             $('#chat_' + cid).find('.chat_unread_div').remove();
-        } else { // 聊天
+        /* 聊天*/
+        } else {
             $('#ms_chat_' + cid).find('.unread_div').remove();
             $('#chat_' + cid).find('.chat_unread_div').remove();
             window.TS.dataBase.transaction('rw?', window.TS.dataBase.message, () => {
@@ -485,9 +491,10 @@ easemob = {
         }
     },
 
-    // 打开消息对话框
+    /*打开消息对话框*/
     openChatDialog: function(type, cid, uid) {
-        if (type == 0) { // 聊天消息
+        /* 聊天消息*/
+        if (type == 0) {
             easemob.setRead(1, cid);
             ly.load('/message/' + type + '/' + cid + '/' + uid, '', '720px', '572px');
         } else {
@@ -495,9 +502,9 @@ easemob = {
         }
     },
 
-    // 获取未读消息数量
+    /*获取未读消息数量*/
     getUnreadMessage: function() {
-        // 获取未读通知数量
+        /*获取未读通知数量*/
         axios.get('/api/v2/user/notifications')
           .then(function (response) {
                 TS.UNREAD.notifications = response.headers['unread-notification-limit'];
@@ -508,7 +515,7 @@ easemob = {
             showError(error.response.data);
           });
 
-        // 获取未读点赞，评论，审核通知数量
+        /*获取未读点赞，评论，审核通知数量*/
         axios.get('/api/v2/user/unread-count')
           .then(function (response) {
                 var res = response.data;
@@ -518,7 +525,7 @@ easemob = {
                 TS.UNREAD.likes = res.counts.unread_likes_count ? res.counts.unread_likes_count : 0;
                 TS.UNREAD.last_likes = res.likes.length > 0 ? res.likes[0]['user']['name'] : '';
 
-                // 审核通知数量
+                /*审核通知数量*/
                 var pinneds_count = 0;
                 for(var i in res.pinneds){
                     pinneds_count += res.pinneds[i]['count'];
@@ -532,9 +539,9 @@ easemob = {
           });
     },
 
-    // 获取未读聊天消息数量
+    /*获取未读聊天消息数量*/
     getUnreadChats: function() {
-        // 获取未读消息数量
+        /*获取未读消息数量*/
         window.TS.dataBase.transaction('rw?', window.TS.dataBase.room, window.TS.dataBase.message, () => {
             window.TS.dataBase.room.where({mid: TS.MID}).each( value => {
                 window.TS.dataBase.message.where('[cid+read]').equals([value.id, 0]).count( number => {
