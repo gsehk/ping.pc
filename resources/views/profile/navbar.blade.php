@@ -2,7 +2,7 @@
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 {{-- 个人中心头部个人信息 --}}
-<div class="profile_top">
+<div class="m-uchead profile_top">
     <div class="profile_top_cover" style="background-image: url({{ $user->bg or asset('assets/pc/images/default_cover.png') }});background-repeat: no-repeat;background-size: cover;">
     </div>
 
@@ -62,6 +62,28 @@
 
                 <li @if($current == 'question') class="active" @endif><a href="{{ route('pc:profilequestion', $user->id) }}">TA的问答</a></li>
             </ul>
+            <div class="m-option">
+                <span class="options" onclick="options(this)">
+                    <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more1"></use></svg>
+                </span>
+                <div class="options_div">
+                    <div class="triangle"></div>
+                    <ul>
+                        <li>
+                            <a href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
+                                <svg class="icon"><use xlink:href="#icon-money"></use></svg>
+                                <span>打赏</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" onclick="reported.init('{{$user->id}}', 'user');">
+                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-report"></use></svg>
+                                <span>举报</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <a class="btn profile-btn mcolor" href="javascript:;" onclick="easemob.createCon({{ $user->id }})">
                 <svg class="icon"><use xlink:href="#icon-messaged"></use></svg>聊天
             </a>
@@ -74,10 +96,6 @@
                     <svg class="icon"><use xlink:href="#icon-add"></use></svg><span>关注</span>
                 </a>
             @endif
-
-            <a class="btn reward-btn profile-btn mcolor" href="javascript:;" onclick="rewarded.show({{$user->id}}, 'user')">
-                <svg class="icon"><use xlink:href="#icon-money"></use></svg>打赏
-            </a>
         @endif
     </div>
 </div>

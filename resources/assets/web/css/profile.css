@@ -1,7 +1,7 @@
 /*个人主页顶部*/
 .contribute-btn {float:right;margin-top:21px;border-radius:18px;padding:7px 23px;}
 .profile-btn {padding:5px 15px;float:right;margin-top:24px;border-radius:18px;border:1px solid #59B6D7;margin-left:10px;line-height:24px;}
-.profile-btn > svg,.contribute-btn > svg{margin-right:3px;}
+.profile-btn > svg,.contribute-btn > svg{margin-right:3px;margin-bottom:2px;}
 .follow-box {line-height:80px;float:right;}
 .follow-box > div {line-height:36px;display:inline-block;width:100px;height:36px;margin-left:10px;cursor:pointer;text-align:center;vertical-align:middle;border:1px solid #ccc;border-radius:18px;background:#fff;}
 .follow-box > div:hover {color:#59b6d7;border-color:#59b6d7;}
@@ -32,6 +32,10 @@
 .profile_body {margin-top:30px;}
 .profile_body .right_box {float:right;width:235px;}
 .profile_body .g-tab>li {margin-right:20px;display:inline-block;}
+.m-uchead .m-option{position:relative;float:right;margin: 22px 20px 0 10px;}
+.m-uchead .m-option .options{color: #59B6D7;}
+.m-uchead .m-option .icon-more{font-size:2.5em;}
+.m-uchead .m-option .options_div{top:50px;right:-53px;}
 /*  列表  */
 .profile_content {background:#fff;padding:30px 40px;}
 .profile_menu > a {color:#999;margin-right:20px;}

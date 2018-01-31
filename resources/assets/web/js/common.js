@@ -1204,7 +1204,7 @@ var reported = {
     },
     get_link: function(){
         var urls = {
-            'user' : '/api/v2/user/'+this.row_id+'/rewards',
+            'user' : '/api/v2/report/users/'+this.row_id,
             'feed' : '/api/v2/feeds/'+this.row_id+'/reports', // 动态
             'news' : '/api/v2/report/comments/'+this.row_id,
             'feeds' : '/api/v2/report/comments/'+this.row_id, //动态评论
