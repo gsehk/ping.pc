@@ -28,11 +28,11 @@ mix.scripts([
     'resources/assets/web/js/dexie.min.js',
     'resources/assets/web/js/iconfont.js',
     'resources/assets/web/js/layer.js',
-], 'resources/assets/web/js/global.min.js');
+], 'resources/assets/web/global.min.js');
 
 // 合并并且压缩环信js
 mix.scripts([
     'resources/assets/web/js/easemob/webim.config.js',
     'resources/assets/web/js/easemob/strophe-1.2.8.min.js',
     'resources/assets/web/js/easemob/websdk-1.4.13.js',
-], 'resources/assets/web/js/easemob/easemob.min.js');
+], 'resources/assets/web/easemob.min.js');

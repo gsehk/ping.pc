@@ -50,11 +50,11 @@
     {{-- 二维码 --}}
     <div class="weixin_qrcode">
     </div>
-    <script src="{{ asset('assets/pc/js/global.min.js')}}"></script>
+    <script src="{{ mix('global.min.js', 'assets/pc') }}"></script>
     <script src="{{ asset('assets/pc/js/common.js') }}"></script>
 
     {{-- 环信 --}}
-    <script src="{{ asset('assets/pc/js/easemob/easemob.min.js') }}"></script>
+    <script src="{{ mix('easemob.min.js', 'assets/pc') }}"></script>
     <script src="{{ asset('assets/pc/js/module.easemob.js') }}"></script>
     @yield('scripts')
 

@@ -1,5 +1,5 @@
 {
     "/admin.js": "/admin.js",
-    "/js/global.min.js": "/js/global.min.js",
-    "/js/easemob/easemob.min.js": "/js/easemob/easemob.min.js"
+    "/global.min.js": "/global.min.js",
+    "/easemob.min.js": "/easemob.min.js"
 }
