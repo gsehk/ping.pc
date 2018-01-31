@@ -16,7 +16,7 @@
             <input type="text" id="subject-title" name="title" value="{{$data->title or ''}}" placeholder="请在此输入20字以内的标题" maxlength="20"/>
         </div>
         <div class="release_title p_30">
-        <textarea class="subject" id="subject-abstract" name="abstract" value="{{$data->subject or ''}}" placeholder="请在此输入200字以内的文章摘要"></textarea>
+        <textarea class="subject" id="subject-abstract" name="abstract" value="{{$data->subject or ''}}" placeholder="请在此输入200字以内的文章摘要" maxlength="200"></textarea>
         </div>
         <div data-value="" class="zy_select gap12 p_30" id="categrey">
             <span>请选择文章分类</span>
