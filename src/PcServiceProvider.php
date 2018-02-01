@@ -67,7 +67,7 @@ class PcServiceProvider extends ServiceProvider
     {
         $this->app->make(ManageRepository::class)->loadManageFrom('PC端', 'pc:admin', [
             'route' => true,
-            'icon' => asset('pc-icon.png'),
+            'icon' => asset('assets/pc/pc-icon.png'),
         ]);
     }
 

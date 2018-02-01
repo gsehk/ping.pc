@@ -1,12 +1,10 @@
-@section('title')
-    {{ $news['title'] }}
-@endsection
-
 @php
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getImageUrl;
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\formatMarkdown;
 @endphp
+
+@section('title') 文章 - {{ $news['title'] }} @endsection
 
 @extends('pcview::layouts.default')
 

@@ -10,7 +10,7 @@
 <div class="login_container">
 
     <div class="login_left">
-        <img src="@if(isset($config['common']['loginbg']) && $config['common']['loginbg']) {{ $routes['storage'] . $config['common']['loginbg'] }} @else {{ $routes['resource'] }}/images/login_bg.png @endif"/>
+        <img src="@if(isset($config['common']['loginbg']) && $config['common']['loginbg']) {{ $routes['storage'] . $config['common']['loginbg'] }} @else {{ asset('assets/pc/images/login_bg.png') }} @endif"/>
     </div>
     <div class="login_right">
         <form role="form" method="POST" action="{{ url('/auth/login') }}">

@@ -10,7 +10,6 @@ use Zhiyi\Plus\Http\Controllers\Controller;
 use Zhiyi\Plus\Models\Comment as CommentModel;
 use Zhiyi\Plus\Models\JWTCache as JWTCacheModel;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Models\Navigation;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\asset;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 use Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Traits\CreateJsonResponseData;
 
@@ -42,7 +41,7 @@ class BaseController extends Controller
                 }
 
                 $this->PlusData['TS'] = clone $user;
-                $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('images/avatar.png');
+                $this->PlusData['TS']['avatar'] = $this->PlusData['TS']['avatar'] ?: asset('assets/pc/images/avatar.png');
             }
 
             // 站点配置
@@ -81,11 +80,8 @@ class BaseController extends Controller
             $this->PlusData['config'] = $config;
 
             // 公共地址
-            $app_url = getenv('APP_URL');
-            $this->PlusData['routes']['siteurl'] = $app_url;
-            $this->PlusData['routes']['api'] = $app_url . '/api/v2';
-            $this->PlusData['routes']['storage'] = $app_url . '/api/v2/files/';
-            $this->PlusData['routes']['resource'] = asset('');
+            $this->PlusData['routes']['api'] = asset('/api/v2');
+            $this->PlusData['routes']['storage'] = asset('/api/v2/files/');
 
             return $next($request);
         });

@@ -5,7 +5,6 @@ namespace Zhiyi\Component\ZhiyiPlus\PlusComponentPc\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getTime;
-use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getShort;
 use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\createRequest;
 
 class NewsController extends BaseController

@@ -10,8 +10,8 @@
             USER:{!! json_encode($TS) !!},
             MID: "{{ $TS['id'] or 0 }}",
             TOKEN: "{{ $token or '' }}",
-            SITE_URL: "{{ $routes['siteurl'] }}",
-            RESOURCE_URL: '{{ $routes["resource"] }}',
+            SITE_URL: "{{ getenv('APP_URL') }}",
+            RESOURCE_URL: '{{ asset('assets/pc/') }}',
             CONFIG: {!! json_encode($config) !!},
             BOOT: {!! json_encode($config['bootstrappers']) !!},
             UNREAD: {}

@@ -6,85 +6,10 @@ use Auth;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use SlimKit\PlusSocialite\API\Requests\AccessTokenRequest;
 use Illuminate\Support\Facades\Route;
 use Zhiyi\Plus\Models\User;
-use GuzzleHttp\Client as GuzzleHttpClient;
-use function asset as plusAsset;
-use function view as plus_view;
-
-/**
- * Generate an asset path for the application.
- *
- * @param string $path
- * @param bool $secure
- * @return string
- * @author Seven Du <shiweidu@outlook.com>
- * @homepage http://medz.cn
- */
-function asset($path, $secure = null)
-{
-    return plusAsset('assets/pc/'.$path, $secure);
-}
-/**
- * Get The component resource asset path.
- *
- * @param string $path
- * @return string
- * @author Seven Du <shiweidu@outlook.com>
- * @homepage http://medz.cn
- */
-function asset_path($path)
-{
-    return component_name().'/'.$path;
-}
-/**
- * Get the component base path.
- *
- * @param string $path
- * @return string
- * @author Seven Du <shiweidu@outlook.com>
- * @homepage http://medz.cn
- */
-function base_path($path = '')
-{
-    return dirname(__DIR__).$path;
-}
-/**
- * Get the component name.
- *
- * @return string
- * @author Seven Du <shiweidu@outlook.com>
- * @homepage http://medz.cn
- */
-function component_name()
-{
-    return 'zhiyicx/plus-component-pc';
-}
-/**
- * Get the component route filename.
- *
- * @return string
- * @author Seven Du <shiweidu@outlook.com>
- * @homepage http://medz.cn
- */
-function route_path()
-{
-    return base_path('/router.php');
-}
-/**
- * Get the component resource path.
- *
- * @return string
- * @author Seven Du <shiweidu@outlook.com>
- * @homepage http://medz.cn
- */
-function resource_path()
-{
-    return base_path('/resource');
-}
 
 function getShort($str, $length = 40, $ext = '')
 {
@@ -205,10 +130,7 @@ function getTime($time, int $type = 1, int $format = 1)
 
 function getImageUrl($image = array(), $width, $height, $cut = true, $blur = 0)
 {
-    if (!$image) {
-        return false;
-    }
-
+    if (!$image) { return false; }
     // 高斯模糊参数
     $b = $blur != 0 ? '&b=' . $blur : '';
 
@@ -221,18 +143,16 @@ function getImageUrl($image = array(), $width, $height, $cut = true, $blur = 0)
         } else {
             $height = number_format($width / $size[0] * $size[1], 2, '.', '');
         }
-        return getenv('APP_URL') . '/api/v2/files/' . $file . '?&w=' . $width . '&h=' . $height . $b . '&token=' . Session::get('token');
+        return asset('/api/v2/files/'.$file) . '?&w=' . $width . '&h=' . $height . $b . '&token=' . Session::get('token');
     } else {
-        return getenv('APP_URL') . '/api/v2/files/' . $file . '?token=' . Session::get('token') . $b;
+        return asset('/api/v2/files/'.$file) . '?token=' . Session::get('token') . $b;
     }
 
 }
 
 function getUserInfo($id)
 {
-    $user = User::where('id', '=', $id)->first();
-
-    return $user;
+    return User::find($id);
 }
 
 /**
@@ -242,9 +162,7 @@ function getUserInfo($id)
  */
 function cacheClear()
 {
-    Artisan::call('cache:clear');
-
-    return;
+   return Artisan::call('cache:clear');
 }
 
 function getAvatar($user, $width = 0)
@@ -255,17 +173,17 @@ function getAvatar($user, $width = 0)
         if(isset($user['sex'])) {
             switch ($user['sex']) {
                 case 1:
-                    $avatar = asset('images/pic_default_man.png');
+                    $avatar = asset('assets/pc/images/pic_default_man.png');
                     break;
                 case 2:
-                    $avatar = asset('images/pic_default_woman.png');
+                    $avatar = asset('assets/pc/images/pic_default_woman.png');
                     break;
                 default:
-                    $avatar = asset('images/pic_default_secret.png');
+                    $avatar = asset('assets/pc/images/pic_default_secret.png');
                     break;
             }
         } else {
-            $avatar = asset('images/avatar.png');
+            $avatar = asset('assets/pc/images/avatar.png');
         }
     }
 
