@@ -81,7 +81,7 @@ class BaseController extends Controller
 
             // 公共地址
             $this->PlusData['routes']['api'] = asset('/api/v2');
-            $this->PlusData['routes']['storage'] = asset('/api/v2/files/');
+            $this->PlusData['routes']['storage'] = asset('/api/v2/files'). '/';
 
             return $next($request);
         });
