@@ -32,7 +32,7 @@ function(e, t) {
             r.path = o.config.path || r.path,
             "string" == typeof e.extend && (e.extend = [e.extend]),
             o.config.path && r.ready(),
-            e.extend ? (a ? layui.addcss("modules/layer/" + e.extend) : r.link("../layer/skin/" + e.extend), this) : this
+            e.extend ? (a ? layui.addcss("modules/layer/" + e.extend) : r.link("layer/skin/" + e.extend), this) : this
         },
         link: function(t, n, a) {
             if (r.path) {
@@ -55,7 +55,7 @@ function(e, t) {
         ready: function(e) {
             var t = "skinlayercss",
             i = "303";
-            return a ? layui.addcss("modules/layer/default/layer.css?v=" + r.v + i, e, t) : r.link("../layer/skin/default/layer.css?v=" + r.v + i, e, t),
+            return a ? layui.addcss("modules/layer/default/layer.css?v=" + r.v + i, e, t) : r.link("layer/skin/default/layer.css?v=" + r.v + i, e, t),
             this
         },
         alert: function(e, t, n) {

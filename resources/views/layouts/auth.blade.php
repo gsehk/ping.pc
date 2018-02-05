@@ -42,7 +42,7 @@
     @include('pcview::layouts.partials.authfooter')
     <script src="{{ asset('assets/pc/js/axios.min.js')}}"></script>
     <script src="{{ asset('assets/pc/js/common.js') }}"></script>
-    <script src="{{ asset('assets/pc/js/font/iconfont.js') }}"></script>
+    <script src="{{ asset('assets/pc/js/iconfont.js') }}"></script>
     <script src="{{ asset('assets/pc/js/jquery.cookie.js') }}"></script>
     @yield('scripts')
 
