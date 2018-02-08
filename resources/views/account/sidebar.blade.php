@@ -21,6 +21,10 @@
             <li class="@if ($account_cur == 'wallet')active @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-wallet"></use></svg>我的钱包</li>
         </a>
+        <a href="{{ Route('pc:currency')}}">
+            <li class="@if ($account_cur == 'currency')active @endif">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-currency"></use></svg>我的积分</li>
+        </a>
         <a href="{{ Route('pc:binds')}}">
             <li class="@if ($account_cur == 'binds')active @endif">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-account"></use></svg>账号管理</li>

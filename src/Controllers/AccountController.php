@@ -232,4 +232,93 @@ class AccountController extends BaseController
 
         return view('pcview::account.binds', $data, $this->PlusData);
     }
+    /**
+     * 我的积分
+     * @author szlvincent
+     * @param  Request     $request
+     * @param  int|integer $type    [类型]
+     * @return mixed
+     */
+    public function currency(Request $request,int $type=1)
+    {
+        $this->PlusData['account_cur'] = 'currency';
+        $params['limit'] = 6;
+        $data['currency'] = createRequest('GET', '/api/v2/currency/orders',$params);
+        $userInfo = createRequest('GET', '/api/v2/user');
+        $data['currency_sum'] = $userInfo->currency->sum ?? 0;
+
+        $data['type'] = $type;
+
+        return view('pcview::account.currency', $data, $this->PlusData);
+    }
+
+    /**
+     * 积分记录列表
+     * @author szlvincent
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function currencyRecords(Request $request)
+    {
+        $type = $request->query('type');
+        $params = [
+            'after' => $request->query('after') ?: 0,
+            'limit' => 10
+        ];
+        switch ($type){
+            case 1:
+                // 我的积分
+                $currency = createRequest('GET', '/api/v2/currency/orders', $params);
+                break;
+            case 2:
+                // 积分明细
+                $currency = createRequest('GET', '/api/v2/currency/orders', $params);
+                break;
+            case 3:
+                //积分充值
+                $params['action'] = 'recharge';
+                $params['type'] = '1';
+                $currency = createRequest('GET', '/api/v2/currency/orders', $params);
+                break;
+            case 4:
+                //积分提现
+                $params['action'] = 'cash';
+                $params['type'] = '-1';
+                $currency = createRequest('GET', '/api/v2/currency/orders', $params);
+                break;
+            case 5:
+                $currency = createRequest('GET', '/api/v2/currency');
+                break;
+        }
+        $after = 0;
+        if ($type != 5){
+            $data['loadcount'] = $request->query('loadcount');
+            $after = $currency->pop()->id ?? 0;
+        }
+        $data['currency'] = $currency;
+        $data['type'] = $type;
+        $html = view('pcview::account.currencyrecords', $data, $this->PlusData)->render();
+
+        return response()->json([
+            'status'  => true,
+            'data' => $html,
+            'after' => $after
+        ]);
+    }
+    //积分充值
+    public function currencyPay()
+    {
+        $this->PlusData['account_cur'] = 'currency';
+        $data['currency'] = createRequest('GET', '/api/v2/currency');
+
+        return view('pcview::account.currencypay',$data, $this->PlusData);
+    }
+    //积分提取
+    public function currencyDraw()
+    {
+        $this->PlusData['account_cur'] = 'currency';
+        $data['currency'] = createRequest('GET', '/api/v2/currency');
+
+        return view('pcview::account.currencydraw',$data, $this->PlusData);
+    }
 }

@@ -140,6 +140,11 @@ Route::prefix('account')->middleware('auth')->group(function () {
     Route::get('/binds', 'AccountController@getMyBinds')->name('pc:binds');
 
     Route::get('/gateway', 'AccountController@gateway')->name('pc:gateway');
+    //我的积分
+    Route::get('/currency/{type?}', 'AccountController@currency')->where(['type' => '[1-5]'])->name('pc:currency');
+    Route::get('/currency/record', 'AccountController@currencyRecords')->name('pc:currencyrecords');
+    Route::get('/currency/pay', 'AccountController@currencyPay')->name('pc:currencypay');
+    Route::get('/currency/draw', 'AccountController@currencyDraw')->name('pc:currencydraw');
 });
 
 Route::prefix('profile')->middleware('auth')->group(function () {
