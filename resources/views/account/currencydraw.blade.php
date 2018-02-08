@@ -59,7 +59,7 @@ $('#J-pay-btn').on('click', function(){
 
     axios.post('/api/v2/currency/cash', params)
       .then(function (response) {
-        noticebox('提取成功，请等待管理员审核', 1, "{{ route('pc:currencydraw') }}");
+        noticebox('提取成功，请等待管理员审核', 1, "/account/currency/draw");
       })
       .catch(function (error) {
         showError(error.response.data);
