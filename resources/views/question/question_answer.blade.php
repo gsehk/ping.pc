@@ -45,19 +45,19 @@
                         <span class="answer-body">{!! str_limit(formatList($answer->body), 250, '...') !!}</span>
                         <a class="button button-plain button-more" href="{{ route('pc:answeread', $answer->id) }}">查看详情</a>
                     @else
-                        <span class="answer-body fuzzy" onclick="QA.look({{ $answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio']/100/100)) }}' , {{ $answer->question_id }})">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
+                        <span class="answer-body fuzzy" onclick="QA.look({{ $answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio'])) }}' , {{ $answer->question_id }})">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
                     @endif
                 </div>
 
                 <div class="answer-footer">
                     <div class="answer-footer-inner">
-                        <a href="javascript:;" class="button button-plain comment J-comment-show">
-                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
-                            <font class="cs{{$answer->id}}">{{$answer->comments_count}}</font> 评论
-                        </a>
                         <a href="{{ route('pc:answeread', $answer->id) }}" class="button button-plain">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-share"></use></svg>
                             {{ $answer->likes_count }} 分享
+                        </a>
+                        <a href="javascript:;" class="button button-plain comment J-comment-show">
+                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-comment"></use></svg>
+                            <font class="cs{{$answer->id}}">{{$answer->comments_count}}</font> 评论
                         </a>
                         <a href="javascript:;" class="button button-plain" id="J-likes{{$answer->id}}" onclick="liked.init({{$answer->id}}, 'question', 1);" status="{{(int) (isset($TS) && $answer->liked)}}" rel="{{ $answer['likes_count'] }}">
                             @if(isset($TS) && $answer->liked)
@@ -74,16 +74,18 @@
                         <div class="options_div">
                             <div class="triangle"></div>
                             <ul>
-                                <li>
-                                    <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);" id="J-collect{{$answer->id}}" status="{{(int) (isset($TS) && $answer->collected)}}">
-                                        @if(isset($TS) && $answer['collected'] == 1)
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
-                                            <span class="collect">已收藏</span>
-                                        @else
-                                            <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
-                                            <span class="collect">收藏</span>
-                                        @endif
+                                <li id="J-collect{{$answer->id}}" rel="0" status="{{(int) $answer->collected}}">
+                                    @if($answer->collected)
+                                    <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);" class="act">
+                                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                                        <span>已收藏</span>
                                     </a>
+                                    @else
+                                    <a href="javascript:;" onclick="collected.init({{$answer->id}}, 'question', 0);">
+                                      <svg class="icon" aria-hidden="true"><use xlink:href="#icon-collect"></use></svg>
+                                      <span>收藏</span>
+                                    </a>
+                                    @endif
                                 </li>
                                 @if($answer->user_id == $TS['id'])
                                     <li>
@@ -125,7 +127,7 @@
                                     @if(isset($TS) && $answer->could)
                                         <button class="button look-cloud" type="button">已围观</button>
                                     @else
-                                        <button class="button button-blue button-primary look-cloud" onclick="QA.look({{ $answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio']/100/100)) }}' , {{ $answer->question_id }})" type="button">围观</button>
+                                        <button class="button button-blue button-primary look-cloud" onclick="QA.look({{ $answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio'])) }}' , {{ $answer->question_id }})" type="button">围观</button>
                                     @endif
                                 @endif
                             </div>

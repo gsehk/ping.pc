@@ -58,59 +58,25 @@ use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
             <span class="view">
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-chakan"></use></svg> {{$post->hits}}
             </span>
+            @if($post->user_id == $TS['id'])
             <span class="options" onclick="options(this)">
                 <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
             </span>
             <div class="options_div">
                 <div class="triangle"></div>
                 <ul>
-                    @if($post->user_id == $TS['id'])
                     <li>
                         <a href="javascript:;" onclick="news.pinneds({{$post->id}}, 'news');">
                             <svg class="icon" aria-hidden="true"><use xlink:href="#icon-pinned2"></use></svg>申请置顶
                         </a>
                     </li>
-                    @endif
                 </ul>
             </div>
+            @endif
         </div>
         @endif
-        <div class="comment_box" style="display: none;">
-            <div class="comment_line">
-                <img src="{{ asset('assets/pc/images/line.png') }}" />
-            </div>
-            <div class="comment_body" id="comment_box{{$post->id}}">
-                <div class="comment_textarea">
-                    <textarea class="comment-editor" id="J-editor{{$post->id}}" onkeyup="checkNums(this, 255, 'nums');"></textarea>
-                    <div class="comment_post">
-                        <span class="dy_cs">可输入<span class="nums" style="color: rgb(89, 182, 215);">255</span>字</span>
-                        <a class="btn btn-primary fr" id="J-button{{$post->id}}" onclick="news.addComment({{$post->id}}, 1)"> 评 论 </a>
-                    </div>
-                </div>
-                <div id="J-commentbox{{ $post->id }}">
-                    @if($post->comments->count())
-                        @foreach($post->comments as $cv)
-                            <p class="comment_con" id="comment{{$cv->id}}">
-                                <span class="tcolor">{{ $cv->user['name'] }}：</span> {{$cv->body}}
-                                @if(isset($cv->pinned) && $cv->pinned == 1)
-                                    <span class="green">置顶</span>
-                                @endif
-                                @if($cv->user_id != $TS['id'])
-                                    <a onclick="comment.reply('{{$cv['user']['id']}}', {{$cv['commentable_id']}}, '{{$cv['user']['name']}}')">回复</a>
-                                @else
-                                    <a class="comment_del" onclick="comment.pinneds('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">申请置顶</a>
-                                    <a class="comment_del" onclick="comment.delete('{{$cv['commentable_type']}}', {{$cv['commentable_id']}}, {{$cv['id']}})">删除</a>
-                                @endif
-                            </p>
-                        @endforeach
-                    @endif
-                </div>
-                @if($post->comments->count() >= 5)
-                <div class="comit_all font12"><a href="{{Route('pc:newsread', $post->id)}}">查看全部评论</a></div>
-                @endif
-
-            </div>
-        </div>
+        {{-- 评论 --}}
+        @include('pcview::widgets.comments', ['id' => $post->id, 'comments_count' => $post->comment_count, 'comments_type' => 'news', 'url' => Route('pc:newsread', $post->id), 'position' => 1, 'comments_data' => $post->comments, 'top' => 1])
         <div class="feed_line"></div>
     </div>
 </div>
