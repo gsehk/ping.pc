@@ -251,6 +251,7 @@
 .question-answers-list .list-item .list-item-header .authorinfo-content .authorinfo-time {margin-top:9px;font-size:12px;color:#ccc;}
 .question-answers-list .list-item .content-inner {margin-top:15px;line-height:1.67;color:#666;word-wrap:break-word;}
 .question-answers-list .list-item .answer-footer {margin-top:20px;margin-bottom:-12px;padding-bottom:12px;background:#fff;}
+.answer-footer .comment_line>.tr2{left:125px;}
 .question-answers-list .list-item .answer-footer .answer-footer-inner {position:relative;}
 .question-answers-list .list-item .answer-footer .answer-footer-inner .options {float:none;width:auto;}
 .question-answers-list .list-item .answer-footer .answer-footer-inner .options_div {right:342px;width:115px;}

@@ -45,7 +45,7 @@
 .qa-item .qa-body>span {line-height:25px;word-wrap:break-word;}
 .qa-item .qa-toolbar .ctime {line-height:30px;}
 .qa-item .qa-toolbar .follow,.qa-item .qa-toolbar .liked,.qa-item .qa-toolbar .comment {font-size:14px;display:inline-block;margin-right:50px;cursor:pointer;color:#ccc;}
-.comment_line_answer>.tr2 {left:150px;}
+.qa-item .tr2 {left:140px;}
 /*文章列表*/
 .news_item .uname {display:inline-block;margin-left:20px;color:#333;}
 .news_item .date {float:right;margin-top:17px;color:#ccc;text-align:right;}
