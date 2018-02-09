@@ -305,7 +305,12 @@ class AccountController extends BaseController
             'after' => $after
         ]);
     }
-    //积分充值
+
+    /**
+     * 积分充值
+     * @author szlvincent
+     * @return mixed
+     */
     public function currencyPay()
     {
         $this->PlusData['account_cur'] = 'currency';
@@ -313,7 +318,12 @@ class AccountController extends BaseController
 
         return view('pcview::account.currencypay',$data, $this->PlusData);
     }
-    //积分提取
+    
+    /**
+     * 积分提取
+     * @author szlvincent
+     * @return mixed
+     */
     public function currencyDraw()
     {
         $this->PlusData['account_cur'] = 'currency';
