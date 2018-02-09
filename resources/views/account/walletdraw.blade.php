@@ -59,7 +59,7 @@ $('#J-pay-btn').on('click', function(){
 
     axios.post('/api/v2/wallet/cashes', params)
       .then(function (response) {
-        noticebox('提现成功，请等待管理员审核', 1, "{{ route('pc:wallet', ['type'=>3]) }}");
+        noticebox('提现成功，请等待管理员审核', 1, '/wallet/3');
       })
       .catch(function (error) {
         showError(error.response.data);
