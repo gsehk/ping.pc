@@ -342,7 +342,7 @@
 
                 return false;
             }
-            axios.post('/api/v2/questions/{{$question['id']}}/answers', args)
+            axios.post('/api/v2/currency-questions/{{$question['id']}}/answers', args)
               .then(function (response) {
                 noticebox(response.data.message, 1, '/question/{{ $question['id'] }}');
               })

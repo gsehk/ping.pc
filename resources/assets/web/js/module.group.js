@@ -17,7 +17,7 @@ var grouped = {
         var html = '';
         var _self = this;
         var _this = this._this;
-        var url = '/api/v2/plus-group/groups/'+this.gid;
+        var url = '/api/v2/currency-groups/'+this.gid;
         if (_this.lockStatus == 1) {
             return;
         }
@@ -192,7 +192,7 @@ post.delPost = function(group_id, post_id, poi) {
 };
 /* 置顶帖子 */
 post.pinnedPost = function(post_id, type){
-    var url = '/api/v2/plus-group/pinned/posts/'+post_id;
+    var url = '/api/v2/currency-pinned/posts/'+post_id;
     if (type == 'pinned') {
         url = '/api/v2/plus-group/pinned/posts/'+post_id+'/create';
     }

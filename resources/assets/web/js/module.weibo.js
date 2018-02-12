@@ -194,7 +194,7 @@ weibo.afterPostFeed = function(feed_id) {
 };
 weibo.delFeed = function(feed_id, type) {
     layer.confirm(confirmTxt + '确定删除这条信息？', {}, function() {
-        var url = '/api/v2/feeds/' + feed_id;
+        var url = '/api/v2/feeds/' + feed_id+'/currency';
         axios.delete(url)
           .then(function (response) {
                 layer.closeAll();
@@ -229,7 +229,7 @@ weibo.denounce = function(obj) {
 };
 //微博申请置顶
 weibo.pinneds = function (feed_id) {
-    var url = '/api/v2/feeds/'+feed_id+'/pinneds';
+    var url = '/api/v2/feeds/'+feed_id+'/currency-pinneds';
     pinneds(url);
 };
 weibo.addComment = function (row_id, type) {

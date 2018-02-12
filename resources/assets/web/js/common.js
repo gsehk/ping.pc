@@ -925,11 +925,11 @@ var comment = {
     pinneds: function (type, source_id, id){
         var url = '';
         if (type == 'feeds') {
-            url = '/api/v2/feeds/' + source_id + '/comments/' + id + '/pinneds';
+            url = '/api/v2/feeds/' + source_id + '/comments/' + id + '/currency-pinneds';
             pinneds(url);
         }
         if (type == 'news') {
-            url = '/api/v2/news/' + source_id + '/comments/' + id + '/pinneds';
+            url = '/api/v2/news/' + source_id + '/comments/' + id + '/currency-pinneds';
             pinneds(url);
         }
         if (type == 'group-posts') {
@@ -1847,7 +1847,7 @@ $(function() {
     $(function(){
         if (TS.MID > 0 && TS.EASEMOB_KEY) {
             // 聊天初始化
-            easemob.init();
+            // easemob.init();
         }
     })
 });

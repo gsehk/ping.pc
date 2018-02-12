@@ -39,9 +39,9 @@
             var type = 'PATCH';
 
             if (data.type == 1) {
-                url = '/api/v2/feeds/'+data.feed_id+'/comments/'+data.comment_id+'/pinneds/'+data.pinned_id;
+                url = '/api/v2/feeds/'+data.feed_id+'/comments/'+data.comment_id+'/currency-pinneds/'+data.pinned_id;
             } else {
-                url = '/api/v2/user/feed-comment-pinneds/'+data.pinned_id;
+                url = '/api/v2/user/feed-comment-currency-pinneds/'+data.pinned_id;
                 type = 'DELETE';
             }
 

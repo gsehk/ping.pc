@@ -314,7 +314,7 @@
                 return update();
             }
             lockStatus = true;
-            axios.post('/api/v2/questions', args)
+            axios.post('/api/v2/currency-questions', args)
               .then(function (response) {
                 lockStatus = false;
                 noticebox(response.data.message, 1, '/question/'+response.data.question.id);
@@ -381,7 +381,7 @@
             }
             args.topics = topic;
             lockStatus = true;
-            axios.patch('/api/v2/questions/'+question_id, args)
+            axios.patch('/api/v2/currency-questions/'+question_id, args)
               .then(function (response) {
                 lockStatus = false;
                 noticebox('修改成功', 1, '/question/'+question_id);

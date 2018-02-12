@@ -13,7 +13,7 @@ var QA = {
         });
     },
     adoptions: function (question_id, answer_id, back_url) {
-        var url = '/api/v2/questions/' + question_id + '/adoptions/' + answer_id;
+        var url = '/api/v2/questions/' + question_id + '/currency-adoptions/' + answer_id;
         axios.put(url)
           .then(function (response) {
             noticebox('采纳成功', 1, back_url);
@@ -62,7 +62,7 @@ var QA = {
                 return;
             }
             _this.lockStatus = 1;
-            var url ='/api/v2/question-answers/' + answer_id + '/onlookers';
+            var url ='/api/v2/question-answers/' + answer_id + '/currency-onlookers';
             axios.post(url)
               .then(function (response) {
                 if (!obj) {
@@ -111,7 +111,7 @@ var question = {
     },
     delQuestion: function(question_id) {
         ly.confirm(formatConfirm('提示', '确定删除这条信息？'), '' , '', function(){
-            var url ='/api/v2/questions/' + question_id;
+            var url ='/api/v2/currency-questions/' + question_id;
             axios.delete(url)
               .then(function (response) {
                 layer.closeAll();
@@ -145,7 +145,7 @@ var question = {
                 return;
             }
             _this.lockStatus = 1;
-            var url ='/api/v2/user/question-application/' + question_id;
+            var url ='/api/v2/user/currency-question-application/' + question_id;
             axios.post(url)
               .then(function (response) {
                 layer.closeAll();
@@ -189,7 +189,7 @@ var question = {
             if (!num && !amount) {
                 return false;
             }
-            var url = '/api/v2/questions/' + question_id + '/amount';
+            var url = '/api/v2/currency-questions/' + question_id + '/amount';
             axios.patch(url, {amount: num ? num : amount})
               .then(function (response) {
                 layer.closeAll();

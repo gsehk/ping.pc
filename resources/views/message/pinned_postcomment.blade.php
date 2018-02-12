@@ -39,9 +39,9 @@
             var type = 'PATCH';
 
             if (data.type == 1) {
-                url = '/api/v2/plus-group/pinned/comments/' + data.comment_id + '/accept';
+                url = '/api/v2/currency-pinned/comments/' + data.comment_id + '/accept';
             } else {
-                url = '/api/v2/plus-group/pinned/comments/' + data.comment_id + '/reject';
+                url = '/api/v2/currency-pinned/comments/' + data.comment_id + '/reject';
             }
 
             axios({ method:type, url:url })

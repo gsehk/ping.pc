@@ -81,7 +81,7 @@ var news = {
             return;
         }
          _this.lockStatus = 1;
-        var url = '/api/v2/news/categories/'+args.cate_id+'/news';
+        var url = '/api/v2/news/categories/'+args.cate_id+'/currency-news';
         axios.post(url, args)
           .then(function (response) {
             layer.closeAll();
@@ -125,7 +125,7 @@ var news = {
         });
     },
     pinneds: function (news_id) {
-        var url = '/api/v2/news/'+news_id+'/pinneds';
+        var url = '/api/v2/news/'+news_id+'/currency-pinneds';
         pinneds(url);
     },
     addComment: function (row_id, type) {
