@@ -632,7 +632,7 @@ var checkEmail = function(string) {
 
 // 签到
 var checkIn = function(is_check, nums) {
-    var url = '/api/v2/user/checkin';
+    var url = '/api/v2/user/checkin/currency';
     if (!is_check) {
         axios.put(url)
           .then(function (response) {
