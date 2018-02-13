@@ -10,7 +10,7 @@ input::-ms-reveal {display:none;}
 /* 底部置地*/html,body,.wrap {height:100%;font-size:100%;background:#f3f6f7;min-width:1200px;}
 img {max-width:100%;border-style:none;vertical-align:middle;object-fit:cover;}
 img.avatar {border-radius:50%;}
-ul {list-style:none;margin-top:0;padding-left:0;}
+ul,li {list-style:none;margin-top:0;padding-left:0;}
 .markdown-body ul {list-style:initial !important;}
 .markdown-body ul li {display:list-item !important;}
 th {font-weight:normal;}
@@ -144,7 +144,7 @@ a {font-size:100%;vertical-align:baseline;background:transparent;text-decoration
 .recusers ul {display:inline-block;}
 .recusers li {float:left;width:50px;margin:0 12px 0 15px;text-align:left;}
 .recusers li img {width:50px;height:50px;margin-top:20px;border-radius:50%;}
-.recusers li span {font-size:12px;display:block;overflow:hidden;width:50px;margin-top:10px;text-align:center;white-space:nowrap;text-overflow:ellipsis;color:#666;line-height:12px;}
+.recusers li span {font-size:12px;display:block;overflow:hidden;width:50px;margin-top:10px;text-align:center;white-space:nowrap;text-overflow:ellipsis;color:#666;}
 .recusers li span a {color:#333;}
 .recusers .recmore {font-size:12px;line-height:40px;display:block;height:40px;margin-top:10px;cursor:pointer;text-align:center;color:#999;background:#f8fcff;}
 .recusers .recmore {color:#999;}

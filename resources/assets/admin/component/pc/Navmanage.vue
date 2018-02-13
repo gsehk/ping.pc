@@ -1,88 +1,86 @@
 <template>
-  <div class="component-container container-fluid">
-    <div class="panel panel-default">
-      <!-- Title -->
-      <div class="panel-heading">导航菜单配置
-        <router-link v-if="options.position == 0" type="button" to="/navmenu">
-          <button type="button" class="btn btn-primary btn-xs pull-right">返回</button>
-        </router-link>
-        <router-link v-else type="button" to="/footnav">
-          <button type="button" class="btn btn-primary btn-xs pull-right">返回</button>
-        </router-link>
-      </div>
-            <!-- Loading -->
-      <div v-if="loadding.state === 0" class="panel-body text-center">
-        <span class="glyphicon glyphicon-refresh component-loadding-icon"></span>
-        加载中...
-      </div>
-      <!-- Body -->
-      <div v-else-if="loadding.state === 1" class="panel-body form-horizontal">
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="name">导航名称</label>
-          <div class="col-sm-4">
-            <input type="text" name="name" class="form-control" id="name" v-model="options.name">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="app_name">英文名称</label>
-          <div class="col-sm-4">
-            <input type="text" name="app_name" class="form-control" id="app_name" v-model="options.app_name">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="url">链接地址</label>
-          <div class="col-sm-4">
-            <input type="text" name="url" class="form-control" id="url" v-model="options.url">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="target">打开方式</label>
-          <div class="col-sm-2">
-              <select class="form-control" id="target" v-model="options.target">
-                <option v-for="(target, index) in targets" :value="index">{{ target }}</option>
-              </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="status">状态</label>
-          <div class="col-sm-4">
-            <input type="radio" name="status" value="0" v-model="options.status">关闭  &nbsp;
-            <input type="radio" name="status" value="1" v-model="options.status">开启   &nbsp;
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="position">导航位置</label>
-          <div class="col-sm-2">
-              <select class="form-control" id="position" v-model="options.position">
-                <option v-for="(type, index) in types" :value="index">{{ type }}</option>
-              </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="order_sort">导航排序</label>
-          <div class="col-sm-3">
-            <input type="number" name="order_sort" class="form-control" id="order_sort" v-model="options.order_sort">
-          </div>
-        </div>
-        <!-- button -->
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-4">
-            <button v-if="submit.state === true" class="btn btn-primary" type="submit" disabled="disabled">
-              <span class="glyphicon glyphicon-refresh component-loadding-icon"></span>
-              提交...
-            </button>
-            <button v-else type="button" class="btn btn-primary" @click.stop.prevent="submitHandle">提交</button>
-          </div>
-          <div class="col-sm-6 help-block">
-            <span :class="`text-${submit.type}`">{{ submit.message }}</span>
-          </div>
+  <div class="panel panel-default">
+    <!-- Title -->
+    <div class="panel-heading">导航菜单配置
+      <router-link v-if="options.position == 0" type="button" to="/navmenu">
+        <button type="button" class="btn btn-primary btn-xs pull-right">返回</button>
+      </router-link>
+      <router-link v-else type="button" to="/footnav">
+        <button type="button" class="btn btn-primary btn-xs pull-right">返回</button>
+      </router-link>
+    </div>
+          <!-- Loading -->
+    <div v-if="loadding.state === 0" class="panel-body text-center">
+      <span class="glyphicon glyphicon-refresh component-loadding-icon"></span>
+      加载中...
+    </div>
+    <!-- Body -->
+    <div v-else-if="loadding.state === 1" class="panel-body form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="name">导航名称</label>
+        <div class="col-sm-4">
+          <input type="text" name="name" class="form-control" id="name" v-model="options.name">
         </div>
       </div>
-      <!-- Loading Error -->
-      <div v-else class="panel-body">
-        <div class="alert alert-danger" role="alert">{{ loadding.message }}</div>
-        <button type="button" class="btn btn-primary" @click.stop.prevent="request">刷新</button>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="app_name">英文名称</label>
+        <div class="col-sm-4">
+          <input type="text" name="app_name" class="form-control" id="app_name" v-model="options.app_name">
+        </div>
       </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="url">链接地址</label>
+        <div class="col-sm-4">
+          <input type="text" name="url" class="form-control" id="url" v-model="options.url">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="target">打开方式</label>
+        <div class="col-sm-2">
+            <select class="form-control" id="target" v-model="options.target">
+              <option v-for="(target, index) in targets" :value="index">{{ target }}</option>
+            </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="status">状态</label>
+        <div class="col-sm-4">
+          <input type="radio" name="status" value="0" v-model="options.status">关闭  &nbsp;
+          <input type="radio" name="status" value="1" v-model="options.status">开启   &nbsp;
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="position">导航位置</label>
+        <div class="col-sm-2">
+            <select class="form-control" id="position" v-model="options.position">
+              <option v-for="(type, index) in types" :value="index">{{ type }}</option>
+            </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="order_sort">导航排序</label>
+        <div class="col-sm-3">
+          <input type="number" name="order_sort" class="form-control" id="order_sort" v-model="options.order_sort">
+        </div>
+      </div>
+      <!-- button -->
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button v-if="submit.state === true" class="btn btn-primary" type="submit" disabled="disabled">
+            <span class="glyphicon glyphicon-refresh component-loadding-icon"></span>
+            提交...
+          </button>
+          <button v-else type="button" class="btn btn-primary" @click.stop.prevent="submitHandle">提交</button>
+        </div>
+        <div class="col-sm-6 help-block">
+          <span :class="`text-${submit.type}`">{{ submit.message }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- Loading Error -->
+    <div v-else class="panel-body">
+      <div class="alert alert-danger" role="alert">{{ loadding.message }}</div>
+      <button type="button" class="btn btn-primary" @click.stop.prevent="request">刷新</button>
     </div>
   </div>
 </template>

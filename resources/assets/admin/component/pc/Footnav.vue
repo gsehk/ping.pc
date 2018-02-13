@@ -1,51 +1,20 @@
-<style lang="css" module>
-.container {
-  padding-top: 15px;
-}
-.loadding {
-  text-align: center;
-  padding-top: 100px;
-  font-size: 42px;
-}
-.loaddingIcon {
-  animation-name: "TurnAround";
-  animation-duration: 1.4s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-.breadcrumbNotActvie {
-  color: #3097D1;
-  cursor: pointer;
-}
-.navTab{
-  margin-bottom: 10px;
-}
-</style>
-
 <template>
-
-  <div class="container-fluid" :class="$style.container">
-  <ul class="nav nav-tabs" :class="$style.navTab">
-    <router-link to="/navmenu" tag="li" active-class="active">
-      <a href="#">头部导航</a>
-    </router-link>
-    <router-link to="/footnav" tag="li" active-class="active">
-      <a href="#">底部导航</a>
-    </router-link>
-    <router-link to="/navmanage" tag="li" active-class="active">
-      <a href="#">增加导航</a>
-    </router-link>
-  </ul>
-
+  <div class="panel panel-default">
+    <div class="panel-heading">底部导航
+      <router-link :to="{ path: '/navmanage' }" class="pull-right" style="margin-right: 20px;" replace>
+          <span class="glyphicon glyphicon-plus"></span> 添加导航
+      </router-link>
+    </div>
+    <div class="panel-body">
     <!-- 加载动画 -->
-    <div v-show="loadding" :class="$style.loadding">
-      <span class="glyphicon glyphicon-refresh" :class="$style.loaddingIcon"></span>
+    <div v-show="loadding" class="panel-body text-center">
+      <span class="glyphicon glyphicon-refresh component-loadding-icon"></span>
+      加载中...
     </div>
     <!-- 整体盒子 -->
     <div v-show="!loadding" class="">
-
       <!-- 列表表格 -->
-      <table class="table table-striped">
+      <table class="table table-hover table-bordered table-responsive table-middle table-news">
         <thead>
           <tr>
             <th>导航名称</th>
@@ -69,12 +38,15 @@
               <td align="center"><div class="input-group">{{ state[nav.status] }}</div></td>
               <td align="center"><div class="input-group">{{ types[nav.position] }}</div></td>
               <td align="left">
-                <router-link type="button" class="btn btn-primary btn-sm" :to="'/navmanage/'+nav.id+'/0'">编辑</router-link>
-                <button type="button" class="btn btn-danger btn-sm" @click.prevent="deletenav(nav.id)">删除</button>
+                <div class="btn-group" style="margin: 5px 0;">
+                  <router-link type="button" class="btn btn-primary btn-sm" :to="'/navmanage/'+nav.id+'/0'">编辑</router-link>
+                  <button type="button" class="btn btn-danger btn-sm" @click.prevent="deletenav(nav.id)">删除</button>
+                </div>
               </td>
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
 </template>
@@ -141,3 +113,9 @@ const navComponent = {
 
 export default navComponent;
 </script>
+<style type="text/css" media="screen">
+.table-middle td {
+  text-align: center;
+  vertical-align: middle !important;
+}
+</style>
