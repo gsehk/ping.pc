@@ -2,75 +2,68 @@
 @extends('pcview::layouts.default')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ URL::asset('assets/pc/css/question.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/pc/css/global.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/pc/css/question.css') }}" />
 @endsection
 
 @section('content')
-<div class="question_left_container">
-    <div class="question_nav">
-        <a href="{{ route('pc:question') }}">问答</a>
-        <a class="active" href="{{ route('pc:topic') }}">话题</a>
-    </div>
-
-    {{-- 问答 --}}
-    <div class="question_body">
-        <div class="question_sub_nav">
-            <a class="active" href="javascript:;" data-type="1">全部话题</a>
-            @if(!empty($TS))
-                <a href="javascript:;" data-type="2">我关注的</a>
-            @endif
+<div class="p-qa p-topic">
+    <div class="left_container">
+        <div class="m-nav">
+            <a href="{{ route('pc:question') }}">问答</a>
+            <a class="cur" href="{{ route('pc:topic') }}">话题</a>
         </div>
-        <div id="topic-list" class="topic_list"></div>
+        <div class="g-mnc">
+            <ul class="m-snav clearfix">
+                <li class="cur" type="1"> 全部话题 </li>
+                @if(!empty($TS))
+                    <li type="2"> 我关注的 </li>
+                @endif
+            </ul>
+            <div id="J-box" class="m-lst topic_list"></div>
+        </div>
+        {{-- /问答 --}}
     </div>
-    {{-- /问答 --}}
-</div>
 
-<div class="right_container">
-    <div class="q_c_post_btn">
-        <a href="javascript:;" onclick="question.create()">
-            <span>
-                <svg class="icon white_color" aria-hidden="true"><use xlink:href="#icon-publish"></use></svg>提问
-            </span>
-        </a>
+    <div class="right_container">
+        <div class="g-sdc">
+            <a class="u-btn" href="javascript:;" onclick="question.create()">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-publish"></use></svg>提问
+            </a>
+        </div>
+        {{-- 热门问题 --}}
+        @include('pcview::widgets.hotquestions')
+
+        {{-- 问答达人排行 --}}
+        {{-- @include('pcview::widgets.questionrank') --}}
     </div>
-    {{-- 热门问题 --}}
-    @include('pcview::widgets.hotquestions')
-
-    {{-- 问答达人排行 --}}
-    {{-- @include('pcview::widgets.questionrank') --}}
 </div>
 @endsection
-
 @section('scripts')
     <script src="{{ asset('assets/pc/js/module.question.js') }}"></script>
     <script>
         $(function(){
             scroll.init({
-                container: '#topic-list',
-                loading: '.question_body',
+                container: '#J-box',
+                loading: '.g-mnc',
                 url: '/question/topic',
                 paramtype: 1,
                 params: {cate: 1, isAjax: true, limit: 10}
             });
-        })
-        
-        // 切换分类
-        $('.question_sub_nav a').on('click', function() {
-            var type = $(this).data('type');
-            // 清空数据
-            $('#topic-list').html('');
-
+        });
+        $('.m-snav li').on('click', function() {
+            var type = $(this).attr('type');
+            $('#J-box').html('');
             scroll.init({
-                container: '#topic-list',
-                loading: '.question_body',
+                container: '#J-box',
+                loading: '.g-mnc',
                 url: '/question/topic',
-                paramtype: 1,
+                paramtype: (type==1) ? 1 : 0,
                 params: {cate: type, isAjax: true, limit: 10}
             });
-
             // 修改样式
-            $('.question_sub_nav a').removeClass('active');
-            $(this).addClass('active');
+            $('.m-snav li').removeClass('cur');
+            $(this).addClass('cur');
         });
 
     </script>

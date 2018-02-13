@@ -231,7 +231,6 @@ var QT = {
         });
     },
     follow: function (obj) {
-        checkLogin();
         var _this = obj;
         var status = $(_this).attr('status');
         var topic_id = $(_this).attr('tid');

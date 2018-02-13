@@ -10,7 +10,7 @@ input::-ms-reveal {display:none;}
 /* 底部置地*/html,body,.wrap {height:100%;font-size:100%;background:#f3f6f7;min-width:1200px;}
 img {max-width:100%;border-style:none;vertical-align:middle;object-fit:cover;}
 img.avatar {border-radius:50%;}
-ul,li {list-style:none;margin-top:0;padding-left:0;}
+ul,li {list-style:none;margin-top:0;margin-bottom:0;padding-left:0;}
 .markdown-body ul {list-style:initial !important;}
 .markdown-body ul li {display:list-item !important;}
 th {font-weight:normal;}
@@ -139,11 +139,11 @@ a {font-size:100%;vertical-align:baseline;background:transparent;text-decoration
 .hot_user_info span {display:block;}
 .hot_user_info .hot_user_name {font-size:14px;color:#333;}
 .hot_user_info .hot_user_intro {font-size:14px;height:44px;line-height:22px;color:#999;margin-top:10px;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;display:-webkit-box;word-break:break-all;}
-/*推荐用户*/.recusers {width:100%;padding-left:0;border-radius:3px;background:#fff;margin-bottom:30px;}
+/*推荐用户*/.recusers {width:100%;padding:10px 0;border-radius:3px;background:#fff;margin-bottom:30px;}
 .recusers p.nodata {line-height:50px;width:100%;height:50px;margin:0;text-align:center;}
 .recusers ul {display:inline-block;}
 .recusers li {float:left;width:50px;margin:0 12px 0 15px;text-align:left;}
-.recusers li img {width:50px;height:50px;margin-top:20px;border-radius:50%;}
+.recusers li img {width:50px;height:50px;border-radius:50%;}
 .recusers li span {font-size:12px;display:block;overflow:hidden;width:50px;margin-top:10px;text-align:center;white-space:nowrap;text-overflow:ellipsis;color:#666;}
 .recusers li span a {color:#333;}
 .recusers .recmore {font-size:12px;line-height:40px;display:block;height:40px;margin-top:10px;cursor:pointer;text-align:center;color:#999;background:#f8fcff;}
@@ -306,7 +306,6 @@ to {-webkit-transform:rotate(360deg);transform:rotate(360deg);}
 .comment_box .comment_tool {text-align:right;}
 .comment_tool .text_stats {margin-right:20px;font-size:14px;color:#777;}
 .comment_list .comment_item {border-bottom:1px solid #ededed;margin-top:40px;padding-bottom:10px;}
-.clearfix:after {display:block;visibility:hidden;clear:both;height:0;content:'.';}
 .comment_list .comment_item dt {float:left;position:relative;}
 .comment_list .comment_item dt img {border-radius:50%;}
 .comment_list .comment_item dt img.role-icon {position:absolute;right:0;bottom:0;width:20px;height:20px;}

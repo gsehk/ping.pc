@@ -4,81 +4,88 @@
     use function Zhiyi\Component\ZhiyiPlus\PlusComponentPc\getAvatar;
 @endphp
 @if (!$data->isEmpty())
+<ul>
     @foreach ($data as $post)
-        <div class="q_c">
-            <div class="q_c_t">
-                <h2 class="q_title">
-                    <a href="{{ route('pc:questionread', ['question_id' => $post['id']]) }}">{{ $post->subject }}</a>
-                    @if($post['excellent'] == 1 && !isset($post['excellent_show']))
-                        <span class="excellent">精</span>
+    <li>
+        <h3 class="m-tt">
+            <a href="{{ route('pc:questionread', $post->id) }}"> {{ $post->subject }} </a>
+            @if($post->excellent == 1 && !isset($post->excellent_show))
+                <span class="u-exc">精</span>
+            @endif
+        </h3>
+        @if ($post->answer)
+        <div class="m-subtt">
+            @if ($post->answer->anonymity && !($post->answer->user_id == $TS['id']))
+                <img src="{{ asset('assets/pc/images/ico_anonymity_60.png') }}" width="24" height="24" />
+                <span class="u-name">（匿名）</span>
+            @else
+                <div class="f-pr fl">
+                    <img class="avatar lazy" data-original="{{ getAvatar($post->answer->user, 24) }}" width="24" height="24" />
+                    @if ($post->answer->user->verified)
+                        <img class="role" src="{{ $post->answer->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
                     @endif
-                </h2>
-                <span class="q_time">{{ getTime($post->created_at) }}</span>
-            </div>
-            @if ($post->answer)
-                <div class="q-answer">
-                    <div class="q_user">
-                        @if ($post->answer->anonymity && !(isset($TS) && $post->answer->user_id == $TS['id']))
-                            <img src="{{ asset('assets/pc/images/ico_anonymity_60.png') }}?s=24" width="24px" height="24px" />
-                            <div class="q_user_info">匿名用户</div>
-                        @else
-                            <div class="post-user-avatar">
-                                <img src="{{ getAvatar($post->answer->user, 24) }}" class="avatar">
-                                @if ($post->answer->user->verified)
-                                    <img class="role-icon" src="{{ $post->answer->user->verified['icon'] or asset('assets/pc/images/vip_icon.svg') }}">
-                                @endif
-                            </div>
-                            <div class="q_user_info">
-                                <span>{{ $post->answer->user->name }} {{ isset($TS) && $post->answer->anonymity == 1 && $post->answer->user_id == $TS['id'] ? '（匿名）' : ''}}</span>
-                                @if($post->answer->user->tags->count() > 0)
-                                    &nbsp;&nbsp;·&nbsp;&nbsp;
-                                @endif
-                                @foreach ($post->answer->user->tags as $tag)
-                                    <div>{{$tag->name}}</div>
-                                @endforeach
-                            </div>
-                        @endif
+                    <span class="u-name">{{ $post->answer->user->name or '（匿名）'}}</span>
+                    @if(!$post->answer->user->tags->isEmpty())
+                    <div class="m-tags">
+                        <span class="u-ll">·</span>
+                        @foreach ($post->answer->user->tags as $tag)
+                            <span class="u-tag">{{$tag->name}}</span>
+                        @endforeach
                     </div>
-                    <div class="q_detail clearfix">
-                        @php
-                            preg_match('/\@\!\[.*\]\((\d+)\)/i', $post->answer->body, $imgs);
-                        @endphp
-                        @if (count($imgs) > 0)
-                            <div class="q_img">
-                                <div class="img_wrap">
-                                    <img src="{{ $routes['storage'].$imgs[1] }}" height="100">
-                                </div>
-                            </div>
-                        @endif
-                        <div class="q_text">
-                            @if($post->answer->invited == 0 || $post->look == 0 || (isset($TS) && $post->answer->invited == 1 && ($post->answer->could || $post->user_id == $TS['id'] || $post->answer->user_id == $TS['id'])))
-                                <span>{!! str_limit(formatList($post->answer->body), 250, '...') !!}</span>
-                                <a href="{{ route('pc:answeread', ['answer_id' => $post->answer->id]) }}" class="button button-plain button-more">查看详情</a>
-                            @else
-                                <span class="answer-body fuzzy" onclick="QA.look({{ $post->answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio'])) }}' , {{ $post->id }}, this)">@php for ($i = 0; $i < 250; $i ++) {echo 'T';} @endphp</span>
-                            @endif
-                        </div>
-                    </div>
+                    @endif
                 </div>
             @endif
-            <div class="q_action">
-                <button class="button button-plain">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-follow"></use></svg>
-                    {{ $post->watchers_count }} 关注
-                </button>
-                <button class="button button-plain">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-huida"></use></svg>
-                    {{ $post->answers_count }} 条回答
-                </button>
-                @if($post->amount > 0)
-                    <button class="button button-plain">
-                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-money"></use></svg>
-                        {{ $post->amount * ($config['bootstrappers']['wallet:ratio']) }}
-                    </button>
+            <span class="u-tm">{{ getTime($post->created_at) }}</span>
+        </div>
+        <div class="m-ct f-cb">
+            @php preg_match('/\@\!\[(.*?)\]\((\d+)\)/i', $post->answer->body, $imgs); @endphp
+            @if (count($imgs))
+                <div class="m-img">
+                    <img class="lazy" data-original="{{ $routes['storage'].$imgs[2] }}" width="200" height="90" />
+                </div>
+            @endif
+            <div class="u-txt">
+                @if(
+                    !$post->answer->invited ||
+                    !$post->look ||
+                    (
+                        $post->answer->invited &&
+                        (
+                            $post->answer->could ||
+                            in_array($TS['id'], [$post->user_id,$post->answer->user_id])
+                        )
+                    )
+                )
+                    <span> {!! str_limit(formatList($post->answer->body), 250, '...') !!} </span>
+                    <a class="u-more" href="{{ route('pc:answeread', $post->answer->id) }}">查看详情</a>
+                @else
+                    <span class="fuzzy" onclick="QA.look({{ $post->answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio'])) }}' , {{ $post->id }}, this)">
+                        @php
+                            for ($i = 0; $i < 250; $i ++) { echo 'T'; } @endphp
+                    </span>
                 @endif
             </div>
         </div>
+        @endif
+        <div class="m-tool">
+            <span class="u-btn">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-follow"></use></svg>
+                {{ $post->watchers_count }} 关注
+            </span>
+            <span class="u-btn">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-huida"></use></svg>
+                {{ $post->answers_count }} 条回答
+            </span>
+            @if($post->amount)
+            <span class="u-btn">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-money"></use></svg>
+                {{ $post->amount * ($config['bootstrappers']['wallet:ratio']) }}
+            </span>
+            @endif
+        </div>
+    </li>
     @endforeach
+</ul>
 @elseif(isset($search) && $search)
 <script>
 if (!$('.no_data_div').length) {

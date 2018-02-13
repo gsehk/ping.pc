@@ -12,10 +12,10 @@
 {{-- 个人中心头部导航栏 --}}
 @include('pcview::profile.navbar')
 
-<div class="profile_body">
+<div class="profile_body p-qa p-topic">
     <div class="left_container">
         <div class="profile_content">
-            <div class="profile_menu J-menu">
+            <div class="m-snav" id="J-menu">
                 <div data-value="1" class="zy_select t_c gap12 mr20" id="J-question">
                     <span class="qa_opt">全部问题</span>
                     <ul>
@@ -45,7 +45,7 @@
                     <a class="qa_opt ucolor" href="javascript:;" data-value="4">关注的话题</a>
                 @endif
             </div>
-            <div id="content_list" class="profile_list follow_topic clearfix question_list">
+            <div id="content_list" class="m-lst">
             </div>
         </div>
     </div>
@@ -91,7 +91,7 @@
             });
         });
 
-        $('.J-menu a').on('click', function(){
+        $('#J-menu a').on('click', function(){
             var type = $(this).data('value');
             $('#content_list').html('');
             scroll.init({
