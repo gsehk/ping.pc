@@ -58,17 +58,23 @@
                         <table class=" table_list table tborder" border="0" cellspacing="0" cellpadding="0">
                             <thead>
                             <tr>
-                                <td width="30%">使用时间</td>
-                                <td width="40%">积分使用途径</td>
-                                <td width="30%">积分数量</td>
+                                <td width="20%">使用时间</td>
+                                <td width="30%">积分使用途径</td>
+                                <th width="30%">状态</th>
+                                <td width="20%">积分数量</td>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($currency as $item)
                                 <tr>
-                                    <td>{{getTime($item->created_at, 0, 0)}}</td>
-                                    <td><p class="ptext">{{ $item->title }}</p></td>
-                                    <td><font color="#FF9400">{{ $item->amount}}积分</font></td>
+                                    <td width="20%">{{getTime($item->created_at, 0, 0)}}</td>
+                                    <td width="30%"><p class="ptext">{{ $item->title }}</p></td>
+                                    <td width="30%"><p class="ptext">
+                                            @if ($item->state == 0) 等待 @endif
+                                            @if ($item->state == 1) 完成 @endif
+                                            @if ($item->state == -1) 失败 @endif</p>
+                                    </td>
+                                    <td width="20%"><font color="#FF9400">{{ $item->amount}}积分</font></td>
                                 </tr>
                             @endforeach
                             </tbody>
