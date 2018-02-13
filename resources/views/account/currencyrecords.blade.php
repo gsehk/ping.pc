@@ -9,18 +9,23 @@
                 @if ($loadcount == 1)
                     <thead>
                     <tr>
-                        <th width="30%">使用时间</th>
-                        <th width="40%">积分使用途径</th>
-                        <th width="30%">积分数量</th>
+                        <th width="20%">使用时间</th>
+                        <th width="30%">积分使用途径</th>
+                        <th width="30%">状态</th>
+                        <th width="20%">积分数量</th>
                     </tr>
                     </thead>
                 @endif
                 <tbody>
                 @foreach ($currency as $item)
                     <tr>
-                        <td width="30%">{{ getTime($item->created_at, 0, 0) }}</td>
-                        <td width="40%"><p class="ptext">{{ $item->title }}</p></td>
-                        <td width="30%">
+                        <td width="20%">{{ getTime($item->created_at, 0, 0) }}</td>
+                        <td width="30%"><p class="ptext">{{ $item->title }}</p></td>
+                        <td width="30%"><p class="ptext">
+                                @if ($item->state == 0) 等待 @endif
+                                @if ($item->state == 1) 完成 @endif
+                                @if ($item->state == -1) 失败 @endif</p></td>
+                        <td width="20%">
                             <font color="#FF9400">{{ $item->amount}}积分</font>
                         </td>
                     </tr>
