@@ -10,6 +10,7 @@
 @section('styles')
     <link rel="stylesheet" href="{{ URL::asset('assets/pc/css/feed.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('assets/pc/css/question.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('assets/pc/markdown/pluseditor.css') }}" />
 @endsection
 
 @section('content')
@@ -42,7 +43,7 @@
                     </div>
                 @endif
                 @if(isset($TS) && $answer->user->id == $TS['id'] && $answer->adoption != 1 && $answer->invited != 1)
-                    <a href="javascript:;" class="options button-more" onclick="options(this)">
+                    <a href="javascript:;" class="options" onclick="options(this)">
                         <svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-more"></use></svg>
                     </a>
                     <div class="options_div">
@@ -88,7 +89,7 @@
             <a href="{{ route('pc:questionread', $answer->question->id) }}">{{ $answer->question->subject }}</a>
         </div>
 
-        <div class="answer-body">
+        <div class="answer-body markdown-body">
             {!! formatMarkdown($answer->body) !!}
         </div>
 

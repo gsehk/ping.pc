@@ -11,6 +11,7 @@
 @section('styles')
     <link rel="stylesheet" href="{{ URL::asset('assets/pc/css/question.css') }}" />
     <link rel="stylesheet" href="{{ URL::asset('assets/pc/css/feed.css') }}" />
+    <link rel="stylesheet" href="{{ URL::asset('assets/pc/markdown/pluseditor.css') }}" />
 @endsection
 
 @section('content')
@@ -38,7 +39,7 @@
                 <h1 class="questionheader-title txt-hide">{{ $question->subject }}</h1>
                 <div class="questionheader-detail">
                     {{-- js增删  .questionrichtextcollapsed 改变content字数 --}}
-                    <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed">
+                    <div class="questionrichtext questionrichtext--expandable questionrichtext--collapsed markdown-body">
                         @if(strpos(formatList($question->body), '[图片]') === false && strlen(formatList($question->body)) <= 300)
                             <div class="show-body"> {!! formatMarkdown($question->body) !!} </div>
                         @else

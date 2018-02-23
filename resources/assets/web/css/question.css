@@ -96,7 +96,7 @@
 .reward-example li {width:29%;height:100%;cursor:pointer;border:1px solid #e1e1e1;display:inline-block;text-align:center;line-height:80px;margin-right:5.8%;border-radius:5px;background-color:#EDEDED;}
 .select-amount {background-color:#CDE9F3 !important;}
 .reward-example li:last-child {margin:0;}
-.custom-money {width:400px;height:40px;padding:0 13px;border:1px solid #ededed;border-radius:4px;color:#333;}
+.custom-money {width:400px;padding:10px;margin-top:20px;border:1px solid #ededed;border-radius:2px;}
 .invitation-notice {margin-top:35px;position:relative;}
 .invitation-notice>div {display:inline-block;cursor:pointer;margin-right:40px;}
 .invitation-notice>span {position:relative;margin-right:20px;}
