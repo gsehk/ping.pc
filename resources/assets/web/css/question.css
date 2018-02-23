@@ -298,7 +298,7 @@
 .p-qa .m-subtt .u-tag:not(:nth-child(2))::before {margin:0 3px;content:"\002F";}
 .p-qa .m-ct {margin-top: 20px;margin-bottom: 30px;overflow:hidden;}
 .p-qa .m-ct .m-img{width: 200px;height: 90px;float: left;margin-right:20px;}
-.p-qa .m-ct .u-txt{max-height:90px;line-height:22px;}
+.p-qa .m-ct .u-txt{max-height:90px;line-height:22px;color:#666;}
 .p-qa .m-ct .u-txt p{margin-top:0;margin-bottom:0;line-height: 30px;}
 .p-qa .m-ct .u-more{font-size: 14px;color: #5caac6;}
 .p-qa .m-tool{padding-bottom: 20px;border-bottom: 1px solid #eaeaea;}

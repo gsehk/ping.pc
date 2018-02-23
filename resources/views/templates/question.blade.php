@@ -56,7 +56,7 @@
                         )
                     )
                 )
-                    <span> {!! str_limit(formatList($post->answer->body), 250, '...') !!} </span>
+                    {!! str_limit(formatList($post->answer->body), 250, '...') !!}
                     <a class="u-more" href="{{ route('pc:answeread', $post->answer->id) }}">查看详情</a>
                 @else
                     <span class="fuzzy" onclick="QA.look({{ $post->answer->id }}, '{{ sprintf("%.2f", $config['bootstrappers']['question:onlookers_amount'] * ($config['bootstrappers']['wallet:ratio'])) }}' , {{ $post->id }}, this)">
