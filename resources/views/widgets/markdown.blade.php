@@ -12,6 +12,7 @@
         element: document.querySelector('#editor'),
         fileApiPath: "/api/v2/files/",
         placeholder: "{{ $place or '开始你的表演'}}",
+        status: false,
         uploadFile: function(file, cb){
             fileUpload.init(file, function(image, f, id){
                 cb(id);
