@@ -242,11 +242,10 @@ class AccountController extends BaseController
     public function currency(Request $request,int $type=1)
     {
         $this->PlusData['account_cur'] = 'currency';
-        $params['limit'] = 6;
-        $data['currency'] = createRequest('GET', '/api/v2/currency/orders',$params);
+
+        $data['currency'] = createRequest('GET', '/api/v2/currency');
         $userInfo = createRequest('GET', '/api/v2/user');
         $data['currency_sum'] = $userInfo->currency->sum ?? 0;
-
         $data['type'] = $type;
 
         return view('pcview::account.currency', $data, $this->PlusData);
@@ -268,7 +267,7 @@ class AccountController extends BaseController
         switch ($type){
             case 1:
                 // 我的积分
-                $currency = createRequest('GET', '/api/v2/currency/orders', $params);
+                $currency = createRequest('GET', '/api/v2/currency');
                 break;
             case 2:
                 // 积分明细
@@ -286,12 +285,9 @@ class AccountController extends BaseController
                 $params['type'] = '-1';
                 $currency = createRequest('GET', '/api/v2/currency/orders', $params);
                 break;
-            case 5:
-                $currency = createRequest('GET', '/api/v2/currency');
-                break;
         }
         $after = 0;
-        if ($type != 5){
+        if ($type != 1){
             $data['loadcount'] = $request->query('loadcount');
             $after = $currency->pop()->id ?? 0;
         }
@@ -305,7 +301,6 @@ class AccountController extends BaseController
             'after' => $after
         ]);
     }
-
     /**
      * 积分充值
      * @author szlvincent
@@ -315,10 +310,16 @@ class AccountController extends BaseController
     {
         $this->PlusData['account_cur'] = 'currency';
         $data['currency'] = createRequest('GET', '/api/v2/currency');
+        $data['currency']['recharge-options'] = array_map(function ($array){
+            if (!is_array($array)){
+                return trim($array);
+            }
+        },array_filter(explode(',',$data['currency']['recharge-options'])));
 
         return view('pcview::account.currencypay',$data, $this->PlusData);
     }
-    
+
+
     /**
      * 积分提取
      * @author szlvincent
