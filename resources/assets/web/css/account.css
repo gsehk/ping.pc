@@ -117,6 +117,11 @@
 .pay-box .pay-way {padding-bottom:30px;margin-bottom:30px;border-bottom:1px solid #EDEDED;}
 .pay-box .pay-way .opt {width:120px;height:50px;line-height:50px;}
 .pay-box .pay-btn {width:100px;height:40px;line-height:40px;color:white;border:0;cursor:pointer;border-radius:2px;background-color:#59B6D7;}
+/*积分充值*/
+.pay-box .pay-curr .opt{width:170px;height:40px;font-size:20px;line-height:40px;margin-right:30px;border-radius:2px;display:inline-block;text-align:center;cursor:pointer;background-color:#EDEDED;margin-bottom: 10px;}
+.pay-box .pay-curr .opt:last-child {margin-right:0;}
+.pay-box .pay-curr .active{background-color:#CDE9F3;}
+
 /* 绑定 */.bind-box {width:80%;}
 .bind-box .bind-line {/*height:30px;*/    line-height:30px;}
 .bind-box .bind-left {width:80%;display:inline;font-size:15px;}
