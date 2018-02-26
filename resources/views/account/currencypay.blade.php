@@ -21,10 +21,12 @@
         <p class="tcolor">充值比率</p>
         <p><font color="#FF9400">1元 = {{$currency['recharge-ratio'] * 100}}积分</font></p>
         <p class="tcolor">设置充值金额</p>
-        <div class="pay-sum">
-            <label class="opt" for="sum10">¥10.00<input class="hide" id="sum10" type="radio" name="sum" value="1000"></label>
-            <label class="opt active" for="sum50">¥50.00<input class="hide" id="sum50" type="radio" name="sum" value="5000" checked></label>
-            <label class="opt" for="sum100">¥100.00<input class="hide" id="sum100" type="radio" name="sum" value="10000"></label>
+        <div class="pay-curr">
+            @if($currency['recharge-options'])
+                @foreach ($currency['recharge-options'] as $item)
+                    <label class="opt" for="sum{{$item}}">¥{{$item}}<input class="hide" id="sum{{$item}}" type="radio" name="sum" value="{{$item * 100}}"></label>
+                @endforeach
+            @endif
         </div>
 
         <p><input min="1" oninput="value=moneyLimit(value)" class="custom-sum" type="text" name="custom" placeholder="自定义充值金额"></p>
@@ -48,8 +50,8 @@
 <script src="{{ asset('assets/pc/js/pingpp.js')}}"></script>
 <script type="text/javascript">
 var popInterval;
-$('.pay-sum label').on('click', function(){
-    $('.pay-sum label').removeClass('active');
+$('.pay-curr label').on('click', function(){
+    $('.pay-curr label').removeClass('active');
     $(this).addClass('active');
 
     $('input[name="custom"]').val('');
