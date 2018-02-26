@@ -1531,7 +1531,7 @@ $(function() {
     }
 
     // 获得用户时区与GMT时区的差值
-    if ($.cookie('customer_timezone') == '') {
+    if ($.cookie('customer_timezone') === undefined) {
         var exp = new Date();
         var gmtHours = -(exp.getTimezoneOffset()/60);
         $.cookie('customer_timezone', gmtHours, 1);
