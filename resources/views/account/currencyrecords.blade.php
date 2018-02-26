@@ -44,7 +44,7 @@
                     <tr>
                         <th width="30%">使用时间</th>
                         <th width="40%">状态</th>
-                        <th width="3%">积分数量</th>
+                        <th width="30%">积分数量</th>
                     </tr>
                     </thead>
                 @endif
@@ -52,7 +52,7 @@
                 @foreach ($currency as $item)
                     <tr>
                         <td width="30%">{{ getTime($item->created_at, 0, 0) }}</td>
-                        <td width="4%">
+                        <td width="40%">
                             @if ($item->state == 0) 等待 @endif
                             @if ($item->state == 1) 完成 @endif
                             @if ($item->state == -1) 失败 @endif
@@ -74,7 +74,7 @@
                     <tr>
                         <th width="30%">使用时间</th>
                         <th width="40%">状态</th>
-                        <th width="3%">积分数量</th>
+                        <th width="30%">积分数量</th>
                     </tr>
                     </thead>
                 @endif
@@ -82,10 +82,10 @@
                 @foreach ($currency as $item)
                     <tr>
                         <td width="30%">{{ getTime($item->created_at, 0, 0) }}</td>
-                        <td width="4%">
-                            @if ($item->state == 0) 等待 @endif
-                            @if ($item->state == 1) 完成 @endif
-                            @if ($item->state == -1) 失败 @endif
+                        <td width="40%">
+                            @if ($item->state == 0) 正在审核 @endif
+                            @if ($item->state == 1) 提取成功 @endif
+                            @if ($item->state == -1) 提取失败 @endif
                         </td>
                         <td width="30%"><p class="ptext"><font color="#FF9400">{{ $item->amount}}积分</font></p></td>
                     </tr>
