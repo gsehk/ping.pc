@@ -23,17 +23,12 @@
 
             <div class="account_r">
                 <div class="account_c_a" id="J-warp">
-
                     <div class="account_tab">
                         <div class="perfect_title">
                             <span class="switch @if($type == 1) active @endif" type="1">我的积分</span>
                             <span class="switch @if($type == 2) active @endif" type="2">积分明细</span>
                             <span class="switch @if($type == 3) active @endif" type="3">充值记录</span>
                             <span class="switch @if($type == 4) active @endif" type="4">提取记录</span>
-                            <span class="switch @if($type == 5) active @endif" type="5" style="float: right;">
-                                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-doubt"></use></svg>
-                                积分规则
-                            </span>
                         </div>
                         <div class="wallet-body" id="wallet-info">
                             <div class="currency-info clearfix">
@@ -41,47 +36,33 @@
 
                                     {{ $currency_sum }}</div>
                                 <div class="operate">
-                                    <a href="{{ route('pc:currencypay') }}"><button>充值积分</button></a>
-                                    <a href="{{ route('pc:currencydraw') }}"><button class="gray">提取积分</button></a>
+
+                                    @if($config['bootstrappers']['currency:recharge']['open'])
+                                        <a href="{{ route('pc:currencypay') }}">
+                                            <button>充值积分</button>
+                                        </a>
+                                    @endif
+                                        @if($config['bootstrappers']['currency:cash']['open'])
+                                        <a href="{{ route('pc:currencydraw') }}">
+                                            <button class="gray">提取积分</button>
+                                        </a>
+                                        @endif
                                 </div>
+
                                 <p class="gcolor">当前积分</p>
                             </div>
+                            @if($type==1)
+                                <p>积分规则</p>
+                                <div class="rules">
+                                    {{$currency['rule']}}
+                                </div>
+                            @endif
                         </div>
                         <div class="wallet-body" id="wallet-records">
                         </div>
                     </div>
                 </div>
-                @if($type==1)
-                <div class="currency_list">
-                    <span class="read-list">近期积分使用记录</span>
-                    @if(!$currency->isEmpty())
-                        <table class=" table_list table tborder" border="0" cellspacing="0" cellpadding="0">
-                            <thead>
-                            <tr>
-                                <td width="20%">使用时间</td>
-                                <td width="30%">积分使用途径</td>
-                                <th width="30%">状态</th>
-                                <td width="20%">积分数量</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($currency as $item)
-                                <tr>
-                                    <td width="20%">{{getTime($item->created_at, 0, 0)}}</td>
-                                    <td width="30%"><p class="ptext">{{ $item->title }}</p></td>
-                                    <td width="30%"><p class="ptext">
-                                            @if ($item->state == 0) 等待 @endif
-                                            @if ($item->state == 1) 完成 @endif
-                                            @if ($item->state == -1) 失败 @endif</p>
-                                    </td>
-                                    <td width="20%"><font color="#FF9400">{{ $item->amount}}积分</font></td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                </div>
-                @endif
+
             </div>
         </div>
     </div>
@@ -91,7 +72,6 @@
     <script>
         $(function(){
             var type = {{ $type }};
-
             // 点击切换分类
             $('.perfect_title .switch').click(function(){
                 switchType($(this).attr('type'));
