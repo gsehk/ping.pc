@@ -361,8 +361,7 @@
                 scroll.init({
                     container: '.J-commentbox',
                     loading: '.detail_comment',
-                    url: '/question/{{$question->id}}/comments' ,
-                    canload: true
+                    url: '/question/{{$question->id}}/comments'
                 });
             }, 300);
         });

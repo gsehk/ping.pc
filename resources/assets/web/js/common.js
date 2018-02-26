@@ -230,14 +230,14 @@ scroll.init = function(option) {
     this.setting.loadtype = option.loadtype || 0; // 加载方式，0为一直加载更多，1为3次以后点击加载，2为点击加载
     this.setting.loading = option.loading; //加载图位置
     this.setting.loadcount = option.loadcount || 0; // 加载次数
-    this.setting.canload = option.canload || true; // 是否能加载
+    this.setting.canload = option.canload || 0; // 是否能加载
     this.setting.url = option.url;
     this.setting.nodata = option.nodata || 0; // 0显示，1不显示
     this.setting.callback = option.callback || null;
 
     scroll.bindScroll();
 
-    if ($(scroll.setting.container).length > 0 && this.setting.canload) {
+    if ($(scroll.setting.container).length > 0 && this.setting.canload == 0) {
         $('.loading').remove();
         $('.click_loading').remove();
         $(scroll.setting.loading).after(loadHtml);
@@ -247,7 +247,7 @@ scroll.init = function(option) {
 
 scroll.bindScroll = function() {
     $(window).bind('scroll resize', function() {
-        if (scroll.setting.canload){
+        if (scroll.setting.canload == 0){
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();
@@ -280,14 +280,14 @@ scroll.bindScroll = function() {
 
 scroll.loadMore = function() {
     // 将能加载参数关闭
-    scroll.setting.canload = false;
+    scroll.setting.canload = 1;
     scroll.setting.loadcount++;
     scroll.params.loadcount = scroll.setting.loadcount;
     axios.get(scroll.setting.url, {params:scroll.params})
       .then(function (response) {
         var res = response.data;
         if (res.data != '') {
-            scroll.setting.canload = true;
+            scroll.setting.canload = 0;
 
             // 两种不同的加载方式
             if (scroll.setting.paramtype == 0) {
@@ -314,7 +314,7 @@ scroll.loadMore = function() {
 
             $("img.lazy").lazyload({ effect: "fadeIn" });
         } else {
-            scroll.setting.canload = false;
+            scroll.setting.canload = 1;
             if (scroll.setting.loadcount == 1 && scroll.setting.nodata == 0) {
                 no_data(scroll.setting.container, 1, ' 暂无相关内容');
                 $('.loading').html('');
@@ -338,14 +338,14 @@ scroll.loadMore = function() {
 
 scroll.clickMore = function(obj) {
     // 将能加载参数关闭
-    scroll.setting.canload = false;
+    scroll.setting.canload = 1;
     scroll.setting.loadcount++;
     $(obj).parent().html("<img src='"+TS.RESOURCE_URL+"/images/three-dots.svg' class='load'>");
     axios.get(scroll.setting.url, {params:scroll.params})
       .then(function (response) {
         var res = response.data;
         if (res.data != '') {
-            scroll.setting.canload = true;
+            scroll.setting.canload = 0;
 
             // 两种不同的加载方式
             if (scroll.setting.paramtype == 0) {
@@ -368,7 +368,7 @@ scroll.clickMore = function(obj) {
 
             $("img.lazy").lazyload({ effect: "fadeIn" });
         } else {
-            scroll.setting.canload = false;
+            scroll.setting.canload = 1;
             $('.click_loading').html('没有更多了');
         }
       })
