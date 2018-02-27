@@ -87,9 +87,11 @@ class ProfileController extends BaseController
                 'data' => $html
             ]);
         }
-
+        $userInfo = createRequest('GET', '/api/v2/user');
+        $currency_sum = $userInfo->currency->sum ?? 0;
         $user = $user->id ? $user : $request->user();
         $user->follower = $user->hasFollower($request->user()->id);
+        $user->currency_sum = $currency_sum;
         $type = 0;
 
         return view('pcview::profile.news', compact('user', 'type'), $this->PlusData);
@@ -161,7 +163,10 @@ class ProfileController extends BaseController
                 'data' => $html
             ]);
         }
+        $userInfo = createRequest('GET', '/api/v2/user');
+        $currency_sum = $userInfo->currency->sum ?? 0;
         $user = $request->user();
+        $user->currency_sum = $currency_sum;
         $type = 0;
 
         return view('pcview::profile.collect', compact('user', 'type'), $this->PlusData);
@@ -201,6 +206,9 @@ class ProfileController extends BaseController
         $type = 'join';
         $user = $user->id ? $user : $request->user();
         $user->follower = $user->hasFollower($request->user()->id);
+        $userInfo = createRequest('GET', '/api/v2/user');
+        $currency_sum = $userInfo->currency->sum ?? 0;
+        $user->currency_sum = $currency_sum;
 
         return view('pcview::profile.group', compact('user', 'type'), $this->PlusData);
     }
@@ -278,7 +286,10 @@ class ProfileController extends BaseController
         }
         $user = $user->id ? $user : $request->user();
         $user->follower = $user->hasFollower($request->user()->id);
-
+        $userInfo = createRequest('GET', '/api/v2/user');
+        $currency_sum = $userInfo->currency->sum ?? 0;
+        $user->currency_sum = $currency_sum;
+        
         return view('pcview::profile.question', compact('user'), $this->PlusData);
     }
 }
