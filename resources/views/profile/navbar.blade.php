@@ -23,7 +23,8 @@
         <div class="profile_top_info_d">
             <div class="profile_top_user">
                 <a href="{{ route('pc:mine', $user->id) }}">{{ $user->name }}</a>
-                <span>{{$user->location or '未知'}}</span>
+                <span>{{$user->location or '未知'}}</span>&nbsp;&nbsp;|
+                &nbsp;<svg class="icon" aria-hidden="true"><use xlink:href="#icon-currency"></use></svg>{{$user->currency_sum}} 积分
             </div>
             <div class="profile_top_bio">{{ $user->bio or '这家伙很懒，什么都没留下'}}</div>
             <div class="profile_top_tags">

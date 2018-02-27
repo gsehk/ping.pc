@@ -46,9 +46,11 @@ class ProfileController extends BaseController
                 'data' => $html
             ]));
         }
-
+        $userInfo = createRequest('GET', '/api/v2/user');
+        $currency_sum = $userInfo->currency->sum ?? 0;
         $user = $user->id ? $user : $request->user();
         $user->follower = $user->hasFollower($request->user()->id);
+        $user->currency_sum = $currency_sum;
 
         return view('pcview::profile.index', compact('user'), $this->PlusData);
     }
