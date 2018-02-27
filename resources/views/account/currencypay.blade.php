@@ -29,7 +29,7 @@
             @endif
         </div>
 
-        <p><input min="1" oninput="value=moneyLimit(value)" class="custom-sum" type="text" name="custom" placeholder="自定义充值金额"></p>
+        <p><input min="1" oninput="value=moneyLimit(value)" onkeydown="if(!isNumber(event.keyCode)) return false;" type="number" class="custom-sum" name="custom" placeholder="自定义充值金额"></p>
 
         <p class="tcolor">选择充值方式</p>
         <div class="pay-way">
