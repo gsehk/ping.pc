@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="_token" content="{{ csrf_token() }}"/>
-    <title>@yield('title')</title>
+    <title>@yield('title') - {{ $config['app']['name'] or 'ThinkSNS Plus' }}</title>
+    <meta name="keywords" content="{{ $config['app']['keywords'] or '' }}"/>
+    <meta name="description" content="{{ $config['app']['description'] or '' }}"/>
     <script>
         var TS = {
             API:'{{ $routes["api"] }}',
